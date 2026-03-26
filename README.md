@@ -93,12 +93,10 @@ cp your_textbook.pdf pdfs/scanned.pdf
 
 ## Roadmap
 
-- [x] v0.1 — Claude-only pipeline (works, but expensive)
-- [ ] Delegate bulk OCR→LaTeX to cheaper vision models (Gemini Flash / GPT-4o-mini)
-- [ ] Replace LLM-based compile fixes with scripted Python pattern matching
-- [ ] Compile after each chapter instead of each batch for faster error detection
-- [ ] Standalone CLI (`retex convert book.pdf`) without Claude Code dependency
-- [ ] Plugin system for swappable OCR backends
+- [x] Claude Code pipeline
+- [ ] Move simple tasks (compile-fix, figure extraction) to [opencode](https://github.com/opencode-ai/opencode) with local/cheap models
+- [ ] Scripted Python pattern matching for compile fixes (no LLM needed)
+- [ ] Per-chapter compilation instead of per-batch
 
 ## License
 
