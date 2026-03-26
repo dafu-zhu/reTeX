@@ -1,0 +1,416 @@
+% sec02_4.tex — Section 2.4: Worked Examples with the Heat Equation (Other Boundary Value Problems)
+\section{Worked Examples with the Heat Equation (Other Boundary Value Problems)}
+\label{sec:2.4}
+
+\subsection{Heat Conduction in a Rod with Insulated Ends}
+\label{sec:2.4.1}
+
+Let us work out in detail the solution (and its interpretation) of the following problem defined for $0 \le x \le L$ and $t \ge 0$:
+\begin{equation}
+\label{eq:2.4.1}
+\text{PDE:}\quad
+\boxed{\pd{u}{t} = k\pdd{u}{x}}
+\end{equation}
+\begin{equation}
+\label{eq:2.4.2}
+\text{BC1:}\quad
+\boxed{\pd{u}{x}(0,t) = 0}
+\end{equation}
+\begin{equation}
+\label{eq:2.4.3}
+\text{BC2:}\quad
+\boxed{\pd{u}{x}(L,t) = 0}
+\end{equation}
+\begin{equation}
+\label{eq:2.4.4}
+\text{IC:}\quad
+\boxed{u(x,0) = f(x).}
+\end{equation}
+
+As a review, this is a heat conduction problem in a one-dimensional rod with constant thermal properties and no sources. This problem is quite similar to the problem treated in Sec.~2.3, the only difference being the boundary conditions. Here the ends are insulated, whereas in Sec.~2.3 the ends were fixed at $0^\circ$. Both the partial differential equation and the boundary conditions are linear and homogeneous. Consequently, we apply the method of separation of variables. We may follow the general procedure described in Sec.~2.3.8. The assumption of product solutions,
+\begin{equation}
+\label{eq:2.4.5}
+u(x,t) = \phi(x)G(t),
+\end{equation}
+implies from the PDE as before that
+\begin{alignat}{2}
+\od{G}{t} &= -\lambda kG & \label{eq:2.4.6} \\[4pt]
+\odd{\phi}{x} &= -\lambda\phi, & \label{eq:2.4.7}
+\end{alignat}
+where $\lambda$ is the separation constant. Again,
+\begin{equation}
+\label{eq:2.4.8}
+G(t) = ce^{-\lambda kt}.
+\end{equation}
+The insulated boundary conditions, \eqref{eq:2.4.2} and \eqref{eq:2.4.3}, imply that the separated solutions must satisfy $d\phi/dx(0) = 0$ and $d\phi/dx(L) = 0$. The separation constant $\lambda$ is then determined by finding those $\lambda$ for which nontrivial solutions exist for the following boundary value problem:
+\begin{equation}
+\label{eq:2.4.9}
+\boxed{\odd{\phi}{x} = -\lambda\phi}
+\end{equation}
+\begin{equation}
+\label{eq:2.4.10}
+\boxed{\od{\phi}{x}(0) = 0}
+\end{equation}
+\begin{equation}
+\label{eq:2.4.11}
+\boxed{\od{\phi}{x}(L) = 0.}
+\end{equation}
+
+Although the ordinary differential equation for the boundary value problem is the same one as previously analyzed, the boundary conditions are different. We must repeat some of the analysis. Once again three cases should be discussed: $\lambda > 0$, $\lambda = 0$, $\lambda < 0$ (since we will assume the eigenvalues are real).
+
+For $\lambda > 0$, the general solution of \eqref{eq:2.4.9} is again
+\begin{equation}
+\label{eq:2.4.12}
+\phi = c_1\cos\sqrt{\lambda}\,x + c_2\sin\sqrt{\lambda}\,x.
+\end{equation}
+We need to calculate $d\phi/dx$ to satisfy the boundary conditions:
+\begin{equation}
+\label{eq:2.4.13}
+\od{\phi}{x} = \sqrt{\lambda}\left(-c_1\sin\sqrt{\lambda}\,x + c_2\cos\sqrt{\lambda}\,x\right).
+\end{equation}
+The boundary condition $d\phi/dx(0) = 0$ implies that $0 = c_2\sqrt{\lambda}$, and hence $c_2 = 0$, since $\lambda > 0$. Thus, $\phi = c_1\cos\sqrt{\lambda}\,x$ and $d\phi/dx = -c_1\sqrt{\lambda}\sin\sqrt{\lambda}\,x$. The eigenvalues $\lambda$ and their corresponding eigenfunctions are determined from the remaining boundary condition, $d\phi/dx(L) = 0$:
+\[
+0 = -c_1\sqrt{\lambda}\sin\sqrt{\lambda}\,L.
+\]
+As before, for nontrivial solutions, $c_1 \ne 0$, and hence $\sin\sqrt{\lambda}\,L = 0$. The eigenvalues for $\lambda > 0$ are the same as the previous problem, $\sqrt{\lambda}\,L = n\pi$ or
+\begin{equation}
+\label{eq:2.4.14}
+\lambda = \left(\frac{n\pi}{L}\right)^2, \qquad n = 1, 2, 3, \ldots
+\end{equation}
+but the corresponding eigenfunctions are cosines (not sines),
+\begin{equation}
+\label{eq:2.4.15}
+\phi(x) = c_1\cos\frac{n\pi x}{L}, \qquad n = 1, 2, 3, \ldots.
+\end{equation}
+The resulting product solutions of the PDE are
+\begin{equation}
+\label{eq:2.4.16}
+u(x,t) = A\cos\frac{n\pi x}{L}\,e^{-(n\pi/L)^2 kt}, \qquad n = 1, 2, 3, \ldots,
+\end{equation}
+where $A$ is an arbitrary multiplicative constant.
+
+Before applying the principle of superposition, we must see if there are any other eigenvalues. If $\lambda = 0$, then
+\begin{equation}
+\label{eq:2.4.17}
+\phi = c_1 + c_2 x,
+\end{equation}
+where $c_1$ and $c_2$ are arbitrary constants. The derivative of $\phi$ is
+\[
+\od{\phi}{x} = c_2.
+\]
+Both boundary conditions, $d\phi/dx(0) = 0$ and $d\phi/dx(L) = 0$, give the same condition, $c_2 = 0$. Thus, there are nontrivial solutions of the boundary value problem for $\lambda = 0$, namely, $\phi(x)$ equaling any constant
+\begin{equation}
+\label{eq:2.4.18}
+\phi(x) = c_1.
+\end{equation}
+The time-dependent part is also a constant, since $e^{-\lambda kt}$ for $\lambda = 0$ equals 1. Thus, another product solution of both the linear homogeneous PDE and BCs is $u(x,t) = A$, where $A$ is any constant. Note that there is only one independent eigenfunction corresponding to $\lambda = 0$, while for each positive eigenvalue, $\lambda = (n\pi/L)^2$, there are two independent eigenfunctions, $\sin n\pi x/L$ and $\cos n\pi x/L$. Not surprisingly, it can be shown that there are no eigenvalues in which $\lambda < 0$. In Exercise~2.4.4 you are asked to show that there are no eigenvalues for $\lambda < 0$.
+
+In order to satisfy the initial condition, we use the principle of superposition. We should take a linear combination of \emph{all} product solutions of the PDE (not just those corresponding to $\lambda > 0$). Thus,
+\begin{equation}
+\label{eq:2.4.19}
+u(x,t) = A_0 + \sum_{n=1}^{\infty} A_n\cos\frac{n\pi x}{L}\,e^{-(n\pi/L)^2 kt}.
+\end{equation}
+
+It is interesting to note that this is equivalent to
+\begin{equation}
+\label{eq:2.4.20}
+u(x,t) = \sum_{n=0}^{\infty} A_n\cos\frac{n\pi x}{L}\,e^{-(n\pi/L)^2 kt}
+\end{equation}
+since $\cos 0 = 1$ and $e^0 = 1$. In fact, \eqref{eq:2.4.20} is often easier to use in practice. We prefer the form \eqref{eq:2.4.19} \emph{in the beginning stages of the learning process}, since it more clearly shows that the solution consists of terms arising from the analysis of two somewhat distinct cases, $\lambda = 0$ and $\lambda > 0$.
+
+The initial condition $u(x,0) = f(x)$ is satisfied if
+\begin{equation}
+\label{eq:2.4.21}
+\boxed{f(x) = A_0 + \sum_{n=1}^{\infty} A_n\cos\frac{n\pi x}{L},}
+\end{equation}
+for $0 \le x \le L$. The validity of \eqref{eq:2.4.21} will also follow from the theory of Fourier series. Let us note that in the previous problem $f(x)$ was represented by a series of sines. Here $f(x)$ consists of a series of cosines and the constant term. The two cases are different due to the different boundary conditions. Let us note that in \eqref{eq:2.4.21} the constant function and $\cos n\pi x/L$ satisfies the following \textbf{orthogonality relation}:
+\begin{equation}
+\label{eq:2.4.22}
+\boxed{\int_0^L \cos\frac{n\pi x}{L}\cos\frac{m\pi x}{L}\dx = \begin{cases} 0 & n \ne m \\ L/2 & n = m \ne 0 \\ L & n = m = 0 \end{cases}}
+\end{equation}
+for $n$ and $m$ nonnegative integers. Note that $n = 0$ or $m = 0$ corresponds to a constant 1 contained in the integrand. The constant $L/2$ is another application of the statement that the average of the square of a sine or cosine function is $\frac{1}{2}$. The constant $L$ in \eqref{eq:2.4.22} is quite simple since for $n = m = 0$, \eqref{eq:2.4.22} becomes $\int_0^L dx = L$. Equation \eqref{eq:2.4.22} states that the \textbf{cosine functions} (including the constant function) \textbf{form an orthogonal set of functions}. We can use that idea, in the same way as before, to determine the coefficients. Multiplying \eqref{eq:2.4.21} by $\cos m\pi x/L$ and integrating from $0$ to $L$ yields
+\[
+\int_0^L f(x)\cos\frac{m\pi x}{L}\dx = A_m \int_0^L \cos^2\frac{m\pi x}{L}\dx.
+\]
+The factor $\int_0^L \cos^2 m\pi x/L\dx$ has two different cases, $m = 0$ and $m \ne 0$. Solving for $A_m$ yields
+\begin{equation}
+\label{eq:2.4.23}
+\boxed{A_0 = \frac{1}{L}\int_0^L f(x)\dx}
+\end{equation}
+\begin{equation}
+\label{eq:2.4.24}
+\boxed{(m \ge 1)\quad A_m = \frac{2}{L}\int_0^L f(x)\cos\frac{m\pi x}{L}\dx.}
+\end{equation}
+
+The two different formulas are a somewhat annoying feature of this series of cosines. They are simply caused by the factors $L/2$ and $L$ in \eqref{eq:2.4.22}.
+
+There is a significant difference between the solutions of the PDE for $\lambda > 0$ and the solution for $\lambda = 0$, whereas the solution for $\lambda = 0$ remains constant in time. Thus, as $t \to \infty$ the complicated infinite series solution \eqref{eq:2.4.19} approaches steady state,
+\[
+\lim_{t\to\infty} u(x,t) = A_0 = \frac{1}{L}\int_0^L f(x)\dx.
+\]
+Not only is the steady-state temperature constant, $A_0$, but we recognize the constant $A_0$ as the average of the initial temperature distribution. This agrees with information obtained previously. Recall from Sec.~1.4 that the equilibrium temperature distribution for the problem with insulated boundaries is not unique. Any constant temperature is an equilibrium solution, but using the ideas of conservation of total thermal energy, we know that the constant must be the average of the initial temperature.
+
+\subsection{Heat Conduction in a Thin Circular Ring}
+\label{sec:2.4.2}
+
+We have investigated a heat flow problem whose eigenfunctions are sines and one whose eigenfunctions are cosines. In this subsection we illustrate a heat flow problem whose eigenfunctions are both sines \emph{and} cosines.
+
+Let us formulate the appropriate initial boundary value problem if a thin wire (with lateral sides insulated) is bent into the shape of a circle, as illustrated in Fig.~2.4.1. For reasons that will not be apparent for a while, we let the wire have length $2L$ (rather than $L$ as for the two previous heat conduction problems). Since the circumference of a circle is $2\pi r$, the radius is $r = 2L/2\pi = L/\pi$. If the wire is thin enough, it is reasonable to assume that the temperature in the wire is constant along cross sections of the bent wire. In this situation the wire should satisfy a one-dimensional heat equation, where the distance is actually the arc length $x$ along the wire:
+\begin{equation}
+\label{eq:2.4.25}
+\boxed{\pd{u}{t} = k\pdd{u}{x}.}
+\end{equation}
+We have assumed that the wire has constant thermal properties and no sources. It is convenient in this problem to measure the arc length $x$, such that $x$ ranges from $-L$ to $+L$ (instead of the more usual $0$ to $2L$).
+
+Let us assume that the wire is very tightly connected to itself at the ends ($x = -L$ to $x = +L$). The conditions of perfect thermal contact should hold there (see Exercise~1.3.2). The temperature $u(x,t)$ is continuous there,
+\begin{equation}
+\label{eq:2.4.26}
+\boxed{u(-L,t) = u(L,t).}
+\end{equation}
+Also, since the heat flux must be continuous there (and the thermal conductivity is constant everywhere), the derivative of the temperature is also continuous:
+\begin{equation}
+\label{eq:2.4.27}
+\boxed{\pd{u}{x}(-L,t) = \pd{u}{x}(L,t).}
+\end{equation}
+The two boundary conditions for the partial differential equation are \eqref{eq:2.4.26} and \eqref{eq:2.4.27}. The initial condition is that the initial temperature is a given function of position along the wire,
+\begin{equation}
+\label{eq:2.4.28}
+u(x,0) = f(x).
+\end{equation}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch02/fig_2_4_1.png}
+\caption{Thin circular ring.}
+\label{fig:2.4.1}
+\end{figure}
+
+The mathematical problem consists of the linear homogeneous PDE \eqref{eq:2.4.25} subject to linear homogeneous BCs \eqref{eq:2.4.26}, \eqref{eq:2.4.27}. As such, we will proceed in the usual way to apply the method of separation of variables. Product solutions $u(x,t) = \phi(x)G(t)$ for the heat equation have been obtained previously, where $G(t) = ce^{-\lambda kt}$. The corresponding boundary value problem is
+\begin{equation}
+\label{eq:2.4.29}
+\boxed{\odd{\phi}{x} = -\lambda\phi}
+\end{equation}
+\begin{equation}
+\label{eq:2.4.30}
+\boxed{\phi(-L) = \phi(L)}
+\end{equation}
+\begin{equation}
+\label{eq:2.4.31}
+\boxed{\od{\phi}{x}(-L) = \od{\phi}{x}(L).}
+\end{equation}
+
+The boundary conditions \eqref{eq:2.4.30} and \eqref{eq:2.4.31} each involve both boundaries (sometimes called the \textbf{mixed} type). The specific boundary conditions \eqref{eq:2.4.30} and \eqref{eq:2.4.31} are referred to as \textbf{periodic boundary conditions} since although the problem can be thought of physically as being defined only for $-L < x < L$, it is often thought of as being defined periodically for all $x$; the temperature will be periodic ($x = x_0$ is the same physical point as $x = x_0 + 2L$, and hence must have the same temperature).
+
+If $\lambda > 0$, the general solution of \eqref{eq:2.4.29} is again
+\[
+\phi = c_1\cos\sqrt{\lambda}\,x + c_2\sin\sqrt{\lambda}\,x.
+\]
+The boundary condition $\phi(-L) = \phi(L)$ implies that
+\[
+c_1\cos\sqrt{\lambda}\,(-L) + c_2\sin\sqrt{\lambda}\,(-L) = c_1\cos\sqrt{\lambda}\,L + c_2\sin\sqrt{\lambda}\,L.
+\]
+Since cosine is an even function, $\cos\sqrt{\lambda}\,(-L) = \cos\sqrt{\lambda}\,L$, and since sine is an odd function, $\sin\sqrt{\lambda}\,(-L) = -\sin\sqrt{\lambda}\,L$, it follows that $\phi(-L) = \phi(L)$ is satisfied only if
+\begin{equation}
+\label{eq:2.4.32}
+c_2\sin\sqrt{\lambda}\,L = 0.
+\end{equation}
+Before solving \eqref{eq:2.4.32}, we analyze the second boundary condition, which involves the derivative,
+\[
+\od{\phi}{x} = \sqrt{\lambda}\left(-c_1\sin\sqrt{\lambda}\,x + c_2\cos\sqrt{\lambda}\,x\right).
+\]
+Thus, $d\phi/dx(-L) = d\phi/dx(L)$ is satisfied only if
+\begin{equation}
+\label{eq:2.4.33}
+c_1\sqrt{\lambda}\sin\sqrt{\lambda}\,L = 0,
+\end{equation}
+where the evenness of cosines and the oddness of sines has again been used. Conditions \eqref{eq:2.4.32} and \eqref{eq:2.4.33} are easily solved. If $\sin\sqrt{\lambda}\,L \ne 0$, then $c_1 = 0$ and $c_2 = 0$, which is just the trivial solution. Thus, for nontrivial solutions,
+\[
+\sin\sqrt{\lambda}\,L = 0,
+\]
+which determines the eigenvalues $\lambda$. We find (as before) that $\sqrt{\lambda}\,L = n\pi$ or, equivalently, that
+\begin{equation}
+\label{eq:2.4.34}
+\lambda = \left(\frac{n\pi}{L}\right)^2, \qquad n = 1, 2, 3, \ldots.
+\end{equation}
+We chose the wire to have length $2L$ so that the eigenvalues have the same formula as before (this will mean less to remember, as all our problems have a similar answer). However, in this problem (unlike the others) there are no additional constraints that $c_1$ and $c_2$ must satisfy. Both are arbitrary. We say that both $\sin n\pi x/L$ and $\cos n\pi x/L$ are eigenfunctions corresponding to the eigenvalue $\lambda = (n\pi/L)^2$,
+\begin{equation}
+\label{eq:2.4.35}
+\phi(x) = \cos\frac{n\pi x}{L},\quad \sin\frac{n\pi x}{L}, \qquad n = 1, 2, 3, \ldots.
+\end{equation}
+In fact, any linear combination of $\cos n\pi x/L$ and $\sin n\pi x/L$ is an eigenfunction,
+\begin{equation}
+\label{eq:2.4.36}
+\phi(x) = c_1\cos\frac{n\pi x}{L} + c_2\sin\frac{n\pi x}{L},
+\end{equation}
+but this is always to be understood when the statement is made that both are eigenfunctions. There are thus two infinite families of product solutions of the partial differential equation,
+\begin{equation}
+\label{eq:2.4.37}
+u(x,t) = \cos\frac{n\pi x}{L}\,e^{-(n\pi/L)^2 kt} \quad\text{and}\quad u(x,t) = \sin\frac{n\pi x}{L}\,e^{-(n\pi/L)^2 kt}.
+\end{equation}
+All of these correspond to $\lambda > 0$.
+
+If $\lambda = 0$, the general solution of \eqref{eq:2.4.29} is
+\[
+\phi = c_1 + c_2 x.
+\]
+The boundary condition $\phi(-L) = \phi(L)$ implies that
+\[
+c_1 - c_2 L = c_1 + c_2 L.
+\]
+Thus, $c_2 = 0$, $\phi(x) = c_1$ and $d\phi/dx = c_1$. The remaining boundary condition, \eqref{eq:2.4.30}, is automatically satisfied. We see that
+\[
+\phi(x) = c_1,
+\]
+any constant, is an eigenfunction, corresponding to the eigenvalue zero. Sometimes we say that $\phi(x) = 1$ is the eigenfunction, since it is known that any multiple of an eigenfunction is always an eigenfunction. Product solutions $u(x,t)$ are also constants in this case. Note that there is only one independent eigenfunction corresponding to $\lambda = 0$, while for each positive eigenvalue, $\lambda = (n\pi/L)^2$, there are two independent eigenfunctions, $\sin n\pi x/L$ and $\cos n\pi x/L$. Not surprisingly, it can be shown that there are no eigenvalues in which $\lambda < 0$.
+
+The principle of superposition must be used before applying the initial condition. The most general solution obtainable by the method of separation of variables consists of an arbitrary linear combination of all product solutions:
+\begin{equation}
+\label{eq:2.4.38}
+\boxed{u(x,t) = a_0 + \sum_{n=1}^{\infty} a_n\cos\frac{n\pi x}{L}\,e^{-(n\pi/L)^2 kt} + \sum_{n=1}^{\infty} b_n\sin\frac{n\pi x}{L}\,e^{-(n\pi/L)^2 kt}.}
+\end{equation}
+The constant $a_0$ is the product solution corresponding to $\lambda = 0$, whereas two families of arbitrary coefficients, $a_n$ and $b_n$, are needed for $\lambda > 0$. The initial condition $u(x,0) = f(x)$ is satisfied if
+\begin{equation}
+\label{eq:2.4.39}
+\boxed{f(x) = a_0 + \sum_{n=1}^{\infty} a_n\cos\frac{n\pi x}{L} + \sum_{n=1}^{\infty} b_n\sin\frac{n\pi x}{L}.}
+\end{equation}
+
+Here the function $f(x)$ is a linear combination of both sines and cosines (and a constant), unlike the previous problems, where either sines or cosines (including the constant term) were used. Another crucial difference is that \eqref{eq:2.4.39} should be valid for the entire ring, which means that $-L \le x \le L$, whereas the series of just sines or cosines was valid for $0 \le x \le L$. The theory of Fourier series will show that \eqref{eq:2.4.39} is valid, and, more important, that the previous series of just sines or cosines are but special cases of the series in \eqref{eq:2.4.39}.
+
+For now we wish just to determine the coefficients $a_0$, $a_n$, $b_n$ from \eqref{eq:2.4.39}. Again the eigenfunctions form an orthogonal set since integral tables verify the following orthogonality conditions:
+\begin{equation}
+\label{eq:2.4.40}
+\boxed{\int_{-L}^{L} \cos\frac{n\pi x}{L}\cos\frac{m\pi x}{L}\dx = \begin{cases} 0 & n \ne m \\ L & n = m \ne 0 \\ 2L & n = m = 0 \end{cases}}
+\end{equation}
+\begin{equation}
+\label{eq:2.4.41}
+\boxed{\int_{-L}^{L} \sin\frac{n\pi x}{L}\sin\frac{m\pi x}{L}\dx = \begin{cases} 0 & n \ne m \\ L & n = m \ne 0 \end{cases}}
+\end{equation}
+\begin{equation}
+\label{eq:2.4.42}
+\boxed{\int_{-L}^{L} \sin\frac{n\pi x}{L}\cos\frac{m\pi x}{L}\dx = 0,}
+\end{equation}
+where $n$ and $m$ are arbitrary (nonnegative) integers. The constant eigenfunction corresponds to $n = 0$ or $m = 0$. Integrals of the square of sines or cosines ($n = m$) are evaluated again by the ``half the length of the interval'' rule. The last of these formulas, \eqref{eq:2.4.42}, is particularly simple to derive, since sine is an odd function and cosine is an even function.\footnote{The product of an odd and an even function is odd. By antisymmetry, the integral of an odd function over a symmetric interval is zero.} Note that, for example, $\cos n\pi x/L$ is orthogonal to every \emph{other} eigenfunction [sines from \eqref{eq:2.4.42}, cosines and the constant eigenfunction from \eqref{eq:2.4.40}].
+
+The coefficients are derived in the same manner as before. A few steps are saved by noting \eqref{eq:2.4.39} is equivalent to
+\[
+f(x) = \sum_{n=0}^{\infty} a_n\cos\frac{n\pi x}{L} + \sum_{n=1}^{\infty} b_n\sin\frac{n\pi x}{L}.
+\]
+If we multiply this by both $\cos m\pi x/L$ and $\sin m\pi x/L$ and then integrate from $x = -L$ to $x = +L$, we obtain
+\begin{align*}
+\int_{-L}^{L} f(x)\left\{\begin{array}{c}\cos\frac{m\pi x}{L} \\[4pt] \sin\frac{m\pi x}{L}\end{array}\right\}\dx &= \sum_{n=0}^{\infty} a_n\int_{-L}^{L}\cos\frac{n\pi x}{L}\left\{\begin{array}{c}\cos\frac{m\pi x}{L} \\[4pt] \sin\frac{m\pi x}{L}\end{array}\right\}\dx \\
+&\quad+ \sum_{n=1}^{\infty} b_n\int_{-L}^{L}\sin\frac{n\pi x}{L}\left\{\begin{array}{c}\cos\frac{m\pi x}{L} \\[4pt] \sin\frac{m\pi x}{L}\end{array}\right\}\dx.
+\end{align*}
+If we utilize \eqref{eq:2.4.40}--\eqref{eq:2.4.42}, we find that
+\begin{align*}
+\int_{-L}^{L} f(x)\cos\frac{m\pi x}{L}\dx &= a_m\int_{-L}^{L}\cos^2\frac{m\pi x}{L}\dx \\[4pt]
+\int_{-L}^{L} f(x)\sin\frac{m\pi x}{L}\dx &= b_m\int_{-L}^{L}\sin^2\frac{m\pi x}{L}\dx.
+\end{align*}
+Solving the coefficients in a manner that we are now familiar with yields
+\begin{equation}
+\label{eq:2.4.43}
+\boxed{\begin{aligned}
+a_0 &= \frac{1}{2L}\int_{-L}^{L} f(x)\dx \\[6pt]
+(m \ge 1)\quad a_m &= \frac{1}{L}\int_{-L}^{L} f(x)\cos\frac{m\pi x}{L}\dx \\[6pt]
+b_m &= \frac{1}{L}\int_{-L}^{L} f(x)\sin\frac{m\pi x}{L}\dx.
+\end{aligned}}
+\end{equation}
+The solution to the problem is \eqref{eq:2.4.38}, where the coefficients are given by \eqref{eq:2.4.43}.
+
+\subsection{Summary of Boundary Value Problems}
+\label{sec:2.4.3}
+
+In many problems, including the ones we have just discussed, the specific simple constant-coefficient differential equation,
+\[
+\odd{\phi}{x} = -\lambda\phi,
+\]
+forms the fundamental part of the boundary value problem. We collect in the table in one place the relevant formulas for the eigenvalues and eigenfunctions for the typical boundary conditions already discussed. You will find it helpful to understand these results because of their enormous applicability throughout this text. It is important to note that, in these cases, whenever $\lambda = 0$ is an eigenvalue, a constant is the eigenfunction (corresponding to $n = 0$ in $\cos n\pi x/L$).
+
+\begin{table}[H]
+\centering
+\caption{Boundary Value Problems for $\dfrac{d^2\phi}{dx^2} = -\lambda\phi$}
+\label{tab:2.4.1}
+\renewcommand{\arraystretch}{2.2}
+\begin{tabular}{@{}l|c|c|c@{}}
+\toprule
+& $\begin{aligned}\phi(0) &= 0 \\ \phi(L) &= 0\end{aligned}$
+& $\begin{aligned}\frac{d\phi}{dx}(0) &= 0 \\ \frac{d\phi}{dx}(L) &= 0\end{aligned}$
+& $\begin{aligned}\phi(-L) &= \phi(L) \\ \frac{d\phi}{dx}(-L) &= \frac{d\phi}{dx}(L)\end{aligned}$ \\
+\midrule
+Eigenvalues $\lambda_n$
+& $\left(\dfrac{n\pi}{L}\right)^2$ \newline $n = 1,2,3,\ldots$
+& $\left(\dfrac{n\pi}{L}\right)^2$ \newline $n = 0,1,2,3,\ldots$
+& $\left(\dfrac{n\pi}{L}\right)^2$ \newline $n = 0,1,2,3,\ldots$ \\
+\midrule
+Eigenfunctions
+& $\sin\dfrac{n\pi x}{L}$
+& $\cos\dfrac{n\pi x}{L}$
+& $\sin\dfrac{n\pi x}{L}$ and $\cos\dfrac{n\pi x}{L}$ \\
+\midrule
+Series
+& $f(x) = \displaystyle\sum B_n\sin\frac{n\pi x}{L}$
+& $f(x) = \displaystyle\sum A_n\cos\frac{n\pi x}{L}$
+& $\begin{aligned}f(x) &= \displaystyle\sum_{n=0}^{\infty} a_n\cos\frac{n\pi x}{L} \\[4pt]
+&+ \displaystyle\sum_{n=1}^{\infty} b_n\sin\frac{n\pi x}{L}\end{aligned}$ \\
+\midrule
+Coefficients
+& $B_n = \dfrac{2}{L}\displaystyle\int_0^L f(x)\sin\frac{n\pi x}{L}\dx$
+& $\begin{aligned}A_0 &= \dfrac{1}{L}\displaystyle\int_0^L f(x)\dx \\[4pt] A_n &= \dfrac{2}{L}\displaystyle\int_0^L f(x)\cos\frac{n\pi x}{L}\dx\end{aligned}$
+& $\begin{aligned}a_0 &= \dfrac{1}{2L}\displaystyle\int_{-L}^{L} f(x)\dx \\[4pt] a_n &= \dfrac{1}{L}\displaystyle\int_{-L}^{L} f(x)\cos\frac{n\pi x}{L}\dx \\[4pt] b_n &= \dfrac{1}{L}\displaystyle\int_{-L}^{L} f(x)\sin\frac{n\pi x}{L}\dx\end{aligned}$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{exercises}{2.4}
+
+\item\starred{} Solve the heat equation $\partial u/\partial t = k\partial^2 u/\partial x^2$, $0 < x < L$, $t > 0$, subject to
+\[
+\pd{u}{x}(0,t) = 0 \qquad \pd{u}{x}(L,t) = 0 \qquad t > 0.
+\]
+\begin{enumerate}
+\item[(a)] $u(x,0) = \begin{cases} 0 & x < L/2 \\ 1 & x > L/2 \end{cases}$
+\qquad
+(b) $u(x,0) = 6 + 4\cos\dfrac{3\pi x}{L}$
+\item[(c)] $u(x,0) = -2\sin\dfrac{\pi x}{L}$
+\qquad
+(d) $u(x,0) = -3\cos\dfrac{8\pi x}{L}$
+\end{enumerate}
+
+\item\starred{} Solve
+\[
+\pd{u}{t} = k\pdd{u}{x} \quad\text{with}\quad \pd{u}{x}(0,t) = 0,\quad u(L,t) = 0,\quad u(x,0) = f(x).
+\]
+For this problem you may assume that no solutions of the heat equation exponentially grow in time. You may also guess appropriate orthogonality conditions for the eigenfunctions.
+
+\item\starred{} Solve the eigenvalue problem
+\[
+\odd{\phi}{x} = -\lambda\phi
+\]
+subject to
+\[
+\phi(0) = \phi(2\pi) \quad\text{and}\quad \od{\phi}{x}(0) = \od{\phi}{x}(2\pi).
+\]
+
+\item Explicitly show that there are no negative eigenvalues for
+\[
+\odd{\phi}{x} = -\lambda\phi \quad\text{subject to}\quad \od{\phi}{x}(0) = 0 \quad\text{and}\quad \od{\phi}{x}(L) = 0.
+\]
+
+\item This problem presents an alternative derivation of the heat equation for a thin wire. The equation for a circular wire of finite thickness is the two-dimensional heat equation (in polar coordinates). Show that this reduces to \eqref{eq:2.4.25} if the temperature does not depend on $r$ and if the wire is very thin.
+
+\item Determine the equilibrium temperature for the thin circular ring of Section~2.4.2:
+\begin{enumerate}
+\item[(a)] Directly from the equilibrium problem (see Sec.~1.4)
+\item[(b)] By computing the limit as $t \to \infty$ of the time-dependent problem
+\end{enumerate}
+
+\item Solve Laplace's equation inside a circle of radius $a$,
+\[
+\laplacian u = \frac{1}{r}\frac{\partial}{\partial r}\!\left(r\pd{u}{r}\right) + \frac{1}{r^2}\pdd{u}{\theta} = 0,
+\]
+subject to the boundary condition
+\[
+u(a,\theta) = f(\theta).
+\]
+(\emph{Hint:} If necessary, see Sec.~2.5.2.)
+
+\end{exercises}

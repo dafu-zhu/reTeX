@@ -1,0 +1,180 @@
+% sec05_10.tex — Section 5.10: Approximation Properties
+\section{Approximation Properties}
+\label{sec:sl-approximation}
+
+In many practical problems of solving partial differential equations by separation of variables, it is impossible to compute and work with an infinite number of terms of the infinite series.  It is more usual to use a finite number of terms.\footnote{Often, for numerical answers to problems in partial differential equations you may be better off using direct numerical methods.}  In this section, we briefly discuss the use of a finite number of terms of generalized Fourier series.
+
+We have claimed that any piecewise smooth function $f(x)$ can be represented by a generalized Fourier series of the eigenfunctions,
+\begin{equation}
+\label{eq:ap-gfs}
+f(x) \sim \sum_{n=1}^{\infty} a_n\phi_n(x).
+\end{equation}
+Due to the orthogonality [with weight $\sigma(x)$] of the eigenfunctions, the generalized Fourier coefficients can be determined easily:
+\begin{equation}
+\label{eq:ap-coeff}
+a_n = \frac{\displaystyle\int_a^b f(x)\phi_n(x)\sigma(x)\dx}{\displaystyle\int_a^b \phi_n^2\sigma\dx}.
+\end{equation}
+
+However, suppose that we can use only the first $M$ eigenfunctions to approximate a function $f(x)$,
+\begin{equation}
+\label{eq:ap-truncated}
+f(x) \approx \sum_{n=1}^{M} \alpha_n\phi_n(x).
+\end{equation}
+What should the coefficients $\alpha_n$ be?  Perhaps if we use a finite number of terms, there would be a better way to approximate $f(x)$ than by using the generalized Fourier coefficients, \eqref{eq:ap-coeff}.  We will pick these new coefficients $\alpha_n$ so that $\sum_{n=1}^M \alpha_n\phi_n(x)$ is the ``best'' approximation to $f(x)$.  There are many ways to define the ``best,'' but we will show a way that is particularly useful.  In general, the coefficients $\alpha_n$ will depend on $M$.  For example, suppose that we choose $M = 10$ and calculate at $\alpha_1, \ldots, \alpha_{10}$ so that \eqref{eq:ap-truncated} is ``best'' in some way.  After this calculation, we may decide that the approximation in \eqref{eq:ap-truncated} is not good enough, so we may wish to include more terms, for example, $M = 11$.  We would then have to recalculate all 11 coefficients that make \eqref{eq:ap-truncated} ``best'' with $M = 11$.  We will show that there is a way to define best such that the coefficients $\alpha_n$ do \textit{not} depend on $M$; that is, in going from $M = 10$ to $M = 11$ only one additional coefficient need be computed, namely, $\alpha_{11}$.
+
+\paragraph{Mean-square deviation.}
+We define \textit{best approximation} as the approximation with the least error.  However, \textit{error} can be defined in many different ways.  The difference between $f(x)$ and its approximation $\sum_{n=1}^M \alpha_n\phi_n(x)$ depends on $x$.  It is possible for $f(x) - \sum_{n=1}^M \alpha_n\phi_n(x)$ to be positive in some regions and negative in others.  One possible measure of the error is the maximum of the deviation over the entire interval: $\max|f(x) - \sum_{n=1}^M \alpha_n\phi_n(x)|$.  This is a reasonable definition of the error, but it is rarely used, since it is very difficult to choose the $\alpha_n$ to minimize this maximum deviation.  Instead, we usually define the \textbf{error} to be the \textbf{mean-square deviation},
+\begin{equation}
+\label{eq:ap-msd}
+\boxed{E \equiv \int_a^b \left[f(x) - \sum_{n=1}^M \alpha_n\phi_n(x)\right]^2 \sigma(x)\dx.}
+\end{equation}
+Here a large penalty is paid for the deviation being large on even a small interval.  We introduce a weight factor $\sigma(x)$ in our definition of the error because we will show that it is easy to minimize this error \textit{only with the weight} $\sigma(x)$.  $\sigma(x)$ is the same function that appears in the differential equation defining the eigenfunctions $\phi_n(x)$; the weight appearing in the error is the same weight as needed for the orthogonality of the eigenfunctions.
+
+The error, defined by \eqref{eq:ap-msd}, is a function of the coefficients $\alpha_1, \alpha_2, \ldots, \alpha_M$.  To minimize a function of $M$ variables, we usually use the first-derivative condition.  We insist that the first partial derivative with respect to each $\alpha_i$ is zero:
+\[
+\pd{E}{\alpha_i} = 0, \quad i = 1, 2, \ldots, M.
+\]
+We calculate each partial derivative and set it equal to zero:
+\begin{equation}
+\label{eq:ap-partials}
+0 = \pd{E}{\alpha_i} = -2\int_a^b \left[f(x) - \sum_{n=1}^M \alpha_n\phi_n(x)\right]\phi_i(x)\sigma(x)\dx, \quad i = 1, 2, \ldots, M,
+\end{equation}
+where we have used the fact that $\partial/\partial\alpha_i(\sum_{n=1}^M \alpha_n\phi_n(x)) = \phi_i(x)$.  There are $M$ equations, \eqref{eq:ap-partials}, for the $M$ unknowns.  This would be rather difficult to solve, except for the fact that the eigenfunctions are orthogonal with the same weight $\sigma(x)$ that appears in \eqref{eq:ap-partials}.  Thus, \eqref{eq:ap-partials} becomes
+\[
+\int_a^b f(x)\phi_i(x)\sigma(x)\dx = \alpha_i\int_a^b \phi_i^2(x)\sigma(x)\dx.
+\]
+The $i$th equation can be solved easily for $\alpha_i$.  In fact, $\alpha_i = a_i$ [see \eqref{eq:ap-coeff}]; all first partial derivatives are zero if the coefficients are chosen to be the generalized Fourier coefficients.  We should still show that this actually minimizes the error (not just a local critical point, where all first partial derivatives vanish).  We in fact will show that \textbf{the best approximation (in the mean-square sense using the first $M$ eigenfunctions) occurs when the coefficients are chosen to be the generalized Fourier coefficients}: In this way (1) the coefficients are easy to determine, and (2) the coefficients are independent of $M$.
+
+\paragraph{Proof.}
+To prove that the error $E$ is actually minimized, we will not use partial derivatives.  Instead, our derivation proceeds by expanding the square deviation in \eqref{eq:ap-msd}:
+\begin{equation}
+\label{eq:ap-expand1}
+E = \int_a^b \left(f^2 - 2\sum_{n=1}^M \alpha_n f\phi_n + \sum_{n=1}^M \alpha_n^2\phi_n^2\right)\sigma\dx.
+\end{equation}
+Some simplification again occurs due to the orthogonality of the eigenfunctions:
+\begin{equation}
+\label{eq:ap-expand2}
+E = \int_a^b \left(f^2 - 2\sum_{n=1}^M \alpha_n f\phi_n + \sum_{n=1}^M \alpha_n^2\phi_n^2\right)\sigma\dx.
+\end{equation}
+Each $\alpha_n$ appears quadratically:
+\begin{equation}
+\label{eq:ap-quadratic}
+E = \sum_{n=1}^M \left[\alpha_n^2\int_a^b \phi_n^2\sigma\dx - 2\alpha_n\int_a^b f\phi_n\sigma\dx\right] + \int_a^b f^2\sigma\dx,
+\end{equation}
+and this suggests completing the square,
+\begin{equation}
+\label{eq:ap-completed}
+E = \sum_{n=1}^M \left[\int_a^b \phi_n^2\sigma\dx \left(\alpha_n - \frac{\int_a^b f\phi_n\sigma\dx}{\int_a^b \phi_n^2\sigma\dx}\right)^2 - \frac{\left(\int_a^b f\phi_n\sigma\dx\right)^2}{\int_a^b \phi_n^2\sigma\dx}\right] + \int_a^b f^2\sigma\dx.
+\end{equation}
+The only term that depends on the unknowns $\alpha_n$ appears in a nonnegative way.  The minimum occurs only if that first term vanishes, determining the best coefficients,
+\begin{equation}
+\label{eq:ap-best-coeff}
+\alpha_n = \frac{\int_a^b f\phi_n\sigma\dx}{\int_a^b \phi_n^2\sigma\dx},
+\end{equation}
+the same result as obtained using the simpler first derivative condition.
+
+\paragraph{Error.}
+In this way \eqref{eq:ap-completed} shows that the minimal error is
+\begin{equation}
+\label{eq:ap-min-error}
+\boxed{E = \int_a^b f^2\sigma\dx - \sum_{n=1}^M \alpha_n^2\int_a^b \phi_n^2\sigma\dx,}
+\end{equation}
+where \eqref{eq:ap-best-coeff} has been used.  Equation \eqref{eq:ap-min-error} shows that as $M$ increases, the error decreases.  Thus, we can think of a generalized Fourier series as an approximation scheme.  \textbf{The more terms in the truncated series that are used, the better the approximation.}
+
+\paragraph{Example.}
+For a Fourier sine series, where $\sigma(x) = 1$, $\phi_n(x) = \sin n\pi x/L$ and $\int_0^L \sin^2 n\pi x/L\dx = L/2$, it follows that
+\begin{equation}
+\label{eq:ap-sine-error}
+E = \int_0^L f^2\dx - \frac{L}{2}\sum_{n=1}^M \alpha_n^2.
+\end{equation}
+
+\paragraph{Bessel's inequality and Parseval's equality.}
+Since $E \ge 0$ [see \eqref{eq:ap-msd}], it follows from \eqref{eq:ap-min-error} that
+\begin{equation}
+\label{eq:ap-bessel}
+\boxed{\int_a^b f^2\sigma\dx \ge \sum_{n=1}^M \alpha_n^2\int_a^b \phi_n^2\sigma\dx,}
+\end{equation}
+known as \textbf{Bessel's inequality}.  More importantly, we claim that for any Sturm--Liouville eigenvalue problem, the eigenfunction expansion of $f(x)$ converges in the mean to $f(x)$, by which we mean [see \eqref{eq:ap-msd}] that
+\[
+\lim_{M\to\infty} E = 0;
+\]
+the mean-square deviation vanishes as $M \to \infty$.  This shows \textbf{Parseval's equality}:
+\begin{equation}
+\label{eq:ap-parseval}
+\int_a^b f^2\sigma\dx = \sum_{n=1}^{\infty} \alpha_n^2\int_a^b \phi_n^2\sigma\dx.
+\end{equation}
+
+Parseval's equality, \eqref{eq:ap-parseval}, is a generalization of the Pythagorean theorem.  For a right triangle, $c^2 = a^2 + b^2$.  This has an interpretation for vectors.  If $\bm{v} = a\hat{i} + b\hat{j}$, then $\bm{v}\cdot\bm{v} = |\bm{v}|^2 = a^2 + b^2$.  Here $a$ and $b$ are components of $\bm{v}$ in an \textit{orthogonal} basis of \textit{unit} vectors.  Here we represent the function $f(x)$ in terms of our orthogonal eigenfunctions
+\[
+f(x) = \sum_{n=1}^{\infty} a_n\phi_n(x).
+\]
+If we introduce eigenfunctions with \textit{unit} length, then
+\[
+f(x) = \sum_{n=1}^{\infty} \frac{a_n l\phi_n(x)}{l},
+\]
+where $l$ is the length of $\phi_n(x)$:
+\[
+l^2 = \int_a^b \phi_n^2\sigma\dx.
+\]
+Parseval's equality simply states that the length of $f$ squared, $\int_a^b f^2\sigma\dx$, equals the sum of squares of the components of $f$ (using an orthogonal basis of functions of unit length), $(a_n l)^2 = a_n^2\int_a^b \phi_n^2\sigma\dx$.
+
+\begin{exercises}{5.10}
+
+\item Consider the Fourier sine series for $f(x) = 1$ on the interval $0 \le x \le L$.  How many terms in the series should be kept so that the mean-square error is 1\% of $\int_0^L f^2\sigma\dx$?
+
+\item Obtain a formula for an infinite series using Parseval's equality applied to the
+\begin{enumerate}
+\item Fourier sine series of $f(x) = 1$ on the interval $0 \le x \le L$
+\item\starred\ Fourier cosine series of $f(x) = x$ on the interval $0 \le x \le L$
+\item Fourier sine series of $f(x) = x$ on the interval $0 \le x \le L$
+\end{enumerate}
+
+\item Consider any function $f(x)$ defined for $a \le x \le b$.  Approximate this function by a constant.  Show that the best such constant (in the mean-square sense, i.e., minimizing the mean-square deviation) is the constant equal to the average of $f(x)$ over the interval $a \le x \le b$.
+
+\item
+\begin{enumerate}
+\item Using Parseval's equality, express the error in terms of the tail of a series.
+\item Redo part (a) for a Fourier sine series on the interval $0 \le x \le L$.
+\item If $f(x)$ is piecewise smooth, estimate the tail in part (b).  (\textit{Hint}: Use integration by parts.)
+\end{enumerate}
+
+\item Show that if
+\[
+L(f) = \frac{d}{d x}\left(p\od{f}{x}\right) + qf,
+\]
+then
+\[
+-\int_a^b fL(f)\dx = -pf\od{f}{x}\bigg|_a^b + \int_a^b \left[p\!\left(\od{f}{x}\right)^{\!2} - qf^2\right]\dx
+\]
+if $f$ and $df/dx$ are continuous.
+
+\item Assuming that the operations of summation and integration can be interchanged, show that if
+\[
+f = \sum \alpha_n\phi_n \quad \text{and} \quad g = \sum \beta_n\phi_n,
+\]
+then for normalized eigenfunctions
+\[
+\int_a^b fg\sigma\dx = \sum_{n=1}^{\infty} \alpha_n\beta_n,
+\]
+a generalization of Parseval's equality.
+
+\item Using Exercises~5.10.5 and 5.10.6, prove that
+\begin{equation}
+\label{eq:ap-exercise-identity}
+-\sum_{n=1}^{\infty} \lambda_n\alpha_n^2 = -pf\od{f}{x}\bigg|_a^b + \int_a^b \left[p\!\left(\od{f}{x}\right)^{\!2} - qf^2\right]\dx.
+\end{equation}
+[\textit{Hint}: Let $g = L(f)$, assuming that term-by-term differentiation is justified.]
+
+\item According to Schwarz's inequality, the absolute value of the \textit{pointwise error} satisfies
+\begin{equation}
+\label{eq:ap-pointwise}
+\left|f(x) - \sum_{n=1}^M \alpha_n\phi_n\right| = \left|\sum_{n=M+1}^{\infty} \alpha_n\phi_n\right| \le \left\{\sum_{n=M+1}^{\infty} |\lambda_n|\alpha_n^2\right\}^{1/2} \left\{\sum_{n=M+1}^{\infty} \frac{\phi_n^2}{|\lambda_n|}\right\}^{1/2}.
+\end{equation}
+Green's function $G(x,x_0)$ satisfies
+\begin{equation}
+\label{eq:ap-greens}
+\sum_{n=1}^{\infty} \frac{\phi_n^2}{\lambda_n} = -G(x,x).
+\end{equation}
+Using \eqref{eq:ap-exercise-identity}, \eqref{eq:ap-pointwise}, and \eqref{eq:ap-greens}, derive an upper bound for the pointwise error (in cases in which the generalized Fourier series is pointwise convergent).  Examples and further discussion of this are given by Weinberger [1995].
+
+\end{exercises}

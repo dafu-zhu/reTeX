@@ -1,0 +1,345 @@
+% sec07_10.tex — Section 7.10: Spherical Problems and Legendre Polynomials
+\section{Spherical Problems and Legendre Polynomials}
+\label{sec:7.10}
+
+\subsection{Introduction}
+\label{sec:7.10.1}
+
+Problems in a spherical geometry are of great interest in many applications.  In the exercises, we consider the three-dimensional heat equation inside the spherical earth.  Here, we consider the three-dimensional wave equation which describes the vibrations of the earth:
+\begin{equation}
+\pdd{u}{t} = c^2\laplacian u,
+\label{eq:7.10.1}
+\end{equation}
+where $u$ is a local displacement.  In geophysics, the response of the real earth to point sources is of particular interest due to earthquakes and nuclear testing.  Solid vibrations of the real earth are more complicated than \eqref{eq:7.10.1}.  Compressional waves called P for primary are smaller than shear waves called S for secondary, arriving later because they propagate at a smaller velocity.  There are also long (L) period surface waves, which are the most destructive in severe earthquakes because their energy is confined to a thin region near the surface.  Real seismograms are more complicated because of scattering of waves due to the interior of the earth not being uniform.  Measuring the vibrations is frequently used to determine the interior structure of the earth needed not only in seismology but also in mineral exploration, such as petroleum engineering.  All displacements solve wave equations.  Simple mathematical models are most valid for the destructive long waves, since the variations in the earth are averaged out for long waves.  For more details, see Aki and Richards [1980], \emph{Quantitative Seismology}.  We use spherical coordinates ($\rho$, $\phi$, $\theta$), where $\rho$ is the distance from the pole and $\theta$ is the usual cylindrical angle.  The boundary condition we assume is $u(a,\theta,\phi,t) = 0$, and the initial displacement and velocity distribution is given throughout the entire solid:
+\begin{align}
+u(r,\theta,\phi,0) &= F(r,\theta,\phi) \label{eq:7.10.2} \\
+\pd{u}{t}(r,\theta,\phi,0) &= G(r,\theta,\phi). \label{eq:7.10.3}
+\end{align}
+Problems with nonhomogeneous boundary conditions are treated in Chapter~8.
+
+\subsection{Separation of Variables and One-Dimensional Eigenvalue Problems}
+\label{sec:7.10.2}
+
+We use the method of separation of variables.  As before, we first introduce product solutions of space and time,
+\begin{equation}
+u(r,\theta,\phi,t) = w(r,\theta,\phi)h(t).
+\label{eq:7.10.4}
+\end{equation}
+We have already separated space and time, so that we know
+\begin{equation}
+\odd{h}{t} = -\lambda c^2 h
+\label{eq:7.10.5}
+\end{equation}
+\begin{equation}
+\laplacian w + \lambda w = 0,
+\label{eq:7.10.6}
+\end{equation}
+where the first separation constant $\lambda$ satisfies the multidimensional eigenvalue problem \eqref{eq:7.10.6} subject to being zero on the boundary of the sphere.  The frequencies of vibration of the solid sphere are given by $c\sqrt{\lambda}$.
+
+Using the equation for the Laplacian in spherical coordinates (reference Chapter~1), we have
+\begin{equation}
+\frac{1}{\rho^2}\frac{\partial}{\partial \rho}\left(\rho^2\pd{w}{\rho}\right) + \frac{1}{\rho^2\sin\phi}\frac{\partial}{\partial \phi}\left(\sin\phi\pd{w}{\phi}\right) + \frac{1}{\rho^2\sin^2\phi}\pdd{w}{\theta} + \lambda w = 0.
+\label{eq:7.10.7}
+\end{equation}
+We seek product solutions of the form
+\begin{equation}
+w(r,\theta,\phi) = f(r)q(\theta)g(\phi).
+\label{eq:7.10.8}
+\end{equation}
+To save some algebra, since the coefficients in \eqref{eq:7.10.7} do not depend on $\theta$, we note that it is clear that the eigenfunctions in $\theta$ are $\cos m\theta$ and $\sin m\theta$, corresponding to the periodic boundary conditions associated with the usual Fourier series in $\theta$ on the interval $-\pi \leq \theta \leq \pi$.  In this case the term $\pdd{w}{\theta}$ in \eqref{eq:7.10.7} may be replaced by $-m^2 w$.  We substitute \eqref{eq:7.10.8} into \eqref{eq:7.10.7}, multiply by $\rho^2$, divide by $f(r)q(\theta)g(\phi)$, and introduce the third (counting $-m^2$ as number two) separation constant $\mu$:
+\begin{equation}
+\frac{1}{f}\frac{d}{d \rho}\left(\rho^2\od{f}{\rho}\right) + \lambda\rho^2 = -\frac{1}{g\sin\phi}\frac{d}{d \phi}\left(\sin\phi\od{g}{\phi}\right) - \frac{m^2}{\sin^2\phi} = \mu.
+\label{eq:7.10.9}
+\end{equation}
+The two ordinary differential equations that are the fundamental part of the eigenvalue problems in $\phi$ and $\rho$ are
+\begin{equation}
+\boxed{\frac{d}{d \rho}\left(\rho^2\od{f}{\rho}\right) + (\lambda\rho^2 - n(n+1))\,f = 0}
+\label{eq:7.10.10}
+\end{equation}
+\begin{equation}
+\boxed{\frac{d}{d \phi}\left(\sin\phi\od{g}{\phi}\right) + \left(\mu\sin\phi - \frac{m^2}{\sin\phi}\right)g = 0.}
+\label{eq:7.10.11}
+\end{equation}
+
+The homogeneous boundary conditions associated with \eqref{eq:7.10.10} and \eqref{eq:7.10.11} will be discussed shortly.  We will solve \eqref{eq:7.10.11} first because it does not depend on the eigenvalues $\lambda$ of \eqref{eq:7.10.10}.
+
+Equation \eqref{eq:7.10.11} is a Sturm-Liouville differential equation (for each $m$) in the angular coordinate $\phi$ with eigenvalue $\mu$ and nonnegative weight $\sin\phi$.  Equation \eqref{eq:7.10.11} is defined from $\phi = 0$ (North Pole) to $\phi = \pi$ (South Pole).  However, \eqref{eq:7.10.11} is not a regular Sturm-Liouville problem since $p = \sin\phi$ must be $> 0$ and $\sin\phi = 0$ at both ends.  There is no physical boundary condition at the singular endpoints.  Instead we insist the solution is bounded at each endpoint: $|g(0)| < \infty$ and $|g(\pi)| < \infty$.  We claim that the usual properties of eigenvalues and eigenfunctions are valid.  In particular, there is an infinite set of eigenfunctions (for each fixed $m$) corresponding to different eigenvalues $\mu_{nm}$, and these eigenfunctions will be an orthogonal set with weight $\sin\phi$.
+
+Equation \eqref{eq:7.10.10} is a Sturm-Liouville differential equation (for each $m$ and $n$) in the radial coordinate $\rho$ with eigenvalue $\lambda$ and weight $\rho^2$.  One homogeneous boundary condition is $f(a) = 0$.  Spherical coordinates are singular at $\rho = 0$, and solutions of the Sturm-Liouville differential equation must be bounded there: $|f(0)| < \infty$.  We claim that this singular problem still has an infinite set of eigenfunctions (for each fixed $m$ and $n$) corresponding to different eigenvalues $\lambda_{knm}$, and these eigenfunctions will form an orthogonal set with weight $\rho^2$.
+
+\subsection{Associated Legendre Functions and Legendre Polynomials}
+\label{sec:7.10.3}
+
+A (not obvious) change of variables has turned out to simplify the analysis of the differential equation that defines the orthogonal eigenfunctions in the angle $\phi$:
+\begin{equation}
+\boxed{x = \cos\phi.}
+\label{eq:7.10.12}
+\end{equation}
+As $\phi$ goes from 0 to $\pi$, this is a one-to-one transformation in which $x$ goes from 1 to $-1$.  We will show that both endpoints remain singular points.  Derivatives are transformed by the chain rule, $dg/d\phi = dg/dx\cdot dx/d\phi = -\sin\phi\,dg/dx$.  In this way \eqref{eq:7.10.11} becomes after dividing by $\sin\phi$ and recognizing that $\sin^2\phi = 1 - \cos^2\phi = 1 - x^2$:
+\begin{equation}
+\boxed{\frac{d}{d x}\left[(1-x^2)\od{g}{x}\right] + \left(\mu - \frac{m^2}{1-x^2}\right)g = 0.}
+\label{eq:7.10.13}
+\end{equation}
+
+This is also a Sturm-Liouville equation, and eigenfunctions will be orthogonal in $x$ with weight 1.  This corresponds to the weight $\sin\phi$ with respect to $\phi$ since $dx = -\sin\phi\,d\phi$.  Equation \eqref{eq:7.10.13} has singular points at $x = \pm 1$, which we will show are regular singular points (see Sec.~7.8.4).  It is helpful to understand the local behavior near each singular point using a corresponding elementary equidimensional (Euler) equation.  We analyze \eqref{eq:7.10.13} near $x = 1$ and claim due to symmetry that the local behavior near $x = -1$ can be the same.  The troublesome coefficients $1 - x^2 = (1-x)(1+x)$ can be approximated by $-2(x-1)$ near $x = 1$.  Thus \eqref{eq:7.10.13} may be approximated near $x = 1$ by
+\begin{equation}
+-2\frac{d}{d x}\left[(x-1)\od{g}{x}\right] + \frac{m^2}{2(x-1)}g \approx 0
+\label{eq:7.10.14}
+\end{equation}
+since only the singular term that multiplies $g$ is significant.  Equation \eqref{eq:7.10.14} is an equidimensional (Euler) differential equation whose exact solutions are easy to obtain by substituting $g = (x - 1)^p$, from which we obtain $p^2 = m^2/4$ or $p = \pm m/2$.  If $m \neq 0$, we conclude that one independent solution is bounded near $x = 1$ [and approximated by $(x-1)^{m/2}$] and the second independent solution is unbounded [and approximated by $(x-1)^{-m/2}$].
+
+Since we want our solution to be bounded at $x = 1$.  When we compute this solution (perhaps numerically) at $x = -1$, its behavior must be a linear combination of the two local behaviors near $x = -1$.  Usually the solution that is bounded at $x = 1$ will be unbounded at $x = -1$.  Only for certain very special values of $\mu_{mn}$ (which we have called the eigenvalues) will the solution of \eqref{eq:7.10.13} be bounded at both $x = \pm 1$.  To simplify the presentation, we will not explain the mysterious but elegant result that the only values of $\mu$ for which the solution is bounded at $x = \pm 1$
+\begin{equation}
+\mu = n(n+1),
+\label{eq:7.10.15}
+\end{equation}
+where $n$ is an integer with some restrictions we will mention.  It is quite remarkable that the eigenvalues do not depend on the important parameter $m$.  Equation \eqref{eq:7.10.13} is a linear differential equation whose two independent solutions are called \textbf{associated Legendre functions (spherical harmonics) of the first} $P_n^m(x)$ and \textbf{second kind} $Q_n^m(x)$.  The first kind is bounded at both $x = \pm 1$ for integer $n$, so that the eigenfunctions are given by $g(x) = P_n^m(x)$.
+
+\textbf{If} $m = 0$\textbf{: Legendre polynomials.}  $m = 0$ corresponds to solutions of the partial differential equation with no dependence on the cylindrical angle $\theta$.  In this case the differential equation \eqref{eq:7.10.13} becomes
+\begin{equation}
+\boxed{\frac{d}{d x}\left[(1-x^2)\od{g}{x}\right] + n(n+1)g = 0,}
+\label{eq:7.10.16}
+\end{equation}
+given that it can be shown that the eigenvalues satisfy \eqref{eq:7.10.15}.  By series methods it can be shown that there are elementary Taylor series solutions around $x = 0$ that terminate (are finite series) only when $\mu = n(n+1)$, and hence are bounded at $x = \pm 1$ when $\mu = n(n+1)$.  It can be shown (not easy) that if $\mu \neq n(n+1)$, then the solution to the differential equation is not bounded at either $\pm 1$.  These important bounded solutions are called Legendre polynomials and are not difficult to compute:
+\begin{equation}
+\boxed{\begin{aligned}
+n &= 0: \quad P_0(x) = 1 \\
+n &= 1: \quad P_1(x) = x = \cos\phi \\
+n &= 2: \quad P_2(x) = \tfrac{1}{2}(3x^2 - 1) = \tfrac{1}{4}(3\cos 2\phi + 1).
+\end{aligned}}
+\label{eq:7.10.17}
+\end{equation}
+These have been chosen such that they equal 1 at $x = 1$ ($\phi = 0$, North Pole).  It can be shown that the Legendre polynomials satisfy \textbf{Rodrigues' formula}:
+\begin{equation}
+\boxed{P_n(x) = \frac{1}{2^n n!}\od[d^n]{}{x^n}(x^2 - 1)^n.}
+\label{eq:7.10.18}
+\end{equation}
+
+Since Legendre polynomials are orthogonal with weight 1, they can be obtained using the Gram-Schmidt procedure (see appendix of Section~7.5).  We graph (see Fig.~7.10.1) in $x$ and $\phi$ the first few eigenfunctions (Legendre polynomials).  It can be shown that the Legendre polynomials are a complete set of polynomials, and therefore there are no other eigenvalues besides $\mu = n(n+1)$.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch07/fig_7_10_1.png}
+\caption{Legendre polynomials.}
+\label{fig:7.10.1}
+\end{figure}
+
+\textbf{If} $m > 0$\textbf{: the associated Legendre functions.}  Remarkably, the eigenvalues when $m > 0$ are basically the same as when $m = 0$ given by \eqref{eq:7.10.15}.  Even more remarkable is that the eigenfunctions when $m > 0$ (which we have called \textbf{associated Legendre functions}) can be related to the eigenfunctions when $m = 0$ (Legendre polynomials):
+\begin{equation}
+\boxed{g(x) = P_n^m(x) = (x^2 - 1)^{m/2}\od[d^m]{}{x^m}P_n(x).}
+\label{eq:7.10.19}
+\end{equation}
+We note that $P_n(x)$ is the $n$th-degree Legendre polynomial.  The $m$th derivative will be zero if $n < m$, and the eigenfunctions exist only for $n \geq m$.  Thus, the infinite number of eigenvalues are
+\begin{equation}
+\boxed{\mu = n(n+1),}
+\label{eq:7.10.20}
+\end{equation}
+with the restriction that $n \geq m$.  These formulas are also valid when $m = 0$; the associated Legendre functions when $m = 0$ are the Legendre polynomials, $P_n^0(x) = P_n(x)$.
+
+\subsection{Radial Eigenvalue Problems}
+\label{sec:7.10.4}
+
+The radial Sturm-Liouville differential equation, \eqref{eq:7.10.10}, with $\mu = n(n+1)$,
+\begin{equation}
+\frac{d}{d \rho}\left(\rho^2\od{f}{\rho}\right) + (\lambda\rho^2 - n(n+1))\,f = 0,
+\label{eq:7.10.21}
+\end{equation}
+has the restriction $n \geq m$ for fixed $m$.  The boundary conditions are $f(a) = 0$, and the solution should be bounded at $\rho = 0$.  Equation \eqref{eq:7.10.21} is nearly Bessel's differential equation.  The parameter $\lambda$ can be eliminated by instead considering $\sqrt{\lambda}\rho$ as the independent variable.  However, the result is not quite Bessel's differential equation.  It is easy to show (see the Exercises) that if $Z_p(x)$ solves Bessel's differential equation \eqref{eq:7.7.25} of order $p$, then $f(\rho) = \rho^{-1/2}Z_{n+\frac{1}{2}}(\sqrt{\lambda}\rho)$, called \textbf{spherical Bessel functions}, satisfy \eqref{eq:7.10.21}.  Since the solutions must be bounded at $\rho = 0$, we have
+\begin{equation}
+f(\rho) = \rho^{-1/2}J_{n+\frac{1}{2}}(\sqrt{\lambda}\rho),
+\label{eq:7.10.22}
+\end{equation}
+for $n \geq m$.  [If we recall the behavior of the Bessel functions at the origin \eqref{eq:7.7.33}, we can verify that these solutions are bounded at the origin.  In fact, they are zero at the origin except for $n = 0$.]  The eigenvalues $\lambda$ are determined by applying the homogeneous boundary condition at $\rho = a$:
+\begin{equation}
+\boxed{J_{n+\frac{1}{2}}(\sqrt{\lambda}\,a) = 0.}
+\label{eq:7.10.23}
+\end{equation}
+The eigenvalues are determined by the zeroes of the Bessel functions of order $n + \frac{1}{2}$.  There is an infinite number of eigenvalues for each $n$ and $m$.  Note that the frequencies of vibration are the same for all values of $m \leq n$.
+
+The spherical Bessel functions can be related to trigonometric functions:
+\begin{equation}
+\boxed{x^{-1/2}J_{n+\frac{1}{2}}(x) = x^n\left(-\frac{1}{x}\frac{d}{d x}\right)^n\left(\frac{\sin x}{x}\right).}
+\label{eq:7.10.24}
+\end{equation}
+
+\subsection{Product Solutions, Modes of Vibration, and the Initial Value Problem}
+\label{sec:7.10.5}
+
+Product solutions for the wave equation in three dimensions are
+\[
+u(r,\theta,\phi,t) = \cos c\sqrt{\lambda}\,t\;\sin c\sqrt{\lambda}\,t\;\rho^{-1/2}J_{n+\frac{1}{2}}(\sqrt{\lambda}\rho)\cos m\theta\sin m\theta\,P_n^m(\cos\phi),
+\]
+where the frequencies of vibration are determined from \eqref{eq:7.10.23}.  The angular parts $Y_n^m \equiv \cos m\theta\sin m\theta\,P_n^m(\cos\phi)$ are called \textbf{surface harmonics} of the first kind.  Initial value problems are solved by using superposition of these infinite modes, summing over $m$, $n$, and the infinite radial eigenfunctions characterized by the zeros of the Bessel functions.  The weights of the three one-dimensional orthogonality give rise to $d\theta$, $\sin\phi\,d\phi$, $\rho^2\,d\rho$, which is equivalent to orthogonality in three dimensions, since differential volume in spherical coordinates is $dV = \rho^2\sin\phi\,d\rho\,d\phi\,d\theta$.  This can be checked using the Jacobian $J$ of the original transformation since $dx\,dy\,dz = J\,d\rho\,d\phi\,d\theta$ and
+\[
+J = \begin{vmatrix}
+\pd{x}{\rho} & \pd{x}{\phi} & \pd{x}{\theta} \\[6pt]
+\pd{y}{\rho} & \pd{y}{\phi} & \pd{y}{\theta} \\[6pt]
+\pd{z}{\rho} & \pd{z}{\phi} & \pd{z}{\theta}
+\end{vmatrix}
+= \begin{vmatrix}
+\sin\phi\cos\theta & \rho\cos\phi\cos\theta & -\rho\sin\phi\sin\theta \\
+\sin\phi\sin\theta & \rho\cos\phi\sin\theta & \rho\sin\phi\cos\theta \\
+\cos\phi & -\rho\sin\phi & 0
+\end{vmatrix}
+= \rho^2\sin\phi.
+\]
+
+Normalization integrals for associated Legendre functions can be found in reference books such as Abramowitz and Stegun:
+\begin{equation}
+\int_{-1}^{1}[P_n^m(x)]^2\dx = \left(n + \frac{1}{2}\right)^{-1}\frac{(n+m)!}{(n-m)!}
+\label{eq:7.10.25}
+\end{equation}
+
+\textbf{Example.}  For the purely radial mode $n = 0$ ($m = 0$ only), using \eqref{eq:7.10.24} the frequencies of vibration satisfy $\sin(\sqrt{\lambda}\,a) = 0$, so that
+\[
+\text{circular frequency} = c\sqrt{\lambda} = \frac{j\pi c}{a},
+\]
+where $a$ is the radius of the earth, for example.  The fundamental mode $j = 1$ has circular frequency $\frac{\pi c}{a}$ hertz (cycles per second) or a frequency of $\frac{c}{2a}$ per second or a period of $\frac{2a}{c}$ seconds.  For the earth we can take $a = 6000$ km and $c = 5$ km/s, giving a period of $\frac{12000}{5} = 2400$ seconds or 40 minutes.
+
+\subsection{Laplace's Equation Inside a Spherical Cavity}
+\label{sec:7.10.6}
+
+In electrostatics, it is of interest to solve Laplace's equation inside a sphere with the potential $u$ specified on the boundary $\rho = a$:
+\begin{equation}
+\boxed{\laplacian u = 0}
+\label{eq:7.10.26}
+\end{equation}
+\begin{equation}
+\boxed{u(a,\theta,\phi) = F(\theta,\phi).}
+\label{eq:7.10.27}
+\end{equation}
+This corresponds to determining the electric potential given the distribution of the potential along the spherical conductor.  We can use the previous computations, where we solved by separation of variables.  The $\theta$ and $\phi$ equations and their solutions will be the same, a Fourier series in $\theta$ involving $\cos m\theta$ and $\sin m\theta$ and a generalized Fourier series in $\phi$ involving the associated Legendre functions $P_n^m(\cos\phi)$.  However, we need to insist that $\lambda = 0$, so that the radial equation \eqref{eq:7.10.21} will be different and will not be an eigenvalue problem:
+\begin{equation}
+\frac{d}{d \rho}\left(\rho^2\od{f}{\rho}\right) - n(n+1)f = 0.
+\label{eq:7.10.28}
+\end{equation}
+Here \eqref{eq:7.10.28} is an equidimensional equation and can be solved exactly by substituting $f = \rho^r$.  By substitution we have $r(r + 1) - n(n + 1) = 0$, which is a quadratic equation with two different roots $r = n$ and $r = -n - 1$ since $n$ is an integer.  Since the potential must be bounded at the center $\rho = 0$, we reject the unbounded solution $\rho^{-n-1}$.  Product solutions for Laplace's equation are
+\begin{equation}
+\rho^n\cos m\theta\sin m\theta\,P_n^m(\cos\phi),
+\label{eq:7.10.29}
+\end{equation}
+so that the solution of Laplace's equation is in the form
+\begin{equation}
+\boxed{u(r,\theta,\phi) = \sum_{m=0}^{\infty}\sum_{n=m}^{\infty}\rho^n[A_{mn}\cos m\theta + B_{mn}\sin m\theta]P_n^m(\cos\phi).}
+\label{eq:7.10.30}
+\end{equation}
+
+The nonhomogeneous boundary condition implies that
+\begin{equation}
+F(\theta,\phi) = \sum_{m=0}^{\infty}\sum_{n=m}^{\infty} a^n[A_{mn}\cos m\theta + B_{mn}\sin m\theta]P_n^m(\cos\phi).
+\label{eq:7.10.31}
+\end{equation}
+By orthogonality, for example,
+\begin{equation}
+\boxed{a^n B_{mn} = \frac{\iint F(\theta,\phi)\sin m\theta\,P_n^m(\cos\phi)\sin\phi\,d\phi\,d\theta}{\iint\sin^2 m\theta\,[P_n^m(\cos\phi)]^2\sin\phi\,d\phi\,d\theta}.}
+\label{eq:7.10.32}
+\end{equation}
+A similar expression exists for $A_{mn}$.
+
+\textbf{Example.}  In electrostatics, it is of interest to determine the electric potential inside a conducting sphere if the hemispheres are at different constant potentials.  This can be done experimentally by separating two hemispheres by a negligibly small insulated ring.  For convenience, we assume the upper hemisphere is at potential $+V$ and the lower hemisphere at potential $-V$.  The boundary condition at $\rho = a$ is cylindrically (azimuthally) symmetric; there is no dependence on the angle $\theta$.  We solve Laplace's equation under this simplifying circumstance.  We follow the later procedure.  Since there is no dependence on $\theta$, all terms for the Fourier series in $\theta$ will be zero in \eqref{eq:7.10.30} except for the $m = 0$ term.  Thus, the solution of Laplace's equation with cylindrical symmetry can be written as a series involving Legendre polynomials:
+\begin{equation}
+u(r,\phi) = \sum_{n=0}^{\infty} A_n\rho^n P_n(\cos\phi).
+\label{eq:7.10.33}
+\end{equation}
+The boundary condition becomes
+\begin{equation}
+\left.
+\begin{aligned}
+V &\quad\text{for } 0 < \phi < \pi/2 \; (0 < x < 1) \\
+-V &\quad\text{for } \pi/2 < \phi < \pi \; (-1 < x < 0)
+\end{aligned}
+\right\}
+= \sum_{n=0}^{\infty} A_n a^n P_n(\cos\phi).
+\label{eq:7.10.34}
+\end{equation}
+Thus, using orthogonality (in $x = \cos\phi$) with weight 1,
+\begin{equation}
+A_n a^n = \frac{\int_{-1}^{0}-V P_n(x)\dx + \int_0^1 V P_n(x)\dx}{\int_{-1}^1 [P_n(x)]^2\dx}
+= \begin{cases}
+0 & \text{for $n$ even} \\[6pt]
+2\displaystyle\int_0^1 VP_n(x)\dx\bigg/\int_{-1}^1[P_n(x)]^2\dx & \text{for $n$ odd,}
+\end{cases}
+\label{eq:7.10.35}
+\end{equation}
+since $P_n(x)$ is even for $n$ even and $P_n(x)$ is odd for $n$ odd and the potential on the surface of the sphere is an odd function of $x$.  Using the normalization integral \eqref{eq:7.10.25} for the denominator and Rodrigues formula for Legendre polynomials, \eqref{eq:7.10.18}, for the numerator, it can be shown that
+\begin{equation}
+u(r,\phi) = V\left[\frac{3}{2}\frac{\rho}{a}P_1(\cos\phi) - \frac{7}{8}\left(\frac{\rho}{a}\right)^3 P_3(\cos\phi) + \frac{11}{16}\left(\frac{\rho}{a}\right)^5 P_5(\cos\phi) + \cdots\right]
+\label{eq:7.10.36}
+\end{equation}
+For a more detailed discussion of this, see Jackson [1998], \emph{Classical Electrodynamics}.
+
+\begin{exercises}{7.10}
+
+\item Solve the initial value problem for the wave equation $\pdd{u}{t} = c^2\laplacian u$ inside a sphere of radius $a$ subject to the boundary condition $u(a,\theta,\phi,t) = 0$ and the initial conditions
+
+\begin{enumerate}
+\item[(a)] $u(\rho,\theta,\phi,0) = F(\rho,\theta,\phi)$ and $\pd{u}{t}(\rho,\theta,\phi,0) = 0$
+\item[(b)] $u(\rho,\theta,\phi,0) = 0$ and $\pd{u}{t}(\rho,\theta,\phi,0) = G(\rho,\theta,\phi)$
+\item[(c)] $u(\rho,\theta,\phi,0) = F(\rho,\phi)$ and $\pd{u}{t}(\rho,\theta,\phi,0) = 0$
+\item[(d)] $u(\rho,\theta,\phi,0) = F(\rho,\phi)\cos 3\theta$ and $\pd{u}{t}(\rho,\theta,\phi,0) = 0$
+\item[(e)] $u(\rho,\theta,\phi,0) = F(\rho,\phi)\cos 3\theta$ and $\pd{u}{t}(\rho,\theta,\phi,0) = 0$
+\item[(f)] $u(\rho,\theta,\phi,0) = F(\rho)\sin 2\theta$ and $\pd{u}{t}(\rho,\theta,\phi,0) = 0$
+\item[(g)] $u(\rho,\theta,\phi,0) = F(\rho)$ and $\pd{u}{t}(\rho,\theta,\phi,0) = 0$
+\item[(h)] $u(\rho,\theta,\phi,0) = 0$ and $\pd{u}{t}(\rho,\theta,\phi,0) = G(\rho)$
+\end{enumerate}
+
+\item Solve the initial value problem for the heat equation $\pd{u}{t} = k\laplacian u$ inside a sphere of radius $a$ subject to the boundary condition $u(a,\theta,\phi,t) = 0$ and the initial conditions
+
+\begin{enumerate}
+\item[(a)] $u(\rho,\theta,\phi,0) = F(\rho,\theta,\phi)$
+\item[(b)] $u(\rho,\theta,\phi,0) = F(\rho,\phi)$
+\item[(c)] $u(\rho,\theta,\phi,0) = F(\rho,\phi)\cos\theta$
+\item[(d)] $u(\rho,\theta,\phi,0) = F(\rho)$
+\end{enumerate}
+
+\item Solve the initial value problem for the heat equation $\pd{u}{t} = k\laplacian u$ inside a sphere of radius $a$ subject to the boundary condition $\pd{u}{\rho}(a,\theta,\phi,t) = 0$ and the initial conditions
+
+\begin{enumerate}
+\item[(a)] $u(\rho,\theta,\phi,0) = F(\rho,\theta,\phi)$
+\item[(b)] $u(\rho,\theta,\phi,0) = F(\rho,\phi)$
+\item[(c)] $u(\rho,\theta,\phi,0) = F(\rho,\phi)\sin 3\theta$
+\item[(d)] $u(\rho,\theta,\phi,0) = F(\rho)$
+\end{enumerate}
+
+\item Using the one-dimensional Rayleigh quotient, show that $\mu \geq 0$ (if $m \geq 0$) as defined by \eqref{eq:7.10.11}.  Under what conditions does $\mu = 0$?
+
+\item Using the one-dimensional Rayleigh quotient, show that $\mu \geq 0$ (if $m \geq 0$) as defined by \eqref{eq:7.10.13}.  Under what conditions does $\mu = 0$?
+
+\item Using the one-dimensional Rayleigh quotient, show that $\lambda \geq 0$ (if $n \geq 0$) as defined by \eqref{eq:7.10.6} with the boundary condition $f(a) = 0$.  Can $\lambda = 0$?
+
+\item Using the three-dimensional Rayleigh quotient, show that $\lambda \geq 0$ as defined by \eqref{eq:7.10.11} with $u(a,\theta,\phi,t) = 0$.  Can $\lambda = 0$?
+
+\item Differential equations related to Bessel's differential equation.  Use this to show that
+\begin{equation}
+x^2\odd{f}{x} + x(1-2a-2bx)\od{f}{x} + [a^2-p^2+(2a-1)bx+(d^2+b^2)x^2]f = 0
+\label{eq:7.10.37}
+\end{equation}
+has solutions $x^a e^{bx}Z_p(dx)$, where $Z_p(x)$ satisfies Bessel's differential equation \eqref{eq:7.7.25}.  By comparing \eqref{eq:7.10.21} and \eqref{eq:7.10.37}, we have $a = -\frac{1}{2}$, $b = 0$, $\frac{1}{4} - p^2 = -n(n+1)$, and $d^2 = \lambda$.  We find that $p = (n + \frac{1}{2})$.
+
+\item Solve Laplace's equation inside a sphere $\rho < a$ subject to the following boundary conditions on the sphere:
+\begin{enumerate}
+\item[(a)] $u(a,\theta,\phi) = F(\phi)\cos 4\theta$
+\item[(b)] $\pd{u}{\rho}(a,\theta,\phi) = F(\phi)$
+\item[(c)] $\pd{u}{\rho}(a,\theta,\phi) = F(\phi)\cos 4\theta$
+\item[(d)] $\pd{u}{\rho}(a,\theta,\phi) = F(\phi)$ with $\int_0^\pi\int_0^{2\pi}F(\phi)\sin\phi\,d\phi\,d\theta = 0$
+\item[(e)] $\pd{u}{\rho}(a,\theta,\phi) = F(\theta,\phi)$ with $\int_0^\pi\int_0^{2\pi}F(\theta,\phi)\sin\phi\,d\phi\,d\theta = 0$
+\end{enumerate}
+
+\item Solve Laplace's equation outside a sphere $\rho > a$ subject to the potential given on the sphere:
+\begin{enumerate}
+\item[(a)] $u(a,\theta,\phi) = F(\theta,\phi)$
+\item[(b)] $u(a,\theta,\phi) = F(\phi)$, with cylindrical (azimuthal) symmetry
+\item[(c)] $u(a,\theta,\phi) = V$ in the upper hemisphere, $-V$ in the lower hemisphere (do not simplify; do not evaluate definite integrals)
+\end{enumerate}
+
+\item Solve Laplace's equation inside a sector of a sphere $\rho < a$ with $0 < \theta < \frac{\pi}{2}$ subject to $u(\rho,0,\phi) = 0$ and $u(\rho,\frac{\pi}{2},\phi) = 0$ and the potential given on the sphere: $u(a,\theta,\phi) = F(\theta,\phi)$.
+
+\item Solve Laplace's equation inside a hemisphere $\rho > a$ with $z > 0$ subject to $u = 0$ at $z = 0$ and the potential given on the hemisphere: $u(a,\theta,\phi) = F(\theta,\phi)$.  [\emph{Hint:} Use symmetry and solve a different problem, a sphere with the antisymmetric potential on the lower hemisphere.]
+
+\item Show that Rodrigues' formula agrees with the given Legendre polynomials for $n = 0$, $n = 1$, and $n = 2$.
+
+\item Show that Rodrigues' formula satisfies the differential equation for Legendre polynomials.
+
+\item Derive \eqref{eq:7.10.36} using \eqref{eq:7.10.35}, \eqref{eq:7.10.18}, and \eqref{eq:7.10.25}.
+
+\end{exercises}

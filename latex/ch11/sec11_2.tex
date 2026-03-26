@@ -1,0 +1,569 @@
+% sec11_2.tex — Section 11.2: Green's Functions for the Wave Equation
+\section{Green's Functions for the Wave Equation}
+\label{sec:greens-wave}
+
+%% ── 11.2.1 Introduction ──────────────────────────────────────
+\subsection{Introduction}
+\label{subsec:wave-green-intro}
+
+In this section we solve the wave equation with possibly time-dependent sources,
+\boxed{\begin{equation}
+\label{eq:11.2.1}
+\pdd{u}{t} = c^2 \laplacian u + Q(\vec{x},t),
+\end{equation}}
+subject to the two initial conditions,
+\boxed{\begin{equation}
+\label{eq:11.2.2}
+u(\vec{x},0) = f(\vec{x})
+\end{equation}}
+\boxed{\begin{equation}
+\label{eq:11.2.3}
+\pd{u}{t}(\vec{x},0) = g(\vec{x}).
+\end{equation}}
+
+If the problem is on a finite or semi-infinite region, then in general, $u(\vec{x},t)$ will satisfy nonhomogeneous conditions on the boundary.  We will determine simultaneously how to solve this problem in one, two, and three dimensions.  (In one dimension $\laplacian = \partial^2/\partial x^2$.)
+
+We introduce the Green's function $G(\vec{x},t;\vec{x}_0,t_0)$ as a solution due to a concentrated source at $\vec{x} = \vec{x}_0$ acting instantaneously only at $t = t_0$:
+\boxed{\begin{equation}
+\label{eq:11.2.4}
+\pdd{G}{t} = c^2 \laplacian G + \delta(\vec{x} - \vec{x}_0)\delta(t - t_0),
+\end{equation}}
+where $\delta(\vec{x} - \vec{x}_0)$ is the Dirac delta function of the appropriate dimension.  For finite or semi-infinite problems, $G$ will satisfy the related homogeneous boundary conditions corresponding to the nonhomogeneous ones satisfied by $u(\vec{x},t)$.
+
+The Green's function is the response at $\vec{x}$ at time $t$ due to a source located at $\vec{x}_0$ at time $t_0$.  Since we desire the Green's function $G$ to be the response only due to this source acting at $t = t_0$ (not due to some nonzero earlier conditions), we insist that the response $G$ will be zero before the source acts ($t < t_0$):
+\boxed{\begin{equation}
+\label{eq:11.2.5}
+G(\vec{x},t;\vec{x}_0,t_0) = 0 \quad \text{for } t < t_0,
+\end{equation}}
+known as the \textbf{causality principle} (see Sec.~9.2).
+
+The Green's function $G(\vec{x},t;\vec{x}_0,t_0)$ only depends on the time after the occurrence of the concentrated source.  If we introduce the \textbf{elapsed} time, $T = t - t_0$,
+\[
+\pdd{G}{T} = c^2 \laplacian G + \delta(\vec{x} - \vec{x}_0)\delta(T)
+\]
+\[
+G = 0 \quad \text{for} \quad T < 0,
+\]
+then $G$ is also seen to be the response due to a concentrated source at $\vec{x} = \vec{x}_0$ at $T = 0$.  We call this the \textbf{translation} property,
+\boxed{\begin{equation}
+\label{eq:11.2.6}
+G(\vec{x},t;\vec{x}_0,t_0) = G(\vec{x},t-t_0;\vec{x}_0,0).
+\end{equation}}
+
+%% ── 11.2.2 Green's Formula ──────────────────────────────────
+\subsection{Green's Formula}
+\label{subsec:greens-formula-wave}
+
+Before solving for the Green's function (in various dimensions), we will show how the solution of the nonhomogeneous wave equation \eqref{eq:11.2.1} (with nonhomogeneous initial and boundary conditions) is obtained using the Green's function.  For time-independent problems (nonhomogeneous Sturm--Liouville type or the Poisson equation), the relationship between the nonhomogeneous solution and the Green's function was obtained using Green's formula:
+
+\textbf{Sturm--Liouville operator} $[L = d/dx(p\;d/dx) + q]$:
+\begin{equation}
+\label{eq:11.2.7}
+\int_a^b [uL(v) - vL(u)]\,dx = p\left(u\od{v}{x} - v\od{u}{x}\right)\bigg|_a^b.
+\end{equation}
+
+\textbf{Three-dimensional Laplacian} ($L = \laplacian$):
+\begin{equation}
+\label{eq:11.2.8}
+\iiint [uL(v) - vL(u)]\,d^3x = \oiint (u\nabla v - v\nabla u)\cdot\hat{\vec{n}}\,dS,
+\end{equation}
+where $d^3 x = dV = dx\,dy\,dz$.  There is a corresponding result for the two-dimensional Laplacian.
+
+To extend these ideas to the nonhomogeneous wave equation, we introduce the appropriate linear differential operator:
+\boxed{\begin{equation}
+\label{eq:11.2.9}
+L = \pdd{}{t} - c^2 \laplacian.
+\end{equation}}
+
+Using this notation, the nonhomogeneous wave equation \eqref{eq:11.2.1} satisfies
+\begin{equation}
+\label{eq:11.2.10}
+L(u) = Q(\vec{x},t),
+\end{equation}
+while the Green's function \eqref{eq:11.2.4} satisfies
+\begin{equation}
+\label{eq:11.2.11}
+L(G) = \delta(\vec{x} - \vec{x}_0)\delta(t - t_0).
+\end{equation}
+
+For the wave operator $L$ [see \eqref{eq:11.2.9}] we will derive a Green's formula analogous to \eqref{eq:11.2.7} and \eqref{eq:11.2.8}.  We will use a \emph{notation} corresponding to three dimensions but will make clear modifications (when necessary) for one and two dimensions.  For time-dependent problems, $L$ has both space and time variables.  Formulas analogous to \eqref{eq:11.2.7} and \eqref{eq:11.2.8} are expected to exist, but integration will occur over both space $\vec{x}$ and time $t$.  Since for the wave operator
+\[
+uL(v) - vL(u) = u\pdd{v}{t} - v\pdd{u}{t} - c^2(u\laplacian v - v\laplacian u),
+\]
+the previous Green's formulas will yield the new \textbf{``Green's formula for the wave equation''}:
+\boxed{\begin{equation}
+\label{eq:11.2.12}
+\begin{split}
+\int_{t_i}^{t_f} &\iiint [uL(v) - vL(u)]\,d^3x\,dt \\
+&= \iiint \left(u\pd{v}{t} - v\pd{u}{t}\right)\bigg|_{t_i}^{t_f} d^3x - c^2 \int_{t_i}^{t_f} \left(\oiint (u\nabla v - v\nabla u)\cdot\hat{\vec{n}}\,dS\right) dt,
+\end{split}
+\end{equation}}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch11/fig_11_2_1.png}
+\caption{Space-time boundaries for a one-dimensional wave equation.}
+\label{fig:11.2.1}
+\end{figure}
+
+\noindent where $\iiint$ indicates integration over the three-dimensional space ($\int_a^b$ for one-dimensional problems) and $\oiint$ indicates integration over its boundary ($\big|_a^b$ for one-dimensional problems).  The terms on the right-hand side represent contributions from the boundaries: the spatial boundaries for all time and the temporal boundaries ($t = t_i$ and $t = t_f$) for all space.  These space-time boundaries are illustrated (for a one-dimensional problem) in Fig.~\ref{fig:11.2.1}.
+
+For example, \emph{if} both $u$ and $v$ satisfy the usual type of homogeneous boundary conditions (in space, for all time), then $\oiint (u\nabla v - v\nabla u)\cdot\hat{\vec{n}}\,dS = 0$, but
+\[
+\iiint \left(u\pd{v}{t} - v\pd{u}{t}\right)\bigg|_{t_i}^{t_f} d^3x
+\]
+may not equal zero due to contributions from the ``initial'' time $t_i$ and ``final'' time $t_f$.
+
+%% ── 11.2.3 Reciprocity ──────────────────────────────────────
+\subsection{Reciprocity}
+\label{subsec:wave-reciprocity}
+
+For time-independent problems, we have shown that the Green's function is symmetric, $G(\vec{x},\vec{x}_0) = G(\vec{x}_0,\vec{x})$.  We proved this result using Green's formula for two different Green's functions $[G(\vec{x},\vec{x}_1)$ and $G(\vec{x},\vec{x}_2)]$.  The result followed because the boundary terms in Green's formula vanished.
+
+For the wave equation there is a somewhat analogous property.  The Green's function $G(\vec{x},t;\vec{x}_0,t_0)$ satisfies
+\begin{equation}
+\label{eq:11.2.13}
+\pdd{G}{t} - c^2\laplacian G = \delta(\vec{x} - \vec{x}_0)\delta(t - t_0),
+\end{equation}
+subject to the causality principle,
+\begin{equation}
+\label{eq:11.2.14}
+G(\vec{x},t;\vec{x}_0,t_0) = 0 \quad \text{for } t < t_0.
+\end{equation}
+$G$ will be nonzero for $t > t_0$.  To utilize Green's formula (to prove reciprocity), we need a second Green's function.  If we choose it to be $G(\vec{x},t;\vec{x}_A,t_A)$, then the contribution $\int_{t_i}^{t_f} \oiint (u\nabla v - v\nabla u)\cdot\hat{\vec{n}}\,dS\,dt$ on the spatial boundary (or infinity) vanishes, but the contribution
+\[
+\iiint \left(u\pd{v}{t} - v\pd{u}{t}\right)\bigg|_{t_i}^{t_f} d^3x
+\]
+on the time boundary will not vanish at both $t = t_i$ and $t = t_f$.  In time our problem is an initial value problem, not a boundary value problem.  If we let $t_i \le t_0$ in Green's formula, the ``initial'' contribution will vanish.
+
+For a second Green's function we are interested in varying the source time $t$, $G(\vec{x},t_1;\vec{x}_1,t)$, what we call the \textbf{source-varying Green's function}.  From the translation property,
+\boxed{\begin{equation}
+\label{eq:11.2.15}
+G(\vec{x},t_1;\vec{x}_1,t) = G(\vec{x},-t;\vec{x}_1,-t_1),
+\end{equation}}
+since the elapsed times are the same $[-t-(-t_1) = t_1 - t]$.  By causality, these are zero if $t_1 < t$ (or, equivalently, $-t < -t_1$):
+\begin{equation}
+\label{eq:11.2.16}
+G(\vec{x},t_1;\vec{x}_1,t) = 0 \quad t > t_1.
+\end{equation}
+We call this the \textbf{source-varying causality principle}.  By introducing this Green's function, we will show that the ``final'' contribution from Green's formula may vanish.
+
+To determine the differential equation satisfied by the source-varying Green's function, we let $t = -\tau$, in which case, from \eqref{eq:11.2.15},
+\[
+G(\vec{x},t_1;\vec{x}_1,t) = G(\vec{x},\tau;\vec{x}_1,-t_1).
+\]
+This is the ordinary (variable-response position) Green's function with $\tau$ being the time variable.  It has a concentrated source located at $\vec{x} = \vec{x}_1$ when $\tau = -t_1$ ($t = t_1$):
+\[
+\left(\pdd{}{\tau} - c^2\laplacian\right) G(\vec{x},t_1;\vec{x}_1,t) = \delta(\vec{x} - \vec{x}_1)\delta(t - t_1).
+\]
+Since $\tau = -t$, from the chain rule $\partial/\partial\tau = -\partial/\partial t$, but $\partial^2/\partial\tau^2 = \partial^2/\partial t^2$.  Thus, the wave operator is symmetric in time, and therefore
+\boxed{\begin{equation}
+\label{eq:11.2.17}
+\left(\pdd{}{t} - c^2\laplacian\right) G(\vec{x},t_1;\vec{x}_1,t) = L[G(\vec{x},t_1;\vec{x}_1,t)] = \delta(\vec{x} - \vec{x}_1)\delta(t - t_1).
+\end{equation}}
+
+A reciprocity formula results from Green's formula \eqref{eq:11.2.12} using two Green's functions, one with varying response time,
+\begin{equation}
+\label{eq:11.2.18}
+u = G(\vec{x},t;\vec{x}_0,t_0),
+\end{equation}
+and one with varying source time,
+\begin{equation}
+\label{eq:11.2.19}
+v = G(\vec{x},t_1;\vec{x}_1,t).
+\end{equation}
+Both satisfy partial differential equations involving the \emph{same} wave operator, $L = \partial^2/\partial t^2 - c^2\laplacian$.  We integrate from $t = -\infty$ to $t = +\infty$ in Green's formula \eqref{eq:11.2.12} (i.e., $t_i = -\infty$ and $t_f = +\infty$).  Since both Green's functions satisfy the same homogeneous boundary conditions, Green's formula \eqref{eq:11.2.12} yields
+\begin{equation}
+\label{eq:11.2.20}
+\begin{split}
+\int_{-\infty}^{\infty} \iiint [u\delta(\vec{x} - \vec{x}_1)\delta(t - t_1) &- v\delta(\vec{x} - \vec{x}_0)\delta(t - t_0)]\,d^3x\,dt \\
+&= \iiint \left(u\pd{v}{t} - v\pd{u}{t}\right)\bigg|_{-\infty}^{+\infty} d^3x.
+\end{split}
+\end{equation}
+From the causality principles, $u$ and $\partial u/\partial t$ vanish for $t < t_0$ and $v$ and $\partial v/\partial t$ vanish for $t > t_1$.  Thus, the r.h.s.\ of \eqref{eq:11.2.20} vanishes.  Consequently, using the properties of the Dirac delta function, $u$ at $\vec{x} = \vec{x}_1$, $t = t_1$ equals $v$ at $\vec{x} = \vec{x}_0$, $t = t_0$:
+\boxed{\begin{equation}
+\label{eq:11.2.21}
+G(\vec{x}_1,t_1;\vec{x}_0,t_0) = G(\vec{x}_0,t_1;\vec{x}_1,t_0),
+\end{equation}}
+the \textbf{reciprocity formula} for the Green's function for the wave equation.  Assuming that $t_1 > t_0$, the response at $\vec{x}_1$ (at time $t_1$) due to a source at $\vec{x}_0$ (at time $t_0$) is the same as the response at $\vec{x}_0$ (at time $t_1$) due to a source at $\vec{x}_1$, \emph{as long as the elapsed times from the sources are the same}.  In this case it is seen that interchanging the source and location points has no effect, what we called Maxwell reciprocity for time-independent Green's functions.
+
+%% ── 11.2.4 Using the Green's Function ──────────────────────
+\subsection{Using the Green's Function}
+\label{subsec:using-greens-wave}
+
+As with our earlier work, the relationship between the Green's function and the solution of the nonhomogeneous problem is established using the appropriate Green's formula, \eqref{eq:11.2.12}.  We let
+\begin{align}
+\label{eq:11.2.22}
+u &= u(\vec{x},t) \\
+\label{eq:11.2.23}
+v &= G(\vec{x},t_0;\vec{x}_0,t) = G(\vec{x}_0,t_0;\vec{x},t)
+\end{align}
+where $u(\vec{x},t)$ is the solution of the nonhomogeneous wave equation satisfying
+\[
+L(u) = Q(\vec{x},t)
+\]
+subject to the given initial conditions for $u(\vec{x},0)$ and $\partial u/\partial t(\vec{x},0)$, and where $G(\vec{x},t_0;\vec{x}_0,t)$ is the source-varying Green's function satisfying \eqref{eq:11.2.17}:
+\[
+L[G(\vec{x},t_0;\vec{x}_0,t)] = \delta(\vec{x} - \vec{x}_0)\delta(t - t_0)
+\]
+subject to the source-varying causality principle
+\[
+G(\vec{x},t_0;\vec{x}_0,t) = 0 \quad \text{for } t > t_0.
+\]
+$G$ satisfies homogeneous boundary conditions, but $u$ may not.  We use Green's formula \eqref{eq:11.2.12} with $t_i = 0$ and $t_f = t_{0+}$; we integrate just beyond the appearance of a concentrated source at $t = t_0$:
+\begin{multline*}
+\int_0^{t_{0+}} \iiint [u(\vec{x},t)\delta(\vec{x} - \vec{x}_0)\delta(t - t_0) - G(\vec{x},t_0;\vec{x}_0,t)Q(\vec{x},t)]\,d^3x\,dt \\
+= \iiint \left(u\pd{v}{t} - v\pd{u}{t}\right)\bigg|_0^{t_{0+}} d^3x - c^2 \int_0^{t_{0+}} \left[\oiint (u\nabla v - v\nabla u)\cdot\hat{\vec{n}}\,dS\right] dt.
+\end{multline*}
+At $t = t_{0+}$, $v = 0$ and $\partial v/\partial t = 0$, since we are using the source-varying Green's function.  We obtain, using the reciprocity formula \eqref{eq:11.2.21},
+\begin{align*}
+u(\vec{x}_0,t_0) &= \int_0^{t_{0+}} \iiint G(\vec{x}_0,t_0;\vec{x},t)Q(\vec{x},t)\,d^3x\,dt \\
+&\quad + \iiint \left[\pd{u}{t}(\vec{x},0)G(\vec{x}_0,t_0;\vec{x},0) - u(\vec{x},0)\frac{\partial}{\partial t}G(\vec{x}_0,t_0;\vec{x},0)\right] d^3x \\
+&\quad - c^2 \int_0^{t_{0+}} \left[\oiint \bigl(u(\vec{x},t)\nabla G(\vec{x}_0,t_0;\vec{x},t) - G(\vec{x}_0,t_0;\vec{x},t)\nabla u(\vec{x},t)\bigr)\cdot\hat{\vec{n}}\,dS\right] dt.
+\end{align*}
+It can be shown that $t_{0+}$ may be replaced by $t_0$ in these limits.  If the roles of $\vec{x}$ and $\vec{x}_0$ are interchanged (as well as $t$ and $t_0$), we obtain a representation formula for $u(\vec{x},t)$ in terms of the Green's function $G(\vec{x},t;\vec{x}_0,t_0)$:
+\boxed{\begin{equation}
+\label{eq:11.2.24}
+\begin{split}
+u(\vec{x},t) &= \int_0^t \iiint G(\vec{x},t;\vec{x}_0,t_0)Q(\vec{x}_0,t_0)\,d^3x_0\,dt_0 \\
+&\quad + \iiint \left[\pd{u}{t_0}(\vec{x}_0,0)G(\vec{x},t;\vec{x}_0,0) - u(\vec{x}_0,0)\frac{\partial}{\partial t_0}G(\vec{x},t;\vec{x}_0,0)\right] d^3x_0 \\
+&\quad - c^2 \int_0^t \left[\oiint \bigl(u(\vec{x}_0,t_0)\nabla_{\vec{x}_0} G(\vec{x},t;\vec{x}_0,t_0) - G(\vec{x},t;\vec{x}_0,t_0)\nabla_{\vec{x}_0} u(\vec{x}_0,t_0)\bigr)\cdot\hat{\vec{n}}\,dS_0\right] dt_0.
+\end{split}
+\end{equation}}
+Note that $\nabla_{\vec{x}_0}$ means a derivative with respect to the source position.  Equation \eqref{eq:11.2.24} expresses the response due to the three kinds of nonhomogeneous terms: source terms, initial conditions, and nonhomogeneous boundary conditions.  In particular, the initial position $u(\vec{x}_0,0)$ has an influence function
+\[
+-\frac{\partial}{\partial t_0}G(\vec{x},t;\vec{x}_0,0)
+\]
+(meaning the source time derivative evaluated initially), while the influence function for the initial velocity is $G(\vec{x},t;\vec{x}_0,0)$.
+
+Furthermore, for example, if $u$ is given on the boundary, then $G$ satisfies the related homogeneous boundary condition; that is, $G = 0$ on the boundary.  In this case the boundary term in \eqref{eq:11.2.24} simplifies to
+\[
+-c^2 \int_0^t \left[\oiint u(\vec{x}_0,t_0)\nabla_{\vec{x}_0} G(\vec{x},t;\vec{x}_0,t_0)\cdot\hat{\vec{n}}\,dS_0\right] dt_0.
+\]
+The influence function for this nonhomogeneous boundary condition is
+\[
+-c^2 \nabla_{\vec{x}_0} G(\vec{x},t;\vec{x}_0,t_0)\cdot\hat{\vec{n}}.
+\]
+This is $-c^2$ times the source outward normal derivative of the Green's function.
+
+%% ── 11.2.5 Green's Function for the Wave Equation ──────────
+\subsection{Green's Function for the Wave Equation}
+\label{subsec:greens-fn-wave}
+
+We recall that the Green's function for the wave equation satisfies \eqref{eq:11.2.4} and \eqref{eq:11.2.5}:
+\boxed{\begin{equation}
+\label{eq:11.2.25}
+\pdd{G}{t} - c^2\laplacian G = \delta(\vec{x} - \vec{x}_0)\delta(t - t_0)
+\end{equation}}
+\begin{equation}
+\label{eq:11.2.26}
+G(\vec{x},t;\vec{x}_0,t_0) = 0 \quad \text{for } t < t_0,
+\end{equation}
+subject to homogeneous boundary conditions.  We will describe the Green's function in a different way.
+
+%% ── 11.2.6 Alternate Differential Equation for the Green's Function ──
+\subsection{Alternate Differential Equation for the Green's Function}
+\label{subsec:alt-de-greens-wave}
+
+Using Green's formula, the solution of the wave equation with homogeneous boundary conditions and with no sources, $Q(\vec{x},t) = 0$, is represented in terms of the Green's function by \eqref{eq:11.2.24},
+\[
+u(\vec{x},t) = \iiint \left[\pd{u}{t_0}(\vec{x}_0,0)G(\vec{x},t;\vec{x}_0,0) - u(\vec{x}_0,0)\frac{\partial}{\partial t_0}G(\vec{x},t;\vec{x}_0,0)\right] d^3\vec{x}_0.
+\]
+From this we see that $G$ is also the influence function for the initial condition for the derivative $\partial u/\partial t$, while $-\partial G/\partial t_0$ is the influence function for the initial condition for $u$.  If we solve the wave equation with the initial conditions $u = 0$ and $\partial u/\partial t = \delta(\vec{x} - \vec{x}_0)$, the solution is the Green's function itself.  Thus, the Green's function $G(\vec{x},t;\vec{x}_0,t_0)$ satisfies the ordinary wave equation with no sources,
+\boxed{\begin{equation}
+\label{eq:11.2.27}
+\pdd{G}{t} - c^2\laplacian G = 0,
+\end{equation}}
+subject to homogeneous boundary conditions and the specific concentrated initial conditions at $t = t_0$:
+\begin{equation}
+\label{eq:11.2.28}
+G = 0
+\end{equation}
+\begin{equation}
+\label{eq:11.2.29}
+\pd{G}{t} = \delta(\vec{x} - \vec{x}_0).
+\end{equation}
+The Green's function for the wave equation can be determined directly from the initial value problem \eqref{eq:11.2.27}--\eqref{eq:11.2.29} rather than from its defining differential equation \eqref{eq:11.2.4} or \eqref{eq:11.2.26}.  Exercise~11.2.9 outlines another derivation of \eqref{eq:11.2.27}--\eqref{eq:11.2.29} in which the defining equation \eqref{eq:11.2.4} is integrated from $t_{0-}$ until $t_{0+}$.
+
+%% ── 11.2.7 Infinite Space Green's Function for the 1-D Wave Eq ──
+\subsection{Infinite Space Green's Function for the One-Dimensional Wave Equation and d'Alembert's Solution}
+\label{subsec:1d-greens-wave}
+
+We will determine the infinite space Green's function by solving the one-dimensional wave equation, $\pdd{G}{t} - c^2 \pdd{G}{x} = 0$, subject to initial conditions \eqref{eq:11.2.28} and \eqref{eq:11.2.29}.  In Chapter~12 (briefly mentioned in Chapter~4) it is shown that there is a remarkable general solution of the one-dimensional wave equation,
+\begin{equation}
+\label{eq:11.2.30}
+G = f(x - ct) + g(x + ct),
+\end{equation}
+where $f(x - ct)$ is an arbitrary function moving to the right with velocity $c$ and $g(x + ct)$ is an arbitrary function moving to the left with velocity $-c$.  It can be verified by direct substitution that \eqref{eq:11.2.30} solves the wave equation.  For ease, we assume $t_0 = 0$ and $x_0 = 0$.  Since from \eqref{eq:11.2.28}, $G = 0$ at $t = 0$, it follows that in this case $g(x) = -f(x)$, so that $G = f(x-ct) - f(x+ct)$.  We calculate $\partial G/\partial t = -c\frac{df(x-ct)}{d(x-ct)} - c\frac{df(x+ct)}{d(x+ct)}$.  In order to satisfy the initial condition \eqref{eq:11.2.29}, $\delta(x) = \frac{\partial G}{\partial t}\big|_{t=0} = -2c\frac{df(x)}{dx}$.  By integration $f(x) = -\frac{1}{2c}H(x) + k$, where $H(x)$ is the Heaviside step function (and $k$ is an unimportant constant of integration):
+\boxed{\begin{equation}
+\label{eq:11.2.31}
+G(x,t;0,0) = \frac{1}{2c}[H(x+ct) - H(x-ct)] = \begin{cases} 0 & |x| > ct \\ \frac{1}{2c} & |x| < ct. \end{cases}
+\end{equation}}
+
+Thus, \textbf{the infinite space Green's function for the one-dimensional wave equation is an expanding rectangular pulse moving at the wave speed $c$}, as is sketched in Fig.~\ref{fig:11.2.2}.  Initially (in general, at $t = t_0$), it is located at one point $x = x_0$.  Each end spreads out at velocity $c$.  In general,
+\boxed{\begin{equation}
+\label{eq:11.2.32}
+G(\vec{x},t;\vec{x}_0,t_0) = \frac{1}{2c}\{H[(x - x_0) + c(t - t_0)] - H[(x - x_0) - c(t - t_0)]\}.
+\end{equation}}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch11/fig_11_2_2.png}
+\caption{Green's function for the one-dimensional wave equation.}
+\label{fig:11.2.2}
+\end{figure}
+
+\textbf{D'Alembert's solution.}\quad To illustrate the use of this Green's function, consider the initial value problem for the wave equation without sources on an infinite domain $-\infty < x < \infty$ (see Sec.~9.7.1):
+\begin{equation}
+\label{eq:11.2.33}
+\pdd{u}{t} = c^2\pdd{u}{x}
+\end{equation}
+\begin{equation}
+\label{eq:11.2.34}
+u(x,0) = f(x)
+\end{equation}
+\begin{equation}
+\label{eq:11.2.35}
+\pd{u}{t}(x,0) = g(x).
+\end{equation}
+In the formula \eqref{eq:11.2.24}, the boundary contribution\footnote{The boundary contribution for an infinite problem is the limit as $L \to \infty$ of the boundaries of a finite region, $-L < x < L$.} vanishes since $G = 0$ for $x$ sufficiently large (positive or negative); see Fig.~\ref{fig:11.2.2}.  Since there are no sources, $u(x,t)$ is caused only by the initial conditions:
+\[
+u(x,t) = \int_{-\infty}^{\infty} \left[g(x_0)G(x,t;x_0,0) - f(x_0)\frac{\partial}{\partial t_0}G(x,t;x_0,0)\right] dx_0.
+\]
+We need to calculate $\frac{\partial}{\partial t_0}G(x,t;x_0,t_0)$ from \eqref{eq:11.2.32}.  Using properties of the derivative of a step function [see (9.3.2)], it follows that
+\[
+\frac{\partial}{\partial t_0}G(x,t;x_0,t_0) = \frac{1}{2}\bigl[-\delta(x - x_0 + c(t-t_0)) - \delta(x - x_0 - c(t-t_0))\bigr]
+\]
+and thus,
+\[
+\frac{\partial}{\partial t_0}G(x,t;x_0,0) = \frac{1}{2}[-\delta(x - x_0 + ct) - \delta(x - x_0 - ct)].
+\]
+Finally, we obtain the solution of the initial value problem:
+\boxed{\begin{equation}
+\label{eq:11.2.36}
+u(x,t) = \frac{f(x+ct) + f(x-ct)}{2} + \frac{1}{2c}\int_{x-ct}^{x+ct} g(x_0)\,dx_0.
+\end{equation}}
+This is known as \textbf{d'Alembert's solution} of the wave equation.  It can be obtained more simply by the method of characteristics (see Chapter~12).  There we will discuss the physical interpretation of the one-dimensional wave equation.
+
+\textbf{Related problems.}\quad Semi-infinite or finite problems for the one-dimensional wave equation can be solved by obtaining the Green's function by the method of images.  In some cases transform or series techniques may be used.  Of greatest usefulness is the method of characteristics.
+
+%% ── 11.2.8 Infinite Space Green's Function for the 3-D Wave Eq ──
+\subsection{Infinite Space Green's Function for the Three-Dimensional Wave Equation (Huygens' Principle)}
+\label{subsec:3d-greens-wave}
+
+We solve the infinite space Green's function using \eqref{eq:11.2.27}--\eqref{eq:11.2.29}.  The solution should be spherically symmetric and depend only on the distance $\rho = |\vec{x} - \vec{x}_0|$.  Thus, the Green's function satisfies the spherically symmetric wave equation, $\pdd{G}{t} - c^2 \frac{1}{\rho^2}\frac{\partial}{\partial \rho}\!\left(\rho^2\pd{G}{\rho}\right) = 0$.  Through an unmotivated but very well-known transformation, $G = \frac{h}{\rho}$, the spherically symmetric wave equation simplifies:
+\[
+0 = \frac{1}{\rho}\pdd{h}{t} - \frac{c^2}{\rho^2}\frac{\partial}{\partial \rho}\!\left(\rho\pd{h}{\rho} - h\right) = \frac{1}{\rho}\!\left(\pdd{h}{t} - c^2\pdd{h}{\rho}\right).
+\]
+Thus, $h$ satisfies the one-dimensional wave equation.  In Chapter~12 it is shown that the general solution of the one-dimensional wave equation can be represented by the sum of left and right going waves moving at velocity $c$.  Consequently, we obtain the exceptionally significant result that \textbf{the general solution of the spherically symmetric wave equation} is
+\boxed{\begin{equation}
+\label{eq:11.2.37}
+G = \frac{f(\rho - ct) + g(\rho + ct)}{\rho}.
+\end{equation}}
+
+$f(\rho - ct)$ is spherically expanding at velocity $c$, while $g(\rho + ct)$ is spherically contracting at velocity $c$.  To satisfy the initial condition \eqref{eq:11.2.28}, $G = 0$ at $t = 0$, $g(\rho) = -f(\rho)$, and hence $G = \frac{f(\rho - ct) - f(\rho + ct)}{\rho}$.  We calculate $\pd{G}{t} = -\frac{c}{\rho}\!\left[\frac{df(\rho - ct)}{d(\rho - ct)} + \frac{df(\rho + ct)}{d(\rho + ct)}\right]$.  Thus, applying the initial condition \eqref{eq:11.2.29} yields
+\[
+\delta(\vec{x} - \vec{x}_0) = \left.\pd{G}{t}\right|_{t=0} = -\frac{2c}{\rho}\od{f(\rho)}{\rho}.
+\]
+Here $\delta(\vec{x} - \vec{x}_0)$ is a three-dimensional delta function.  The function $f$ will be constant, which we set to zero away from $\rho = 0$.  We integrate in three-dimensional space over a sphere of radius $R$ and obtain
+\[
+1 = -2c\int_0^R \frac{1}{\rho}\od{f}{\rho}\,4\pi\rho^2\,d\rho = 8\pi c \int_0^R f\,d\rho,
+\]
+after an integration by parts using $f = 0$ for $\rho > 0$ (one way to justify integrating by parts is to introduce the even extensions of $f$ for $\rho < 0$ so that $\int_0^R = \frac{1}{2}\int_{-R}^R$).  Thus, $f = \frac{1}{4\pi c}\delta(\rho)$ where $\delta(\rho)$ is the one-dimensional delta function that is even and hence satisfies $\int_0^R \delta(\rho)\,d\rho = \frac{1}{2}$.  Consequently,
+\boxed{\begin{equation}
+\label{eq:11.2.38}
+G = \frac{1}{4\pi c\rho}[\delta(\rho - ct) - \delta(\rho + ct)].
+\end{equation}}
+
+However, since $\rho > 0$ and $t > 0$, the later Dirac delta function is always zero.  To be more general, $t$ should be replaced by $t - t_0$.  In this way we obtain the \textbf{infinite space Green's function for the three-dimensional wave equation}:
+\boxed{\begin{equation}
+\label{eq:11.2.39}
+G(\vec{x},t;\vec{x}_0,t_0) = \frac{1}{4\pi c\rho}[\delta(\rho - c(t - t_0))],
+\end{equation}}
+where $\rho = |\vec{x} - \vec{x}_0|$.  The Green's function for the three-dimensional wave equation is a spherical shell impulse spreading out from the source ($\vec{x} = \vec{x}_0$ and $t = t_0$) at radial velocity $c$ with an intensity decaying proportional to $\frac{1}{\rho}$.
+
+\textbf{Huygens' principle.}\quad We have shown that a concentrated source at $\vec{x}_0$ (at time $t_0$) only influences the position $\vec{x}$ (at time $t$) if $|\vec{x} - \vec{x}_0| = c(t - t_0)$.  The distance from source to location equals $c$ times the time.  The point source emits a wave moving in all directions at velocity $c$.  At time $t - t_0$ later, the source's effect is located on a spherical shell a distance $c(t - t_0)$ away.  This is part of what is known as \textbf{Huygens' principle}.
+
+\textbf{Example.}\quad To be more specific, let us analyze the effect of sources, $Q(\vec{x},t)$.  Consider the wave equation with sources in infinite three-dimensional space with zero initial conditions.  According to Green's formula \eqref{eq:11.2.24},
+\begin{equation}
+\label{eq:11.2.40}
+u(\vec{x},t) = \int_0^t \iiint G(\vec{x},t;\vec{x}_0,t_0)Q(\vec{x}_0,t_0)\,d^3x_0\,dt_0
+\end{equation}
+since the ``boundary'' contribution vanishes.  Using the infinite three-dimensional space Green's function,
+\begin{equation}
+\label{eq:11.2.41}
+u(\vec{x},t) = \frac{1}{4\pi c}\int_0^t \iiint \frac{1}{\rho}\delta[\rho - c(t-t_0)]Q(\vec{x}_0,t_0)\,d^3x_0\,dt_0,
+\end{equation}
+where $\rho = |\vec{x} - \vec{x}_0|$.  The only sources that contribute satisfy $|\vec{x} - \vec{x}_0| = c(t - t_0)$.  The effect at $\vec{x}$ at time $t$ is caused by all received sources; the velocity of propagation of each source is $c$.
+
+%% ── 11.2.9 Two-Dimensional Infinite Space Green's Function ──
+\subsection{Two-Dimensional Infinite Space Green's Function}
+\label{subsec:2d-greens-wave}
+
+The two-dimensional Green's function for the wave equation is not as simple as the one and three dimensional cases.  In Exercise~11.2.12 the two-dimensional Green's function is derived by the method of descent by using the three-dimensional solution with a two-dimensional source.  The signal again propagates with velocity $c$, so that the solution is zero before the signal is received, that is for the elapsed time $t - t_0 < \frac{r}{c}$, where $r = |\vec{x} - \vec{x}_0|$ in two dimensions.  However, once the signal is received, it is largest (infinite) at the moment the signal is first received, and then the signal gradually decreases:
+\boxed{\begin{equation}
+\label{eq:11.2.42}
+G(\vec{x},t;\vec{x}_0,t_0) = \begin{cases} 0 & \text{if } r > c(t - t_0) \\ \displaystyle\frac{1}{2\pi c}\frac{1}{\sqrt{c^2(t-t_0)^2 - r^2}} & \text{if } r < c(t - t_0) \end{cases}.
+\end{equation}}
+
+%% ── 11.2.10 Summary ──────────────────────────────────────────
+\subsection{Summary}
+\label{subsec:wave-green-summary}
+
+For the wave equation in any dimension, information propagates at velocity $c$.  The Green's functions for the wave equation in one and three dimensions are different.  Huygens' principle is only valid in three dimensions in which the influence of a concentrated source is only felt on the surface of the expanding sphere propagating at velocity $c$.  In one dimension, the influence is felt uniformly inside the expanding pulse.  In two dimensions, the largest effect occurs on the circumference corresponding to the propagation velocity $c$, but the effect diminishes behind the pulse.
+
+%% ── Exercises 11.2 ──────────────────────────────────────────
+\begin{exercises}{11.2}
+
+\item \label{ex:11.2.1}
+\begin{enumerate}
+\item[(a)] Show that for $G(\vec{x},t;\vec{x}_0,t_0)$, $\partial G/\partial t = -\partial G/\partial t_0$.
+\item[(b)] Use part~(a) to show that the response due to $u(\vec{x},0) = f(\vec{x})$ is the time derivative of the response due to $\partial u/\partial t(\vec{x},0) = f(\vec{x})$.
+\end{enumerate}
+
+\item \label{ex:11.2.2}
+Express \eqref{eq:11.2.24} for a one-dimensional problem.
+
+\item \label{ex:11.2.3}
+If $G(\vec{x},t;\vec{x}_0,t_0) = 0$ for $\vec{x}$ on the boundary, explain why the corresponding term in \eqref{eq:11.2.24} vanishes (for any $\vec{x}$).
+
+\item \label{ex:11.2.4}
+For the one-dimensional wave equation, sketch $G(x,t;x_0,t_0)$ as a function of
+\begin{enumerate}
+\item[(a)] $x$ with $t$ fixed ($x_0$, $t_0$ fixed)
+\item[(b)] $t$ with $x$ fixed ($x_0$, $t_0$ fixed)
+\end{enumerate}
+
+\item \label{ex:11.2.5}
+\begin{enumerate}
+\item[(a)] For the one-dimensional wave equation, for what values of $x_0$ ($x$, $t$, $t_0$ fixed) is $G(x,t;x_0,t_0) \ne 0$?
+\item[(b)] Determine the answer to part~(a) using the reciprocity property.
+\end{enumerate}
+
+\item \label{ex:11.2.6}
+\begin{enumerate}
+\item[(a)] Solve
+\[
+\pdd{u}{t} = c^2\pdd{u}{x} + Q(x,t) \qquad -\infty < x < \infty
+\]
+with $u(x,0) = 0$ and $\pd{u}{t}(x,0) = 0$.
+\item[\starred (b)] What space-time locations of the source $Q(x,t)$ influence $u$ at position $x_1$ and time $t_1$?
+\end{enumerate}
+
+\item \label{ex:11.2.7}
+Reconsider Exercise~11.2.6 if $Q(x,t) = g(\vec{x})e^{-i\omega t}$.
+\begin{enumerate}
+\item[\starred (a)] Solve for $u(x,t)$.  Show that the influence function for $g(\vec{x})$ is an outward-propagating wave.
+\item[(b)] Instead, determine a particular solution of the form $u(\vec{x},t) = \psi(\vec{x})e^{-i\omega t}$.  (See Exercise~8.3.13.)
+\item[(c)] Compare parts~(a) and~(b).
+\end{enumerate}
+
+\item \label{ex:11.2.8}
+\starred\ In three-dimensional infinite space, solve
+\[
+\pdd{u}{t} = c^2\laplacian u + g(\vec{x})e^{-i\omega t}
+\]
+with zero initial conditions, $u(\vec{x},0) = 0$ and $\pd{u}{t}(\vec{x},0) = 0$.  From your solution, show that the influence function for $g(\vec{x})$ is an outward-propagating wave.
+\begin{enumerate}
+\item[(b)] Compare with Exercise~9.5.10.
+\end{enumerate}
+
+\item \label{ex:11.2.9}
+Consider the Green's function $G(\vec{x},t;\vec{x}_0,t_0)$ for the wave equation.  From \eqref{eq:11.2.24} we easily obtain the influence functions for $Q(\vec{x}_0,t_0)$, $u(\vec{x}_0,0)$, and $\partial u/\partial t_0(\vec{x}_0,0)$.  These results may be obtained in the following alternative way:
+\begin{enumerate}
+\item[(a)] For $t > t_{0+}$ show that
+\begin{equation}
+\label{eq:11.2.43}
+\pdd{G}{t} = c^2\laplacian G,
+\end{equation}
+where (by integrating from $t_{0-}$ to $t_{0+}$)
+\begin{equation}
+\label{eq:11.2.44}
+G(\vec{x},t_{0+};\vec{x}_0,t_0) = 0
+\end{equation}
+\begin{equation}
+\label{eq:11.2.45}
+\pd{G}{t}(\vec{x},t_{0+};\vec{x}_0,t_0) = \delta(\vec{x} - \vec{x}_0).
+\end{equation}
+From \eqref{eq:11.2.32}, briefly explain why $G(\vec{x},t;\vec{x}_0,0)$ is the influence function for $\partial u/\partial t_0(\vec{x}_0,0)$.
+
+\item[(b)] Let $\phi = \partial G/\partial t$.  Show that for $t > t_{0+}$,
+\begin{equation}
+\label{eq:11.2.46}
+\pdd{\phi}{t} = c^2\laplacian \phi
+\end{equation}
+\begin{equation}
+\label{eq:11.2.47}
+\phi(\vec{x},t_{0+};\vec{x}_0,t_0) = \delta(\vec{x} - \vec{x}_0)
+\end{equation}
+\begin{equation}
+\label{eq:11.2.48}
+\pd{\phi}{t}(\vec{x},t_{0+};\vec{x}_0,t_0) = 0.
+\end{equation}
+From \eqref{eq:11.2.46}--\eqref{eq:11.2.48}, briefly explain why $-\partial G/\partial t_0(\vec{x},t;\vec{x}_0,0)$ is the influence function for $u(\vec{x}_0,0)$.
+\end{enumerate}
+
+\item \label{ex:11.2.10}
+Consider
+\begin{align*}
+\pdd{u}{t} &= c^2\pdd{u}{x} + Q(x,t) \qquad x > 0 \\
+u(x,0) &= f(x) \\
+\pd{u}{t}(x,0) &= g(x) \\
+u(0,t) &= h(t).
+\end{align*}
+\begin{enumerate}
+\item[(a)] Determine the appropriate Green's function using the method of images.
+\item[\starred (b)] Solve for $u(x,t)$ if $Q(x,t) = 0$, $f(x) = 0$, and $g(x) = 0$.
+\item[(c)] For what values of $t$ does $h(t)$ influence $u(x_1,t_1)$?  Briefly interpret physically.
+\end{enumerate}
+
+\item \label{ex:11.2.11}
+Reconsider Exercise~11.2.10:
+\begin{enumerate}
+\item[(a)] if $Q(x,t) \ne 0$, but $f(x) = 0$, $g(x) = 0$, and $h(t) = 0$
+\item[(b)] if $f(x) \ne 0$, but $Q(x,t) = 0$, $g(x) = 0$, and $h(t) = 0$
+\item[(c)] if $g(x) \ne 0$, but $Q(x,t) = 0$, $f(x) = 0$, and $h(t) = 0$
+\end{enumerate}
+
+\item \label{ex:11.2.12}
+Consider the Green's function $G(\vec{x},t;\vec{x}_1,t_1)$ for the \emph{two}-dimensional wave equation as the solution of the following \emph{three}-dimensional wave equation:
+\begin{align*}
+\pdd{u}{t} &= c^2\laplacian u + Q(\vec{x},t) \\
+u(\vec{x},0) &= 0 \\
+\pd{u}{t}(\vec{x},0) &= 0 \\
+Q(\vec{x},t) &= \delta(x - x_1)\delta(y - y_1)\delta(t - t_1).
+\end{align*}
+We will solve for the two-dimensional Green's function by this \textbf{method of descent} (descending from three dimensions to two dimensions).
+\begin{enumerate}
+\item[\starred (a)] Solve for $G(\vec{x},t;\vec{x}_1,t_1)$ using the general solution of the three-dimensional wave equation.  Here, the source $Q(\vec{x},t)$ may be interpreted either as a point source in two dimensions or a line source in three dimensions.  [\emph{Hint}: $\int_{-\infty}^{\infty}\cdots dz_0$ may be evaluated by introducing the three-dimensional distance $\rho$ from the point source,
+\[
+\rho^2 = (x - x_1)^2 + (y - y_1)^2 + (z - z_0)^2.]
+\]
+\item[(b)] Show that $G$ is a function only of the elapsed time $t - t_1$ and the two-dimensional distance $r$ from the line source,
+\[
+r^2 = (x - x_1)^2 + (y - y_1)^2.
+\]
+\item[(c)] Where is the effect of an impulse felt after a time $\tau$ has elapsed?  Compare to the one- and three-dimensional problems.
+\item[(d)] Sketch $G$ for $t - t_1$ fixed.
+\item[(e)] Sketch $G$ for $r$ fixed.
+\end{enumerate}
+
+\item \label{ex:11.2.13}
+Consider the three-dimensional wave equation.  Determine the response to a unit point source moving at the constant velocity $\vec{v}$:
+\[
+Q(\vec{x},t) = \delta(\vec{x} - \vec{v}t).
+\]
+
+\item \label{ex:11.2.14}
+Solve the wave equation in infinite three-dimensional space without sources, subject to the initial conditions
+\begin{enumerate}
+\item[(a)] $u(\vec{x},0) = 0$ and $\pd{u}{t}(\vec{x},0) = g(\vec{x})$.  The answer is called \textbf{Kirchhoff's formula}, although it is due to Poisson (according to Weinberger [1995]).
+\item[(b)] $u(\vec{x},0) = f(\vec{x})$ and $\pd{u}{t}(\vec{x},0) = 0$.  [\emph{Hint}: Use \eqref{eq:11.2.24}.]
+\item[(c)] Solve part~(b) in the following manner.  Let $v(\vec{x},t) = \frac{\partial}{\partial t}u(\vec{x},t)$, where $u(\vec{x},t)$ satisfies part~(a).  [\emph{Hint}: Show that $v(\vec{x},t)$ satisfies the wave equation with $v(\vec{x},0) = g(\vec{x})$ and $\pd{v}{t}(\vec{x},0) = 0$.]
+\end{enumerate}
+
+\item \label{ex:11.2.15}
+Derive the one-dimensional Green's function for the wave equation by considering a three-dimensional problem with $Q(\vec{x},t) = \delta(x - x_1)\delta(t - t_1)$.  [\emph{Hint}: Use polar coordinates for the $y_0$, $z_0$ integration centered at $y_0 = y$, $z_0 = z$.]
+
+\end{exercises}
+

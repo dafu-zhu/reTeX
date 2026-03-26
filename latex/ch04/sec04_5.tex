@@ -1,0 +1,81 @@
+% sec04_5.tex — Section 4.5: Vibrating Membrane
+\section{Vibrating Membrane}
+\label{sec:vibrating-membrane}
+
+The heat equation in one spatial dimension is $\partial u/\partial t = k\partial^2 u/\partial x^2$.  In two or three dimensions, the temperature satisfies $\partial u/\partial t = k\laplacian u$.  In a similar way, the vibration of a string (one dimension) can be extended to the vibration of a membrane (two dimensions).
+
+The vertical displacement of a vibrating string satisfies the one-dimensional wave equation
+\[
+\pdd{u}{t} = c^2\pdd{u}{x}.
+\]
+There are important physical problems that solve
+\begin{equation}
+\pdd{u}{t} = c^2\laplacian u = c^2\left(\pdd{u}{x} + \pdd{u}{y}\right),
+\label{eq:4.5.1}
+\end{equation}
+known as the two- or three-dimensional wave equation.  An example of a physical problem that satisfies a two-dimensional wave equation is the vibration of a highly stretched membrane.  This can be thought of as a two-dimensional vibrating string.  We will give a \emph{brief} derivation in the manner described by Kaplan [1981], omitting some of the details we discussed for a vibrating string.  We again introduce the displacement $z = u(x,y,t)$, which depends on $x$, $y$, and $t$ (as illustrated in Fig.~4.5.1).  If all slopes (i.e., $\partial u/\partial x$ and $\partial u/\partial y$) are small, then as an approximation we may assume that the vibrations are entirely vertical and the tension is approximately constant.  Then the mass density (mass per unit surface area), $\rho_0(x,y)$, of the membrane in the unperturbed position does not change appreciably when the membrane is perturbed.
+
+The tensile force (per unit arc length), $\vec{F}_T$, is tangent to the membrane and acts along the entire edge.  The direction of the tensile force (see Fig.~4.5.1) is obtained by crossing the unit tangent vector to the edge, $\hat{\ell}$, with the unit normal vector to the membrane, $\hat{n}$.  Since the tensile force has constant magnitude ($|\vec{F}_T| = T_0$), it follows that
+\[
+\vec{F}_T = T_0\hat{\ell}\times\hat{n},
+\]
+where the vertical component is obtained by $\vec{F}_T \cdot \hat{k}$.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch04/fig_4_5_1.png}
+\caption{Perturbed stretched membrane with approximately constant tension $T_0$.  The normal vector to the surface is $\hat{n}$ and the tangent vector to the edge is $\hat{\ell}$.}
+\label{fig:4.5.1}
+\end{figure}
+
+Newton's law for vertical motion must be applied to each differential section of the membrane and then summed (integrated).  The sum (surface integral) of the mass ($\rho_0\,dA$) times the vertical acceleration ($\partial^2 u/\partial t^2$) equals the total (closed line integral) \emph{vertical} tensile force (ignoring body forces)
+\begin{equation}
+\iint \rho_0\pdd{u}{t}\,dA = \oint T_0\hat{\ell}\times\hat{n}\cdot\hat{k}\ds = \oint T_0(\hat{n}\times\hat{k})\cdot\hat{\ell}\ds,
+\label{eq:4.5.2}
+\end{equation}
+where $ds$ is the differential arc length, $dA$ is differential surface area, and the vector triple product relation has been used ($\vec{A}\times\vec{B}\cdot\vec{C} = \vec{B}\times\vec{C}\cdot\vec{A}$).  Stokes' theorem ($\iint \nabla\times\vec{B}\cdot\hat{n}\,dA = \oint\vec{B}\cdot\hat{\ell}\ds$), will be applied (for the only time in this text):
+\begin{equation}
+\iint \rho_0\pdd{u}{t}\,dA = \iint T_0[\nabla\times(\hat{n}\times\hat{k})]\cdot\hat{n}\,dA.
+\label{eq:4.5.3}
+\end{equation}
+Since the region is arbitrary, we derive
+\begin{equation}
+\rho_0\pdd{u}{t} = T_0[\nabla\times(\hat{n}\times\hat{k})]\cdot\hat{n}.
+\label{eq:4.5.4}
+\end{equation}
+
+A point on the membrane is described by $z = u(x,y)$.  Thus, the unit normal to the vibrating membrane (using the gradient; see Appendix to Sec.~1.5) is calculated as follows:
+\[
+\hat{n} = \frac{-\pd{u}{x}\hat{\imath} - \pd{u}{y}\hat{\jmath} + \hat{k}}{\sqrt{\left(\pd{u}{x}\right)^2 + \left(\pd{u}{y}\right)^2 + 1}} \approx -\pd{u}{x}\hat{\imath} - \pd{u}{y}\hat{\jmath} + \hat{k},
+\]
+since the partial derivatives are assumed to be small.  We now begin to calculate the expression needed in \eqref{eq:4.5.4}:
+\[
+\hat{n}\times\hat{k} = \begin{vmatrix} \hat{\imath} & \hat{\jmath} & \hat{k} \\ -\dfrac{\partial u}{\partial x} & -\dfrac{\partial u}{\partial y} & 1 \\ 0 & 0 & 1 \end{vmatrix} = -\pd{u}{y}\hat{\imath} + \pd{u}{x}\hat{\jmath}.
+\]
+Continuing, we obtain
+\[
+\nabla\times(\hat{n}\times\hat{k}) = \begin{vmatrix} \hat{\imath} & \hat{\jmath} & \hat{k} \\[4pt] \dfrac{\partial}{\partial x} & \dfrac{\partial}{\partial y} & \dfrac{\partial}{\partial z} \\[4pt] -\dfrac{\partial u}{\partial y} & \dfrac{\partial u}{\partial x} & 0 \end{vmatrix} = \hat{k}\left(\pdd{u}{x} + \pdd{u}{y}\right).
+\]
+In this way we obtain the partial differential equation for a vibrating membrane,
+\[
+\rho_0\pdd{u}{t} = T_0\left(\pdd{u}{x} + \pdd{u}{y}\right).
+\]
+Dividing by $\rho_0$ yields the two-dimensional wave equation
+\begin{equation}
+\pdd{u}{t} = c^2\left(\pdd{u}{x} + \pdd{u}{y}\right),
+\label{eq:4.5.5}
+\end{equation}
+where again $c^2 = T_0/\rho_0$.  The solutions of problems for a vibrating membrane are postponed until Chapter~7.
+
+\begin{exercises}{4.5}
+
+\item If a membrane satisfies an ``elastic'' boundary condition, show that
+\begin{equation}
+T_0\nabla u\cdot\hat{\vec{n}} = -ku
+\label{eq:4.5.6}
+\end{equation}
+if there is a restoring force per unit length proportional to the displacement, where $\hat{n}$ is a unit normal of the two-dimensional boundary.
+
+\item Derive the two-dimensional wave equation for a vibrating membrane.
+
+\end{exercises}

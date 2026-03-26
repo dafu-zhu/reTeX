@@ -1,0 +1,413 @@
+% sec01_5.tex — Section 1.5: Derivation of the Heat Equation in Two or Three Dimensions
+
+\section{Derivation of the Heat Equation in Two or Three Dimensions}
+\label{sec:1.5}
+
+\paragraph{Introduction.}
+In Sec.~1.2 we showed that for the conduction of heat in a one-dimensional rod the temperature $u(x,t)$ satisfies
+\[
+c\rho\pd{u}{t} = \frac{\partial}{\partial x}\left(K_0\pd{u}{x}\right) + Q.
+\]
+In cases in which there are no sources ($Q = 0$) and the thermal properties are constant, the partial differential equation becomes
+\[
+\pd{u}{t} = k\pdd{u}{x},
+\]
+where $k = K_0/c\rho$. Before we solve problems involving these partial differential equations, we will formulate partial differential equations corresponding to heat flow problems in two or three spatial dimensions. We will find the derivation to be similar to the one used for one-dimensional problems, although important differences will emerge. We propose to derive new and more complex equations (before solving the simpler ones) so that, when we do discuss \emph{techniques} for the solutions of PDEs, we will have more than one example to work with.
+
+\paragraph{Heat energy.}
+We begin our derivation by considering any \emph{arbitrary subregion} $R$, as illustrated in Fig.~\ref{fig:1.5.1}. As in the one-dimensional case, conservation of heat energy is summarized by the following word equation:
+
+\begin{center}
+\fbox{\parbox{0.9\textwidth}{
+\begin{tabular}{lcl}
+rate of change & \quad heat energy flowing \quad & heat energy generated \\
+of heat energy & $=$ \quad across the boundaries \quad $+$ & inside per unit time. \\
+ & \quad per unit time &
+\end{tabular}
+}}
+\end{center}
+
+\noindent where the heat energy within an arbitrary subregion $R$ is
+\[
+\text{heat energy} = \iiint_R c\rho u\dV,
+\]
+instead of the one-dimensional integral used in Sec.~1.2.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch01/fig_1_5_1.png}
+\caption{Three-dimensional subregion $R$.}
+\label{fig:1.5.1}
+\end{figure}
+
+\paragraph{Heat flux vector and normal vectors.}
+We need an expression for the flow of heat energy. In a one-dimensional problem the heat flux $\phi$ is defined to the right ($\phi < 0$ means flowing to the left). In a three-dimensional problem the heat flows in some direction, and hence the \textbf{heat flux is a vector} $\vec{\phi}$. The magnitude of $\vec{\phi}$ is the amount of heat energy flowing per unit time per unit surface area. However, in considering conservation of heat energy, it is only the heat flowing \emph{across the boundaries} per unit time that is important. If, as at point $A$ in Fig.~\ref{fig:1.5.2}, the heat flow is parallel to the boundary, then there is no heat energy \emph{crossing} the boundary at that point. In fact, it is only the normal component of the heat flow that contributes (as illustrated by point $B$ in Fig.~\ref{fig:1.5.2}). At any point there are two normal vectors, an inward and an outward normal $\vec{n}$. We will use the convention of only utilizing the unit \textbf{outward normal vector} $\hat{\vec{n}}$ (where the \^{} stands for a unit vector).
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch01/fig_1_5_2.png}
+\caption{Outward normal component of heat flux vector.}
+\label{fig:1.5.2}
+\end{figure}
+
+\paragraph{Conservation of heat energy.}
+At each point the amount of heat energy flowing \emph{out} of the region $R$ per unit time per unit surface area is the outward normal component of the heat flux vector. From Fig.~\ref{fig:1.5.2} at point $B$, the outward normal component of the heat flux vector is $|\vec{\phi}|\cos\theta = \vec{\phi}\cdot\vec{n}/|\vec{n}| = \vec{\phi}\cdot\hat{\vec{n}}$. If the heat flux vector $\vec{\phi}$ is directed inward, then $\vec{\phi}\cdot\hat{\vec{n}} < 0$ and the outward flow of heat energy is negative. To calculate the total heat energy flowing out of $R$ per unit time, we must multiply $\vec{\phi}\cdot\hat{\vec{n}}$ by the differential surface area $dS$ and ``sum'' over the entire surface that encloses the region $R$. This\footnote{Sometimes the notation $\phi_n$ is used instead of $\vec{\phi}\cdot\hat{\vec{n}}$, meaning the outward normal component of $\vec{\phi}$.} is indicated by the closed surface integral $\oiint \vec{\phi}\cdot\hat{\vec{n}}\dS$. This is the amount of heat energy (per unit time) leaving the region $R$ and (if positive) results in a decreasing of the total heat energy within $R$. If $Q$ is the rate of heat energy generated per unit volume, then the total heat energy generated per unit time is $\iiint_R Q\dV$. Consequently, conservation of heat energy for an arbitrary three-dimensional region $R$ becomes
+\begin{equation}
+\boxed{\frac{d}{d t}\iiint_R c\rho u\dV = -\oiint \vec{\phi}\cdot\hat{\vec{n}}\dS + \iiint_R Q\dV.}
+\label{eq:1.5.1}
+\end{equation}
+
+\paragraph{Divergence theorem.}
+In one dimension, a way in which we derived a partial differential relationship from the integral conservation law was to notice (via the fundamental theorem of calculus) that
+\[
+\phi(a) - \phi(b) = -\int_a^b \pd{\phi}{x}\dx;
+\]
+that is, the flow through the boundaries can be expressed as an integral over the entire region for one-dimensional problems. We claim that the divergence theorem is an analogous procedure for functions of three variables. The divergence theorem deals with a vector $\vec{A}$ (with components $A_x$, $A_y$ and $A_z$; i.e., $\vec{A} = A_x\hat{\vec{\imath}} + A_y\hat{\vec{\jmath}} + A_z\hat{\vec{k}}$) and its divergence defined as follows:
+\begin{equation}
+\nabla\cdot\vec{A} \equiv \frac{\partial}{\partial x}A_x + \frac{\partial}{\partial y}A_y + \frac{\partial}{\partial z}A_z.
+\label{eq:1.5.2}
+\end{equation}
+Note that the divergence of a vector is a scalar. \textbf{The divergence theorem states that the volume integral of the divergence of any continuously differentiable vector $\vec{A}$ is the closed surface integral of the outward normal component of $\vec{A}$}:
+\begin{equation}
+\iiint_R \nabla\cdot\vec{A}\dV = \oiint \vec{A}\cdot\hat{\vec{n}}\dS.
+\label{eq:1.5.3}
+\end{equation}
+
+This is also known as Gauss's theorem. It can be used to relate certain surface integrals to volume integrals, and vice versa. It is very important and very useful (both immediately and later in this text). We omit a derivation, which may be based on repeating the one-dimensional fundamental theorem in all three dimensions.
+
+\paragraph{Application of the divergence theorem to heat flow.}
+In particular, the closed surface integral that arises in the conservation of heat energy \eqref{eq:1.5.1}, corresponding to the heat energy flowing across the boundary per unit time, can be written as a volume integral according to the divergence theorem, \eqref{eq:1.5.3}. Thus, \eqref{eq:1.5.1} becomes
+\begin{equation}
+\frac{d}{d t}\iiint_R c\rho u\dV = -\iiint_R \nabla\cdot\vec{\phi}\dV + \iiint_R Q\dV.
+\label{eq:1.5.4}
+\end{equation}
+We note that the time derivative in \eqref{eq:1.5.4} can be put inside the integral (since $R$ is fixed in space) if the time derivative is changed to a partial derivative. Thus, all the expressions in \eqref{eq:1.5.4} are volume integrals over the same volume, and they can be combined into one integral:
+\begin{equation}
+\iiint_R \left[c\rho\pd{u}{t} + \nabla\cdot\vec{\phi} - Q\right]\dV = 0.
+\label{eq:1.5.5}
+\end{equation}
+Since this integral is zero for all regions $R$, it follows (as it did for one-dimensional integrals) that the integrand itself must be zero:
+\[
+c\rho\pd{u}{t} + \nabla\cdot\vec{\phi} - Q = 0
+\]
+or, equivalently,
+\begin{equation}
+\boxed{c\rho\pd{u}{t} = -\nabla\cdot\vec{\phi} + Q.}
+\label{eq:1.5.6}
+\end{equation}
+Equation~\eqref{eq:1.5.6} reduces to \eqref{eq:1.2.3} in the one-dimensional case.
+
+\paragraph{Fourier's law of heat conduction.}
+In one-dimensional problems, from experiments according to Fourier's law, the heat flux $\phi$ is proportional to the derivative of the temperature, $\phi = -K_0\,\partial u/\partial x$. The minus sign is related to the fact that thermal energy flows from hot to cold. $\partial u/\partial x$ is the change in temperature per unit length. These same ideas are valid in three dimensions. In the appendix, we derive that the heat flux vector $\vec{\phi}$ is proportional to the temperature gradient $\left(\nabla u \equiv \pd{u}{x}\hat{\vec{\imath}} + \pd{u}{y}\hat{\vec{\jmath}} + \pd{u}{z}\hat{\vec{k}}\right)$:
+\begin{equation}
+\boxed{\vec{\phi} = -K_0\nabla u,}
+\label{eq:1.5.7}
+\end{equation}
+known as \textbf{Fourier's law of heat conduction}, where again $K_0$ is called the thermal conductivity. Thus, in three dimensions the gradient $\nabla u$ replaces $\partial u/\partial x$.
+
+\paragraph{Heat equation.}
+When the heat flux vector, \eqref{eq:1.5.7}, is substituted into the conservation of heat energy equation, \eqref{eq:1.5.6}, a partial differential equation for temperature results:
+\begin{equation}
+\boxed{c\rho\pd{u}{t} = \nabla\cdot(K_0\nabla u) + Q.}
+\label{eq:1.5.8}
+\end{equation}
+
+In the cases in which there are no heat sources ($Q = 0$) and the thermal coefficients are constant, \eqref{eq:1.5.8} becomes
+\begin{equation}
+\pd{u}{t} = k\nabla\cdot(\nabla u),
+\label{eq:1.5.9}
+\end{equation}
+where $k = K_0/c\rho$ is again called the thermal diffusivity. From their definitions, we calculate the divergence of the gradient of $u$:
+\begin{equation}
+\nabla\cdot(\nabla u) = \frac{\partial}{\partial x}\left(\pd{u}{x}\right) + \frac{\partial}{\partial y}\left(\pd{u}{y}\right) + \frac{\partial}{\partial z}\left(\pd{u}{z}\right) = \pdd{u}{x} + \pdd{u}{y} + \pdd{u}{z} \equiv \nabla^2 u.
+\label{eq:1.5.10}
+\end{equation}
+This expression $\nabla^2 u$ is defined to be the \textbf{Laplacian} of $u$. Thus, in this case
+\begin{equation}
+\boxed{\pd{u}{t} = k\laplacian u.}
+\label{eq:1.5.11}
+\end{equation}
+Equation~\eqref{eq:1.5.11} is known as the \textbf{heat} or \textbf{diffusion equation} in three spatial dimensions. The notation $\nabla^2 u$ is often used to emphasize the role of the del operator $\nabla$:
+\[
+\nabla \equiv \frac{\partial}{\partial x}\hat{\vec{\imath}} + \frac{\partial}{\partial y}\hat{\vec{\jmath}} + \frac{\partial}{\partial z}\hat{\vec{k}}.
+\]
+Note that $\nabla u$ is $\nabla$ operating on $u$, while $\nabla\cdot\vec{A}$ is the vector dot product of del with $\vec{A}$. Furthermore, $\nabla^2$ is the dot product of the del operator with itself or
+\[
+\nabla\cdot\nabla = \frac{\partial}{\partial x}\left(\frac{\partial}{\partial x}\right) + \frac{\partial}{\partial y}\left(\frac{\partial}{\partial y}\right) + \frac{\partial}{\partial z}\left(\frac{\partial}{\partial z}\right)
+\]
+operating on $u$, hence the notation del squared, $\nabla^2$.
+
+\paragraph{Initial boundary value problem.}
+In addition to \eqref{eq:1.5.8} or \eqref{eq:1.5.11}, the temperature satisfies a given initial distribution,
+\[
+u(x,y,z,0) = f(x,y,z).
+\]
+
+The temperature also satisfies a boundary condition at every point on the surface that encloses the region of interest. The boundary condition can be of various types (as in the one-dimensional problem). The temperature could be prescribed,
+\[
+u(x,y,z,t) = T(x,y,z,t),
+\]
+everywhere \emph{on the boundary} where $T$ is a known function of $t$ at each point of the boundary. It is also possible that the flow across the boundary is prescribed. Frequently, we might have part of the boundary \textbf{insulated}. This means that there is no heat flow across that portion of the boundary. Since the heat flux vector is $-K_0\nabla u$, the heat flowing out will be the unit outward normal component of the heat flow vector, $-K_0\nabla u\cdot\hat{\vec{n}}$, where $\hat{\vec{n}}$ is a unit outward normal to the boundary surface. Thus, at an insulated surface,
+\[
+\nabla u\cdot\hat{\vec{n}} = 0.
+\]
+
+Recall that $\nabla u\cdot\hat{\vec{n}}$ is the directional derivative of $u$ in the outward normal direction; it is also called the normal derivative.\footnote{Sometimes (in other books and references) the notation $\partial u/\partial n$ is used. However, to calculate $\partial u/\partial n$ we usually calculate the dot product of the two vectors, $\nabla u$ and $\hat{\vec{n}}$, $\nabla u\cdot\hat{\vec{n}}$, so we will not use the notation $\partial u/\partial n$ in this text.}
+
+Often Newton's law of cooling is a more realistic condition at the boundary. It states that the heat energy flowing out per unit time per unit surface area is proportional to the difference between the temperature at the surface $u$ and the temperature outside the surface $u_b$. Thus, if Newton's law of cooling is valid, then at the boundary
+\begin{equation}
+-K_0\nabla u\cdot\hat{\vec{n}} = H(u - u_b).
+\label{eq:1.5.12}
+\end{equation}
+Note that usually the proportionality constant $H > 0$, since if $u > u_b$, then we expect that heat energy will flow out and $-K_0\nabla u\cdot\hat{\vec{n}}$ will be greater than zero. Equation~\eqref{eq:1.5.12} verifies the two forms of Newton's law of cooling for one-dimensional problems. In particular, at $x = 0$, $\hat{\vec{n}} = -\hat{\vec{\imath}}$ and the left-hand side (l.h.s.) of \eqref{eq:1.5.12} becomes $K_0\,\partial u/\partial x$, while at $x = L$, $\hat{\vec{n}} = \hat{\vec{\imath}}$ and the l.h.s.\ of \eqref{eq:1.5.12} becomes $-K_0\,\partial u/\partial x$ [see \eqref{eq:1.3.4} and \eqref{eq:1.3.5}].
+
+\paragraph{Steady state.}
+If the boundary conditions and any sources of thermal energy are independent of time, it is possible that there exist steady-state solutions to the heat equation satisfying the given steady boundary condition:
+\[
+0 = \nabla\cdot(K_0 \nabla u) + Q.
+\]
+Note that an equilibrium temperature distribution $u(x,y,z)$ satisfies a partial differential equation when more than one spatial dimension is involved. In the case with constant thermal properties, the equilibrium temperature distribution will satisfy
+\begin{equation}
+\laplacian u = -\frac{Q}{K_0},
+\label{eq:1.5.13}
+\end{equation}
+known as \textbf{Poisson's equation}. If, in addition, there are no sources ($Q = 0$), then
+\begin{equation}
+\boxed{\laplacian u = 0;}
+\label{eq:1.5.14}
+\end{equation}
+the Laplacian of the temperature distribution is zero. Equation~\eqref{eq:1.5.14} is known as \textbf{Laplace's equation}. It is also known as the \textbf{potential equation}, since gravitational and electrostatic potentials satisfy \eqref{eq:1.5.14} if there are no sources. We will solve a number of problems involving Laplace's equation in later sections.
+
+\paragraph{Two-dimensional problems.}
+All the previous remarks about three-dimensional problems are valid if the geometry is such that the temperature only depends on $x$, $y$ and $t$. For example, Laplace's equation in two dimensions, $x$ and $y$, corresponding to equilibrium heat flow with no sources (and constant thermal properties) is
+\[
+\laplacian u = \pdd{u}{x} + \pdd{u}{y} = 0,
+\]
+since $\partial^2 u/\partial z^2 = 0$. Two-dimensional results can be derived directly (without taking a limit of three-dimensional problems), by using fundamental principles in two dimensions. We will not repeat the derivation. However, we can easily outline the results. Every time a volume integral ($\iiint_R \cdots\dV$) appears, it must be replaced by a surface integral over the entire two-dimensional plane region ($\iint_R \cdots\dS$). Similarly, the boundary contribution for three-dimensional problems, which is the closed surface integral $\oiint \cdots\dS$, must be replaced by the closed line integral $\oint \cdots\,d\tau$, an integration over the boundary of the two-dimensional plane surface. These results are not difficult to derive since the divergence theorem in three dimensions,
+\begin{equation}
+\iiint_R \nabla\cdot\vec{A}\dV = \oiint \vec{A}\cdot\hat{\vec{n}}\dS,
+\label{eq:1.5.15}
+\end{equation}
+is valid in two dimensions, taking the form
+\begin{equation}
+\iint_R \nabla\cdot\vec{A}\dS = \oint \vec{A}\cdot\hat{\vec{n}}\,d\tau.
+\label{eq:1.5.16}
+\end{equation}
+Sometimes \eqref{eq:1.5.16} is called \emph{Green's theorem}, but we prefer to refer to it as the two-dimensional divergence theorem. In this way only one equation need be familiar to the reader, namely \eqref{eq:1.5.15}; \emph{the conversion to two-dimensional form involves only changing the number of integral signs}.
+
+\paragraph{Polar and cylindrical coordinates.}
+The Laplacian,
+\begin{equation}
+\laplacian u = \pdd{u}{x} + \pdd{u}{y} + \pdd{u}{z},
+\label{eq:1.5.17}
+\end{equation}
+is important for the heat equation \eqref{eq:1.5.11} and its steady-state version \eqref{eq:1.5.14}, as well as for other significant problems in science and engineering. Equation~\eqref{eq:1.5.17} written in Cartesian coordinates is most useful when the geometrical region under investigation is a rectangle or a rectangular box. Other coordinate systems are frequently useful. In practical applications, we may need the formula that expresses the Laplacian in the appropriate coordinate system. In circular cylindrical coordinates, with $r$ the radial distance from the $z$-axis and $\theta$ the angle
+\begin{equation}
+\boxed{\begin{aligned}
+x &= r\cos\theta \\
+y &= r\sin\theta \\
+z &= z,
+\end{aligned}}
+\label{eq:1.5.18}
+\end{equation}
+the Laplacian can be shown to equal the following formula:
+\begin{equation}
+\boxed{\laplacian u = \frac{1}{r}\frac{\partial}{\partial r}\left(r\pd{u}{r}\right) + \frac{1}{r^2}\pdd{u}{\theta} + \pdd{u}{z}.}
+\label{eq:1.5.19}
+\end{equation}
+
+There may be no need to memorize this formula, as it can often be looked up in a reference book. As an aid in minimizing errors, it should be noted that every term in the Laplacian has the dimension of $u$ divided by two spatial dimensions [just as in Cartesian coordinates, \eqref{eq:1.5.17}]. Since $\theta$ is measured in radians, which have no dimensions, this remark aids in remembering to divide $\partial^2 u/\partial\theta^2$ by $r^2$. In polar coordinates (by which we mean a two-dimensional coordinate system with $z$ fixed, usually $z = 0$), the Laplacian is the same as \eqref{eq:1.5.19} with $\partial^2 u/\partial z^2 = 0$ since there is no dependence on $z$. Equation~\eqref{eq:1.5.19} can be derived (see the Exercises) using the chain rule for partial derivatives, applicable for changes of variables.
+
+In some physical situations it is known that the temperature does not depend on the polar angle $\theta$; it is said to be circularly or axially symmetric. In that case
+\begin{equation}
+\laplacian u = \frac{1}{r}\frac{\partial}{\partial r}\left(r\pd{u}{r}\right) + \pdd{u}{z}.
+\label{eq:1.5.20}
+\end{equation}
+
+\paragraph{Spherical coordinates.}
+Geophysical problems as well as electrical problems with spherical conductors are best solved using spherical coordinates $(\rho, \theta, \phi)$. The radial distance is $\rho$, the angle from the pole ($z$-axis) is $\phi$, and the cylindrical (or azimuthal) angle is $\theta$. Note that if $\rho$ is constant and the angle $\phi$ is a constant a circle is generated with radius $\rho\sin\phi$ (as shown in Fig.~\ref{fig:1.5.3}) so that
+\begin{equation}
+\boxed{\begin{aligned}
+x &= \rho\sin\phi\cos\theta \\
+y &= \rho\sin\phi\sin\theta \\
+z &= \rho\cos\phi.
+\end{aligned}}
+\label{eq:1.5.21}
+\end{equation}
+The angle from the pole ranges from $0$ to $\pi$ (while the usual cylindrical angle ranges from $0$ to $2\pi$). It can be shown that the Laplacian satisfies
+\begin{equation}
+\laplacian u = \frac{1}{\rho^2}\frac{\partial}{\partial \rho}\left(\rho^2\pd{u}{\rho}\right) + \frac{1}{\rho^2\sin\phi}\frac{\partial}{\partial \phi}\left(\sin\phi\,\pd{u}{\phi}\right) + \frac{1}{\rho^2\sin^2\phi}\pdd{u}{\theta}.
+\label{eq:1.5.22}
+\end{equation}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch01/fig_1_5_3.png}
+\caption{Spherical coordinates.}
+\label{fig:1.5.3}
+\end{figure}
+
+\begin{exercises}{1.5}
+
+\item Let $c(x,y,z,t)$ denote the concentration of a pollutant (the amount per unit volume).
+\begin{enumerate}
+\item[(a)] What is an expression for the total amount of pollutant in the region $R$?
+\item[(b)] Suppose that the flow $\vec{J}$ of the pollutant is proportional to the gradient of the concentration. (Is this reasonable?) Express conservation of the pollutant.
+\item[(c)] Derive the partial differential equation governing the diffusion of the pollutant.
+\end{enumerate}
+
+\item[\starred 1.5.2.] For conduction of thermal energy, the heat flux vector is $\vec{\phi} = -K_0\nabla u$. If in addition the molecules move at an average velocity $\vec{V}$, a process called \textbf{convection}, then briefly explain why $\vec{\phi} = -K_0\nabla u + c\rho u\vec{V}$. Derive the corresponding equation for heat flow, including both conduction and convection of thermal energy (assuming constant thermal properties with no sources).
+
+\item Consider the polar coordinates
+\[
+x = r\cos\theta \qquad y = r\sin\theta.
+\]
+\begin{enumerate}
+\item[(a)] Since $r^2 = x^2 + y^2$, show that $\pd{r}{x} = \cos\theta$, $\pd{\theta}{x} = \frac{-\sin\theta}{r}$, $\pd{r}{y} = \sin\theta$, $\pd{\theta}{y} = \frac{\cos\theta}{r}$.
+\item[(b)] Show that $\hat{\vec{r}} = \cos\theta\,\hat{\vec{\imath}} + \sin\theta\,\hat{\vec{\jmath}}$ and $\hat{\vec{\theta}} = -\sin\theta\,\hat{\vec{\imath}} + \cos\theta\,\hat{\vec{\jmath}}$.
+\item[(c)] Using the chain rule, show that $\nabla = \hat{\vec{r}}\frac{\partial}{\partial r} + \hat{\vec{\theta}}\frac{1}{r}\frac{\partial}{\partial \theta}$ and hence $\nabla u = \hat{\vec{r}}\pd{u}{r} + \hat{\vec{\theta}}\frac{1}{r}\pd{u}{\theta}$.
+\item[(d)] If $\vec{A} = A_r\hat{\vec{r}} + A_\theta\hat{\vec{\theta}}$, show that $\nabla\cdot\vec{A} = \frac{1}{r}\frac{\partial}{\partial r}(rA_r) + \frac{1}{r}\frac{\partial}{\partial \theta}(A_\theta)$, since $\partial\hat{\vec{r}}/\partial\theta = \hat{\vec{\theta}}$ and $\partial\hat{\vec{\theta}}/\partial\theta = -\hat{\vec{r}}$.
+\item[(e)] Show that $\laplacian u = \frac{1}{r}\frac{\partial}{\partial r}\left(r\pd{u}{r}\right) + \frac{1}{r^2}\pdd{u}{\theta}$.
+\end{enumerate}
+
+\item Using Exercise~1.5.3(a) and the chain rule for partial derivatives, derive the special case of Exercise~1.5.3(e) if $u(r)$ only.
+
+\item Assume that the temperature is circularly symmetric: $u = u(r,t)$, where $r^2 = x^2 + y^2$. We will derive the heat equation for this problem. Consider any circular annulus $a \le r \le b$.
+\begin{enumerate}
+\item[(a)] Show that the total heat energy is $2\pi\int_a^b c\rho u r\,dr$.
+\item[(b)] Show that the flow of heat energy per unit time out of the annulus at $r = b$ is $-2\pi b K_0\,\partial u/\partial r\big|_{r=b}$. A similar result holds at $r = a$.
+\item[(c)] Use parts (a) and (b) to derive the circularly symmetric heat equation without sources:
+\[
+\pd{u}{t} = \frac{k}{r}\frac{\partial}{\partial r}\left(r\pd{u}{r}\right).
+\]
+\end{enumerate}
+
+\item Modify Exercise~1.5.5 if the thermal properties depend on $r$.
+
+\item Derive the heat equation in two dimensions by using Green's theorem, \eqref{eq:1.5.16}, the two-dimensional form of the divergence theorem.
+
+\item If Laplace's equation is satisfied in three dimensions, show that
+\[
+\oiint \nabla u\cdot\hat{\vec{n}}\dS = 0
+\]
+for any closed surface. (\emph{Hint}: Use the divergence theorem.) Give a physical interpretation of this result (in the context of heat flow).
+
+\item Determine the equilibrium temperature distribution inside a circular annulus ($r_1 \le r \le r_2$):
+\begin{enumerate}
+\item[\starred (a)] if the outer radius is at temperature $T_2$ and the inner at $T_1$
+\item[(b)] if the outer radius is insulated and the inner radius is at temperature $T_1$
+\end{enumerate}
+
+\item Determine the equilibrium temperature distribution inside a circle ($r \le r_0$) if the boundary is fixed at temperature $T_0$.
+
+\item[\starred 1.5.11.] Consider
+\[
+\pd{u}{t} = \frac{k}{r}\frac{\partial}{\partial r}\left(r\pd{u}{r}\right) \qquad a < r < b
+\]
+subject to
+\[
+u(r,0) = f(r), \quad \pd{u}{r}(a,t) = \beta, \quad \text{and} \quad \pd{u}{r}(b,t) = 1.
+\]
+Using physical reasoning, for what value(s) of $\beta$ does an equilibrium temperature distribution exist?
+
+\item Assume that the temperature is spherically symmetric, $u = u(r,t)$, where $r$ is the distance from a fixed point ($r^2 = x^2 + y^2 + z^2$). Consider the heat flow (without sources) between any two concentric spheres of radii $a$ and $b$.
+\begin{enumerate}
+\item[(a)] Show that the total heat energy is $4\pi\int_a^b c\rho u r^2\,dr$.
+\item[(b)] Show that the flow of heat energy per unit time out of the spherical shell at $r = b$ is $-4\pi b^2 K_0\,\partial u/\partial r\big|_{r=b}$. A similar result holds at $r = a$.
+\item[(c)] Use parts (a) and (b) to derive the spherically symmetric heat equation
+\[
+\pd{u}{t} = \frac{k}{r^2}\frac{\partial}{\partial r}\left(r^2\pd{u}{r}\right).
+\]
+\end{enumerate}
+
+\item[\starred 1.5.13.] Determine the \emph{steady-state} temperature distribution between two concentric \emph{spheres} with radii 1 and 4, respectively, if the temperature of the outer sphere is maintained at $80^\circ$ and the inner sphere at $0^\circ$ (see Exercise~1.5.12).
+
+\item Isobars are lines of constant temperature. Show that isobars are perpendicular to any part of the boundary that is insulated.
+
+\item Derive the heat equation in three dimensions assuming constant thermal properties and no sources.
+
+\item Express the integral conservation law for any three-dimensional object. Assume there are no sources. Also assume the heat flow is specified, $\nabla u\cdot\hat{\vec{n}} = g(\vec{x},y,z)$, on the entire boundary and does not depend on time. By integrating with respect to time, determine the total thermal energy. (Hint: Use the initial condition.)
+
+\item Derive the integral conservation law for any three-dimensional object (with constant thermal properties) by integrating the heat equation \eqref{eq:1.5.11} (assuming no sources). Show that the result is equivalent to \eqref{eq:1.5.1}.
+
+\paragraph{Orthogonal curvilinear coordinates.}
+A coordinate system ($u$, $v$, $w$) may be introduced and defined by $x = x(u,v,w)$, $y = y(u,v,w)$ and $z = z(u,v,w)$. The radial vector $\vec{r} \equiv x\hat{\vec{\imath}} + y\hat{\vec{\jmath}} + z\hat{\vec{k}}$. Partial derivatives of $\vec{r}$ with respect to a coordinate are in the direction of the coordinate. Thus, for example, a vector in the $u$-direction $\partial\vec{r}/\partial u$ can be made a unit vector $\hat{\vec{e}}_u$ in the $u$-direction by dividing by its length $h_u = |\partial\vec{r}/\partial u|$ called the \textbf{scale factor}: $\hat{\vec{e}}_u = \frac{1}{h_u}\pd{\vec{r}}{u}$.
+
+\item Determine the scale factors for cylindrical coordinates.
+
+\item Determine the scale factors for spherical coordinates.
+
+\item The gradient of a scalar can be expressed in terms of the new coordinate system $\nabla g = a\,\partial\vec{r}/\partial u + b\,\partial\vec{r}/\partial v + c\,\partial\vec{r}/\partial w$, where you will determine the scalars $a$, $b$, $c$. Using $dg = \nabla g\cdot d\vec{r}$, derive that the \textbf{gradient} in an orthogonal curvilinear coordinate system is given by
+\begin{equation}
+\nabla g = \frac{1}{h_u}\pd{g}{u}\hat{\vec{e}}_u + \frac{1}{h_v}\pd{g}{v}\hat{\vec{e}}_v + \frac{1}{h_w}\pd{g}{w}\hat{\vec{e}}_w.
+\label{eq:1.5.23}
+\end{equation}
+
+\item Derive the \textbf{Laplacian} in an orthogonal curvilinear coordinate system. Using \eqref{eq:1.5.23} and \eqref{eq:1.5.24}, derive the Laplacian:
+\begin{equation}
+\nabla\cdot\vec{p} = \frac{1}{h_u h_v h_w}\left[\frac{\partial}{\partial u}(h_v h_w p_u) + \frac{\partial}{\partial v}(h_u h_w p_v) + \frac{\partial}{\partial w}(h_u h_v p_w)\right].
+\label{eq:1.5.24}
+\end{equation}
+\begin{equation}
+\laplacian T = \frac{1}{h_u h_v h_w}\left[\frac{\partial}{\partial u}\left(\frac{h_v h_w}{h_u}\pd{T}{u}\right) + \frac{\partial}{\partial v}\left(\frac{h_u h_w}{h_v}\pd{T}{v}\right) + \frac{\partial}{\partial w}\left(\frac{h_u h_v}{h_w}\pd{T}{w}\right)\right].
+\label{eq:1.5.25}
+\end{equation}
+
+\item Using \eqref{eq:1.5.25}, derive the Laplacian for cylindrical coordinates.
+
+\item Using \eqref{eq:1.5.25}, derive the Laplacian for spherical coordinates.
+
+\end{exercises}
+
+\subsection*{Appendix to 1.5: Review of Gradient and a Derivation of Fourier's Law of Heat Conduction}
+
+Experimentally, for isotropic\footnote{Examples of nonisotropic materials are certain crystal and grainy woods.} materials (i.e., without preferential directions) heat flows from hot to cold in the direction in which temperature differences are greatest. The heat flow is proportional (with proportionality constant $K_0$, the thermal conductivity) to the rate of change of temperature in this direction.
+
+The change in the temperature $\Delta u$ is
+\[
+\Delta u = u(\vec{x} + \Delta\vec{x}, t) - u(\vec{x},t) \approx \pd{u}{x}\Delta x + \pd{u}{y}\Delta y + \pd{u}{z}\Delta z.
+\]
+In the direction $\hat{\vec{\alpha}} = \alpha_1\hat{\vec{\imath}} + \alpha_2\hat{\vec{\jmath}} + \alpha_3\hat{\vec{k}}$, $\Delta\vec{x} = \Delta s\,\hat{\vec{\alpha}}$, where $\Delta s$ is the distance between $\vec{x}$ and $\vec{x} + \Delta\vec{x}$. Thus, the rate of change of the temperature in the direction $\hat{\vec{\alpha}}$ is the \textbf{directional derivative}:
+\[
+\lim_{\Delta s \to 0}\frac{\Delta u}{\Delta s} = \alpha_1\pd{u}{x} + \alpha_2\pd{u}{y} + \alpha_3\pd{u}{z} = \hat{\vec{\alpha}}\cdot\nabla u,
+\]
+where it has been convenient to define the following \emph{vector}:
+\begin{equation}
+\boxed{\nabla u \equiv \pd{u}{x}\hat{\vec{\imath}} + \pd{u}{y}\hat{\vec{\jmath}} + \pd{u}{z}\hat{\vec{k}},}
+\label{eq:1.5.26}
+\end{equation}
+called the \textbf{gradient} of the temperature. From the property of dot products, if $\theta$ is the angle between $\hat{\vec{\alpha}}$ and $\nabla u$, then the directional derivative is $|\nabla u|\cos\theta$ since $|\hat{\vec{\alpha}}| = 1$. The largest rate of change of $u$ (the largest directional derivative) is $|\nabla u| > 0$, and it occurs if $\theta = 0$ (i.e., in the direction of the gradient). Since this derivative is positive, the temperature increase is greatest in the direction of the gradient. Since heat energy flows in the direction of decreasing temperatures, \textbf{the heat flow vector is in the opposite direction to the heat gradient}. It follows that
+\begin{equation}
+\boxed{\vec{\phi} = -K_0 \nabla u,}
+\label{eq:1.5.27}
+\end{equation}
+since $|\nabla u|$ equals the magnitude of the rate of change of $u$ (in the direction of the gradient). This is again called Fourier's law of heat conduction. Thus, in three dimensions, the gradient $\nabla u$ replaces $\partial u/\partial x$.
+
+Another fundamental property of the gradient is that it is normal (perpendicular) to the level surfaces. It is easier to illustrate this in a two-dimensional problem (see Fig.~\ref{fig:1.5.4}) in which the temperature is constant along level curves (rather than level surfaces). To show that the gradient is perpendicular, consider the surface on which the temperature is the constant $T_0$, $u(x,y,z,t) = T_0$. We calculate the differential of both sides (at a fixed time) along the surface. Since $T_0$ is constant, $dT_0 = 0$. Therefore, using the chain rule of partial derivatives,
+\begin{equation}
+du = \pd{u}{x}\dx + \pd{u}{y}\dy + \pd{u}{z}dz = 0.
+\label{eq:1.5.28}
+\end{equation}
+Equation~\eqref{eq:1.5.28} can be written as
+\[
+\left(\pd{u}{x}\hat{\vec{\imath}} + \pd{u}{y}\hat{\vec{\jmath}} + \pd{u}{z}\hat{\vec{k}}\right)\cdot(\dx\,\hat{\vec{\imath}} + \dy\,\hat{\vec{\jmath}} + dz\,\hat{\vec{k}}) = 0
+\]
+or
+\begin{equation}
+\nabla u\cdot(\dx\,\hat{\vec{\imath}} + \dy\,\hat{\vec{\jmath}} + dz\,\hat{\vec{k}}) = 0.
+\label{eq:1.5.29}
+\end{equation}
+$\dx\,\hat{\vec{\imath}} + \dy\,\hat{\vec{\jmath}} + dz\,\hat{\vec{k}}$ represents any vector in the tangent plane of the level surface. From \eqref{eq:1.5.29}, its dot product with $\nabla u$ is zero; that is, $\nabla u$ is perpendicular to the tangent plane. Thus, $\nabla u$ is perpendicular to the surface $u = \text{constant}$.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch01/fig_1_5_4.png}
+\caption{The gradient is perpendicular to level surfaces of the temperature.}
+\label{fig:1.5.4}
+\end{figure}
+
+We have thus learned two properties of the gradient, $\nabla u$:
+\begin{enumerate}
+\item Direction: $\nabla u$ is perpendicular to the surface $u = \text{constant}$. $\nabla u$ is also in the direction of the largest directional derivative. $u$ increases in the direction of the gradient.
+\item Magnitude: $|\nabla u|$ is the largest value of the directional derivative.
+\end{enumerate}

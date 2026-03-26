@@ -1,0 +1,140 @@
+% sec12_5.tex — Section 12.5: Method of Characteristics for a Vibrating String of Fixed Length
+\section{Method of Characteristics for a Vibrating String of Fixed Length}
+\label{sec:char-fixed-string}
+
+In Chapter~2 we solved for the vibration of a finite string satisfying
+\boxed{\begin{equation}
+\label{eq:12.5.1}
+\text{PDE:}\quad \pdd{u}{t} = c^2\pdd{u}{x}
+\end{equation}}
+\boxed{\begin{equation}
+\label{eq:12.5.2}
+\text{BC:}\quad u(0,t) = 0, \qquad u(L,t) = 0
+\end{equation}}
+\boxed{\begin{equation}
+\label{eq:12.5.3}
+\text{IC:}\quad u(x,0) = f(x), \qquad \pd{u}{t}(x,0) = g(x),
+\end{equation}}
+using Fourier series methods.  We can obtain an equivalent, but in some ways more useful, result by using the general solution of the one-dimensional wave equation:
+\begin{equation}
+\label{eq:12.5.4}
+u(x,t) = F(x - ct) + G(x + ct).
+\end{equation}
+The initial conditions are prescribed only for $0 < x < L$, and hence the formulas for $F(x)$ and $G(x)$ previously obtained are valid only for $0 < x < L$:
+\begin{align}
+\label{eq:12.5.5}
+F(x) &= \frac{1}{2}f(x) - \frac{1}{2c}\int_0^x g(\bar{x})\,d\bar{x} \\
+\label{eq:12.5.6}
+G(x) &= \frac{1}{2}f(x) + \frac{1}{2c}\int_0^x g(\bar{x})\,d\bar{x}.
+\end{align}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch12/fig_12_5_1.png}
+\caption{Characteristics.}
+\label{fig:12.5.1}
+\end{figure}
+
+If $0 < x - ct < L$ and $0 < x + ct < L$, as shown shaded in Fig.~12.5.1, then d'Alembert's solution is valid:
+\begin{equation}
+\label{eq:12.5.7}
+u(x,t) = \frac{f(x-ct) + f(x+ct)}{2} + \frac{1}{2c}\int_{x-ct}^{x+ct} g(\bar{x})\,d\bar{x}.
+\end{equation}
+In this region the string does not know that either boundary exists; the information that there is a boundary propagates at velocity $c$ from $x = 0$ and $x = L$.
+
+If one's position and time is such that signals from the boundary have already arrived, then modifications in \eqref{eq:12.5.7} must be made.  The boundary condition at $x = 0$ implies that
+\begin{equation}
+\label{eq:12.5.8}
+0 = F(-ct) + G(ct) \qquad \text{for } t > 0,
+\end{equation}
+while at $x = L$ we have
+\begin{equation}
+\label{eq:12.5.9}
+0 = F(L - ct) + G(L + ct) \qquad \text{for } t > 0.
+\end{equation}
+These, in turn, imply reflections and multiple reflections, as illustrated in Fig.~12.5.2.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch12/fig_12_5_2.png}
+\caption{Multiply reflected characteristics.}
+\label{fig:12.5.2}
+\end{figure}
+
+Alternatively, a solution on an infinite domain without boundaries can be considered that is odd around $x = 0$ and odd around $x = L$, as sketched in Fig.~12.5.3.  In this way, the zero condition at both $x = 0$ and $x = L$ will be satisfied.  We note that $u(x,t)$ is periodic with period $2L$, since periodic functions that are odd around $x = 0$ are automatically odd around $x = L$.  Thus, the simplest way to obtain the solution is to \textbf{extend the initial conditions as odd functions (around $x = 0$) which are periodic (with period $2L$)}.  With these odd periodic initial conditions, the method of characteristics can be utilized as well as d'Alembert's solution \eqref{eq:12.5.7}.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch12/fig_12_5_3.png}
+\caption{Odd periodic extension.}
+\label{fig:12.5.3}
+\end{figure}
+
+\textbf{Example.}  Suppose that a string is initially at rest with prescribed initial conditions $u(x,0) = f(x)$.  The string is fixed at $x = 0$ and $x = L$.  Instead of using Fourier series methods, we extend the initial conditions as odd functions around $x = 0$ and $x = L$.  Equivalently, we introduce the \emph{odd periodic extension}.  (The odd periodic extension is also used in the Fourier series solution.)  Since the string is initially at rest, $g(x) = 0$; the odd periodic extension is $g(x) = 0$ for all $x$.  Thus, the solution of the one-dimensional wave equation is the sum of two simple waves:
+\[
+u(x,t) = \frac{1}{2}[f_{\text{ext}}(x - ct) + f_{\text{ext}}(x + ct)],
+\]
+where $f_{\text{ext}}(x)$ is the odd periodic extension of the given initial position.  This solution is much simpler than the summation of the first 100 terms of its Fourier sine series.
+
+\textbf{Separation of variables.}  By separation of variables, the solution of the wave equation with fixed boundary conditions ($u(0,t) = 0$ and $u(L,t) = 0$) satisfying the initial conditions $u(x,0) = f(x)$ and $\frac{\partial u}{\partial t} = 0$ is
+\[
+u(x,t) = \sum_{n=1}^{\infty} a_n \sin\frac{n\pi x}{L}\cos\frac{n\pi ct}{L},
+\]
+where the given initial conditions are only specified for $[0,L]$.  To be precise, the infinite Fourier series $f_{\text{ext}}(x)$ equals the odd periodic extension (with period $2L$) of $f(x)$: $f_{\text{ext}}(x) = \sum_{n=1}^{\infty} a_n \sin\frac{n\pi x}{L}$.  Using $\sin\frac{n\pi x}{L}\cos\frac{n\pi ct}{L} = \frac{1}{2}\sin\frac{n\pi(x+ct)}{L} + \frac{1}{2}\sin\frac{n\pi(x-ct)}{L}$, we obtain
+\[
+u(x,t) = \frac{1}{2}f_{\text{ext}}(x + ct) + \frac{1}{2}f_{\text{ext}}(x - ct),
+\]
+which is the same result obtained by the method of characteristics.
+
+\begin{exercises}{12.5}
+
+\item \label{ex:12.5.1}
+Consider
+\[
+\pdd{u}{t} = c^2\pdd{u}{x}
+\]
+\begin{align*}
+u(x,0) &= f(x) \\
+\pd{u}{t}(x,0) &= g(x)
+\end{align*} \quad $0 < x < L$
+\begin{align*}
+u(0,t) &= 0 \\
+u(L,t) &= 0.
+\end{align*}
+\begin{enumerate}
+\item[(a)] Obtain the solution by Fourier series techniques.
+\item[(b)]\starred\ If $g(x) = 0$, show that part (a) is equivalent to the results of Chapter~12.
+\item[(c)] If $f(x) = 0$, show that part (a) is equivalent to the results of Chapter~12.
+\end{enumerate}
+
+\item \label{ex:12.5.2}
+Solve using the method of characteristics:
+\[
+\pdd{u}{t} = c^2\pdd{u}{x}
+\]
+\begin{align*}
+u(x,0) &= 0 \qquad & u(0,t) &= h(t) \\
+\pd{u}{t}(x,0) &= 0 \qquad & u(L,t) &= 0.
+\end{align*}
+
+\item \label{ex:12.5.3}
+Consider
+\[
+\pdd{u}{t} = c^2\pdd{u}{x} \qquad 0 < x < 10
+\]
+\[
+u(x,0) = f(x) = \begin{cases} 1 & 4 < x < 5 \\ 0 & \text{otherwise} \end{cases} \qquad u(0,t) = 0
+\]
+\[
+\pd{u}{t}(x,0) = g(x) = 0 \qquad \pd{u}{x}(L,t) = 0.
+\]
+\begin{enumerate}
+\item[(a)] Sketch the solution using the method of characteristics.
+\item[(b)] Obtain the solution using Fourier-series-type techniques.
+\item[(c)] Obtain the solution by converting to an equivalent problem on an infinite domain.
+\end{enumerate}
+
+\item \label{ex:12.5.4}
+How should initial conditions be extended if $\partial u/\partial x(0,t) = 0$ and $u(L,t) = 0$?
+
+\end{exercises}

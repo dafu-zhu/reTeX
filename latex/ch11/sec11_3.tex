@@ -1,0 +1,440 @@
+% sec11_3.tex — Section 11.3: Green's Functions for the Heat Equation
+\section{Green's Functions for the Heat Equation}
+\label{sec:greens-heat}
+
+%% ── 11.3.1 Introduction ──────────────────────────────────────
+\subsection{Introduction}
+\label{subsec:heat-green-intro}
+
+We are interested in solving the heat equation with possibly time-dependent sources,
+\boxed{\begin{equation}
+\label{eq:11.3.1}
+\pd{u}{t} = k\laplacian u + Q(\vec{x},t),
+\end{equation}}
+subject to the initial condition $u(\vec{x},0) = g(\vec{x})$.  We will analyze this problem in one, two, and three spatial dimensions.  In this subsection we do not specify the geometric region or the possibly nonhomogeneous boundary conditions.  There can be three nonhomogeneous terms: the source $Q(\vec{x},t)$, the initial condition, and the boundary conditions.
+
+We define the \textbf{Green's function} $G(\vec{x},t;\vec{x}_0,t_0)$ as the solution of
+\boxed{\begin{equation}
+\label{eq:11.3.2}
+\pd{G}{t} = k\laplacian G + \delta(\vec{x} - \vec{x}_0)\delta(t - t_0)
+\end{equation}}
+on the same region with the related homogeneous boundary conditions.  Since the Green's function represents the temperature response at $\vec{x}$ (at time $t$) due to a concentrated thermal source at $\vec{x}_0$ (at time $t_0$), we will insist that this Green's function is zero before the source acts:
+\boxed{\begin{equation}
+\label{eq:11.3.3}
+G(\vec{x},t;\vec{x}_0,t_0) = 0 \quad \text{for} \quad t < t_0,
+\end{equation}}
+the \textbf{causality principle}.
+
+Furthermore, we show that only the elapsed time $t - t_0$ (from the initiation time $t = t_0$) is needed:
+\boxed{\begin{equation}
+\label{eq:11.3.4}
+G(\vec{x},t;\vec{x}_0,t_0) = G(\vec{x},t-t_0;\vec{x}_0,0),
+\end{equation}}
+the \textbf{translation property}.  Equation \eqref{eq:11.3.4} is shown by letting $T = t - t_0$, in which case the Green's function $G(\vec{x},t;\vec{x}_0,t_0)$ satisfies
+\[
+\pd{G}{T} = k\laplacian G + \delta(\vec{x} - \vec{x}_0)\delta(T) \quad \text{with} \quad G = 0 \quad \text{for} \quad T < 0.
+\]
+This is precisely the response due to a concentrated source at $\vec{x} = \vec{x}_0$ at $T = 0$, implying \eqref{eq:11.3.4}.
+
+We postpone until later subsections the actual calculation of the Green's function.  For now, we will assume that the Green's function is known and ask how to represent the temperature $u(\vec{x},t)$ in terms of the Green's function.
+
+%% ── 11.3.2 Non-Self-Adjoint Nature of the Heat Equation ─────
+\subsection{Non-Self-Adjoint Nature of the Heat Equation}
+\label{subsec:heat-non-self-adjoint}
+
+To show how this problem relates to others discussed in this book, we introduce the linear operator notation,
+\boxed{\begin{equation}
+\label{eq:11.3.5}
+L = \frac{\partial}{\partial t} - k\laplacian,
+\end{equation}}
+called the \textbf{heat} or \textbf{diffusion operator}.  In previous problems the relation between the solution of the nonhomogeneous problem and its Green's function was based on Green's formulas.  We have solved problems in which $L$ is the Sturm--Liouville operator, the Laplacian, and most recently the wave operator.
+
+The heat operator $L$ is composed of two parts.  $\laplacian$ is easily analyzed by Green's formula for the Laplacian [see \eqref{eq:11.2.8}].  However, as innocuous as $\partial/\partial t$ appears, it is much harder to analyze than any of the other previous operators.  To illustrate the difficulty presented by first derivatives, consider
+\[
+L = \frac{\partial}{\partial t}.
+\]
+For second-order Sturm--Liouville operators, elementary integrations yielded Green's formula.  The same idea for $L = \partial/\partial t$ will not work.  In particular,
+\[
+\int [uL(v) - vL(u)]\,dt = \int \left(u\pd{v}{t} - v\pd{u}{t}\right) dt
+\]
+cannot be simplified.  There is no formula to evaluate $\int [uL(v) - vL(u)]\,dt$.  The operator $L = \partial/\partial t$ is not self-adjoint.  Instead, by standard integration by parts,
+\[
+\int_a^b uL(v)\,dt = \int_a^b u\pd{v}{t}\,dt = uv\bigg|_a^b - \int_a^b v\pd{u}{t}\,dt,
+\]
+and thus
+\begin{equation}
+\label{eq:11.3.6}
+\int_a^b \left(u\pd{v}{t} + v\pd{u}{t}\right) dt = uv\bigg|_a^b.
+\end{equation}
+For the operator $L = \partial/\partial t$ we introduce the \textbf{adjoint operator},
+\boxed{\begin{equation}
+\label{eq:11.3.7}
+L^* = -\frac{\partial}{\partial t}.
+\end{equation}}
+From \eqref{eq:11.3.6},
+\boxed{\begin{equation}
+\label{eq:11.3.8}
+\int_a^b [uL^*(v) - vL(u)]\,dt = -uv\bigg|_a^b.
+\end{equation}}
+This is analogous to Green's formula.\footnote{For a first-order operator, typically there is only one ``boundary condition,'' $u(a) = 0$.  For the integrated-by-parts term to vanish, we must introduce an \emph{adjoint boundary condition}, $v(b) = 0$.}
+
+%% ── 11.3.3 Green's Formula ──────────────────────────────────
+\subsection{Green's Formula}
+\label{subsec:greens-formula-heat}
+
+We now return to the nonhomogeneous heat problem:
+\boxed{\begin{equation}
+\label{eq:11.3.9}
+L(u) = Q(\vec{x},t)
+\end{equation}}
+\boxed{\begin{equation}
+\label{eq:11.3.10}
+L(G) = \delta(\vec{x} - \vec{x}_0)\delta(t - t_0),
+\end{equation}}
+where
+\boxed{\begin{equation}
+\label{eq:11.3.11}
+L = \frac{\partial}{\partial t} - k\laplacian.
+\end{equation}}
+
+For the nonhomogeneous heat equation, our results are more complicated since we must introduce the \textbf{adjoint heat operator},
+\boxed{\begin{equation}
+\label{eq:11.3.12}
+L^* = -\frac{\partial}{\partial t} - k\laplacian.
+\end{equation}}
+
+By a direct calculation
+\[
+uL^*(v) - vL(u) = -u\pd{v}{t} - v\pd{u}{t} + k(v\laplacian u - u\laplacian v),
+\]
+and thus
+\boxed{\begin{equation}
+\label{eq:11.3.13}
+\begin{split}
+\int_{t_i}^{t_f} &\iiint [uL^*(v) - vL(u)]\,d^3x\,dt \\
+&= -\iiint uv\bigg|_{t_i}^{t_f} d^3x + k\int_{t_i}^{t_f} \oiint (v\nabla u - u\nabla v)\cdot\hat{\vec{n}}\,dS\,dt.
+\end{split}
+\end{equation}}
+
+We have integrated over all space and from some time $t = t_i$ to another time $t = t_f$.  We have used \eqref{eq:11.3.6} for the $\partial/\partial t$-terms and Green's formula \eqref{eq:11.2.8} for the $\laplacian$ operator.  The ``boundary contributions'' are of two types, the spatial part (over $\oiint$\footnote{For infinite or semi-infinite geometries, we consider finite regions in some appropriate limit.  The boundary terms at infinity will vanish if $u$ and $v$ decay sufficiently fast.}) and a temporal part (at the initial $t_i$ and final $t_f$ times).  If both $u$ and $v$ satisfy the same homogeneous boundary condition (of the usual types), then the spatial contributions vanish,
+\[
+\oiint (v\nabla u - u\nabla v)\cdot\hat{\vec{n}}\,dS = 0.
+\]
+Equation \eqref{eq:11.3.13} will involve initial contributions (at $t = t_i$) and final contributions ($t = t_f$).
+
+%% ── 11.3.4 Adjoint Green's Function ─────────────────────────
+\subsection{Adjoint Green's Function}
+\label{subsec:adjoint-greens-heat}
+
+In order to eventually derive a representation formula for $u(\vec{x},t)$ in terms of the Green's function $G(\vec{x},t;\vec{x}_0,t_0)$, we must consider summing up various source times.  Thus, we consider the \textbf{source-varying Green's function},
+\[
+G(\vec{x},t_1;\vec{x}_1,t) = G(\vec{x},-t;\vec{x}_1,-t_1),
+\]
+where the translation property has been used.  This is precisely the procedure we employed when analyzing the wave equation [see \eqref{eq:11.2.15}].  By causality, these are zero if $t > t_1$:
+\begin{equation}
+\label{eq:11.3.14}
+G(\vec{x},t_1;\vec{x}_1,t) = 0 \quad \text{for } t > t_1.
+\end{equation}
+
+Letting $\tau = -t$, we see that the source-varying Green's function $G(\vec{x},t_1;\vec{x}_1,t)$ satisfies
+\begin{equation}
+\label{eq:11.3.15}
+\left(-\frac{\partial}{\partial t} - k\laplacian\right) G(\vec{x},t_1;\vec{x}_1,t) = \delta(\vec{x} - \vec{x}_1)\delta(t - t_1),
+\end{equation}
+as well as the source-varying causality principle \eqref{eq:11.3.14}.  The heat operator $L$ does not occur.  Instead, the adjoint heat operator $L^*$ appears:
+\boxed{\begin{equation}
+\label{eq:11.3.16}
+L^*[G(\vec{x},t_1;\vec{x}_1,t)] = \delta(\vec{x} - \vec{x}_1)\delta(t - t_1).
+\end{equation}}
+
+We see that $G(\vec{x},t_1;\vec{x}_1,t)$ is the Green's function for the adjoint heat operator (with the source-varying causality principle).  Sometimes it is called the \textbf{adjoint Green's function}, $G^*(\vec{x},t;\vec{x}_1,t_1)$.  However, it is unnecessary to ever calculate or use it since
+\begin{equation}
+\label{eq:11.3.17}
+G^*(\vec{x},t;\vec{x}_1,t_1) = G(\vec{x},t_1;\vec{x}_1,t),
+\end{equation}
+and both are zero for $t > t_1$.
+
+%% ── 11.3.5 Reciprocity ──────────────────────────────────────
+\subsection{Reciprocity}
+\label{subsec:heat-reciprocity}
+
+As with the wave equation, we derive a reciprocity formula.  Here, there are some small differences because of the occurrence of the adjoint operator in Green's formula, \eqref{eq:11.3.13}.  In \eqref{eq:11.3.13} we introduce
+\begin{equation}
+\label{eq:11.3.18}
+u = G(\vec{x},t;\vec{x}_0,t_0)
+\end{equation}
+\begin{equation}
+\label{eq:11.3.19}
+v = G(\vec{x},t_1;\vec{x}_1,t),
+\end{equation}
+the latter having been shown to be the source-varying or adjoint Green's function.  Thus, the defining properties for $u$ and $v$ are
+\begin{align*}
+L(u) &= \delta(\vec{x} - \vec{x}_0)\delta(t - t_0), & L^*(v) &= \delta(\vec{x} - \vec{x}_1)\delta(t - t_1) \\
+u &= 0 \quad \text{for } t < t_0, & v &= 0 \quad \text{for } t > t_1.
+\end{align*}
+
+We integrate from $t = -\infty$ to $t = +\infty$ [i.e., $t_i = -\infty$ and $t_f = +\infty$ in \eqref{eq:11.3.13}], obtaining
+\begin{multline*}
+\int_{-\infty}^{\infty} \iiint [G(\vec{x},t;\vec{x}_0,t_0)\delta(\vec{x} - \vec{x}_1)\delta(t - t_1) - G(\vec{x},t_1;\vec{x}_1,t)\delta(\vec{x} - \vec{x}_0)\delta(t - t_0)]\,d^3x\,dt \\
+= -\iiint G(\vec{x},t;\vec{x}_0,t_0)G(\vec{x},t_1;\vec{x}_1,t)\bigg|_{t=-\infty}^{t=\infty} d^3x,
+\end{multline*}
+since $u$ and $v$ both satisfy the same homogeneous boundary conditions, so that
+\[
+\oiint (v\nabla u - u\nabla v)\cdot\hat{\vec{n}}\,dS
+\]
+vanishes.  The contributions also vanish at $t = \pm\infty$ due to causality.  Using the properties of the Dirac delta function, we obtain \textbf{reciprocity}:
+\boxed{\begin{equation}
+\label{eq:11.3.20}
+G(\vec{x}_1,t_1;\vec{x}_0,t_0) = G(\vec{x}_0,t_1;\vec{x}_1,t_0).
+\end{equation}}
+As we have shown for the wave equation [see \eqref{eq:11.2.21}], interchanging the source and location positions does not alter the responses if the elapsed times from the sources are the same.  In this sense the Green's function for the heat (diffusion) equation is symmetric because of Green's formula.
+
+%% ── 11.3.6 Representation of the Solution Using Green's Functions ──
+\subsection{Representation of the Solution Using Green's Functions}
+\label{subsec:representation-heat}
+
+To obtain the relationship between the solution of the nonhomogeneous problem and the Green's function, we apply Green's formula \eqref{eq:11.3.13} with $u$ satisfying \eqref{eq:11.3.1} subject to nonhomogeneous boundary and initial conditions.  We let $v$ equal the source-varying or adjoint Green's function, $v = G(\vec{x},t_0;\vec{x}_0,t)$.  Using the defining differential equations \eqref{eq:11.3.9} and \eqref{eq:11.3.10}, Green's formula \eqref{eq:11.3.13} becomes
+\begin{multline*}
+\int_0^{t_{0+}} \iiint [u\delta(\vec{x} - \vec{x}_0)\delta(t - t_0) - G(\vec{x},t_0;\vec{x}_0,t)Q(\vec{x},t)]\,d^3x\,dt \\
+= \iiint u(\vec{x},0)G(\vec{x},t_0;\vec{x}_0,0)\,d^3x \\
++ k \int_0^{t_{0+}} \oiint [G(\vec{x},t_0;\vec{x}_0,t)\nabla u - u\nabla G(\vec{x},t_0;\vec{x}_0,t)]\cdot\hat{\vec{n}}\,dS\,dt,
+\end{multline*}
+since $G = 0$ for $t > t_0$.  Solving for $u$, we obtain
+\begin{align*}
+u(\vec{x}_0,t_0) &= \int_0^{t_0} \iiint G(\vec{x},t_0;\vec{x}_0,t)Q(\vec{x},t)\,d^3x\,dt \\
+&\quad + \iiint u(\vec{x},0)G(\vec{x},t_0;\vec{x}_0,0)\,d^3x \\
+&\quad + k \int_0^{t_0} \oiint [G(\vec{x},t_0;\vec{x}_0,t)\nabla u - u\nabla G(\vec{x},t_0;\vec{x}_0,t)]\cdot\hat{\vec{n}}\,dS\,dt.
+\end{align*}
+It can be shown that the limits $t_{0+}$ may be replaced by $t_0$.  We now (as before) interchange $\vec{x}$ with $\vec{x}_0$ and $t$ with $t_0$.  In addition, we use reciprocity and derive
+\boxed{\begin{equation}
+\label{eq:11.3.21}
+\begin{split}
+u(\vec{x},t) &= \int_0^t \iiint G(\vec{x},t;\vec{x}_0,t_0)Q(\vec{x}_0,t_0)\,d^3x_0\,dt_0 \\
+&\quad + \iiint G(\vec{x},t;\vec{x}_0,0)u(\vec{x}_0,0)\,d^3x_0 \\
+&\quad + k \int_0^t \oiint [G(\vec{x},t;\vec{x}_0,t_0)\nabla_{\vec{x}_0} u - u(\vec{x}_0,t_0)\nabla_{\vec{x}_0} G(\vec{x},t;\vec{x}_0,t_0)]\cdot\hat{\vec{n}}\,dS_0\,dt_0.
+\end{split}
+\end{equation}}
+
+Equation \eqref{eq:11.3.21} illustrates how the temperature $u(\vec{x},t)$ is affected by the three nonhomogeneous terms.  The Green's function $G(\vec{x},t;\vec{x}_0,t_0)$ is the influence function for the source term $Q(\vec{x}_0,t_0)$ as well as for the initial temperature distribution $u(\vec{x}_0,0)$ (if we evaluate the Green's function at $t_0 = 0$, as is quite reasonable).  Furthermore, nonhomogeneous boundary conditions are accounted for by the term $k\int_0^t \oiint (G\nabla_{\vec{x}_0} u - u\nabla_{\vec{x}_0} G)\cdot\hat{\vec{n}}\,dS_0\,dt_0$.  Equation \eqref{eq:11.3.21} illustrates the causality principle; at time $t$, the sources and boundary conditions have an effect only for $t_0 < t$.  Equation \eqref{eq:11.3.21} generalizes results obtained by the method of eigenfunction expansion for one-dimensional heat equation on a finite interval with zero boundary conditions.
+
+\textbf{Example.}\quad Both $u$ and its normal derivative seem to be needed on the boundary.  To clarify the effect of the nonhomogeneous boundary conditions, we consider an example in which the temperature is specified along the entire boundary:
+\[
+u(\vec{x},t) = u_B(\vec{x},t) \quad \text{along the boundary.}
+\]
+The Green's function satisfies the related homogeneous boundary conditions, in this case
+\[
+G(\vec{x},t;\vec{x}_0,t_0) = 0 \quad \text{for all } \vec{x} \text{ along the boundary.}
+\]
+Thus, the effect of this imposed temperature distribution is
+\[
+-k \int_0^t \oiint u_B(\vec{x}_0,t_0)\nabla_{\vec{x}_0} G(\vec{x},t;\vec{x}_0,t_0)\cdot\hat{\vec{n}}\,dS_0\,dt_0.
+\]
+The influence function for the nonhomogeneous boundary conditions is minus $k$ times the normal derivative of the Green's function (a dipole distribution).
+
+\textbf{One-dimensional case.}\quad It may be helpful to illustrate the modifications necessary for one-dimensional problems.  Volume integrals $\iiint d^3x_0$ become one-dimensional integrals $\int_a^b dx_0$.  Boundary contributions on the closed surface $\oiint dS_0$ become contributions at the two ends $x = a$ and $x = b$.  For example, if the temperature is prescribed at both ends, $u(a,t) = A(t)$ and $u(b,t) = B(t)$, then these nonhomogeneous boundary conditions influence the temperature $u(\vec{x},t)$:
+\begin{align*}
+-k \int_0^t &\oiint u_B(\vec{x}_0,t_0)\nabla_{\vec{x}_0} G(\vec{x},t;\vec{x}_0,t_0)\cdot\hat{\vec{n}}\,dS_0\,dt_0 \quad \text{becomes}\\
+-k \int_0^t &\left[B(t_0)\pd{G}{x_0}(x,t;b,t_0) - A(t_0)\pd{G}{x_0}(x,t;a,t_0)\right] dt_0.
+\end{align*}
+This agrees with results that could be obtained by the method of eigenfunction expansions (Chapter~9) for nonhomogeneous boundary conditions.
+
+%% ── 11.3.7 Alternate Differential Equation for the Green's Function ──
+\subsection{Alternate Differential Equation for the Green's Function}
+\label{subsec:alt-de-greens-heat}
+
+Using Green's formula, we derived \eqref{eq:11.3.21} which shows the influence of sources, nonhomogeneous boundary conditions, and the initial condition for the heat equation.  The Green's function for the heat equation is not only the influence function for the sources, but also the influence function for the initial condition.  If there are no sources, if the boundary conditions are homogeneous, and if the initial condition is a delta function, then the response is the Green's function itself.  The Green's function $G(\vec{x},t;\vec{x}_0,t_0)$ may be determined directly from the diffusion equation with no sources:
+\boxed{\begin{equation}
+\label{eq:11.3.22}
+\pd{G}{t} = k\laplacian G,
+\end{equation}}
+subject to homogeneous boundary conditions and the concentrated initial conditions at $t = t_0$:
+\begin{equation}
+\label{eq:11.3.23}
+G = \delta(\vec{x} - \vec{x}_0),
+\end{equation}
+rather than its defining differential equation \eqref{eq:11.3.2}.
+
+%% ── 11.3.8 Infinite Space Green's Function for the Diffusion Equation ──
+\subsection{Infinite Space Green's Function for the Diffusion Equation}
+\label{subsec:inf-space-greens-heat}
+
+If there are no boundaries and no sources, $\pd{u}{t} = k\laplacian u$ with initial conditions $u(\vec{x},0) = f(\vec{x})$, then \eqref{eq:11.3.21} represents the solution of the diffusion equation in terms of its Green's function:
+\begin{equation}
+\label{eq:11.3.24}
+u(x,t) = \iiint u(x_0,0)G(x,t;x_0,0)\,d^3x_0 = \iiint f(x_0)G(x,t;x_0,0)\,d^3x_0.
+\end{equation}
+Instead of solving \eqref{eq:11.3.22}, we note that this initial value problem was analyzed using the Fourier transform in Chapter~10, and we obtained the one-dimensional solution:
+\begin{equation}
+\label{eq:11.3.25}
+u(x,t) = \int_{-\infty}^{\infty} f(x_0)\frac{1}{\sqrt{4\pi k t}}\,e^{-(x-x_0)^2/4kt}\,dx_0.
+\end{equation}
+By comparing \eqref{eq:11.3.24} and \eqref{eq:11.3.25}, we are able to determine the one-dimensional infinite space Green's function for the diffusion equation:
+\begin{equation}
+\label{eq:11.3.26}
+G(x,t;x_0,0) = \frac{1}{\sqrt{4\pi kt}}\,e^{-(x-x_0)^2/4kt}.
+\end{equation}
+Due to translational invariance, the more general Green's function involves the elapsed time:
+\boxed{\begin{equation}
+\label{eq:11.3.27}
+G(x,t;x_0,t_0) = \frac{1}{\sqrt{4\pi k(t-t_0)}}\,e^{-(x-x_0)^2/4k(t-t_0)}.
+\end{equation}}
+
+For $n$ dimensions ($n = 1,2,3$), the solution was also obtained in Chapter~10 (10.6.95), and hence the \textbf{$n$-dimensional infinite space Green's function for the diffusion equation} is
+\boxed{\begin{equation}
+\label{eq:11.3.28}
+G(\vec{x},t;\vec{x}_0,t_0) = \left[\frac{1}{4\pi k(t-t_0)}\right]^{n/2} e^{-|\vec{x} - \vec{x}_0|^2/4k(t-t_0)}.
+\end{equation}}
+
+This Green's function shows the symmetry of the response and source positions as long as the elapsed time is the same.  As with one-dimensional problems discussed in Sec.~10.4, the influence of a concentrated heat source diminishes exponentially as one moves away from the source.  For small times ($t$ near $t_0$) the decay is especially strong.
+
+\textbf{Example.}\quad In this manner we can obtain the solution of the heat equation with sources on an infinite domain:
+\begin{equation}
+\label{eq:11.3.29}
+\pd{u}{t} = k\laplacian u + Q(\vec{x},t)
+\end{equation}
+\[
+u(x,0) = f(\vec{x}).
+\]
+According to \eqref{eq:11.3.21} and \eqref{eq:11.3.28}, the solution is
+\boxed{\begin{equation}
+\label{eq:11.3.30}
+\begin{split}
+u(\vec{x},t) &= \int_0^t \int_{-\infty}^{\infty} \left[\frac{1}{4\pi k(t-t_0)}\right]^{n/2} e^{-(\vec{x} - \vec{x}_0)^2/4k(t-t_0)}\,Q(\vec{x}_0,t_0)\,d^n x_0\,dt_0 \\
+&\quad + \int_{-\infty}^{\infty} \left(\frac{1}{4\pi k t}\right)^{n/2} e^{-(\vec{x} - \vec{x}_0)^2/4kt}\,f(\vec{x}_0)\,d^n x_0.
+\end{split}
+\end{equation}}
+
+If $Q(\vec{x},t) = 0$, this simplifies to the solution obtained in Chapter~10 using Fourier transforms directly without using the Green's function.
+
+%% ── 11.3.9 Green's Function for the Heat Equation (Semi-Infinite Domain) ──
+\subsection{Green's Function for the Heat Equation (Semi-Infinite Domain)}
+\label{subsec:semi-inf-greens-heat}
+
+In this subsection we obtain the Green's function needed to solve the nonhomogeneous heat equation on the semi-infinite interval in one dimension ($x > 0$), subject to a nonhomogeneous boundary condition at $x = 0$:
+\begin{equation}
+\label{eq:11.3.31}
+\text{PDE:}\quad \pd{u}{t} = k\pdd{u}{x} + Q(x,t) \quad x > 0,
+\end{equation}
+\begin{equation}
+\label{eq:11.3.32}
+\text{BC:}\quad u(0,t) = A(t)
+\end{equation}
+\begin{equation}
+\label{eq:11.3.33}
+\text{IC:}\quad u(x,0) = f(x).
+\end{equation}
+
+Equation \eqref{eq:11.3.21} can be used to determine $u(x,t)$ if we can obtain the Green's function.  The Green's function $G(x,t;x_0,t_0)$ is the response due to a concentrated source:
+\[
+\pd{G}{t} = k\pdd{G}{x} + \delta(x - x_0)\delta(t - t_0).
+\]
+The Green's function satisfies the corresponding \emph{homogeneous} boundary condition,
+\[
+G(0,t;x_0,t_0) = 0,
+\]
+and the causality principle,
+\[
+G(x,t;x_0,t_0) = 0 \quad \text{for } t < t_0.
+\]
+The Green's function is determined by the method of images (see Sec.~9.5.8).  Instead of a semi-infinite interval with one concentrated positive source at $x = x_0$, we consider an infinite interval with an additional negative source (the image source) located at $x = -x_0$.  By symmetry the temperature $G$ will be zero at $x = 0$ for all $t$.  The Green's function is thus the sum of two infinite space Green's functions,
+\boxed{\begin{equation}
+\label{eq:11.3.34}
+G(x,t;x_0,t_0) = \frac{1}{\sqrt{4\pi k(t-t_0)}}\left\{\exp\left[-\frac{(x - x_0)^2}{4k(t-t_0)}\right] - \exp\left[-\frac{(x + x_0)^2}{4k(t-t_0)}\right]\right\}.
+\end{equation}}
+We note that the boundary condition at $x = 0$ is automatically satisfied.
+
+%% ── 11.3.10 Green's Function for the Heat Equation (Finite Region) ──
+\subsection{Green's Function for the Heat Equation (on a Finite Region)}
+\label{subsec:finite-greens-heat}
+
+For a one-dimensional rod, $0 < x < L$, we have already determined in Chapter~9 the Green's function for the heat equation by the method of eigenfunction expansions.  With zero boundary conditions at both ends,
+\boxed{\begin{equation}
+\label{eq:11.3.35}
+G(x,t;x_0,t_0) = \sum_{n=1}^{\infty} \frac{2}{L}\sin\frac{n\pi x}{L}\sin\frac{n\pi x_0}{L}\,e^{-k(n\pi/L)^2(t-t_0)}.
+\end{equation}}
+
+We can obtain an alternative representation for this Green's function by utilizing the method of images.  By symmetry (see Fig.~\ref{fig:11.3.1}) the boundary conditions at $x = 0$ and at $x = L$ are satisfied if positive concentrated sources are located at $x = x_0 + 2Ln$ and negative concentrated sources are located at $x = -x_0 + 2Ln$ (for all integers $n$, $-\infty < n < \infty$).  Using the infinite space Green's function, we have an alternative representation of the Green's function for a one-dimensional rod:
+\boxed{\begin{equation}
+\label{eq:11.3.36}
+G(x,t;x_0,t_0) = \frac{1}{\sqrt{4\pi k(t-t_0)}} \sum_{n=-\infty}^{\infty} \left\{\exp\left[-\frac{(x - x_0 - 2Ln)^2}{4k(t-t_0)}\right] - \exp\left[-\frac{(x + x_0 - 2Ln)^2}{4k(t-t_0)}\right]\right\}.
+\end{equation}}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch11/fig_11_3_1.png}
+\caption{Multiple image sources for the Green's function for the heat equation for a finite one-dimensional rod.}
+\label{fig:11.3.1}
+\end{figure}
+
+Using the method of images, the Green's function is also represented by an infinite series, \eqref{eq:11.3.36}.  The infinite space Green's function (at fixed $t$) exponentially decays away from the source position.
+\[
+\frac{1}{\sqrt{4\pi k(t-t_0)}}\,e^{-(x - x_0)^2/4k(t-t_0)}.
+\]
+It decays in space very sharply if $t$ is near $t_0$.  If $t$ is near $t_0$ then only sources near the response location $x$ are important; sources far away will not be important (if $t$ is near $t_0$); see Fig.~\ref{fig:11.3.1}.  Thus, the image sources can be neglected if $t$ is near $t_0$ (and if $x$ or $x_0$ is neither near the boundaries $0$ or $L$, as is explained in Exercise~11.3.8).  As an approximation,
+\[
+G(x,t;x_0,t_0) \approx \frac{1}{\sqrt{4\pi k(t-t_0)}}\,e^{-(x - x_0)^2/4k(t-t_0)};
+\]
+\textbf{if $t$ is near $t_0$ the Green's function with boundaries can be approximated} (in regions away from the boundaries) \textbf{by the infinite space Green's function}.  This means that for small times the boundary can be neglected (away from the boundary).
+
+To be more precise, the effect of every image source is much smaller than the actual source if $(t-t_0)k/L^2$ is large.  This yields a better understanding of a ``small time'' approximation.  The infinite space Green's function if $t - t_0$ is small (i.e., if $t - t_0 \ll L^2/k$, where $L^2/k$ is a ratio of physically measurable quantities).  Alternatively, this approximation is valid for a ``long rod'' in the sense that $L \gg \sqrt{k(t-t_0)}$.
+
+In summary, the image method yields a rapidly convergent infinite series for the Green's function if $L^2/k(t-t_0) \gg 1$, while the eigenfunction expansion yields a rapidly convergent infinite series representation of the Green's function if $L^2/k(t-t_0) \ll 1$.  If $L^2/k(t-t_0)$ is neither small nor large, then the two expansions are competitive, but both require at least a moderate number of terms.
+
+%% ── Exercises 11.3 ──────────────────────────────────────────
+\begin{exercises}{11.3}
+
+\item \label{ex:11.3.1}
+Show that for the Green's functions defined by \eqref{eq:11.3.2} with \eqref{eq:11.3.3}
+\[
+G^*(\vec{x},t;\vec{x}_0,t_0) = G(\vec{x}_0,t_0;\vec{x},t).
+\]
+
+\item \label{ex:11.3.2}
+Consider
+\begin{align*}
+\pd{u}{t} &= k\pdd{u}{x} + Q(x,t) \qquad x > 0 \\
+u(0,t) &= A(t) \\
+u(x,0) &= f(x).
+\end{align*}
+\begin{enumerate}
+\item[(a)] Solve if $A(t) = 0$ and $f(x) = 0$.  Simplify this result if $Q(x,t) = 1$.
+\item[(b)] Solve if $Q(x,t) = 0$ and $A(t) = 0$.  Simplify this result if $f(x) = 1$.
+\item[\starred (c)] Solve if $Q(x,t) = 0$ and $f(x) = 0$.  Simplify this result if $A(t) = 1$.
+\end{enumerate}
+
+\item \label{ex:11.3.3}
+\starred\ Determine the Green's function for
+\begin{align*}
+\pd{u}{t} &= k\pdd{u}{x} + Q(x,t) \qquad x > 0 \\
+\pd{u}{x}(0,t) &= A(t) \\
+u(x,0) &= f(x).
+\end{align*}
+
+\item \label{ex:11.3.4}
+Consider \eqref{eq:11.3.34}, the Green's function for \eqref{eq:11.3.31}.  Show that the Green's function for this semi-infinite problem may be approximated by the Green's function for the infinite problem if
+\[
+\frac{xx_0}{k(t-t_0)} \gg 1 \quad \text{(i.e., $t - t_0$ ``small'').}
+\]
+Explain physically why this approximation fails if $x$ or $x_0$ is near the boundary.
+
+\item \label{ex:11.3.5}
+Consider
+\begin{align*}
+\pd{u}{t} &= k\pdd{u}{x} + Q(x,t) \\
+u(x,0) &= f(x) \\
+\pd{u}{x}(0,t) &= A(t) \\
+\pd{u}{x}(L,t) &= B(t).
+\end{align*}
+\begin{enumerate}
+\item[(a)] Solve for the appropriate Green's function using the method of eigenfunction expansion.
+\item[(b)] Approximate the Green's function of part~(a).  Under what conditions is your approximation valid?
+\item[(c)] Solve for the appropriate Green's function using the infinite space Green's function.
+\item[(d)] Approximate the Green's function of part~(c).  Under what conditions is your approximation valid?
+\item[(e)] Solve for $u(x,t)$ in terms of the Green's function.
+\end{enumerate}
+
+\item \label{ex:11.3.6}
+Determine the Green's function for the heat equation subject to zero boundary conditions at $x = 0$ and $x = L$ by applying the method of eigenfunction expansions directly to the defining differential equation.  [\emph{Hint}: The answer is given by \eqref{eq:11.3.35}.]
+
+\end{exercises}
+

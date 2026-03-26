@@ -1,0 +1,172 @@
+% sec14_3.tex — Section 14.3: Wave Guides
+\section{Wave Guides}
+\label{sec:wave-guides}
+
+In wave propagation problems (where physical phenomena are described by the wave equation or other partial differential equations), local disturbances decay rapidly in three-dimensional space.  In order to communicate efficiently in a three-dimensional world, energy must be confined to two or one dimension.  Wave guides are introduced for this purpose for electromagnetic (light) or acoustic (sound) waves.  Typical wave guides are long, hollow tubes with circular cross section that (as we will show) can be designed to permit the propagation of electromagnetic or acoustic waves in one dimension.  Acoustic waves solve the three-dimensional wave equation
+\boxed{\begin{equation}
+\label{eq:14.3.1}
+\pdd{u}{t} = c^2\biggl(\pdd{u}{x} + \pdd{u}{y} + \pdd{u}{z}\biggr).
+\end{equation}}
+
+Electromagnetic waves satisfy a system of wave equations, more complicated because the different components of the electric and magnetic fields are coupled through various boundary conditions.  However, the mathematical procedures to analyze these electromagnetic waves are the same as for acoustic waves so that to simplify the presentation we will restrict our attention to the three-dimensional wave equation \eqref{eq:14.3.1}.
+
+We will analyze a wave guide with a rectangular cross section rather than the more realistic circular cross section (see Fig.~14.3.1).  The analysis of rectangular wave guides ($0 < y < L$, $0 < z < H$) uses the trigonometric functions of a Fourier series, while circular wave guides require Bessel functions.  We leave circular wave guides to the Exercises, but we assure the reader that the circular problem presents no new problems once the rectangular wave guide is understood.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch14/fig_14_3_1.png}
+\caption{(a) Rectangular and (b) circular wave guides.}
+\label{fig:14.3.1}
+\end{figure}
+
+For electromagnetic waves, different boundary conditions apply for different phenomena.  We choose to study the boundary condition that $u = 0$ on the boundary of the wave guide.  Solutions of the partial differential equation \eqref{eq:14.3.1} will be in the form
+\boxed{\begin{equation}
+\label{eq:14.3.2}
+u = e^{i(kx - \omega t)}\sin\frac{n\pi y}{L}\sin\frac{m\pi z}{H}, \quad n = 1,\,2,\,3,\ldots \text{ and } m = 1,\,2,\,3,\ldots
+\end{equation}}
+corresponding to Fourier sine series in $y$ and $z$ due to the boundary conditions.  The traveling wave $e^{i(kx - \omega t)}$ in the $x$-direction corresponds to a Fourier transform in $x$.  Solutions to the initial value problem for \eqref{eq:14.3.1} are obtained by summing over $n$ and $m$ and integrating over $k$.  Substituting \eqref{eq:14.3.2} into \eqref{eq:14.3.1} yields the all natural frequencies of vibration $\omega$ for the wave guide, the dispersion relation
+\begin{equation}
+\label{eq:14.3.3}
+\omega^2 = c^2\Bigl[k^2 + \Bigl(\frac{n\pi}{L}\Bigr)^2 + \Bigl(\frac{m\pi}{H}\Bigr)^2\Bigr], \quad n = 1,\,2,\,3,\ldots \text{ and } m = 1,\,2,\,3,\ldots.
+\end{equation}
+
+This also follows by separation of variables.  It is important to distinguish between the continuous nature of $k$ and the discrete nature of $n$ and $m$.  Each solution \eqref{eq:14.3.2} is called a \textbf{mode} of the wave guide.  There is a doubly infinite set of modes, $n = 1,2,3,\ldots$ and $m = 1,2,3,\ldots$.  Each mode (fixed $m$ and $n$) is dispersive.  The group velocity can be obtained by differentiating \eqref{eq:14.3.3} with respect to the wave number $k$, $2\omega\od{\omega}{k} = c^2 2k$, so that
+\[
+\od{\omega}{k} = c^2\frac{k}{\omega}.
+\]
+For wave guides the group velocity is in the same direction as the phase velocity $\frac{\omega}{k}$.  For wave guides, waves whose phase travels to the left have energy that travels to the left.  (For other partial differential equations, the phase and the energy do not have to travel in the same direction.)
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch14/fig_14_3_2.png}
+\caption{Dispersion relation for various modes of a wave guide.}
+\label{fig:14.3.2}
+\end{figure}
+
+In Fig.~14.3.2 we graph the frequency as a function of the wave number for the first few modes.  There is a lowest natural frequency, which is called a \textbf{cut-off frequency} for reasons to be described.  It occurs for $n = 1$, $m = 1$ with $k = 0$ (infinitely long waves):
+\begin{equation}
+\label{eq:14.3.4}
+\omega_c = c\sqrt{\Bigl(\frac{\pi}{L}\Bigr)^2 + \Bigl(\frac{\pi}{H}\Bigr)^2}.
+\end{equation}
+
+The propagation of waves in wave guides occurs by forcing the wave guide in some way with a forcing frequency $\omega_f$.  Roughly speaking, resonance is involved.  We will show that if the forcing frequency is greater than the cut-off frequency ($\omega_f > \omega_c$), then some kind of resonance is possible in which a wave propagates along the wave guide with constant amplitude.  Given a specific forcing frequency $\omega = \omega_f$, the dispersion relation \eqref{eq:14.3.3} determines the wave number $k_f$ (for each $n$ and $m$) that will propagate:
+\[
+k_f = \pm\sqrt{\frac{\omega_f^2}{c^2} - \Bigl[\Bigl(\frac{n\pi}{L}\Bigr)^2 + \Bigl(\frac{m\pi}{H}\Bigr)^2\Bigr]}.
+\]
+The number of waves that can propagate depends on $\omega_f$, and from Fig.~14.3.2 the larger $\omega_f$ the more modes that can propagate.  We will show that if the forcing frequency is less than the cut-off frequency ($\omega_f < \omega_c$), then the response of the system is much smaller.
+
+\subsection{Response to Concentrated Periodic Sources with Frequency $\omega_f$}
+\label{sec:wave-guide-periodic-source}
+
+To understand how a wave guide responds to periodic forcing, we consider a periodic source concentrated inside the wave guide at $x = x_0$, $y = y_0$, $z = z_0$ with forcing frequency $\omega_f$:
+\begin{equation}
+\label{eq:14.3.5}
+\pdd{u}{t} = c^2\biggl(\pdd{u}{x} + \pdd{u}{y} + \pdd{u}{z}\biggr) + e^{-i\omega_f t}\delta(x - x_0)\delta(y - y_0)\delta(z - z_0).
+\end{equation}
+
+We assume the same boundary conditions $u = 0$ on the boundary.  Because of the boundary conditions, we seek a solution as a double Fourier sine series in $y$ and $z$:
+\begin{equation}
+\label{eq:14.3.6}
+u(x,y,z,t) = \sum_{n=1}^{\infty}\sum_{m=1}^{\infty} A_{nm}(x,t)\sin\frac{n\pi y}{L}\sin\frac{m\pi z}{H}.
+\end{equation}
+
+The equation that the amplitudes $A_{nm}$ satisfy (dropping subscripts for convenience) is
+\begin{equation}
+\label{eq:14.3.7}
+\pdd{A}{t} = c^2\pdd{A}{x} - c^2\Bigl[\Bigl(\frac{n\pi}{L}\Bigr)^2 + \Bigl(\frac{m\pi}{H}\Bigr)^2\Bigr]A + \frac{4}{LH}e^{-i\omega_f t}\delta(x - x_0)\sin\frac{n\pi y_0}{L}\sin\frac{m\pi z_0}{H}.
+\end{equation}
+The amplitude of each mode satisfies \eqref{eq:14.3.7}, a one-dimensional wave equation (in the propagation direction $x$ of the wave guide) with an extra restoring force and a concentrated periodic source.  Since \eqref{eq:14.3.7} has simple periodic forcing, we can find a particular solution of \eqref{eq:14.3.7} with the same periodic forcing:
+\begin{equation}
+\label{eq:14.3.8}
+A(x,t) = G(x,x_0)e^{-i\omega_f t},
+\end{equation}
+where the one-dimensional Green's function $G(x,x_0)$ for each mode (fixed $n$ and $m$) along the wave guide satisfies
+\begin{equation}
+\label{eq:14.3.9}
+c^2\odd{G}{x} + \biggl\{\omega_f^2 - c^2\Bigl[\Bigl(\frac{n\pi}{L}\Bigr)^2 + \Bigl(\frac{m\pi}{H}\Bigr)^2\Bigr]\biggr\}G = \frac{4}{LH}\delta(x - x_0)\sin\frac{n\pi y_0}{L}\sin\frac{m\pi z_0}{H}.
+\end{equation}
+
+\subsection{Green's Function If Mode Propagates}
+\label{sec:greens-function-propagates}
+
+Since the right-hand side of \eqref{eq:14.3.9} is a Dirac delta function in space, the differential equation is solved by using homogenous solutions for $x < x_0$ and for $x > x_0$ and applying the jump condition as described in Chapter~8.  There are two cases for the homogeneous solutions depending on whether the forcing frequency ($\omega_f$) is greater than or less than the natural frequency of the $nm$th mode.
+
+If the forcing frequency is greater than the natural frequency of the particular mode ($n$ and $m$ fixed), then the homogeneous solutions are $\sin k_f x$ and $\cos k_f x$, where $k_f \equiv \sqrt{\frac{\omega_f^2}{c^2} - \bigl[\bigl(\frac{n\pi}{L}\bigr)^2 + \bigl(\frac{m\pi}{H}\bigr)^2\bigr]}$.  However, the differential equation in $x$ \eqref{eq:14.3.9} does not have any boundary conditions in $x$.  Even if we insist the solution is bounded in $x$, all of these solutions are bounded in $x$.  There is no easy, mathematically precise way to derive a unique Green's function.  Instead we apply a \textbf{radiation condition} (which follows from more advanced mathematics).  It is clearer, using equivalent homogeneous solutions, that $e^{\pm ik_f(x-x_0)}$ in the boundary layer solution.  According to \eqref{eq:14.3.8}, to obtain the amplitude of the $n - m$th mode, we must multiply by $e^{-i\omega_f t}$.  Thus, the homogeneous solutions for the $n-m$th mode correspond to $e^{\pm ik_f(x-x_0)-i\omega_f t}$.  These are seen to be one-dimensional waves whose energy is propagating to the left and right.  Since we have a source at $x = x_0$, the \textbf{radiation condition} asserts that we have waves with energy moving to the right for $x > x_0$ and waves with energy moving to the left for $x < x_0$.  In this way (if $\omega_f$ is greater than the natural frequency of the $n - m$th mode), we derive that the Green's function
+\begin{equation}
+\label{eq:14.3.10}
+G(x,x_0) = \frac{4}{2ik_fLHc^2}\sin\frac{n\pi y_0}{L}\sin\frac{m\pi z_0}{H}\begin{cases} e^{ik_f(x-x_0)} & \text{for } x > x_0 \\ e^{-ik_f(x-x_0)} & \text{for } x < x_0, \end{cases}
+\end{equation}
+where we have also applied the jump condition following from \eqref{eq:14.3.9} that
+\[
+\evalat{\od{G}{x}}{x=x_0^+} - \evalat{\od{G}{x}}{x=x_0^-} = \frac{4}{LHc^2}\sin\frac{n\pi y_0}{L}\sin\frac{m\pi z_0}{H}.
+\]
+Thus the amplitude of the $(m\text{-}n)$th mode is quite simple and corresponds to a wave with energy propagating outward in the wave guide (due to the concentrated periodic source).  Since $\omega_f$ is given, the wave number is discrete.  From \eqref{eq:14.3.6}, the solution in the wave guide consists of a \emph{sum} of all electromagnetic or acoustic waves with energy traveling outward with wave numbers $k_f$ corresponding to a given forcing frequency $\omega_f$.  These solutions are traveling waves; they do not decay in space or time as they travel away from the source.
+
+\subsection{Green's Function If Mode Does Not Propagate}
+\label{sec:greens-function-no-propagate}
+
+We continue to consider part of the response that generates the $(m\text{-}n)$th mode with structure $\sin\frac{n\pi y}{L}\sin\frac{m\pi z}{H}$ transverse to the wave guide.  The amplitude of this mode due to the concentrated periodic source satisfies \eqref{eq:14.3.9}.  If the forcing frequency is less than the natural frequency of the $(m\text{-}n)$th mode, then the homogeneous solutions of \eqref{eq:14.3.9} are not sinusoidal but are growing and decaying exponentials $e^{\pm\beta_f x}$, where $\beta_f = \sqrt{\bigl(\frac{n\pi}{L}\bigr)^2 + \bigl(\frac{m\pi}{H}\bigr)^2 - \frac{\omega_f^2}{c^2}} > 0$.  We insist our solution is bounded for all $x$, the solution must exponentially decay both for $x > x_0$ and for $x < x_0$.  Thus, the Green's function \eqref{eq:14.3.9} is given by
+\begin{equation}
+\label{eq:14.3.11}
+G(x,x_0) = \frac{4}{-2\beta_fLHc^2}\sin\frac{n\pi y_0}{L}\sin\frac{m\pi z_0}{H}\begin{cases} e^{-\beta_f(x-x_0)} & \text{for } x > x_0 \\ e^{\beta_f(x-x_0)} & \text{for } x < x_0. \end{cases}
+\end{equation}
+For example, for $x > x_0$, we have a simple exact elementary solution of the three-dimensional wave equation, $u = Be^{-\beta_f x}\sin\frac{n\pi y}{L}\sin\frac{m\pi z}{H}e^{-i\omega_f t}$, called an \textbf{evanescent wave}.
+
+\subsection{Design Considerations}
+\label{sec:wave-guide-design}
+
+Often it is desirable to design a wave guide such that only one wave mode propagates at a given frequency.  Otherwise the signal is more complicated, composed of two or more waves with different wave lengths but the same frequency.  This can only be accomplished easily for the mode with the lowest frequency (here $n = 1$, $m = 1$).  We design the wave guide such that the desired frequency is slightly greater than the cut-off frequency.  For a square ($L = H$) wave guide, satisfying the three-dimensional wave equation, $\omega_c = \frac{c\pi}{L}\sqrt{2} < \omega_f$.  The next lowest frequency corresponds to $n = 1$ and $m = 2$ (or $m = 1$ and $n = 2$): $\omega_2 = \frac{c\pi}{L}\sqrt{5}$.  To guarantee that only one wave of frequency $\omega_f$ propagates, we insist that
+\[
+\frac{c\pi}{L}\sqrt{2} < \omega_f < \frac{c\pi}{L}\sqrt{5}.
+\]
+If we assume that the material through which the electromagnetic or acoustic wave travels is fixed, then we would know $c$.  The lengths of the sides would satisfy
+\[
+\frac{c\pi}{\omega_f}\sqrt{2} < L < \frac{c\pi}{\omega_f}\sqrt{5}.
+\]
+
+\begin{exercises}{14.3}
+\item Consider a two-dimensional wave equation $\pdd{u}{t} = c^2\bigl(\pdd{u}{x} + \pdd{u}{y}\bigr)$ with $u = 0$ at $y = 0$ and $y = L$.
+\begin{enumerate}
+\item[(a)] Determine the dispersion relation.
+\item[(b)] Determine a cut-off frequency.
+\item[(c)] For what forcing frequencies will only one mode propagate?
+\end{enumerate}
+
+\item Redo Exercise~14.3.1 with the boundary condition $\pd{u}{y} = 0$ at $y = 0$ and $y = L$.  (Do not call $n = 0$ a propagating wave.)
+
+\item Consider the three-dimensional wave equation $\pdd{u}{t} = c^2\bigl(\pdd{u}{x} + \pdd{u}{y} + \pdd{u}{z}\bigr)$ inside a circular conductor ($y^2 + z^2 = a^2$) with $u = 0$ at $r = a$.  Only consider circularly symmetric solutions where $u = u(r,x,t)$ propagating in the $x$-direction.
+\begin{enumerate}
+\item[(a)] Determine the dispersion relation.
+\item[(b)] Determine a cut-off frequency.
+\item[(c)] For what forcing frequencies will only one mode propagate?
+\end{enumerate}
+
+\item Redo Exercise~14.3.3, but do not make the assumption that the solution is circularly symmetric.
+
+\item Consider the three-dimensional wave equation $\pdd{u}{t} = c^2\bigl(\pdd{u}{x} + \pdd{u}{y} + \pdd{u}{z}\bigr)$ inside a rectangular conductor with $u = 0$ at $y = 0$ and $y = L$ and $\pd{u}{z} = 0$ at $z = 0$ and $z = H$.  Answer the same questions as for Exercise~14.3.1.
+
+\item Determine the Green's function corresponding to a propagating mode for
+\begin{enumerate}
+\item[(a)] Exercise~14.3.1
+\item[(b)] Exercise~14.3.2
+\item[(c)] Exercise~14.3.4
+\item[(d)] Exercise~14.3.5
+\end{enumerate}
+
+\item Determine the Green's function when a mode is not propagating for
+\begin{enumerate}
+\item[(a)] Exercise~14.3.1
+\item[(b)] Exercise~14.3.2
+\item[(c)] Exercise~14.3.4
+\item[(d)] Exercise~14.3.5
+\end{enumerate}
+
+\item Show that allowable traveling wave modes that can propagate in a rectangular wave guide of this section have zero amplitude if the concentrated source is located at a node of that mode.
+
+\item Using the radiation condition (involving group velocity), determine the Green's function for the following partial differential equations:
+\begin{enumerate}
+\item[\starred (a)] $\pd{u}{t} = \pdd{u}{x} + e^{-i\omega_f t}\delta(x)$
+\item[(b)] $\pd{u}{t} = -\pdd{u}{x} + e^{-i\omega_f t}\delta(x)$
+\item[(c)] $i\pd{u}{t} = \pdd{u}{x} + e^{-i\omega_f t}\delta(x)$ (analyze both cases $\omega_f > 0$ and $\omega_f < 0$)
+\end{enumerate}
+\end{exercises}

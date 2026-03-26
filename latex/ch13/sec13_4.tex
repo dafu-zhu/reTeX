@@ -1,0 +1,150 @@
+% sec13_4.tex — Section 13.4: A Signal Problem for the Wave Equation
+\section{A Signal Problem for the Wave Equation}
+\label{sec:13.4}
+
+Using Laplace transforms to solve partial differential equations often requires great skill in the use of Laplace transforms.  We only pursue some relatively simple examples.\footnote{For more difficult examples, see Churchill~[1972] and Weinberger~[1995].}  Consider a semi-infinite string ($x > 0$), whose motion is caused only by a time-dependent boundary condition at $x = 0$:
+\begin{align}
+\text{PDE:}\quad &
+\begin{array}{|c|}
+\hline
+\displaystyle\pdd{u}{t} = c^2\pdd{u}{x} \\[4pt]
+\hline
+\end{array}
+\label{eq:13.4.1} \\[8pt]
+\text{BC:}\quad &
+\begin{array}{|c|}
+\hline
+u(0,t) = f(t) \\
+\hline
+\end{array}
+\label{eq:13.4.2} \\[8pt]
+\text{IC:}\quad &
+\begin{array}{|c|}
+\hline
+u(x,0) = 0 \\[2pt]
+\displaystyle\pd{u}{t}(x,0) = 0. \\
+\hline
+\end{array}
+\label{eq:13.4.3}
+\end{align}
+The string is initially horizontal and at rest.  The left end is being moved vertically (while maintaining the large tension).  Since the problem is defined for all $x > 0$, we need a boundary condition as $x \to \infty$:
+\begin{equation}
+\lim_{x\to\infty} u(x,t) = 0.
+\label{eq:13.4.4}
+\end{equation}
+
+All the initial conditions of this problem are zero.  Consequently, the use of Laplace transforms in the time variable is expected to yield a simple solution:
+\[
+\mathcal{L}[u(x,t)] = \overline{U}(x,s) = \int_0^{\infty} u(x,t)\,e^{-st}\dt.
+\]
+As with ordinary differential equations, we take the Laplace transform in the time variable of \eqref{eq:13.4.1},
+\begin{equation}
+\mathcal{L}\!\left[\pdd{u}{t}\right]
+= s^2\mathcal{L}[u] - s\,u(x,0) - \pd{u}{t}(x,0)
+= s^2\mathcal{L}[u].
+\label{eq:13.4.5}
+\end{equation}
+Here, we also need the Laplace transforms in the time variable of partial derivatives with respect to $x$.  We obtain
+\begin{equation}
+\mathcal{L}\!\left[\pdd{u}{x}\right]
+= \int_0^{\infty} \pdd{u}{x}\,e^{-st}\dt
+= \frac{\partial^2}{\partial x^2}\int_0^{\infty} u(x,t)\,e^{-st}\dt
+= \frac{\partial^2}{\partial x^2}\mathcal{L}[u].
+\label{eq:13.4.6}
+\end{equation}
+In this manner, the Laplace transform of a partial differential equation yields an ``ordinary'' differential equation
+\begin{equation}
+s^2\overline{U}(x,s) = c^2\frac{\partial^2\overline{U}}{\partial x^2},
+\label{eq:13.4.7}
+\end{equation}
+defined for $0 < x < \infty$.  At $x = 0$, $u(x,t)$ is given for all $t$, and thus its Laplace transform is known:
+\begin{equation}
+\overline{U}(0,s) = \int_0^{\infty} u(0,t)\,e^{-st}\dt
+             = \int_0^{\infty} f(t)\,e^{-st}\dt = F(s),
+\label{eq:13.4.8}
+\end{equation}
+where $F(s)$ is the Laplace transform of the boundary condition.  Also since $u(x,t) \to 0$ as $x \to \infty$ (for all fixed $t$), we have the same result for its Laplace transform,
+\begin{equation}
+\lim_{x\to\infty} \overline{U}(x,s) = 0.
+\label{eq:13.4.9}
+\end{equation}
+
+The general solution of \eqref{eq:13.4.7} is
+\[
+\overline{U}(x,s) = A(s)\,e^{-(s/c)x} + B(s)\,e^{(s/c)x},
+\]
+where $A(s)$ and $B(s)$ are arbitrary functions of the transform variable $s$.  For $s > 0$ [more precisely $\Real(s) > 0$], $B(s) = 0$ to satisfy the decay as $x \to \infty$, \eqref{eq:13.4.9}.  In addition, the boundary condition at $x = 0$, \eqref{eq:13.4.8}, implies that $A(s) = F(s)$, and thus
+\begin{equation}
+\overline{U}(x,s) = F(s)\,e^{-(s/c)x}.
+\label{eq:13.4.10}
+\end{equation}
+
+To invert this transform, we could use the convolution theorem.  Instead, a quick glance at Table~13.2.1 shows that an exponential multiple in the transform yields a time shift in the solution.  Consequently,
+\boxed{\begin{equation}
+u(x,t) = H\!\left(t - \frac{x}{c}\right) f\!\left(t - \frac{x}{c}\right),
+\label{eq:13.4.11}
+\end{equation}}
+where $H$ is the Heaviside unit step function.  The solution is zero for $x > ct$.  In fact, the solution is constant whenever $x - ct$ is constant.  The solution travels as a wave of fixed shape at velocity~$c$.  We obtained similar results in Chapter~12, using the method of characteristics.  We illustrate this in a space-time diagram in Fig.~13.4.1.  The signal propagates with velocity~$c$, and thus at time $t$ it has traveled only a distance $ct$.  If $x > ct$, the ``wiggling'' of the string at $x = 0$ has not been noticed.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch13/fig_13_4_1.png}
+\caption{Signal problem for the one-dimensional wave equation.}
+\label{fig:13.4.1}
+\end{figure}
+
+However, it is educational to obtain the same result using the convolution theorem.  Since $\overline{U}(x,s) = F(s)\,e^{-(s/c)x}$,
+\[
+u(x,t) = \int_0^t f(t_0)\,g(t-t_0)\,dt_0,
+\]
+where $e^{-(s/c)x}$ is the Laplace transform of $g(t)$.  From a table of Laplace transforms (as can be easily verified), $g(t) = \delta(t - x/c)$.  Thus,
+\[
+u(x,t) = \int_0^t f(t_0)\,\delta\!\left(t - t_0 - \frac{x}{c}\right)\,dt_0
+= \begin{cases} 0 & t < x/c \\ f(t - x/c) & t > x/c, \end{cases}
+\]
+which is equivalent to \eqref{eq:13.4.11}.
+
+%% ── Exercises 13.4 ──────────────────────────────────────────────
+\begin{exercises}{13.4}
+
+\item Solve
+\[
+\pdd{u}{t} = c^2\pdd{u}{x}
+\]
+subject to $\pd{u}{x}(0,t) = f(t)$, $u(x,0) = 0$ and $\pd{u}{t}(x,0) = 0$.
+
+\item Solve
+\begin{align*}
+\pd{w}{t} &= c\,\pd{w}{x}, \qquad c < 0,\; x > 0,\; t > 0 \\
+w(0,t) &= f(t) \\
+w(x,0) &= 0.
+\end{align*}
+
+\item[\starred 13.4.3.] Solve
+\begin{align*}
+\pdd{u}{t} &= c^2\pdd{u}{x}, \qquad -\infty < x < \infty \\
+u(x,0) &= \sin x \\
+\pd{u}{t}(x,0) &= 0.
+\end{align*}
+
+\item[\starred 13.4.4.] Consider
+\begin{align*}
+\pd{u}{t} &= k\pdd{u}{x}, \qquad x > 0 \\
+u(x,0) &= 0 \\
+u(0,t) &= f(t).
+\end{align*}
+Determine the Laplace transform of $u(x,t)$.  Invert to obtain $u(x,t)$.  (\emph{Hint}: See Table~13.2.1 of Laplace transforms.)
+
+\item Reconsider Exercise~13.4.4 if instead the boundary and initial conditions are
+\[
+u(x,0) = 0 \qquad\text{and}\qquad \pd{u}{x}(0,t) = f(t).
+\]
+
+\item Reconsider Exercise~13.4.4 if $f(t) = Ae^{i\sigma_0 t}$ (see Exercise~10.5.17).
+\begin{enumerate}
+\item[(a)] Determine an expression for $u(x,t)$ using Laplace transforms.
+\item[(b)] Simplify part~(a) with the change of variables $w = x/2\sqrt{t-\bar{t}}$, where $\bar{t}$ is the variable of integration in part~(a).
+\item[(c)] Approximate $u(x,t)$ if $t$ is large.
+\end{enumerate}
+
+\end{exercises}

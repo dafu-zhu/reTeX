@@ -1,0 +1,113 @@
+% sec13_3.tex — Section 13.3: Green's Functions for Initial Value Problems for ODEs
+\section{Green's Functions for Initial Value Problems for Ordinary Differential Equations}
+\label{sec:13.3}
+
+The convolution theorem is very useful in solving nonhomogeneous ordinary differential equations.  For example, consider
+\begin{equation}
+\alpha\odd{y}{t} + \beta\od{y}{t} + \gamma y = f(t),
+\label{eq:13.3.1}
+\end{equation}
+subject to zero\footnote{Nonzero initial conditions can be analyzed by adding appropriate homogeneous solutions of the differential equation.} initial conditions
+\begin{align}
+y(0) &= 0 \label{eq:13.3.2}\\
+\od{y}{t}(0) &= 0. \label{eq:13.3.3}
+\end{align}
+Taking the Laplace transform of the differential equation \eqref{eq:13.3.1} yields
+\begin{equation}
+(\alpha s^2 + \beta s + \gamma)\,Y(s) = F(s)
+\qquad\text{or}\qquad
+Y(s) = F(s)\cdot\frac{1}{\alpha s^2 + \beta s + \gamma},
+\label{eq:13.3.4}
+\end{equation}
+where $Y(s)$ and $F(s)$ are the Laplace transforms of $y(t)$ and $f(t)$, respectively.  The solution $y(t)$ can be obtained using the convolution theorem:
+\begin{equation}
+y(t) = \int_0^t f(t_0)\,q(t-t_0)\,dt_0,
+\label{eq:13.3.5}
+\end{equation}
+where $q(t)$ is the inverse Laplace transform of $1/(\alpha s^2+\beta s+\gamma)$.  We can determine $q(t)$ using tables and/or partial fractions.  This result, \eqref{eq:13.3.5}, will be equivalent to the solution of nonhomogeneous problems as is usually obtained by the method of variation of parameters in most elementary texts on ordinary differential equations.
+
+There is an important alternative interpretation of this result.  $q(t)$ is the solution of \eqref{eq:13.3.1} if $F(s)=1$.  The inverse Laplace transform of $F(s)=1$ is $f(t)=\delta(t-0{+})$ [see~\eqref{eq:13.2.14}].  Thus, $q(t)$ is the response due to an impulse at $t=0{+}$:
+\begin{equation}
+\begin{aligned}
+\alpha\odd{q}{t} + \beta\od{q}{t} + \gamma q &= \delta(t-0{+}) \\
+q(0) &= 0 \\
+\od{q}{t}(0) &= 0.
+\end{aligned}
+\label{eq:13.3.6}
+\end{equation}
+We can introduce the terminology of Chapters~9 and~11.  We call $q(t)$ the \textbf{Green's function for the initial value problem}, the response at $t$ due to a concentrated source at $t=0$:
+\[
+q(t) = G(t,0).
+\]
+The convolution theorem shows that we are interested in $q(t-t_0)$:
+\[
+q(t-t_0) = G(t-t_0,0).
+\]
+However, due to the constant coefficients present in \eqref{eq:13.3.6}, \textbf{the response at $t$ due to an impulse at $t_0$}, $G(t,t_0)$, is the same as the response due to an impulse at $0$, if the elapsed time is the same:
+\begin{equation}
+G(t,t_0) = G(t-t_0,0),
+\label{eq:13.3.7}
+\end{equation}
+the \textbf{translation property} of the Green's function.  Thus,
+\[
+q(t-t_0) = G(t,t_0).
+\]
+Therefore, from \eqref{eq:13.3.5}, through the use of Laplace transforms, we have obtained a representation of the solution of the nonhomogeneous initial value problem \eqref{eq:13.3.1}--\eqref{eq:13.3.3} involving the Green's function
+\boxed{\begin{equation}
+y(t) = \int_0^t f(t_0)\,G(t,t_0)\,dt_0.
+\label{eq:13.3.8}
+\end{equation}}
+The solution is the generalized superposition of all sources acting before the time $t$, an example of the \textbf{causality principle} for initial value problems for ordinary differential equations.  In this form the result appears quite similar to our results concerning Green's functions for boundary value problems for ordinary and partial differential equations.  Here the Green's function $h(t) = G(t,0)$ is simply the inverse Laplace transform of $1/(\alpha s^2 + \beta s + \gamma)$.
+
+\textbf{Example.}
+Consider the differential equation
+\begin{equation}
+\alpha^2\odd{y}{t} - \gamma^2 y = f(t).
+\label{eq:13.3.9}
+\end{equation}
+The solution that satisfies zero initial conditions is
+\[
+y(t) = \int_0^t f(t_0)\,G(t,t_0)\,dt_0,
+\]
+where the Green's function $G(t,t_0)$ satisfies $q(t-t_0)=G(t,t_0)$.  We introduce the Laplace transform of $q(t)$:
+\[
+\mathcal{L}[q(t)] = \frac{1}{\alpha^2 s^2 - \gamma^2}
+               = \frac{1}{\alpha^2(s^2 - \gamma^2/\alpha^2)}.
+\]
+Directly from tables, we may obtain the Green's function, $G(t,0)$,
+\[
+G(t,0) = q(t) = \frac{1}{\alpha^2}\cdot\frac{\alpha}{\gamma}\sinh\frac{\gamma}{\alpha}\,t.
+\]
+Thus, the solution of \eqref{eq:13.3.9} is
+\begin{equation}
+y(t) = \frac{1}{\alpha\gamma}\int_0^t f(t_0)\sinh\frac{\gamma}{\alpha}(t-t_0)\,dt_0,
+\label{eq:13.3.10}
+\end{equation}
+where $y(0) = 0$ and $dy/dt(0) = 0$.
+
+%% ── Exercises 13.3 ──────────────────────────────────────────────
+\begin{exercises}{13.3}
+
+\item By using Laplace transforms, determine the effect of the initial conditions in terms of the Green's function for the initial value problem
+\[
+\alpha\odd{y}{t} + \beta\od{y}{t} + \gamma y = 0,
+\]
+subject to $y(0) = y_0$ and $\dfrac{dy}{dt}(0) = v_0$.
+
+\item[\starred 13.3.2.] What is the Green's function for
+\[
+\odd{y}{t} + y = f(t)
+\]
+with $y(0) = 0$ and $\dfrac{dy}{dt}(0) = 0$?  Solve for $y(t)$.
+
+\item This exercise has been intentionally omitted from this edition.
+
+\item Show that for $t > t_0$, $G(t,t_0)$ for \eqref{eq:13.3.1}--\eqref{eq:13.3.3} satisfies
+\[
+\alpha\odd{G}{t} + \beta\od{G}{t} + \gamma G = 0
+\]
+with $G(t_0,t_0) = 0$ and $\dfrac{dG}{dt}(t_0,t_0) = \dfrac{1}{\alpha}$.
+
+\item Solve Exercise~13.3.2 using Exercise~13.3.4.
+
+\end{exercises}

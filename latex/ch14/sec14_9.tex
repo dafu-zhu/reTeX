@@ -1,0 +1,532 @@
+% sec14_9.tex — Section 14.9: Singular Perturbation Methods: Multiple Scales
+
+\section{Singular Perturbation Methods: Multiple Scales}
+\label{sec:14.9}
+
+Often problems of physical interest can be expressed as difficult mathematical problems that are near (in some sense) to a problem that is easy to solve. For example, as in Sec.\ 9.6, the geometric region may be nearly circular, and we wish to determine the effect of the small perturbation. There we determined how the solution differs from the solution corresponding to a circular geometry. We usually have (or can introduce) a small parameter $\varepsilon$, and the solution (for example) $u(x,y,t,\varepsilon)$ depends on $\varepsilon$. If
+\begin{equation}
+u(x,y,t,\varepsilon) = u_0(x,y,t) + \varepsilon u_1(x,y,t) + \cdots,
+\label{eq:14.9.1}
+\end{equation}
+the solution is said to be a \textbf{regular perturbation problem}. The first term (called the leading-order term) $u_0(x,y,t)$ is often a well-known solution corresponding to the unperturbed problem $\varepsilon = 0$. Usually only the first few additional terms are needed, and the higher-order terms such as $u_1(x,y,t)$ can be successively determined by substituting the regular expansion into the original partial differential equation.
+
+More difficult (and interesting) situations arise when a regular perturbation expansion is not valid, in which case we call the problem a \textbf{singular perturbation problem}. Whole books (for example, see the one by Kevorkian and Cole [1996]) exist on the subject. Sometimes simple expansions exist like \eqref{eq:14.9.1}, but expansions of different forms are valid in different regions. In this case, \textbf{boundary layer} methods can be developed (see Sec.\ 14.10). Sometimes different scaled variables (to be defined shortly) are simultaneously valid, in which case we use the \textbf{method of multiple scales}.
+
+\subsection{Ordinary Differential Equation: Weakly Nonlinearly Damped Oscillator}
+\label{subsec:14.9.1}
+
+As a motivating example to learn the method of multiple scales in its simplest context (ordinary differential equations), we consider a linear oscillator with small nonlinear damping (proportional to the velocity cubed). We introduce dimensionless variables so that the model ordinary differential equation is
+\begin{equation}
+\boxed{\odd{u}{t} + u = -\varepsilon\left(\od{u}{t}\right)^3,}
+\label{eq:14.9.2}
+\end{equation}
+where $\varepsilon$ is a small positive parameter, $0 < \varepsilon \ll 1$. The perturbation corresponds to some form of nonlinear damping because it is an odd function of the velocity $\od{u}{t}$.
+
+\paragraph{Regular perturbation expansion (naive).}
+We begin by assuming the solution has a regular perturbation expansion:
+\begin{equation}
+u(t, \varepsilon) = u_0(t) + \varepsilon u_1(t) + \cdots,
+\label{eq:14.9.3}
+\end{equation}
+By substituting \eqref{eq:14.9.3} into \eqref{eq:14.9.2} and comparing coefficients of $\varepsilon$ to different powers, we obtain
+\begin{align}
+O(\varepsilon^0): \quad &\odd{u_0}{t} + u_0 = 0 \label{eq:14.9.4} \\
+O(\varepsilon^1): \quad &\odd{u_1}{t} + u_1 = -\left(\od{u_0}{t}\right)^3. \label{eq:14.9.5}
+\end{align}
+The leading-order terms yield the unperturbed equation \eqref{eq:14.9.4}. The solution of the unperturbed equation is periodic, a linear combination of $\sin t$ and $\cos t$. We will use instead complex exponentials (in order to simplify some of the later nonlinear calculations):
+\begin{equation}
+u_0(t) = Ae^{it} + A^*e^{-it}.
+\label{eq:14.9.6}
+\end{equation}
+We use the complex amplitude $A$, and in order for the solution to be real we let the other coefficient be $A^*$ the complex conjugate of $A$.
+
+Using this leading-order solution \eqref{eq:14.9.6}, we obtain the differential equation for the most important perturbed term $u_1$:
+\begin{equation}
+\odd{u_1}{t} + u_1 = i(Ae^{it} - A^*e^{-it})^3 = i(A^3e^{3it} - 3A^2A^*e^{it}) + (*),
+\label{eq:14.9.7}
+\end{equation}
+where $(*)$ stands for the complex conjugate of the other terms presented on the right-hand side of \eqref{eq:14.9.7}. The right-hand side contains third harmonic terms $e^{\pm 3it}$ and the fundamental $e^{\pm it}$. Using the method of undetermined coefficients, a particular solution is easy to obtain corresponding to the third harmonic term. However, here in the regular perturbation method, the forcing frequency associated with $e^{it}$ equals the natural frequency, and thus resonance occurs. The corresponding solution grows linearly in time and is said to be \textbf{secular}. In this way, a particular solution of \eqref{eq:14.9.7} is
+\[
+u_1(t) = i\frac{A^3}{1-9}e^{3it} + i\#A^2A^*te^{it} + (*),
+\]
+where $\#$ is a number that could be computed (with some effort using the method of undetermined coefficients), but we do not need to know its value. Homogeneous solutions should also be included.
+
+The regular expansion solution $u_0(t) + \varepsilon u_1(t) + \cdots$ is a valid approximation if $\varepsilon t$ is small. However, if $t$ is large enough so that $\varepsilon t$ is an order quantity or larger, then the regular expansion is no longer valid because of the secular term.
+
+\paragraph{The method of multiple scales.}
+The regular perturbation expansion is not valid for large times. However, the regular perturbation expansion suggests that interesting dynamics occur when $\varepsilon t = O(1)$. If we are interested in the solution on that long time scale, then we assume the solution $u(t, T, \varepsilon)$ depends on two variables, a \textbf{fast variable} $t$ and a \textbf{slow variable}
+\begin{equation}
+\boxed{T = \varepsilon t,}
+\label{eq:14.9.8}
+\end{equation}
+known as the \textbf{method of multiple scales}. (Sometimes this is called the method of slow variation.) We may use the chain rule
+\begin{equation}
+\boxed{\frac{d}{d t} = \frac{\partial}{\partial t} + \varepsilon\frac{\partial}{\partial T},}
+\label{eq:14.9.9}
+\end{equation}
+where derivatives are now treated as partial derivatives (and a subscript notation for partial derivatives will be used). In this case the equation for the nonlinearly damped oscillator \eqref{eq:14.9.2} becomes
+\begin{equation}
+u_{tt} + 2\varepsilon u_{tT} + \varepsilon^2 u_{TT} + u = -\varepsilon(u_t + \varepsilon u_T)^3.
+\label{eq:14.9.10}
+\end{equation}
+Now the regular expansion, $u(t, T, \varepsilon) = u_0(t, T) + \varepsilon u_1(t, T) + \cdots$, yields
+\begin{align}
+O(\varepsilon^0): \quad &\pdd{u_0}{t} + u_0 = 0 \label{eq:14.9.11} \\
+O(\varepsilon^1): \quad &\pdd{u_1}{t} + u_1 = -\left(\pd{u_0}{t}\right)^3 - 2\frac{\partial}{\partial T}\left(\pd{u_0}{t}\right). \label{eq:14.9.12}
+\end{align}
+Only the order $\varepsilon$ term $-2\frac{\partial}{\partial T}(\pd{u_0}{t})$ differs from the naive perturbation expansion \eqref{eq:14.9.4} and \eqref{eq:14.9.5}.
+
+The leading-order equation is the unperturbed linear oscillator, but we must remember that $\frac{\partial}{\partial t}$ means keeping $T$ fixed. Thus, the general solution of \eqref{eq:14.9.11} is
+\begin{equation}
+\boxed{u_0(t, T) = A(T)e^{it} + A^*(T)e^{-it},}
+\label{eq:14.9.13}
+\end{equation}
+where $A(T)$ is an arbitrary complex function of the slow time variable.
+
+Using \eqref{eq:14.9.13}, the first perturbed term satisfies
+\begin{equation}
+\pdd{u_1}{t} + u_1 = i(Ae^{it} - A^*e^{-it})^3 - 2i\left(\od{A}{T}e^{it} - \od{A^*}{T}e^{-it}\right)
+\label{eq:14.9.14}
+\end{equation}
+\[
+= i(A^3 e^{3it} - 3A^2A^*e^{it}) - 2i\od{A}{T}e^{it} + (*).
+\]
+We will determine $A(T)$ by eliminating secular terms in the perturbed problem. The multiply scaled variables are introduced in order for the solution to be valid for long times $t = O(\frac{1}{\varepsilon})$. The secular terms (resonant terms on the right-hand side proportional to $e^{it}$) are not allowable, in which case we derive
+\begin{equation}
+\boxed{2\od{A}{T} = -3A^2A^*.}
+\label{eq:14.9.15}
+\end{equation}
+
+Equation \eqref{eq:14.9.15} can be derived in another way. Equation \eqref{eq:14.9.14} is a nonhomogeneous linear differential equation with two homogenous boundary conditions (here the periodicity constraint). According to the Fredholm alternative, periodic solutions to \eqref{eq:14.9.14} only exist if the right-hand side is orthogonal to the solutions of the homogenous differential equation satisfying homogeneous boundary conditions, in this case $e^{it}$ and $e^{-it}$. Equation \eqref{eq:14.9.15} follows from this Fredholm alternative since from the theory of Fourier series $e^{3it}$ is orthogonal to $e^{\pm it}$ on the interval 0 to $2\pi$.
+
+The differential equation for the slow variation of the complex amplitude can be solved using the amplitude and phase form of a complex quantity
+\begin{equation}
+A(T) = r(T)e^{i\phi(T)},
+\label{eq:14.9.16}
+\end{equation}
+in which case
+\[
+u_0(t, T) = r(T)e^{i(t + \phi(T))} + r(T)e^{-i(t + \phi(T))} = 2r(T)\cos(t + \phi(T)).
+\]
+Thus $2r(T)$ is the real amplitude of oscillation, which slowly varies, and the phase of the oscillation is $t + \phi(T)$. Physically the derivative of the phase with respect to time is the frequency, and thus the frequency is $1 + \varepsilon\od{\phi}{T}$.
+
+Since $\od{A}{T} = (\od{r}{T} + i\od{\phi}{T}r)e^{i\phi(T)}$ and $A^2A^* = r^3 e^{i\phi(T)}$, it follows from \eqref{eq:14.9.15}, using the real and imaginary parts, that
+\begin{align}
+2\od{r}{T} &= -3r^3 \label{eq:14.9.17} \\
+r\od{\phi}{T} &= 0. \label{eq:14.9.18}
+\end{align}
+The one complex equation \eqref{eq:14.9.15} is equivalent to two real equations \eqref{eq:14.9.17} and \eqref{eq:14.9.18}. In this specific example the phase shift $\phi(T)$ is a constant. However, the amplitude of oscillation decays due to the nonlinear damping satisfying \eqref{eq:14.9.17}. By separation, $\od{r}{T} = -\frac{3}{2}dT$. It follows after some algebra that the amplitude of oscillation algebraically decays due to the small nonlinear damping:
+\begin{equation}
+\boxed{r(T) = \frac{r(0)}{\sqrt{1 + 3r^2(0)T}}.}
+\end{equation}
+Typically the phase ($t + \phi(T)$) varies quickly while the amplitude [$r(T)$] varies slowly. This is typical of problems with multiple scales since it shows the simultaneous appearance of two scaled variables. We call the oscillator a \textbf{slowly varying oscillator} as the amplitude decays slowly.
+
+\subsection{Ordinary Differential Equation: Slowly Varying Oscillator}
+\label{subsec:14.9.2}
+
+Solutions of oscillatory ordinary differential equations also may require the method of multiple scales if the coefficients are slowly varying. Consider the spring-mass system with slowly varying spring constant:
+\begin{equation}
+\boxed{\odd{u}{t} + \omega^2(\varepsilon t)u = 0}
+\label{eq:14.9.19}
+\end{equation}
+This can also represent the propagation of light with a slowly varying index of refraction $\omega(\varepsilon t)$. The one-dimensional wave equation $[\pdd{E}{t} = c^2(x)\pdd{E}{x}]$ in a variable spatial medium with fixed temporal frequency $\omega_f$ [$E = u(x)e^{-i\omega_f t}$] becomes $-\omega_f^2 u = c^2(x)\odd{u}{x}$. This is an ordinary differential equation in $x$ which can be shown equivalent to the time-dependent \eqref{eq:14.9.19}. If the typical length over which $c(x)$ varies is much longer than a typical wave length $\frac{2\pi c}{\omega_f}$ of solutions, then the medium is slowly varying.
+
+For a slowly varying wave train, we introduce a fast unknown phase $\theta$ and define the wave number as we did for uniform media $k_1 \equiv \pd{\theta}{x}$, $k_2 \equiv \pd{\theta}{y}$, $k_3 \equiv \pd{\theta}{z}$. Thus, the wave number vector is defined as follows:
+\begin{equation}
+\boxed{\vec{k} = \nabla\theta.}
+\label{eq:14.9.50}
+\end{equation}
+We assume the solution depends on this fast phase $\theta$ and the slow spatial scales $X = \varepsilon x$, $Y = \varepsilon y$, $Z = \varepsilon z$. In the method of multiply scaled variables (by the chain rule),
+\begin{equation}
+\frac{\partial}{\partial x} = k_1\frac{\partial}{\partial \theta} + \varepsilon\frac{\partial}{\partial X}
+\label{eq:14.9.67}
+\end{equation}
+\begin{equation}
+\frac{\partial}{\partial t} = -\omega\frac{\partial}{\partial \theta} + \varepsilon\frac{\partial}{\partial T}.
+\label{eq:14.9.68}
+\end{equation}
+
+We postulate that the fast phase satisfies exactly
+\begin{equation}
+\boxed{\od{\theta}{t} = \omega(\varepsilon t).}
+\label{eq:14.9.20}
+\end{equation}
+[It can be shown that perturbation methods based on phases that do not satisfy \eqref{eq:14.9.20} will not work.] The following expressions for the fast phase are equivalent:
+\begin{equation}
+\boxed{\theta = \int\omega(\varepsilon t)\,dt = \frac{\int\omega(T)\,dT}{\varepsilon}.}
+\label{eq:14.9.21}
+\end{equation}
+
+We assume the solution $u(\theta, T, \varepsilon)$ depends on two variables: a fast phase $\theta$ and the slow time $T = \varepsilon t$. According to the chain rule (the method of multiply scaled variables),
+\begin{equation}
+\boxed{\frac{d}{d t} = \omega(T)\frac{\partial}{\partial \theta} + \varepsilon\frac{\partial}{\partial T}.}
+\label{eq:14.9.22}
+\end{equation}
+The differential equation \eqref{eq:14.9.19} becomes
+\begin{equation}
+\omega^2\pdd{u}{\theta} + \varepsilon\left(2\omega(T)\frac{\partial}{\partial T}\pd{u}{\theta} + \omega'(T)\pd{u}{\theta}\right) + \varepsilon^2\pdd{u}{T} + \omega^2 u = 0.
+\label{eq:14.9.23}
+\end{equation}
+We now assume a perturbation expansion in the multiply scaled variables:
+\begin{equation}
+u(\theta, T, \varepsilon) = u_0(\theta, T) + \varepsilon u_1(\theta, T) + \cdots.
+\label{eq:14.9.24}
+\end{equation}
+By substituting \eqref{eq:14.9.24} into \eqref{eq:14.9.23}, we obtain a sequence of equations of which we only need the first two:
+\begin{align}
+O(\varepsilon^0): \quad &\omega^2\left(\pdd{u_0}{\theta} + u_0\right) = 0 \label{eq:14.9.25} \\
+O(\varepsilon^1): \quad &\omega^2\left(\pdd{u_1}{\theta} + u_1\right) = -2\omega(T)\frac{\partial}{\partial T}\pd{u_0}{\theta} - \omega'(T)\pd{u_0}{\theta}. \label{eq:14.9.26}
+\end{align}
+To leading order, the solution is an elementary slowly varying oscillator in the phase variable $\theta$:
+\begin{equation}
+\boxed{u_0(\theta, T) = A(T)e^{i\theta} + A^*(T)e^{-i\theta},}
+\label{eq:14.9.27}
+\end{equation}
+where $A(T)$ is an arbitrary function of the slow time variable $T = \varepsilon t$, which we will determine shortly. Equation \eqref{eq:14.9.27}, with \eqref{eq:14.9.20}, shows that the slowly varying frequency is $\omega$, as we have insisted.
+
+We substitute our form of solution \eqref{eq:14.9.27} into \eqref{eq:14.9.26} and obtain
+\[
+\omega^2\left(\pdd{u_1}{\theta} + u_1\right) = -[2\omega(T)A'(T) + \omega'(T)A(T)]ie^{i\theta} + (*).
+\]
+Coefficients on the right-hand side proportional to $e^{\pm i\theta}$ are secular (resonant since the forcing frequency equaling the natural frequency) and must be eliminated:
+\begin{equation}
+\boxed{2\omega(T)A'(T) + \omega'(T)A(T) = 0.}
+\label{eq:14.9.28}
+\end{equation}
+Equation \eqref{eq:14.9.28} is a differential equation for the slowly varying complex amplitude. Since $A(T)$ may be complex,
+\begin{equation}
+A(T) = r(T)e^{i\psi}.
+\label{eq:14.9.29}
+\end{equation}
+However, it may be shown that $\psi$ is a constant (in this problem), and the amplitude $r(T)$ satisfies
+\begin{equation}
+2\omega(T)r'(T) + \omega'(T)r(T) = 0.
+\label{eq:14.9.30}
+\end{equation}
+This equation can be solved by separation or usual linear techniques or by just noticing that
+\begin{equation}
+\frac{d}{d T}(\omega^{1/2} r) = 0
+\label{eq:14.9.31}
+\end{equation}
+is equivalent to \eqref{eq:14.9.30}. Thus, by integration,
+\begin{equation}
+\boxed{r(T) = c\omega^{-1/2},}
+\label{eq:14.9.32}
+\end{equation}
+where $c$ is an arbitrary constant.
+
+This example illustrates the \textbf{conservation of action} first investigated by Einstein. We will show that with slowly varying coefficients, the energy is not conserved. However, the action is conserved:
+\[
+\frac{d}{d T}(\text{action}) = 0, \quad \text{where action} \equiv \frac{\text{energy}}{\text{frequency}}.
+\]
+The energy is defined to be the energy that would occur if the coefficients were constant. If $\omega$ in our differential equation, $\odd{u}{t} + \omega^2 u = 0$, then we would define the energy as follows: $E = \frac{1}{2}(\od{u}{t})^2 + \frac{\omega^2}{2}u^2$ (kinetic energy plus potential energy). The solution of the differential equation (in our complex notation) would be $u = Ae^{i\omega t} + A^*e^{-i\omega t} = 2r\cos(\omega t + \phi_0)$. In this case the energy $E = \frac{\omega^2}{T}(2r)^2(\cos^2 + \sin^2) = 2\omega^2 r^2$. Thus, according to the conservation of action,
+\[
+\frac{d}{d T}\left(\frac{2\omega^2 r^2}{\omega}\right) = 0,
+\]
+equivalent to \eqref{eq:14.9.32}, which we have derived using the method of multiply scaled variables. In more difficult problems, physicists use conservation of action to determine the slow variation of the amplitude.
+
+We have shown that with slowly varying coefficients the energy is not conserved,
+\[
+\od{E}{T} = \frac{d}{d T}(\omega^2 r^2) \neq 0,
+\]
+according to \eqref{eq:14.9.32}. It is not easy to figure out how a slowly varying restoring force puts energy into the system or takes energy out of the system. That is why conservation of action is quite useful.
+
+In summary, we have analyzed the linear differential equation with slowly varying coefficients:
+\begin{equation}
+\boxed{\odd{u}{t} + \omega^2(\varepsilon t)u = 0.}
+\label{eq:14.9.33}
+\end{equation}
+We have obtained the following approximate solution:
+\begin{equation}
+\boxed{u(t) \approx u_0(\theta, T) = c\omega^{-1/2}e^{i\theta + \psi} + (*) = 2c\omega^{-\frac{1}{2}}\cos\left(\int\omega(\varepsilon t)\,dt + \psi\right),}
+\label{eq:14.9.34}
+\end{equation}
+where $c$ and $\psi$ are arbitrary constants since $\theta$ satisfies
+\begin{equation}
+\boxed{\od{\theta}{t} = \omega(\varepsilon t).}
+\label{eq:14.9.35}
+\end{equation}
+
+This is not difficult to memorize as the derivative of the phase can be obtained from the physically intuitive notions of frequency. This is a well-known formula for wave propagation problems with variable media. It can also be used to approximate the eigenfunctions of any Sturm-Liouville problem for large eigenvalues (see Sec.\ 6.9). This method is sometimes incorrectly called WKB method, while perhaps Liouville-Green (working independently in 1837) would be more appropriate. WKB (Wentzel, Kramers, Brillouin) in the 1920s solved problems in which the coefficient $\omega^2$ evolves from positive to negative (in the context of tunnelling in quantum mechanics), obtaining connection formulas between the oscillatory solutions as in \eqref{eq:14.9.34} and the corresponding exponential solutions.
+
+\subsection{Slightly Unstable Partial Differential Equation on Fixed Spatial Domain}
+\label{subsec:14.9.3}
+
+We consider the following model weakly nonlinear partial differential equation:
+\begin{equation}
+\pd{u}{t} = k\pdd{u}{x} + Ru - \varepsilon u^3,
+\label{eq:14.9.36}
+\end{equation}
+subject to the boundary conditions $u(0,t) = 0$ and $u(L,t) = 0$. The linearized problem ($\varepsilon = 0$) has solutions $\sin\frac{n\pi x}{L}e^{\sigma t}$, where $\sigma = R - k(\frac{n\pi}{L})^2$. Some modes (fixed $n$) grow exponentially depending on the parameter $R$. For $n$ sufficiently large, the modes decay exponentially (similar to the heat equation). The first instability (of $u = 0$) occurs when $R$ is slightly greater than $k(\frac{\pi}{L})^2$, in which case only the mode $n = 1$ exponentially grows; all the other modes decay exponentially. Thus, we assume $R = k(\frac{\pi}{L})^2 + \varepsilon R_1$ with $R_1 > 0$ so that
+\begin{equation}
+\pd{u}{t} = k\pdd{u}{x} + \left[k\left(\frac{\pi}{L}\right)^2 + \varepsilon R_1\right]u - \varepsilon u^3.
+\label{eq:14.9.37}
+\end{equation}
+It can be shown that a naive perturbation expansion fails on the long time scale:
+\begin{equation}
+\boxed{T = \varepsilon t.}
+\label{eq:14.9.38}
+\end{equation}
+Thus, we use the method of multiple scales:
+\begin{equation}
+\boxed{\frac{d}{d t} = \frac{\partial}{\partial t} + \varepsilon\frac{\partial}{\partial T}.}
+\label{eq:14.9.39}
+\end{equation}
+Using \eqref{eq:14.9.39}, the partial differential equation \eqref{eq:14.9.37} becomes
+\begin{equation}
+\boxed{\pd{u}{t} = k\pdd{u}{x} + k\left(\frac{\pi}{L}\right)^2 u + \varepsilon\left[-\pd{u}{T} + R_1 u - u^3\right].}
+\label{eq:14.9.40}
+\end{equation}
+Substituting the perturbation expansion $u = u_0 + \varepsilon u_1 + \cdots$ into \eqref{eq:14.9.40} yields
+\begin{align}
+O(\varepsilon^0): \quad &\pd{u_0}{t} = k\pdd{u_0}{x} + k\left(\frac{\pi}{L}\right)^2 u_0 \label{eq:14.9.41} \\
+O(\varepsilon^1): \quad &\pd{u_1}{t} = k\pdd{u_1}{x} + k\left(\frac{\pi}{L}\right)^2 u_1 - \pd{u_0}{T} + R_1 u_0 - u_0^3. \label{eq:14.9.42}
+\end{align}
+We use an elementary solution of the leading-order equation \eqref{eq:14.9.41},
+\begin{equation}
+\boxed{u_0 = A(T)\sin\frac{\pi x}{L}.}
+\label{eq:14.9.43}
+\end{equation}
+The other modes can be included, but the other modes quickly decay exponentially in time. The amplitude $A(T)$ of the slightly unstable mode $\sin\frac{\pi x}{L}$ is an arbitrary function of the slow time $T$. We will determine $A(T)$ by eliminating secular terms from the $O(\varepsilon)$ equation.
+
+Using \eqref{eq:14.9.43}, the perturbed equation \eqref{eq:14.9.42} becomes
+\begin{equation}
+\pd{u_1}{t} = k\pdd{u_1}{x} + k\left(\frac{\pi}{L}\right)^2 u_1 - \od{A}{T}\sin\frac{\pi x}{L} + R_1 A\sin\frac{\pi x}{L} - A^3\sin^3\frac{\pi x}{L},
+\label{eq:14.9.44}
+\end{equation}
+to be solved with homogeneous boundary conditions $u_1(0,t) = 0$ and $u_1(L,t) = 0$. Since (from trigonometric tables) $\sin^3\frac{\pi x}{L} = \frac{3}{4}\sin\frac{\pi x}{L} - \frac{1}{4}\sin\frac{3\pi x}{L}$, the nonlinearity generates only the first and third harmonics, and thus (the method of eigenfunction expansion),
+\begin{equation}
+u_1 = B_1\sin\frac{\pi x}{L} + B_3\sin\frac{3\pi x}{L}.
+\label{eq:14.9.45}
+\end{equation}
+Substituting \eqref{eq:14.9.45} into \eqref{eq:14.9.44} yields ordinary differential equations for the coefficients:
+\begin{align}
+\pd{B_1}{t} &= -\od{A}{T} + R_1 A - \frac{3}{4}A^3 \label{eq:14.9.46} \\
+\pd{B_3}{t} + 8k\left(\frac{\pi}{L}\right)^2 B_3 &= \frac{1}{4}A^3. \label{eq:14.9.47}
+\end{align}
+A particular solution [$B_3 = \frac{1}{32k}(\frac{L}{\pi})^2 A^3$] for the third harmonic is not secular since it is not needed since it decays exponentially.
+
+We consider \eqref{eq:14.9.46} the higher-order term for the first harmonic. The terms on the right-hand side of \eqref{eq:14.9.46} are functions of the slow time variable $T = \varepsilon t$ and hence constant with respect to the fast time variable $t$ on the left-hand side. If a constant $c$ were on the right-hand side, the solution corresponding to it would be $B_1 = ct$, algebraic growth in time. This algebraic growth is not acceptable in the asymptotic expansion $u = u_0 + \varepsilon u_1 + \cdots$. All the first harmonic in space terms on the right-hand side of \eqref{eq:14.9.46} are secular, giving rise to algebraic growth in time (proportional to $t$). The secular terms must be zero (eliminating them), which implies that $A(T)$ varies slowly and satisfies (what we have called the \textbf{Landau equation} in Subsection 14.8.6)
+\begin{equation}
+\boxed{\od{A}{T} = R_1 A - \frac{3}{4}A^3.}
+\label{eq:14.9.48}
+\end{equation}
+
+According to the linear theory ($A$ small), the amplitude grows exponentially (if $R_1 > 0$). However, as shown in Fig.\ 14.9.1 using a one-dimensional phase portrait, the \textbf{nonlinearity prevents this growth}. The amplitude $A(T)$ equilibrates (the limit as $t \to \infty$) to $A = \pm\sqrt{\frac{4R_1}{3}}$ (depending on the initial condition). This is referred to as \textbf{pitchfork bifurcation}, as can be seen from the bifurcation diagram in Fig.\ 14.9.1 (where the equilibrated amplitude is graphed as a function of the parameter $R_1$). If $R_1 > 0$, $A = 0$ is unstable, but $A = \pm\sqrt{\frac{4R_1}{3}}$ are stable. The parameter $R_1$ measures the distance from the critical value of the parameter $R$, $\varepsilon R_1 = R - k(\frac{\pi}{L})^2$.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch14/fig_14_9_1.png}
+\caption{One-dimensional phase portrait and bifurcation diagram for pitchfork bifurcation (Landau equation).}
+\label{fig:14.9.1}
+\end{figure}
+
+\subsection{Slowly Varying Medium for the Wave Equation}
+\label{subsec:14.9.4}
+
+The wave equation in a spatially variable two- or three-dimensional medium is
+\[
+\pdd{E}{t} = c^2(x,y,z)\laplacian E.
+\]
+Plane waves in a uniform medium (c constant) satisfy $E = E_0 e^{i(k_1 x + k_2 y + k_3 z - \omega t)}$, where $k = |\vec{k}| = \frac{\omega}{c}$. For uniform medium, the spatial part of the phase can be defined as follows: $\theta \equiv k_1 x + k_2 y + k_3 z$, which can be summarized as $\vec{k} = \nabla\theta$. Thus, the wave number vector satisfies $k_1 = \pd{\theta}{x}, k_2 = \pd{\theta}{y}, k_3 = \pd{\theta}{z}$.
+
+For \textbf{nonuniform medium} (spatially varying $c$), the temporal frequency $\omega$ is fixed (perhaps due to some incoming wave at infinity), $E = ue^{-i\omega_f t}$, so that $u$ satisfies the \textbf{reduced wave equation} (also called the \textbf{Helmholtz equation})
+\begin{equation}
+\boxed{\laplacian u + n^2 u = 0,}
+\label{eq:14.9.49}
+\end{equation}
+where $n = \frac{\omega}{c}$ is the \textbf{index of refraction}. Here, it is assumed that we have a \textbf{slowly varying medium} which means that the medium varies over a much longer distance than typical wave lengths, so that $n^2 = n^2(\varepsilon x, \varepsilon y, \varepsilon z)$. For example, when $x$ varies by a very long distance $O(\frac{1}{\varepsilon})$ (many wave lengths), then the index of refraction can change. The analogous one-dimensional problem was discussed in subsection 14.9.2.
+
+For a \textbf{slowly varying wave train}, we introduce a fast unknown phase $\theta$ and define the wave number as we did for uniform media $k_1 \equiv \pd{\theta}{x}$, $k_2 \equiv \pd{\theta}{y}$, $k_3 \equiv \pd{\theta}{z}$. Thus the wave number vector is defined as $\vec{k} = \nabla\theta$. We assume the solution depends on this fast phase $\theta$ and the slow spatial scales $X = \varepsilon x$, $Y = \varepsilon y$, $Z = \varepsilon z$. In the method of multiply scaled variables, the reduced wave equation \eqref{eq:14.9.49} becomes (after using the chain rule)
+\begin{equation}
+k^2\pdd{u}{\theta} + \varepsilon\left(2\vec{k}\cdot\nabla_X\pd{u}{\theta} + \nabla\cdot\vec{k}\pd{u}{\theta}\right) + \varepsilon^2\nabla_X^2 u + n^2 u = 0.
+\end{equation}
+
+It can be shown (not easily) that the perturbation methods to follow will only work if the \textbf{eikonal equation} is satisfied:
+\begin{equation}
+\boxed{k^2 = \nabla\theta\cdot\nabla\theta = n^2,}
+\label{eq:14.9.53}
+\end{equation}
+where $k = |\vec{k}|$. As described in Sec.\ 12.7, the eikonal equation says that the wave number of a slowly varying wave is always the wave number associated with the infinite plane wave ($k = \frac{\omega}{c} = n$). The eikonal equation describes \textbf{refraction} for slowly varying media (and is the basis of \textbf{geometrical optics}). The eikonal equation can be solved for the phase $\theta$ by the method of characteristics (see Sec.\ 12.6).
+
+We now introduce the perturbation expansion $u = u_0 + \varepsilon u_1 + \cdots$ and obtain
+\begin{align}
+O(\varepsilon^0): \quad &n^2\left(\pdd{u_0}{\theta} + u_0\right) = 0 \label{eq:14.9.55} \\
+O(\varepsilon^1): \quad &n^2\left(\pdd{u_1}{\theta} + u_1\right) = -2\vec{k}\cdot\nabla_X\pd{u_0}{\theta} - \nabla\cdot\vec{k}\pd{u_0}{\theta}. \label{eq:14.9.56}
+\end{align}
+The leading-order solution of the reduced wave equation ($\laplacian u + n^2 u = 0$) for slowly varying media is a slowly varying plane wave
+\begin{equation}
+\boxed{u_0 = A(X,Y,Z)e^{i\theta},}
+\label{eq:14.9.57}
+\end{equation}
+where $\theta$ satisfies the eikonal equation \eqref{eq:14.9.53} and $A$ solves the \textbf{transport equation}. By eliminating secular terms from \eqref{eq:14.9.56}, the amplitude $A$ must satisfy the \textbf{transport equation}:
+\begin{equation}
+\boxed{2\vec{k}\cdot\nabla_X A + \nabla\cdot\vec{k}\,A = 0.}
+\label{eq:14.9.59}
+\end{equation}
+Since $\vec{k} = \nabla\theta$, an equivalent expression for the transport equation is
+\begin{equation}
+\boxed{2\nabla\theta\cdot\nabla_X A + \nabla^2\theta\,A = 0.}
+\label{eq:14.9.60}
+\end{equation}
+Elegant expressions (see, for example, Bleistein [1984]) for the amplitude $A$ and phase $\theta$ can be obtained using the method of characteristics. These equations are the basis of Keller's geometric theory of diffraction of plane waves by blunt objects (such as cylinders or airplanes or submarines).
+
+In summary, the leading-order solution of the reduced wave equation ($\laplacian u + n^2 u = 0$) for slowly varying media is
+\begin{equation}
+u_0 = Ae^{i\theta},
+\label{eq:14.9.61}
+\end{equation}
+where $\theta$ satisfies the eikonal equation \eqref{eq:14.9.53} and $A$ solves the transport equation \eqref{eq:14.9.59} or \eqref{eq:14.9.60}. Higher-order terms may be obtained.
+
+\subsection{Slowly Varying Linear Dispersive Waves (Including Weak Nonlinear Effects)}
+\label{subsec:14.9.5}
+
+As a simple example of the method of multiply scaled variables for partial differential equations, we consider the following model linear dispersive wave (with dimensionless variables) with a weakly nonlinear perturbation:
+\begin{equation}
+\boxed{\pdd{u}{t} - \pdd{u}{x} + u = \varepsilon\beta u^3.}
+\label{eq:14.9.62}
+\end{equation}
+The unperturbed partial differential equation ($\varepsilon = 0$) is a linear wave equation with an additional restoring force $-u$. Plane wave solutions of the unperturbed problem $u = e^{i(kx - \omega t)}$ satisfy the dispersion relation $\omega^2 = k^2 + 1$, and hence the unperturbed problem is a linear dispersive wave. For plane waves, we introduce the phase $\theta = kx - \omega t$ such that the wave number $k = \pd{\theta}{x}$ and frequency $\omega = -\pd{\theta}{t}$.
+
+We seek slowly varying plane wave solutions due either to initial conditions that are slowly varying or to the perturbation. We introduce the unknown phase $\theta$ and define the wave number and frequency as for plane waves:
+\begin{equation}
+k = \pd{\theta}{x}
+\label{eq:14.9.63}
+\end{equation}
+\begin{equation}
+\omega = -\pd{\theta}{t}.
+\label{eq:14.9.64}
+\end{equation}
+We assume initially that the wave number $k$ may not be constant but may vary slowly, only changing appreciably over many wave lengths. We assume that there are slow and temporal scales,
+\begin{equation}
+\boxed{X = \varepsilon x}
+\label{eq:14.9.65}
+\end{equation}
+\begin{equation}
+\boxed{T = \varepsilon t,}
+\label{eq:14.9.66}
+\end{equation}
+of the same order of magnitude as induced by the perturbation to the partial differential equation. We use the \textbf{method of multiply scaled variables} with the fast phase $\theta$ and the slow temporal and spatial scales $X$, $T$. According to the chain rule,
+\begin{equation}
+\frac{\partial}{\partial x} = k\frac{\partial}{\partial \theta} + \varepsilon\frac{\partial}{\partial X}
+\label{eq:14.9.67b}
+\end{equation}
+\begin{equation}
+\frac{\partial}{\partial t} = -\omega\frac{\partial}{\partial \theta} + \varepsilon\frac{\partial}{\partial T}.
+\label{eq:14.9.68b}
+\end{equation}
+For the partial differential equation, we need the second derivatives:
+\begin{align}
+\pdd{}{x} &= k^2\pdd{}{\theta} + \varepsilon\left(2k\frac{\partial}{\partial \theta}\frac{\partial}{\partial X} + k_X\frac{\partial}{\partial \theta}\right) + \varepsilon^2\pdd{}{X} \label{eq:14.9.69} \\
+\pdd{}{t} &= \omega^2\pdd{}{\theta} + \varepsilon\left(-2\omega\frac{\partial}{\partial \theta}\frac{\partial}{\partial T} - \omega_T\frac{\partial}{\partial \theta}\right) + \varepsilon^2\pdd{}{T}. \label{eq:14.9.70}
+\end{align}
+Substituting these expressions \eqref{eq:14.9.69} and \eqref{eq:14.9.70} into the partial differential equation \eqref{eq:14.9.62} yields
+\begin{multline}
+(\omega^2 - k^2)\pdd{u}{\theta} + u + \varepsilon\left(-2\omega\frac{\partial}{\partial T}\pd{u}{\theta} - \omega_T\pd{u}{\theta} - 2k\frac{\partial}{\partial X}\pd{u}{\theta} - k_X\pd{u}{\theta}\right) \\
++ \varepsilon^2\left(\pdd{u}{T} - \pdd{u}{X}\right) = \varepsilon\beta u^3. \label{eq:14.9.71}
+\end{multline}
+
+We claim that the perturbation method that follows will not work unless the frequency of the slowly varying wave satisfies the dispersion relation for elementary plane waves:
+\begin{equation}
+\boxed{\omega^2 = k^2 + 1.}
+\label{eq:14.9.72}
+\end{equation}
+The slowly varying wave number $k$ (and phase $\theta$) can be solved by the method of characteristics from given initial conditions, as we outline later (and have shown in Sec.\ 14.6). In particular, conservation of waves follows from the definitions of $k$ and $\omega$ [\eqref{eq:14.9.63} and \eqref{eq:14.9.64}]:
+\begin{equation}
+k_T + \omega_X = 0.
+\label{eq:14.9.74}
+\end{equation}
+A quasilinear partial differential equation for the wave number $k$ follows from \eqref{eq:14.9.72}, equation \eqref{eq:14.9.71} simplifies to
+\begin{multline}
+\pdd{u}{\theta} + u + \varepsilon\left(-2\omega\frac{\partial}{\partial T}\pd{u}{\theta} - \omega_T\pd{u}{\theta} - 2k\frac{\partial}{\partial X}\pd{u}{\theta} - k_X\pd{u}{\theta}\right) \\
++ \varepsilon^2\left(\pdd{u}{T} - \pdd{u}{X}\right) = \varepsilon\beta u^3. \label{eq:14.9.75}
+\end{multline}
+Using a perturbation expansion $u = u_0 + \varepsilon u_1 + \cdots$, we obtain from \eqref{eq:14.9.75}
+\begin{align}
+O(\varepsilon^0): \quad &\pdd{u_0}{\theta} + u_0 = 0 \label{eq:14.9.76} \\
+O(\varepsilon^1): \quad &\pdd{u_1}{\theta} + u_1 = \left(\omega_T + 2\omega\frac{\partial}{\partial T}\right)\pd{u_0}{\theta} + \left(k_X + 2k\frac{\partial}{\partial X}\right)\pd{u_0}{\theta} + \beta u_0^3. \label{eq:14.9.77}
+\end{align}
+The solution of the leading order equation \eqref{eq:14.9.76} is a \textbf{slowly varying (modulating) plane wave}
+\begin{equation}
+\boxed{u_0 = A(X,T)e^{i\theta} + (*),}
+\label{eq:14.9.78}
+\end{equation}
+where $(*)$ represents the complex conjugate. In general, $A(X,T)$ is the complex wave amplitude and will be determined by eliminating secular terms from the next order equation.
+
+We now consider the $O(\varepsilon)$ equation \eqref{eq:14.9.77}, whose right-hand side includes the effect of the nonlinear perturbation and the slow variation assumptions. If the nonlinearity is present ($\beta \neq 0$), then the nonlinearity generates first and third harmonics since $u_0^3 = A^3 e^{3i\theta} + 3A^2 A^* e^{i\theta} + (*)$. Substituting \eqref{eq:14.9.78} into \eqref{eq:14.9.77} yields
+\begin{multline}
+\pdd{u_1}{\theta} + u_1 = i(\omega_T A + 2\omega\pd{A}{T})e^{i\theta} + i(k_X A + 2k\pd{A}{X})e^{i\theta} \\
++ \beta(A^3 e^{3i\theta} + 3A^2 A^* e^{i\theta}) + (*). \label{eq:14.9.79}
+\end{multline}
+The first harmonic terms $e^{i\theta}$ on the right-hand side of \eqref{eq:14.9.79} are secular (resonant with forcing frequency equaling the natural frequency). Eliminating the secular terms yields a partial differential equation the wave amplitude $A(X,T)$ must satisfy:
+\begin{equation}
+\boxed{2\omega\pd{A}{T} + 2k\pd{A}{X} + (\omega_T + k_X)A - i\beta 3A^2 A^* = 0.}
+\label{eq:14.9.80}
+\end{equation}
+From this equation we see that the amplitude moves with the group velocity (since for this dispersion relation $\omega^2 = k^2 + 1$ the group velocity is given by $\omega_k = \frac{k}{\omega}$) but the amplitude is not constant, moving with the group velocity.
+
+Multiplying \eqref{eq:14.9.80} by $A^*$ and adding the complex conjugate yields an equation which represents an important nontrivial physical concept:
+\begin{equation}
+\boxed{\frac{\partial}{\partial T}(\omega|A|^2) + \frac{\partial}{\partial X}(k|A|^2) = 0,}
+\label{eq:14.9.81}
+\end{equation}
+where we have used $|A|^2 = AA^*$. Equation \eqref{eq:14.9.81} is called \textbf{conservation of wave action} and is a general principal. Conservation laws can be put in the form $\pd{p}{t} + \pd{q}{x} = 0$, where $p$ is the conserved quantity and $q$ its flux. Differential conservation laws follow from integral conservation laws (as is briefly discussed in Sec.\ 1.2). Sometimes on infinite domains it can be shown that $\frac{d}{d t}\int_{-\infty}^{\infty}\rho\,dx = 0$, and hence for all time $\int_{-\infty}^{\infty}\rho\,dx$ equals its initial value (and is thus constant in time or conserved). The general statement of \textbf{conservation of wave action for linear dispersive partial differential equations even when the coefficients in the partial differential equation are slowly varying} is
+\begin{equation}
+\boxed{\frac{\partial}{\partial T}\left(\frac{E}{\omega}\right) + \frac{\partial}{\partial X}\left(c_g\frac{E}{\omega}\right) = 0.}
+\label{eq:14.9.82}
+\end{equation}
+The wave action $\frac{E}{\omega}$ is conserved, where $E$ is the average energy density and $c_g$ is the usual group velocity. It can be shown for our example that $E = \omega^2|A|^2$. Consequently, the flux of wave action $c_g\frac{E}{\omega} = k|A|^2$ since in our example $c_g = \omega_k = \frac{k}{\omega}$. [If $\beta = 0$ and thus $A$ could be real, this result would follow just by multiplying \eqref{eq:14.9.80} by $A$.] Wave action provides a generalization of the idea of action for linear ordinary differential equations. Action has been further generalized to nonlinear dispersive partial differential equations by Whitham [1999].
+
+In this example, the nonlinearity only affects the phase since the nonlinear term here is just a restoring force. If the nonlinearity had been a damping force, the nonlinearity would have affected the amplitude. To see how the nonlinear perturbation affects the phase, we let
+\begin{equation}
+A = re^{i\phi},
+\label{eq:14.9.83}
+\end{equation}
+where $r = |A|$ has already been analyzed. Substituting \eqref{eq:14.9.83} into \eqref{eq:14.9.80} and keeping only the imaginary part yields the equation for the phase (of the complex amplitude $A$):
+\begin{equation}
+2\omega\pd{\phi}{T} + 2k\pd{\phi}{X} = 3\beta r^2,
+\label{eq:14.9.84}
+\end{equation}
+which shows that the phase moves with the group velocity that evolves depending on the amplitude $r = |A|$ due to the nonlinear perturbation. (If $\beta = 0$, the phase $\phi$ would be constant if it were initially constant.)
+
+Typically, small perturbations of oscillatory phenomena cause small modulations (slow variations) of the amplitude and the phase (as in this subsection).
+
+\begin{exercises}{14.9}
+In all of the following exercises, assume $0 < \varepsilon \ll 1$. In Exercises 14.9.1--14.9.7, use the method of multiple scales to obtain equations for the amplitude and phase.
+
+\item $\odd{u}{t} + u = -\varepsilon\od{u}{t}$ (compare to approximations of exact solution)
+
+\item $\odd{u}{t} + \omega^2(\varepsilon t)u = -\varepsilon\od{u}{t}$
+
+\item[\starred] $\odd{u}{t} + \omega^2(\varepsilon t)u = -\varepsilon(\od{u}{t})^3$
+
+\item $\odd{u}{t} + u = \varepsilon(u^3 - \od{u}{t})$
+
+\item[\starred] A linearized pendulum with varying length $L$ can be shown to satisfy the following equation:
+\[
+\odd{u}{t} + \frac{g}{L}u = -2\frac{1}{L}\od{L}{t}\od{u}{t}.
+\]
+Note that the right-hand side is not zero. Suppose $L$ is a slowly varying length $L = L(\varepsilon t)$. Use the method of multiple scales to obtain a solution valid when $\varepsilon t = O(1)$. [\emph{Hint}: $\frac{1}{L}\od{L}{T} = \frac{\varepsilon}{L}\od{L}{dT}$, where $T = \varepsilon t$.]
+
+\item Consider the system
+\begin{align*}
+\odd{x}{t} + 9x &= \varepsilon y^3 \\
+\odd{y}{t} + y &= 4\varepsilon xy^2.
+\end{align*}
+\begin{enumerate}
+\item[(a)] By discussing the frequencies, show why the slow time is $T = \varepsilon t$.
+\item[(b)] Obtain the leading-order equations (but do \emph{not} solve them) that are valid for $T = O(1)$, describing the long time behavior of this system.
+\end{enumerate}
+
+\item Approximate the solution of Airy's differential equation $\odd{u}{t} + xu = 0$ in the region of oscillation (assume large $x$ can be interpreted as a slowly varying coefficient) using the Liouville-Green approximation.
+
+In Exercises 14.9.8--14.9.10, use the method of multiply scaled variables to obtain the equation for the slowly varying amplitude and phase.
+
+\item[\starred] $\pd{u}{t} = \frac{\partial^3 u}{\partial x^3}$
+
+\item $\pdd{u}{t} - \pdd{u}{x} + u = \varepsilon\beta(\pd{u}{t})^3$
+
+\item $\pdd{u}{t} - c^2\pdd{u}{x} + \beta u = 0$, assuming c and $\beta$ depend slowly on $X$ and $T$. You may assume the dispersion relation is still valid for slowly varying media.
+
+\item Because the reduced wave equation \eqref{eq:14.9.49} is linear, we can simple let $u = A(X,Y,Z)e^{i\theta}$, where $\theta$ solves the eikonal equation \eqref{eq:14.9.53}. Find the exact equation for $A$ and the leading-order equation.
+\end{exercises}

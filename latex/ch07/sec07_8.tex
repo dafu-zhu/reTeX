@@ -1,0 +1,272 @@
+% sec07_8.tex — Section 7.8: More on Bessel Functions
+\section{More on Bessel Functions}
+\label{sec:7.8}
+
+\subsection{Qualitative Properties of Bessel Functions}
+\label{sec:7.8.1}
+
+It is helpful to have some understanding of the sketch of Bessel functions.  Let us rewrite Bessel's differential equation as
+\begin{equation}
+\odd{f}{z} = -\left(1 - \frac{m^2}{z^2}\right)f - \frac{1}{z}\od{f}{z},
+\label{eq:7.8.1}
+\end{equation}
+in order to compare it with the equation describing the motion of a spring-mass system (unit mass, spring ``constant'' $k$ and frictional coefficient $c$):
+\[
+\odd{y}{t} = -ky - c\od{y}{t}.
+\]
+The equilibrium is $y = 0$.  Thus, we might think of Bessel's differential equation as representing a time-varying frictional force ($c = 1/t$) and a time-varying ``restoring'' force ($k = 1 - m^2/t^2$).  The latter force is a variable restoring force only for $t > m$ ($z > m$).  We might expect the solutions of Bessel's differential equation to be similar to a damped oscillator (at least for $z > m$).  The larger $z$ gets, the closer the variable spring constant $k$ approaches 1 and the more the frictional force tends to vanish.  The solution should oscillate with frequency approximately 1, but should slowly decay.  This is similar to an underdamped spring-mass system, but the solutions to Bessel's differential equation should decay more slowly than any exponential since the frictional force is approaching zero.  Detailed numerical solutions of Bessel functions are sketched in Fig.~7.8.1, verifying these points.  Note that \emph{for small} $z$,
+\begin{equation}
+\begin{aligned}
+J_0(z) &\approx 1 & Y_0(z) &\approx \tfrac{2}{\pi}\ln z \\
+J_1(z) &\approx \tfrac{1}{2}z & Y_1(z) &\approx -\tfrac{2}{\pi}z^{-1} \\
+J_2(z) &\approx \tfrac{1}{8}z^2 & Y_2(z) &\approx -\tfrac{1}{\pi}z^{-2}.
+\end{aligned}
+\label{eq:7.8.2}
+\end{equation}
+These sketches vividly show a property worth memorizing: \textbf{Bessel functions of the first and second kind look like decaying oscillations}.  In fact, it is known that $J_m(z)$ and $Y_m(z)$ may be accurately approximated for large $z$ by simple algebraically decaying oscillations \emph{for large} $z$:
+\begin{equation}
+\boxed{\begin{aligned}
+J_m(z) &\sim \sqrt{\frac{2}{\pi z}}\cos\left(z - \frac{\pi}{4} - m\frac{\pi}{2}\right) \quad\text{as } z \to \infty \\[6pt]
+Y_m(z) &\sim \sqrt{\frac{2}{\pi z}}\sin\left(z - \frac{\pi}{4} - m\frac{\pi}{2}\right) \quad\text{as } z \to \infty.
+\end{aligned}}
+\label{eq:7.8.3}
+\end{equation}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch07/fig_7_8_1.png}
+\caption{Sketch of various Bessel functions.}
+\label{fig:7.8.1}
+\end{figure}
+
+These are known as asymptotic formulas, meaning that the approximations improve as $z \to \infty$.  In Sec.~5.9 we claimed that approximation formulas similar to \eqref{eq:7.8.3} always exist for any Sturm-Liouville problem for the large eigenvalues $\lambda \gg 1$.  Here $\lambda \gg 1$ implies that $z \gg 1$ since $z = \sqrt{\lambda}\,r$ and $0 < r < a$ (as long as $r$ is not too small).
+
+A derivation of \eqref{eq:7.8.3} requires facts beyond the scope of this text.  However, information such as \eqref{eq:7.8.3} is readily available from many sources.\footnote{A personal favorite, highly recommended to students with a serious interest in the applications of mathematics to science and engineering, is \emph{Handbook of Mathematical Functions}, edited by M.~Abramowitz and I.~A.~Stegun, originally published inexpensively by the National Bureau of Standards in 1964 and in 1974 reprinted by Dover in paperback.}  We notice from \eqref{eq:7.8.3} that the only difference in the approximate behavior for large $z$ of all these Bessel functions is the precise phase shift.  We also note that the frequency is approximately 1 (and period $2\pi$) for large $z$, consistent with the comparison with a spring-mass system with vanishing friction and $k \to 1$.  Furthermore, the amplitude of oscillation, $\sqrt{2/\pi z}$, decays more slowly as $z \to \infty$ than the exponential rate of decay associated with an underdamped oscillator, as previously discussed qualitatively.
+
+\subsection{Asymptotic Formulas for the Eigenvalues}
+\label{sec:7.8.2}
+
+Approximate values of the zeros of the eigenfunctions $J_m(z)$ may be obtained using these asymptotic formulas, \eqref{eq:7.8.3}.  For example, for $m = 0$, for large $z$
+\[
+J_0(z) \sim \sqrt{\frac{2}{\pi z}}\cos\left(z - \frac{\pi}{4}\right).
+\]
+The zeros approximately occur when $z - \pi/4 = -\pi/2 + s\pi$, but $s$ must be large (in order for $z$ to be large).  Thus, the large zeros are given approximately by
+\begin{equation}
+z \sim \pi\left(s - \frac{1}{4}\right),
+\label{eq:7.8.4}
+\end{equation}
+for large integral $s$.  We claim that formula \eqref{eq:7.8.4} becomes more and more accurate as $n$ increases.  In fact, since the formula is reasonably accurate already for $n = 2$ or 3 (see Table~7.8.1), it may be unnecessary to compute the zero to a greater accuracy than by \eqref{eq:7.8.4}.  A further indication of the accuracy of the asymptotic formula is that we see that the differences of the first few eigenvalues are already nearly $\pi$ (as predicted for the large eigenvalues).
+
+\begin{table}[H]
+\centering
+\caption{Zeros of $J_0(z)$}
+\label{tab:7.8.1}
+\begin{tabular}{ccccccc}
+\toprule
+$n$ & $z_{0n}$ & Exact & Large $z$ formula \eqref{eq:7.8.4} & Error & Percentage error & $z_{0n} - z_{0(n-1)}$ \\
+\midrule
+1 & $z_{01}$ & 2.40483\ldots & 2.35619 & 0.04864 & 2.0 & --- \\
+2 & $z_{02}$ & 5.52008\ldots & 5.49779 & 0.02229 & 0.4 & 3.11525 \\
+3 & $z_{03}$ & 8.65373\ldots & 8.63938 & 0.01435 & 0.2 & 3.13365 \\
+4 & $z_{04}$ & 11.79153\ldots & 11.78097 & 0.01056 & 0.1 & 3.13780 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Zeros of Bessel Functions and Nodal Curves}
+\label{sec:7.8.3}
+
+We have shown that the eigenfunctions are $J_m\left(\sqrt{\lambda_{mn}}\,r\right)$ where $\lambda_{mn} = (z_{mn}/a)^2$, $z_{mn}$ being the $n$th zero of $J_m(z)$.  Thus, the eigenfunctions are
+\[
+J_m\left(z_{mn}\frac{r}{a}\right).
+\]
+For example, for $m = 0$, the eigenfunctions are $J_0(z_{0n}r/a)$, where the sketch of $J_0(z)$ is reproduced in Fig.~7.8.2 (and the zeros are marked).  As $r$ ranges from 0 to $a$, the argument of the eigenfunction $J_0(z_{0n}r/a)$ ranges from 0 to the $n$th zero, $z_{0n}$.  At $r = a$, $z = z_{0n}$, the $n$th zero.  Thus, the $n$th eigenfunction has $n - 1$ zeros in the interior.  Although originally stated for regular Sturm-Liouville problems, it is also valid for singular problems (if eigenfunctions exist).
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch07/fig_7_8_2.png}
+\caption{Sketch of $J_0(z)$ and its zeros.}
+\label{fig:7.8.2}
+\end{figure}
+
+The separation of variables solution of the wave equation is
+\[
+u(r,\theta,t) = f(r)g(\theta)h(t),
+\]
+where
+\begin{equation}
+u(r,\theta,t) = J_m\left(z_{mn}\frac{r}{a}\right)
+\begin{Bmatrix} \sin m\theta \\ \cos m\theta \end{Bmatrix}
+\begin{Bmatrix} \sin c\sqrt{\lambda_{mn}}\,t \\ \cos c\sqrt{\lambda_{mn}}\,t \end{Bmatrix},
+\label{eq:7.8.5}
+\end{equation}
+known as a normal mode of oscillation and is graphed for fixed $t$ in Fig.~7.8.3.  For each $m \neq 0$ there are four families of solutions (for $m = 0$ there are two families).  Each mode oscillates with a characteristic natural frequency, $c\sqrt{\lambda_{mn}}$.  At certain positions along the membrane, known as \textbf{nodal curves}, the membrane will be unperturbed for all time (for vibrating strings we called these positions nodes).  The nodal curve for the $\sin m\theta$ mode is determined by
+\begin{equation}
+J_m\left(z_{mn}\frac{r}{a}\right)\sin m\theta = 0.
+\label{eq:7.8.6}
+\end{equation}
+The nodal curve consists of all points where $\sin m\theta = 0$ or $J_m(z_{mn}r/a) = 0$; $\sin m\theta$ is zero along $2m$ distinct rays, $\theta = s\pi/m$, $s = 1, 2, \ldots, 2m$.  In order for there to be a zero of $J_m(z_{mn}r/a)$ for $0 < r < a$, $z_{mn}r/a$ must equal an earlier zero of $J_m(z)$, $z_{mn}r/a = z_{mp}$, $p = 1, 2, \ldots, n - 1$.  There are thus $n - 1$ circles along which $J_m(z_{mn}r/a) = 0$ besides $r = a$.  We illustrate this for $m = 3$, $n = 2$ in Fig.~7.8.3, where the nodal circles are determined from a table.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch07/fig_7_8_3.png}
+\caption{Normal nodes and nodal curves for a vibrating circular membrane.}
+\label{fig:7.8.3}
+\end{figure}
+
+\subsection{Series Representation of Bessel Functions}
+\label{sec:7.8.4}
+
+The usual method of discussing Bessel functions relies on series solution methods for differential equations.  We will obtain little useful information by pursuing this topic.  However, some may find it helpful to refer to the formulas that follow.
+
+First we review some additional results concerning series solutions around $z = 0$ for second-order linear differential equations:
+\begin{equation}
+\odd{f}{z} + a(z)\od{f}{z} + b(z)f = 0.
+\label{eq:7.8.7}
+\end{equation}
+Recall that $z = 0$ is an ordinary point if both $a(z)$ and $b(z)$ have Taylor series around $z = 0$.  In this case we are guaranteed that all solutions may be represented by a convergent Taylor series,
+\[
+f = \sum_{n=0}^{\infty} a_n z^n = a_0 + a_1 z + a_2 z^2 + \cdots,
+\]
+at least in some neighborhood of $z = 0$.
+
+If $z = 0$ is not an ordinary point, then we call it a singular point ($z = 0$ is a singular point of Bessel's differential equation).  If $z = 0$ is a singular point, however, if $a(z) = R(z)/z$ and $b(z) = S(z)/z^2$ with $R(z)$ and $S(z)$ having Taylor series around $z = 0$, then we can say more about solutions of the differential equation near $z = 0$.  For this case known as a \textbf{regular singular point}, the coefficients $a(z)$ and $b(z)$ can have at worst a simple pole and double pole, respectively.  It is possible for $b(z)$ not to be that singular.  For Bessel's differential equation, if $a(z) = 1 + z$ and $b(z) = (1 - z^3)/z^2$, then $z = 0$ is a regular singular point for Bessel's differential equation in the form \eqref{eq:7.8.7}.
+
+For a regular singular point at $z = 0$, it is known by the \textbf{method of Frobenius} that at least one solution of the differential equation is in the form
+\begin{equation}
+f = z^p\sum_{n=0}^{\infty} a_n z^n,
+\label{eq:7.8.8}
+\end{equation}
+that is, $z^p$ times a Taylor series, where $p$ is one of the solutions of the quadratic indicial equation.  One method to obtain the indicial equation is to substitute $f = z^p$ into the corresponding equidimensional equation that results by replacing $R(z)$ and $S(z)$ by $R(0)$ and $S(0)$.  Thus
+\[
+p(p-1) + R(0)p + S(0) = 0
+\]
+is the indicial equation.  If the two values of $p$ (the roots of the indicial equation) differ by a noninteger, then two independent solutions exist in the form \eqref{eq:7.8.8}.  If the two roots of the indicial equation are identical, then only one solution is in the form \eqref{eq:7.8.8}, and the other solution is more complicated but always involves logarithms.  If the roots differ by an integer, then sometimes both solutions exist in the form \eqref{eq:7.8.8}, while other times form \eqref{eq:7.8.8} only exists corresponding to the larger root $p$ and a series beginning with the smaller root $p$ must be modified by the introduction of logarithms.  Details of the method of Frobenius are presented in most elementary differential equations texts.
+
+For Bessel's equation, we have shown that the indicial equation is
+\[
+p(p-1) + p - m^2 = 0,
+\]
+since $R(0) = 1$ and $S(0) = -m^2$.  Its roots are $p = \pm m$.  If $m = 0$, the roots are identical.  Form \eqref{eq:7.8.8} is valid for one solution, while logarithms must enter the second solution.  If $m \neq 0$ the roots of the indicial equation differ by an integer.  The following infinite series can be verified by substitution and are often considered as definitions of $J_m(z)$ and $Y_m(z)$:
+\begin{equation}
+J_m(z) = \sum_{k=0}^{\infty}\frac{(-1)^k(z/2)^{2k+m}}{k!(k+m)!}
+\label{eq:7.8.9}
+\end{equation}
+\begin{equation}
+\begin{aligned}
+Y_m(z) &= \frac{2}{\pi}\left(\log\frac{z}{2} + \gamma\right)J_m(z) - \frac{1}{\pi}\sum_{k=0}^{m-1}\frac{(m-k-1)!(z/2)^{2k-m}}{k!} \\
+&\quad + \frac{1}{2}\sum_{k=0}^{\infty}(-1)^{k+1}\left[\varphi(k) + \varphi(k+m)\right]\frac{(z/2)^{2k+m}}{k!(m+k)!},
+\end{aligned}
+\label{eq:7.8.10}
+\end{equation}
+where
+\begin{enumerate}
+\item[(i)] $\varphi(k) = 1 + \frac{1}{2} + \frac{1}{3} + \cdots + 1/k$, \quad $\phi(0) = 0$
+\item[(ii)] $\gamma = \lim_{k\to\infty}[\varphi(k) - \ln k] = 0.5772157\ldots$, known as Euler's constant.
+\item[(iii)] If $m = 0$, $\sum_{k=0}^{m-1} \equiv 0$.
+\end{enumerate}
+
+We have obtained these from the previously mentioned handbook edited by Abramowitz and Stegun.
+
+\begin{exercises}{7.8}
+
+\item The boundary value problem for a vibrating annular membrane $1 < r < 2$ (fixed at the inner and outer radii) is
+\[
+\frac{d}{d r}\left(r\od{f}{r}\right) + \left(\lambda r - \frac{m^2}{r}\right)f = 0
+\]
+with $f(1) = 0$ and $f(2) = 0$, where $m = 0, 1, 2, \ldots\;$.
+
+\begin{enumerate}
+\item[(a)] Show that $\lambda > 0$.
+
+\item[\starred(b)] Obtain an expression that determines the eigenvalues.
+
+\item[(c)] For what value of $m$ does the smallest eigenvalue occur?
+
+\item[\starred(d)] Obtain an upper and lower bound for the smallest eigenvalue.
+
+\item[(e)] Using a trial function, obtain an upper bound for the lowest eigenvalue.
+
+\item[(f)] Compute approximately the lowest eigenvalue from part~(b) using tables of Bessel functions.  Compare to parts~(d) and~(e).
+\end{enumerate}
+
+\item Consider the temperature $u(r,\theta,t)$ in a quarter-circle of radius $a$ satisfying
+\[
+\pd{u}{t} = k\laplacian u
+\]
+subject to the conditions
+\[
+\begin{aligned}
+u(r,0,t) &= 0 & u(a,\theta,t) &= 0 \\
+u(r,\pi/2,t) &= 0 & u(r,\theta,0) &= G(r,\theta).
+\end{aligned}
+\]
+
+\begin{enumerate}
+\item[(a)] Show that the boundary value problem is
+\[
+\frac{d}{d r}\left(r\od{f}{r}\right) + \left(\lambda r - \frac{\mu}{r}\right)f = 0
+\]
+with $f(a) = 0$ and $f(0)$ bounded.
+
+\item[(b)] Show that $\lambda > 0$ if $\mu \geq 0$.
+
+\item[(c)] Show that for each $\mu$, the eigenfunction corresponding to the smallest eigenvalue has no zeros for $0 < r < a$.
+
+\item[\starred(d)] Solve the initial value problem.
+\end{enumerate}
+
+\item Reconsider Exercise~7.8.2 with the boundary conditions
+\[
+\pd{u}{\theta}(r,0,t) = 0, \qquad \pd{u}{\theta}\left(r,\tfrac{\pi}{2},t\right) = 0, \qquad u(a,\theta,t) = 0.
+\]
+
+\item Consider the boundary value problem
+\[
+\frac{d}{d r}\left(r\od{f}{r}\right) + \left(\lambda r - \frac{m^2}{r}\right)f = 0
+\]
+with $f(a) = 0$ and $f(0)$ bounded.  For each integral $m$, show that the $n$th eigenfunction has $n - 1$ zeros for $0 < r < a$.
+
+\item Using the known asymptotic behavior as $z \to 0$ and as $z \to \infty$, roughly sketch for all $z > 0$
+
+\begin{enumerate}
+\item[(a)] $J_4(z)$ \qquad (b) $Y_1(z)$ \qquad (c) $Y_0(z)$
+\item[(d)] $J_0(z)$ \qquad (e) $Y_5(z)$ \qquad (f) $J_2(z)$
+\end{enumerate}
+
+\item Determine approximately the \emph{large} frequencies of vibration of a circular membrane.
+
+\item Consider Bessel's differential equation
+\[
+z^2\odd{f}{z} + z\od{f}{z} + (z^2 - m^2)\,f = 0.
+\]
+Let $f = y/z^{1/2}$.  Derive that
+\[
+\odd{y}{z} + y\left(1 + \frac{1}{4}z^{-2} - m^2 z^{-2}\right) = 0.
+\]
+
+\item[\starred] Using Exercise~7.8.7, determine exact expressions for $J_{1/2}(z)$ and $Y_{1/2}(z)$.  Use and verify \eqref{eq:7.8.3} and \eqref{eq:7.7.33} in this case.
+
+\item In this exercise use the result of Exercise~7.8.7.  If $z$ is large, verify as much as possible concerning \eqref{eq:7.8.3}.
+
+\item In this exercise use the result of Exercise~7.8.7 in order to improve on \eqref{eq:7.8.3}:
+\begin{enumerate}
+\item[(a)] Substitute $y = e^{iz}w(z)$ and show that
+\[
+\odd{w}{z} + 2i\od{w}{z} + \frac{\gamma}{z^2}w = 0, \quad\text{where } \gamma = \frac{1}{4} - m^2.
+\]
+
+\item[(b)] Substitute $w = \sum_{n=0}^{\infty}\beta_n z^{-n}$.  Determine the first few $\beta_n$ (assuming $\beta_0 = 1$).
+
+\item[(c)] Use part~(b) to obtain an improved asymptotic solution of Bessel's differential equation.  For real solutions, take real and imaginary parts.
+
+\item[(d)] Find a recurrence formula for $\beta_n$.  Show that the series diverges.  (Nonetheless, a finite series is very useful.)
+\end{enumerate}
+
+\item In order to ``understand'' the behavior of Bessel's differential equation as $z \to \infty$, let $x = 1/z$.  Show that $x = 0$ is a singular point, but an irregular singular point.  [The asymptotic solution of a differential equation in the neighborhood of an irregular singular point is analyzed in an unmotivated way in Exercise~7.8.10.  For a more systematic presentation, see advanced texts on asymptotic or perturbation methods (such as Bender and Orszag [1999]).]
+
+\item The lowest eigenvalue for \eqref{eq:7.7.34}--\eqref{eq:7.7.36} for $m = 0$ is $\lambda = (z_{01}/a)^2$.  Determine a reasonably accurate upper bound by using the Rayleigh quotient with a trial function.  Compare to the exact answer.
+
+\item Explain why the nodal circles in Fig.~7.8.3 are nearly equally spaced.
+
+\end{exercises}

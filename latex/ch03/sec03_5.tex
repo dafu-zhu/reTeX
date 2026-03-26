@@ -1,0 +1,166 @@
+% sec03_5.tex — Section 3.5: Term-by-Term Integration of Fourier Series
+\section{Term-By-Term Integration of Fourier Series}
+\label{sec:term-integration}
+
+In doing mathematical manipulations with infinite series, we must remember that some properties of finite series do not hold for infinite series.  In particular, Sec.~3.4 indicated that we must be especially careful differentiating term by term an infinite Fourier series.  The following theorem however, enables us to integrate Fourier series without caution:
+
+\begin{center}
+\fbox{\parbox{0.8\textwidth}{
+A Fourier series of piecewise smooth $f(x)$ can always be integrated term by term and the result is a \textit{convergent} infinite series that always \textit{converges} to the integral of $f(x)$ for $-L \le x \le L$ (even if the original Fourier series has jump discontinuities).
+}}
+\end{center}
+
+Remarkably, the new series formed by term-by-term integration is continuous.  However, the new series may not be a Fourier series.
+
+To quantify this statement, let us suppose that $f(x)$ is piecewise smooth and hence has a Fourier series in the range $-L \le x \le L$ (not necessarily continuous):
+\begin{equation}
+\label{eq:f-fourier}
+f(x) \sim a_0 + \sum_{n=1}^{\infty} a_n \cos \frac{n\pi x}{L} + \sum_{n=1}^{\infty} b_n \sin \frac{n\pi x}{L}.
+\end{equation}
+We will prove our claim that we can just integrate this result term by term:
+\begin{equation}
+\label{eq:f-integrated}
+\int_{-L}^{x} f(t) \dt \sim a_0(x + L) + \sum_{n=1}^{\infty}\left[\frac{a_n}{n\pi/L}\sin\frac{n\pi x}{L} + \frac{b_n}{n\pi/L}\left(\cos n\pi - \cos\frac{n\pi x}{L}\right)\right].
+\end{equation}
+
+We will actually show that the preceding statement is valid with an $=$ sign.  If term-by-term integration from $-L$ to $x$ of a Fourier series is valid, then any definite integration is also valid since
+\[
+\int_a^b = \int_{-L}^{b} - \int_{-L}^{a}.
+\]
+
+\textbf{Example.}  Term-by-term integration has some interesting applications.  Recall that the Fourier sine series for $f(x) = 1$ is given by
+\begin{equation}
+\label{eq:1-sine-series}
+1 \sim \frac{4}{\pi}\left(\sin\frac{\pi x}{L} + \frac{1}{3}\sin\frac{3\pi x}{L} + \frac{1}{5}\sin\frac{5\pi x}{L} + \cdots\right),
+\end{equation}
+where $\sim$ is used since \eqref{eq:1-sine-series} is an equality only for $0 < x < L$.  Integrating term by term from 0 to $x$ results in
+\begin{equation}
+\label{eq:x-from-integration}
+x \sim \frac{4L}{\pi^2}\left(1 + \frac{1}{3^2} + \frac{1}{5^2} + \cdots \right) - \frac{4L}{\pi^2}\left(\cos\frac{\pi x}{L} + \frac{\cos 3\pi x/L}{3^2} + \frac{\cos 5\pi x/L}{5^2} + \cdots\right), \quad 0 \le x \le L,
+\end{equation}
+where because of our theorem the $=$ sign can be used.  We immediately recognize that \eqref{eq:x-from-integration} should be the Fourier cosine series of the function $x$.  It was obtained by integrating the Fourier sine series of $f(x) = 1$.  However, an infinite series of constants appears in \eqref{eq:x-from-integration}; it is the constant term of the Fourier cosine series of $x$.  In this way we can evaluate that infinite series,
+\[
+\frac{4L}{\pi^2}\left(1 + \frac{1}{3^2} + \frac{1}{5^2} + \cdots \right) = \frac{1}{L}\int_0^{L} x \dx = \frac{L}{2}.
+\]
+Thus, we obtain the usual form for the Fourier cosine series for $x$,
+\begin{equation}
+\label{eq:x-cosine-from-int}
+x = \frac{L}{2} - \frac{4L}{\pi^2}\left(\cos\frac{\pi x}{L} + \frac{\cos 3\pi x/L}{3^2} + \frac{\cos 5\pi x/L}{5^2} + \cdots \right), \quad 0 \le x \le L.
+\end{equation}
+The process of deriving new series from old ones can be continued.  Integrating \eqref{eq:x-cosine-from-int} from 0 to $x$ yields
+\begin{equation}
+\label{eq:x2-from-int}
+\frac{x^2}{2} = \frac{L}{2} x - \frac{4L^2}{\pi^3}\left(\sin\frac{\pi x}{L} + \frac{\sin 3\pi x/L}{3^3} + \frac{\sin 5\pi x/L}{5^3} + \cdots \right).
+\end{equation}
+This example illustrates that \textit{integrating a Fourier series term by term does not necessarily yield another Fourier series}.  However, \eqref{eq:x2-from-int} can be looked at as either
+\begin{enumerate}
+\item The Fourier sine series of $x^2/2 - (L/2)x$, or
+\item The Fourier sine series of $x^2/2$, where the Fourier sine series of $x$ is needed first [see \eqref{eq:x-sine} and \eqref{eq:Bn-x}].
+\end{enumerate}
+
+An alternative procedure is to perform indefinite integration.  In this case an arbitrary constant must be included and evaluated.  For example, reconsider the Fourier sine series of $f(x) = 1$, \eqref{eq:1-sine-series}.  By term-by-term indefinite integration we derive the Fourier cosine series of $x$,
+\[
+x = c - \frac{4L}{\pi^2}\left(\cos\frac{\pi x}{L} + \frac{\cos 3\pi x/L}{3^2} + \frac{\cos 5\pi x/L}{5^2} + \cdots \right).
+\]
+The constant of integration is not arbitrary; it must be evaluated.  Here $c$ is again the constant term of the Fourier cosine series of $x$, $c = (1/L)\int_0^L x \dx = L/2$.
+
+\textbf{Proof on integrating Fourier series.}  Consider
+\begin{equation}
+\label{eq:F-def}
+F(x) = \int_{-L}^{x} f(t) \dt.
+\end{equation}
+This integral is a continuous function of $x$ since $f(x)$ is piecewise smooth.  $F(x)$ has a continuous Fourier series only if $F(L) = F(-L)$ [otherwise, remember that the Fourier series of $F(x)$ does not converge to $F(x)$ at the endpoints $x = \pm L$].  However, note that from the definition \eqref{eq:F-def},
+\[
+F(-L) = 0 \quad \text{and} \quad F(L) = \int_{-L}^{L} f(t) \dt = 2La_0.
+\]
+Thus, in general $F(x)$ does not have a continuous Fourier series.  In Fig.~3.5.1, $F(x)$ is sketched, illustrating the fact that usually $F(-L) \ne F(L)$.  However, consider the straight line connecting the point $F(-L)$ to $F(L)$, $y = a_0(x+L)$.  $G(x)$, defined to be the difference between $F(x)$ and the straight line,
+\begin{equation}
+\label{eq:G-def}
+G(x) \equiv F(x) - a_0(x + L),
+\end{equation}
+will be zero at both ends, $x = \pm L$,
+\[
+G(-L) = G(L) = 0,
+\]
+as illustrated in Fig.~3.5.1.  $G(x)$ is also continuous.  Thus, $G(x)$ satisfies the properties that enable the Fourier series of $G(x)$ actually to equal $G(x)$:
+\begin{equation}
+\label{eq:G-fourier}
+G(x) = A_0 + \sum_{n=1}^{\infty}\left(A_n \cos \frac{n\pi x}{L} + B_n \sin \frac{n\pi x}{L}\right),
+\end{equation}
+where the $=$ sign is emphasized.  These Fourier coefficients can be computed as
+\[
+A_n = \frac{1}{L}\int_{-L}^{L}\left[F(x) - a_0(x+L)\right]\cos\frac{n\pi x}{L}\dx \quad (n \ne 0).
+\]
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch03/fig_3_5_1.png}
+\caption{$F(x)$ with $F(-L) \ne F(L)$.}
+\label{fig:3.5.1}
+\end{figure}
+
+The $x$-term can be dropped since it is odd (i.e., $\int_{-L}^{L} x\cos n\pi x/L \dx = 0$).  The resulting expression can be integrated by parts as follows:
+\begin{align*}
+u &= F(x) - a_0 L & dv &= \cos\frac{n\pi x}{L}\dx \\
+du &= \od{F}{x}\dx = f(x)\dx & v &= \frac{L}{n\pi}\sin\frac{n\pi x}{L},
+\end{align*}
+yielding
+\begin{equation}
+\label{eq:An-proof}
+A_n = \frac{1}{L}\left[\left(F(x) - a_0 L\right)\frac{\sin n\pi x/L}{n\pi/L}\bigg|_{-L}^{L} - \frac{L}{n\pi}\int_{-L}^{L} f(x)\sin\frac{n\pi x}{L}\dx\right] = -\frac{b_n}{n\pi/L},
+\end{equation}
+where we have recognized that $b_n$ is the Fourier sine coefficient of $f(x)$.  In a similar manner (which we leave as an exercise), it can be shown that
+\[
+B_n = \frac{a_n}{n\pi/L},
+\]
+where $a_n$ is the Fourier cosine coefficient of $f(x)$.  $A_0$ can be calculated in a different manner (the previous method will not work).  Since $G(L) = 0$ and the Fourier series of $G(x)$ is pointwise convergent, from \eqref{eq:G-fourier} it follows that
+\[
+0 = A_0 + \sum_{n=1}^{\infty} A_n \cos n\pi = A_0 - \sum_{n=1}^{\infty}\frac{b_n}{n\pi/L}\cos n\pi
+\]
+since $A_n = -b_n/(n\pi/L)$.  Thus, we have shown from \eqref{eq:G-fourier} that
+\begin{equation}
+\label{eq:F-result}
+F(x) = a_0(x+L) + \sum_{n=1}^{\infty}\left[\frac{a_n}{n\pi/L}\sin\frac{n\pi x}{L} + \frac{b_n}{n\pi/L}\left(\cos n\pi - \cos\frac{n\pi x}{L}\right)\right],
+\end{equation}
+exactly the result of simple term-by-term integration.  However, notice that \eqref{eq:F-result} is \textit{not} the Fourier series of $F(x)$, since $a_0 x$ appears.  Nonetheless, \eqref{eq:F-result} is valid.  We have now justified term-by-term integration of Fourier series.
+
+\begin{exercises}{3.5}
+\item Consider
+\begin{equation}
+\label{eq:x2-sine}
+x^2 \sim \sum_{n=1}^{\infty} b_n \sin \frac{n\pi x}{L}.
+\end{equation}
+\begin{enumerate}
+\item[\textbf{(a)}] Determine $b_n$ from \eqref{eq:x-sine}, \eqref{eq:Bn-x}, and \eqref{eq:x2-from-int}.
+\item[\textbf{(b)}] For what values of $x$ is \eqref{eq:x2-sine} an equality?
+\item[\starred\textbf{(c)}] Derive the Fourier cosine series for $x^3$ from \eqref{eq:x2-sine}.  For what values of $x$ will this be an equality?
+\end{enumerate}
+
+\item
+\begin{enumerate}
+\item[\textbf{(a)}] Using \eqref{eq:x-sine} and \eqref{eq:Bn-x}, obtain the Fourier cosine series of $x^2$.
+\item[\textbf{(b)}] From part (a), determine the Fourier sine series of $x^3$.
+\end{enumerate}
+
+\item Generalize Exercise 3.5.2, in order to derive the Fourier sine series of $x^m$, $m$ odd.
+
+\item[\starred 3.5.4.] Suppose that $\cosh x \sim \sum_{n=1}^{\infty} b_n \sin n\pi x/L$.
+\begin{enumerate}
+\item[\textbf{(a)}] Determine $b_n$ by correctly differentiating this series twice.
+\item[\textbf{(b)}] Determine $b_n$ by integrating this series twice.
+\end{enumerate}
+
+\item Show that $B_n$ in \eqref{eq:G-fourier} satisfies $B_n = a_n/(n\pi/L)$, where $a_n$ is defined in \eqref{eq:f-fourier}.
+
+\item Evaluate
+\[
+1 + \frac{1}{2^2} + \frac{1}{3^2} + \frac{1}{4^2} + \frac{1}{5^2} + \frac{1}{6^2} + \cdots
+\]
+by evaluating \eqref{eq:x-cosine-from-int} at $x = 0$.
+
+\item[\starred 3.5.7.] Evaluate
+\[
+1 - \frac{1}{3^3} + \frac{1}{5^3} - \frac{1}{7^3} + \cdots
+\]
+using \eqref{eq:x2-from-int}.
+\end{exercises}

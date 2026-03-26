@@ -1,0 +1,146 @@
+% sec05_4.tex — Section 5.4: Worked Example: Heat Flow in a Nonuniform Rod without Sources
+\section{Worked Example: Heat Flow in a Nonuniform Rod without Sources}
+\label{sec:sl-heat-nonuniform}
+
+In this section we illustrate the application to partial differential equations of some of the general theorems on regular Sturm--Liouville eigenvalue problems.  Consider the heat flow in a nonuniform rod (with possibly nonconstant thermal properties $c$, $\rho$, $K_0$) \textit{without sources}; see Section~\ref{subsec:nonuniform-rod}.  At the left end, $x = 0$, the temperature is prescribed to be $0^\circ$, and the right end is insulated.  The initial temperature distribution is given.  The mathematical formulation of this problem is
+\begin{align}
+\label{eq:heat-nonuniform-pde}
+\text{PDE:}\quad & \boxed{c\rho\pd{u}{t} = \frac{\partial}{\partial x}\left(K_0\pd{u}{x}\right)} \\[6pt]
+\label{eq:heat-nonuniform-bc}
+\text{BC:}\quad & \boxed{\begin{aligned} u(0,t) &= 0 \\ \pd{u}{x}(L,t) &= 0 \end{aligned}} \\[6pt]
+\label{eq:heat-nonuniform-ic}
+\text{IC:}\quad & \boxed{u(x,0) = f(x).}
+\end{align}
+
+Since the partial differential equation and the boundary conditions are linear and homogeneous, we seek special solutions (ignoring the initial condition) in the product form:
+\begin{equation}
+\label{eq:product-uxt}
+u(x,t) = \phi(x)h(t).
+\end{equation}
+After separation of variables (for details, see Section~\ref{subsec:nonuniform-rod}), we find that the time part satisfies the ordinary differential equation
+\begin{equation}
+\label{eq:time-part}
+\od{h}{t} = -\lambda h,
+\end{equation}
+while the spatial part solves the following regular Sturm--Liouville eigenvalue problem:
+\begin{align}
+\label{eq:spatial-sl-heat}
+& \boxed{\frac{d}{d x}\left(K_0\od{\phi}{x}\right) + \lambda c\rho\phi = 0} \\[6pt]
+\label{eq:spatial-bc1}
+& \boxed{\phi(0) = 0} \\[6pt]
+\label{eq:spatial-bc2}
+& \boxed{\od{\phi}{x}(L) = 0.}
+\end{align}
+
+According to our theorems concerning Sturm--Liouville eigenvalue problems, there is an infinite sequence of eigenvalues $\lambda_n$ and corresponding eigenfunctions $\phi_n(x)$.  \textit{We assume that $\phi_n(x)$ are known} (it might be a difficult problem to determine approximately the first few using numerical methods, but nevertheless it can be done).  The time-dependent part of the differential equation is easily solved,
+\begin{equation}
+\label{eq:time-solution}
+h(t) = ce^{-\lambda_n t}.
+\end{equation}
+In this way we obtain an infinite sequence of product solutions of the partial differential equation
+\begin{equation}
+\label{eq:product-solutions}
+u(x,t) = \phi_n(x)e^{-\lambda_n t}.
+\end{equation}
+According to the principle of superposition, we attempt to satisfy the initial condition with an infinite linear combination of these product solutions:
+\begin{equation}
+\label{eq:superposition}
+\boxed{u(x,t) = \sum_{n=1}^{\infty} a_n\phi_n(x)e^{-\lambda_n t}.}
+\end{equation}
+
+This infinite series has the property that it solves the PDE and the homogeneous BCs.  We will show that we can determine the as-yet unknown constants $a_n$ from the initial condition
+\begin{equation}
+\label{eq:initial-expansion}
+u(x,0) = f(x) = \sum_{n=1}^{\infty} a_n\phi_n(x).
+\end{equation}
+Our theorems imply that any piecewise smooth $f(x)$ can be represented by this type of series of eigenfunctions.  The coefficients $a_n$ are the generalized Fourier coefficients of the initial condition.  Furthermore, the eigenfunctions are orthogonal with a weight $\sigma(x) = c(x)\rho(x)$, determined from the physical properties of the rod:
+\[
+\int_0^L \phi_n(x)\phi_m(x)c(x)\rho(x)\dx = 0 \quad \text{for } n \neq m.
+\]
+Using these orthogonality formulas, the generalized Fourier coefficients are
+\begin{equation}
+\label{eq:gen-fourier-heat}
+\boxed{a_n = \frac{\displaystyle\int_0^L f(x)\phi_n(x)c(x)\rho(x)\dx}{\displaystyle\int_0^L \phi_n^2(x)c(x)\rho(x)\dx}.}
+\end{equation}
+
+We claim that \eqref{eq:superposition} is the desired solution, with coefficients given by \eqref{eq:gen-fourier-heat}.
+
+In order to give a minimal interpretation of the solution, we should ask what happens for large $t$.  Since the eigenvalues form an increasing sequence, each succeeding term in \eqref{eq:superposition} is exponentially smaller than the preceding term for large $t$.  Thus, for large time the solution may be accurately approximated by
+\begin{equation}
+\label{eq:large-time}
+u(x,t) \approx a_1\phi_1(x)e^{-\lambda_1 t}.
+\end{equation}
+This approximation is not very good if $a_1 = 0$, in which case \eqref{eq:large-time} should begin with the first nonzero term.  However, often the initial temperature $f(x)$ is nonnegative (and not identically zero).  In this case, we will show from \eqref{eq:gen-fourier-heat} that $a_1 \neq 0$:
+\begin{equation}
+\label{eq:a1-nonzero}
+a_1 = \frac{\displaystyle\int_0^L f(x)\phi_1(x)c(x)\rho(x)\dx}{\displaystyle\int_0^L \phi_1^2(x)c(x)\rho(x)\dx}.
+\end{equation}
+It follows that $a_1 \neq 0$, because $\phi_1(x)$ is the eigenfunction corresponding to the lowest eigenvalue and has no zeros; $\phi_1(x)$ is of one sign.  Thus, if $f(x) > 0$, it follows that $a_1 \neq 0$, since $c(x)$ and $\rho(x)$ are positive physical functions.  In order to sketch the solution for large fixed $t$, \eqref{eq:large-time} shows that all that is needed is the first eigenfunction.  At the very least, a numerical calculation of the first eigenfunction is easier than the computation of the first hundred.
+
+For large time, the ``shape'' of the temperature distribution in space stays approximately the same in time.  Its amplitude grows or decays in time depending on whether $\lambda_1 > 0$ or $\lambda_1 < 0$ (it would be constant in time if $\lambda_1 = 0$).  Since this is a heat flow problem with no sources and with zero temperature at $x = 0$, we certainly expect the temperature to be exponentially decaying toward $0^\circ$ (i.e., we expect that $\lambda_1 > 0$).  Although the right end is insulated, heat energy should flow out the left end since there $u = 0$.  We now prove mathematically that all $\lambda > 0$.  Since $p(x) = K_0(x)$, $q(x) = 0$, and $\sigma(x) = c(x)\rho(x)$, it follows from the Rayleigh quotient that
+\begin{equation}
+\label{eq:rayleigh-heat}
+\lambda = \frac{\displaystyle\int_0^L K_0(x)(d\phi/dx)^2\dx}{\displaystyle\int_0^L \phi^2 c(x)\rho(x)\dx},
+\end{equation}
+where the boundary contribution to \eqref{eq:rayleigh-heat} vanished due to the specific homogeneous boundary conditions, \eqref{eq:spatial-bc1} and \eqref{eq:spatial-bc2}.  It immediately follows from \eqref{eq:rayleigh-heat} that all $\lambda \ge 0$, since the thermal coefficients are positive.  Furthermore, $\lambda > 0$, since $\phi = \text{constant}$ is not an allowable eigenfunction [because $\phi(0) = 0$].  Thus, we have shown that $\lim_{t\to\infty} u(x,t) = 0$ for this example.
+
+\begin{exercises}{5.4}
+
+\item Consider
+\[
+c\rho\pd{u}{t} = \frac{\partial}{\partial x}\left(K_0\pd{u}{x}\right) + \alpha u,
+\]
+where $c$, $\rho$, $K_0$, and $\alpha$ are functions of $x$, subject to
+\begin{align*}
+u(0,t) &= 0 \\
+u(L,t) &= 0 \\
+u(x,0) &= f(x).
+\end{align*}
+Assume that the appropriate eigenfunctions are known.
+\begin{enumerate}
+\item Show that the eigenvalues are positive if $\alpha < 0$ (see Section~\ref{subsec:nonuniform-rod}).
+\item Solve the initial value problem.
+\item Briefly discuss $\lim_{t\to\infty} u(x,t)$.
+\end{enumerate}
+
+\item Consider the one-dimensional heat equation for nonconstant thermal properties
+\[
+c(x)\rho(x)\pd{u}{t} = \frac{\partial}{\partial x}\left[K_0(x)\pd{u}{x}\right]
+\]
+with the initial condition $u(x,0) = f(x)$.  [\textit{Hint}: Suppose it is known that if $u(x,t) = \phi(x)\,h(t)$, then
+\[
+\frac{1}{h}\od{h}{t} = \frac{1}{c(x)\rho(x)\phi}\frac{d}{d x}\left[K_0(x)\od{\phi}{x}\right] = -\lambda.
+\]
+You may assume the eigenfunctions are known.  Briefly discuss $\lim_{t\to\infty} u(x,t)$.  Solve the initial value problem:
+\begin{enumerate}
+\item with boundary conditions $u(0,t) = 0$ and $u(L,t) = 0$
+\item\starred\ with boundary conditions $\displaystyle\pd{u}{x}(0,t) = 0$ and $\displaystyle\pd{u}{x}(L,t) = 0$,
+\end{enumerate}
+Derive coefficients using orthogonality.]
+
+\item\starred\ Solve
+\[
+\pd{u}{t} = k\frac{1}{r}\frac{\partial}{\partial r}\left(r\pd{u}{r}\right)
+\]
+with $u(r,0) = f(r)$, $u(0,t)$ bounded, and $u(a,t) = 0$.  You may assume that the corresponding eigenfunctions, denoted $\phi_n(r)$, are known and are complete.  (\textit{Hint}: See Section~\ref{subsec:circular-heat}.)
+
+\item Consider the following boundary value problem
+\[
+\pd{u}{t} = k\pdd{u}{x} \quad \text{with} \quad \pd{u}{x}(0,t) = 0 \quad \text{and} \quad u(L,t) = 0.
+\]
+Solve such that $u(x,0) = \sin\pi x/L$ (initial condition).  (\textit{Hint}: If necessary, use a table of integrals.)
+
+\item Consider
+\[
+\rho\pdd{u}{t} = T_0\pdd{u}{x} + \alpha u,
+\]
+where $\rho(x) > 0$, $\alpha(x) < 0$, and $T_0$ is constant, subject to
+\begin{align*}
+u(0,t) &= 0, \qquad u(x,0) = f(x) \\
+u(L,t) &= 0, \qquad \pd{u}{t}(x,0) = g(x).
+\end{align*}
+Assume that the appropriate eigenfunctions are known.  Solve the initial value problem.
+
+\item\starred\ Consider the vibrations of a \textit{nonuniform} string of mass density $\rho_0(x)$.  Suppose that the left end at $x = 0$ is fixed and the right end obeys the elastic boundary condition: $\partial u/\partial x = -(k/T_0)u$ at $x = L$.  Suppose that the string is \textit{initially at rest} with a known initial position $f(x)$.  Solve this initial value problem.  (\textit{Hints}: Assume that the appropriate eigenvalues and corresponding eigenfunctions are known.  What differential equations with what boundary conditions do they satisfy?  The eigenfunctions are orthogonal with what weighting function?)
+
+\end{exercises}

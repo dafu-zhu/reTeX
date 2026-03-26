@@ -1,0 +1,414 @@
+% sec14_7.tex — Section 14.7: Wave Envelope Equations (Concentrated Wave Number)
+\section{Wave Envelope Equations (Concentrated Wave Number)}
+\label{sec:wave-envelope}
+
+For linear dispersive partial differential equations, plane traveling waves of the form $u(x,t) = Ae^{i(kx - \omega(k)t)}$ exist with constant wave number $k$.  The most general situations are somewhat difficult to analyze since they involve the superposition of all wave numbers using a Fourier transform.  A greater understanding can be achieved by considering some important special situations.
+
+In Sec.~14.6 we assume that the wave number is slowly varying.  Here, instead we assume most of the energy is concentrated in one wave number $k_0$.  We assume the solution of the original partial differential equation is in the form
+\boxed{\begin{equation}
+\label{eq:14.7.1}
+u(x,t) = A(x,t)e^{i(k_0 x - \omega(k_0)t)}.
+\end{equation}}
+
+We assume the amplitude $A(x,t)$ is not constant but varies slowly in space and time.  The amplitude $A(x,t)$ acts as an \textbf{wave envelope} of the traveling wave, and our goal is to determine a partial differential equation that describes the propagation of that wave envelope $A(x,t)$.
+
+Since $u(x,t)$ has the exact solution $A(x,t) = e^{i(k-k_0)x - i(\omega - \omega_0)t}$, where $\omega = \omega(k)$ and $\omega_0 = \omega(k_0)$, the differential equation for $A(x,t)$ must have the very special but simple exact solution $A(x,t) = e^{i(k-k_0)x - i(\omega-\omega_0)t}$.  We note that $\pd{A}{x} = i(k - k_0)A$ and $\pd{A}{t} = -i(\omega - \omega_0)A$.  In this way we have shown that first- and higher-derivative operators acting on the amplitude correspond to elementary multiplications:
+\begin{align}
+\label{eq:14.7.2}
+-i\frac{\partial}{\partial x} &\iff (k - k_0) \\
+\label{eq:14.7.3}
+i\frac{\partial}{\partial t} &\iff (\omega - \omega_0).
+\end{align}
+
+The partial differential equation for the wave amplitude follows from the dispersion relation $\omega = \omega(k)$.  Since we assume energy is focused in the wave number $k_0$, we can use a Taylor series for the dispersion relation around the special wave number $k_0$:
+\begin{equation}
+\label{eq:14.7.4}
+\omega = \omega(k_0) + (k - k_0)\omega'(k_0) + (k - k_0)^2\frac{\omega''(k_0)}{2!} + (k - k_0)^3\frac{\omega'''(k_0)}{3!} + \cdots.
+\end{equation}
+Moving $\omega(k_0)$ to the left-hand side, using the operator relations, and dividing by $i$ yields the \textbf{wave envelope equation} in all cases:
+\boxed{\begin{equation}
+\label{eq:14.7.5}
+\pd{A}{t} + \omega'(k_0)\pd{A}{x} = i\frac{\omega''(k_0)}{2!}\pdd{A}{x} + \frac{\omega'''(k_0)}{3!}\frac{\partial^3 A}{\partial x^3} + \cdots.
+\end{equation}}
+
+This shows the importance of the group velocity $c_g = \omega'(k_0)$.  These results can also be obtained by perturbation methods.
+
+\subsection{Schr\"odinger Equation}
+\label{sec:schrodinger}
+
+To truncate the Taylor expansion \eqref{eq:14.7.4} in a useful and accurate way, we must assume that $k - k_0$ is small.  From \eqref{eq:14.7.2} it follows that the spatial derivatives of the wave envelope must be small.  This corresponds to the assumptions of a slowly varying wave amplitude alluded to earlier.  The wave amplitude must not change much over one wave length $\frac{2\pi}{k_0}$ for the wave envelope equation \eqref{eq:14.7.5} to be valid.  Each spatial derivative of the amplitude in \eqref{eq:14.7.5} is smaller.  Thus, if $\omega''(k_0) \neq 0$, we are justified in using the \textbf{Schr\"odinger equation},
+\boxed{\begin{equation}
+\label{eq:14.7.6}
+\pd{A}{t} + \omega'(k_0)\pd{A}{x} = i\frac{\omega''(k_0)}{2!}\pdd{A}{x},
+\end{equation}}
+the approximation that results from ignoring the third and higher derivatives.  Any time energy is focused in one wave number (the so-called \textbf{nearly monochromatic} approximation), $u(x,t) \approx A(x,t)e^{i(k_0 x - \omega(k_0)t)}$, the wave amplitude or wave envelope satisfies the Schr\"odinger equation \eqref{eq:14.7.6}.  The Schr\"odinger equation is a linear partial differential equation with plane wave solutions $A = e^{i(\alpha x - \Omega(\alpha)t)}$ so that its dispersion relation is quadratic: $\Omega(\alpha) = \omega'(k_0)\alpha + \frac{\omega''(k_0)}{2!}\alpha^2$.  The solution of the Schr\"odinger equation corresponding to an infinite domain can be obtained by Fourier transforms:
+\begin{equation}
+\label{eq:14.7.7}
+A(x,t) = \int_{-\infty}^{\infty} G(\alpha)e^{i[\alpha(x - \omega'(k_0)t) - \frac{\omega''(k_0)}{2!}\alpha^2 t]}\,d\alpha.
+\end{equation}
+
+In this nearly monochromatic approximation the dispersive term is small.  However, the dispersion cannot be ignored if we wish to understand the behavior for relatively long times.  Perhaps the relations between space and time are better understood, making a change of variables to a coordinate system moving with the group velocity:
+\begin{align}
+\label{eq:14.7.8}
+X &= x - \omega'(k_0)t \\
+\label{eq:14.7.9}
+T &= t.
+\end{align}
+In this moving coordinate system the Schr\"odinger equation has the following simpler form:
+\[
+\pd{A}{T} - \omega'(k_0)\pd{A}{X} + \omega'(k_0)\pd{A}{X} = \pd{A}{T} = i\frac{\omega''(k_0)}{2!}\pdd{A}{X}.
+\]
+In this way small spatial derivatives are balanced by small time derivatives (in the moving coordinate system).
+
+\textbf{Caustics.}  Away from caustics, slowly linear dispersive waves can be analyzed approximately by the method of characteristics.  However, this approximation fails near the caustic, where characteristics focus the energy.  Near a caustic the solution is more complicated.  In the region near this caustic ($x$ near $x_c$ and $t$ near $t_c$), the wave energy is focused in one wave number [the critical value $k_c = k(\xi_c, 0)$] so that $u(x,t) \approx A(x,t)e^{i(k_c(x - x_c) - \omega(k_c)(t - t_c))}$, and the wave amplitude $A(x,t)$ approximately solves the linear Schr\"odinger equation whose solutions are given by \eqref{eq:14.7.7}.  We may replace $x$ by $x - x_c$ and $t$ by $t - t_c$ in \eqref{eq:14.7.7}, though this corresponds to a different arbitrary function $G(\alpha)$.  We wish to determine the complex function $G(\alpha) = R(\alpha)e^{i\Phi(\alpha)}$, which agrees with the known caustic behavior:
+\begin{equation}
+\label{eq:14.7.10}
+A(x,t) = \int_{-\infty}^{\infty} R(\alpha)e^{i\Phi(\alpha)}\,e^{i[\alpha(x - x_c - \omega'(k_c)(t - t_c)) - \frac{\omega''(k_c)}{2!}\alpha^2(t-t_c)]}\,d\alpha.
+\end{equation}
+
+This exact solution can be approximated by evaluating the phase at which $\alpha$ is stationary:
+\begin{equation}
+\label{eq:14.7.11}
+x - x_c - \omega'(k_c)(t - t_c) - \omega''(k_c)\alpha(t - t_c) + \Phi'(\alpha) = 0.
+\end{equation}
+
+By comparing \eqref{eq:14.7.11} with the fundamental cubic equation \eqref{eq:14.6.20}, first we see that $\alpha = k_\xi(\xi - \xi_c)$, since from \eqref{eq:14.6.13}, $F' = \omega''k_\xi$.  It follows that $\Phi'(\alpha) = -\frac{\omega'''(\xi_c)}{3!}\frac{F'''(\xi_c)}{k_\xi^3}t_c$.  In this way we derive an integral representation of the solution in the neighborhood of a cusped caustic:
+\boxed{\begin{equation}
+\label{eq:14.7.12}
+A(x,t) = \int_{-\infty}^{\infty} e^{i[\alpha(x - x_c - \omega'(k_c)(t - t_c)) - \frac{\omega''(k_c)}{2!}\alpha^2(t - t_c) - \frac{\omega'''(\xi_c)}{4!}\frac{F'''(\xi_c)}{k_\xi^4}t_c]}\,d\alpha,
+\end{equation}}
+where for simplicity we have taken $R(\alpha) = 1$.  Equation \eqref{eq:14.7.12} is known as the \textbf{Pearcey integral} though Brillouin seems to have been the first to study it.  Stationary points for \eqref{eq:14.7.12} satisfy the cubic \eqref{eq:14.7.11}, so that asymptotically the number of oscillatory phases varies from one outside the cusped caustic to three inside.
+
+\subsection{Linearized Korteweg-de~Vries Equation}
+\label{sec:linearized-kdv}
+
+Usually the wave envelope satisfies the Schr\"odinger equation \eqref{eq:14.7.6}.  However, if wave energy is focused in one wave number and that wave number corresponds to a maximum or minimum of the group velocity $\omega'(k)$, then $\omega''(k_0) = 0$.  Usually when the group velocity is at an extrema, then the wave envelope is approximated by the \textbf{linearized Korteweg-de~Vries equation}:
+\begin{equation}
+\label{eq:14.7.13}
+\pd{A}{t} + \omega'(k_0)\pd{A}{x} = \frac{\omega'''(k_0)}{3!}\frac{\partial^3 A}{\partial x^3},
+\end{equation}
+which follows directly from \eqref{eq:14.7.5}.  The dispersive term is small, but over large times its effects must be kept.  [The transformation \eqref{eq:14.7.8} and \eqref{eq:14.7.9} corresponding to moving with the group velocity could be used.]
+
+\textbf{Long waves.}  Partial differential equations arising from physical problems usually have odd dispersion relations $\omega(-k) = -\omega(k)$ so that the phase velocities corresponding to $k$ and $-k$ are the same.  For that reason, here we assume the dispersion relation is odd.  \textbf{Long waves} are waves with wave lengths much longer than any other length scale in the problem.  For long waves, the wave number $k$ will be small.  The approximate dispersion relation for long waves can be obtained from the Taylor series of the dispersion relation:
+\begin{equation}
+\label{eq:14.7.14}
+\omega(k) = \omega(0) + \omega'(0)k + \frac{\omega''(0)}{2!}k^2 + \frac{\omega'''(0)}{3!}k^3 + \cdots = \omega'(0)k + \frac{\omega'''(0)}{3!}k^3 + \cdots,
+\end{equation}
+since for odd dispersion relations $\omega(0) = 0$ and $\omega''(0) = 0$.  Thus, because of the usual operator assumptions \eqref{eq:14.2.7} and \eqref{eq:14.2.8} ($k = -i\frac{\partial}{\partial x}$ and $\omega = i\frac{\partial}{\partial t}$), long waves should satisfy the linearized Korteweg-de~Vries (linearized KdV) equation:
+\[
+\pd{u}{t} + \omega'(0)\pd{u}{x} = \frac{\omega'''(0)}{3!}\frac{\partial^3 u}{\partial x^3}.
+\]
+
+This can be understood in another way.  If energy is focused in one wave (long wave) $k_0 = 0$, then the wave envelope equation follows from \eqref{eq:14.7.5}:
+\[
+\pd{A}{t} + \omega'(0)\pd{A}{x} = \frac{\omega'''(0)}{3!}\frac{\partial^3 A}{\partial x^3} + \cdots.
+\]
+Here the solution and the wave envelope are the same, satisfying the same partial differential equation because for nearly monochromatic waves
+\[
+u(x,t) = A(x,t)e^{i(k_0 x - \omega(k_0)t)} = A(x,t)
+\]
+since $k_0 = 0$ and $\omega(0) = 0$.  The group velocity for long waves (with an odd dispersion relation) is obtained by differentiating \eqref{eq:14.7.14}: $\omega'(k) = \omega'(0) + \frac{\omega'''(0)}{2!}k^2 + \cdots$.  Thus, the group velocity has a minimum or maximum for long waves ($k = 0$).  Thus, the first or last waves often observed will be long waves.  To understand how long waves propagate, we just study the linearized Korteweg-de~Vries equation.  Since it is dispersive, the amplitudes observed should be very small (as shown by the method of stationary phase).  Large amplitude long dispersive waves must have an alternate explanation (see the next section).
+
+\textbf{Maximum group velocity and rainbow caustic.}  We briefly investigate the solution that occurs (from the method of stationary phase) when the group velocity $\omega'(k)$ has a maximum.  Thus $\omega''(k_1) = 0$, in which case the linearized KdV \eqref{eq:14.7.13} governs.  Specifically, following from \eqref{eq:14.5.8} in Exercise~14.5.4, the wave envelope satisfies:
+\[
+A(x,t) = \int_{-\infty}^{\infty} e^{i[(k-k_1)(x - \omega'(k_1)t) - \frac{(k-k_1)^3}{3!}\omega'''(k_1)t]}\,dk.
+\]
+From this it can be seen that $A(x,t)$ satisfies the linearized KdV \eqref{eq:14.7.13} as should follow theoretically from \eqref{eq:14.7.14}.  This is perhaps easier to see using a coordinate system moving with the group velocity in which case roughly
+\[
+A_T = -A_{XXX}
+\]
+[since $\omega'''(k_1) < 0$].  Further analysis in Exercise~14.5.4 shows that
+\[
+A(x,t) = \frac{1}{t^{1/3}}\,\text{Ai}\Bigl(\frac{x - \omega'(k_1)t}{t^{1/3}}\Bigr),
+\]
+where Ai is an Airy function.  Thus, $A(x,t)$ should be a \textbf{similarity solution} of the linearized KdV.  It will be instructive to show the form taken by similarity solutions of the linearized KdV:
+\[
+A(X,T) = \frac{1}{T^{1/3}}f\Bigl(\frac{X}{T^{1/3}}\Bigr) = \frac{1}{T^{1/3}}f(\xi),
+\]
+where the similarity variable $\xi$ is given by
+\[
+\xi = \frac{X}{T^{1/3}}.
+\]
+Derivatives with respect to $X$ are straightforward ($\frac{\partial}{\partial X} = \frac{\partial\xi}{\partial X}\frac{d}{d \xi} = \frac{1}{T^{1/3}}\frac{d}{d \xi}$), but we must be more careful with $t$-derivatives.  The linearized KdV ($A_T = -A_{XXX}$) becomes
+\[
+-\frac{1}{3}\frac{1}{T^{4/3}}f + \frac{1}{T^{1/3}}\frac{1}{T^{1/3}}f'\Bigl(-\frac{1}{3}\frac{\xi}{T}\Bigr) = -\frac{1}{T^{4/3}}f''',
+\]
+which after multiplying by $T^{4/3}$ becomes a third-order ordinary differential equation ($-\frac{1}{3}f - \frac{1}{3}f'\xi = -f'''$) that can be integrated to $-\frac{1}{3}f\xi = -f'' + c$.  The constant $c = 0$ (since we want $f \to 0$ as $\xi \to +\infty$), and hence the similarity solution of the linearized KdV is related to \textbf{Airy's equation}:
+\[
+f'' - \frac{1}{3}f\xi = 0.
+\]
+
+Here, regions with two and zero characteristics are caused by a maximum group velocity.  Regions with two and zero characteristics are separated by a straight line characteristic (caustic) $x = \omega'(k_1)t$ with $\omega''(k_1) = 0$.  This is the same situation that occurs for the characteristics for a rainbow (see Fig.~14.6.8) where there is a maximum group velocity.
+
+\subsection{Nonlinear Dispersive Waves: Korteweg-de~Vries Equation}
+\label{sec:kdv-equation}
+
+These amplitude equations, the Schr\"odinger equation \eqref{eq:14.7.6} or the linearized Korteweg-de~Vries equation \eqref{eq:14.7.13}, balance small spatial and temporal changes (especially when viewed from moving coordinate systems).  Often in physical problems small nonlinear terms have been neglected, and they are often just as important as the small dispersive terms.  The specific nonlinear terms can be derived for each specific application using multiple-scale singular perturbation methods (which are beyond the scope of this text).  In different physical problems, the nonlinear terms frequently have similar forms (since they are derived as small but finite amplitude expansions much like Taylor series expansions for the amplitude).
+
+For long waves, the usual nonlinearity that occurs yields the \textbf{Korteweg-de Vries} (KdV) equation:
+\boxed{\begin{equation}
+\label{eq:14.7.15}
+\pd{u}{t} + [\omega'(0) + \beta u]\pd{u}{x} = \frac{\omega'''(0)}{3!}\frac{\partial^3 u}{\partial x^3}.
+\end{equation}}
+
+If for the moment we ignore the dispersive term $\frac{\partial^3 u}{\partial x^3}$, then \eqref{eq:14.7.15} is a quasi-linear partial differential equation solvable by the method of characteristics.  The characteristic velocity, $\omega'(0) + \beta u$, can be thought of as the linearization around $u = 0$ (small amplitude approximation) of some unknown characteristic velocity $f(u)$.  Taller waves move faster or slower (depending on $\beta$) and smooth initial conditions steepen (and eventually break).  Some significant effort (usually using perturbation methods corresponding to long waves) is required to derive the coefficient $\beta$ from the equations of motion for a specific physical problem.  Korteweg and de~Vries first derived \eqref{eq:14.7.15} in 1895 when trying to understand unusually persistent surface water waves observed in canals.
+
+The KdV equation is an interesting model nonlinear partial differential equation because two different physical effects are present.  There is an expectation that solutions of the KdV equation decay due to the dispersive term.  However, the nonlinear term causes waves to steepen.  By moving with the linearized group velocity and scaling $x$ and $u$, we obtain the standard form of the KdV equation:
+\boxed{\begin{equation}
+\label{eq:14.7.16}
+\pd{u}{t} + 6u\pd{u}{x} + \frac{\partial^3 u}{\partial x^3} = 0.
+\end{equation}}
+
+We limit our discussion here to elementary traveling wave solutions of the KdV equation:
+\boxed{\begin{equation}
+\label{eq:14.7.17}
+u(x,t) = f(\xi), \quad \text{where } \xi = x - ct.
+\end{equation}}
+
+When \eqref{eq:14.7.17} is substituted into \eqref{eq:14.7.16}, a third-order ordinary differential equation arises:
+\[
+f''' - cf' + 6ff' = 0.
+\]
+This can be integrated to yield a nonlinear second-order ordinary differential equation (of the type corresponding to $F = ma$ in mechanics, where $a = f''$):
+\begin{equation}
+\label{eq:14.7.18}
+f'' + 3f^2 - cf - A = 0,
+\end{equation}
+where $A$ is a constant.  Multiplying by $f'$ and integrating with respect to $\xi$, yields an equation corresponding to \textbf{conservation of energy} [if \eqref{eq:14.7.18} were Newton's law]:
+\begin{equation}
+\label{eq:14.7.19}
+\frac{1}{2}(f')^2 + f^3 - \frac{1}{2}cf^2 - Af = E,
+\end{equation}
+where $E$ is the constant total energy [and $\frac{1}{2}(f')^2$ represents kinetic energy and $f^3 - \frac{1}{2}cf^2 - Af$ \textbf{potential energy}].  In Fig.~14.7.1 we graph the potential energy as a function of $f$.  Critical points for the potential occur if $3f^2 - cf - A = 0$, corresponding to equilibrium solutions of \eqref{eq:14.7.18}.  The discriminant of this quadratic is $c^2 + 12A$.  If $c^2 + 12A \le 0$, then the potential energy is monotonically increasing, and it can be shown that the traveling waves are not bounded.  Thus, we assume $c^2 + 12A > 0$, in which case two equilibria exist.  Constant energy lines (in the potential energy sketch) enable us to draw the phase portrait in Fig.~14.7.1.  We note that one equilibrium is a saddle point ($f_\text{min}$) and the other is a center.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch14/fig_14_7_1.png}
+\caption{Potential and phase portrait for traveling wave for the KdV equation.}
+\label{fig:14.7.1}
+\end{figure}
+
+\textbf{Periodic traveling waves (cnoidal waves).}  Most of the bounded traveling waves are periodic.  Some analysis is performed in the Exercises.
+
+\textbf{Solitary traveling waves.}  If the constant energy $E$ is just right, then the traveling wave has an infinite period.  The cubic potential energy has two coincident roots at $f_\text{max}$ and a larger single root at $f_\text{max} > f_\text{min}$, so that
+\begin{equation}
+\label{eq:14.7.20}
+\frac{1}{2}(f')^2 = -(f - f_\text{max})(f - f_\text{min})^2.
+\end{equation}
+The phase portrait shows that this solution has a single maximum at $f = f_\text{max}$ and tails off exponentially to $f = f_\text{min}$.  It is graphed in Fig.~14.7.2 and is called a \textbf{solitary wave}.  This permanent traveling wave exists when the steepening effects of the nonlinearity balance the dispersive term.  An expression for the wave speed can be obtained by comparing the quadratic terms in \eqref{eq:14.7.19} and \eqref{eq:14.7.20}: $\frac{1}{2}c = f_\text{max} + 2f_\text{min} = 3f_\text{min} + (f_\text{max} - f_\text{min})$.  The simplest example is when $f_\text{min} = 0$, requiring $f_\text{max} > 0$, in which case
+\begin{equation}
+\label{eq:14.7.21}
+\frac{1}{2}c = f_\text{max}.
+\end{equation}
+
+These solitary waves only occur for $f_\text{max} > 0$, as sketched in Fig.~14.7.2.  Thus, taller waves move faster (to the right).  There is an analytic formula for these solitary waves.  If $f_\text{min} = 0$, it can be shown that
+\boxed{\begin{equation}
+\label{eq:14.7.22}
+u(x,t) = \frac{1}{2}c\,\text{sech}^2\biggl[\frac{1}{2}\sqrt{c}(x - ct)\biggr],
+\end{equation}}
+where $c > 0$ is given by \eqref{eq:14.7.21}.  This shows that the taller waves (which move faster) are more sharply peaked.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch14/fig_14_7_2.png}
+\caption{Solitary wave for the KdV equation.}
+\label{fig:14.7.2}
+\end{figure}
+
+\subsection{Solitons and Inverse Scattering}
+\label{sec:solitons-inverse-scattering}
+
+For many other nonlinear partial differential equations, solitary wave equations exist.  For most nonlinear dispersive wave equations, no additional analytic results are known since the equations are nonlinear.  Modern numerical experiments usually show that solitary waves of different velocities interact in a somewhat complex way.  However, for the KdV equation \eqref{eq:14.7.16} Zabusky and Kruskal~[1965] showed that different solitary waves interact like particles (preserving their amplitude exactly after interaction) and hence are called \textbf{solitons}.  These solitons have become quite important because it has been shown that solutions of this form develop even if the initial conditions are not in this shape and that this property also holds for many other nonlinear partial differential equations that describe other physically interesting nonlinear dispersive waves.  In attempting to understand these numerical experiments, Gardner, Greene, Kruskal, and Miura~[1967] showed that the nonlinear KdV equation could be related to a scattering problem associated with the Schr\"odinger eigenvalue problem (see Sec.~10.7) and the time evolution of the scattering problem.  Lax~[1968] generalized this to two linear nonconstant differential operators $L$ and $M$ that depend on an unknown function $u(x,t)$:
+\begin{align}
+\label{eq:14.7.23}
+L\phi &= \lambda\phi \\
+\label{eq:14.7.24}
+\pd{\phi}{t} &= M\phi.
+\end{align}
+The operator $L$ describes the spectral (scattering) problem with $\phi$ the usual eigenfunction, and $M$ describes how the eigenfunctions evolve in time.  The consistency of these equations [solving both for $L\pd{\phi}{t}$ by taking the time derivative of \eqref{eq:14.7.23}] yields $L\pd{\phi}{t} = LM\phi = -\pd{L}{t}\phi + \lambda\pd{\phi}{t} + \od{\lambda}{t}\phi$, where \eqref{eq:14.7.23} and \eqref{eq:14.7.24} have been used.  The \textbf{spectral parameter is constant} ($\od{\lambda}{t} = 0$) if and only if an equation known as \textbf{Lax's equation} holds:
+\begin{equation}
+\label{eq:14.7.25}
+\pd{L}{t} + LM - ML = 0,
+\end{equation}
+which in practice will be a nonlinear partial differential equation for $u(x,t)$ since the commutator $LM - ML$ of two nonconstant operators is usually nonzero.
+
+In an exercise, it is shown that for the specific operators
+\boxed{\begin{equation}
+\label{eq:14.7.26}
+L = -\pdd{}{x} + u
+\end{equation}}
+\boxed{\begin{equation}
+\label{eq:14.7.27}
+M = \gamma - \pd{u}{x} + 6u\frac{\partial}{\partial x} - 4\frac{\partial^3}{\partial x^3},
+\end{equation}}
+where $\gamma$ is a constant, Lax's equation is a version of the Korteweg-de~Vries equation
+\begin{equation}
+\label{eq:14.7.28}
+\pd{u}{t} - 6u\pd{u}{x} + \frac{\partial^3 u}{\partial x^3} = 0.
+\end{equation}
+
+\textbf{Inverse scattering transform.}  The initial value problem for the KdV equation on the infinite interval $-\infty < x < \infty$ is solved by utilizing the difficult relationships between the nonlinear KdV equation and the linear scattering problem for $-\infty < x < \infty$.  The eigenfunction $\phi$ satisfies the Schr\"odinger eigenvalue problem
+\begin{equation}
+\label{eq:14.7.29}
+\pdd{\phi}{x} + (\lambda - u(x,t))\phi = 0.
+\end{equation}
+Here time is an unusual parameter.  In the brief Sec.~10.7 on inverse scattering, we claimed that the potential $u(x,t)$ for fixed $t$ can be reconstructed from the scattering data at that fixed $t$:
+\boxed{\begin{equation}
+\label{eq:14.7.30}
+u(x,t) = -2\frac{\partial}{\partial x}K(x,x,t),
+\end{equation}}
+using the unique solution of the Gelfand-Levitan-Marchenko integral equation:
+\boxed{\begin{equation}
+\label{eq:14.7.31}
+K(x,y,t) + F(x+y,t) + \int_x^{\infty} K(x,z,t)F(y+z,t)\,dz = 0, \quad \text{for } y > x.
+\end{equation}}
+
+Here the nonhomogeneous term and the kernel are related to the inverse Fourier transform of the reflection coefficient $R(k,t)$ (defined in Sec.~10.7), including a contribution from the bound states (discrete eigenvalues $\lambda = -\kappa_n^2$):
+\boxed{\begin{equation}
+\label{eq:14.7.32}
+F(s,t) = \sum_{n=1}^{N} c_n^2(t)e^{-\kappa_n s} + \frac{1}{2\pi}\int_{-\infty}^{\infty} R(k,t)e^{iks}\,dk.
+\end{equation}}
+
+Unfortunately, we do not know the time-dependent scattering data since only $u(x,0)$ is given as the initial condition for the KdV equation.  Thus, at least the initial scattering data can be determined.  If the initial condition has discrete eigenvalues, then these discrete eigenvalues for the time evolution $u(x,t)$ of the KdV equation miraculously do not change in time because we have shown that $\od{\lambda}{t} = 0$ for the KdV equation.  It has also been shown that the time-dependent scattering data can be determined easily from the initial scattering data only using \eqref{eq:14.7.29} with \eqref{eq:14.7.26} and \eqref{eq:14.7.27}:
+\begin{align}
+\label{eq:14.7.33}
+R(k,t) &= R(k,0)e^{8ik^3 t} \\
+\label{eq:14.7.34}
+c_n(t) &= c_n(0)e^{4\kappa_n^3 t}.
+\end{align}
+This method is called the \textbf{inverse scattering transform}.  The initial condition is transformed to the scattering data and the scattering data, satisfy simple time-dependent linear ordinary differential equations whose solution appears in \eqref{eq:14.7.33} and \eqref{eq:14.7.34}.  The time-dependent solution is then obtained by an inverse scattering procedure.
+
+It can be shown that the solution of the inverse scattering transform corresponding to an initial condition that is a reflectionless potential with one discrete eigenvalue yields the solitary wave solution discussed earlier.  However, solutions can be obtained corresponding to initial conditions that are reflectionless potentials with two or more discrete eigenvalues.  The corresponding solutions to the KdV equation are interacting strongly nonlinear solitary waves with exact interaction properties first observed numerically by Zabusky and Kruskal~[1965].  We have been very brief.  Ablowitz, Kaup, Newell, and Segur developed a somewhat simpler procedure, equivalent to \eqref{eq:14.7.23} and \eqref{eq:14.7.24}, which is described (among many other things) in the books by Ablowitz and Segur~[1981] and Ablowitz and Clarkson~[1991].
+
+\subsection{Nonlinear Schr\"odinger Equation}
+\label{sec:nonlinear-schrodinger}
+
+When wave energy is focused in one wave number $k_0$, the wave amplitude of a linear dispersive wave can be approximated by \eqref{eq:14.7.6}.  Small spatial and temporal changes are balanced by small spatial changes.  If the underlying physical equations are nonlinear, small but finite amplitude effects can be developed using perturbations methods.  In many situations, the nonlinearity and spatial dispersion balance in the following way.  The amplitude is said to solve the (cubic) \textbf{nonlinear Schr\"odinger equation} (NLS):
+\boxed{\begin{equation}
+\label{eq:14.7.35}
+\pd{A}{t} + \omega'(k_0)\pd{A}{x} = i\frac{\omega''(k_0)}{2!}\pdd{A}{x} + i\beta\,|A|^2\,A.
+\end{equation}}
+
+To understand the nonlinear aspects of this equation, first note that there is a solution with the wave amplitude constant in space: $u(x,t) = A(t)e^{i(k_0 x - \omega(k_0)t)}$ if $\od{A}{t} = i\beta|A|^2\,A$.  To solve this differential equation, we let $A = re^{i\theta}$, which gives $\od{\theta}{t} = \beta r^2$ and $\od{r}{t} = 0$.  Thus, $A(t) = r_0\,e^{i\beta r_0^2 t}$, which corresponds to $u(x,t) = r_0\,e^{i\beta r_0^2 t}\,e^{i(k_0 x - \omega(k_0)t)}$.  Here the frequency $\omega(k_0, |A|) = \omega(k_0) - \beta|A|^2$ depends on the amplitude of the wave $r_0 = |A|$.  It is fairly typical that the frequency depends on the amplitude of the wave in this way as an approximation for small wave amplitudes.  When spatial dependence is included the nonlinear dispersive wave equation, \eqref{eq:14.7.35} results.
+
+We will show that the NLS has solutions that correspond to an oscillatory traveling wave with a wave envelope shaped like a solitary wave.  We let
+\[
+\boxed{A(x,t) = r(x,t)e^{i(\theta(x,t))} = r(x,t)e^{i(\alpha x - \Omega t)},}
+\]
+where $r(x,t)$ is real and represents the amplitude of an elementary traveling wave with wave number $\alpha$ and frequency $\Omega$.  The wave number $\alpha$ is arbitrary, but we will determine the frequency $\Omega$ corresponding to this solitary wave envelope.  Since $A_x = (r_x + i\alpha r)e^{i(\alpha x - \Omega t)}$, it follows that $A_{xx} = (r_{xx} + 2i\alpha r_x - \alpha^2 r)e^{i(\alpha x - \Omega t)}$.  The real part of the NLS \eqref{eq:14.7.35} yields
+\begin{equation}
+\label{eq:14.7.36}
+r_t + [\omega'(k_0) + \alpha\omega''(k_0)]r_x = 0.
+\end{equation}
+The method of characteristics can be applied to \eqref{eq:14.7.36}, and it shows that
+\[
+r(x,t) = r(x - ct),
+\]
+where the wave speed of the solitary wave envelope satisfies
+\begin{equation}
+\label{eq:14.7.37}
+c = \omega'(k_0) + \alpha\omega''(k_0).
+\end{equation}
+This shows the magnitude of the complex amplitude stays constant moving with the group velocity.  Since $\alpha$ represents a small perturbed wave number, this is just an approximation to the group velocity at the wave number $k_0 + \alpha$.  The imaginary part of the NLS \eqref{eq:14.7.35} yields
+\[
+-\Omega r + \omega'(k_0)\alpha r = \frac{\omega''(k_0)}{2!}(r_{xx} - \alpha^2 r) + \beta r^3.
+\]
+We can rewrite this as the nonlinear ordinary differential equation
+\begin{equation}
+\label{eq:14.7.38}
+0 = r_{xx} + \delta r + \gamma r^3,
+\end{equation}
+where $\gamma = \frac{2\beta}{\omega''(k_0)}$ and $\delta = -\alpha^2 + 2\frac{\Omega - \omega'(k_0)\alpha}{\omega''(k_0)}$.  Multiplying \eqref{eq:14.7.38} by $r_x$ and integrating yields the energy equation:
+\[
+\frac{1}{2}(r_x)^2 + \frac{\delta}{2}r^2 + \frac{\gamma}{4}r^4 = E = 0.
+\]
+We have chosen $E = 0$ in order to look for a wave envelope with the property that $r \to 0$ as $x \to \infty$.  The potential $\frac{\delta}{2}r^2 + \frac{\gamma}{4}r^4$ is graphed in Fig.~14.7.3.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch14/fig_14.7.3.png}
+\caption{Potential and phase portrait for NLS.}
+\label{fig:14.7.3}
+\end{figure}
+
+The phase portrait ($r_x$ as a function of $r$) is obtained (Fig.~14.7.3), which shows that a solitary wave (Fig.~14.7.4) only exists if $\gamma > 0$ [corresponding to $\beta$ having the same sign as $\omega''(k_0)$] and $\delta < 0$.  Here the nonlinearity prevents the wave packet from dispersing.
+
+The maximum value of $r$, the amplitude of the solitary wave envelope, is given by $r_\text{max}^2 = -2\frac{\delta}{\gamma} = -\frac{\delta}{\omega''(k_0)}$.  This equation can be used to determine the frequency
+\begin{equation}
+\label{eq:14.7.39}
+\Omega = \omega'(k_0)\alpha + \frac{\omega''(k_0)}{2}\alpha^2 - \frac{\beta}{2}r_\text{max}^2.
+\end{equation}
+
+In addition to the frequency caused by the perturbed wave number, there is an amplitude dependence of the frequency.  It can be shown that this wave envelope soliton with $r \to 0$ as $x \to \infty$ for the NLS \eqref{eq:14.7.35} is given by
+\[
+\boxed{A(x,t) = r_\text{max}\,\text{sech}\biggl[\sqrt{\frac{\beta}{\omega''(k_0)}}\,r_\text{max}(x - ct)\biggr]\,e^{i(\alpha x - \Omega t)},}
+\]
+where $\Omega$ is given by \eqref{eq:14.7.39} and $c$ given by \eqref{eq:14.7.37}.  (Note that $\alpha$ and $r_\text{max}$ are arbitrary.)  The real part of $A(x,t)$ is sketched in Fig.~14.7.4.  Note that the phase velocity of the individual waves is different from the velocity of the wave envelope.  These wave envelope solitary waves are known as \textbf{wave envelope solitons} because of surprising exact nonlinear interaction properties.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch14/fig_14_7_4.png}
+\caption{Solitary wave for the amplitude is used to obtain wave envelope soliton for the NLS equation.}
+\label{fig:14.7.4}
+\end{figure}
+
+\begin{exercises}{14.7}
+\item \textbf{Curved caustic.}  Near a curved caustic the wave number is approximately a constant $k_0 = k_c = k(\xi_c, 0)$ so that the Schr\"odinger equation \eqref{eq:14.7.6} applies.
+\begin{enumerate}
+\item[(a)] From \eqref{eq:14.7.7} [assuming $R(\alpha) = 1$], using the fundamental quadratic equation \eqref{eq:14.6.22}, derive that
+\[
+A(x,t) = \int_{-\infty}^{\infty} e^{i[\alpha(x - x_c - \omega'(k_c)(t - t_c)) - \frac{\omega''(k_c)}{2!}\alpha^2(t - t_c) - \frac{\omega'''(\xi_c)}{4!}\frac{F'''(\xi_c)}{k_\xi^4}t_c]}\,d\alpha.
+\]
+To make the algebra easier for (b)--(d) consider
+\[
+B(z,\tau) = \int_{-\infty}^{\infty} e^{i[\beta z + \beta^2\tau + \beta^3/3]}\,d\beta.
+\]
+\item[(b)] Show that $B$ satisfies a dimensionless form of the Schr\"odinger equation $B_\tau = -iB_{zz}$.
+\item[(c)] Show that the quadratic term in the integrand can be transformed away by letting $\beta = \gamma - \tau$, in which case
+\[
+B(z,\tau) = e^{i(-\tau z + \frac{1}{3}\tau^3)}\int_{-\infty}^{\infty} e^{i[\gamma(z - \tau^2) + \gamma^3/3]}\,d\gamma.
+\]
+\item[(d)] This describes the intensity of light inside the caustic.  The remaining integral is an Airy function usually defined as
+\[
+\text{Ai}(x) = \frac{1}{2\pi}\int_{-\infty}^{\infty} e^{i[\gamma x + \gamma^3/3]}\,d\gamma.
+\]
+Express $B(z,\tau)$ in terms of an Airy function.  (It can be shown this Airy function satisfies $w'' - xw = 0$.  The asymptotic expansion for large arguments of the Airy function can be used to show that the curved caustic (related to the Airy function) separates a region with two rays from a region with zero rays.)
+\item[(e)] Determine $A(x,t)$ in terms of the Airy function.
+\end{enumerate}
+
+\item The dispersion relation for water waves is $\omega^2 = gk\tanh kh$, where $g$ is the usual gravitational acceleration and $h$ is the constant depth.  Determine the coefficients of the linearized KdV equation that is valid for long waves.
+
+\item Sketch a phase portrait that shows that periodic and solitary nonlinear waves exist:
+\begin{enumerate}
+\item[(a)] Modified KdV equation: $\pd{u}{t} + 6u^2\pd{u}{x} + \frac{\partial^3 u}{\partial x^3} = 0$
+\item[(b)] Klein-Gordon equation: $\pdd{u}{t} - \pdd{u}{x} + u - u^3 = 0$
+\item[(c)] Sine-Gordon equation: $\pdd{u}{t} - \pdd{u}{x} + \sin u = 0$
+\end{enumerate}
+
+\item Determine an integral formula for the period of periodic solutions of the KdV equation.  Determine the wave speed in terms of the three roots of the cubic equation.  Periodic solutions cannot be represented in terms of sinusoidal functions.  Instead it can be shown that the solution is related to the Jacobian elliptic function $cn$ and hence are called cnoidal waves.  If you wish a project, study Jacobian elliptic functions in Abramowitz and Stegun~[1974] or elsewhere.
+
+\item Derive (using integral tables) the formula in the text for the solitary wave for
+\begin{enumerate}
+\item[(a)] the KdV equation
+\item[(b)] the nonlinear Schr\"odinger equation
+\item[(c)] Modified KdV (see Exercise~14.7.3a) with formula for solution
+\end{enumerate}
+
+\item Using differentiation formulas and identities for hyperbolic functions, verify the formula in the text for the solitary wave for
+\begin{enumerate}
+\item[(a)] the KdV equation
+\item[(b)] the nonlinear Schr\"odinger equation
+\end{enumerate}
+
+\item If the eigenfunction satisfies the Schr\"odinger equation but the time evolution of the eigenfunction satisfies $\pd{\phi}{t} = P\pdd{\phi}{x} + Q\phi$, show that the equations are consistent only if $Q = -\frac{1}{2}\pdd{P}{x}$ and $u(x,t)$ satisfies the partial differential equation $u_t = -\frac{1}{2}P_{xxx} + 2P_x(u - \lambda) + Pu_x$.
+
+\item[\starred] Refer to Exercise~14.7.7.  If $P = A + B\lambda + C\lambda^2$ with $C$ constant, determine $A$ and $B$ and a nonlinear partial differential equation for $u(x,t)$.
+
+\item Show that Lax's equation is the Korteweg-de~Vries equation for operators $L$ and $M$ given by \eqref{eq:14.7.26} and \eqref{eq:14.7.27}.  [\textit{Hint}: Compute the compatibility of \eqref{eq:14.7.23} and \eqref{eq:14.7.24} directly using \eqref{eq:14.7.26} and \eqref{eq:14.7.27}.]
+
+\item Using the definitions of the reflection and transmission coefficients in Sec.~10.7, derive \eqref{eq:14.7.33}.  In doing so, you should also derive that $\gamma = 4ik^3$ in \eqref{eq:14.7.27}.  The bound states are more complicated.
+
+\item Assume the initial condition for the KdV equation is a reflectionless potential $R(k,0) = 0$ with one discrete eigenvalue.  Solve the Gelfand-Levitan-Marchenko integral equation (it is separable) and show that $u(x,t)$ is the solitary (soliton) wave described earlier.
+
+\item Generalize Exercise~14.7.11 to the case of a reflectionless potential with two discrete eigenvalues.  The integral equation is still separable.  The solution represents the interaction of two solitons.
+\end{exercises}
