@@ -1,0 +1,363 @@
+% sec6_4.tex — Section 6.4: Estimating Autoregressions
+
+Autoregressive processes (autoregressions) are popular in econometrics, not only
+because they have a natural interpretation but also because they are easy to estimate.
+This section considers the estimation of autoregressions. Estimation of
+ARMA processes will be touched upon at the end.
+
+\subsection*{Estimation of AR(1)}
+
+Recall that an AR(1) is an $\text{MA}(\infty)$ with absolutely summable coefficients. So
+if $\{\varepsilon_t\}$ is independent white noise (an i.i.d.\ sequence with zero mean and finite
+variance), it is strictly stationary and ergodic (Proposition~6.1(d)). Letting $\mathbf{x}_t =
+(1, y_{t-1})'$ and $\bm{\beta} = (c, \phi)'$, the AR(1) equation \eqref{eq:6.2.1} can be written as a regression
+equation
+\begin{equation}
+  y_t = \mathbf{x}_t' \bm{\beta} + \varepsilon_t.
+  \label{eq:6.4.1}
+\end{equation}
+We assume the sample is $(y_0, y_1, \ldots, y_n)$, $y_0$ inclusive, so that \eqref{eq:6.4.1} for $t = 1$
+(which has $y_0$ on the right-hand side) can be included in the estimation. So the
+sample period is from $t = 1$ to $n$.
+
+We now show that all the conditions of Proposition~2.5 about the asymptotic
+properties of the OLS estimator of $\bm{\beta}$ with conditional homoskedasticity are satisfied
+here. First, obviously, linearity (Assumption~2.1) is satisfied. Second, as just
+noted, $\{y_t, \mathbf{x}_t\}$ is jointly stationary and ergodic (Assumption~2.2). Third, since $y_{t-1}$
+(the nonconstant regressor in $\mathbf{x}_t$) is a function of $\{\varepsilon_{t-1}, \varepsilon_{t-2}, \ldots\}$, it is independent
+of the error term $\varepsilon_t$ by the i.i.d.\ assumption for $\{\varepsilon_t\}$. Thus
+\begin{equation}
+  \E(\varepsilon_t^2 \mid \mathbf{x}_t) = \sigma^2,
+  \label{eq:6.4.2}
+\end{equation}
+that is, the error is conditionally homoskedastic (Assumption~2.7). Fourth, if
+$\mathbf{g}_t \equiv \mathbf{x}_t \cdot \varepsilon_t = (\varepsilon_t, y_{t-1} \varepsilon_t)'$, $\{\mathbf{g}_t\}$ is a martingale difference sequence, as required in
+Assumption~2.5, because
+
+\medskip
+\noindent first element of $\E(\mathbf{g}_t \mid \mathbf{g}_{t-1}, \mathbf{g}_{t-2}, \ldots)$
+\begin{align*}
+  &= \E(\varepsilon_t \mid \mathbf{g}_{t-1}, \mathbf{g}_{t-2}, \ldots) \\
+  &= \E(\varepsilon_t \mid \varepsilon_{t-1}, \varepsilon_{t-2}, \ldots, y_{t-2}\varepsilon_{t-1}, y_{t-3}\varepsilon_{t-2}, \ldots) \\
+  &= 0 \quad (\text{since $\{\varepsilon_t\}$ is i.i.d.\ and $y_{t-j}$ is a function of $(\varepsilon_{t-j}, \varepsilon_{t-j-1}, \ldots)$})
+\end{align*}
+and
+\begin{align}
+  &\text{second element of } \E(\mathbf{g}_t \mid \mathbf{g}_{t-1}, \mathbf{g}_{t-2}, \ldots) \notag \\
+  &= \E(\varepsilon_t y_{t-1} \mid \mathbf{g}_{t-1}, \mathbf{g}_{t-2}, \ldots) \notag \\
+  &= \E[\E(\varepsilon_t y_{t-1} \mid y_{t-1}, \mathbf{g}_{t-1}, \mathbf{g}_{t-2}, \ldots) \mid \mathbf{g}_{t-1}, \mathbf{g}_{t-2}, \ldots] \notag \\
+  &\qquad \text{(by the Law of Iterated Expectations)} \notag \\
+  &= \E[y_{t-1}\,\E(\varepsilon_t \mid y_{t-1}, \mathbf{g}_{t-1}, \mathbf{g}_{t-2}, \ldots) \mid \mathbf{g}_{t-1}, \mathbf{g}_{t-2}, \ldots] \notag \\
+  &= 0 \quad (\text{since } \E(\varepsilon_t \mid y_{t-1}, \varepsilon_{t-1}, \varepsilon_{t-2}, \ldots, y_{t-2}\varepsilon_{t-1}, y_{t-3}\varepsilon_{t-2}, \ldots) = 0).
+  \label{eq:6.4.3}
+\end{align}
+In particular, $\E(\varepsilon_t y_{t-1}) = 0$, so $\mathbf{x}_t$ is orthogonal to the error term (Assumption~2.3).
+Finally, the rank condition about the moment matrix $\E(\mathbf{x}_t \mathbf{x}_t')$ (Assumption~2.4) is
+satisfied because the determinant of
+\begin{equation}
+  \E(\mathbf{x}_t \mathbf{x}_t') =
+  \begin{bmatrix} 1 & \mu \\ \mu & \gamma_0 + \mu^2 \end{bmatrix}
+  \label{eq:6.4.4}
+\end{equation}
+is $\gamma_0 > 0$. This also means that $\E(\mathbf{g}_t \mathbf{g}_t')$ is nonsingular because under conditional
+homoskedasticity $\E(\mathbf{g}_t \mathbf{g}_t') = \sigma^2 \E(\mathbf{x}_t \mathbf{x}_t')$. So the nonsingularity condition
+in Assumption~2.5 is met.
+
+Thus the AR(1) with an independent white noise process satisfies all the
+assumptions of Proposition~2.5, so parts (a)--(c) of the propositions hold true here,
+with $(c, \phi)'$ as $\bm{\beta}$, $(1, y_{t-1})'$ as $\mathbf{x}_t$, and $\sigma^2$ as the error variance. In particular, the
+OLS estimate of the error variance given by
+\[
+  s^2 = \frac{1}{n-2} \sum_{t=1}^{n} e_t^2, \quad
+  e_t \equiv y_t - \hat{c} - \hat{\phi}\,y_{t-1} \quad
+  \text{where $(\hat{c}, \hat{\phi})$ are OLS estimates,}
+\]
+is consistent for $\sigma^2$.
+
+\subsection*{Estimation of AR(\textit{p})}
+
+Similarly for $\text{AR}(p)$, the autoregressive coefficients $(\phi_1, \ldots, \phi_p)$ can be consistently
+estimated by regressing $y_t$ on the constant and lagged $y$'s, $(y_{t-1}, \ldots, y_{t-p})$.
+We assume the sample is $(y_{-p+1}, y_{-p+2}, \ldots, y_0, y_1, \ldots, y_n)$, inclusive of $p$ lagged
+values prior to $y_1$, so that the $\text{AR}(p)$ equation for $t = 1$ can be included and the
+sample period is from $t = 1$ to $n$.
+
+\begin{proposition}[Estimation of AR coefficients]
+\label{prop:6.7}
+Let $\{y_t\}$ be the $\mathrm{AR}(p)$ process
+following \eqref{eq:6.2.6} with the stationarity condition \eqref{eq:6.1.18}. Suppose further that
+$\{\varepsilon_t\}$ is independent white noise. Then the OLS estimator of $(c, \phi_1, \phi_2, \ldots, \phi_p)$
+obtained by regressing $y_t$ on the constant and $p$ lagged values of $y$ for the sample
+period of $t = 1, 2, \ldots, n$ is consistent and asymptotically normal. Letting
+$\bm{\beta} = (c, \phi_1, \phi_2, \ldots, \phi_p)'$ and $\mathbf{x}_t = (1, y_{t-1}, \ldots, y_{t-p})'$, and $\hat{\bm{\beta}} =$ OLS estimate of
+$\bm{\beta}$, we have
+\[
+  \avar(\hat{\bm{\beta}}) = \sigma^2\,\E(\mathbf{x}_t \mathbf{x}_t')^{-1},
+\]
+which is consistently estimated by
+\[
+  \widehat{\avar(\hat{\bm{\beta}})} = s^2 \cdot
+  \left(\frac{1}{n} \sum_{t=1}^{n} \mathbf{x}_t \mathbf{x}_t'\right)^{-1},
+\]
+where $s^2$ is the OLS estimate of the error variance given by
+\begin{equation}
+  s^2 = \frac{1}{n - p - 1} \sum_{t=1}^{n}
+  (y_t - \hat{c} - \hat{\phi}_1 y_{t-1} - \cdots - \hat{\phi}_p y_{t-p})^2.
+  \label{eq:6.4.5}
+\end{equation}
+\end{proposition}
+
+The proof is to verify the assumptions of Proposition~2.5, which can be done in the
+same way as we did for AR(1). The only difficult part is to show that $\E(\mathbf{x}_t \mathbf{x}_t')$ is
+nonsingular (Assumption~2.4), which is equivalent to requiring the $p \times p$ autocovariance
+matrix $\Var(y_t, \ldots, y_{t-p+1})$ to be nonsingular (see Review Question~1(b)
+below). It can be shown that the autocovariance matrix of a covariance-stationary
+process is nonsingular for any $p$ if $\gamma_0 > 0$ and $\gamma_j \to 0$ as $j \to \infty$.\footnote{See, e.g., Proposition~5.1.1 of Brockwell and Davis (1991).}
+So Assumption~2.4, too, is met.
+
+We have not covered the maximum likelihood estimation of $\text{AR}(p)$, but for
+those of you who are curious about the connection to ML, the OLS estimator is
+numerically the same as the conditional Gaussian ML estimator and asymptotically
+equivalent to the exact Gaussian ML estimator. See Section~8.7.
+
+\subsection*{Choice of Lag Length}
+
+All these nice results about estimation of autoregressions assume that the order
+(the lag length) of autoregression, $p$, is known. How should we proceed if the
+order $p$ is unknown? First of all, it is clear that Proposition~6.7, which is about
+$p$-th order autoregressions, is applicable to autoregressions of lower order, say
+$r < p$. That is, even if $\phi_r \neq 0$ but $\phi_{r+1} = \phi_{r+2} = \cdots = \phi_p = 0$, the proposition
+remains applicable as long as $(\phi_1, \phi_2, \ldots, \phi_r)$ satisfies the stationarity condition.
+In particular, the OLS estimates of $(\phi_{r+1}, \phi_{r+2}, \ldots, \phi_p)$ will converge to the true
+value of zero. To put the same argument differently, suppose that the true order of
+the autoregression is $p$ (so $\phi_p \neq 0$) and suppose that all we know about $p$ is that it
+is less than or equal to some known integer $p_{max}$. By setting the $r$ in the argument
+just given to $p$ and the $p$ to $p_{max}$, we see that Proposition~6.7 is applicable to
+autoregressions with $p_{max}$ lags: if the $\{y_t\}$ is stationary $\text{AR}(p)$ and if we regress
+$y_t$ on the constant and $p_{max}$ lags of $y$, then the OLS coefficient estimates will be
+consistent and asymptotically normal.
+
+It is natural to think that the true lag length may be estimated from this OLS
+estimate of $(\phi_1, \ldots, \phi_{p_{max}})$. We consider two classes of rules for determining the
+lag length. The first is the
+
+\medskip
+\noindent\textbf{General-to-specific sequential \textit{t} rule:} \; Start with an autoregression of $p_{max}$ lags.
+If the last lag is significant at some prespecified significance level (say, 10 percent),
+then end the procedure and set the lag length to $p_{max}$. Otherwise drop the
+last lag, reestimate the autoregression with one fewer lag, and repeat the same
+test. If this process continues until there is only one lag in the autoregression
+and if that lag is insignificant, then set the lag length to 0 (no lags).
+
+\medskip
+This rule has the following interesting properties, to be illustrated in a moment. Since the
+$t$-test is consistent, the lag length thus chosen will never be less than $p$ (the true lag
+length) in large samples. However, the probability of overfitting (that the lag length
+chosen is greater than the true lag length $p$) is not zero, even in large samples. That
+is, if $\hat{p}$ is the lag length chosen by the sequential $t$ rule,
+\begin{equation}
+  \lim_{n \to \infty} \Pr(\hat{p} < p) = 0 \quad \text{and} \quad
+  \lim_{n \to \infty} \Pr(\hat{p} > p) > 0.
+  \label{eq:6.4.6}
+\end{equation}
+
+To illustrate, suppose $p = 2$ and $p_{max} = 3$. The sequential $t$ rule starts out
+with three lags in the autoregression:
+\[
+  y_t = c + \phi_1 y_{t-1} + \phi_2 y_{t-2} + \phi_3 y_{t-3} + \varepsilon_t.
+\]
+We test the null hypothesis that $\phi_3 = 0$ at the 10 percent significance level. With
+a probability of 10 percent, we reject the (true) null and set the lag length to~3, or
+accept the null with a probability of 90 percent, in large samples. In the event of
+accepting the null, we set $\phi_3 = 0$, estimate an autoregression with two lags, and test
+the hypothesis that $\phi_2 = 0$. Since $\phi_2 \neq 0$ in truth (i.e., since $p = 2$), the absolute
+value of the $t$-value on the OLS estimate of $\phi_2$ would be very large in large samples,
+so we would never accept the (false) null that the second lag is zero. Therefore, in
+this example, $\Pr(\hat{p} = 2) = 90\%$ and $\Pr(\hat{p} = 3) = 10\%$ in large samples.
+
+There are two minor variations in the choice of the sample period with data
+$(y_1, \ldots, y_n)$. One is to use the same sample period of $t = p_{max} + 1, p_{max} + 2, \ldots, n$
+throughout. The other is to let the sample period be ``elastic'' by expanding it as
+fewer and fewer lags are included. That is, when the autoregression being estimated
+has $j$ lags, the sample period is $t = j + 1, j + 2, \ldots, n$.
+
+The second rule for selecting the lag length uses either the \textbf{Akaike information
+criterion} (\textbf{AIC}) or the \textbf{Schwartz information criterion} (\textbf{SIC}), also called the
+\textbf{Bayesian information criterion} (\textbf{BIC}). This procedure sets the lag length to the $j$
+that minimizes
+\begin{equation}
+  \log(SSR_j / n) + (j + 1) C(n) / n,
+  \label{eq:6.4.7}
+\end{equation}
+over $j = 0, 1, \ldots, p_{max}$, where $SSR_j$ is the sum of squared residuals for the autoregression
+with $j$ lags. In this formula, ``$j + 1$'' enters as the number of parameters
+(the coefficients of the constant and $j$ lags). For the AIC, $C(n) = 2$ while for the
+BIC, $C(n) = \log(n)$. A few comments about this information-criterion-based rule:
+\begin{itemize}
+\item As the number of parameters increases with $j$, the first term of the objective
+function \eqref{eq:6.4.7} declines because the fit of the equation gets better, but the second
+term increases. The information criterion strikes a balance between a better
+fit and model parsimony.
+
+\item Without an upper bound $p_{max}$, a ridiculously large value of $j$ might be chosen
+(indeed, the information criterion achieves a minimum of $-\infty$ at $j + 1 = n$
+because $SSR_j = 0$ for $j = n - 1$). In the present context where the true DGP is a
+finite-order autoregression, a reasonable upper bound is the maximum possible
+lag length.
+
+\item Again there can be two ways to set the sample period. You can use the fixed
+sample period of $t = p_{max} + 1, p_{max} + 2, \ldots, n$ throughout, in which case $SSR_j$
+is the sum of $n - p_{max}$ squared residuals. Or you can use the ``elastic'' sample
+period, in which case $SSR_j$ is the sum of $n - j$ squared residuals. In either case,
+there is yet another variation, which is to replace the $n$ in the information criterion
+\eqref{eq:6.4.7} by the actual sample size. So you replace the $n$ by $n - p_{max}$ if
+the fixed sample is to be used. Based on simulations and some theoretical considerations,
+Ng and Perron (2000) recommend the use of a fixed, rather than an
+``elastic,'' sample period, with $n - p_{max}$ replacing $n$ in the information criterion.
+\end{itemize}
+
+Let $\hat{p}_{\text{AIC}}$ and $\hat{p}_{\text{BIC}}$ be the lag lengths chosen by the AIC and BIC, respectively.
+Like the lag length selected by the general-to-specific $t$ rule, they are functions of
+data, and hence are random variables. For them it is possible to show the following
+(see, e.g., L\"utkepohl, 1993, Section~4.3):
+
+\begin{enumerate}
+\item[(1)] $\hat{p}_{\text{BIC}} \leq \hat{p}_{\text{AIC}}$ unless the sample size is very small. (If the fixed sample of
+$t = p_{max} + 1, \ldots, n$ is used and ``$n - p_{max}$'' replaces $n$ in \eqref{eq:6.4.7}, this is true
+for any finite sample with $n \geq p_{max} + 8$.) This is an algebraic result and holds
+for any sample on $y$.
+
+\item[(2)] Suppose that $\{y_t\}$ is stationary $\text{AR}(p)$ and $\{\varepsilon_t\}$ is independent white noise with
+a finite fourth moment. Then
+\begin{equation}
+  \lim_{n \to \infty} \hat{p}_{\text{BIC}} = p, \quad
+  \lim_{n \to \infty} \Pr(\hat{p}_{\text{AIC}} < p) = 0, \quad
+  \lim_{n \to \infty} \Pr(\hat{p}_{\text{AIC}} > p) > 0.
+  \label{eq:6.4.8}
+\end{equation}
+\end{enumerate}
+
+That is, just like the general-to-specific sequential $t$ rule, the AIC rule has a positive
+probability of overfitting. In contrast, the BIC rule is consistent. Furthermore,
+Hannan and Deistler (1988, Theorem~5.4.1(c) and its Remark~1) have shown that
+the consistency of $\hat{p}_{\text{BIC}}$ holds when the upper bound $p_{max}$ is made to increase at a
+rate of $\log(n)$ (i.e., when it is set to $[c \log(n)]$ [the integer part of $c \log(n)$] for any
+given $c > 0$). This means that you do not need to know an upper bound in the
+consistent estimation by BIC of the order of an autoregression.
+
+\subsection*{Estimation of VARs}
+
+Estimation of VAR coefficients is equally easy. If $\mathbf{y}_t$ is $M$-dimensional, the $\text{VAR}(p)$
+\eqref{eq:6.3.9} is an $M$-equation system and can be written as
+\begin{equation}
+  y_{tm} = \mathbf{x}_t' \bm{\delta}_m + \varepsilon_{tm} \quad (m = 1, 2, \ldots, M),
+  \label{eq:6.4.9}
+\end{equation}
+where $y_{tm}$ is the $m$-th element of $\mathbf{y}_t$, $\varepsilon_{tm}$ is the $m$-th element of $\bm{\varepsilon}_t$, and
+\[
+  \underset{(Mp+1) \times 1}{\mathbf{x}_t} =
+  \begin{bmatrix} 1 \\ \mathbf{y}_{t-1} \\ \mathbf{y}_{t-2} \\ \vdots \\ \mathbf{y}_{t-p} \end{bmatrix}, \quad
+  \bm{\delta}_m =
+  \begin{bmatrix} c_m \\ \bm{\phi}_{1m} \\ \bm{\phi}_{2m} \\ \vdots \\ \bm{\phi}_{pm} \end{bmatrix},
+\]
+$c_m = m$-th element of $\mathbf{c}$, $\bm{\phi}_{jm}' = m$-th row of $\bm{\Phi}_j$.
+So the $M$ equations share the same set of regressors. It is easy to verify that $\mathbf{x}_t$
+is orthogonal to the error term in each equation and that the error is conditionally
+homoskedastic (the proof is very similar to the proof for $\text{AR}(p)$). So the
+$M$-equation system with i.i.d.\ $\{\bm{\varepsilon}_t\}$ satisfies all the conditions for the multivariate
+regression model of Section~4.5. Thus, efficient GMM estimation is very easy:
+just do equation-by-equation OLS. The expressions for the asymptotic variance
+and its consistent estimate can be obtained from Proposition~4.6 with $\mathbf{z}_{tm} = \mathbf{x}_t$ (so
+$(4.5.13')$ on page~280 becomes $\frac{1}{n} \sum_t \mathbf{x}_t \mathbf{x}_t'$). If $\bm{\delta}$ is the $(Mp + 1)M$-dimensional
+stacked vector created from $(\bm{\delta}_1, \ldots, \bm{\delta}_M)$ and if $\hat{\bm{\delta}}$ is the equation-by-equation OLS
+estimate of $\bm{\delta}$, we have from (4.5.17)
+\begin{equation}
+  \widehat{\avar(\hat{\bm{\delta}})} = \hat{\bm{\Omega}} \otimes
+  \left(\frac{1}{n} \sum_{t=1}^{n} \mathbf{x}_t \mathbf{x}_t'\right)^{-1},
+  \label{eq:6.4.10}
+\end{equation}
+where
+\begin{equation}
+  \hat{\bm{\Omega}} \equiv \frac{1}{n - Mp - 1} \sum_{t=1}^{n} \hat{\bm{\varepsilon}}_t \hat{\bm{\varepsilon}}_t', \quad
+  \hat{\bm{\varepsilon}}_t = \mathbf{y}_t - \hat{\mathbf{c}} - \hat{\bm{\Phi}}_1 \mathbf{y}_{t-1} - \cdots - \hat{\bm{\Phi}}_p \mathbf{y}_{t-p}.
+  \label{eq:6.4.11}
+\end{equation}
+
+If we do not know the lag length $p$, we estimate it from data. In the information-criterion-based
+rule, the lag length we choose is the $k$ that minimizes
+\begin{equation}
+  \log\left(\left|\frac{1}{n} \sum_{t=1}^{n} \hat{\bm{\varepsilon}}_t \hat{\bm{\varepsilon}}_t'\right|\right)
+  + (k M^2 + M) \cdot \frac{C(n)}{n},
+  \label{eq:6.4.12}
+\end{equation}
+over $k = 0, 1, \ldots, p_{max}$. Here, as in the univariate case, $C(n) = 2$ for the AIC and
+$\log(n)$ for the BIC. Exactly the same results, listed as (1) and (2) above for the univariate
+case, hold for the multivariate case (see, e.g., L\"utkepohl, 1993, Section~4.3).
+
+\subsection*{Estimation of ARMA(\textit{p}, \textit{q})}
+
+Letting
+\begin{gather*}
+  u_t \equiv \varepsilon_t + \theta_1 \varepsilon_{t-1} + \theta_2 \varepsilon_{t-2} + \cdots + \theta_q \varepsilon_{t-q}, \\
+  \mathbf{z}_t = (1, y_{t-1}, y_{t-2}, \ldots, y_{t-p})', \quad
+  \bm{\delta} = (c, \phi_1, \phi_2, \ldots, \phi_p)',
+\end{gather*}
+the univariate $\text{ARMA}(p, q)$ equation \eqref{eq:6.2.9} can be written as
+\begin{equation}
+  y_t = \mathbf{z}_t' \bm{\delta} + u_t.
+  \label{eq:6.4.13}
+\end{equation}
+The moving-average component of ARMA creates two problems. First, obviously,
+the error term $u_t$ is serially correlated (in fact, it is $\text{MA}(q)$). Second, since the
+lagged dependent variables included in $\mathbf{z}_t$ are correlated with lags of $\varepsilon$ included in
+the error term, the regressors $\mathbf{z}_t$ are not orthogonal to the error term $u_t$. That is,
+serial correlation in the presence of lagged dependent variables results in biased
+estimation. The second problem could be dealt with by using suitably lagged
+dependent variables $(y_{t-q-1}, y_{t-q-2}, \ldots)$ as instruments. Regarding the first problem,
+the method to be developed later in this chapter provides consistent estimates
+of the coefficient vector in the presence of serial correlation. Given a consistent
+estimate of $\bm{\delta}$, the MA parameters ($\theta$'s) can be estimated from the residuals. This
+procedure, however, is not efficient.\footnote{The model yields infinitely many orthogonality conditions, $\E(u_t \cdot y_s) = 0$ for all $s \leq t - q - 1$. The GMM procedure can exploit only finitely many orthogonality conditions.}
+We will not cover the topic of efficient estimation
+of $\text{ARMA}(p, q)$ processes with Gaussian errors. Interested readers are
+referred to, e.g., Fuller (1996, Chapter~8) or Hamilton (1994, Chapter~5).
+
+\subsection*{Questions for Review}
+
+\begin{enumerate}
+\item (Avar of AR coefficients)
+\begin{enumerate}[label=(\alph*)]
+\item For AR(1), show that
+\[
+  \avar(\hat{\phi}) = \frac{\sigma^2}{\gamma_0} = 1 - \phi^2,
+\]
+where $\hat{\phi}$ is the OLS estimator of $\phi$. \textbf{Hint:} It is $\sigma^2$ times the $(2, 2)$ element
+of the inverse of \eqref{eq:6.4.4}.
+
+\item For $\text{AR}(p)$, let $\hat{\bm{\phi}}$ be the OLS estimate of $(\phi_1, \phi_2, \ldots, \phi_p)'$. Show that
+\[
+  \avar(\hat{\bm{\phi}}) = \sigma^2 \mathbf{V}^{-1},
+\]
+where $\mathbf{V}$ is the $p \times p$ autocovariance matrix
+\[
+  \mathbf{V} = \Var(y_t, \ldots, y_{t-p+1}) =
+  \begin{bmatrix}
+    \gamma_0 & \gamma_1 & \gamma_2 & \cdots & \gamma_{p-1} \\
+    \gamma_1 & \gamma_0 & \gamma_1 & \cdots & \gamma_{p-2} \\
+    \vdots & \ddots & \ddots & \ddots & \vdots \\
+    \gamma_{p-2} & \cdots & \gamma_1 & \gamma_0 & \gamma_1 \\
+    \gamma_{p-1} & \cdots & \gamma_2 & \gamma_1 & \gamma_0
+  \end{bmatrix}.
+\]
+\textbf{Hint:} If $\mathbf{x}_t$ is as in Proposition~6.7, then
+\[
+  \E(\mathbf{x}_t \mathbf{x}_t') =
+  \begin{bmatrix} 1 & \bm{\mu} \mathbf{1}' \\ \bm{\mu} \mathbf{1} & \mathbf{V} + \mu^2 \mathbf{1}\mathbf{1}' \end{bmatrix},
+\]
+where $\mathbf{1}$ is a $p \times 1$ vector of ones. Show that the inverse of this matrix is
+\[
+  \E(\mathbf{x}_t \mathbf{x}_t')^{-1} =
+  \begin{bmatrix} * & * \\ * & \mathbf{V}^{-1} \end{bmatrix}.
+\]
+\end{enumerate}
+\end{enumerate}

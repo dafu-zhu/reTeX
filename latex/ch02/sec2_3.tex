@@ -1,0 +1,429 @@
+% sec2_3.tex — Section 2.3: Large-Sample Distribution of the OLS Estimator
+
+The importance in econometrics of the OLS procedure, originally developed for the
+classical regression model of Chapter~1, lies in the fact that it has good asymptotic
+properties for a class of models, different from the classical model, that are useful
+in economics.  Of those models, the model presented in this section has probably the
+widest range of economic applications.  No specific distributional assumption (such
+as the normality of the error term) is required to derive the asymptotic distribution
+of the OLS estimator.  The requirement in finite-sample theory that the regressors be
+strictly exogenous or ``fixed'' is replaced by a much weaker requirement that they be
+``predetermined.''  (For the sake of completeness, the appendix develops a parallel
+asymptotic theory for a model with ``fixed'' regressors.)
+
+%% ─── The Model ─────────────────────────────────────────────────────────────
+\subsection*{The Model}
+
+We use the term the \textbf{data generating process} (\textbf{DGP}) for the stochastic
+process that generated the finite sample $(\mathbf{y}, \mathbf{X})$.  Therefore, if we
+specify the DGP, the joint distribution of the finite sample $(\mathbf{y}, \mathbf{X})$
+can be determined.  In finite-sample theory, where the sample size is fixed and
+finite, we defined a model as a set of the joint distributions of
+$(\mathbf{y}, \mathbf{X})$.  In large-sample theory, a model is stated as a set of
+DGPs.  The model we study is the set of DGPs satisfying the following set of
+assumptions.
+
+\begin{assumption}[linearity]
+\label{ass:2.1}
+\begin{equation*}
+  y_i = \mathbf{x}_i'\bm{\beta} + \varepsilon_i
+  \quad (i = 1, 2, \ldots, n)
+\end{equation*}
+\emph{where $\mathbf{x}_i$ is a $K$-dimensional vector of explanatory variables
+(regressors), $\bm{\beta}$ is a $K$-dimensional coefficient vector, and
+$\varepsilon_i$ is the unobservable error term.}
+\end{assumption}
+
+\begin{assumption}[ergodic stationarity]
+\label{ass:2.2}
+\emph{The $(K+1)$-dimensional vector stochastic process $\{y_i, \mathbf{x}_i\}$ is
+jointly stationary and ergodic.}
+\end{assumption}
+
+\begin{assumption}[predetermined regressors]
+\label{ass:2.3}
+\emph{All the regressors are \textbf{predetermined} in the sense that they are
+orthogonal to the contemporaneous error term:
+$\E(x_{ik}\varepsilon_i) = 0$ for all $i$ and $k$ $(= 1, 2, \ldots, K)$.\footnote{Our
+definition of the term \emph{predetermined} is not universal.  Some authors say the
+regressors are predetermined if
+$\E(\mathbf{x}_{i-j} \cdot \varepsilon_i) = \mathbf{0}$ for all $j \geq 0$, not just
+for $j = 0$.  That is, the error term is orthogonal not only to the contemporaneous
+but also the past regressors.  In Koopmans and Hood (1953), the regressors are said
+to be predetermined if $\varepsilon_i$ is independent of $\mathbf{x}_{i-j}$ for all
+$j \geq 0$.  Our definition is the same as Hamilton's (1994).}
+This can be written as}
+\[
+  \E[\mathbf{x}_i \cdot (y_i - \mathbf{x}_i'\bm{\beta})] = \mathbf{0}
+  \quad \textit{or equivalently} \quad
+  \E(\mathbf{g}_i) = \mathbf{0}
+\]
+\emph{where $\mathbf{g}_i \equiv \mathbf{x}_i \cdot \varepsilon_i$.}
+\end{assumption}
+
+\begin{assumption}[rank condition]
+\label{ass:2.4}
+\emph{The $K \times K$ matrix $\E(\mathbf{x}_i\mathbf{x}_i')$ is nonsingular (and
+hence finite).  We denote this matrix by $\bm{\Sigma}_{\mathbf{xx}}$.}
+\end{assumption}
+
+\begin{assumption}[$\mathbf{g}_i$ is a martingale difference sequence with finite
+second moments]
+\label{ass:2.5}
+\emph{$\{\mathbf{g}_i\}$ is a martingale difference sequence (so a fortiori
+$\E(\mathbf{g}_i) = \mathbf{0}$).  The $K \times K$ matrix of cross moments,
+$\E(\mathbf{g}_i\mathbf{g}_i')$, is nonsingular.  We use $\mathbf{S}$ for
+$\avar(\bar{\mathbf{g}})$ (the variance of the asymptotic distribution of
+$\sqrt{n}\,\bar{\mathbf{g}}$, where
+$\bar{\mathbf{g}} \equiv \frac{1}{n}\sum_i \mathbf{g}_i$).  By Assumption~\ref{ass:2.2}
+and the ergodic stationary Martingale Differences CLT,
+$\mathbf{S} = \E(\mathbf{g}_i\mathbf{g}_i')$.}
+\end{assumption}
+
+The first assumption is just reproducing Assumption~1.1.  The rest of the assumptions
+require some lengthy comments.
+
+\begin{itemize}
+\item (Ergodic stationarity)\quad A trivial but important special case of ergodic
+  stationarity is that $\{y_i, \mathbf{x}_i\}$ is i.i.d., that is, the sample is a
+  random sample.\footnote{Actually, once the independence assumption is made, the same
+  large-sample results can be proved for the more general case where
+  $\{y_i, \mathbf{x}_i\}$ is independently but not identically distributed (i.n.i.d.),
+  provided that some conditions on higher moments of the joint distribution of
+  $(\varepsilon_i, \mathbf{x}_i)$ are satisfied.  We will not entertain this
+  generalization because the i.i.d.\ assumption is satisfied in most microdata sets.}
+  Most existing microdata on households are random samples, with observations
+  randomly drawn from a population of a nation's households.  Thus, we are in no
+  way ruling out models that use cross-section data.
+
+\item (The model accommodates conditional heteroskedasticity)\quad
+  If $\{y_i, \mathbf{x}_i\}$ is stationary, then the error term
+  $\varepsilon_i = y_i - \mathbf{x}_i'\bm{\beta}$ is also stationary.  Thus,
+  Assumption~\ref{ass:2.2} implies that the unconditional second moment
+  $\E(\varepsilon_i^2)$---if it exists and is finite---is constant across $i$.  That
+  is, the error term is unconditionally homoskedastic.  Yet the error can be
+  conditionally heteroskedastic in that the conditional second moment,
+  $\E(\varepsilon_i^2 \mid \mathbf{x}_i)$, can depend on $\mathbf{x}_i$.  An example
+  in which the error is homoskedastic unconditionally but not conditionally is
+  included in Section~2.6, where the consequence of superimposing conditional
+  homoskedasticity (that $\E(\varepsilon_i^2 \mid \mathbf{x}_i) = \sigma^2$) on the
+  model will be explored.
+
+\item ($\E(\mathbf{x}_i \cdot \varepsilon_i) = \mathbf{0}$ vs.\
+  $\E(\varepsilon_i \mid \mathbf{x}_i) = 0$)\quad Sometimes, instead of the
+  orthogonality condition $\E(\mathbf{x}_i \cdot \varepsilon_i) = \mathbf{0}$, it is
+  assumed that the error is unrelated in the sense that
+  $\E(\varepsilon_i \mid \mathbf{x}_i) = 0$.  This is stronger than the orthogonality
+  condition because it implies that, for any (measurable) function $f$ of
+  $\mathbf{x}_i$, $f(\mathbf{x}_i)$ is orthogonal to $\varepsilon_i$:
+  \[
+    \E[f(\mathbf{x}_i)\varepsilon_i]
+    = \E[\E(f(\mathbf{x}_i)\varepsilon_i \mid \mathbf{x}_i)]
+    = \E[f(\mathbf{x}_i)\,\E(\varepsilon_i \mid \mathbf{x}_i)] = 0.
+  \]
+  In rational expectations models, this stronger condition is satisfied, but for the
+  purpose of developing asymptotic theory, we need only the weaker assumption of the
+  orthogonality condition.
+
+\item (Predetermined vs.\ strictly exogenous regressors)\quad The regressors are
+  \emph{not} required to be strictly exogenous.  As we noted in Section~1.2, the
+  exogeneity assumption (Assumption~1.2) implies that, for any regressor $k$,
+  $\E(x_{jk}\varepsilon_i) = 0$ for all $i$ and $j$, not just for $i = j$, which
+  rules out the possibility that the current error term, $\varepsilon_i$, is
+  correlated with future regressors, $\mathbf{x}_{i+j}$ for $j \geq 1$.
+  Assumption~\ref{ass:2.3}, restricting only the \emph{contemporaneous} relationship
+  between the error term and the regressors, does not rule out that possibility.
+  For example, the AR(1) process, which does not satisfy the exogeneity assumption of
+  the classical regression model, can be accommodated in the model of this chapter.
+  This weaker assumption of predetermined regressors will be further relaxed in the
+  next chapter.
+
+\item (Rank condition as no multicollinearity in the limit)\quad
+  Since $\E(\mathbf{x}_i\mathbf{x}_i')$ is finite by Assumption~\ref{ass:2.4},
+  $\lim_{n \to \infty} \mathbf{S}_{\mathbf{xx}} = \bm{\Sigma}_{\mathbf{xx}}$
+  (where $\mathbf{S}_{\mathbf{xx}} \equiv \frac{1}{n}\sum_{i=1}^{n}
+  \mathbf{x}_i\mathbf{x}_i'$) with probability one by the Ergodic Theorem.  So, for
+  $n$ sufficiently large, the sample cross moment of the regressors
+  $\mathbf{S}_{\mathbf{xx}}$, which can be written as
+  $\frac{1}{n}\mathbf{X}'\mathbf{X}$, is nonsingular by Assumptions~\ref{ass:2.2} and
+  \ref{ass:2.4}.  Since $\frac{1}{n}\mathbf{X}'\mathbf{X}$ is nonsingular if and only
+  if $\rank(\mathbf{X}) = K$, Assumption~1.3 (no multicollinearity) is satisfied with
+  probability one for sufficiently large $n$.  In the OLS formula
+  $\mathbf{b} = \mathbf{S}_{\mathbf{xx}}^{-1}\mathbf{s}_{\mathbf{xy}}$
+  (where $\mathbf{s}_{\mathbf{xy}} \equiv \frac{1}{n}\sum_{i=1}^{n}
+  \mathbf{x}_i \cdot y_i$), $\mathbf{S}_{\mathbf{xx}}$ needs to be inverted.  If
+  $\mathbf{S}_{\mathbf{xx}}$ is singular in a finite sample (so it cannot be
+  inverted), we just assign an arbitrary value to $\mathbf{b}$ so that the OLS
+  estimator is well-defined for any sample.
+
+\item (A sufficient condition for $\{\mathbf{g}_i\}$ to be an m.d.s.)\quad
+  Since an m.d.s.\ (martingale difference sequence) is zero-mean by definition,
+  Assumption~\ref{ass:2.5} is stronger than Assumption~\ref{ass:2.3}.  We will need
+  Assumption~\ref{ass:2.5} to prove the asymptotic normality of the OLS estimator.
+  The assumption, about the product of the regressors and the error term, may be hard
+  to interpret.  A sufficient condition that is easier to interpret is
+  \begin{equation}
+    \E(\varepsilon_i \mid \varepsilon_{i-1}, \varepsilon_{i-2}, \ldots,
+    \varepsilon_1, \mathbf{x}_i, \mathbf{x}_{i-1}, \ldots, \mathbf{x}_1) = 0.
+    \label{eq:2.3.1}
+  \end{equation}
+  Note that the \emph{current} as well as lagged regressors is included in the
+  information set.  This condition implies that the error term is serially uncorrelated
+  and also is uncorrelated with the current and past regressors (the proof is much
+  like the proof in the previous section that an m.d.s.\ is serially uncorrelated).
+  That \eqref{eq:2.3.1} is sufficient for $\{\mathbf{g}_i\}$ to be an m.d.s.\ can be
+  seen as follows.  We have
+  \begin{align}
+    \E(\mathbf{g}_i \mid \mathbf{g}_{i-1}, \ldots, \mathbf{g}_1)
+    &= \E[\E(\mathbf{g}_i \mid \varepsilon_{i-1}, \varepsilon_{i-2}, \ldots,
+       \varepsilon_1, \mathbf{x}_i, \mathbf{x}_{i-1}, \ldots, \mathbf{x}_1)
+       \mid \mathbf{g}_{i-1}, \ldots, \mathbf{g}_1].
+       \notag
+  \end{align}
+  This holds by the Law of Iterated Expectations because there is more information
+  in the ``inside'' information set
+  $(\varepsilon_{i-1}, \varepsilon_{i-2}, \ldots, \varepsilon_1, \mathbf{x}_i,
+  \mathbf{x}_{i-1}, \ldots, \mathbf{x}_1)$ than in the ``outside'' information set
+  $(\mathbf{g}_{i-1}, \ldots, \mathbf{g}_1)$.  Therefore,
+  \begin{align}
+    \E(\mathbf{g}_i \mid \mathbf{g}_{i-1}, \ldots, \mathbf{g}_1)
+    &= \E[\mathbf{x}_i\,\E(\varepsilon_i \mid \varepsilon_{i-1},
+       \varepsilon_{i-2}, \ldots, \varepsilon_1, \mathbf{x}_i,
+       \mathbf{x}_{i-1}, \ldots, \mathbf{x}_1)
+       \mid \mathbf{g}_{i-1}, \ldots, \mathbf{g}_1] \notag \\
+    &\quad \text{(by the linearity of conditional expectations)} \notag \\
+    &= \mathbf{0} \quad (\text{by } \eqref{eq:2.3.1}).
+    \label{eq:2.3.2}
+  \end{align}
+
+\item (When the regressors include a constant)\quad In virtually all applications,
+  the regressors include a constant so that $x_{i1} = 1$ for all $i$, then
+  Assumption~\ref{ass:2.3} of predetermined regressors can be stated in more familiar
+  terms: the mean of the error term is zero (which is implied by
+  $\E(x_{ik}\varepsilon_i) = 0$ for $k = 1$), and the contemporaneous correlation
+  between the error term and the regressors is zero (which is implied by
+  $\E(x_{ik}\varepsilon_i)$ for $k \neq 1$ and $\E(\varepsilon_i) = 0$).  Also,
+  since the first element of the $K$-dimensional vector
+  $\mathbf{g}_i$ $(\equiv \mathbf{x}_i \cdot \varepsilon_i)$ is $\varepsilon_i$,
+  Assumption~\ref{ass:2.5} implies
+  \[
+    \E(\varepsilon_i \mid \mathbf{g}_{i-1}, \mathbf{g}_{i-2}, \ldots,
+    \mathbf{g}_1) = 0.
+  \]
+  Then, by the Law of Iterated Expectations, $\{\varepsilon_i\}$ is a scalar m.d.s.\ and
+  hence is serially uncorrelated.
+  \begin{equation}
+    \E(\varepsilon_i \mid \varepsilon_{i-1}, \varepsilon_{i-2}, \ldots,
+    \varepsilon_1) = 0.
+    \label{eq:2.3.3}
+  \end{equation}
+  Therefore, Assumption~\ref{ass:2.5} implies that the error term itself is an m.d.s.\
+  and hence is serially uncorrelated.
+
+\item ($\mathbf{S}$ is a matrix of fourth moments)\quad Since
+  $\mathbf{g}_i \equiv \mathbf{x}_i \cdot \varepsilon_i$, the $\mathbf{S}$ in
+  Assumption~\ref{ass:2.5} can be written as
+  $\E(\varepsilon_i^2\mathbf{x}_i\mathbf{x}_i')$.  Its $(k,j)$ element is
+  $\E(\varepsilon_i^2 x_{ik} x_{ij})$.  So $\mathbf{S}$ is a matrix of fourth moments
+  (the expectation of products of four different variables).  Consistent estimation of
+  $\mathbf{S}$ will require an additional assumption to be specified in Section~2.5.
+
+\item ($\mathbf{S}$ will take a different expression without Assumption~\ref{ass:2.5})
+  \quad Thanks to the assumption that $\{\mathbf{g}_i\}$ is an m.d.s.,
+  $\mathbf{S}$ $(\equiv \avar(\bar{\mathbf{g}}))$ is equal to
+  $\E(\mathbf{g}_i\mathbf{g}_i')$.  Without the assumption, as we will see in
+  Chapter~6, the expression for $\mathbf{S}$ is more complicated and involves
+  autocovariances of $\mathbf{g}_i$.
+\end{itemize}
+
+%% ─── Asymptotic Distribution of the OLS Estimator ─────────────────────────
+\subsection*{Asymptotic Distribution of the OLS Estimator}
+
+We now prove that the OLS estimator is consistent and asymptotically normal.  It
+should be kept in mind throughout the rest of this chapter that the OLS estimator
+$\mathbf{b}$ depends on the sample size $n$ (although the dependence is not made
+explicit by our choice of not to subscript $\mathbf{b}$ by $n$) and that $K$, the
+number of regressors, is held fixed when we track the sequence of OLS estimators
+indexed by $n$.  For the time being, we presume that there is available some
+consistent estimator, denoted $\widehat{\mathbf{S}}$, of
+$\mathbf{S}$ $(\equiv \avar(\bar{\mathbf{g}}) = \E(\mathbf{g}_i\mathbf{g}_i')
+= \E(\varepsilon_i^2\mathbf{x}_i\mathbf{x}_i'))$.  The issue of estimating
+$\mathbf{S}$ consistently will be taken up later.
+
+\begin{proposition}[asymptotic distribution of the OLS Estimator]
+\label{prop:2.1}
+\begin{enumerate}[label=(\alph*)]
+  \item \emph{(Consistency of\/ $\mathbf{b}$ for $\bm{\beta}$)\quad Under
+    Assumptions~\ref{ass:2.1}--\ref{ass:2.4},
+    $\plim_{n \to \infty} \mathbf{b} = \bm{\beta}$.  (So Assumption~\ref{ass:2.5}
+    is not needed for consistency.)}
+  \item \emph{(Asymptotic Normality of\/ $\mathbf{b}$)\quad If
+    Assumption~\ref{ass:2.3} is strengthened as Assumption~\ref{ass:2.5}, then}
+    \[
+      \sqrt{n}(\mathbf{b} - \bm{\beta}) \dto
+      N(\mathbf{0},\, \avar(\mathbf{b}))
+      \quad \text{as } n \to \infty,
+    \]
+    \emph{where}
+    \begin{equation}
+      \avar(\mathbf{b})
+      = \bm{\Sigma}_{\mathbf{xx}}^{-1}\,\mathbf{S}\,
+        \bm{\Sigma}_{\mathbf{xx}}^{-1}.
+      \label{eq:2.3.4}
+    \end{equation}
+    \emph{(Recall: $\bm{\Sigma}_{\mathbf{xx}} \equiv \E(\mathbf{x}_i\mathbf{x}_i')$,
+    $\mathbf{S} = \E(\mathbf{g}_i\mathbf{g}_i')$,
+    $\mathbf{g}_i \equiv \mathbf{x}_i \cdot \varepsilon_i$.)}
+  \item \emph{(Consistent Estimate of\/ $\avar(\mathbf{b})$)\quad Suppose there is
+    available a consistent estimator, $\widehat{\mathbf{S}}$, of\/
+    $\mathbf{S}$ $(K \times K)$.  Then, under Assumption~\ref{ass:2.2},
+    $\avar(\mathbf{b})$ is consistently estimated by}
+    \begin{equation}
+      \widehat{\avar(\mathbf{b})}
+      = \mathbf{S}_{\mathbf{xx}}^{-1}\,\widehat{\mathbf{S}}\,
+        \mathbf{S}_{\mathbf{xx}}^{-1},
+      \label{eq:2.3.5}
+    \end{equation}
+    \emph{where $\mathbf{S}_{\mathbf{xx}}$ is the sample mean of\/
+    $\mathbf{x}_i\mathbf{x}_i'$:}
+    \begin{equation}
+      \underset{(K \times K)}{\mathbf{S}_{\mathbf{xx}}}
+      \equiv \frac{1}{n} \sum_{i=1}^{n} \mathbf{x}_i\mathbf{x}_i'
+      = \frac{1}{n}\mathbf{X}'\mathbf{X}.
+      \label{eq:2.3.6}
+    \end{equation}
+\end{enumerate}
+\end{proposition}
+
+The proof is a showcase of all the standard tricks in asymptotics.  For proving (a)
+and (b), three tricks will be employed: (1)~write the object in question in terms of
+sample means, (2)~apply the relevant LLN (the Ergodic Theorem in the present
+context) and CLT (the ergodic stationary Martingale Differences CLT) to sample
+means, and (3)~use Lemma~\ref{lem:2.4}(c) to derive the asymptotic distribution.
+Proof of (c) will not be given because it is an immediate implication of ergodic
+stationarity.
+
+\begin{proof}[Proof (Parts (a) and (b))]
+\begin{enumerate}
+\item We first write the sampling error $\mathbf{b} - \bm{\beta}$ in terms of sample
+  means.
+  \begin{align}
+    \mathbf{b} - \bm{\beta}
+    &= (\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\bm{\varepsilon} \notag \\
+    &= \left(\frac{1}{n}\mathbf{X}'\mathbf{X}\right)^{-1}
+       \left(\frac{1}{n}\mathbf{X}'\bm{\varepsilon}\right) \notag \\
+    &= \left(\frac{1}{n}\sum_{i=1}^{n} \mathbf{x}_i\mathbf{x}_i'\right)^{-1}
+       \left(\frac{1}{n}\sum_{i=1}^{n} \mathbf{x}_i \cdot \varepsilon_i\right)
+       \notag \\
+    &\equiv \mathbf{S}_{\mathbf{xx}}^{-1}\,\bar{\mathbf{g}},
+    \label{eq:2.3.7}
+  \end{align}
+  where
+  \[
+    \bar{\mathbf{g}} \equiv \frac{1}{n}\sum_{i=1}^{n} \mathbf{g}_i, \quad
+    \mathbf{g}_i \equiv \mathbf{x}_i \cdot \varepsilon_i.
+  \]
+  The sample means $\mathbf{S}_{\mathbf{xx}}$ and $\bar{\mathbf{g}}$ depend on the
+  sample size $n$, although the notation does not make it explicit.
+
+\item (Consistency)\quad Since by Assumption~\ref{ass:2.2}
+  $\{\mathbf{x}_i\mathbf{x}_i'\}$ is ergodic stationary,
+  $\mathbf{S}_{\mathbf{xx}} \pto \bm{\Sigma}_{\mathbf{xx}}$.  (The convergence is
+  actually almost surely, but almost sure convergence implies convergence in
+  probability.)  Since $\bm{\Sigma}_{\mathbf{xx}}$ is invertible by
+  Assumption~\ref{ass:2.4}, $\mathbf{S}_{\mathbf{xx}}^{-1} \pto
+  \bm{\Sigma}_{\mathbf{xx}}^{-1}$ by Lemma~\ref{lem:2.3}(a).  Similarly,
+  $\bar{\mathbf{g}} \pto \E(\mathbf{g}_i)$ which by Assumption~\ref{ass:2.3} is
+  $\mathbf{0}$.  So by Lemma~\ref{lem:2.3}(a),
+  $\mathbf{S}_{\mathbf{xx}}^{-1}\bar{\mathbf{g}} \pto
+  \bm{\Sigma}_{\mathbf{xx}}^{-1}\mathbf{0} = \mathbf{0}$.  Therefore,
+  $\plim_{n \to \infty}(\mathbf{b} - \bm{\beta}) = \mathbf{0}$, which implies
+  $\plim_{n \to \infty} \mathbf{b} = \bm{\beta}$.
+
+\item (Asymptotic normality)\quad Rewrite \eqref{eq:2.3.7} as
+  \begin{equation}
+    \sqrt{n}(\mathbf{b} - \bm{\beta})
+    = \mathbf{S}_{\mathbf{xx}}^{-1}(\sqrt{n}\,\bar{\mathbf{g}}).
+    \label{eq:2.3.8}
+  \end{equation}
+  As mentioned in the statement of Assumption~\ref{ass:2.5},
+  $\sqrt{n}\,\bar{\mathbf{g}} \dto N(\mathbf{0}, \mathbf{S})$.  So, by
+  Lemma~\ref{lem:2.4}(c), $\sqrt{n}(\mathbf{b} - \bm{\beta})$ converges to a normal
+  distribution with mean $\mathbf{0}$ and variance
+  $\bm{\Sigma}_{\mathbf{xx}}^{-1}\mathbf{S}(\bm{\Sigma}_{\mathbf{xx}}^{-1})'$.
+  But since $\bm{\Sigma}_{\mathbf{xx}}$ is symmetric, this expression equals
+  \eqref{eq:2.3.4}. \qedhere
+\end{enumerate}
+\end{proof}
+
+This result says that the distribution of $\sqrt{n}$ times the sampling error is
+approximated arbitrarily well by a normal distribution when the sample size is
+sufficiently large.  The natural question is how large is ``large'': how large must
+the sample size be for the asymptotic approximation to be valid?  The asymptotic
+result we just derived holds for all the DGPs satisfying the model assumptions.
+However, the sample size needed to achieve a given measure of proximity to the
+asymptotic distribution depends on the DGP.  We will partially address this issue in
+the Monte Carlo experiment of this chapter.
+
+%% ─── s^2 Is Consistent ────────────────────────────────────────────────────
+\subsection*{$s^2$ Is Consistent}
+
+We now turn to the OLS estimator, $s^2$, of the error variance.
+
+\begin{proposition}[consistent estimation of error variance]
+\label{prop:2.2}
+Let $e_i \equiv y_i - \mathbf{x}_i'\mathbf{b}$ be the OLS residual for observation
+$i$.  Under Assumptions~\ref{ass:2.1}--\ref{ass:2.4},
+\[
+  s^2 \equiv \frac{1}{n - K} \sum_{i=1}^{n} e_i^2 \pto \E(\varepsilon_i^2),
+\]
+provided $\E(\varepsilon_i^2)$ exists and is finite.
+\end{proposition}
+
+If we could observe the error term $\varepsilon_i$, then the obvious estimator would
+be the sample mean of $\varepsilon_i^2$.  It is consistent by ergodic stationarity.
+The message of Proposition~\ref{prop:2.2} is that the substitution of the OLS
+residual $e_i$ for the true error term $\varepsilon_i$ does not impair consistency.
+Let us go through a sketch of the proof, because knowing how to handle the
+discrepancy between $\varepsilon_i$ and its estimate $e_i$ will be useful in other
+contexts as well.  Since
+\[
+  s^2 = \frac{n}{n - K}\left(\frac{1}{n}\sum_{i=1}^{n} e_i^2\right),
+\]
+it suffices to prove that the sample mean of $e_i^2$,
+$\frac{1}{n}\sum_i e_i^2$, converges in probability to $\E(\varepsilon_i^2)$.
+The relationship between $e_i$ and $\varepsilon_i$ is given by
+\begin{align}
+  e_i &\equiv y_i - \mathbf{x}_i'\mathbf{b} \notag \\
+  &= y_i - \mathbf{x}_i'\bm{\beta} - \mathbf{x}_i'(\mathbf{b} - \bm{\beta})
+     \quad (\text{by adding and subtracting } \mathbf{x}_i'\bm{\beta}) \notag \\
+  &= \varepsilon_i - \mathbf{x}_i'(\mathbf{b} - \bm{\beta}),
+  \label{eq:2.3.9}
+\end{align}
+so that
+\begin{equation}
+  e_i^2 = \varepsilon_i^2
+  - 2(\mathbf{b} - \bm{\beta})'\mathbf{x}_i \cdot \varepsilon_i
+  + (\mathbf{b} - \bm{\beta})'\mathbf{x}_i\mathbf{x}_i'(\mathbf{b} - \bm{\beta}).
+  \label{eq:2.3.10}
+\end{equation}
+Summing over $i$, we obtain
+\begin{equation}
+  \frac{1}{n}\sum_{i=1}^{n} e_i^2
+  = \frac{1}{n}\sum_{i=1}^{n} \varepsilon_i^2
+  - 2(\mathbf{b} - \bm{\beta})'\frac{1}{n}\sum_{i=1}^{n}
+    \mathbf{x}_i \cdot \varepsilon_i
+  + (\mathbf{b} - \bm{\beta})'\left(\frac{1}{n}\sum_{i=1}^{n}
+    \mathbf{x}_i\mathbf{x}_i'\right)(\mathbf{b} - \bm{\beta})
+  = \frac{1}{n}\sum_{i=1}^{n} \varepsilon_i^2
+  - 2(\mathbf{b} - \bm{\beta})'\bar{\mathbf{g}}
+  + (\mathbf{b} - \bm{\beta})'\mathbf{S}_{\mathbf{xx}}
+    (\mathbf{b} - \bm{\beta}).
+  \label{eq:2.3.11}
+\end{equation}
+The rest of the proof, which is to show that the plims of the last two terms are zero
+so that $\plim \frac{1}{n}\sum_i e_i^2 = \plim \frac{1}{n}\sum_i \varepsilon_i^2$,
+is left as a review question.  If you do the review question, it should be clear to
+you that all that is required for the coefficient estimator is consistency; if some
+consistent estimator, rather than the OLS estimator $\mathbf{b}$, is used to form
+the residuals, the error variance estimator is still consistent for $\E(\varepsilon_i^2)$.

@@ -1,0 +1,729 @@
+% sec9_4.tex — Section 9.4: Augmented Dickey-Fuller Tests
+
+The I(1) null process in the previous section was a random walk, which does not
+allow for serial correlation in first differences. The tests of this section control for
+serial correlation by adding lagged first differences to the autoregressive equation.
+They are due to Dickey and Fuller (1979) and came to be known as the \textbf{Augmented
+Dickey-Fuller} (\textbf{ADF}) \textbf{tests}.
+
+\subsection*{The Augmented Autoregression}
+
+The I(1) null in the simplest ADF tests is that $\{y_t\}$ is ARIMA($p$, 1, 0), that is, $\{\Delta y_t\}$
+is a zero-mean stationary AR($p$) process:
+\begin{equation}
+\label{eq:9.4.1}
+\Delta y_t = \zeta_1\,\Delta y_{t-1} + \zeta_2\,\Delta y_{t-2} + \cdots + \zeta_p\,\Delta y_{t-p} + \varepsilon_t,
+\quad \E(\varepsilon_t^2) \equiv \sigma^2,
+\end{equation}
+where $\{\varepsilon_t\}$ is independent white noise and where the associated polynomial equation, $1 - \zeta_1 z - \zeta_2 z^2 - \cdots - \zeta_p z^p = 0$, has all its roots outside the unit circle. (Later
+on we will allow $\{\Delta y_t\}$ to be stationary ARMA($p$, $q$).) The first difference process
+$\{\Delta y_t\}$ is thus an I(0) process because it can be written as $\Delta y_t = \psi(L)\varepsilon_t$ where
+\begin{equation}
+\label{eq:9.4.2}
+\psi(L) = (1 - \zeta_1 L - \zeta_2 L^2 - \cdots - \zeta_p L^p)^{-1}.
+\end{equation}
+The model used to derive the test statistics includes this process as a special case:
+\begin{equation}
+\label{eq:9.4.3}
+y_t = \rho\, y_{t-1} + \zeta_1\,\Delta y_{t-1} + \zeta_2\,\Delta y_{t-2} + \cdots + \zeta_p\,\Delta y_{t-p} + \varepsilon_t.
+\end{equation}
+Indeed, \eqref{eq:9.4.3} reduces to~\eqref{eq:9.4.1} when $\rho = 1$.
+
+Equation~\eqref{eq:9.4.3} can also be written as an AR($p+1$):
+\begin{equation}
+\label{eq:9.4.4}
+y_t = \phi_1 y_{t-1} + \phi_2 y_{t-2} + \cdots + \phi_{p+1} y_{t-p-1} + \varepsilon_t,
+\end{equation}
+where the $\phi$'s are related to $(\rho, \zeta_1, \ldots, \zeta_p)$ by
+\begin{align}
+\rho &\equiv \phi_1 + \phi_2 + \cdots + \phi_{p+1}, \notag \\
+\zeta_j &\equiv -(\phi_{j+1} + \phi_{j+2} + \cdots + \phi_{p+1})
+\quad (j = 1, 2, \ldots, p).
+\label{eq:9.4.5}
+\end{align}
+Conversely, any ($p+1$)-th order autoregression can be written in the form~\eqref{eq:9.4.3}.
+This form~\eqref{eq:9.4.3} was originally proposed by Fuller (1976, p.~374). It is called the
+\textbf{augmented autoregression} because it can be obtained by adding lagged changes
+to the level AR(1) equation~\eqref{eq:9.3.1}.
+
+It is easy to show (Review Question~2) that the polynomial equation associated
+with~\eqref{eq:9.4.4} has a root inside the unit circle if $\rho > 1$. Thus, if we take the position
+that the DGP is either I(1) or I(0), then $\rho$ cannot be greater than~1 and the I(0)
+alternative is that $\rho < 1$.
+
+\subsection*{Limiting Distribution of the OLS Estimator}
+
+Having set up the model, we now turn to the task of deriving the limiting distribution of the OLS estimate of $\rho$ in the augmented autoregression~\eqref{eq:9.4.3} under the
+I(1) null. Numerically the same estimate of $\rho$ can be obtained from the AR($p+1$)
+equation~\eqref{eq:9.4.4} by calculating the sum of the OLS estimates of $(\phi_1, \phi_2, \ldots, \phi_{p+1})$
+(recall that $\rho = \phi_1 + \cdots + \phi_{p+1}$). For the purpose of deriving the limiting distribution, however, the augmented autoregression is more convenient. Under the I(1)
+null, all the $p+1$ regressors in~\eqref{eq:9.4.4} are driftless I(1), but it masks the fact, to
+be exploited below and clear from~\eqref{eq:9.4.3}, that $p$ linear combinations of them are
+zero-mean I(0).
+
+To simplify the calculation, consider the special case of $p = 1$ (one lagged
+change in $y_t$ or AR(2)), so that the augmented autoregression is
+\begin{equation}
+\label{eq:9.4.6}
+y_t = \rho\, y_{t-1} + \zeta_1\,\Delta y_{t-1} + \varepsilon_t.
+\end{equation}
+We assume that the sample is $(y_{-1}, y_0, \ldots, y_T)$ so that the augmented autoregression can be estimated for $t = 1, 2, \ldots, T$ (or alternatively, the sample is
+$(y_1, y_2, \ldots, y_T)$ but the summations in what follows are from $t = 3$ to $t = T$
+rather than from $t = 1$ to $t = T$). Write this as
+\[
+y_t = \mathbf{x}_t' \bm{\beta} + \varepsilon_t
+\]
+with
+\begin{equation}
+\label{eq:9.4.7}
+\underset{(2 \times 1)}{\mathbf{x}_t} = \begin{bmatrix} y_{t-1} \\ \Delta y_{t-1} \end{bmatrix}, \qquad
+\underset{(2 \times 1)}{\bm{\beta}} = \begin{bmatrix} \rho \\ \zeta_1 \end{bmatrix}.
+\end{equation}
+If $\mathbf{b} \equiv (\hat{\rho}, \hat{\zeta}_1)'$ is the OLS estimator of the augmented autoregression coefficients
+$\bm{\beta}\; (= (\rho, \zeta_1)')$, the sampling error is given by
+\begin{equation}
+\label{eq:9.4.8}
+\mathbf{b} - \bm{\beta}
+= \left(\sum_{t=1}^{T} \mathbf{x}_t \mathbf{x}_t'\right)^{-1} \sum_{t=1}^{T} \mathbf{x}_t \cdot \varepsilon_t.
+\end{equation}
+The individual terms in~\eqref{eq:9.4.8} are given by
+\begin{align}
+\mathbf{X}'\mathbf{X} &\equiv \sum_{t=1}^{T} \mathbf{x}_t \mathbf{x}_t'
+= \begin{bmatrix}
+\sum_{t=1}^{T}(y_{t-1})^2 & \sum_{t=1}^{T} y_{t-1}\,\Delta y_{t-1} \\[4pt]
+\sum_{t=1}^{T} \Delta y_{t-1}\, y_{t-1} & \sum_{t=1}^{T} (\Delta y_{t-1})^2
+\end{bmatrix}, \notag \\[6pt]
+\sum_{t=1}^{T} \mathbf{x}_t \cdot \varepsilon_t
+&= \begin{bmatrix}
+\sum_{t=1}^{T} y_{t-1}\, \varepsilon_t \\[4pt]
+\sum_{t=1}^{T} \Delta y_{t-1}\, \varepsilon_t
+\end{bmatrix}.
+\label{eq:9.4.9}
+\end{align}
+
+We can now apply the same trick we used for the time regression of Section~2.12. For some nonsingular matrix $\bm{\Upsilon}_T$ to be specified below, rewrite~\eqref{eq:9.4.8} as
+\begin{equation}
+\label{eq:9.4.10}
+\bm{\Upsilon}_T \cdot (\mathbf{b} - \bm{\beta})
+= \bm{\Upsilon}_T \begin{bmatrix} \hat{\rho} - \rho \\ \hat{\zeta}_1 - \zeta_1 \end{bmatrix}
+= \mathbf{A}_T^{-1}\, \mathbf{c}_T,
+\end{equation}
+where
+\begin{equation}
+\label{eq:9.4.11}
+\mathbf{A}_T \equiv \bm{\Upsilon}_T^{-1}\left[\sum_{t=1}^{T} \mathbf{x}_t \mathbf{x}_t'\right]\bm{\Upsilon}_T^{-1}, \quad
+\mathbf{c}_T \equiv \bm{\Upsilon}_T^{-1} \sum_{t=1}^{T} \mathbf{x}_t \cdot \varepsilon_t.
+\end{equation}
+
+We seek a matrix $\bm{\Upsilon}_T$ such that $\bm{\Upsilon}_T \cdot (\mathbf{b} - \bm{\beta})$ has a nondegenerate limiting distribution under the I(1) null. This is accomplished by setting
+\begin{equation}
+\label{eq:9.4.12}
+\bm{\Upsilon}_T = \begin{bmatrix} T & 0 \\ 0 & \sqrt{T} \end{bmatrix}.
+\end{equation}
+With this choice of the scaling matrix $\bm{\Upsilon}_T$, it follows from~\eqref{eq:9.4.9} and~\eqref{eq:9.4.11} that
+\begin{align}
+\mathbf{A}_T &= \begin{bmatrix}
+\frac{1}{T^2}\sum_{t=1}^{T}(y_{t-1})^2 &
+\frac{1}{\sqrt{T}}\frac{1}{T}\sum_{t=1}^{T} y_{t-1}\,\Delta y_{t-1} \\[6pt]
+\frac{1}{\sqrt{T}}\frac{1}{T}\sum_{t=1}^{T}\Delta y_{t-1}\, y_{t-1} &
+\frac{1}{T}\sum_{t=1}^{T}(\Delta y_{t-1})^2
+\end{bmatrix}, \notag \\[6pt]
+\mathbf{c}_T &= \begin{bmatrix}
+\frac{1}{T}\sum_{t=1}^{T} y_{t-1}\,\varepsilon_t \\[4pt]
+\frac{1}{\sqrt{T}}\sum_{t=1}^{T} \Delta y_{t-1}\,\varepsilon_t
+\end{bmatrix}.
+\label{eq:9.4.13}
+\end{align}
+
+Let us examine the elements of $\mathbf{A}_T$ and $\mathbf{c}_T$ and derive their limiting distributions
+under the null of $\rho = 1$.
+
+\textbf{The (1, 1) element of $\mathbf{A}_T$.} Since $\{y_t\}$ is I(1) without drift, it converges in distribution to $\lambda^2 \cdot \int W^2\,\mathrm{d}r$ by Proposition~9.2(a) where $\lambda^2 \equiv$ long-run variance of
+$\{\Delta y_t\}$.
+
+\textbf{The (2, 2) element of $\mathbf{A}_T$.} It converges in probability (and hence in distribution)
+to $\gamma_0$ ($\equiv \Var(\Delta y_t)$) because $\{\Delta y_t\}$, being stationary AR(1), is ergodic stationary with mean zero.
+
+\textbf{The off-diagonal elements of $\mathbf{A}_T$.} They are $1/\sqrt{T}$ times
+\begin{equation}
+\label{eq:9.4.14}
+\frac{1}{T}\sum_{t=1}^{T} \Delta y_{t-1}\, y_{t-1},
+\end{equation}
+which is the average of the product of zero-mean I(0) and driftless I(1) variables. By Proposition~9.2(b), the similar product $(1/T)\sum_{t=1}^{T} \Delta y_t\, y_{t-1}$ converges in distribution to a random variable. It is easy to show (Review Question~3) that~\eqref{eq:9.4.14}, too, converges to a random variable. So $1/\sqrt{T}$ times~\eqref{eq:9.4.14},
+which is the off-diagonal elements of $\mathbf{A}_T$, converges in probability (hence in
+distribution) to~0.
+
+Therefore, $\mathbf{A}_T$, the properly rescaled $\mathbf{X}'\mathbf{X}$ matrix, is asymptotically diagonal:
+\[
+\mathbf{A}_T \;\dto\;
+\begin{bmatrix}
+\lambda^2 \cdot \int_0^1 W(r)^2\,\mathrm{d}r & 0 \\
+0 & \gamma_0
+\end{bmatrix},
+\]
+so
+\begin{equation}
+\label{eq:9.4.15}
+(\mathbf{A}_T)^{-1} \;\dto\;
+\begin{bmatrix}
+\big(\lambda^2 \cdot \int_0^1 W(r)^2\,\mathrm{d}r\big)^{-1} & 0 \\
+0 & \gamma_0^{-1}
+\end{bmatrix}.
+\end{equation}
+
+We now turn to the elements of $\mathbf{c}_T$.
+
+\textbf{The first element of $\mathbf{c}_T$.} Using the Beveridge-Nelson decomposition, it can be
+shown (Analytical Exercise~4) that
+\begin{equation}
+\label{eq:9.4.16}
+\frac{1}{T}\sum_{t=1}^{T} y_{t-1}\,\varepsilon_t
+\;\dto\; c_1 \equiv \tfrac{1}{2}\sigma^2 \cdot \psi(1) \cdot [W(1)^2 - 1],
+\end{equation}
+for a general zero-mean I(0) process
+\begin{equation}
+\label{eq:9.4.17}
+\Delta y_t = \psi(L)\varepsilon_t.
+\end{equation}
+In the present case, $\Delta y_t = \zeta_1 \Delta y_{t-1} + \varepsilon_t$ under the null, so $\psi(L) = (1 - \zeta_1 L)^{-1}$
+and
+\begin{equation}
+\label{eq:9.4.18}
+\psi(1) = \frac{1}{1 - \zeta_1}.
+\end{equation}
+
+\textbf{Second element of $\mathbf{c}_T$.} It is easy to show (Review Question~4) that $\{\Delta y_{t-1}\varepsilon_t\}$ is a
+stationary and ergodic martingale difference sequence, so
+\begin{equation}
+\label{eq:9.4.19}
+\text{second element of } \mathbf{c}_T
+= \frac{1}{\sqrt{T}}\sum_{t=1}^{T}\Delta y_{t-1}\,\varepsilon_t
+\;\dto\; c_2 \sim N(0, \gamma_0 \cdot \sigma^2),
+\end{equation}
+where $\gamma_0 \equiv \Var(\Delta y_t)$ and $\sigma^2 \equiv \Var(\varepsilon_t)$.
+
+Substituting \eqref{eq:9.4.15}--\eqref{eq:9.4.19} into~\eqref{eq:9.4.10} and noting that the true value of
+$\rho$ is unity under the I(1) null, we obtain, for the OLS estimate of the augmented
+autoregression,\footnote{Here, we are using Lemma~2.3(b) to claim that $\mathbf{A}_T^{-1}\mathbf{c}_T$ converges in distribution to $\mathbf{A}^{-1}\mathbf{c}$ where $\mathbf{A}$ and $\mathbf{c}$
+are the limiting random variables of $\mathbf{A}_T$ and $\mathbf{c}_T$, respectively. Note that, unlike in situations encountered for the
+stationary case, the convergence of $\mathbf{A}_T$ to $\mathbf{A}$ is in distribution, not in probability. We have proved in the text that
+$\mathbf{A}_T$ converges in distribution to $\mathbf{A}$ and $\mathbf{c}_T$ to $\mathbf{c}$, but we have not shown that $(\mathbf{A}_T, \mathbf{c}_T)$ converges in distribution
+jointly to $(\mathbf{A}, \mathbf{c})$, which is needed when using Lemma~2.3(b). However, by, e.g., Theorem~2.2 of Chan and Wei
+(1988), the convergence is joint.}
+\begin{align}
+\bm{\Upsilon}_T \cdot (\mathbf{b} - \bm{\beta})
+&= \begin{bmatrix} T \cdot (\hat{\rho} - 1) \\ \sqrt{T}\,(\hat{\zeta}_1 - \zeta_1) \end{bmatrix}
+\;\dto\;
+\begin{bmatrix}
+\big(\lambda^2 \cdot \int_0^1 W(r)^2\,\mathrm{d}r\big)^{-1} & 0 \\
+0 & \gamma_0^{-1}
+\end{bmatrix}
+\begin{bmatrix} c_1 \\ c_2 \end{bmatrix} \notag \\[6pt]
+&= \begin{bmatrix}
+(\lambda^2 \cdot \int_0^1 W(r)^2\,\mathrm{d}r)^{-1} c_1 \\
+\gamma_0^{-1} c_2
+\end{bmatrix}.
+\label{eq:9.4.20result}
+\end{align}
+Thus,
+\begin{align}
+T \cdot (\hat{\rho} - 1) &\;\dto\;
+\frac{\sigma^2 \psi(1)}{\lambda^2} \cdot \frac{\tfrac{1}{2}[W(1)^2 - 1]}{\int_0^1 W(r)^2\,\mathrm{d}r}
+\quad\text{or}\quad
+\frac{\lambda^2}{\sigma^2 \psi(1)} \cdot T \cdot (\hat{\rho} - 1) \;\dto\; DF_\rho,
+\label{eq:9.4.20} \\
+\sqrt{T}\,(\hat{\zeta}_1 - \zeta_1) &\;\dto\;
+N\!\left(0,\;\frac{\sigma^2}{\gamma_0}\right),
+\label{eq:9.4.21}
+\end{align}
+where $DF_\rho$ is none other than the DF $\rho$ distribution defined in~\eqref{eq:9.3.6}. Note that
+the estimated coefficient of the zero-mean I(0) variable ($\Delta y_{t-1}$) has the usual $\sqrt{T}$
+asymptotics, while that of the driftless I(1) variable ($y_{t-1}$) has a nonstandard limiting distribution.
+
+\subsection*{Deriving Test Statistics}
+
+There are no nuisance parameters entering the limiting distribution of the statistic
+$\frac{\lambda^2}{\sigma^2 \psi(1)} \cdot T \cdot (\hat{\rho} - 1)$ in~\eqref{eq:9.4.20}, but the statistic itself involves nuisance parameters
+through $\frac{\lambda^2}{\sigma^2 \psi(1)}$. By the formula~\eqref{eq:9.2.4} for the long-run variance $\lambda^2$ of $\{\Delta y_t\}$, this
+ratio equals $\psi(1)$, which in turn equals $\frac{1}{1-\zeta_1}$ by~\eqref{eq:9.4.18} under the null. Now go
+back to the augmented autoregression~\eqref{eq:9.4.6}. Since $\hat{\zeta}_1$, the OLS estimate of $\zeta_1$, is
+consistent by~\eqref{eq:9.4.21}, a consistent estimator of $\frac{1}{1-\zeta_1}$ is $(1 - \hat{\zeta}_1)^{-1}$. It then follows
+from~\eqref{eq:9.4.20} that
+\begin{equation}
+\label{eq:9.4.22}
+\frac{T \cdot (\hat{\rho} - 1)}{1 - \hat{\zeta}_1} \;\dto\; DF_\rho.
+\end{equation}
+That is, the required correction on $T \cdot (\hat{\rho} - 1)$ is done through the estimated coefficient of lagged $\Delta y$ in the augmented autoregression. After the correction is made,
+the limiting distribution of the statistic does not depend on nuisance parameters
+controlling serial correlation of $\{\Delta y_t\}$ such as $\lambda^2$ and $\gamma_0$.
+
+The OLS $t$-value for the hypothesis that $\rho = 1$, too, has a limiting distribution.
+It can be written as
+\begin{equation}
+\label{eq:9.4.23}
+t = \frac{\hat{\rho} - 1}{s \cdot \sqrt{(1, 1) \text{ element of } \big(\sum_{t=1}^{T} \mathbf{x}_t \mathbf{x}_t'\big)^{-1}}}
+= \frac{T \cdot (\hat{\rho} - 1)}{s \cdot \sqrt{(1,1) \text{ element of } (\mathbf{A}_T)^{-1}}},
+\end{equation}
+where $s$ is the usual OLS standard error of regression. It follows easily from
+\eqref{eq:9.4.15}, \eqref{eq:9.4.20}, the consistency of $s^2$ for $\sigma^2$, and Proposition~9.2(a) and~(b) for
+$\xi_t = y_t$ that
+\begin{equation}
+\label{eq:9.4.24}
+t \;\dto\; DF_t,
+\end{equation}
+where $DF_t$ is the DF $t$ distribution defined in~\eqref{eq:9.3.9}. Therefore, for the $t$-value,
+there is no need to correct for the fact that lagged $\Delta y$ is included in the augmented
+autoregression.
+
+All these results for $p = 1$ can be generalized easily:
+
+\begin{proposition}[Augmented Dickey-Fuller test of a unit root without intercept]
+\label{prop:9.6}
+Suppose that $\{y_t\}$ is ARIMA($p$, 1, 0) so that $\{\Delta y_t\}$ is a zero-mean stationary AR($p$) process following~\eqref{eq:9.4.1}. Consider estimating the augmented autoregression,~\eqref{eq:9.4.3}, and let $(\hat{\rho}, \hat{\zeta}_1, \hat{\zeta}_2, \ldots, \hat{\zeta}_p)$ be the OLS coefficient estimates. Also
+let $t$ be the $t$-value for the hypothesis that $\rho = 1$. Then
+\begin{align}
+&\textit{ADF $\rho$ statistic:}\quad
+\frac{T \cdot (\hat{\rho} - 1)}{1 - \hat{\zeta}_1 - \hat{\zeta}_2 - \cdots - \hat{\zeta}_p}
+\;\dto\; DF_\rho,
+\label{eq:9.4.25} \\
+&\textit{ADF $t$ statistic:}\quad t \;\dto\; DF_t,
+\label{eq:9.4.26}
+\end{align}
+where $DF_\rho$ and $DF_t$ are the two random variables defined in~\eqref{eq:9.3.6} and~\eqref{eq:9.3.9}.
+\end{proposition}
+
+\subsection*{Testing Hypotheses about $\zeta$}
+
+The argument leading to this surprisingly simple result is lengthy, but it has a
+by-product. The obvious generalization of~\eqref{eq:9.4.21} to the $p$-th order autoregression is
+\begin{equation}
+\label{eq:9.4.27}
+\sqrt{T} \cdot
+\begin{bmatrix}
+\hat{\zeta}_1 - \zeta_1 \\
+\hat{\zeta}_2 - \zeta_2 \\
+\vdots \\
+\hat{\zeta}_p - \zeta_p
+\end{bmatrix}
+\;\dto\;
+N\!\left(
+\begin{bmatrix} 0 \\ 0 \\ \vdots \\ 0 \end{bmatrix},\;
+\sigma^2 \cdot
+\begin{bmatrix}
+\gamma_0 & \gamma_1 & \cdots & \gamma_{p-1} \\
+\gamma_1 & \gamma_0 & \cdots & \gamma_{p-2} \\
+\vdots & \vdots & \ddots & \vdots \\
+\gamma_{p-1} & \gamma_{p-2} & \cdots & \gamma_0
+\end{bmatrix}^{-1}
+\right),
+\end{equation}
+where $\gamma_j$ is the $j$-th order autocovariance of $\{\Delta y_t\}$. By Proposition~6.7, this is the
+same asymptotic distribution you would get if the augmented autoregression~\eqref{eq:9.4.3}
+were estimated by OLS with the restriction $\rho = 1$, that is, if~\eqref{eq:9.4.1} is estimated
+by OLS. It is easy to show (Review Question~6) that hypotheses involving only
+the coefficients of the zero-mean I(0) regressors $(\zeta_1, \zeta_2, \ldots, \zeta_p)$ can be tested in the
+usual way, with the usual $t$ and $F$ statistics asymptotically valid.
+
+In deriving the limiting distributions of the regression coefficients, we have
+exploited the fact that one of the regressors is zero-mean I(0) while the other is
+driftless I(1). A systematic treatment of more general cases can be found in Sims,
+Stock, and Watson (1990) and Watson (1994, Section~2).
+
+\subsection*{What to Do When $p$ Is Unknown?}
+
+Proposition~9.6 assumes that the order of autoregression, $p$, for $\Delta y_t$ is known.
+What can we do when the order $p$ is unknown? To distinguish between the true
+order $p$ and the number of lagged changes included in the augmented autoregression, we denote the latter by $\hat{p}$ in this section. We have considered a similar problem in Section~6.4. The difference is that the DGP here is a stationary process in
+first differences, not in levels as in Section~6.4, and that the estimation equation is
+an augmented autoregression with $\rho$ freely estimated. We display below, without
+proof, three large-sample results about the choice of $\hat{p}$ under which the conclusion of Proposition~9.6 remains valid. These results are applicable to a class of
+processes more general than is assumed in Proposition~9.6: $\{\Delta y_t\}$ is zero-mean
+stationary and invertible ARMA($p$, $q$) of unknown order (albeit with an additional
+assumption on $\varepsilon_t$ that its fourth moment is finite).\footnote{See Section~6.2 for the definition of invertible ARMA($p$, $q$) processes. If an ARMA($p$, $q$) process is invertible, then it can be written as an infinite-order autoregression.}
+
+So, written as an autoregression, the order of autoregression for $\Delta y_t$ can be
+infinite, as when $q > 0$, or finite, as when $q = 0$.
+
+The first result is that the conclusion of Proposition~9.6 continues to hold when
+$\hat{p}$, the number of lagged first differences in the augmented autoregression, is increased with the sample size at an appropriate rate.
+
+\begin{enumerate}
+\item (Said and Dickey, 1984, generalization of Proposition~9.6) \enspace Suppose that $\hat{p}$
+satisfies
+\begin{equation}
+\label{eq:9.4.28}
+\hat{p} \to \infty \quad \text{but} \quad \frac{\hat{p}}{T^{1/3}} \to 0 \quad \text{as } T \to \infty.
+\end{equation}
+(That is, $\hat{p}$ goes to infinity but at a rate slower than $T^{1/3}$.) Then the two
+statistics, the ADF $\rho$ and ADF $t$, based on the augmented autoregression with
+$\hat{p}$ lagged changes, have the same limiting distributions as those indicated in
+Proposition~9.6.
+\end{enumerate}
+
+This result, however, does not give us a practical guide for the lag length selection because there are infinitely many rules for $\hat{p}$ satisfying~\eqref{eq:9.4.28}. A natural
+question is whether any of the rules for selecting the lag length considered in
+Section~6.4---the general-to-specific sequential $t$ rule or the information-criterion-based rules---can be used in the present context. To refresh your memory, the
+information-criterion-based rule is to set $\hat{p}$ to the $j$ that minimizes
+\begin{equation}
+\label{eq:9.4.29}
+\log\!\left(\frac{SSR_j}{T}\right) + (j + 1) \times \frac{C(T)}{T},
+\end{equation}
+where $SSR_j$ is the sum of squared residuals from the autoregression with $j$ lags:
+\begin{equation}
+\label{eq:9.4.30}
+\Delta y_t = \rho\, y_{t-1} + \zeta_1\,\Delta y_{t-1} + \zeta_2\,\Delta y_{t-2} + \cdots + \zeta_j\,\Delta y_{t-j} + \varepsilon_t.
+\end{equation}
+The term $C(T)/T$ is multiplied by $j + 1$, because the equation has $j + 1$ coefficients including the lagged $y_t$ coefficient. For the Akaike information criterion
+(AIC), $C(T) = 2$, while for the Bayesian information criterion (BIC, also called
+Schwarz information criterion (SIC)), $C(T) = \log(T)$. In either rule, $\hat{p}$ is selected
+from the set $j = 0, 1, 2, \ldots, p_{\max}$. In Section~6.4, this upper bound $p_{\max}$ was set
+to some known integer greater than or equal to the true order of the finite-order
+autoregressive process. The $\hat{p}$ selected by either of these rules is a function of data
+(not just a function of $T$), and hence is a random variable.
+
+To be sure, when $\{\Delta y_t\}$ is stationary and invertible ARMA($p$, $q$), the autoregressive order is infinite when $q > 0$ and the upper bound $p_{\max}$ obviously cannot
+be set to the true order. But it can be made to increase with the sample size $T$. To
+emphasize the dependence of $p_{\max}$ on $T$, write it as $p_{\max}(T)$. If the rules are thus
+modified, does the Said-Dickey extension of Proposition~9.6 remain valid when $\hat{p}$
+is chosen by either of the rules? The answer obtained by Ng and Perron (1995) is
+yes. More specifically,
+
+\begin{enumerate}
+\setcounter{enumi}{1}
+\item Suppose that $\hat{p}$ is selected by the general-to-specific $t$ rule with $p_{\max}(T)$ satisfying condition~\eqref{eq:9.4.28} (which in the Said-Dickey extension above was a
+condition for $\hat{p}$, not for $p_{\max}(T)$) and $p_{\max}(T) > c \cdot T^g$ for some $c > 0$ and
+$0 < g < 1/3$. Then the limiting distributions of the ADF $\rho$ and ADF $t$ statistics
+are as indicated in Proposition~9.6.\footnote{This is Theorem~5.3 of Ng and Perron (1995). Their condition A1 is~\eqref{eq:9.4.28} here. Their condition A2$''$ is
+implied by the second condition indicated here.}
+
+\item Suppose that $\hat{p}$ is selected by AIC or by BIC with $p_{\max}(T)$ satisfying condition~\eqref{eq:9.4.28}. Then the same conclusion holds.\footnote{This is Theorem~4.3 of Ng and Perron (1995). The theorem does not indicate the upper bound $p_{\max}(T)$, but
+(as pointed out by Pierre Perron in private communications with the author) Hannan and Deistler (1988, Section~7.4~(ii)) implies that~\eqref{eq:9.4.28} can be an upper bound.}
+\end{enumerate}
+
+Thus, no matter which rule---the sequential $t$, AIC, or BIC---for selecting $\hat{p}$ you
+employ, the large-sample distributions of the ADF statistics are the same as in
+Proposition~9.6.
+
+\subsection*{A Suggestion for the Choice of $p_{\max}(T)$}
+
+The finite-sample distribution, however, depends on which rule you use and also
+on the choice of the upper bound $p_{\max}(T)$, and there are infinitely many valid
+choices for the function $p_{\max}(T)$. For example, $p_{\max}(T) = [T^{1/4}]$ (the integer
+part of $T^{1/4}$) satisfies the conditions in result~(2) for the sequential $t$-test. So does
+$p_{\max}(T) = [100 T^{3/10}]$. It is important, therefore, that researchers use the same
+$p_{\max}(T)$ when deciding the order of the augmented autoregression. In this context,
+the Monte Carlo literature examining the small-sample properties of various unit-root tests is relevant. Simulations run by Schwert (1989) show that in small and
+moderately large samples (from $T = 25$ to 1,000), including enough lags in the
+autoregression is important to minimize size distortions.\footnote{Recall that a size distortion refers to the difference between the actual or exact size (the finite-sample probability of rejecting a true null) and the nominal size (the probability of rejecting a true null when the sample size
+is infinite).} The choice of $\hat{p}$ (the
+number of lags included in the autoregression) that was more or less successful in
+controlling the actual size in Schwert's study is $\big[12 \cdot \big(\frac{T}{100}\big)^{1/4}\big]$. The upper bound
+$p_{\max}(T)$ should therefore give lag selection rules a chance of selecting a $\hat{p}$ as large
+as this. Therefore, in the examples and application of this chapter, we use the function
+\begin{equation}
+\label{eq:9.4.31}
+p_{\max}(T) = \left[12 \cdot \left(\frac{T}{100}\right)^{1/4}\right]
+\quad \text{(integer part of $12 \cdot (T/100)^{1/4}$)}
+\end{equation}
+in any of the rules for selecting the lag length. This function satisfies the conditions
+of results~(2) and~(3) above.
+
+The sample period when selecting $\hat{p}$ is $t = p_{\max}(T) + 2, \ldots, T$.
+The first $t$ is $p_{\max}(T) + 2$ because $p_{\max}(T) + 1$ observations are needed to calculate $p_{\max}(T)$ lagged changes in the augmented autoregression. Since only $T -
+p_{\max}(T) - 1$ observations are used to estimate the autoregression~\eqref{eq:9.4.30} for $j =
+1, 2, \ldots, p_{\max}(T)$, the sample size in the objective function in~\eqref{eq:9.4.29} should be
+$T - p_{\max}(T) - 1$ rather than $T$:
+\begin{equation}
+\label{eq:9.4.32}
+\log\!\left(\frac{SSR_j}{T - p_{\max}(T) - 1}\right)
++ (j + 1) \times \frac{C(T - p_{\max}(T) - 1)}{T - p_{\max}(T) - 1}.
+\end{equation}
+
+\subsection*{Including the Intercept in the Regression}
+
+As in the DF tests, we can modify the ADF tests so that they are invariant to an
+addition of a constant to the series. We allow $\{y_t\}$ to differ by an unspecified
+constant from the process that follows the augmented autoregression without intercept~\eqref{eq:9.4.3}. This amounts to replacing the $y_t$ in~\eqref{eq:9.4.3} by $y_t - \alpha$, which yields
+\begin{equation}
+\label{eq:9.4.33}
+y_t = \alpha^* + \rho\, y_{t-1} + \zeta_1\,\Delta y_{t-1} + \zeta_2\,\Delta y_{t-2}
++ \cdots + \zeta_p\,\Delta y_{t-p} + \varepsilon_t,
+\end{equation}
+where $\alpha^* = (1 - \rho)\alpha$. As in the AR(1) model with intercept, the I(1) null is the
+joint hypothesis that $\rho = 1$ \emph{and} $\alpha^* = 0$. Nevertheless, unit-root tests usually focus
+on the single restriction $\rho = 1$.
+
+It is left as an analytical exercise to prove
+
+\begin{proposition}[Augmented Dickey-Fuller test of a unit root with intercept]
+\label{prop:9.7}
+Suppose that $\{y_t\}$ is an ARIMA($p$, 1, 0) process so that $\{\Delta y_t\}$ is a zero-mean
+stationary AR($p$) process following~\eqref{eq:9.4.1}. Consider estimating the augmented
+autoregression with intercept,~\eqref{eq:9.4.33}, and let $(\hat{\alpha}, \hat{\rho}^\mu, \hat{\zeta}_1, \hat{\zeta}_2, \ldots, \hat{\zeta}_p)$ be the OLS
+coefficient estimates. Also let $t^\mu$ be the $t$-value for the hypothesis that $\rho = 1$. Then
+\begin{align}
+&\textit{ADF $\rho^\mu$ statistic:}\quad
+\frac{T \cdot (\hat{\rho}^\mu - 1)}{1 - \hat{\zeta}_1 - \hat{\zeta}_2 - \cdots - \hat{\zeta}_p}
+\;\dto\; DF_\rho^\mu,
+\label{eq:9.4.34} \\
+&\textit{ADF $t^\mu$ statistic:}\quad t^\mu \;\dto\; DF_t^\mu,
+\label{eq:9.4.35}
+\end{align}
+where the random variables $DF_\rho^\mu$ and $DF_t^\mu$ are defined in~\eqref{eq:9.3.13} and~\eqref{eq:9.3.14}.
+\end{proposition}
+
+The basic idea of the proof is to use the Frisch-Waugh Theorem to write $\hat{\rho}^\mu$ and
+the $t$-value in formulas involving the demeaned series created from $\{y_t\}$.
+
+Before turning to an example, two comments about Proposition~9.7 are in order.
+
+\begin{itemize}
+\item (Numerical invariance) \enspace As was true in Proposition~9.4, since the regression
+includes a constant, the test statistics are invariant to an addition of a constant to
+the series.
+
+\item (Said-Dickey extension) \enspace The Said-Dickey-Ng-Perron extension is also applicable here: if $\{\Delta y_t\}$ is stationary and invertible ARMA($p$, $q$) (so $\Delta y_t$ can be
+written as a possibly infinite-order autoregression), then the ADF $\rho^\mu$ and $t^\mu$
+statistics have the limiting distributions indicated in Proposition~9.7, provided
+that $\hat{p}$ (the number of lagged changes to be included in the autoregression) is set
+by the sequential $t$ rule or the AIC or BIC rules.\footnote{Ng and Perron (1995) proved this result about the selection of lag length only for the case without intercept.
+That it can be extended to the case with intercept and also to the case with trend was confirmed in a private
+communication with one of the authors of the paper.}
+\end{itemize}
+
+\begin{example}[ADF on T-bill rate]
+\label{ex:9.2}
+In the empirical exercise of Chapter~2, we remarked rather casually that the nominal interest rate $R_t$ might have
+a trend for the sample period studied by Fama (1975). Here we test whether
+it has a stochastic trend (i.e., whether it is driftless I(1)). The data set we
+used in the empirical application of Chapter~2 was monthly observations on
+the U.S.\ one-month Treasury bill rate. We take the sample period to be from
+January 1953 to July 1971 ($T = 223$ observations), the sample period of
+Fama's (1975) study. The interest rate series does not exhibit time trend. So
+we include a constant but not time in the autoregression.
+
+The maximum lag length $p_{\max}(T)$ is set equal to 14 according to the function~\eqref{eq:9.4.31}. In the process of choosing the actual lag length $\hat{p}$, we fix the
+sample period from $t = p_{\max}(T) + 2 = 16$ (April 1954) to $t = 223$ (July
+1971), with a sample size of $208$ ($= T - p_{\max}(T) - 1$). The sequential $t$ rule
+picks a $\hat{p}$ of 14. The objective function in the information-criterion-based
+rule when the sample size is fixed is~\eqref{eq:9.4.32}. The AIC picks $\hat{p} = 14$, while
+the BIC picks $\hat{p} = 1$. Given $\hat{p} = 1$, we estimate the augmented autoregression on the maximum sample period, which is $t = \hat{p} + 2, \ldots, T$ (from March
+1953 to July 1971) with 221 observations. The estimated regression is
+\[
+R_t = \underset{(0.057)}{0.088} + \underset{(0.0162)}{0.97705}\; R_{t-1}
+- \underset{(0.067)}{0.20}\;\Delta R_{t-1},
+\]
+\[
+R^2 = 0.944, \quad \text{sample size} = 221.
+\]
+From this estimated regression, we can calculate
+\[
+\text{ADF } \hat{\rho}^\mu = 221 \times \frac{0.97705 - 1}{1 + 0.20} = -4.22,
+\quad t^\mu = \frac{0.97705 - 1}{0.0162} = -1.42.
+\]
+From Table~9.1, Panel~(b), the 5 percent critical value for the ADF $\rho^\mu$ statistic
+is $-14.1$. The 5 percent critical value for the ADF $t^\mu$ statistic is $-2.86$ from
+Table~9.2, Panel~(b). For either statistic, the I(1) null is easily accepted.
+\end{example}
+
+\subsection*{Incorporating the Time Trend}
+
+Allowing for a linear trend, too, can be done as in the DF tests. Replacing the
+$y_t$ in augmented autoregression~\eqref{eq:9.4.3} by $y_t - \alpha - \delta \cdot t$, we obtain the following
+augmented autoregression with time trend:
+\begin{equation}
+\label{eq:9.4.36}
+y_t = \alpha^* + \delta^* \cdot t + \rho\, y_{t-1} + \zeta_1\,\Delta y_{t-1}
++ \zeta_2\,\Delta y_{t-2} + \cdots + \zeta_p\,\Delta y_{t-p} + \varepsilon_t,
+\end{equation}
+where
+\begin{equation}
+\label{eq:9.4.37}
+\alpha^* = (1-\rho)\alpha + (\rho - \zeta_1 - \zeta_2 - \cdots - \zeta_p)\delta,
+\quad \delta^* = (1-\rho)\delta.
+\end{equation}
+Since $\delta^* = 0$ when $\rho = 1$, the I(1) null (that the process is I(1) with or without
+drift) implies that $\rho = 1$ \emph{and} $\delta^* = 0$ in~\eqref{eq:9.4.36}, but, as usual, we focus on the
+single restriction $\rho = 1$.
+
+Combining the techniques used for proving Propositions~9.5 and~9.7, it is easy
+to prove
+
+\begin{proposition}[Augmented Dickey-Fuller Test of a unit root with linear time
+trend]
+\label{prop:9.8}
+Suppose that $\{y_t\}$ is the sum of a linear time trend and an ARIMA($p$, 1, 0)
+process so that $\{\Delta y_t\}$ is a stationary AR($p$) process whose mean may or may not
+be zero. Consider estimating the augmented autoregression with trend,~\eqref{eq:9.4.36},
+and let $(\hat{\alpha}, \hat{\delta}, \hat{\rho}^\tau, \hat{\zeta}_1, \hat{\zeta}_2, \ldots, \hat{\zeta}_p)$ be the OLS coefficient estimates. Also let $t^\tau$ be
+the $t$-value for the hypothesis that $\rho = 1$. Then
+\begin{align}
+&\textit{ADF $\rho^\tau$ statistic:}\quad
+\frac{T \cdot (\hat{\rho}^\tau - 1)}{1 - \hat{\zeta}_1 - \hat{\zeta}_2 - \cdots - \hat{\zeta}_p}
+\;\dto\; DF_\rho^\tau,
+\label{eq:9.4.38} \\
+&\textit{ADF $t^\tau$ statistic:}\quad t^\tau \;\dto\; DF_t^\tau,
+\label{eq:9.4.39}
+\end{align}
+where the random variables $DF_\rho^\tau$ and $DF_t^\tau$ are defined in~\eqref{eq:9.3.19} and~\eqref{eq:9.3.20}.
+\end{proposition}
+
+Before turning to an example, three comments are in order.
+
+\begin{itemize}
+\item (Numerical invariance to trend parameters) \enspace As in Proposition~9.5, since the
+regression includes a constant and time, neither $\alpha$ nor $\delta$ affects the OLS estimates of $(\rho, \zeta_1, \ldots, \zeta_p)$ and their standard errors, so the finite-sample as well as
+large-sample distribution of the ADF statistics will not be affected by $(\alpha, \delta)$.
+
+\item (Said-Dickey extension) \enspace Again, the Said-Dickey-Ng-Perron extension is
+applicable here: if $\{\Delta y_t\}$ is stationary and invertible ARMA($p$, $q$) with possibly
+a nonzero mean, then the ADF $\rho^\tau$ and $t^\tau$ statistics have the limiting distributions
+indicated in Proposition~9.8, provided that $\hat{p}$ is set by the sequential $t$-rule or the AIC or BIC rules.
+
+\item (Should the regression include time?) \enspace The same comment we made about the
+choice between the DF tests with or without trend is applicable to the ADF tests.
+If you are confident that the null process has no trend, then the ADF $\rho^\mu$ and $t^\mu$
+tests of Proposition~9.7 should be used, with the augmented autoregression not
+including time, because the finite-sample power of the ADF tests is generally
+greater without time in the augmented autoregression. On the other hand, if you
+think that the process might have a trend, then you should use the ADF $\rho^\tau$ and
+$t^\tau$ tests of Proposition~9.8 with time in the augmented autoregression.
+\end{itemize}
+
+\begin{example}[Does GDP have a unit root?]
+\label{ex:9.3}
+As was shown in Figure~9.1,
+the log of U.S.\ GDP clearly has a linear time trend, so we include time in
+the augmented autoregression. Using the logarithm of U.S.\ real GDP quarterly data from 1947:Q1 to 1998:Q1 (205 observations), we estimate the
+augmented autoregression~\eqref{eq:9.4.36}. As in Example~9.2, we set $p_{\max}(T) =
+\big[12 \cdot (205/100)^{1/4}\big]$ (which is 14). Also as in Example~9.2, the sample period
+is fixed ($t = p_{\max}(T) + 2, \ldots, T$) in the process of selecting the number of
+lagged changes. The sequential $t$ picks $\hat{p} = 12$, while both AIC and BIC
+pick $\hat{p} = 1$. Given $\hat{p} = 1$, the augmented autoregression estimated on the
+maximal sample of $t = \hat{p} + 2, \ldots, T$ (1947:Q3 to 1998:Q1) is
+\[
+y_t = \underset{(0.10)}{0.22} + \underset{(0.00011)}{0.00022}\;t
++ \underset{(0.0137)}{0.9707}\;y_{t-1}
++ \underset{(0.066)}{0.348}\;\Delta y_{t-1},
+\]
+\[
+R^2 = 0.999, \quad \text{sample size} = 203.
+\]
+From this estimated regression, we can calculate
+\begin{align*}
+\text{ADF } \hat{\rho}^\tau &= 203 \times \frac{0.9707388 - 1}{1 - 0.348} = -9.11, \\
+t^\tau &= \frac{0.9707388 - 1}{0.0137104} = -2.13.
+\end{align*}
+From Table~9.1, Panel~(c), the 5 percent critical value for the ADF $\rho^\tau$ statistic
+is $-21.7$. The 5 percent critical value for the ADF $t^\tau$ statistic is $-3.41$ from
+Table~9.2, Panel~(c). For either statistic, the I(1) null is easily accepted.
+
+A little over 50 years of data may not be enough to discriminate between
+the I(1) and I(0) alternatives. (As noted by Perron (1991), among others,
+the span of the data rather than the sampling frequency, e.g., quarterly vs.\
+annual, is more important for the power of unit-root tests, because $1 - \hat{p}$ is
+much smaller on quarterly data than on annual data.) We now use annual
+GDP data from 1869 to 1997 for the ADF tests.\footnote{Annual GDP data from 1929 are available from the Bureau of Economic Analysis web site. The Balke-Gordon GNP data (Balke and Gordon, 1989) were used to extrapolate GDP back to 1869.} So $T = 129$. As before,
+we set $p_{\max}(T) = [12 \cdot (129/100)^{1/4}]$ (which is 12) and fix the sample period
+in the process of choosing the lag length. The sequential $t$ picks 9 for $\hat{p}$,
+while the value chosen by AIC and BIC is~1. When $\hat{p} = 1$, the regression
+estimated on the maximum sample of $t = \hat{p} + 2, \ldots, T$ (from 1871 to 1997,
+127 observations) is
+\[
+y_t = \underset{(0.18)}{0.67} + \underset{(0.0014)}{0.0048}\;t
++ \underset{(0.03989)}{0.85886}\;y_{t-1}
++ \underset{(0.086)}{0.32}\;\Delta y_{t-1},
+\]
+\[
+R^2 = 0.999, \quad \text{sample size} = 127.
+\]
+The ADF $\rho^\tau$ and $t^\tau$ statistics are $-26.2$ and $-3.53$, respectively, which are
+less (greater in absolute value) than their respective 5 percent critical values
+of $-21.7$ and $-3.41$. With the annual data covering a much longer span of
+time, we can reject the I(1) null that GDP has a stochastic trend.
+\end{example}
+
+The impression one gets from Examples~9.1--9.3 is the ease with which the I(1)
+null is accepted, which leads to the suspicion that the DF and ADF tests may have
+low power in finite samples. The power issue will be examined in the next section.
+
+\subsection*{Summary of the DF and ADF Tests and Other Unit-Root Tests}
+
+The various I(1) processes we have considered in this and the previous section
+satisfy the model (a set of DGPs)
+\begin{equation}
+\label{eq:9.4.40}
+y_t = d_t + z_t, \quad z_t = \rho z_{t-1} + u_t, \quad
+\{u_t\} \sim \text{zero-mean I(0).}
+\end{equation}
+The restrictions on~\eqref{eq:9.4.40}, besides the restriction that $\rho = 1$, that characterize the
+I(1) null for each of the cases considered are the following.
+
+\begin{enumerate}
+\item Proposition~9.3: $d_t = 0$, $\{u_t\}$ independent white noise,
+\item Proposition~9.4: $d_t = \alpha$, $\{u_t\}$ independent white noise,
+\item Proposition~9.5: $d_t = \alpha + \delta \cdot t$, $\{u_t\}$ independent white noise,
+\item Said-Dickey extension of Proposition~9.6: $d_t = 0$, $\{u_t\}$ is zero-mean
+ARMA($p$, $q$),
+\item Said-Dickey extension of Proposition~9.7: $d_t = \alpha$, $\{u_t\}$ is zero-mean
+ARMA($p$, $q$),
+\item Said-Dickey extension of Proposition~9.8: $d_t = \alpha + \delta \cdot t$, $\{u_t\}$ is zero-mean
+ARMA($p$, $q$).
+\end{enumerate}
+
+\bigskip
+\noindent\textsc{questions for review} \hrulefill
+
+\begin{enumerate}
+\item (Non-uniqueness of the decomposition between zero-mean I(0) and driftless
+I(1)) \enspace Assume $p = 2$ in~\eqref{eq:9.4.4}. Show that the third-order autoregression can
+be written equivalently as
+\[
+y_t = a_1 \cdot y_{t-1} + a_2 \cdot (y_{t-1} - y_{t-2}) + a_3 \cdot (y_{t-1} - y_{t-3}) + \varepsilon_t.
+\]
+How are $(a_1, a_2, a_3)$ related to $(\phi_1, \phi_2, \phi_3)$? Which regressor is zero-mean I(0)
+and which one is driftless I(1)? Verify that the OLS estimate of the $y_{t-1}$ coefficient from this equation is numerically the same as the OLS estimate of $\rho$ from~\eqref{eq:9.4.3} with $p = 2$.
+
+\item Let $\phi(z) = 1 - \phi_1 z - \cdots - \phi_{p+1} z^{p+1}$ be the polynomial associated with the
+AR($p+1$) process~\eqref{eq:9.4.4}. Show that $\phi(z) = 0$ has a real root inside the unit
+circle if $\rho > 1$. \textbf{Hint:} $\phi(1) = 1 - (\phi_1 + \cdots + \phi_{p+1}) = 1 - \rho < 0$ if $\rho > 1$.
+$\phi(0) = 1 > 0$.
+
+\item Prove that~\eqref{eq:9.4.14} $\dto$ $\frac{\lambda^2}{2} W(1)^2 + \frac{\gamma_0}{2}$. \textbf{Hint:} The asymptotic distribution
+of $\frac{1}{T}\sum_{t=1}^{T}\Delta y_{t-1}\, y_{t-1}$ is the same as that of $\frac{1}{T}\sum_{t=1}^{T}\Delta y_t\, y_t$. Also, $\Delta y_t\, y_t =
+\Delta y_t\, y_{t-1} + (\Delta y_t)^2$. Use Proposition~9.2(b).
+
+\item Let $\{\Delta y_t\}$ be a zero-mean I(0) process satisfying \eqref{eq:9.2.1}--\eqref{eq:9.2.3b}. (The zero-mean stationary AR($p$) process $\{\Delta y_t\}$ considered in Proposition~9.6 is a
+special case of this.)
+
+\begin{enumerate}[label=(\alph*)]
+\item Show that $\{\Delta y_{t-1}\varepsilon_t\}$ is a stationary and ergodic martingale difference
+sequence. \textbf{Hint:} Since $\{\varepsilon_t\}$ and $\{\Delta y_t\}$ are jointly ergodic stationary, $\{\Delta y_{t-1} \cdot
+\varepsilon_t\}$ is ergodic stationary. To show that $\{\Delta y_{t-1}\varepsilon_t\}$ is a martingale difference
+sequence, use the Law of Iterated Expectations. $\{\varepsilon_{t-1}, \varepsilon_{t-2}, \ldots\}$ has more
+information than $\{\Delta y_{t-2}, \Delta y_{t-3}, \varepsilon_{t-2}, \ldots\}$.
+
+\item Prove~\eqref{eq:9.4.19}. \textbf{Hint:} You need to show that $\E[(\Delta y_{t-1}\,\varepsilon_t)^2] = \gamma_0 \cdot \sigma^2$.
+\end{enumerate}
+
+\item Verify~\eqref{eq:9.4.24}. \textbf{Hint:} From~\eqref{eq:9.4.20} and~\eqref{eq:9.2.4},
+\[
+T \cdot (\hat{\rho} - 1) \;\dto\;
+\frac{1}{\psi(1)} \cdot \frac{\tfrac{1}{2}(W(1)^2 - 1)}{\int_0^1 W^2\,\mathrm{d}r}.
+\]
+Also, by~\eqref{eq:9.4.15} and~\eqref{eq:9.2.4},
+\begin{equation}
+\label{eq:9.4.41}
+s \cdot \sqrt{(1,1) \text{ element of } (\mathbf{A}_T)^{-1}}
+\;\dto\; 1 \Big/ \sqrt{\psi(1)^2 \int_0^1 W^2\,\mathrm{d}r}.
+\end{equation}
+Since $\psi(1) > 0$ by the stationarity condition, $\sqrt{\psi(1)^2} = \psi(1)$.
+
+\item ($t$-test on $\zeta$) \enspace It is claimed in the text (right below~\eqref{eq:9.4.27}) that the usual $t$-value for each $\zeta$ is asymptotically standard normal. Verify this for the case of
+$p = 1$. \textbf{Hint:}~\eqref{eq:9.4.27} for $p = 1$ is
+\[
+\sqrt{T} \cdot (\hat{\zeta}_1 - \zeta_1) \;\dto\; N(0, \sigma^2/\gamma_0).
+\]
+You need to show that $\sqrt{T}$ times the standard error of $\hat{\zeta}_1$ converges in probability to the square root of $\sigma^2/\gamma_0$. $\sqrt{T}$ times the standard error of $\hat{\zeta}_1$ is $s \cdot
+\sqrt{(2, 2) \text{ element of } (\mathbf{A}_T)^{-1}}$.
+\end{enumerate}

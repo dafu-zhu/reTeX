@@ -1,0 +1,276 @@
+% sec2_12.tex — Section 2.12: Time Regressions
+
+\section{Time Regressions}
+\label{sec:2.12}
+
+Throughout this chapter, we have assumed that $\{y_t, \mathbf{x}_t\}$ is stationary. This assumption, however, is not always satisfied in time-series regressions. In this book, we
+examine two cases where the regressors are not stationary and yet OLS is applicable. The first is examined here, while the other case, called ``cointegrating regressions,'' is covered in Chapter~10.
+
+The regression we consider is written as
+%
+\begin{equation}
+y_t = \alpha + \delta \cdot t + \varepsilon_t,
+\label{eq:2.12.1}
+\end{equation}
+%
+where $\{\varepsilon_t\}$ is independent white noise. This regression can be written as
+$y_t = \mathbf{x}_t'\bm{\beta} + \varepsilon_t$ with
+%
+\begin{equation}
+\mathbf{x}_t = (1, t)', \quad \bm{\beta} = (\alpha, \delta)'.
+\label{eq:2.12.2}
+\end{equation}
+%
+Clearly, $\mathbf{x}_t$ is not stationary because the mean of the second element is $t$, which
+increases with time. Similarly, $y_t$ is not stationary. The linear function,
+$\alpha + \delta \cdot t$, is called the \textbf{time trend} of $y_t$. We say that a process is
+\textbf{trend stationary} if it can be written as the sum of a time trend and a stationary
+process. The process $\{y_t\}$ here is a special trend-stationary process where the
+stationary component is independent white noise.
+
+\subsection*{The Asymptotic Distribution of the OLS Estimator}
+
+Let $\mathbf{b}$ be the OLS estimate of $\bm{\beta}$ based on a sample of size $n$:
+%
+\begin{equation}
+\mathbf{b} \equiv \begin{bmatrix} \hat{\alpha} \\ \hat{\delta} \end{bmatrix}
+= \Bigl(\sum_{t=1}^{n}\mathbf{x}_t\mathbf{x}_t'\Bigr)^{-1}
+\Bigl(\sum_{t=1}^{n}\mathbf{x}_t \cdot y_t\Bigr).
+\label{eq:2.12.3}
+\end{equation}
+%
+The sampling error can be written as
+%
+\begin{equation}
+\mathbf{b} - \bm{\beta}
+= \begin{bmatrix} \hat{\alpha} - \alpha \\ \hat{\delta} - \delta \end{bmatrix}
+= \Bigl(\sum_{t=1}^{n}\mathbf{x}_t\mathbf{x}_t'\Bigr)^{-1}
+\Bigl(\sum_{t=1}^{n}\mathbf{x}_t \cdot \varepsilon_t\Bigr).
+\label{eq:2.12.4}
+\end{equation}
+%
+Using the algebraic result that $\sum_{t=1}^{n} t = n(n+1)/2$,
+$\sum_{t=1}^{n} t^2 = n(n+1)(2n+1)/6$, it is easy to show
+%
+\begin{equation}
+\sum_{t=1}^{n}\mathbf{x}_t\mathbf{x}_t'
+= \begin{bmatrix}
+n & n(n+1)/2 \\
+n(n+1)/2 & n(n+1)(2n+1)/6
+\end{bmatrix}.
+\label{eq:2.12.5}
+\end{equation}
+%
+So, unlike the stationary case, $\sum_{t=1}^{n}\mathbf{x}_t\mathbf{x}_t'/n$ does not converge in probability to
+a nonsingular matrix; it actually diverges.
+
+It turns out that the OLS estimates $\hat{\alpha}$ and $\hat{\delta}$ are consistent but have different rates
+of convergence. As in the stationary case, the rate of convergence for $\hat{\alpha}$ is $\sqrt{n}$. In
+contrast, the rate for $\hat{\delta}$ is $n^{3/2}$. That is, $n^{3/2}(\hat{\delta} - \delta)$ converges to a nondegenerate
+distribution (the distribution of a nonconstant random variable). To assign those
+different rates of convergence to the elements of $\mathbf{b} - \bm{\beta}$, consider multiplying both
+sides of \eqref{eq:2.12.4} by the matrix
+%
+\begin{equation}
+\bm{\Upsilon}_n = \begin{bmatrix}
+\sqrt{n} & 0 \\ 0 & n^{3/2}
+\end{bmatrix}.
+\label{eq:2.12.6}
+\end{equation}
+%
+This produces
+%
+\begin{align}
+\bm{\Upsilon}_n(\mathbf{b} - \bm{\beta})
+&= \begin{bmatrix}
+\sqrt{n}(\hat{\alpha} - \alpha) \\ n^{3/2}(\hat{\delta} - \delta)
+\end{bmatrix}
+= \bm{\Upsilon}_n
+\Bigl(\sum_{t=1}^{n}\mathbf{x}_t\mathbf{x}_t'\Bigr)^{-1}
+\Bigl(\sum_{t=1}^{n}\mathbf{x}_t \cdot \varepsilon_t\Bigr) \notag \\
+&= \bm{\Upsilon}_n
+\Bigl(\sum_{t=1}^{n}\mathbf{x}_t\mathbf{x}_t'\Bigr)^{-1}
+\bm{\Upsilon}_n\,\bm{\Upsilon}_n^{-1}
+\Bigl(\sum_{t=1}^{n}\mathbf{x}_t \cdot \varepsilon_t\Bigr) \notag \\
+&= \Bigl[\bm{\Upsilon}_n^{-1}
+\Bigl(\sum_{t=1}^{n}\mathbf{x}_t\mathbf{x}_t'\Bigr)
+\bm{\Upsilon}_n^{-1}\Bigr]^{-1}
+\Bigl(\bm{\Upsilon}_n^{-1}\sum_{t=1}^{n}\mathbf{x}_t \cdot \varepsilon_t\Bigr)
+\notag \\
+&\equiv \mathbf{Q}_n^{-1}\,\mathbf{v}_n,
+\label{eq:2.12.7}
+\end{align}
+%
+where
+%
+\begin{equation}
+\mathbf{Q}_n \equiv \bm{\Upsilon}_n^{-1}
+\Bigl(\sum_{t=1}^{n}\mathbf{x}_t\mathbf{x}_t'\Bigr)\bm{\Upsilon}_n^{-1}
+\quad \text{and} \quad
+\mathbf{v}_n \equiv \bm{\Upsilon}_n^{-1}
+\sum_{t=1}^{n}\mathbf{x}_t \cdot \varepsilon_t.
+\label{eq:2.12.8}
+\end{equation}
+%
+Substituting \eqref{eq:2.12.5} and \eqref{eq:2.12.6} into these expressions for $\mathbf{Q}_n$ and $\mathbf{v}_n$, we obtain
+%
+\begin{equation}
+\mathbf{Q}_n = \begin{bmatrix}
+1 & (n+1)/(2n) \\
+(n+1)/(2n) & (n+1)(2n+1)/(6n^2)
+\end{bmatrix}, \quad
+\mathbf{v}_n = \begin{bmatrix}
+\frac{1}{\sqrt{n}}\sum_{t=1}^{n}\varepsilon_t \\[4pt]
+\frac{1}{\sqrt{n}}\sum_{t=1}^{n}(t/n)\varepsilon_t
+\end{bmatrix}.
+\label{eq:2.12.9}
+\end{equation}
+%
+Clearly we have
+%
+\begin{equation}
+\mathbf{Q}_n \to \mathbf{Q} \equiv \begin{bmatrix}
+1 & 1/2 \\ 1/2 & 1/3
+\end{bmatrix}.
+\label{eq:2.12.10}
+\end{equation}
+%
+For $\mathbf{v}_n$, it can be shown (see, e.g., Hamilton, 1994, pp.~458--460) that
+%
+\begin{equation}
+\mathbf{v}_n \dto N(\mathbf{0}, \sigma^2\,\mathbf{Q})
+\label{eq:2.12.11}
+\end{equation}
+%
+if $\{\varepsilon_t\}$ is independent white noise with $\E(\varepsilon_t^2) = \sigma^2$ and
+$\E(\varepsilon_t^4) < \infty$. Thus the asymptotic distribution of \eqref{eq:2.12.7}
+is normal with mean $\mathbf{0}$ and variance
+$\mathbf{Q}^{-1}(\sigma^2\,\mathbf{Q}) \cdot \mathbf{Q}^{-1} = \sigma^2\,\mathbf{Q}^{-1}$.
+Summarizing the discussion so far,
+
+\begin{proposition}[2.11 (OLS estimation of the time regression)]
+\label{prop:2.11}
+Consider the time regression \eqref{eq:2.12.1} where $\varepsilon_t$ is independent white noise with
+$\E(\varepsilon_t^2) = \sigma^2$ and $\E(\varepsilon_t^4) < \infty$ and let $\hat{\alpha}$ and
+$\hat{\delta}$ be the OLS estimate of $\alpha$ and $\delta$. Then
+\[
+\begin{bmatrix}
+\sqrt{n}(\hat{\alpha} - \alpha) \\
+n^{3/2}(\hat{\delta} - \delta)
+\end{bmatrix}
+\dto N\!\left(\mathbf{0},\;\sigma^2 \cdot
+\begin{bmatrix} 1 & 1/2 \\ 1/2 & 1/3 \end{bmatrix}^{-1}\right).
+\]
+\end{proposition}
+
+As in the stationary case, $\hat{\alpha}$ is $\sqrt{n}$-consistent because
+$\sqrt{n}(\hat{\alpha} - \alpha)$ converges to a (normal) random variable.
+The OLS estimate of the time coefficient, $\hat{\delta}$, too is consistent, but the speed of convergence is faster: it is $n^{3/2}$-consistent in that
+$n^{3/2}(\hat{\delta} - \delta)$ converge to a random variable. In this sense,
+$\hat{\delta}$ is \textbf{hyperconsistent}.\footnote{Estimators that are $n^\gamma$-consistent
+are usually called \textbf{superconsistent}. A prominent example of superconsistent estimators
+arises in the estimation of unit-root processes; see Chapter~9. Some authors use the
+term ``superconsistent'' more broadly, to refer to estimators that are $n^\gamma$-consistent
+with $\gamma > \frac{1}{2}$. In their language, $\hat{\delta}$ in the text is superconsistent.}
+
+\subsection*{Hypothesis Testing for Time Regressions}
+
+Thus, the OLS coefficient estimates of the time regression are asymptotically normal, provided the sampling error is properly scaled. We now show that the deflation of the sampling error by the standard error provides a scaling that makes the
+resulting ratio---the $t$-value---asymptotically standard normal.
+
+First consider the $t$-value for the null $\alpha = \alpha_0$. Noting that
+%
+\begin{equation}
+\text{(1, 1) element of }
+\Bigl(\sum_{t=1}^{n}\mathbf{x}_t\mathbf{x}_t'\Bigr)^{-1}
+= [1 \quad 0]\Bigl(\sum_{t=1}^{n}\mathbf{x}_t\mathbf{x}_t'\Bigr)^{-1}
+\begin{bmatrix} 1 \\ 0 \end{bmatrix},
+\label{eq:2.12.12}
+\end{equation}
+%
+the $t$-value can be written as
+%
+\begin{align}
+t &= \frac{\hat{\alpha} - \alpha_0}
+{\sqrt{s^2 \cdot [1 \quad 0]
+(\sum_{t=1}^{n}\mathbf{x}_t\mathbf{x}_t')^{-1}
+\begin{bmatrix} 1 \\ 0 \end{bmatrix}}} \notag \\
+&= \frac{\sqrt{n}(\hat{\alpha} - \alpha_0)}
+{\sqrt{s^2 \cdot [\sqrt{n} \quad 0]
+(\sum_{t=1}^{n}\mathbf{x}_t\mathbf{x}_t')^{-1}
+\begin{bmatrix} \sqrt{n} \\ 0 \end{bmatrix}}} \notag \\
+&= \frac{\sqrt{n}(\hat{\alpha} - \alpha_0)}
+{\sqrt{s^2 \cdot [1 \quad 0]
+\bm{\Upsilon}_n
+(\sum_{t=1}^{n}\mathbf{x}_t\mathbf{x}_t')^{-1}
+\bm{\Upsilon}_n
+\begin{bmatrix} 1 \\ 0 \end{bmatrix}}}
+\quad (\text{since } [\sqrt{n} \quad 0] = [1 \quad 0]\,\bm{\Upsilon}_n)
+\notag \\
+&= \frac{\sqrt{n}(\hat{\alpha} - \alpha_0)}
+{\sqrt{s^2 \cdot [1 \quad 0]\,\mathbf{Q}_n^{-1}
+\begin{bmatrix} 1 \\ 0 \end{bmatrix}}}
+\quad \text{(by \eqref{eq:2.12.8})}.
+\label{eq:2.12.13}
+\end{align}
+%
+It is straightforward (see review question~1) to show that $s^2$ is consistent for $\sigma^2$.
+And by \eqref{eq:2.12.10}, $\mathbf{Q}_n \pto \mathbf{Q}$. Thus by Lemma~2.4(c) and Proposition~\ref{prop:2.11},
+%
+\begin{equation}
+t\text{-value for the null of } \alpha = \alpha_0 \dto
+\frac{\text{1st element of } \mathbf{z}}
+{\sqrt{\sigma^2 \times (1,1) \text{ element of } \mathbf{Q}^{-1}}}
+\label{eq:2.12.14}
+\end{equation}
+%
+where $\mathbf{z} \sim N(\mathbf{0}, \sigma^2\,\mathbf{Q}^{-1})$. So the $t$-value for $\alpha$ is asymptotically $N(0, 1)$, as in the
+stationary case.
+
+Using the same trick and noting that
+$[0 \quad n^{3/2}] = [0 \quad 1]\,\bm{\Upsilon}_n$, we can write the
+$t$-value for the null of $\delta = \delta_0$ as
+%
+\begin{equation}
+t = \frac{n^{3/2}(\hat{\delta} - \delta_0)}
+{\sqrt{s^2 \cdot [0 \quad 1]\,\mathbf{Q}_n^{-1}
+\begin{bmatrix} 0 \\ 1 \end{bmatrix}}}.
+\label{eq:2.12.15}
+\end{equation}
+%
+So the $t$-value for the coefficient of time, too, is asymptotically $N(0, 1)$! Inference
+about $\alpha$ or $\delta$ can be done exactly as in the stationary case.
+
+\bigskip
+\noindent\textsc{Questions for Review}
+\begin{enumerate}
+\item ($s^2$ is consistent for $\sigma^2$)\quad
+Show that $s^2 \pto \sigma^2$. \textbf{Hint:} From (2.3.10), derive
+\[
+e_t^2 = \varepsilon_t^2
+- 2(\mathbf{b} - \bm{\beta})'\bm{\Upsilon}_n\,\bm{\Upsilon}_n^{-1}\mathbf{x}_t
+\cdot \varepsilon_t
++ (\mathbf{b} - \bm{\beta})'\bm{\Upsilon}_n\,
+\bm{\Upsilon}_n^{-1}\mathbf{x}_t\mathbf{x}_t'\bm{\Upsilon}_n^{-1}\,
+\bm{\Upsilon}_n(\mathbf{b} - \bm{\beta}).
+\]
+Sum over $t$ to obtain
+\[
+\frac{1}{n}\sum_{t=1}^{n}e_t^2
+= \frac{1}{n}\sum_{t=1}^{n}\varepsilon_t^2
+- \frac{2}{n}(\mathbf{b} - \bm{\beta})'\bm{\Upsilon}_n\,\mathbf{v}_n
++ \frac{1}{n}(\mathbf{b} - \bm{\beta})'\bm{\Upsilon}_n\,
+\mathbf{Q}_n\,\bm{\Upsilon}_n(\mathbf{b} - \bm{\beta}).
+\]
+
+\item (Serially uncorrelated errors)\quad
+Suppose $\{\varepsilon_t\}$ is a general stationary process,
+rather than an independent white noise process, but suppose that
+$\mathbf{v}_n \dto N(\mathbf{0}, \mathbf{V})$
+where $\mathbf{V} \neq \sigma^2\,\mathbf{Q}$. Are the OLS estimators, $\hat{\alpha}$ and $\hat{\delta}$, consistent? Does
+$\bm{\Upsilon}_n(\mathbf{b} - \bm{\beta})$ converge to a normal random vector with mean zero? If so,
+what is the variance of the normal distribution?
+[Answer: $\mathbf{Q}^{-1}\mathbf{V}\mathbf{Q}^{-1}$.]
+Are the $t$-values asymptotically normal?
+[Answer: Yes, but the variance will not be unity.]
+\end{enumerate}

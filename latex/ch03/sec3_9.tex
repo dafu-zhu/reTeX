@@ -1,0 +1,375 @@
+% sec3_9.tex — Section 3.9: Application: Returns from Schooling
+
+Since Mincer's (1958) pioneering study, the relationship between the wage rate
+and schooling has been the subject of a large number of empirical and theoretical
+investigations.  You might find the amount of attention puzzling because the
+explanation of the positive relationship seems to be obvious: education enhances
+the individual's productivity.  There are, however, other explanations.  For example,
+in the Spencian job market signaling model, more educated individuals receive
+higher wages only because education is used as a signal of higher ability; although
+education does not increase the individual's earning capacity, there is a correlation
+between the wage rate and schooling because both variables are influenced by the
+third variable, ability.  This section shows how to use the technique of this chapter
+to isolate the effect of education on the wage rate from that of ability.  One of the
+earliest studies to address this issue is Griliches (1976).
+
+%% ─── The NLS-Y Data ───────────────────────────────────────────────────────
+\subsection*{The NLS-Y Data}
+
+The data used by Griliches are the Young Men's Cohort of the National Longitudinal
+Survey (NLS-Y).  This cohort was first surveyed in 1966 at ages 14--24, with
+5,225 respondents, and was resurveyed at one- or two-year intervals thereafter.  By
+1969, about a quarter of the original sample was lost, but there are 2,026 individuals
+who reported earnings in 1969 and whose records are complete enough to
+allow derivation of all the variables for analysis.  A very attractive feature of the
+NLS-Y is its inclusion of two measures of ability.  One of them is the score on
+the Knowledge of the World of Work (KWW) test administered by the NLS interviewers
+in 1966.  The other measure is the IQ score.  All youths in the survey who
+had completed ninth grade by 1966 were asked to sign waivers letting their school
+supply the survey administrator their scores on various tests and other background
+materials.  The resulting School Survey, conducted in 1968, yielded data on different
+mental ability scores, which were combined into IQ equivalents.  Of the 2,026
+individuals with information about the 1969 wage rate and other variables, the IQ
+score is available for 1,362 individuals, reflecting the fact that the School Survey
+was able to cover only two-thirds of the original sample.  Our discussion here concerns
+Griliches's results based on this smaller sample.  Table~3.1 reports the means
+and standard deviation of key variables.
+
+%% ─── Table 3.1 ─────────────────────────────────────────────────────────────
+\begin{table}[htbp]
+\centering
+\caption{Characteristics of Young Men from the National Longitudinal Survey}
+\label{tab:3.1}
+\medskip
+Means and Standard Deviations (in parentheses)
+\medskip
+
+\begin{tabular}{@{}l r@{}}
+\toprule
+Variable & \\
+\midrule
+Sample size & 1{,}362 \\[4pt]
+Age in 1969 & 22.3 \\
+ & (3.2) \\[4pt]
+Schooling in years in 1969 ($S$) & 12.5 \\
+ & (1.9) \\[4pt]
+Logarithm of hourly wages (in cents) in 1969 ($LW$) & 5.68 \\
+ & (0.40) \\[4pt]
+Score on the Knowledge of the World of Work test ($KWW$) & 35.1 \\
+ & (7.9) \\[4pt]
+IQ score ($IQ$) & 97.7 \\
+ & (15.3) \\[4pt]
+Experience in years in 1969 & 3.7 \\
+ & (2.8) \\
+\bottomrule
+\end{tabular}
+
+\smallskip
+{\footnotesize Source: Griliches (1976, Table~1).}
+\end{table}
+
+%% ─── The Semi-Log Wage Equation ────────────────────────────────────────────
+\subsection*{The Semi-Log Wage Equation}
+
+The typical wage equation estimated in the literature is the semi-log form:
+\begin{equation}
+  LW = \alpha + \beta S + \gamma A + \boldsymbol{\delta}'\mathbf{h} + \varepsilon,
+  \label{eq:3.9.1}
+\end{equation}
+where $LW$ is the log wage rate for the individual, $S$ is schooling in years, $A$ is a
+measure of ability, $\mathbf{h}$ is the vector of observable characteristics of the individual
+(such as experience and location dummies), $\boldsymbol{\delta}$ is the associated vector of coefficients,
+and $\varepsilon$ is the unobservable error term with zero mean (in this section, the
+individual subscript $i$ will be dropped for notational simplicity).  The semi-log
+specification for schooling $S$ is often justified by appealing to the well-established
+stylized fact from large cross-section data (such as the Current Population Survey)
+that the relationship between log wages and schooling is linear.\footnote{For the
+functional form issue, see Card (1995).}
+
+The schooling coefficient $\beta$ measures the percentage increase in the wage rate
+the individual would receive if she had one more year of education.  It therefore
+represents the marginal return from investing in human capital, which should be in
+the same order of magnitude as the rate of return from financial assets.  We assume
+that the nonconstant regressors, $(S, A, \mathbf{h})$, are uncorrelated with the error $\varepsilon$
+so that the OLS is an appropriate estimation technique if ability is included in
+the regression along with $S$ and $\mathbf{h}$.  In the rest of this section, we examine what
+Griliches called the ``ability bias'' --- biases on the OLS estimate of $\beta$ that would
+arise when ability $A$ is not included in the regression and when its imperfect measure
+is included in its place.
+
+%% ─── Omitted Variable Bias ─────────────────────────────────────────────────
+\subsection*{Omitted Variable Bias}
+
+Sometimes the data set you work with has no measures of $A$ (this is true for the
+Current Population Survey, for example).  What is the consequence of ignoring
+ability by omitting $A$ from the wage equation?  We know from Section~2.9 that
+the regression of $LW$ on a constant, $S$, and $\mathbf{h}$ provides a consistent estimator of the
+corresponding least squares projection, which can be written as
+\begin{align}
+  \tilde{\E}^*(LW \mid 1, S, \mathbf{h})
+  &= \tilde{\E}^*(\alpha + \beta S + \gamma A + \boldsymbol{\delta}'\mathbf{h}
+    + \varepsilon \mid 1, S, \mathbf{h})
+  \quad \text{(by \eqref{eq:3.9.1})} \notag \\
+  &= \alpha + \beta S + \boldsymbol{\delta}'\mathbf{h}
+    + \gamma\, \tilde{\E}^*(A \mid 1, S, \mathbf{h})
+    + \tilde{\E}^*(\varepsilon \mid 1, S, \mathbf{h}).
+  \label{eq:3.9.2}
+\end{align}
+Since the regressors in \eqref{eq:3.9.1} are all predetermined, we have $\E(\varepsilon) = 0$,
+$\E(S\,\varepsilon) = 0$, and $\E(\mathbf{h}\cdot\varepsilon) = \mathbf{0}$.  So
+$\tilde{\E}^*(\varepsilon \mid 1, S, \mathbf{h}) = 0$.  Writing
+$\tilde{\E}^*(A \mid 1, S, \mathbf{h}) = \theta_1 + \theta_S\, S + \boldsymbol{\theta}_{\mathbf{h}}'\mathbf{h}$,
+\eqref{eq:3.9.2} becomes
+\[
+  \tilde{\E}^*(LW \mid 1, S, \mathbf{h})
+  = (\alpha + \gamma \theta_1) + (\beta + \gamma \theta_S)\, S
+  + (\boldsymbol{\delta} + \gamma \cdot \boldsymbol{\theta}_{\mathbf{h}})'\mathbf{h}.
+\]
+Therefore, the OLS coefficient estimate can be asymptotically biased for \emph{all} the
+included regressors.  This phenomenon is called the \textbf{omitted variable bias}.  In
+particular,
+\[
+  \plim\, \hat{\beta}_{\text{OLS}} = \beta + \gamma \theta_S.
+\]
+That is, the OLS estimate of the schooling coefficient $\beta$ includes the indirect effect
+of ability through schooling ($\gamma \theta_S$) as well as the direct effect of schooling
+($\beta$).  If $\theta_S$ is positive, then $\hat{\beta}_{\text{OLS}}$ is asymptotically biased upward.
+
+Using the sample of 1,362 individuals from the NLS-Y described above,
+Griliches estimated the wage equation for 1969.  The list of variables included in
+$\mathbf{h}$ will not be given here; suffice to say that it includes experience in years and some
+region and city-size dummies.  Griliches's estimate of the schooling coefficient
+when ability is ignored in the wage equation is reproduced on line~1 of Table~3.2.
+On the face of it, the estimate looks good: the point estimate resembles the rate of
+return one might get from financial assets, and it is sharply estimated as evidenced
+by the high $t$-value.
+
+%% ─── IQ as the Measure of Ability ──────────────────────────────────────────
+\subsection*{IQ as the Measure of Ability}
+
+As already mentioned, the NLS-Y has two measures of ability, $KWW$ (the score on
+the Knowledge of the World of Work test) collected in 1966 and $IQ$ (the IQ score).
+Since the NLS-Y respondents were at least fourteen years old in 1966, $KWW$ would
+reflect the effect of schooling already undertaken, and so it cannot be a measure of
+raw ability.  The IQ score does not have this problem.  If $IQ$ were a perfect measure
+of ability so that $A$ can be equated with it, then the wage equation \eqref{eq:3.9.1}
+could be estimated consistently with $IQ$ substituting for $A$.  Griliches's OLS estimates
+of $\beta$ (schooling coefficient) and $\gamma$ (ability coefficient) when $IQ$ is included in
+the equation are reported in line~2 of Table~3.2.  Now the estimated schooling coefficient
+is lower, confirming our prediction that the estimated schooling coefficient includes
+the effect of ability on the wage rate when ability is omitted from the regression.
+
+%% ─── Errors-in-Variables ──────────────────────────────────────────────────
+\subsection*{Errors-in-Variables}
+
+Of course the IQ score may not be an error-free measure of ability.  If $\eta$ is the
+measurement error, $IQ$ is related to $A$ as
+\begin{equation}
+  IQ = \phi + A + \eta,
+  \label{eq:3.9.3}
+\end{equation}
+with $\E(\eta) = 0$.  The interpretation of $\eta$ as measurement error makes it reasonable
+to assume that $\eta$ is uncorrelated with $A$, $S$, $\mathbf{h}$, and the wage equation error term
+$\varepsilon$.  Substituting \eqref{eq:3.9.3} into \eqref{eq:3.9.1}, we obtain
+\begin{equation}
+  LW = (\alpha - \gamma\phi) + \beta S + \gamma\, IQ + \boldsymbol{\delta}'\mathbf{h}
+  + (\varepsilon - \gamma\eta).
+  \label{eq:3.9.4}
+\end{equation}
+
+We now illustrate for this example the general result that, if at least one of the
+regressors is measured with error, the OLS estimates of \emph{all} the regression coefficients
+can be asymptotically biased.
+
+To examine the consequence of using the error-ridden measure $IQ$ for $A$, consider
+the corresponding least squares projection:
+\begin{align}
+  \tilde{\E}^*(LW \mid 1, S, IQ, \mathbf{h})
+  &= (\alpha - \gamma\phi) + \beta S + \gamma\, IQ + \boldsymbol{\delta}'\mathbf{h} \notag \\
+  &\quad + \tilde{\E}^*(\varepsilon \mid 1, S, IQ, \mathbf{h})
+    - \gamma\, \tilde{\E}^*(\eta \mid 1, S, IQ, \mathbf{h}).
+  \label{eq:3.9.5}
+\end{align}
+Now consider $\tilde{\E}^*(\varepsilon \mid 1, S, IQ, \mathbf{h})$ in \eqref{eq:3.9.5}.
+Since $\E(\varepsilon) = 0$ and $(S, \mathbf{h})$ are uncorrelated with $\varepsilon$,
+$(1, S, \mathbf{h})$ are orthogonal to $\varepsilon$.  $IQ$ is also orthogonal to $\varepsilon$ because
+\[
+  \E(IQ \cdot \varepsilon) = \E[(\phi + A + \eta)\,\varepsilon]
+  \quad \text{(by \eqref{eq:3.9.3})}
+  = \E(\eta\,\varepsilon) = 0.
+\]
+Thus, $\tilde{\E}^*(\varepsilon \mid 1, S, IQ, \mathbf{h}) = 0$ in \eqref{eq:3.9.5}.
+
+So the biases, if any, equal
+$-\gamma\, \tilde{\E}^*(\eta \mid 1, S, IQ, \mathbf{h})$ in \eqref{eq:3.9.5}.
+Let $(\theta_S, \theta_{IQ}, \boldsymbol{\theta}_{\mathbf{h}})$ be the projection coefficients of
+$(S, IQ, \mathbf{h})$ in $\tilde{\E}^*(\eta \mid 1, S, IQ, \mathbf{h})$.  By the formula
+(2.9.7) from Chapter~2,
+\begin{equation}
+  \begin{bmatrix} \theta_S \\ \theta_{IQ} \\ \boldsymbol{\theta}_{\mathbf{h}} \end{bmatrix}
+  = \begin{bmatrix}
+      \Var(S) & \Cov(S, IQ) & \Cov(S, \mathbf{h}') \\
+      \Cov(IQ, S) & \Var(IQ) & \Cov(IQ, \mathbf{h}') \\
+      \Cov(\mathbf{h}, S) & \Cov(\mathbf{h}, IQ) & \Var(\mathbf{h})
+    \end{bmatrix}^{-1}
+  \begin{bmatrix} \Cov(S, \eta) \\ \Cov(IQ, \eta) \\ \Cov(\mathbf{h}, \eta)
+  \end{bmatrix}.
+  \label{eq:3.9.6}
+\end{equation}
+In this expression, $\Cov(S, \eta)$ and $\Cov(\mathbf{h}, \eta)$ are zero by assumption.
+$\Cov(IQ, \eta)$, however, is not zero because
+\begin{align*}
+  \Cov(IQ,\, \eta) &= \E(IQ\;\eta) \quad \text{(since $\E(\eta) = 0$)} \\
+  &= \E[(\phi + A + \eta)\,\eta] \quad \text{(by \eqref{eq:3.9.3})} \\
+  &= \phi\,\E(\eta) + \E(A\,\eta) + \E(\eta^2) \\
+  &= \Var(\eta) \quad \text{(since $\E(\eta) = 0$ and $\Cov(A,\eta) = 0$)}.
+\end{align*}
+That is, the measurement error, if uncorrelated with the true value, is necessarily
+correlated with the measured value.  Using the fact that
+\[
+  \Cov(S, \eta) = 0, \quad \Cov(IQ, \eta) = \Var(\eta), \quad
+  \Cov(\mathbf{h}, \eta) = \mathbf{0},
+\]
+the projection coefficients can be rewritten as
+\[
+  \begin{bmatrix} \theta_S \\ \theta_{IQ} \\ \boldsymbol{\theta}_{\mathbf{h}} \end{bmatrix}
+  = \Var(\eta) \cdot \mathbf{a},
+\]
+where
+\[
+  \mathbf{a} \equiv \text{second column of }
+  \begin{bmatrix}
+    \Var(S) & \Cov(S, IQ) & \Cov(S, \mathbf{h}') \\
+    \Cov(IQ, S) & \Var(IQ) & \Cov(IQ, \mathbf{h}') \\
+    \Cov(\mathbf{h}, S) & \Cov(\mathbf{h}, IQ) & \Var(\mathbf{h})
+  \end{bmatrix}^{-1}.
+\]
+
+Since the second element of $\mathbf{a}$ is positive (it is a diagonal element of the inverse of
+a variance-covariance matrix), the OLS estimate of the ability coefficient is biased
+downward.  The direction of the asymptotic bias for the schooling coefficient, however,
+depends on the sign of the first element of $\mathbf{a}$.  Typically, $\Cov(S, IQ)$ would
+be positive, so, barring unusually strong correlation of $(S, IQ)$ with $\mathbf{h}$, the first
+element of $\mathbf{a}$ would be negative.  Thus, we conjecture that $\hat{\beta}_{\text{OLS}}$ is
+biased upward for schooling.
+
+Therefore, in the regression of $LW$ on a constant, $S$, $IQ$, and $\mathbf{h}$,
+\begin{align}
+  \plim\, \hat{\beta}_{\text{OLS}}
+  &= \beta - \gamma \cdot \Var(\eta) \cdot \text{(1st element of $\mathbf{a}$)},
+  \label{eq:3.9.7a} \\
+  \plim\, \hat{\gamma}_{\text{OLS}}
+  &= \gamma - \gamma \cdot \Var(\eta) \cdot \text{(2nd element of $\mathbf{a}$)}.
+  \label{eq:3.9.7b}
+\end{align}
+
+%% ─── 2SLS to Correct for the Bias ─────────────────────────────────────────
+\subsection*{2SLS to Correct for the Bias}
+
+To control for the bias, Griliches applies the 2SLS to the wage equation.  To do
+so, the set of instruments needs to be specified.  The predetermined regressors,
+$(1, S, \mathbf{h})$, can be included in the set.  The additional variables included in the set
+to instrument $IQ$ are age, age squared, $KWW$, mother's education, and some other
+background variables of the individual (such as father's occupation).  Those variables
+are thus assumed to be predetermined.  Griliches's 2SLS estimate for this
+specification is reproduced in line~3 of Table~3.2.\footnote{The $R^2$ is not reported for
+the 2SLS estimate because, unlike in the OLS case, the sum of squared 2SLS
+residuals cannot be divided between the ``explained variation'' and the ``unexplained
+variation.''}  In accordance with our prediction that the OLS estimate of the ability
+coefficient is biased downward, the OLS estimate of the ability coefficient of
+0.0019 in line~2 is lower than the 2SLS estimate of 0.0038 in line~3.  Our conjecture
+that $\hat{\beta}_{\text{OLS}}$ of the schooling coefficient when $IQ$ is included in the
+regression is biased upward, too, is borne out by data because the estimate of
+$\beta$ of 0.059 in line~2 is higher than the estimate of 0.052 in line~3.
+
+%% ─── Table 3.2 ─────────────────────────────────────────────────────────────
+\begin{table}[htbp]
+\centering
+\caption{Parameter Estimates}
+\label{tab:3.2}
+\medskip
+Estimation equation: $LW = \alpha + \beta S + \gamma\, IQ + \text{other controls}$
+\medskip
+
+\begin{tabular}{@{}c l cc cc l l@{}}
+\toprule
+& Estimation & \multicolumn{2}{c}{Coefficient of}
+& & & Which regressor & Excluded \\
+\cmidrule(lr){3-4}
+Line no.\ & technique & $S$ & $IQ$ & $SER$ & $R^2$
+& is endogenous? & predetermined variables \\
+\midrule
+1 & OLS & 0.065 & --- & 0.332 & 0.309 & none & --- \\
+  &     & (13.2) & & & & & \\[4pt]
+2 & OLS & 0.059 & 0.0019 & 0.331 & 0.313 & none & --- \\
+  &     & (10.7) & (2.8) & & & & \\[4pt]
+3 & 2SLS & 0.052 & 0.0038 & 0.332 & --- & $IQ$ & $MED$, $KWW$, age, \\
+  &      & (7.0) & (2.4) & & & & age squared, back- \\
+  &      &       &        & & & & ground variables \\
+\bottomrule
+\end{tabular}
+
+\smallskip
+{\footnotesize Source: Line~1: equation~(B1) in Griliches (1976, Table~2).
+Line~2: equation~(B3) in Griliches's Table~2.
+Line~3: line~3 in Griliches's Table~5.
+Figures in parentheses are $t$-values rather than standard errors.}
+\end{table}
+
+To summarize, the ``ability bias'' studied by Griliches is that the schooling
+coefficient is biased upward if ability is ignored and is biased in an unknown direction
+(but perhaps upward) if an imperfect measure of ability ($IQ$ in the present case)
+is included.  The 2SLS provides a solution, but it is predicated on the assumption
+that the instruments used (such as $MED$ and $KWW$) are uncorrelated with unobserved
+wage determinants $\varepsilon$ and $\eta$.  Those determinants would include personal
+characteristics like diligence.  It seems not unreasonable to suppose that $KWW$
+cannot serve as an instrument.  If so, $KWW$ is not predetermined either, because some
+of the mother's personal characteristics that influenced her education and that are
+valued in the marketplace would be inherited by the child.  Whether those variables
+included in the set of instruments are predetermined can be tested by Sargan's
+statistic.  But the statistic is not reported in Griliches's paper (which was written
+long before doing so became a standard practice).
+
+%% ─── Subsequent Developments ──────────────────────────────────────────────
+\subsection*{Subsequent Developments}
+
+Perhaps because it is so difficult to come up with valid instruments that are uncorrelated
+with unobserved characteristics but correlated with $IQ$, controlling for the
+``ability bias'' continued to attract much attention in the literature.  There is a fairly
+large literature starting with Behrman et al.\ (1980), which compares identical twins
+with different levels of education to control for genetic characteristics and family
+background.  One can also compare the same individual at two points in time.  In
+either case, the appropriate estimation technique is what is called the fixed-effect
+estimator, to be covered in Chapter~5.
+
+The endogeneity of schooling is another major issue.  If one takes the view that
+the error term includes a host of unobservable individual characteristics that might
+affect the individual's choice of schooling, then schooling needs to be treated as an
+endogenous variable.  But again, finding valid instruments uncorrelated with unobservable
+characteristics but correlated with schooling is extremely difficult.  The
+recent literature can be viewed as a search for the determinants of schooling having
+little to do with the individual's unobserved characteristics.  The variable used
+in Angrist and Krueger (1991), for example, is whether the individual is subject to
+compulsory schooling laws.
+
+Finally, the literature on the relationship between school quality and earnings
+is attracting renewed attention.  See Card and Krueger (1996) for a survey.
+
+%% ─── Questions for Review ──────────────────────────────────────────────────
+\bigskip
+\begin{center}\rule{0.6\textwidth}{0.4pt}\end{center}
+\noindent\textsc{Questions for Review}
+\medskip
+
+\begin{enumerate}
+\item List all the assumptions made in this section about the means and covariances
+  of $(S, A, IQ, KWW, \mathbf{h}, \varepsilon, \eta)$.  Study how Griliches states those assumptions.
+  Which ones are crucial for the 2SLS to be consistent?
+
+\item Suppose the relationship between $IQ$ and $A$ is given not by \eqref{eq:3.9.3} but by
+  \[
+    IQ = \phi + \pi \cdot A + \eta.
+  \]
+  Is the 2SLS estimator of $\beta$ (the schooling coefficient) still consistent?
+  [Answer: Yes.]
+\end{enumerate}

@@ -1,0 +1,86 @@
+% sec9_6.tex — Section 9.6: Application: Purchasing Power Parity
+
+The theory of \textbf{purchasing power parity} (PPP) states that, for any two countries,
+the currency exchange rate equals the ratio of the price levels of the two countries.
+Put differently, once converted to a common currency, national price levels should
+be equal. Let $P_t$ be the price index for the United States, $P_t^*$ be the price index for
+the foreign country in question (say, the United Kingdom), and $S_t$ be the exchange
+rate in dollars per unit of the foreign currency. PPP states that
+\begin{equation}
+\label{eq:9.6.1}
+P_t = S_t \cdot P_t^*,
+\end{equation}
+or taking logs and using lower-case letters for them,\footnote{Equation~\eqref{eq:9.6.1}
+or~\eqref{eq:9.6.2} is a statement of ``absolute PPP.'' What is called relative PPP requires only that
+the first difference of~\eqref{eq:9.6.2} hold, that is, the rate of growth of the exchange rate should offset the differential
+between the rate of growth in home and foreign price indexes. Relative PPP should not be confused with the
+weaker version of PPP to be introduced below.}
+\begin{equation}
+\label{eq:9.6.2}
+p_t = s_t + p_t^*.
+\end{equation}
+PPP is related to but different from the \textbf{law of one price}, which states that~\eqref{eq:9.6.1}
+holds for any good, with $P_t$ representing the dollar price of the good in question
+and $P_t^*$ the foreign currency price of the good. If international price arbitrage
+works smoothly, the law of one price should hold at every date $t$. If the law of one
+price holds for all goods and if the basket of goods for the price index is the same
+between two countries, then PPP should hold.
+
+Due to a variety of factors limiting international price arbitrage, PPP does not
+hold exactly at every date $t$.\footnote{See, e.g., Section~4 of Rogoff (1996) for a list of factors that prevent PPP from holding.} A weaker version of PPP is that the deviation
+from PPP
+\begin{equation}
+\label{eq:9.6.3}
+z_t \equiv s_t - p_t + p_t^*,
+\end{equation}
+which is the real exchange rate, is stationary. Even if it does not enforce the law
+of one price in the short run, international arbitrage should have an effect in the
+long run.
+
+\subsection*{The Embarrassing Resiliency of the Random Walk Model?}
+
+For many years researchers found it difficult to reject the hypothesis that real
+exchange rates follow a random walk under floating exchange regimes. As Rogoff
+(1996) notes, this was somewhat of an embarrassment because every reasonable
+theoretical model suggests the weaker version of PPP. However, studies since the
+mid 1980s looking at longer spans of data have been able to reject the random walk
+null. Recent work by Lothian and Taylor (1996) is a good example. It uses annual
+data spanning two centuries from 1791 to 1990 for dollar/sterling and franc/sterling
+real exchange rates to find that the random walk null can be rejected. In what follows, we apply the ADF $t$-test to their data on the dollar/sterling (dollars per pound)
+exchange rate.
+
+The dollar/sterling real exchange rate, calculated as~\eqref{eq:9.6.3} and plotted in Figure~9.4, exhibits no time trend. We therefore do not include time in the augmented
+autoregression. If we were dealing with the weak version of the law of one price,
+with $P_t$ and $P_t^*$ denoting the home and foreign prices of a particular good, then we
+could exclude the intercept from the augmented autoregression because a change
+in units of measuring the good does not affect $z_t$. But $P_t$ and $P_t^*$ here are price
+indexes, and a change in the base year leads to adding a constant to $z_t$. To make
+the test invariant to such changes, a constant is included in the augmented autoregression. By applying the ADF test, rather than the DF test, we can allow for serial
+correlation in the first differences of $z_t$ under the null, but the lag chosen by
+BIC (with $p_{\max}(T) = \big[12 \cdot (200/100)^{1/4}\big] = 14$) turned out to be 0, so the ADF $t$-test reduces to the DF $t$-test and an augmented autoregression reduces to an AR(1)
+equation. The estimated AR(1) equation is
+\[
+z_t = \underset{(0.052)}{0.179} + \underset{(0.0326)}{0.8869}\; z_{t-1},
+\quad SER = 0.071, \quad R^2 = 0.790, \quad t = 1792, \ldots, 1990.
+\]
+
+\begin{figure}[htbp]
+\centering
+\framebox[\textwidth]{\rule{0pt}{2.5in}\parbox{0.8\textwidth}{\centering
+  Figure 9.4: Dollar/Sterling Real Exchange Rate, 1791--1990, 1914 Value Set to 0}}
+\caption{Dollar/Sterling Real Exchange Rate, 1791--1990, 1914 Value Set to 0}
+\label{fig:9.4}
+\end{figure}
+
+The DF $t$-statistic ($t^\mu$) is $-3.5$ ($= (0.8869 - 1)/0.0326$), which is significant at
+1 percent. Thus, we can indeed reject the hypothesis that the sterling/dollar real
+exchange rate is a random walk.
+
+An obvious caveat to this result is that the sample period of 1791--1990 includes
+fixed and floating rate periods. It might be that international price arbitrage works
+more effectively under fixed exchange rate regimes. If so, the $z_{t-1}$ coefficient
+should be closer to 0 during fixed rate periods. Lothian and Taylor (1996) report
+that if one uses a simple Chow test, one cannot reject the hypothesis that the $z_{t-1}$
+coefficient is the same before and after floating began in 1973. In the empirical
+exercise of this chapter, you will be asked to verify their finding and also use the
+ADF-GLS to test the same hypothesis.

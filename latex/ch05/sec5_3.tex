@@ -1,0 +1,227 @@
+% sec5_3.tex — Section 5.3: Unbalanced Panels (optional)
+
+\section{Unbalanced Panels (optional)}
+\label{sec:5.3}
+
+In applying the multiple-equation model to panel data, we have been making an
+implicit but important assumption that the variables are observable for all $m$, so
+that the number of observations for each cross-section unit is the same ($M$). Such
+a panel is called a \textbf{balanced panel}. But no available panel data sets are balanced,
+thanks to exits from and entries to the survey. Inevitably, some firms disappear
+from the sample due to bankruptcies and mergers before the end year $M$ of the
+survey, while those firms that did not exist at the start of the survey may be included
+later. Some of the households initially in the survey will not complete the spell of
+$M$ periods due to household resolutions or because respondents get tired of being
+asked the same questions over and over again. The panel of identical siblings is
+unbalanced if it includes identical triplets (and even septuplets) as well as twins.
+
+This section shows that the fixed-effects estimator easily extends to unbalanced
+panels. This sanguine conclusion, however, depends on the assumption that
+whether the cross-section unit stays in the sample does not depend on the error
+term. Without this assumption, the estimator is no longer consistent. This phenomenon
+is called the \textbf{selectivity bias}. A full discussion of why a selectivity bias
+arises and how it can be corrected for is relegated to Section~8.2, because the issue
+is not specific to panel data.
+
+\subsection*{``Zeroing Out'' Missing Observations}
+
+To handle missing observations, it is convenient to define a dummy variable, $d_{im}$,
+\begin{equation}
+  d_{im} = \begin{cases}
+    1 & \text{if observation $m$ is in the sample,} \\
+    0 & \text{otherwise,}
+  \end{cases}
+  \label{eq:5.3.1} \tag{5.3.1}
+\end{equation}
+and
+\begin{equation}
+  \underset{(M \times 1)}{\mathbf{d}_i}
+  = \begin{bmatrix} d_{i1} \\ \vdots \\ d_{iM} \end{bmatrix}, \quad
+  M_i = \sum_{m=1}^{M} d_{im} = \text{\# observations from } i.
+  \label{eq:5.3.2} \tag{5.3.2}
+\end{equation}
+
+If observation $m$ is missing for group $i$, fill the $m$-th rows of $\mathbf{y}_i$, $\mathbf{F}_i$, and
+$\boldsymbol{\eta}_i$ with zeros so that they continue to be of fixed size. That is,
+\begin{equation}
+  \underset{(M \times 1)}{\mathbf{y}_i}
+  = \begin{bmatrix} d_{i1} \cdot y_{i1} \\ \vdots \\ d_{iM} \cdot y_{iM} \end{bmatrix}, \quad
+  \underset{(M \times \#\boldsymbol{\beta})}{\mathbf{F}_i}
+  = \begin{bmatrix} d_{i1} \cdot \mathbf{f}_{i1}' \\ \vdots \\ d_{iM} \cdot \mathbf{f}_{iM}' \end{bmatrix}, \quad
+  \underset{(M \times 1)}{\boldsymbol{\eta}_i}
+  = \begin{bmatrix} d_{i1} \cdot \eta_{i1} \\ \vdots \\ d_{iM} \cdot \eta_{iM} \end{bmatrix}.
+  \label{eq:5.3.3} \tag{5.3.3}
+\end{equation}
+
+Thus, for each $i$ and $m$, either all the elements of the vector
+$(y_{im}, \mathbf{f}_{im})$ are observable
+or none is observable. We will not consider the case where some, but not all,
+elements of $(y_{im}, \mathbf{f}_{im})$ are observable.
+
+With this new notation, \eqref{eq:5.1.1pp} on page~329 becomes
+\begin{equation}
+  \mathbf{y}_i = \mathbf{F}_i\boldsymbol{\beta} + \mathbf{d}_i \cdot \mathbf{b}_i'\boldsymbol{\gamma}
+  + \mathbf{d}_i \cdot \alpha_i + \boldsymbol{\eta}_i
+  \quad (i = 1, 2, \ldots, n).
+  \label{eq:5.3.4} \tag{5.3.4}
+\end{equation}
+
+In the case of balanced panels, where $\mathbf{d}_i = \mathbf{1}_M$, the transformation matrix $\mathbf{Q}$ in the
+fixed-effects formula \eqref{eq:5.2.4} is the annihilator associated with $\mathbf{1}_M$
+(see \eqref{eq:5.1.10}).
+
+With missing observations, we use as the transformation matrix the annihilator
+associated with $\mathbf{d}_i$:
+\begin{align}
+  \underset{(M \times M)}{\mathbf{Q}}
+  &= \mathbf{I}_M - \mathbf{d}_i(\mathbf{d}_i'\mathbf{d}_i)^{-1}\mathbf{d}_i'
+  \notag \\
+  &= \mathbf{I}_M - \frac{1}{M_i}\,\mathbf{d}_i\mathbf{d}_i'
+  \quad (\text{since } \mathbf{d}_i'\mathbf{d}_i = M_i).
+  \label{eq:5.3.5} \tag{5.3.5}
+\end{align}
+
+This matrix depends on $i$ because $\mathbf{d}_i$ differs across $i$. Nevertheless, we leave this
+dependence of $\mathbf{Q}$ on $i$ implicit for economy of notation. With $\mathbf{y}_i$, $\mathbf{F}_i$,
+$\boldsymbol{\eta}_i$, and $\mathbf{Q}$ thus
+redefined, the formula for the fixed-effects estimator remains the same as \eqref{eq:5.2.4}.
+Substituting \eqref{eq:5.3.4} into this formula and observing that $\mathbf{Q}\mathbf{d}_i = \mathbf{0}$, we see that the
+expression for the sampling error, too, is the same as \eqref{eq:5.2.5}.
+
+\subsection*{Zeroing Out versus Compression}
+
+As seen in Section~5.2 for the case of balanced panels, the fixed-effects estimator
+can be calculated as the OLS estimator on the pooled sample (of size $Mn$) of deviations
+from group means. As before, let $\tilde{\mathbf{y}}_i$, $\widetilde{\mathbf{F}}_i$, and
+$\tilde{\boldsymbol{\eta}}_i$ be the transformations by $\mathbf{Q}$
+of $\mathbf{y}_i$, $\mathbf{F}_i$, and $\boldsymbol{\eta}_i$, respectively. For example,
+$\tilde{\mathbf{y}}_i$ looks like
+\[
+  \underset{(M \times M)}{\tilde{\mathbf{y}}_i} \equiv \mathbf{Q}\mathbf{y}_i
+  = \begin{bmatrix} d_{i1} \cdot y_{i1} - d_{i1} \cdot \bar{y}_i \\
+    \vdots \\
+    d_{iM} \cdot y_{iM} - d_{iM} \cdot \bar{y}_i
+  \end{bmatrix},
+\]
+where
+\begin{equation}
+  \bar{y}_i \equiv \frac{1}{M_i}\,\mathbf{d}_i'\mathbf{y}_i
+  = \frac{1}{M_i} \times (\text{sum of } y_{im} \text{ over } m
+  \text{ for which data are available}).
+  \label{eq:5.3.6} \tag{5.3.6}
+\end{equation}
+
+Thus, if observation $m$ for group $i$ is available, the $m$-th element of $\tilde{\mathbf{y}}_i$ is still the
+deviation of $y_{im}$ from the group mean, but the group mean is over available observations.
+Since $d_{im} = 0$ if observation $m$ is not available, the rows corresponding to
+missing observations in $\tilde{\mathbf{y}}_i$ are zero. The same structure applies to columns of
+$\widetilde{\mathbf{F}}_i$.
+Therefore, the pooled sample of size $Mn$ created from
+$(\tilde{\mathbf{y}}_i, \widetilde{\mathbf{F}}_i)$ $(i = 1, \ldots, n)$ has
+a number of rows filled with zeros. Those rows can be dropped from the pooled
+sample without affecting the numerical value of the fixed-effects estimator. That
+is, we can ``compress'' $(\tilde{\mathbf{y}}_i, \widetilde{\mathbf{F}}_i)$ by dropping rows filled with zeros, before forming
+the pooled sample.
+
+\subsection*{No Selectivity Bias}
+
+The fixed-effects estimator, thus adapted to unbalanced panels, remains consistent
+and asymptotically normal, if the orthogonality conditions \eqref{eq:5.2.6} in Proposition
+5.1 are modified to
+\begin{equation}
+  \text{(no selectivity bias)} \quad
+  \E(\mathbf{f}_{im} \cdot \eta_{ih} \mid \mathbf{d}_i) = \mathbf{0}
+  \quad (m, h = 1, 2, \ldots, M).
+  \label{eq:5.3.7} \tag{5.3.7}
+\end{equation}
+
+As shown in the next proposition, this condition is crucial for ensuring the consistency
+of the fixed-effects estimator. By the Law of Total Expectations, this condition
+is stronger than \eqref{eq:5.2.6} that the unconditional expectation is zero. It is easy to
+construct an example where \eqref{eq:5.3.7} does not hold because the pattern of selection
+$\mathbf{d}_i$ depends on the error term $\boldsymbol{\eta}_i$. Note that \eqref{eq:5.3.7} does not involve the fixed effect
+$\alpha_i$. Thus, if the dependence of sample selection on the error term is only through
+the fixed effect, the problem of sample selectivity bias does not occur.
+
+If the orthogonality conditions \eqref{eq:5.2.6} are strengthened as \eqref{eq:5.3.7}, the conclusions
+of Proposition~5.3 carry over:
+
+\begin{proposition}[large-sample properties of the fixed-effects estimator for unbalanced panels]
+\label{prop:5.4}
+Consider the error-components model consisting of \eqref{eq:5.3.4},
+\eqref{eq:5.1.2}, \eqref{eq:5.1.4}--\eqref{eq:5.1.6}, \eqref{eq:5.1.15}, and
+\eqref{eq:5.3.7}, with $(\mathbf{y}_i, \mathbf{F}_i, \boldsymbol{\eta}_i)$ as in \eqref{eq:5.3.3}. As
+before, define $(\tilde{\mathbf{y}}_i, \widetilde{\mathbf{F}}_i, \tilde{\boldsymbol{\eta}}_i)$
+by \eqref{eq:5.2.2}, but with $\mathbf{Q}$ given by \eqref{eq:5.3.5}. Then the conclusions
+of Proposition~5.3 hold.
+\end{proposition}
+
+Here we show that $\E(\mathbf{F}_i'\mathbf{Q}\boldsymbol{\eta}_i) = \mathbf{0}$.
+(The other parts of the proof, which are applications of Kolmogorov's LLN and the Lindeberg-Levy CLT, are the same as in the
+proof of Proposition~5.3.) Since
+\begin{equation}
+  \mathbf{F}_i'\mathbf{Q}\boldsymbol{\eta}_i
+  = \sum_{m=1}^{M}\sum_{h=1}^{M}q_{mh}^{(i)} \cdot d_{im} \cdot d_{ih}
+  \cdot \mathbf{f}_{im} \cdot \eta_{ih},
+  \label{eq:5.3.8} \tag{5.3.8}
+\end{equation}
+where $q_{mh}^{(i)}$ is the $(m,h)$ element of $\mathbf{Q}$ applied to the $i$-th equations, we have
+\begin{equation}
+  \E(\mathbf{F}_i'\mathbf{Q}\boldsymbol{\eta}_i)
+  = \sum_{m=1}^{M}\sum_{h=1}^{M}
+  \E(q_{mh}^{(i)} \cdot d_{im} \cdot d_{ih} \cdot \mathbf{f}_{im} \cdot \eta_{ih}).
+  \label{eq:5.3.9} \tag{5.3.9}
+\end{equation}
+
+If there is no selectivity bias so that
+$\E(\mathbf{f}_{im} \cdot \eta_{ih} \mid \mathbf{d}_i) = \mathbf{0}$, then \eqref{eq:5.3.9} equals zero
+because
+\begin{align}
+  &\E(q_{mh}^{(i)} \cdot d_{im} \cdot d_{ih} \cdot \mathbf{f}_{im} \cdot \eta_{ih})
+  \notag \\
+  &\quad= \E\!\bigl[q_{mh}^{(i)} \cdot d_{im} \cdot d_{ih}
+  \cdot \E(\mathbf{f}_{im} \cdot \eta_{ih} \mid \mathbf{d}_i)\bigr]
+  \quad (\text{since } q_{mh}^{(i)} \text{ is a function of } \mathbf{d}_i).
+  \label{eq:5.3.10} \tag{5.3.10}
+\end{align}
+
+It is interesting that the extension to unbalanced panels is easier without conditional
+homoskedasticity. In order for \eqref{eq:5.2.7} of Proposition~5.1 to be the asymptotic
+variance of the estimator under conditional homoskedasticity, we would have to
+assume that the second moment of $\tilde{\boldsymbol{\eta}}_i$ conditional on $\mathbf{x}_i$ \emph{and}
+$\mathbf{d}_i$ equals the unconditional second moment, and consistent estimation of this second moment would be
+a bit complicated.
+
+\bigskip
+\noindent\rule{\textwidth}{0.5pt}
+\textsc{Questions for Review}
+\medskip
+
+\begin{enumerate}
+\item For $\mathbf{d}_i = (1, 0, 1)'$, write down $\mathbf{Q}$.
+
+\item (Alternative derivation of the fixed-effects estimator for unbalanced panels)\quad
+  Let $\mathbf{y}_i^*$ be the $M_i$-dimensional vector created from the $M$-dimensional vector
+  $\mathbf{y}_i$ by dropping rows for which there is no observation. Similarly, create $\mathbf{F}_i^*$
+  ($M_i \times \#\boldsymbol{\beta}$) from $\mathbf{F}_i$ and $\mathbf{d}_i^*$ from $\mathbf{d}_i$
+  (so $\mathbf{d}_i^*$ is the $M_i$-dimensional vector of
+  ones). Let $\mathbf{Q}^*$ ($M_i \times M_i$) be the annihilator associated with $\mathbf{d}_i^*$.
+  Verify that the
+  fixed-effects estimator can also be written as \eqref{eq:5.2.4} in terms of those starred
+  matrices and vectors.
+
+\item Section~4.6 described the pooled OLS in levels for the system (4.6.1$'$) on page~292.
+  \begin{enumerate}[label=(\alph*)]
+  \item How would you modify the estimator (4.6.11$'$) on page~293 to accommodate
+    unbalanced panels? \textbf{Hint:} Define $\mathbf{y}_i$ and $\mathbf{Z}_i$
+    ($M \times L$) by ``zeroing out.''
+  \item Without conditional homoskedasticity, what is its asymptotic variance?
+    [Answer: $\bigl[\E(\mathbf{Z}_i\mathbf{Z}_i')\bigr]^{-1}\,
+    \E(\mathbf{Z}_i\boldsymbol{\varepsilon}_i\boldsymbol{\varepsilon}_i'\mathbf{Z}_i')\,
+    \bigl[\E(\mathbf{Z}_i\mathbf{Z}_i')\bigr]^{-1}$.]
+  \item How would you estimate the asymptotic variance? \textbf{Hint:} Replace
+    $\widetilde{\mathbf{F}}_i$ by $\mathbf{Z}_i$,
+    $\mathbf{Q}$ by $\mathbf{I}_M$, and $\tilde{\boldsymbol{\eta}}_i$ by
+    $\boldsymbol{\varepsilon}_i$ in Proposition~5.3.
+  \end{enumerate}
+\end{enumerate}

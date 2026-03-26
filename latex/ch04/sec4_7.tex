@@ -1,0 +1,549 @@
+% sec4_7.tex — Section 4.7: Application: Interrelated Factor Demands
+
+\section{Application: Interrelated Factor Demands}
+\label{sec:4.7}
+
+The \textbf{translog cost function} is a generalization of the Cobb-Douglas (log-linear)
+cost function introduced in Section~1.7. An attractive feature of the translog specification
+is that the cost-minimizing input demand equations, if transformed into cost
+share equations, are linear in the logs of output and factor prices, with the coefficients
+inheriting (a subset of) the cost function parameters characterizing the technology.
+Those technology parameters can be estimated from a system of equations
+for cost shares. Early applications of this idea include Berndt and Wood (1975)
+and Christensen and Greene (1976). This section reviews their basic methodology.
+The methodology is also applicable in the analysis of consumer demand.
+
+To better focus on the issue at hand and to follow the practice of those original
+studies, we will proceed under the assumption of conditional homoskedasticity.
+Also, we will assume that the regressors in the system of share equations, which are
+log factor prices and log output, are predetermined. As we argued in Section~1.7,
+this assumption is not unreasonable for the U.S.\ electric power industry before the
+recent deregulation. Consequently, the appropriate multiple-equation estimation
+technique is the multivariate regression.
+
+\subsection*{The Translog Cost Function}
+
+We have already made a partial transition from the log-linear to translog cost function:
+in the empirical exercise of Chapter~1, we entertained the idea of adding the
+square of log output to the log-linear cost function (see Model~4). If this idea is
+extended to the quadratic and cross terms in the logs of all the arguments, the log-linear
+cost function with three inputs (1.7.4) becomes the translog cost function:
+\begin{multline}
+\log(C) = \alpha_0 + \sum_{j=1}^{3} \alpha_j \log(p_j)
++ \frac{1}{2} \sum_{j=1}^{3} \sum_{k=1}^{3}
+\gamma_{jk} \log(p_j) \log(p_k) \\
++ \alpha_Q \log(Q) + \frac{1}{2} \gamma_{QQ} (\log(Q))^2
++ \sum_{j=1}^{3} \gamma_{jQ} \log(p_j) \log(Q) + \varepsilon.
+\label{eq:4.7.1}
+\end{multline}
+Here, and as in the rest of this section, the observation subscript ``$i$'' is dropped.
+In this expression, the term
+\[
+\frac{1}{2} \sum_{j=1}^{3} \sum_{k=1}^{3}
+\gamma_{jk} \log(p_j) \log(p_k)
+\]
+is a quadratic form representing the second-order effect of factor prices. We can
+assume, without loss of generality, that the $3 \times 3$ matrix of quadratic form
+coefficients, $(\gamma_{jk})$, is symmetric:\footnote{Let $\mathbf{x}$ be an
+$n$-dimensional vector. The associated quadratic form is $\mathbf{x}'\mathbf{A}\mathbf{x}$.
+Since $\mathbf{x}'\mathbf{A}\mathbf{x} = \mathbf{x}'\mathbf{A}'\mathbf{x}$, we have
+$\mathbf{x}'\mathbf{A}\mathbf{x} = \mathbf{x}'[(\mathbf{A} + \mathbf{A}')/2]\mathbf{x}$.
+So if $\mathbf{A}$ is not symmetric, it can be replaced by the symmetric matrix
+$(\mathbf{A} + \mathbf{A}')/2$ without changing the value of the quadratic form.}
+\begin{equation}
+\gamma_{jk} = \gamma_{kj} \quad (j, k = 1, 2, 3).
+\label{eq:4.7.2}
+\end{equation}
+
+In the case of log-linear cost function examined in Section~1.7, the degree of
+returns to scale can be calculated as the reciprocal of the elasticity of costs with
+respect to output. If this definition is applied to the translog cost function, we have
+\begin{equation}
+\text{returns to scale} = \frac{1}{\partial \log(C) / \partial \log(Q)}
+= \frac{1}{\alpha_Q + \gamma_{QQ} \log(Q)
++ \sum_{j=1}^{3} \gamma_{jQ} \log(p_j)}.
+\label{eq:4.7.3}
+\end{equation}
+
+\subsection*{Factor Shares}
+
+The link between the cost function parameters and factor demands is given by
+\textbf{Shephard's Lemma} from microeconomics. Let $x_j$ be the cost-minimizing demand
+for factor input $j$ given factor prices $(p_1, p_2, p_3)$ and output $Q$.
+So $\sum_{j=1}^{3} p_j x_j = C$. The lemma states that
+\begin{equation}
+\frac{\partial C}{\partial p_j} = x_j.
+\label{eq:4.7.4}
+\end{equation}
+Noting that
+\[
+\frac{\partial \log(C)}{\partial \log(p_j)}
+= \frac{p_j}{C} \cdot \frac{\partial C}{\partial p_j},
+\]
+the lemma can also be written as stating that the logarithmic partial derivative of
+the cost function equals the factor share, namely,
+\begin{equation}
+\frac{\partial \log(C)}{\partial \log(p_j)} = \frac{p_j x_j}{C}.
+\label{eq:4.7.5}
+\end{equation}
+
+For the case of translog cost function given in~\eqref{eq:4.7.1}, the log partial
+derivative is easy to calculate:
+\begin{equation}
+\frac{\partial \log(C)}{\partial \log(p_j)}
+= \alpha_j + \sum_{k=1}^{3} \gamma_{jk} \log(p_k) + \gamma_{jQ} \log(Q)
+\quad (j = 1, 2, 3).
+\label{eq:4.7.6}
+\end{equation}
+Combining this with~\eqref{eq:4.7.5} and defining the cost shares
+$s_j \equiv p_j x_j / C$, we obtain the following system of cost share equations
+associated with the translog cost function:
+\begin{equation}
+s_j = \alpha_j + \sum_{k=1}^{3} \gamma_{jk} \log(p_k) + \gamma_{jQ} \log(Q)
+\quad (j = 1, 2, 3).
+\label{eq:4.7.7}
+\end{equation}
+This system of share equations is subject to the \textit{cross-equation restrictions}
+that the coefficient of $\log(p_k)$ in the $s_j$ equation equals the coefficient of
+$\log(p_j)$ in the $s_k$ equation for $j \neq k$. In the rest of this section, these
+cross-equation restrictions will be called the symmetry restrictions, although they
+are \textit{not} a consequence of the symmetry assumption~\eqref{eq:4.7.2}.
+Those cross-equation restrictions are a consequence of calculus: you should verify
+that, if you did not assume symmetry, the coefficient of $\log(p_2)$ in the $s_1$
+equation, for example, would be $(\gamma_{12} + \gamma_{21})/2$, which would
+equal the $\log(p_1)$ coefficient in the $s_2$ equation.
+
+\subsection*{Substitution Elasticities}
+
+In the production function literature, a great deal of attention has been paid to
+estimating the elasticities of substitution (more precisely, the Hicks-Allen partial
+elasticities of substitution) between various inputs.\footnote{See Section~9.2 of
+Berndt (1991) for a historical overview.}
+As shown in Uzawa (1962), the substitution elasticity between $j$ and $k$,
+denoted $\eta_{jk}$, is related to the cost function $C$ by the formula
+\begin{equation}
+\eta_{jk} = \frac{C \cdot \dfrac{\partial^2 C}{\partial p_j \partial p_k}}
+{\dfrac{\partial C}{\partial p_j} \cdot \dfrac{\partial C}{\partial p_k}}.
+\label{eq:4.7.8}
+\end{equation}
+
+For the translog cost function, some routine calculus and Shephard's lemma
+show that
+\begin{equation}
+\eta_{jk} = \begin{cases}
+\dfrac{\gamma_{jk} + s_j s_k}{s_j s_k} & \text{for } j \neq k, \\[10pt]
+\dfrac{\gamma_{jj} + s_j^2 - s_j}{s_j^2} & \text{for } j = k,
+\end{cases}
+\label{eq:4.7.9}
+\end{equation}
+where $s_j$ is the cost share of input $j$. In the special case of the log-linear cost
+function where $\gamma_{jk} = 0$ for all $j, k$, we have $\eta_{jk} = 1$ for
+$j \neq k$, verifying that the substitution elasticities are unity between any two
+factor inputs for the Cobb-Douglas technology.
+
+\subsection*{Properties of Cost Functions}
+
+As is well known in microeconomics (see, e.g., Varian, 1992, Chapter~5), cost
+functions have the following properties:
+
+\begin{enumerate}
+\item \textit{(Homogeneity)}\quad
+Homogeneous of degree one in factor prices.
+
+\item \textit{(Monotonicity)}\quad
+Nondecreasing in factor prices, which requires that
+$\partial C / \partial p_j \geq 0$ for all $j$.
+
+\item \textit{(Concavity)}\quad
+Concave in factor prices, which requires that the Hessian (the
+matrix of second-order derivatives) of a cost function $C$, say
+\[
+\mathbf{H} \equiv (\partial^2 C / \partial p_j \partial p_k),
+\]
+be negative semidefinite. By~\eqref{eq:4.7.8}, concavity is satisfied if and only if
+the matrix of substitution elasticities, $(\eta_{jk})$, is negative
+semidefinite.\footnote{Let $\mathbf{H}$ be the Hessian of the cost function $C$
+and $\mathbf{V}$ be a diagonal matrix whose $j$-th diagonal is $\partial C / \partial p_j$.
+Then the matrix of substitution elasticities, $(\eta_{jk})$, given in~\eqref{eq:4.7.8}
+can be written compactly as: $(\eta_{jk}) = C \cdot \mathbf{V}^{-1} \mathbf{H}
+\mathbf{V}^{-1}$. Since $\mathbf{V}$ is a diagonal matrix,
+$\mathbf{V}^{-1} \mathbf{H} \mathbf{V}^{-1}$ is negative semidefinite if and only
+if $\mathbf{H}$ is.}
+\end{enumerate}
+
+For the case of translog cost function, these properties take the following form.
+
+\begin{enumerate}
+\item \textit{Homogeneity:}\quad
+It is easy to verify (see a review question) that, with the symmetry
+restrictions imposed on $(\gamma_{jk})$, the homogeneity condition can be expressed as
+\begin{equation}
+\begin{cases}
+\alpha_1 + \alpha_2 + \alpha_3 = 1, \\
+\gamma_{11} + \gamma_{12} + \gamma_{13} = 0, \\
+\gamma_{12} + \gamma_{22} + \gamma_{23} = 0, \\
+\gamma_{13} + \gamma_{23} + \gamma_{33} = 0, \\
+\gamma_{1Q} + \gamma_{2Q} + \gamma_{3Q} = 0.
+\end{cases}
+\label{eq:4.7.10}
+\end{equation}
+Homogeneity will be imposed in our estimation of the share equations.
+
+\item \textit{Monotonicity:}\quad
+Given Shephard's lemma, monotonicity is equivalent to requiring
+that the right-hand sides of the share equations~\eqref{eq:4.7.7} be nonnegative for
+any combinations of factor prices and output. For any values of coefficients,
+we can always choose factor prices and output so that this condition is violated.
+Accordingly, we cannot impose monotonicity on the share equations. It
+is possible, however, to check whether monotonicity is satisfied for the ``relevant
+range,'' that is, if it is satisfied for all the combinations of factor prices and
+output found in the data at hand; we will do this for the estimated parameters
+below.
+
+\item \textit{Concavity:}\quad
+Concavity requires that the matrix of substitution elasticities given
+by~\eqref{eq:4.7.9} be negative semidefinite for any combinations of cost shares.
+It is possible to show that a necessary and sufficient condition for concavity is that
+the $3 \times 3$ matrix $(\gamma_{jk})$ be negative semidefinite.\footnote{Proof:
+Let $\mathbf{s}$ here be a $3 \times 1$ vector whose $j$-th element is $s_j$ and
+$\mathbf{S}$ here be a diagonal matrix whose $j$-th element is $s_j$.
+Then the matrix of substitution elasticities given in~\eqref{eq:4.7.9} can be written
+as $(\eta_{jk}) = \mathbf{S}^{-1}[(\gamma_{jk}) + \mathbf{s}\mathbf{s}' -
+\mathbf{S}]\mathbf{S}^{-1}$. For some combination of cost shares,
+$\mathbf{s}\mathbf{s}' - \mathbf{S}$ is zero (for example, set
+$\mathbf{s} = (1, 0, 0)'$). So a necessary condition for the matrix $(\eta_{jk})$
+to be negative semidefinite is that the matrix $(\gamma_{jk})$ is negative
+semidefinite. This condition is also sufficient, because the matrix
+$\mathbf{s}\mathbf{s}' - \mathbf{S}$ is negative semidefinite and the sum of two
+negative semidefinite matrices is negative semidefinite.}
+In particular, the diagonal elements, $(\gamma_{11}, \gamma_{22}, \gamma_{33})$,
+have to be nonpositive. The condition that the matrix $(\gamma_{jk})$ be negative
+semidefinite is a set of inequality conditions on its elements.
+Estimation while imposing inequality conditions is feasible (see Jorgenson,
+1986, Section~2.4.5, for the required technique), but it will not be pursued here.
+\end{enumerate}
+
+\subsection*{Stochastic Specifications}
+
+The translog cost function given in~\eqref{eq:4.7.1} has an (additive) error term,
+$\varepsilon$, while the share equations derived from it have none. On our data, the
+share equations do not hold exactly for each firm, so we need to allow for errors.
+The usual practice is to add a random disturbance term to each share equation.
+There are two ways to justify such a stochastic specification. One is optimization
+errors: firms make random errors in choosing their cost-minimizing input
+combinations. But then actual total costs will not be as low as what is indicated
+in the cost function, because there is no room for optimization errors in the
+derivation of the cost function. The other justification for errors is to allow the
+$\alpha_j$ in the share equations to be stochastic and differ across firms.
+The intercept in the share equation for $j$ would then be the mean of $\alpha_j$,
+and the error term would be the deviation of $\alpha_j$ from its mean. But this
+also means that the $\alpha_j$ in the cost function has to be treated as random.
+
+In either case, therefore, internal consistency would prevent us from adding
+the cost function to the share equations with additive errors to form a system of
+estimation equations. In the rest of this section, we will focus on a system that
+consists entirely of share equations. This, however, means that we can estimate
+only a subset of the cost function parameters. Two parameters, $\alpha_Q$ and
+$\gamma_{QQ}$, which are absent in factor demands, cannot be estimated.
+Since the degree of returns to scale depends on them (see~\eqref{eq:4.7.3}),
+it cannot be estimated either.
+
+\subsection*{The Nature of Restrictions}
+
+With the additive errors appended, the system of share equations~\eqref{eq:4.7.7}
+is written out in full as
+\begin{equation}
+\begin{cases}
+s_1 = \alpha_1 + \gamma_{11} \log(p_1) + \gamma_{12} \log(p_2)
++ \gamma_{13} \log(p_3) + \gamma_{1Q} \log(Q) + \varepsilon_1, \\
+s_2 = \alpha_2 + \gamma_{21} \log(p_1) + \gamma_{22} \log(p_2)
++ \gamma_{23} \log(p_3) + \gamma_{2Q} \log(Q) + \varepsilon_2, \\
+s_3 = \alpha_3 + \gamma_{31} \log(p_1) + \gamma_{32} \log(p_2)
++ \gamma_{33} \log(p_3) + \gamma_{3Q} \log(Q) + \varepsilon_3.
+\end{cases}
+\label{eq:4.7.11}
+\end{equation}
+
+This system has fifteen coefficients or parameters. The cross-equation restrictions
+(that the $3 \times 3$ matrix of log price coefficients, $(\gamma_{jk})$, be symmetric)
+and the homogeneity restrictions~\eqref{eq:4.7.10} form a set of eight restrictions,
+so that the fifteen parameters can be described by seven free parameters.
+To understand this, it is useful to decompose the restrictions into the following three groups.
+\begin{align}
+\text{adding-up restrictions:} \quad &
+\begin{cases}
+\alpha_1 + \alpha_2 + \alpha_3 = 1, \\
+\gamma_{11} + \gamma_{21} + \gamma_{31} = 0, \\
+\gamma_{12} + \gamma_{22} + \gamma_{32} = 0, \\
+\gamma_{13} + \gamma_{23} + \gamma_{33} = 0, \\
+\gamma_{1Q} + \gamma_{2Q} + \gamma_{3Q} = 0.
+\end{cases}
+\label{eq:4.7.12} \\[6pt]
+\text{homogeneity:} \quad &
+\begin{cases}
+\gamma_{11} + \gamma_{12} + \gamma_{13} = 0, \\
+\gamma_{21} + \gamma_{22} + \gamma_{23} = 0, \\
+\gamma_{31} + \gamma_{32} + \gamma_{33} = 0,
+\end{cases}
+\label{eq:4.7.13} \\[6pt]
+\text{symmetry:} \quad &
+\begin{cases}
+\gamma_{12} = \gamma_{21}, \\
+\gamma_{13} = \gamma_{31}, \\
+\gamma_{23} = \gamma_{32}.
+\end{cases}
+\label{eq:4.7.14}
+\end{align}
+
+These are eleven equations, but only eight of them are restrictive: given the
+adding-up restrictions, one of the three homogeneity restrictions is implied by
+the two others, and given the adding-up and homogeneity restrictions, two of the
+three symmetry restrictions are implied by the other (you should verify this).
+
+\subsection*{Multivariate Regression Subject to Cross-Equation Restrictions}
+
+It is straightforward to impose the homogeneity restrictions,~\eqref{eq:4.7.13},
+because they are not cross-equation restrictions. We can eliminate three parameters,
+say $(\gamma_{13}, \gamma_{23}, \gamma_{33})$, from the system to obtain
+\begin{equation}
+\begin{cases}
+s_1 = \alpha_1 + \gamma_{11} \log(p_1/p_3)
++ \gamma_{12} \log(p_2/p_3) + \gamma_{1Q} \log(Q) + \varepsilon_1, \\
+s_2 = \alpha_2 + \gamma_{21} \log(p_1/p_3)
++ \gamma_{22} \log(p_2/p_3) + \gamma_{2Q} \log(Q) + \varepsilon_2, \\
+s_3 = \alpha_3 + \gamma_{31} \log(p_1/p_3)
++ \gamma_{32} \log(p_2/p_3) + \gamma_{3Q} \log(Q) + \varepsilon_3.
+\end{cases}
+\label{eq:4.7.15}
+\end{equation}
+
+The system (with or without the imposition of homogeneity) has the special
+feature that the sum of the dependent variables, $(s_1, s_2, s_3)$, adds up to unity for
+all observations. This feature and the adding-up restrictions imply that the sum of
+the error terms, $(\varepsilon_1, \varepsilon_2, \varepsilon_3)$, is zero for all
+observations, so the $3 \times 3$ error covariance matrix,
+$\boldsymbol{\Sigma} \equiv \Var(\varepsilon_1, \varepsilon_2, \varepsilon_3)$,
+is singular. Recall that, in the multivariate regression model (which is the special
+case of the SUR model described in Proposition~4.6), the $\mathbf{S}$ matrix defined
+in~\eqref{eq:4.1.11} can be written as a Kronecker product:
+$\mathbf{S} = \boldsymbol{\Sigma} \otimes \E(\mathbf{x}_i \mathbf{x}_i')$.
+Thus $\mathbf{S}$ becomes singular, in violation of Assumption~4.5. The common
+practice to deal with this singularity problem is to drop one equation from the
+system and estimate the system composed of the remaining equations (see below
+for more on this issue). The coefficients in the equation that was dropped can be
+calculated from the coefficient estimates for the included two equations by using
+the adding-up restrictions. The adding-up restrictions as well as homogeneity are
+thus incorporated.
+
+As mentioned above, given the adding-up restrictions and homogeneity, there
+is effectively only one symmetry restriction. For example, if $(\gamma_{13},
+\gamma_{23}, \gamma_{33})$ are eliminated from the system to incorporate homogeneity,
+as in~\eqref{eq:4.7.15}, and if the third equation is dropped to incorporate the
+adding-up restrictions, then the unique symmetry restriction can be stated as
+$\gamma_{12} = \gamma_{21}$. If this cross-equation restriction is imposed, the
+system becomes
+\begin{equation}
+\begin{cases}
+s_1 = \alpha_1 + \gamma_{11} \log(p_1/p_3)
++ \gamma_{12} \log(p_2/p_3) + \gamma_{1Q} \log(Q) + \varepsilon_1, \\
+s_2 = \alpha_2 + \gamma_{12} \log(p_1/p_3)
++ \gamma_{22} \log(p_2/p_3) + \gamma_{2Q} \log(Q) + \varepsilon_2.
+\end{cases}
+\label{eq:4.7.16}
+\end{equation}
+
+Since the regressors are predetermined and since the equations have common
+regressors, the system can be estimated by the multivariate regression subject to
+the cross-equation restriction of symmetry. This constrained estimation, if it is cast
+in the ``common coefficient'' format explored in Section~4.6, can be transformed
+into an unconstrained estimation. That is, the system~\eqref{eq:4.7.16} can be
+written in the ``common coefficient'' format of
+$\mathbf{y}_i = \mathbf{Z}_i \boldsymbol{\delta} + \boldsymbol{\varepsilon}_i$
+(see~\eqref{eq:4.6.1p} on page~292), if we set (while still dropping the ``$i$''
+subscript from $s_1$, $s_2$, $\log(p_1/p_3)$, $\log(p_2/p_3)$, and $\log(Q)$)
+\begin{equation}
+\mathbf{y}_i = \begin{bmatrix} s_1 \\ s_2 \end{bmatrix}, \quad
+\mathbf{Z}_i = \begin{bmatrix}
+1 & 0 & \log(p_1/p_3) & \log(p_2/p_3) & 0 & \log(Q) & 0 \\
+0 & 1 & \log(p_1/p_3) & 0 & \log(p_2/p_3) & 0 & \log(Q)
+\end{bmatrix},
+\quad
+\boldsymbol{\delta}' = \begin{bmatrix}
+\alpha_1 & \alpha_2 & \gamma_{11} & \gamma_{12} & \gamma_{22} &
+\gamma_{1Q} & \gamma_{2Q}
+\end{bmatrix}.
+\label{eq:4.7.17}
+\end{equation}
+So the multivariate regression subject to symmetry is equivalent to the (unconstrained)
+random-effects estimation.
+
+This random-effects estimation of the two-equation system produces consistent
+estimates of the following seven parameters:
+\[
+\alpha_1, \alpha_2, \gamma_{11}, \gamma_{12}, \gamma_{22},
+\gamma_{1Q}, \gamma_{2Q}.
+\]
+The rest of the fifteen share equation parameters,
+\[
+\alpha_3, \gamma_{13}, \gamma_{21}, \gamma_{23}, \gamma_{31}, \gamma_{32},
+\gamma_{33}, \gamma_{3Q},
+\]
+can be calculated using the adding-up restrictions~\eqref{eq:4.7.12},
+homogeneity~\eqref{eq:4.7.13}, and symmetry~\eqref{eq:4.7.14}.
+For example, $\gamma_{33}$ can be calculated as
+\[
+\gamma_{33} = -\gamma_{31} - \gamma_{32}
+= -\gamma_{13} - \gamma_{23}
+= (\gamma_{11} + \gamma_{12}) + (\gamma_{12} + \gamma_{22})
+= \gamma_{11} + 2\gamma_{12} + \gamma_{22}.
+\]
+So the point estimate of $\gamma_{33}$ is given by
+\[
+\hat{\gamma}_{33} = \hat{\gamma}_{11} + 2\hat{\gamma}_{12} + \hat{\gamma}_{22},
+\]
+where $(\hat{\gamma}_{11}, \hat{\gamma}_{12}, \hat{\gamma}_{22})$ are the
+random-effects estimates. The standard error of $\hat{\gamma}_{33}$
+can be calculated by applying the ``delta method'' (see Lemma~2.5) to the
+consistent estimate of
+$\avar(\hat{\gamma}_{11}, \hat{\gamma}_{12}, \hat{\gamma}_{22})$ obtained from the
+random-effects estimation.
+
+\subsection*{Which Equation to Delete?}
+
+Does it matter which equation is to be dropped from the system? It clearly would
+not if there were no cross-equation restrictions, because the multivariate regression
+is numerically equivalent to the equation-by-equation OLS. To see if the numerical
+invariance holds under the cross-equation restriction, let
+$\boldsymbol{\Sigma}^*$ be the $2 \times 2$ matrix of error covariances for the
+two-equation system obtained from dropping one equation from the three-equation
+system~\eqref{eq:4.7.15}. It is the appropriate submatrix of the $3 \times 3$ error
+covariance matrix $\boldsymbol{\Sigma}$. (For example, if the third equation is dropped,
+then $\boldsymbol{\Sigma}^*$ is the leading $2 \times 2$ submatrix of the $3 \times 3$
+matrix $\boldsymbol{\Sigma}$.) To implement the random-effects estimation, we need a
+consistent estimate, $\widehat{\boldsymbol{\Sigma}}^*$, of $\boldsymbol{\Sigma}^*$.
+Two ways for obtaining $\widehat{\boldsymbol{\Sigma}}^*$ are:
+
+\begin{itemize}
+\item (equation-by-equation OLS)\quad Estimate the two equations separately, thus
+ignoring the cross-equation restriction, and then use the residuals to calculate
+$\widehat{\boldsymbol{\Sigma}}^*$. Equivalently, estimate the \textit{three}
+equations separately by OLS, use the three-equation residuals to calculate
+$\widehat{\boldsymbol{\Sigma}}$ (an estimate of the $3 \times 3$ error covariance
+matrix $\boldsymbol{\Sigma}$), and then extract the appropriate submatrix from
+$\widehat{\boldsymbol{\Sigma}}$. If $\widehat{\boldsymbol{\Sigma}}^*$ is thus
+obtained, then (as you will verify in the empirical exercise) the numerical invariance
+is guaranteed; it does not matter which equation to drop.
+
+\item Obtain $\widehat{\boldsymbol{\Sigma}}^*$ from some technique that exploits
+the cross-equation restriction (such as the pooled OLS applied to the common
+coefficient format). The numerical invariance in this case is not guaranteed.
+\end{itemize}
+
+The numerical invariance holds under equation-by-equation OLS, because the
+$3 \times 3$ matrix $\widehat{\boldsymbol{\Sigma}}$, from which
+$\widehat{\boldsymbol{\Sigma}}^*$ is derived, is singular in finite samples.
+In large samples, as long as $\widehat{\boldsymbol{\Sigma}}^*$ is consistent,
+and even if $\widehat{\boldsymbol{\Sigma}}^*$ is not from equation-by-equation OLS,
+this relationship between $\widehat{\boldsymbol{\Sigma}}^*$ and
+$\widehat{\boldsymbol{\Sigma}}$ holds asymptotically because $\boldsymbol{\Sigma}$
+is singular. So the invariance holds asymptotically if
+$\widehat{\boldsymbol{\Sigma}}^*$ is consistent. In particular, the asymptotic
+variance of parameter estimates does not depend on the choice of equation to drop.
+
+\subsection*{Results}
+
+Nerlove's study examined in Chapter~1 was based on 1955 cross-section data for
+U.S.\ electric utility companies. Christensen and Greene (1976) updated Nerlove's
+data to 1970 for 99 firms, using data sources that allowed them to construct better
+measures of the wage rate and fuel prices (see their Section~V for more details).
+Their data set includes information on factor shares, so the share equations can be
+estimated. The means and standard deviations for some of the variables in the data
+are reported in Table~4.3, which shows that fuel accounts for a very large share of
+the cost of electricity generation.
+
+\begin{table}[htbp]
+\centering
+\caption{Simple Statistics (Sample Size $= 99$)}
+\label{tab:4.3}
+\medskip
+\begin{tabular}{@{}lcccc@{}}
+\toprule
+& Output in & Labor & Capital & Fuel \\
+& kilowatt hours & share & share & share \\
+\midrule
+Mean & 9.0 & 0.141 & 0.227 & 0.631 \\
+Std.\ deviation & 10.3 & 0.059 & 0.062 & 0.095 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+We use the equation-by-equation OLS residuals to calculate
+$\widehat{\boldsymbol{\Sigma}}^*$, so that the random-effects estimates are
+numerically invariant to the choice of equation to drop. The estimates are reported
+in Table~4.4, along with $\widehat{\boldsymbol{\Sigma}}$ derived from the
+equation-by-equation OLS. The factor input index $j$ is 1 for labor, 2 for capital,
+and 3 for fuel. Some (actually all) of the diagonal elements of the matrix of
+estimated price coefficients, $(\hat{\gamma}_{jk})$, are positive.
+So the matrix is not negative semidefinite, in violation of concavity.\footnote{This
+``test'' of concavity can be formalized. Using the delta method, we can calculate
+the asymptotic distribution of the characteristic roots of $(\hat{\gamma}_{jk})$.
+The null hypothesis of concavity is that those characteristic roots are all nonpositive.}
+
+Even if $(\hat{\gamma}_{jk})$ is not negative semidefinite, the associated substitution
+elasticities given in the formula~\eqref{eq:4.7.9} may be negative semidefinite.
+Since the formula is derived assuming no optimization errors, fitted cost shares,
+rather than actual cost shares, should be used for the $s_j$ and $s_k$ in the formula.
+The elasticities averaged over firms are shown in Table~4.5. (They are the
+off-diagonal elements of the symmetric $3 \times 3$ substitution elasticity matrix
+thus calculated.) The three factor inputs are substitutes because the substitution
+elasticities are positive, but the degree of substitutability is far less than what is
+assumed in the log-linear technology. Concavity is violated even in the ``relevant
+range'': for 20 firms out of the 99 in the sample, the matrix of substitution
+elasticities is not negative semidefinite. Monotonicity, in contrast, is satisfied in the
+relevant range: fitted cost shares are nonnegative for all inputs for all firms in the sample.
+
+\begin{table}[htbp]
+\centering
+\caption{Random-Effects Estimates}
+\label{tab:4.4}
+\medskip
+\begin{tabular}{@{}lccc@{}}
+\toprule
+Parameter & Point estimate & Standard error & $t$-value \\
+\midrule
+$\alpha_1$ & $-0.132$ & $0.106$ & $-1.25$ \\
+$\alpha_2$ & $0.318$ & $0.085$ & $3.75$ \\
+$\alpha_3$ & $0.813$ & $0.094$ & $8.69$ \\
+$\gamma_{11}$ & $0.084$ & $0.020$ & $4.19$ \\
+$\gamma_{12}$ & $-0.023$ & $0.016$ & $-1.46$ \\
+$\gamma_{13}$ & $-0.060$ & $0.015$ & $-3.92$ \\
+$\gamma_{22}$ & $0.122$ & $0.020$ & $6.19$ \\
+$\gamma_{23}$ & $-0.099$ & $0.017$ & $-5.75$ \\
+$\gamma_{33}$ & $0.159$ & $0.023$ & $6.90$ \\
+$\gamma_{1Q}$ & $-0.0211$ & $0.0025$ & $-8.55$ \\
+$\gamma_{2Q}$ & $-0.0086$ & $0.0030$ & $-2.87$ \\
+$\gamma_{3Q}$ & $0.0297$ & $0.0037$ & $7.98$ \\
+\bottomrule
+\end{tabular}
+\bigskip
+
+$\widehat{\boldsymbol{\Sigma}}$ by pooled OLS $= \begin{bmatrix}
+0.00173 & -0.000171 & -0.00156 \\
+-0.000171 & 0.00253 & -0.00236 \\
+-0.00156 & -0.00236 & 0.00391
+\end{bmatrix}$
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\caption{Substitution Elasticities}
+\label{tab:4.5}
+\medskip
+\begin{tabular}{@{}ccc@{}}
+\toprule
+Labor-Capital & Capital-Fuel & Labor-Fuel \\
+\midrule
+0.17 & 0.27 & 0.29 \\
+\bottomrule
+\end{tabular}
+\end{table}

@@ -1,0 +1,388 @@
+% sec9_2.tex — Section 9.2: Tools for Unit-Root Econometrics
+
+The basic tool in unit-root econometrics is what is called the ``functional central
+limit theorem'' (FCLT). For the FCLT to be applicable, we need to specialize I(1)
+processes by placing restrictions on the associated I(0) processes. Which restrictions to place, that is, which class of I(0) processes to focus on, differs from author
+to author, depending on the version of the FCLT in use. In this book, following the
+practice in the literature, we focus on linear I(0) processes. After defining linear
+I(0) processes, this section introduces some concepts and results that will be used
+repeatedly in the rest of this chapter.
+
+\subsection*{Linear I(0) Processes}
+
+Our definition of linear I(0) processes is as follows.
+
+\begin{definition}[Linear I(0) processes]
+\label{def:9.2}
+A linear I(0) process can be written as a
+constant plus a zero-mean linear process $\{u_t\}$ such that
+\begin{align}
+u_t &= \psi(L)\varepsilon_t, \quad
+\psi(L) \equiv \psi_0 + \psi_1 L + \psi_2 L^2 + \cdots
+\quad \text{for } t = 0, \pm 1, \pm 2, \ldots.
+\label{eq:9.2.1} \\
+\{\varepsilon_t\} &\text{ is independent white noise (i.i.d.\ with mean 0 and }
+\E(\varepsilon_t^2) \equiv \sigma^2 > 0\text{),}
+\label{eq:9.2.2}
+\end{align}
+\begin{align}
+\sum_{j=0}^{\infty} j|\psi_j| &< \infty,
+\label{eq:9.2.3a}
+\tag{9.2.3a} \\
+\psi(1) &\neq 0.
+\label{eq:9.2.3b}
+\tag{9.2.3b}
+\end{align}
+\end{definition}
+
+The innovation process $\{\varepsilon_t\}$ is assumed to be white noise i.i.d. This requirement is
+for simplifying the exposition and can be relaxed substantially.\footnote{For
+example, the innovation process can be stationary martingale differences. See,
+e.g., Theorem~3.8 of Tanaka (1996, p.~80).} In the rest of this
+chapter, we will refer to linear I(0) processes as simply I(0) processes, without the
+qualifier ``linear.'' Also, unless otherwise stated, $\{\varepsilon_t\}$ will be an independent white
+noise process and $\{u_t\}$ a zero-mean I(0) process.
+
+Condition~\eqref{eq:9.2.3a} (sometimes called the \textbf{one-summability} condition) is
+stronger than the more familiar condition of absolute summability. This stronger
+assumption will make it easier to prove large sample results of the next section,
+with the help of the Beveridge-Nelson decomposition to be introduced shortly.
+Since $\{\psi_j\}$ is absolutely summable, the linear process $\{u_t\}$ is strictly stationary
+and ergodic by Proposition~6.1(d). The $j$-th order autocovariance of $\{u_t\}$ will be
+denoted $\gamma_j$. Since $\E(u_t) = 0$, $\gamma_j = \E(u_t u_{t-j})$. By Proposition~6.1(c) the autocovariances are absolutely summable.
+
+To understand condition~\eqref{eq:9.2.3b}, recall that the long-run variance (which we
+denote $\lambda^2$ in this chapter) equals the value of the autocovariance-generating function at $z = 1$ by Proposition~6.8(b). By Proposition~6.6 it is given by
+\begin{equation}
+\label{eq:9.2.4}
+\lambda^2 \equiv \text{long-run variance of } \{u_t\}
+= \gamma_0 + 2 \sum_{j=1}^{\infty} \gamma_j
+= \sigma^2 \cdot [\psi(1)]^2.
+\end{equation}
+The condition~\eqref{eq:9.2.3b} thus ensures the long-run variance to be positive.
+
+\subsection*{Approximating I(1) by a Random Walk}
+
+Let $\{\xi_t\}$ be I(1) so that $\Delta \xi_t = \delta + u_t$ where $u_t \equiv \psi(L)\varepsilon_t$ is a zero-mean I(0)
+process satisfying \eqref{eq:9.2.1}--\eqref{eq:9.2.3b} with $\E(\xi_0^2) < \infty$. Using the following identity
+(to be verified in Review Question~1):
+\begin{align}
+\psi(L) &= \psi(1) + \Delta \alpha(L), \quad \Delta \equiv 1 - L, \notag \\
+\alpha(L) &\equiv \sum_{j=0}^{\infty} \alpha_j L^j, \quad
+\alpha_j = -(\psi_{j+1} + \psi_{j+2} + \cdots) \quad (j = 0, 1, 2, \ldots),
+\label{eq:9.2.5}
+\end{align}
+we can write $u_t$ as
+\begin{equation}
+\label{eq:9.2.6}
+u_t \equiv \psi(L)\varepsilon_t = \psi(1) \cdot \varepsilon_t + \eta_t - \eta_{t-1}
+\quad \text{with } \eta_t \equiv \alpha(L)\varepsilon_t.
+\end{equation}
+It can be shown (see Analytical Exercise~7) that $\alpha(L)$ is absolutely summable.
+So, by Proposition~6.1(a), $\{\eta_t\}$ is a well-defined zero-mean covariance-stationary
+process (it is actually ergodic stationary by Proposition~6.1(d)). Substituting~\eqref{eq:9.2.6}
+into~\eqref{eq:9.1.4}, we obtain (what is known in econometrics as) the \textbf{Beveridge-Nelson
+decomposition}:
+\begin{align}
+\xi_t &= \delta \cdot t + \sum_{s=1}^{t}[\psi(1) \cdot \varepsilon_s + \eta_s - \eta_{s-1}] + \xi_0 \notag \\
+&= \delta \cdot t + \psi(1) \sum_{s=1}^{t} \varepsilon_s + \eta_t + (\xi_0 - \eta_0)
+\quad \Bigl(\text{since } \sum_{s=1}^{t}(\eta_s - \eta_{s-1}) = \eta_t - \eta_0\Bigr).
+\label{eq:9.2.7}
+\end{align}
+Thus, any linear I(1) process can be written as the sum of a linear time trend ($\delta \cdot t$),
+a driftless random walk or a stochastic trend ($\psi(1)(\varepsilon_1 + \varepsilon_2 + \cdots + \varepsilon_t)$), a stationary
+process ($\eta_t$), and an initial condition ($\xi_0 - \eta_0$). Stated somewhat differently, we
+have
+
+\begin{proposition}[Beveridge-Nelson decomposition]
+\label{prop:9.1}
+Let $\{u_t\}$ be a zero-mean
+I(0) process satisfying \eqref{eq:9.2.1}--\eqref{eq:9.2.3b}. Then
+\[
+u_1 + u_2 + \cdots + u_t = \psi(1)(\varepsilon_1 + \varepsilon_2 + \cdots + \varepsilon_t) + \eta_t - \eta_0,
+\]
+where $\eta_t \equiv \alpha(L)\varepsilon_t$, $\alpha_j = -(\psi_{j+1} + \psi_{j+2} + \cdots)$. $\{\eta_t\}$ is zero-mean ergodic
+stationary.\footnote{For a more general condition, which does not require the I(0)
+process $\{u_t\}$ to be linear, under which $u_1 + \cdots + u_t$ is decomposed as shown here,
+see Theorem~5.4 of Hall and Heyde (1980). In that theorem, $\{\varepsilon_t\}$ is a
+stationary martingale difference sequence, so the stochastic trend is a martingale.}
+\end{proposition}
+
+For a moment set $\delta = 0$ in~\eqref{eq:9.2.7} so that $\{\xi_t\}$ is driftless I(1). An important
+implication of the decomposition is that any driftless I(1) process is dominated by
+the stochastic trend $\psi(1) \sum_{s=1}^{t} \varepsilon_s$ in the following sense. Divide both sides of the
+decomposition~\eqref{eq:9.2.7} (with $\delta = 0$) by $\sqrt{t}$ to obtain
+\begin{equation}
+\label{eq:9.2.8}
+\frac{\xi_t}{\sqrt{t}} = \psi(1) \cdot \frac{1}{\sqrt{t}} \sum_{s=1}^{t} \varepsilon_s
++ \left[\frac{\xi_0}{\sqrt{t}} + \frac{\eta_t}{\sqrt{t}} - \frac{\eta_0}{\sqrt{t}}\right].
+\end{equation}
+Since $\E(\xi_0^2) < \infty$ by assumption, $\E[(\xi_0/\sqrt{t})^2] \to 0$ as $t \to \infty$. So $\xi_0/\sqrt{t}$ converges in mean square (and hence in probability) to zero. The same applies to
+$\eta_t/\sqrt{t}$ and $\eta_0/\sqrt{t}$. So the terms in the brackets on the right-hand side of~\eqref{eq:9.2.8} can
+be ignored asymptotically. In contrast, the first term has a limiting distribution of
+$N(0, \sigma^2 \cdot [\psi(1)]^2)$ by the Lindeberg-Levy CLT of Section~2.1. In this sense, the stochastic trend grows at rate $\sqrt{t}$. Using~\eqref{eq:9.2.4}, the stochastic trend can be written as
+\begin{equation}
+\label{eq:9.2.9}
+\psi(1)(\varepsilon_1 + \varepsilon_2 + \cdots + \varepsilon_t)
+= \lambda \cdot \left(\frac{\varepsilon_1}{\sigma} + \frac{\varepsilon_2}{\sigma} + \cdots + \frac{\varepsilon_t}{\sigma}\right),
+\end{equation}
+which shows that changes in the stochastic trend in $\xi_t$ have a variance of $\lambda^2$, the
+long-run variance of $\{\Delta \xi_t\}$.
+
+Now suppose $\delta \neq 0$ so that $\{\xi_t\}$ is I(1) with drift. As is clear from dividing
+both sides of~\eqref{eq:9.2.7} by $t$ rather than $\sqrt{t}$ and applying the same argument just given
+for the $\delta = 0$ case, the stochastic trend as well as the stationary component can be
+ignored asymptotically, with $\xi_t/t$ converging in probability to $\delta$. In this sense the
+time trend dominates the I(1) process in large samples.
+
+\subsection*{Relation to ARMA Models}
+
+In Section~6.2, we defined a zero-mean stationary ARMA process $\{u_t\}$ as the
+unique covariance-stationary process satisfying the stationary ARMA($p$, $q$)
+equation
+\begin{equation}
+\label{eq:9.2.10}
+\phi(L) u_t = \theta(L) \varepsilon_t,
+\end{equation}
+where $\phi(L)$ satisfies the stationarity condition. If $\{\varepsilon_t\}$ is independent white noise
+and if $\theta(1) \neq 0$, then the ARMA($p$, $q$) process is zero-mean I(0). To see this, note
+from Proposition~6.5(a) that $u_t$ can be written as~\eqref{eq:9.2.1} with
+\begin{equation}
+\label{eq:9.2.11}
+\psi(L) = \phi(L)^{-1} \theta(L).
+\end{equation}
+Since $\phi(1) \neq 0$ by the stationarity condition and $\theta(1) \neq 0$ by assumption, condition~\eqref{eq:9.2.3b} (that $\psi(1) \neq 0$) is satisfied. By Proposition~6.4(a), the coefficient
+sequence $\{\psi_j\}$ is bounded in absolute value by a geometrically declining sequence,
+which ensures that~\eqref{eq:9.2.3a} is satisfied.
+
+Given the zero-mean stationary ARMA($p$, $q$) process $\{u_t\}$ just described, the
+associated I(1) process $\{\xi_t\}$ defined by the relation $\Delta \xi_t = u_t$ is called an \textbf{autoregressive integrated moving average} (\textbf{ARIMA($\bm{p}$, 1, $\bm{q}$)}) process. Substituting the
+relation $u_t = (1 - L)\xi_t$ into~\eqref{eq:9.2.10}, we obtain
+\begin{equation}
+\label{eq:9.2.12}
+\phi^*(L) \xi_t = \theta(L) \varepsilon_t,
+\end{equation}
+with $\phi^*(L) \equiv \phi(L)(1 - L)$, $\phi(L)$ stationary, and $\theta(1) \neq 0$. One of the roots of
+the associated autoregressive polynomial equation $\phi^*(z) = 0$ is unity and all other
+roots lie outside the unit circle. More generally, a class of I($d$) processes can be
+represented as satisfying~\eqref{eq:9.2.12} where $\phi^*(L)$ is now defined as
+\begin{equation}
+\label{eq:9.2.13}
+\phi^*(L) = \phi(L)(1 - L)^d.
+\end{equation}
+So $\phi^*(z) = 0$ now has a root of unity with a multiplicity of $d$ (i.e., $d$ unit roots) and
+all other roots lie outside the unit circle. This class of I($d$) processes is called autoregressive integrated moving average (\textbf{ARIMA($\bm{p}$, $\bm{d}$, $\bm{q}$)}) processes. The first
+parameter ($p$) refers to the order of autoregressive lags (not counting the unit
+roots), the second parameter ($d$) refers to the order of integration, and the third
+parameter ($q$) is the number of moving average lags. Since $\phi(L)$ satisfies the
+stationarity condition, taking $d$-th differences of an ARIMA($p$, $d$, $q$) produces a
+zero-mean stationary ARMA($p$, $q$) process. So an ARIMA($p$, $d$, $q$) process is
+I($d$).
+
+\subsection*{The Wiener Process}
+
+The next two sections will present a variety of unit-root tests. The limiting distributions of their test statistics will be written in terms of \textbf{Wiener processes} (also
+called \textbf{Brownian motion processes}). Some of you may already be familiar with
+this from continuous-time finance, but to refresh your memory,
+
+\begin{definition}[Standard Wiener processes]
+\label{def:9.3}
+A standard Wiener (Brownian
+motion) process $W(\cdot)$ is a continuous-time stochastic process, associating each
+date $t \in [0, 1]$ with the scalar random variable $W(t)$, such that
+\begin{enumerate}
+\item $W(0) = 0$;
+\item for any dates $0 \leq t_1 < t_2 < \cdots < t_k \leq 1$, the changes
+\[
+W(t_2) - W(t_1),\; W(t_3) - W(t_2),\; \ldots,\; W(t_k) - W(t_{k-1})
+\]
+are independent multivariate normal with $W(s) - W(t) \sim N(0, (s-t))$ (so in
+particular $W(1) \sim N(0,1)$);
+\item for any realization, $W(t)$ is continuous in $t$ with probability~1.
+\end{enumerate}
+\end{definition}
+
+Roughly speaking, the \textbf{functional central limit theorem} (\textbf{FCLT}), also called the
+\textbf{invariance principle}, states that a Wiener process is a continuous-time analogue
+of a driftless random walk. Imagine that you generate a realization of a standard
+random walk (whose changes have a unit variance) of length $T$, scale the graph
+vertically by deflating all its values by $\sqrt{T}$, and then horizontally compress this
+normalized graph so that it fits the unit interval $[0, 1]$. In Panel~(a) of Figure~9.2,
+that is done for a sample size of $T = 10$. The sample size is increased to 100 in
+Panel~(b), and then to 1,000 in Panel~(c). As the figure shows, the graph becomes
+increasingly dense over the unit interval. The FCLT assures us that there exists a
+well-defined limit as $T \to \infty$ and that the limiting process is the Wiener process.
+Property~(2) of Definition~9.3 is a mathematical formulation of the property that the
+sequence of instantaneous changes of a Wiener process is i.i.d. The continuous-time analogue of a driftless random walk whose changes have a variance of $\sigma^2$,
+rather than unity, can be written as $\sigma W(r)$.
+
+\begin{figure}[htbp]
+\centering
+\framebox[\textwidth]{\rule{0pt}{4in}\parbox{0.8\textwidth}{\centering
+  Figure 9.2: Illustration of the Functional Central Limit Theorem\\
+  (a) $T = 10$ \quad (b) $T = 100$ \quad (c) $T = 1000$}}
+\caption{Illustration of the Functional Central Limit Theorem}
+\label{fig:9.2}
+\end{figure}
+
+To pursue the analogy between a driftless random walk and a Wiener process
+a bit further, consider a ``demeaned standard random walk'' which is constructed
+from a standard driftless random walk by subtracting the sample mean. That is, let
+$\{\xi_t\}$ be a driftless random walk with $\Var(\Delta \xi_t) = 1$ and define
+\begin{equation}
+\label{eq:9.2.14}
+\xi_t^\mu \equiv \xi_t - \frac{\xi_0 + \xi_1 + \cdots + \xi_{T-1}}{T}
+\quad (t = 0, 1, \ldots, T-1).
+\end{equation}
+The continuous-time analogue of this demeaned random walk is a \textbf{demeaned standard Wiener process} defined as
+\begin{equation}
+\label{eq:9.2.15}
+W^\mu(r) \equiv W(r) - \int_0^1 W(s)\,\mathrm{d}s.
+\end{equation}
+(We defined the demeaned series for $t = 0, 1, \ldots, T-1$, to match the dating
+convention of Proposition~9.2 below. If the demeaned series is defined for $t =
+1, 2, \ldots, T$, then its continuous-time analogue, too, is~\eqref{eq:9.2.15}.)
+
+We can also create from the standard random walk $\{\xi_t\}$ a detrended series:
+\begin{equation}
+\label{eq:9.2.16}
+\xi_t^\tau \equiv \xi_t - \hat{\alpha} - \hat{\delta} \cdot t
+\quad (t = 0, 1, \ldots, T-1),
+\end{equation}
+where $\hat{\alpha}$ and $\hat{\delta}$ are the OLS estimates of the intercept and the time coefficient in the
+regression of $\xi_t$ on $(1, t)$ $(t = 0, 1, \ldots, T-1)$. The continuous-time analogue of
+the detrended random walk is a \textbf{detrended standard Wiener process} defined as
+\begin{align}
+W^\tau(r) &\equiv W(r) - a - d \cdot r, \notag \\
+a &\equiv \int_0^1 (4 - 6s) W(s)\,\mathrm{d}s, \notag \\
+d &\equiv \int_0^1 (-6 + 12s) W(s)\,\mathrm{d}s.
+\label{eq:9.2.17}
+\end{align}
+The coefficients $a$ and $d$ are the limiting random variables of $\hat{\alpha}$ and $\hat{\delta}$, respectively,
+as $T \to \infty$ (see, e.g., Phillips and Durlauf, 1986, for a derivation). Therefore,
+if a linear time trend is fitted to a \emph{driftless} random walk by OLS, the estimated
+linear time trend $\hat{\delta}$ converges in distribution to a random variable $d$; even in large
+samples $\hat{\delta}$ will never be zero unless by accident. This phenomenon is sometimes
+called \textbf{spurious detrending}.
+
+\subsection*{A Useful Lemma}
+
+Unit-root tests utilize statistics involving I(0) and I(1) processes. The key results
+collected in the following proposition will be used to derive the limiting distributions of the test statistics of the unit-root tests of Sections~9.3--9.4.
+
+\begin{proposition}[Limiting distributions of statistics involving I(0) and I(1)
+variables]
+\label{prop:9.2}
+Let $\{\xi_t\}$ be driftless I(1) so that $\Delta \xi_t$ is zero-mean I(0) satisfying
+\eqref{eq:9.2.1}--\eqref{eq:9.2.3b} and $\E(\xi_0^2) < \infty$. Let
+\[
+\lambda^2 \equiv \textit{long-run variance of } \{\Delta \xi_t\}
+\quad \text{and} \quad
+\gamma_0 \equiv \Var(\Delta \xi_t).
+\]
+
+\medskip\noindent
+Then
+\begin{enumerate}[label=(\alph*)]
+\item $\displaystyle \frac{1}{T^2} \sum_{t=1}^{T} (\xi_{t-1})^2
+\;\dto\; \lambda^2 \cdot \int_0^1 W(r)^2\,\mathrm{d}r,$
+
+\item $\displaystyle \frac{1}{T} \sum_{t=1}^{T} \Delta\xi_t\, \xi_{t-1}
+\;\dto\; \frac{\lambda^2}{2}\, W(1)^2 - \frac{\gamma_0}{2}.$
+\end{enumerate}
+
+\medskip\noindent
+Let $\{\xi_t^\mu\}$ be the demeaned series created from $\{\xi_t\}$ by the formula~\eqref{eq:9.2.14}. Then
+\begin{enumerate}[label=(\alph*),start=3]
+\item $\displaystyle \frac{1}{T^2} \sum_{t=1}^{T} (\xi_{t-1}^\mu)^2
+\;\dto\; \lambda^2 \cdot \int_0^1 [W^\mu(r)]^2\,\mathrm{d}r,$
+
+\item $\displaystyle \frac{1}{T} \sum_{t=1}^{T} \Delta\xi_t\, \xi_{t-1}^\mu
+\;\dto\; \frac{\lambda^2}{2}\big\{[W^\mu(1)]^2 - [W^\mu(0)]^2\big\} - \frac{\gamma_0}{2}.$
+\end{enumerate}
+
+\medskip\noindent
+Let $\{\xi_t^\tau\}$ be the detrended series created from $\{\xi_t\}$ by the formula~\eqref{eq:9.2.16}. Then
+\begin{enumerate}[label=(\alph*),start=5]
+\item $\displaystyle \frac{1}{T^2} \sum_{t=1}^{T} (\xi_{t-1}^\tau)^2
+\;\dto\; \lambda^2 \cdot \int_0^1 [W^\tau(r)]^2\,\mathrm{d}r,$
+
+\item $\displaystyle \frac{1}{T} \sum_{t=1}^{T} \Delta\xi_t\, \xi_{t-1}^\tau
+\;\dto\; \frac{\lambda^2}{2}\big\{[W^\tau(1)]^2 - [W^\tau(0)]^2\big\} - \frac{\gamma_0}{2}.$
+\end{enumerate}
+
+\medskip\noindent
+The convergence is joint. That is, a vector consisting of the statistics indicated in
+(a)--(f) converges to a random vector whose elements are the corresponding random
+variables also indicated in (a)--(f).
+\end{proposition}
+
+Part~(a), for example, reads as follows: the sequence of random variables $\{(1/T)^2
+\sum_{t=1}^T (\xi_{t-1})^2\}$ indexed by $T$ converges in distribution to a random variable $\lambda^2 \int W^2\,
+\mathrm{d}r$. The limiting random variables in the proposition are all written in terms of
+standard Wiener processes. Note that the \emph{same} Wiener process $W(\cdot)$ appears in
+(a) and~(b) and that the demeaned and detrended Wiener processes in (c) and~(f) are
+derived from the Wiener process appearing in (a) and~(b). So the limiting random
+variables in (a)--(f) can be correlated.
+
+To gain some understanding of this result, suppose temporarily that $\{\xi_t\}$ is
+a driftless random walk with $\Var(\Delta \xi_t) = \sigma^2$. Given that a Wiener process is
+the continuous-time analogue, it is not surprising that ``$\sum_{t=1}^T (\xi_{t-1})^2$'' suitably normalized by a power of $T$ becomes ``$\sigma^2 \int W^2$.'' Perhaps what you might not have
+guessed is the normalization by $T^2$. One way to see why the square of $T$ provides
+the right normalization, is to recall that $\E[(\xi_t)^2] = \Var(\xi_t) = \sigma^2 \cdot t$. Thus,
+\begin{equation}
+\label{eq:9.2.18}
+\E\!\left[\sum_{t=1}^{T} (\xi_{t-1})^2\right]
+= \sigma^2 \sum_{t=1}^{T} (t-1)
+= \sigma^2 \cdot (T-1) \frac{T}{2}.
+\end{equation}
+So the mean of $\sum_{t=1}^T (\xi_{t-1})^2$ grows at rate $T^2$. In order to construct a random
+variable that could have a limiting distribution, $\sum_{t=1}^T (\xi_{t-1})^2$ will have to be divided
+by $T^2$.
+
+Now suppose that $\{\xi_t\}$ is a general driftless I(1) process whose first difference
+is a zero-mean I(0) process satisfying \eqref{eq:9.2.1}--\eqref{eq:9.2.3b}. Then serial correlation in
+$\Delta \xi_t$ can be taken into account by replacing $\sigma^2$ by $\lambda^2$ (the long-run variance of
+$\{\Delta \xi_t\}$). This is due to implication~\eqref{eq:9.2.9} of the Beveridge-Nelson decomposition that a driftless I(1) process is dominated in large samples by a random walk
+whose changes have a variance of $\lambda^2$. Put differently, the limiting distribution of
+$\sum_{t=1}^T (\xi_{t-1})^2 / T^2$ would be the same if $\{\xi_t\}$, instead of being a general driftless
+I(1) process with serially correlated first differences, were a driftless random walk
+whose changes have a variance of $\lambda^2$.
+
+For a proof of Proposition~9.2, see, e.g., Stock (1994, pp.~2751--2753). It is a
+rather mechanical application of the FCLT and a theorem called the ``continuous
+mapping theorem.'' Since $W(1) \sim N(0, 1)$, the limiting random variable in (b) is
+\begin{equation}
+\label{eq:9.2.19}
+\left(\frac{\lambda^2}{2}\right) X - \frac{\gamma_0}{2}
+\end{equation}
+where $X \sim \chi^2(1)$ (chi-squared with 1 degree of freedom). Proof of (b) can be done
+without the fancy apparatus of the FCLT and the continuous mapping theorem and
+is left as Analytical Exercise~1.
+
+\bigskip
+\noindent\textsc{questions for review} \hrulefill
+
+\begin{enumerate}
+\item (Verifying Beveridge-Nelson for simple cases) \enspace Verify~\eqref{eq:9.2.5} for $\psi(L) = 1 +
+\psi_1 L$. Do the same for $\psi(L) = (1 - \phi L)^{-1}$ where $|\phi| < 1$.
+
+\item (A CLT for I(0)) \enspace Proposition~6.9 is about the asymptotics of the sample mean
+of a linear process. Verify that the paragraph right below Proposition~9.1 is a
+proof of Proposition~6.9 with the added assumption of one-summability.
+
+\item (Is the stationary component in Beveridge-Nelson I(0)?) \enspace Consider a zero-mean I(0) process
+\[
+u_t = \psi_0 \varepsilon_t - 2\varepsilon_{t-1} + \varepsilon_{t-2}.
+\]
+Verify that the long-run variance of $\{\eta_t\}$ defined in~\eqref{eq:9.2.6} is zero.
+
+\item (Initial values and demeaned values) \enspace Let $\{\xi_t\}$ be driftless I(1) so that $\xi_t$ can
+be written as $\xi_t = \xi_0 + u_1 + u_2 + \cdots + u_t$. Does the value of $\xi_0$ affect the
+value of $\xi_t^\mu$ where $\{\xi_t^\mu\}$ is the demeaned series created from $\{\xi_t\}$ by the formula~\eqref{eq:9.2.14}? [Answer: No.]
+
+\item (Linear trends and detrended values) \enspace Let $\xi_t$ be I(1) with drift, so it can be
+written as the sum of a linear time trend $\alpha + \delta \cdot t$ and a driftless I(1) process.
+Do the values of $\alpha$ and $\delta$ affect the value of $\xi_t^\tau$ where $\{\xi_t^\tau\}$ is the detrended
+series created from $\{\xi_t\}$ by the formula~\eqref{eq:9.2.16}? [Answer: No.]
+\end{enumerate}

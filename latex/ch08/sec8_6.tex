@@ -1,0 +1,261 @@
+% sec8_6.tex — Section 8.6: LIML
+
+\subsection*{LIML Defined}
+
+The advantage of the FIML estimator is that it allows you to exploit all the information afforded by the complete system of simultaneous equations. This, however,
+is also a weakness because, as is true with any other system or joint estimation procedure, the estimator is not consistent if any part of the system is misspecified.
+If you are confident that the equation in question is correctly specified but not so
+sure about the rest of the system, you may well prefer to employ single-equation
+methods such as 2SLS. The rest of this section derives the ML estimator called the
+\textbf{limited-information maximum likelihood (LIML) estimator}, which is the ML
+counterpart of 2SLS.
+
+Let the $m$-th equation of the $M$-equation system be the equation of interest. The
+$m$-th equation has $L_m$ regressors, $\mathbf{z}_{tm}$, are either endogenous or predetermined. Let
+$\tilde{\mathbf{y}}_t$ be the vector
+of $M_m$ endogenous variables and $\tilde{\mathbf{x}}_t$ be the vector of $K_m$ predetermined variables,
+with $M_m + K_m = L_m$. Partition $\boldsymbol{\delta}_{0m}$ conformably as
+$\boldsymbol{\delta}_{0m} = (\boldsymbol{\gamma}_{0m}', \boldsymbol{\beta}_{0m}')'$. Then the
+$m$-th equation can be written as
+\begin{equation}
+  y_{tm} = \underset{(1 \times L_m)}{\mathbf{z}_{tm}'}
+  \underset{(L_m \times 1)}{\boldsymbol{\delta}_{0m}}
+  + \varepsilon_{tm}
+  = \underset{(1 \times M_m)}{\tilde{\mathbf{y}}_t'}
+  \underset{(M_m \times 1)}{\boldsymbol{\gamma}_{0m}}
+  + \underset{(1 \times K_m)}{\tilde{\mathbf{x}}_t'}
+  \underset{(K_m \times 1)}{\boldsymbol{\beta}_{0m}}
+  + \varepsilon_{tm}.
+  \label{eq:8.6.1} \tag{8.6.1}
+\end{equation}
+Obviously, this single equation in isolation is an incomplete system because of the
+existence of the $M_m$ included endogenous variables $\tilde{\mathbf{y}}_t$. However, if this equation
+is supplemented by the $M_m$ reduced-form equations for $\tilde{\mathbf{y}}_t$ taken from \eqref{eq:8.5.9}, then
+the system of $1 + M_m$ equations thus formed is a complete system of simultaneous
+equations. To describe this idea more fully, let $\tilde{\boldsymbol{\Pi}}_0$ be the associated reduced-form coefficient matrix and collect appropriate $M_m$ columns from $\boldsymbol{\Pi}_0$ and write the
+reduced-form equations for the $M_m$ included endogenous variables as
+\begin{equation}
+  \underset{(M_m \times 1)}{\tilde{\mathbf{y}}_t}
+  = \underset{(M_m \times K)}{\tilde{\boldsymbol{\Pi}}_0'}
+  \underset{(K \times 1)}{\mathbf{x}_t}
+  + \underset{(M_m \times 1)}{\tilde{\mathbf{v}}_t}.
+  \label{eq:8.6.2} \tag{8.6.2}
+\end{equation}
+
+Combining \eqref{eq:8.6.1} and \eqref{eq:8.6.2}, we obtain the system of $1 + M_m$ equations:
+\begin{equation}
+  \underset{((1+M_m) \times (1+M_m))}{\bar{\boldsymbol{\Gamma}}_0}
+  \underset{((1+M_m) \times 1)}{\bar{\mathbf{y}}_t}
+  + \underset{((1+M_m) \times K)}{\bar{\mathbf{B}}_0}
+  \underset{(K \times 1)}{\mathbf{x}_t}
+  = \underset{((1+M_m) \times 1)}{\bar{\boldsymbol{\varepsilon}}_t},
+  \label{eq:8.6.3} \tag{8.6.3}
+\end{equation}
+where
+\[
+  \bar{\mathbf{y}}_t \equiv \begin{bmatrix} y_{tm} \\ \tilde{\mathbf{y}}_t \end{bmatrix}, \quad
+  \bar{\boldsymbol{\varepsilon}}_t \equiv \begin{bmatrix} \varepsilon_{tm} \\ \tilde{\mathbf{v}}_t \end{bmatrix},
+\]
+\begin{equation}
+  \bar{\boldsymbol{\Gamma}}_0
+  \equiv \begin{bmatrix}
+    1 & -\boldsymbol{\gamma}_{0m}' \\
+    \underset{(M_m \times 1)}{\mathbf{0}} & \mathbf{I}_{M_m}
+  \end{bmatrix}, \quad
+  \bar{\mathbf{B}}_0
+  \equiv \begin{bmatrix}
+    -\boldsymbol{\beta}_{0m}' & \mathbf{0}' \\
+    \underset{(1 \times K_m)}{\phantom{x}} & \underset{(1 \times (K - K_m))}{\phantom{x}} \\
+    & -\tilde{\boldsymbol{\Pi}}_0' \\
+    \underset{(M_m \times K)}{\phantom{x}}
+  \end{bmatrix}.
+  \label{eq:8.6.4} \tag{8.6.4}
+\end{equation}
+Here, we have assumed, without loss of generality, that the included predetermined
+variables $\tilde{\mathbf{x}}_t$ are the first $K_m$ elements of $\mathbf{x}_t$. The equation system \eqref{eq:8.6.3} is a complete system of $1 + M_m$ simultaneous equations because
+\begin{equation}
+  |\bar{\boldsymbol{\Gamma}}_0| = 1 \neq 0.
+  \label{eq:8.6.5} \tag{8.6.5}
+\end{equation}
+
+For example, consider Example~8.2. The included endogenous variable in the
+wage equation is $S_t$. Supplement the wage equation by a reduced-form equation
+for $S_t$, a regression of $S_t$ on a constant, $IQ_t$, and $MED_t$. The $\bar{\boldsymbol{\Gamma}}_0$ matrix for the
+two-equation system that results is
+\[
+  \bar{\boldsymbol{\Gamma}}_0
+  = \begin{bmatrix} 1 & -\gamma_{11} \\ 0 & 1 \end{bmatrix}.
+\]
+
+The hypothetical value $\bar{\boldsymbol{\Gamma}}$ of $\bar{\boldsymbol{\Gamma}}_0$ has the same structure as shown in \eqref{eq:8.6.4} for
+$\bar{\boldsymbol{\Gamma}}_0$. So $|\bar{\boldsymbol{\Gamma}}| = 1$. Replacing in the FIML objective function \eqref{eq:8.5.20}
+$(\boldsymbol{\delta}, \mathbf{B})$
+by $(\boldsymbol{\gamma}_m, \boldsymbol{\beta}_m, \bar{\boldsymbol{\Pi}})$,
+$\boldsymbol{\Gamma}$ by $\bar{\boldsymbol{\Gamma}}$, and $\boldsymbol{\Sigma}$ by $\bar{\boldsymbol{\Sigma}}$, and noting that
+$|\bar{\boldsymbol{\Gamma}}| = 1$, we obtain the LIML
+objective function:
+\begin{multline}
+  Q_n(\boldsymbol{\gamma}_m, \boldsymbol{\beta}_m, \bar{\boldsymbol{\Pi}}, \bar{\boldsymbol{\Sigma}})
+  = -\frac{M_m}{2}\log(2\pi)
+    - \frac{1}{2}\log(|\bar{\boldsymbol{\Sigma}}|) \\
+    - \frac{1}{2n}\sum_{t=1}^{n}
+      [\bar{\boldsymbol{\Gamma}}\bar{\mathbf{y}}_t + \bar{\mathbf{B}}\mathbf{x}_t]'
+      \bar{\boldsymbol{\Sigma}}^{-1}
+      [\bar{\boldsymbol{\Gamma}}\bar{\mathbf{y}}_t + \bar{\mathbf{B}}\mathbf{x}_t],
+  \label{eq:8.6.6} \tag{8.6.6}
+\end{multline}
+where $\bar{\boldsymbol{\Sigma}}$ is the $(1 + M_m) \times (1 + M_m)$ variance matrix of
+$\bar{\boldsymbol{\varepsilon}}_t$. Let
+$(\hat{\boldsymbol{\gamma}}_m, \hat{\boldsymbol{\beta}}_m, \hat{\bar{\boldsymbol{\Pi}}}, \hat{\bar{\boldsymbol{\Sigma}}})$
+be the FIML estimator of this system. The \textbf{LIML estimator} of
+$\boldsymbol{\delta}_{0m} = (\boldsymbol{\gamma}_{0m}', \boldsymbol{\beta}_{0m}')'$
+is $(\hat{\boldsymbol{\gamma}}_m', \hat{\boldsymbol{\beta}}_m')'$. This derivation of the LIML estimator, which is different from the
+original derivation of Anderson and Rubin (1949), is due to Pagan (1979). Since
+LIML is a FIML estimator, Proposition~\ref{prop:8.1} assures us that the LIML estimator is
+consistent and asymptotically normal even if the error is not normally distributed.
+
+\subsection*{Computation of LIML}
+
+For the SUR model, we have shown that the ML estimator can be obtained from
+the iterative SUR procedure. If you reexamine the argument, you should see that
+it does not depend on $\boldsymbol{\Gamma}$ in the SUR objective function \eqref{eq:8.5.29} being the identity
+matrix; all that is needed is that the determinant of $\boldsymbol{\Gamma}$ is a constant. Therefore, the
+same argument also applies to the LIML objective function \eqref{eq:8.6.6}. That is, we can
+obtain the LIML estimator of $\boldsymbol{\delta}_{0m}$ by applying the iterative SUR procedure to the
+$(1+M_m)$-equation system \eqref{eq:8.6.3}. In particular, if $\boldsymbol{\Sigma}_0$ is known, the LIML estimator
+is the SUR estimator. On the face of it, this conclusion --- that SUR can be used to
+estimate the coefficients of included \emph{endogenous} variables --- is surprising, but it is
+true. The essential reason is this: the sampling error $\hat{\boldsymbol{\delta}}_m - \boldsymbol{\delta}_{0m}$ depends not only
+on the correlation between the included endogenous variables $\tilde{\mathbf{y}}_t$ and the error term
+$\varepsilon_{tm}$ but also on the correlation between $\tilde{\mathbf{y}}_t$ and $\tilde{\mathbf{v}}_t$. Those two correlations cancel
+each other out. Review Question~1 verifies this for a simple example.
+
+The iterative SUR procedure, however, is not how the LIML estimator is usually calculated, because there is a closed-form expression for the estimator. The
+simultaneous equation system \eqref{eq:8.6.3} has two special features. One is the special
+structure of $\bar{\boldsymbol{\Gamma}}$, which we have noted, and the other is the fact that there are no
+exclusion restrictions in the rows of $\bar{\mathbf{B}}$ corresponding to the included endogenous
+variables $\tilde{\mathbf{y}}_t$. Thanks to these features, the LIML estimator
+$\hat{\boldsymbol{\delta}}_m = (\hat{\boldsymbol{\gamma}}_m', \hat{\boldsymbol{\beta}}_m')'$ and
+also the likelihood ratio statistic \eqref{eq:8.5.25} can be calculated explicitly.
+
+To write down the closed-form expressions for the LIML estimator and the
+likelihood ratio statistic, we need to introduce some more notation. Let $\mathbf{Z}_m$,
+$\tilde{\mathbf{Y}}$, $\tilde{\mathbf{X}}$,
+$\mathbf{X}$, and $\mathbf{y}_m$ be the data matrices and the data vector associated with $\mathbf{z}_{tm}$,
+$\tilde{\mathbf{y}}_t$, $\tilde{\mathbf{x}}_t$, $\mathbf{x}_t$,
+and $y_{tm}$, respectively:
+\begin{equation}
+  \underset{(n \times L_m)}{\mathbf{Z}_m}
+  \equiv \begin{bmatrix} \mathbf{z}_{1m}' \\ \vdots \\ \mathbf{z}_{nm}' \end{bmatrix}, \quad
+  \underset{(n \times M_m)}{\tilde{\mathbf{Y}}}
+  \equiv \begin{bmatrix} \tilde{\mathbf{y}}_1' \\ \vdots \\ \tilde{\mathbf{y}}_n' \end{bmatrix}, \quad
+  \underset{(n \times K_m)}{\tilde{\mathbf{X}}}
+  \equiv \begin{bmatrix} \tilde{\mathbf{x}}_1' \\ \vdots \\ \tilde{\mathbf{x}}_n' \end{bmatrix}, \quad
+  \underset{(n \times K)}{\mathbf{X}}
+  \equiv \begin{bmatrix} \mathbf{x}_1' \\ \vdots \\ \mathbf{x}_n' \end{bmatrix}, \quad
+  \underset{(n \times 1)}{\mathbf{y}_m}
+  \equiv \begin{bmatrix} y_{1m} \\ \vdots \\ y_{nm} \end{bmatrix},
+  \label{eq:8.6.7} \tag{8.6.7}
+\end{equation}
+and let $\mathbf{M}$ and $\tilde{\mathbf{M}}$ be the annihilators based on $\mathbf{X}$ and $\tilde{\mathbf{X}}$, respectively:
+\begin{equation}
+  \underset{(n \times n)}{\mathbf{M}}
+  \equiv \mathbf{I}_n - \mathbf{X}(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}', \quad
+  \underset{(n \times n)}{\tilde{\mathbf{M}}}
+  \equiv \mathbf{I}_n - \tilde{\mathbf{X}}(\tilde{\mathbf{X}}'\tilde{\mathbf{X}})^{-1}\tilde{\mathbf{X}}'.
+  \label{eq:8.6.8} \tag{8.6.8}
+\end{equation}
+Then the LIML estimator $\hat{\boldsymbol{\delta}}_m$ can be written as
+\begin{equation}
+  \hat{\boldsymbol{\delta}}_m
+  = [\mathbf{Z}_m'(\mathbf{I}_n - k\mathbf{M})\mathbf{Z}_m]^{-1}
+    \mathbf{Z}_m'(\mathbf{I}_n - k\mathbf{M})\mathbf{y}_m,
+  \label{eq:8.6.9} \tag{8.6.9}
+\end{equation}
+where $k$ is the smallest characteristic root of
+\begin{equation}
+  \tilde{\mathbf{W}}\,\mathbf{W}^{-1},
+  \label{eq:8.6.10} \tag{8.6.10}
+\end{equation}
+with $(1 + M_m) \times (1 + M_m)$ matrices $\tilde{\mathbf{W}}$ and $\mathbf{W}$ defined by
+\begin{equation}
+  \tilde{\mathbf{W}}
+  \equiv [\mathbf{y}_m : \tilde{\mathbf{Y}}]'\tilde{\mathbf{M}}
+    [\mathbf{y}_m : \tilde{\mathbf{Y}}], \quad
+  \mathbf{W}
+  \equiv [\mathbf{y}_m : \tilde{\mathbf{Y}}]'\mathbf{M}
+    [\mathbf{y}_m : \tilde{\mathbf{Y}}].
+  \label{eq:8.6.11} \tag{8.6.11}
+\end{equation}
+(See, e.g., Davidson and MacKinnon, 1993, pp.~645--649, for a derivation.) The
+likelihood ratio statistic \eqref{eq:8.5.25} for testing overidentifying restrictions reduces to
+\begin{equation}
+  LR = n \log k.
+  \label{eq:8.6.12} \tag{8.6.12}
+\end{equation}
+Since there are no overidentifying restrictions in the supplementary $M_m$ equations
+\eqref{eq:8.6.2}, the equation of interest is the only source of overidentifying restrictions,
+which are $K - L_m$ in number. Therefore, by Proposition~\ref{prop:8.1}, this statistic for testing
+overidentifying restrictions is asymptotically $\chi^2(K - L_m)$. When the equation is
+just identified so that $K = L_m$, then the $LR$ statistic should be zero. Indeed, it can
+be shown that $k = 1$ in this case (see, e.g., p.~647 of Davidson and MacKinnon,
+1993).
+
+If we do not necessarily require $k$ to be as just defined, the estimator \eqref{eq:8.6.9} is
+called a \textbf{$k$-class estimator}. The LIML estimator is thus a $k$-class estimator with
+$k$ defined above. Inspection of the 2SLS formula in terms of data matrices (see
+$(3.8.3')$ on page~230) immediately shows that the 2SLS estimator is a $k$-class estimator with $k = 1$, and the OLS estimator is a $k$-class estimator with $k = 0$. It
+follows that LIML and 2SLS are numerically the same when the equation is just
+identified (so that $k = 1$).
+
+We have already shown that LIML is consistent and asymptotically normal.
+Moreover, using the explicit formula \eqref{eq:8.6.9}, it can be shown that the LIML estimator of $\boldsymbol{\delta}_{0m}$ has the same asymptotic distribution as 2SLS (see, e.g., Amemiya,
+1985, Section~7.3.4). So the formula for the asymptotic variance of LIML is given
+by (3.8.4) and its consistent estimate by (3.8.5).
+
+\subsection*{LIML versus 2SLS}
+
+Since LIML and 2SLS share the same asymptotic distribution, you cannot prefer
+one over the other on asymptotic grounds. For any finite sample, LIML has the
+invariance property, while 2SLS is not invariant. Furthermore, the conclusion one
+could draw from the large literature on finite-sample properties (see, e.g., Judge
+et al., 1985, Section~15.4) is that LIML should be preferred to 2SLS. Major conclusions from the literature are listed below. They assume that the predetermined
+variables $\mathbf{x}_t$ are fixed constants, however.
+\begin{itemize}
+\item Suppose errors are normally distributed. The $p$-th moment of the 2SLS estimator exists if and only if $p < K - L_m + 1$, where $K$ is the number of predetermined
+  variables and $L_m$ is the number of regressors in the $m$-th equation. Thus, 2SLS
+  does not even have a mean if the equation is just identified (i.e., if $K = L_m$),
+  and this is true even if the distribution of errors is a normal distribution, whose
+  moments are all finite.
+
+\item The LIML estimator has no finite moments even if errors are normally distributed.
+
+\item However, in most Monte Carlo simulations (see, e.g., Anderson, Kunitomo, and
+  Sawa, 1982), LIML approaches its asymptotic normal distribution much more
+  rapidly than does 2SLS.
+\end{itemize}
+
+\bigskip
+\noindent\rule{\textwidth}{0.4pt}
+\textbf{QUESTIONS FOR REVIEW}
+\medskip
+
+\begin{enumerate}
+\item (Why SUR can be used for a structural equation)\quad
+  To see why SUR can be
+  used to estimate the coefficients of included endogenous variables, consider
+  the following simple example:
+  \[
+    \begin{cases}
+      y_{t1} = \gamma_0 y_{t2} + \varepsilon_{t1}, \\
+      y_{t2} = \beta_0 x_t + v_t,
+    \end{cases}
+  \]
+  where $x_t$ is predetermined. Suppose for simplicity that
+  \[
+    \underset{(2 \times 2)}{\boldsymbol{\Sigma}_0}
+    \equiv \E\!\left(\begin{bmatrix} \varepsilon_{t1} \\ v_t \end{bmatrix}
+      \begin{bmatrix} \varepsilon_{t1} & v_t \end{bmatrix}\right)
+  \]
+  is known. Let $(\hat{\gamma}, \hat{\beta})$ be the SUR estimator of $(\gamma_0, \beta_0)$.
+\end{enumerate}

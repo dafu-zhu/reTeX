@@ -1,0 +1,203 @@
+% sec3_7.tex — Section 3.7: Hypothesis Testing by the Likelihood-Ratio Principle
+
+We have derived in Section~3.5 the chi-squared test statistics for the null hypothesis
+$\mathrm{H}_0\colon \mathbf{a}(\boldsymbol{\delta}) = \mathbf{0}$ by the Wald principle.  This section does
+the same by the likelihood-ratio (LR) principle, which is to examine the difference in the
+objective function with and without the imposition of the null.  Derivation of test
+statistics by the Lagrange Multiplier principle for GMM and extension to nonlinear
+equations are given in Section~7.4.
+
+In the efficient GMM estimation, the objective function is
+$J(\tilde{\boldsymbol{\delta}}, \hat{\mathbf{S}}^{-1})$ for a given consistent estimate $\hat{\mathbf{S}}$ of
+$\mathbf{S}$.  The \textbf{restricted efficient GMM estimator} is defined as
+\begin{equation}
+  \text{restricted efficient GMM:} \quad
+  \tilde{\boldsymbol{\delta}}(\hat{\mathbf{S}}^{-1})
+  \equiv \argmin_{\tilde{\boldsymbol{\delta}}}\;
+  J(\tilde{\boldsymbol{\delta}},\, \hat{\mathbf{S}}^{-1})
+  \quad \text{subject to } \mathrm{H}_0.
+  \label{eq:3.7.1}
+\end{equation}
+The LR principle suggests that
+\begin{equation}
+  LR \equiv J\bigl(\tilde{\boldsymbol{\delta}}(\hat{\mathbf{S}}^{-1}),\,
+  \hat{\mathbf{S}}^{-1}\bigr)
+  - J\bigl(\hat{\boldsymbol{\delta}}(\hat{\mathbf{S}}^{-1}),\,
+  \hat{\mathbf{S}}^{-1}\bigr)
+  \label{eq:3.7.2}
+\end{equation}
+should be asymptotically chi-squared.  Indeed it is.
+
+\begin{proposition}[test statistic by the LR principle]
+\label{prop:3.8}
+\emph{Suppose Assumptions~3.1--3.5 hold and suppose there is available a consistent estimator,
+$\hat{\mathbf{S}}$, of $\mathbf{S}$ $(= \E(\mathbf{g}_i \mathbf{g}_i'))$.
+Consider the null hypothesis of $\#\mathbf{a}$ restrictions $\mathrm{H}_0\colon
+\mathbf{a}(\boldsymbol{\delta}) = \mathbf{0}$ such that $\mathbf{A}(\boldsymbol{\delta})$, the
+$\#\mathbf{a} \times L$ matrix of first derivatives, is continuous and of full row rank.  Define two
+statistics, $W$ and $LR$, by \eqref{eq:3.5.16} and \eqref{eq:3.7.2}, respectively.  Then,
+under the null, the following holds:}
+\begin{enumerate}[label=(\alph*)]
+\item \emph{The two statistics are asymptotically equivalent in that their asymptotic
+  distributions are the same (namely, $\chi^2(\#\mathbf{a})$).}
+
+\item \emph{The two statistics are asymptotically equivalent in the stronger sense that their
+  numerical difference converges in probability to zero: $LR - W \pto 0$.
+  (By Lemma~2.4(a), this result is stronger than~(a).)}
+
+\item \emph{Furthermore, if the hypothesis is linear so that the restrictions can be written as
+  $\mathbf{R}\boldsymbol{\delta} = \mathbf{r}$, then the two statistics are numerically equal.}
+\end{enumerate}
+\end{proposition}
+
+Proving this for the linear case, which is an algebraic result, is left as an analytical
+exercise.  For a full proof, see Section~7.4.
+
+Several comments about Proposition~3.8:
+
+\begin{itemize}
+\item The advantage of $LR$ over $W$ is invariance: the numerical value of $LR$ does not
+  depend on how the nonlinear restrictions are represented by $\mathbf{a}(\cdot)$.  On the other
+  hand, you have to write a nonlinear optimization computer program to find the
+  restricted efficient GMM when the hypothesis is nonlinear.
+
+\item Proposition~3.8 requires that the distance matrix $\hat{\mathbf{W}}$ satisfy the efficiency
+  condition $\plim\, \hat{\mathbf{W}} = \mathbf{S}^{-1}$.  Otherwise $LR$ is not asymptotically chi-squared.
+  In contrast, the Wald statistic is asymptotically chi-squared without $\hat{\mathbf{W}}$
+  satisfying the efficiency condition.
+
+\item The same estimate of $\mathbf{S}$ should be used throughout in the calculation of $LR$.
+  Let $\tilde{\mathbf{S}}$ and $\bar{\mathbf{S}}$ be two different consistent estimators of $\mathbf{S}$,
+  and consider the statistic
+  \[
+    J(\tilde{\boldsymbol{\delta}}(\bar{\mathbf{S}}^{-1}),\, \bar{\mathbf{S}}^{-1})
+    - J(\hat{\boldsymbol{\delta}}(\tilde{\mathbf{S}}^{-1}),\, \tilde{\mathbf{S}}^{-1}).
+  \]
+  This statistic is what you end up with if you perform two separate two-step efficient
+  GMMs with and without the constraint of the null; $\bar{\mathbf{S}}$ is the estimate of $\mathbf{S}$
+  from the first step with the constraint, while $\tilde{\mathbf{S}}$ is from the first step without the
+  constraint.  The statistic is asymptotically equivalent to $LR$ (in that the difference
+  between the two converges in probability to zero), but in finite samples it may
+  be negative.  Having the same estimate of $\mathbf{S}$ throughout ensures the nonnegativity
+  of the statistic in finite samples.  Researchers usually use the estimate from
+  unconstrained estimation ($\tilde{\mathbf{S}}$) here, but the estimate from constrained estimation
+  is also valid because it is consistent for $\mathbf{S}$ under the null.
+
+\item Part~(b) of the proposition (the asymptotic equivalence in a stronger sense)
+  means that if the sample size is large enough and the hypothesis is true, then the
+  outcome (not just the probability of rejection or acceptance) of the test based
+  on $LR$ will be the same as that based on $W$ because the probability that the two
+  statistics differ numerically by an even tiny amount is zero in sufficiently large
+  samples.
+
+\item For the numerical equivalence $LR = W$ for the linear case to hold, the same
+  $\hat{\mathbf{S}}$ must be used throughout to calculate not only $LR$ but also the Wald statistic.
+  Otherwise $LR$ and $W$ are only asymptotically equivalent.
+\end{itemize}
+
+%% ─── The LR Statistic for the Regression Model ────────────────────────────
+\subsection*{The $LR$ Statistic for the Regression Model}
+
+Because the regression model of Chapter~2 is a special case of the GMM model
+of this chapter, it may be useful to know how $LR$ would look for that special case.
+Because $\mathbf{x}_i = \mathbf{z}_i$ in the regression model, the (unrestricted) efficient GMM estimator
+is OLS and $J(\hat{\boldsymbol{\delta}}(\hat{\mathbf{S}}^{-1}), \hat{\mathbf{S}}^{-1}) = 0$.
+Therefore,
+\begin{equation}
+  LR = J(\tilde{\boldsymbol{\delta}}(\hat{\mathbf{S}}^{-1}),\, \hat{\mathbf{S}}^{-1}),
+  \label{eq:3.7.3}
+\end{equation}
+where $\tilde{\boldsymbol{\delta}}(\hat{\mathbf{S}}^{-1})$ is the restricted efficient GMM estimator.
+By Proposition~3.8, this statistic is asymptotically chi-squared and is numerically equal
+to the Wald statistic if the null is linear.  As will be shown below, under conditional
+homoskedasticity, this statistic can be written as the difference in the sum of squared
+residuals normalized to the error variance.
+
+%% ─── Variable Addition Test (optional) ──────────────────────────────────────
+\subsection*{Variable Addition Test (optional)}
+
+In the previous section, we considered a specification test based on the $C$ statistic
+for the endogeneity of a subset, $\mathbf{x}_{i2}$, of instruments $\mathbf{x}_i$ while assuming that the
+other instruments $\mathbf{x}_{i1}$ are predetermined.  Occasionally, we encounter a special case
+where $\mathbf{z}_i = \mathbf{x}_{i1}$:
+\begin{equation}
+  y_i = \mathbf{x}_{i1}' \boldsymbol{\delta} + \varepsilon_i.
+  \label{eq:3.7.4}
+\end{equation}
+A popular method to test whether the suspect instruments $\mathbf{x}_{i2}$ are predetermined is
+to estimate the augmented equation
+\begin{equation}
+  y_i = \mathbf{x}_{i1}' \boldsymbol{\delta}
+  + \mathbf{x}_{i2}' \boldsymbol{\alpha} + \varepsilon_i
+  = \mathbf{x}_i' \boldsymbol{\gamma} + \varepsilon_i
+  \quad \text{with } \boldsymbol{\gamma}
+  = \begin{bmatrix} \boldsymbol{\delta} \\ \boldsymbol{\alpha} \end{bmatrix}
+  \label{eq:3.7.5}
+\end{equation}
+and test the null $\mathrm{H}_0\colon \boldsymbol{\alpha} = \mathbf{0}$.  Testing is either by the Wald
+statistic $W$ or by the $LR$ statistic, which is numerically equal to $W$.  This test is
+sometimes called the \textbf{variable addition test}.  How is the test related to the $C$ test
+of Proposition~3.7?
+
+To calculate $LR$, we have to calculate two efficient GMM estimators of
+$\boldsymbol{\gamma}$ with the same instrument set $\mathbf{x}_i$: one with the constraint
+$\boldsymbol{\alpha} = \mathbf{0}$ and one without.  The unrestricted efficient GMM estimator is the OLS
+estimator on the unconstrained equation \eqref{eq:3.7.5}.  The associated $J$ statistic is zero.
+Let
+\begin{equation}
+  \hat{\mathbf{S}} \equiv \frac{1}{n} \sum_{i=1}^{n}
+  e_i^2\, \mathbf{x}_i \mathbf{x}_i',
+  \label{eq:3.7.6}
+\end{equation}
+where $e_i$ is the OLS residual from the unrestricted regression \eqref{eq:3.7.5}.  If we use
+this estimate of $\mathbf{S}$, the restricted efficient GMM estimator of $\boldsymbol{\gamma}$ minimizes the $J$
+function
+\[
+  J(\tilde{\boldsymbol{\gamma}},\, \hat{\mathbf{S}}^{-1})
+  = n \cdot (\mathbf{s}_{xy} - \mathbf{S}_{xx}\tilde{\boldsymbol{\gamma}})'
+  \hat{\mathbf{S}}^{-1}
+  (\mathbf{s}_{xy} - \mathbf{S}_{xx}\tilde{\boldsymbol{\gamma}})
+\]
+subject to $\boldsymbol{\alpha} = \mathbf{0}$.  Clearly, the restricted estimator can be written as
+\[
+  \tilde{\boldsymbol{\gamma}}
+  = \begin{bmatrix} \hat{\boldsymbol{\delta}}(\hat{\mathbf{S}}^{-1}) \\ \mathbf{0} \end{bmatrix},
+\]
+where $\hat{\boldsymbol{\delta}}(\hat{\mathbf{S}}^{-1})$ is the efficient GMM estimator with $\mathbf{x}_i$ as instruments on the restricted
+equation~\eqref{eq:3.7.4}.  So
+\begin{align*}
+  LR &= n \cdot (\mathbf{s}_{xy} - \mathbf{S}_{xx}\tilde{\boldsymbol{\gamma}})'
+    \hat{\mathbf{S}}^{-1}(\mathbf{s}_{xy} - \mathbf{S}_{xx}\tilde{\boldsymbol{\gamma}})
+    \quad (\text{since } J = 0 \text{ for unrestricted GMM}) \\
+  &= n \cdot (\mathbf{s}_{xy} - \mathbf{S}_{xx_1}\hat{\boldsymbol{\delta}}(\hat{\mathbf{S}}^{-1}))'
+    \hat{\mathbf{S}}^{-1}
+    (\mathbf{s}_{xy} - \mathbf{S}_{xx_1}\hat{\boldsymbol{\delta}}(\hat{\mathbf{S}}^{-1}))
+    \quad (\text{since } \mathbf{S}_{xx}\tilde{\boldsymbol{\gamma}}
+    = \mathbf{S}_{xx_1}\hat{\boldsymbol{\delta}}(\hat{\mathbf{S}}^{-1})).
+\end{align*}
+This is none other than Hansen's $J$ statistic for the restricted equation~\eqref{eq:3.7.4}
+when $\mathbf{x}_i$ is the instrument vector.  This statistic, in turn, equals the $C$ statistic
+because the $J_1$ in Proposition~3.7 is zero in the present case.  Therefore, all three
+statistics, $W$ from the unrestricted regression, $LR$, and $C$, are numerically equal to
+Hansen's $J$, provided that the same $\hat{\mathbf{S}}$ is used throughout.  That is, the variable
+addition test is numerically equivalent to Hansen's test for overidentifying restrictions.
+
+\medskip\noindent
+\textsc{Questions for Review}
+
+\begin{enumerate}
+\item ($LR$ for the regression model)\quad Verify that, for the regression model where
+  $\mathbf{z}_i = \mathbf{x}_i$,
+  \[
+    LR = \mathbf{y}'\mathbf{X}(n\hat{\mathbf{S}})^{-1}\mathbf{X}'\mathbf{y}
+    - 2\mathbf{y}'\mathbf{X}(n\hat{\mathbf{S}})^{-1}(\mathbf{X}'\mathbf{X})
+    \hat{\boldsymbol{\delta}}
+    + \hat{\boldsymbol{\delta}}'(\mathbf{X}'\mathbf{X})(n\hat{\mathbf{S}})^{-1}
+    (\mathbf{X}'\mathbf{X})\hat{\boldsymbol{\delta}}.
+  \]
+
+\item (Choice of $\hat{\mathbf{S}}$ in variable addition test)\quad Suppose you form
+  $\bar{\mathbf{S}}$ from the residual from the restricted regression~\eqref{eq:3.7.4} and use it to
+  form $W$, $LR$, and $C$.  Are they numerically equal?  Are they asymptotically chi-squared?
+  \textbf{Hint:} Is this $\bar{\mathbf{S}}$ consistent under the null?
+\end{enumerate}

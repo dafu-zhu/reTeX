@@ -1,0 +1,610 @@
+% sec8_5.tex — Section 8.5: FIML
+
+As seen in Chapter~4, the multivariate regression model is a specialization of the
+seemingly unrelated regression (SUR) model, which in turn is a specialization of
+the multiple-equation system to which three-stage least squares (3SLS) is applicable. The two-stage least squares (2SLS) estimator is the GMM estimator when
+each equation of the system is estimated separately, while 3SLS is the GMM estimator when the system as a whole is estimated. This section presents the ML
+counterparts of 2SLS and 3SLS.
+
+\subsection*{The Multiple-Equation Model with Common Instruments Restated}
+
+To refresh your memory, the model is an $M$-equation system described by Assumptions~4.1--4.5 and~4.7, with $\mathbf{x}_{tm} = \mathbf{x}_t$ for all $m = 1, 2, \ldots, M$ (so the set of instruments is the same across equations). Still maintaining the convention of denoting the true parameter value by subscript~0, we can write the $M$ equations of the
+system as
+\begin{equation}
+  y_{tm} = \underset{(1 \times L_m)}{\mathbf{z}_{tm}'} \;
+  \underset{(L_m \times 1)}{\boldsymbol{\delta}_{0m}}
+  + \varepsilon_{tm}
+  \quad (m = 1, 2, \ldots, M;\; t = 1, 2, \ldots, n).
+  \label{eq:8.5.1} \tag{8.5.1}
+\end{equation}
+The model has the following features.
+\begin{itemize}
+\item Unlike in the multivariate regression model, for each equation~$m$, the regressors $\mathbf{z}_{tm}$ may not be orthogonal to the error term, but there are available $K$ predetermined variables $\mathbf{x}_t$ that are known to satisfy the orthogonality conditions
+  $\E(\mathbf{x}_t \cdot \varepsilon_{tm}) = \mathbf{0}$ for all~$m$ (this is Assumption~4.3). Defining the $M \times 1$ vector
+  $\boldsymbol{\varepsilon}_t$ as
+  \begin{equation}
+    \underset{(M \times 1)}{\boldsymbol{\varepsilon}_t}
+    = \begin{bmatrix} \varepsilon_{t1} \\ \varepsilon_{t2} \\ \vdots \\ \varepsilon_{tM} \end{bmatrix},
+    \label{eq:8.5.2} \tag{8.5.2}
+  \end{equation}
+  the orthogonality conditions can be expressed as
+  \begin{equation}
+    \E(\mathbf{x}_t \boldsymbol{\varepsilon}_t') = \underset{(K \times M)}{\mathbf{0}}.
+    \label{eq:8.5.3} \tag{8.5.3}
+  \end{equation}
+  These $K$ predetermined variables serve as the common set of instruments in the
+  GMM estimation.
+
+\item The \textbf{endogenous variables} of the system are those variables (apart from the
+  errors) in the system that are not included in $\mathbf{x}_t$.
+
+\item The rank condition for identification (Assumption~4.4) is that the $K \times L_m$ matrix
+  $\E(\mathbf{x}_t\mathbf{z}_{tm}')$ be of full column rank for all~$m$. Equation~$m$ is said to be \textbf{overidentified} if the rank condition is satisfied and $L_m < K$.
+
+\item The error vector is conditionally homoskedastic in that
+  $\E(\boldsymbol{\varepsilon}_t\boldsymbol{\varepsilon}_t' \mid \mathbf{x}_t) = \boldsymbol{\Sigma}_0$, and
+  $\boldsymbol{\Sigma}_0$ is positive definite (Assumption~4.7).
+
+\item $\E(\mathbf{x}_t\mathbf{x}_t')$ is nonsingular (a consequence of conditional homoskedasticity and the
+  nonsingularity requirement in Assumption~4.5).
+\end{itemize}
+
+The GMM estimator for this system as a whole is the 3SLS estimator given in
+(4.5.12), while the single-equation GMM estimator of each equation in isolation is
+2SLS given in (3.8.3).
+
+The following examples will be used to illustrate the concepts to be introduced
+shortly.
+
+\begin{example}[A model of market equilibrium]\label{ex:8.1}
+An expanded version of
+Working's example considered in Section~3.1 is a two-equation system:
+\begin{align}
+  q_t &= \gamma_{11} p_t + \beta_{11} + \beta_{12} a_t + \varepsilon_{t1}
+  \quad \text{(demand)},
+  \label{eq:8.5.4} \tag{8.5.4} \\
+  q_t &= \gamma_{21} p_t + \beta_{21} + \beta_{22} w_t + \varepsilon_{t2}
+  \quad \text{(supply)}.
+  \label{eq:8.5.5} \tag{8.5.5}
+\end{align}
+In this system, $q_t$ is the amount of coffee transacted and $p_t$ is the coffee price.
+The variable $a_t$ appearing in the demand equation is a taste shifter, while the
+variable $w_t$ is the amount of rainfall that affects the supply of coffee. The
+system can be cast in the general format by setting
+\[
+  y_{t1} = q_t, \; y_{t2} = q_t, \quad
+  \mathbf{z}_{t1} = \begin{bmatrix} p_t \\ 1 \\ a_t \end{bmatrix}, \quad
+  \mathbf{z}_{t2} = \begin{bmatrix} p_t \\ 1 \\ w_t \end{bmatrix},
+\]
+\[
+  \boldsymbol{\delta}_{01} = \begin{bmatrix} \gamma_{11} \\ \beta_{11} \\ \beta_{12} \end{bmatrix}, \quad
+  \boldsymbol{\delta}_{02} = \begin{bmatrix} \gamma_{21} \\ \beta_{21} \\ \beta_{22} \end{bmatrix}.
+\]
+(Note that $y_{t1}$ and $y_{t2}$ are the same variable.) If $\E(\varepsilon_{tj}) = 0$,
+$\E(a_t \varepsilon_{tj}) = 0$, and
+$\E(w_t \varepsilon_{tj}) = 0$ for $j = 1, 2$, then $(1, a_t, w_t)$ can be included in the common
+set of instruments. So
+\[
+  \mathbf{x}_t = \begin{bmatrix} 1 \\ a_t \\ w_t \end{bmatrix}.
+\]
+The other nonerror variables in the system, $p_t$ and $q_t$, are endogenous variables. Provided that the rank condition for identification is satisfied, each
+equation is just identified because the number of right-hand side variables
+equals that of instruments.
+\end{example}
+
+\begin{example}[Wage equation]\label{ex:8.2}
+In the empirical exercise of Chapter~3,
+we estimated a standard wage equation. Consider supplementing the wage
+equation by an equation explaining $KWW$ (the score on the ``Knowledge of
+the World of Work'' test):
+\begin{align}
+  LW_t &= \gamma_{11} S_t + \beta_{11} + \beta_{12} IQ_t + \varepsilon_{t1},
+  \label{eq:8.5.6} \tag{8.5.6} \\
+  KWW_t &= \gamma_{21} S_t + \beta_{21} + \varepsilon_{t2},
+  \label{eq:8.5.7} \tag{8.5.7}
+\end{align}
+where $S_t$, for example, is years in schooling for individual~$t$. Assume that
+$\E(\varepsilon_{tj}) = 0$ and $\E(IQ_t \varepsilon_{tj}) = 0$ for $j = 1, 2$. Assume also that there is a
+variable $MED$ (mother's education), which does not appear in either equation
+but which is predetermined in that $\E(MED_t \varepsilon_{tj}) = 0$ for $j = 1, 2$. So the
+common set of instruments is $\mathbf{x}_t = (1, IQ_t, MED_t)'$. The rest of the nonerror
+variables in the system are endogenous variables. This two-equation system
+has \emph{three} endogenous variables, $LW$, $S$, and $KWW$. Provided that the rank
+condition is satisfied, the first equation is just identified because the number of
+right-hand side variables equals the number of instruments, while the second
+equation is overidentified.
+\end{example}
+
+\subsection*{The Complete System of Simultaneous Equations}
+
+The ML counterpart of 3SLS is called the \textbf{full-information maximum likelihood
+(FIML) estimator}. If it is to be estimated by FIML, the multiple-equation model
+needs to be further specialized \emph{before} introducing the normality and i.i.d.\ assumptions. The required specialization is that those $M$ equations form a ``complete''
+system of simultaneous equations. Completeness requires two things.
+
+\begin{enumerate}
+\item There are as many endogenous variables as there are equations. This condition
+  implies that, if $\mathbf{y}_t$ is an $M$-dimensional vector collecting those $M$ endogenous
+  variables, then $(y_{t1}, \ldots, y_{tM}, \mathbf{z}_{t1}, \ldots, \mathbf{z}_{tM})$ are all elements of
+  $(\mathbf{y}_t, \mathbf{x}_t)$, which
+  allows one to write the $M$-equation system \eqref{eq:8.5.1} as
+  \begin{equation}
+    \underset{(M \times M)}{\boldsymbol{\Gamma}_0}
+    \underset{(M \times 1)}{\mathbf{y}_t}
+    + \underset{(M \times K)}{\mathbf{B}_0}
+    \underset{(K \times 1)}{\mathbf{x}_t}
+    = \underset{(M \times 1)}{\boldsymbol{\varepsilon}_t}
+    \quad (t = 1, 2, \ldots, n),
+    \label{eq:8.5.8} \tag{8.5.8}
+  \end{equation}
+  with the $m$-th equation being
+  $y_{tm} = \mathbf{z}_{tm}'\boldsymbol{\delta}_{0m} + \varepsilon_{tm}$. (This is illustrated for
+  Example~8.1 below.) The equation system written in this way is called the
+  \textbf{structural form}, and $(\boldsymbol{\Gamma}_0, \mathbf{B}_0)$ are called the \textbf{structural form parameters}. As
+  will be illustrated below, each of the structural form parameters is a function of
+  $(\boldsymbol{\delta}_{01}, \ldots, \boldsymbol{\delta}_{0M})$.
+
+  The system in Example~8.1 satisfies this first requirement. The system in
+  Example~8.2 is not a complete system because the number of endogenous variables is greater than the number of equations. It is not possible to estimate
+  incomplete systems by FIML (unless we complete the system by adding appropriate equations, see the discussion about LIML below). This is in contrast to
+  GMM; incomplete systems can be estimated by 3SLS (or more generally by
+  multiple-equation GMM if conditional homoskedasticity is not assumed), as
+  long as they satisfy the rank condition for identification.
+
+\item The square matrix $\boldsymbol{\Gamma}_0$ is nonsingular. This implies that the structural form can
+  be solved for the endogenous variables $\mathbf{y}_t$ as
+  \begin{equation}
+    \mathbf{y}_t = -\boldsymbol{\Gamma}_0^{-1}\mathbf{B}_0\mathbf{x}_t
+    + \boldsymbol{\Gamma}_0^{-1}\boldsymbol{\varepsilon}_t
+    \equiv \boldsymbol{\Pi}_0'\mathbf{x}_t + \mathbf{v}_t,
+    \label{eq:8.5.9} \tag{8.5.9}
+  \end{equation}
+  where
+  \begin{align}
+    \underset{(M \times K)}{\boldsymbol{\Pi}_0'} &\equiv
+    -\underset{(M \times M)}{\boldsymbol{\Gamma}_0^{-1}}
+    \underset{(M \times K)}{\mathbf{B}_0},
+    \label{eq:8.5.10} \tag{8.5.10} \\
+    \underset{(M \times 1)}{\mathbf{v}_t} &\equiv
+    \underset{(M \times M)}{\boldsymbol{\Gamma}_0^{-1}}
+    \underset{(M \times 1)}{\boldsymbol{\varepsilon}_t}.
+    \label{eq:8.5.11} \tag{8.5.11}
+  \end{align}
+  Expression \eqref{eq:8.5.9} is known as the \textbf{reduced-form} representation of the structural form, and the elements of $\boldsymbol{\Pi}_0$ are called the \textbf{reduced-form coefficients}. In
+  each equation of the reduced form, the regressors are the same set of variables,
+  $\mathbf{x}_t$. From \eqref{eq:8.5.3} and \eqref{eq:8.5.11}, it follows that
+  $\E(\mathbf{x}_t\mathbf{v}_t') = \mathbf{0}$, namely, that all the
+  regressors are predetermined. The reduced form, therefore, is a multivariate
+  regression model.
+\end{enumerate}
+
+\subsection*{Relationship between \texorpdfstring{$(\boldsymbol{\Gamma}_0, \mathbf{B}_0)$}{(Gamma0, B0)} and \texorpdfstring{$\boldsymbol{\delta}_0$}{delta0}}
+
+Let $\boldsymbol{\delta}_0$ be the stacked vector collecting all the coefficients in the $M$-equation system
+\eqref{eq:8.5.1}:
+\begin{equation}
+  \underset{(\sum_{m=1}^{M} L_m \times 1)}{\boldsymbol{\delta}_0}
+  = \begin{bmatrix}
+      \boldsymbol{\delta}_{01} \\ \boldsymbol{\delta}_{02} \\ \vdots \\ \boldsymbol{\delta}_{0M}
+    \end{bmatrix}.
+  \label{eq:8.5.12} \tag{8.5.12}
+\end{equation}
+For understanding the mechanics of FIML, it is important to see how the coefficient matrices $(\boldsymbol{\Gamma}_0, \mathbf{B}_0)$ depend on $\boldsymbol{\delta}_0$. To illustrate, consider Example~8.1.
+The $\boldsymbol{\delta}_0$ vector is
+\begin{equation}
+  \underset{(6 \times 1)}{\boldsymbol{\delta}_0}
+  = \begin{bmatrix}
+      \gamma_{11} \\ \beta_{11} \\ \beta_{12} \\
+      \gamma_{21} \\ \beta_{21} \\ \beta_{22}
+    \end{bmatrix}.
+  \label{eq:8.5.13} \tag{8.5.13}
+\end{equation}
+The two endogenous variables are $(p_t, q_t)$. It does not matter how the endogenous
+variables are ordered, so arbitrarily put $p_t$ first in $\mathbf{y}_t$:
+$\mathbf{y}_t = (p_t, q_t)'$. The structural
+form parameters can be written as
+\begin{equation}
+  \underset{(2 \times 2)}{\boldsymbol{\Gamma}_0}
+  = \begin{bmatrix} -\gamma_{11} & 1 \\ -\gamma_{21} & 1 \end{bmatrix}, \quad
+  \underset{(2 \times 3)}{\mathbf{B}_0}
+  = \begin{bmatrix}
+      -\beta_{11} & -\beta_{12} & 0 \\
+      -\beta_{21} & 0 & -\beta_{22}
+    \end{bmatrix}.
+  \label{eq:8.5.14} \tag{8.5.14}
+\end{equation}
+
+This example serves to illustrate three points. First, each row of $\boldsymbol{\Gamma}_0$ has an
+element of unity, reflecting the fact that the coefficient of the dependent variable
+in each of the $M$ equations \eqref{eq:8.5.1} is unity. In this sense $\boldsymbol{\Gamma}_0$ is already normalized. Second, some of the elements of $\boldsymbol{\Gamma}_0$ and $\mathbf{B}_0$ are zeros, reflecting the fact that some
+endogenous or predetermined variables do not appear in certain equations of the
+$M$-equation system. This feature of the structural form coefficient matrices is
+called the \textbf{exclusion restrictions}. (In Example~8.1, no elements of $\boldsymbol{\Gamma}_0$ happen
+to be zero because the two endogenous variables appear in both equations.) Third,
+the system involves no cross-equation restrictions, so each element of $\boldsymbol{\delta}_0$ appears
+in $(\boldsymbol{\Gamma}_0, \mathbf{B}_0)$ just once.
+
+\subsection*{The FIML Likelihood Function}
+
+To make the complete system of simultaneous equations estimable by FIML, we
+assume (1) that the structural error vector $\boldsymbol{\varepsilon}_t$ is jointly normal conditional on $\mathbf{x}_t$,
+i.e., $\boldsymbol{\varepsilon}_t \mid \mathbf{x}_t \sim N(\mathbf{0}, \boldsymbol{\Sigma}_0)$, and
+(2) that $\{\mathbf{y}_t, \mathbf{x}_t\}$ is i.i.d., not just ergodic stationary
+martingale differences (this assumption strengthens Assumptions~4.2 and~4.5).
+
+By the normality assumption~(1) about the structural errors $\boldsymbol{\varepsilon}_t$ and
+\eqref{eq:8.5.11},
+we have $\mathbf{v}_t \mid \mathbf{x}_t \sim N(\mathbf{0},
+\boldsymbol{\Gamma}_0^{-1}\boldsymbol{\Sigma}_0(\boldsymbol{\Gamma}_0^{-1})')$.
+Combining this and the reduced form
+$\mathbf{y}_t = \boldsymbol{\Pi}_0'\mathbf{x}_t + \mathbf{v}_t$ with \eqref{eq:8.5.10} produces
+\begin{equation}
+  \mathbf{y}_t \mid \mathbf{x}_t \sim
+  N\bigl(-\boldsymbol{\Gamma}_0^{-1}\mathbf{B}_0\mathbf{x}_t,\;
+    \boldsymbol{\Gamma}_0^{-1}\boldsymbol{\Sigma}_0(\boldsymbol{\Gamma}_0^{-1})'\bigr).
+  \label{eq:8.5.15} \tag{8.5.15}
+\end{equation}
+So the log conditional likelihood for observation~$t$ is
+\begin{multline}
+  \log f(\mathbf{y}_t \mid \mathbf{x}_t;\, \boldsymbol{\delta}, \boldsymbol{\Sigma})
+  = -\frac{M}{2}\log(2\pi)
+    - \frac{1}{2}\log(|\boldsymbol{\Gamma}^{-1}\boldsymbol{\Sigma}(\boldsymbol{\Gamma}^{-1})'|)
+    \\
+    - \frac{1}{2}[\mathbf{y}_t + \boldsymbol{\Gamma}^{-1}\mathbf{B}\mathbf{x}_t]'
+      [\boldsymbol{\Gamma}^{-1}\boldsymbol{\Sigma}(\boldsymbol{\Gamma}^{-1})']^{-1}
+      [\mathbf{y}_t + \boldsymbol{\Gamma}^{-1}\mathbf{B}\mathbf{x}_t].
+  \label{eq:8.5.16} \tag{8.5.16}
+\end{multline}
+The likelihood is a function of $(\boldsymbol{\delta}, \boldsymbol{\Sigma})$ because, as illustrated in \eqref{eq:8.5.14}, the structural form coefficients $(\boldsymbol{\Gamma}, \mathbf{B})$ are functions of $\boldsymbol{\delta}$. Now
+\begin{equation}
+  [\mathbf{y}_t + \boldsymbol{\Gamma}^{-1}\mathbf{B}\mathbf{x}_t]'
+  [\boldsymbol{\Gamma}^{-1}\boldsymbol{\Sigma}(\boldsymbol{\Gamma}^{-1})']^{-1}
+  [\mathbf{y}_t + \boldsymbol{\Gamma}^{-1}\mathbf{B}\mathbf{x}_t]
+  = [\boldsymbol{\Gamma}\mathbf{y}_t + \mathbf{B}\mathbf{x}_t]'
+    \boldsymbol{\Sigma}^{-1}
+    [\boldsymbol{\Gamma}\mathbf{y}_t + \mathbf{B}\mathbf{x}_t]
+  \label{eq:8.5.17} \tag{8.5.17}
+\end{equation}
+and
+\begin{equation}
+  |\boldsymbol{\Gamma}^{-1}\boldsymbol{\Sigma}(\boldsymbol{\Gamma}^{-1})'|
+  = |\boldsymbol{\Gamma}^{-1}| \,|\boldsymbol{\Sigma}|\, |(\boldsymbol{\Gamma}^{-1})'|
+  = |\boldsymbol{\Sigma}|/|\boldsymbol{\Gamma}|^2.
+  \label{eq:8.5.18} \tag{8.5.18}
+\end{equation}
+Substituting these into \eqref{eq:8.5.16},
+\begin{multline}
+  \log f(\mathbf{y}_t \mid \mathbf{x}_t;\, \boldsymbol{\delta}, \boldsymbol{\Sigma})
+  = -\frac{M}{2}\log(2\pi)
+    + \frac{1}{2}\log(|\boldsymbol{\Gamma}|^2)
+    - \frac{1}{2}\log(|\boldsymbol{\Sigma}|) \\
+    - \frac{1}{2}[\boldsymbol{\Gamma}\mathbf{y}_t + \mathbf{B}\mathbf{x}_t]'
+      \boldsymbol{\Sigma}^{-1}
+      [\boldsymbol{\Gamma}\mathbf{y}_t + \mathbf{B}\mathbf{x}_t].
+  \label{eq:8.5.19} \tag{8.5.19}
+\end{multline}
+Taking the average over~$t$, we obtain the FIML objective function for a random
+sample:
+\begin{multline}
+  Q_n(\boldsymbol{\delta}, \boldsymbol{\Sigma})
+  = -\frac{M}{2}\log(2\pi)
+    + \frac{1}{2}\log(|\boldsymbol{\Gamma}|^2)
+    - \frac{1}{2}\log(|\boldsymbol{\Sigma}|) \\
+    - \frac{1}{2n}\sum_{t=1}^{n}
+      [\boldsymbol{\Gamma}\mathbf{y}_t + \mathbf{B}\mathbf{x}_t]'
+      \boldsymbol{\Sigma}^{-1}
+      [\boldsymbol{\Gamma}\mathbf{y}_t + \mathbf{B}\mathbf{x}_t].
+  \label{eq:8.5.20} \tag{8.5.20}
+\end{multline}
+The FIML estimate of $(\boldsymbol{\delta}_0, \boldsymbol{\Sigma}_0)$ is the $(\boldsymbol{\delta}, \boldsymbol{\Sigma})$ that maximizes this objective function.
+
+\subsection*{The FIML Concentrated Likelihood Function}
+
+As in the maximization of the objective function of the multivariate regression
+model, we can proceed in two steps. The first step is to maximize
+$Q_n(\boldsymbol{\delta}, \boldsymbol{\Sigma})$ with
+respect to $\boldsymbol{\Sigma}$ given $\boldsymbol{\delta}$. This yields
+\begin{equation}
+  \underset{(M \times M)}{\hat{\boldsymbol{\Sigma}}(\boldsymbol{\delta})}
+  = \frac{1}{n}\sum_{t=1}^{n}
+    (\boldsymbol{\Gamma}\mathbf{y}_t + \mathbf{B}\mathbf{x}_t)
+    (\boldsymbol{\Gamma}\mathbf{y}_t + \mathbf{B}\mathbf{x}_t)'.
+  \label{eq:8.5.21} \tag{8.5.21}
+\end{equation}
+Its $(m, h)$ element can be written as
+\begin{equation}
+  \hat{\sigma}_{mh}
+  = \frac{1}{n}\sum_{t=1}^{n}
+    (y_{tm} - \mathbf{z}_{tm}'\boldsymbol{\delta}_m)
+    (y_{th} - \mathbf{z}_{th}'\boldsymbol{\delta}_h).
+  \label{eq:8.5.22} \tag{8.5.22}
+\end{equation}
+By substituting \eqref{eq:8.5.21} back into the objective function \eqref{eq:8.5.20},
+$(1/n$ times) the
+FIML concentrated likelihood function can be derived as
+\begin{align}
+  Q_n^*(\boldsymbol{\delta})
+  &\equiv Q_n(\boldsymbol{\delta},\, \hat{\boldsymbol{\Sigma}}(\boldsymbol{\delta})) \notag \\
+  &= -\frac{M}{2}\log(2\pi)
+     - \frac{M}{2}
+     + \frac{1}{2}\log(|\boldsymbol{\Gamma}|^2)
+     - \frac{1}{2}\log(|\hat{\boldsymbol{\Sigma}}(\boldsymbol{\delta})|) \notag \\
+  &= -\frac{M}{2}\log(2\pi)
+     - \frac{M}{2}
+     - \frac{1}{2}\log\biggl|\frac{1}{n}\sum_{t=1}^{n}
+       (\mathbf{y}_t + \boldsymbol{\Gamma}^{-1}\mathbf{B}\mathbf{x}_t)
+       (\mathbf{y}_t + \boldsymbol{\Gamma}^{-1}\mathbf{B}\mathbf{x}_t)'\biggr|.
+  \label{eq:8.5.23} \tag{8.5.23}
+\end{align}
+
+The second step is to maximize this FIML concentrated likelihood with respect to
+$\boldsymbol{\delta}$. The FIML estimator $\hat{\boldsymbol{\delta}}$ of $\boldsymbol{\delta}_0$ is the $\boldsymbol{\delta}$ that maximizes this function.\footnote{So the FIML estimator $\hat{\boldsymbol{\delta}}$ is an extremum estimator that maximizes
+$-\bigl|\frac{1}{n}\sum_{t=1}^{n}
+(\mathbf{y}_t + \boldsymbol{\Gamma}^{-1}\mathbf{B}\mathbf{x}_t)
+(\mathbf{y}_t + \boldsymbol{\Gamma}^{-1}\mathbf{B}\mathbf{x}_t)'\bigr|$.
+Some aspects of this extremum estimator are explored in an optional analytical exercise (see Analytical Exercise~3).}
+The FIML
+estimator of $\boldsymbol{\Sigma}_0$ is $\hat{\boldsymbol{\Sigma}}(\hat{\boldsymbol{\delta}})$.
+
+\subsection*{Testing Overidentifying Restrictions}
+
+Now compare this FIML concentrated likelihood $Q_n^*(\boldsymbol{\delta})$ given in \eqref{eq:8.5.23} with that
+for the multivariate regression model, $Q_n^*(\boldsymbol{\Pi})$ given in \eqref{eq:8.4.13}. The FIML concentrated likelihood $Q_n^*(\boldsymbol{\delta})$ is what obtains when we impose on
+$Q_n^*(\boldsymbol{\Pi})$ the restrictions
+implied by the null hypothesis that
+\begin{equation}
+  \mathrm{H}_0:\;
+  \boldsymbol{\Pi}_0' = -\boldsymbol{\Gamma}_0^{-1}\mathbf{B}_0
+  \;\text{ or }\;
+  \boldsymbol{\Gamma}_0\boldsymbol{\Pi}_0' + \mathbf{B}_0 = 0.
+  \label{eq:8.5.24} \tag{8.5.24}
+\end{equation}
+Put differently, FIML estimation of $\boldsymbol{\delta}_0$ is a constrained multivariate regression.
+Therefore, the truth of the null hypothesis can be tested by the likelihood ratio
+principle. Since the OLS estimator $\hat{\boldsymbol{\Pi}}$ given in \eqref{eq:8.4.5} maximizes the multivariate
+regression concentrated likelihood function $Q_n^*(\boldsymbol{\Pi})$ given in \eqref{eq:8.4.13} and the FIML
+estimator $\hat{\boldsymbol{\delta}}$ maximizes the FIML concentrated likelihood function $Q_n^*(\boldsymbol{\delta})$ given in
+\eqref{eq:8.5.23}, the likelihood ratio test statistic is
+\begin{align}
+  LR &= 2n \cdot (Q_n^*(\hat{\boldsymbol{\Pi}}) - Q_n^*(\hat{\boldsymbol{\delta}})) \notag \\
+     &= n \times \bigl(\log|\hat{\boldsymbol{\Omega}}(-(\tilde{\boldsymbol{\Gamma}}^{-1}\tilde{\mathbf{B}})' )|
+        - \log|\hat{\boldsymbol{\Omega}}(\hat{\boldsymbol{\Pi}})|\bigr),
+  \label{eq:8.5.25} \tag{8.5.25}
+\end{align}
+where $\hat{\boldsymbol{\Omega}}(\boldsymbol{\Pi})$ is defined in \eqref{eq:8.4.10} and
+$(\tilde{\boldsymbol{\Gamma}}, \tilde{\mathbf{B}})$ is the value of $(\boldsymbol{\Gamma}, \mathbf{B})$ implied by $\hat{\boldsymbol{\delta}}$.
+Since the dimension of $\boldsymbol{\delta}$ equals $\sum_{m=1}^{M} L_m$, the number of restrictions implied by
+the null hypothesis $\mathrm{H}_0$ above is
+\begin{equation}
+  KM - \sum_{m=1}^{M} L_m = \sum_{m=1}^{M}(K - L_m),
+  \label{eq:8.5.26} \tag{8.5.26}
+\end{equation}
+which is the total number of overidentifying restrictions of the system. Therefore,
+the likelihood ratio test based on the $LR$ statistic \eqref{eq:8.5.25} is a \textbf{test of overidentifying restrictions}. It is a specification test because the restriction being tested is a
+condition assumed in the model.
+
+\subsection*{Properties of the FIML Estimator}
+
+There is no closed-form solution to the FIML estimator. So, in order to establish
+the consistency and asymptotic normality, we would have to verify the conditions
+of relevant theorems of the previous chapter. We summarize here, without proof,
+the main properties of the FIML estimator.
+
+\subsubsection*{Identification}
+
+Stating the identification condition in various forms for complete simultaneous
+equations systems is a major topic in most textbooks. Here it is left as an optional
+analytical exercise (Analytical Exercise~3) to show that the identification condition for FIML as an extremum estimator is equivalent to the rank condition for
+identification (that $\E(\mathbf{x}_t\mathbf{z}_{tm}')$ be of full column rank for all
+$m = 1, 2, \ldots, M$).
+
+\subsubsection*{Asymptotic Properties}
+
+Although the FIML objective function \eqref{eq:8.5.20} is derived under the normality of
+$\boldsymbol{\varepsilon}_t \mid \mathbf{x}_t$, the FIML estimator of $\boldsymbol{\delta}_0$ is consistent and asymptotically normal without
+the normality assumption. For a proof of consistency without normality, see, e.g.,
+Amemiya (1985, pp.~232--233). There is a nice proof of asymptotic normality
+of $\hat{\boldsymbol{\delta}}$ due to Hausman (1975), which shows that an iterative instrumental variable
+estimation can be viewed as an algorithm for solving the first-order conditions for
+the maximization of $Q_n(\boldsymbol{\delta}, \boldsymbol{\Sigma})$.\footnote{We will not display the first-order conditions (the likelihood equations) for FIML because it requires
+cumbersome matrix notation. See Amemiya (1985, pp.~233--234) or Davidson and MacKinnon (1993, pp.~658--660) for more details. For the SUR model, the likelihood equations and the iterative procedure are much easier
+to describe; see the next subsection.}
+This argument shows that the FIML estimator of
+$\boldsymbol{\delta}_0$ is asymptotically equivalent to the 3SLS estimator.\footnote{This asymptotic equivalence does not carry over to nonlinear equation systems; nonlinear FIML is more
+efficient than nonlinear 3SLS. See Amemiya (1985, Section~8.2).}
+Therefore, its asymptotic
+variance is given by (4.5.15), and a consistent estimator of the asymptotic variance
+is (4.5.17).
+
+\subsubsection*{Invariance}
+
+Since the FIML estimator is an ML estimator, it has the invariance property discussed in Section~7.1. To illustrate, consider Example~8.1 and suppose you wish to
+reparameterize the supply equation as
+\begin{equation}
+  p_t = \tilde{\gamma}_{21} q_t + \tilde{\beta}_{21}
+  + \tilde{\beta}_{22} w_t + \tilde{\varepsilon}_{t2}
+  \quad \text{(supply)}.
+  \label{eq:8.5.27} \tag{8.5.27}
+\end{equation}
+The old supply parameters $(\gamma_{21}, \beta_{21}, \beta_{22})$ and the new supply parameters
+$(\tilde{\gamma}_{21}, \tilde{\beta}_{21}, \tilde{\beta}_{22})$ are connected by the one-to-one mapping
+\begin{equation}
+  \tilde{\gamma}_{21} = 1/\gamma_{21}, \quad
+  \tilde{\beta}_{21} = -\beta_{21}/\gamma_{21}, \quad
+  \tilde{\beta}_{22} = -\beta_{22}/\gamma_{21}.
+  \label{eq:8.5.28} \tag{8.5.28}
+\end{equation}
+If $(\hat{\gamma}_{21}, \hat{\beta}_{21}, \hat{\beta}_{22})$ is the FIML estimator of
+$(\gamma_{21}, \beta_{21}, \beta_{22})$ for the system consisting
+of the demand equation \eqref{eq:8.5.4} and the old supply equation \eqref{eq:8.5.5}, then the FIML
+estimator based on the system consisting of \eqref{eq:8.5.4} and the new supply equation
+\eqref{eq:8.5.27}
+is numerically the same as the value of the above mapping at
+$(\hat{\gamma}_{21}, \hat{\beta}_{21}, \hat{\beta}_{22})$. The
+3SLS estimator (and 2SLS for that matter) does not have this invariance property.
+
+The foregoing discussion about FIML can be summarized as
+
+\begin{proposition}[Asymptotic properties of FIML]\label{prop:8.1}
+Consider the $M$-equation system \eqref{eq:8.5.1} and let $\boldsymbol{\delta}_0$ be the stacked vector collecting all the coefficients in the
+$M$-equation system. Make the following assumptions.
+\begin{itemize}
+\item the rank condition for identification (that $\E(\mathbf{x}_t\mathbf{z}_{tm}')$ be of full column rank for all
+  $m = 1, 2, \ldots, M$) is satisfied,
+\item $\E(\mathbf{x}_t\mathbf{x}_t')$ is nonsingular,
+\item the $M$-equation system can be written as a complete system of simultaneous
+  equations \eqref{eq:8.5.8} with $\boldsymbol{\Gamma}_0$ nonsingular,
+\item $\boldsymbol{\varepsilon}_t \mid \mathbf{x}_t \sim N(\mathbf{0}, \boldsymbol{\Sigma}_0)$,
+  $\boldsymbol{\Sigma}_0$ positive definite,
+\item $\{\mathbf{y}_t, \mathbf{x}_t\}$ is i.i.d.,
+\item the parameter space for $(\boldsymbol{\delta}_0, \boldsymbol{\Sigma}_0)$ is compact with the true parameter vector
+  $(\boldsymbol{\delta}_0, \boldsymbol{\Sigma}_0)$ included as an interior point.
+\end{itemize}
+Then
+\begin{enumerate}[label=(\alph*)]
+\item the FIML estimator $(\hat{\boldsymbol{\delta}}, \hat{\boldsymbol{\Sigma}})$, which maximizes \eqref{eq:8.5.20}, is consistent and asymptotically normal,
+\item the asymptotic variance of $\hat{\boldsymbol{\delta}}$ is given by $(4.5.15)$, and a consistent estimator of
+  the asymptotic variance is $(4.5.17)$ where $\hat{\sigma}^{mh}$ is the $(m, h)$ element of
+  $\hat{\boldsymbol{\Sigma}}^{-1}$,
+\item the likelihood ratio statistic \eqref{eq:8.5.25} for testing overidentifying restrictions is
+  asymptotically $\chi^2$ with $KM - \sum_{m=1}^{M} L_m$ degrees of freedom.
+\end{enumerate}
+Furthermore, these asymptotic results about $\hat{\boldsymbol{\delta}}$ hold even if
+$\boldsymbol{\varepsilon}_t \mid \mathbf{x}_t$ is not normal.
+\end{proposition}
+
+\subsection*{ML Estimation of the SUR Model}
+
+The SUR model is a specialization of the FIML model with $\mathbf{z}_{tm}$ being a subvector
+of $\mathbf{x}_t$. It is therefore an $M$-equation system \eqref{eq:8.5.1} where the regressors $\mathbf{z}_{tm}$ are
+predetermined. Unlike in the multivariate regression model, the set of regressors
+could differ across equations. It is easy to show (see Review Question~3) that no
+two dependent variables can be the same variable, so $\mathbf{y}_t$ ($M \times 1$) in the structural
+form \eqref{eq:8.5.8} simply collects the $M$ dependent variables. Furthermore, since $\mathbf{z}_{tm}$
+includes no endogenous variables, $\boldsymbol{\Gamma}_0$ in the structural form is the identity matrix.
+Thus, the FIML objective function \eqref{eq:8.5.20} becomes
+\begin{equation}
+  Q_n(\boldsymbol{\delta}, \boldsymbol{\Sigma})
+  = -\frac{M}{2}\log(2\pi)
+    - \frac{1}{2}\log(|\boldsymbol{\Sigma}|)
+    - \frac{1}{2n}\sum_{t=1}^{n}
+      [\boldsymbol{\Gamma}\mathbf{y}_t + \mathbf{B}\mathbf{x}_t]'
+      \boldsymbol{\Sigma}^{-1}
+      [\boldsymbol{\Gamma}\mathbf{y}_t + \mathbf{B}\mathbf{x}_t],
+  \label{eq:8.5.29} \tag{8.5.29}
+\end{equation}
+where $\boldsymbol{\Gamma}$ is understood to be the identity matrix. (We continue to carry $\boldsymbol{\Gamma}$ around
+in order to facilitate the comparison to the objective function for LIML to be introduced in the next subsection.) As in FIML, the $\boldsymbol{\Sigma}$ that maximizes the objective
+function given $\boldsymbol{\delta}$ is given by $\hat{\boldsymbol{\Sigma}}(\boldsymbol{\delta})$ in \eqref{eq:8.5.21}.
+
+For the SUR model, the score with respect to $\boldsymbol{\delta}$ can be written down rather
+easily. The $m$-th row of $\boldsymbol{\Gamma}\mathbf{y}_t + \mathbf{B}\mathbf{x}_t$ is
+$y_{tm} - \mathbf{z}_{tm}'\boldsymbol{\delta}_m$. Define
+$\mathbf{y}$ ($Mn \times 1$) and $\mathbf{Z}$
+($Mn \times \sum_{m=1}^{M} L_m$) as in the first analytical exercise to Chapter~4. Then
+\begin{equation}
+  \sum_{t=1}^{n}
+    [\boldsymbol{\Gamma}\mathbf{y}_t + \mathbf{B}\mathbf{x}_t]'
+    \boldsymbol{\Sigma}^{-1}
+    [\boldsymbol{\Gamma}\mathbf{y}_t + \mathbf{B}\mathbf{x}_t]
+  = (\mathbf{y} - \mathbf{Z}\boldsymbol{\delta})'
+    (\boldsymbol{\Sigma}^{-1} \otimes \mathbf{I}_n)
+    (\mathbf{y} - \mathbf{Z}\boldsymbol{\delta}).
+  \label{eq:8.5.30} \tag{8.5.30}
+\end{equation}
+Therefore,
+\begin{equation}
+  \frac{\partial Q_n(\boldsymbol{\delta}, \boldsymbol{\Sigma})}{\partial \boldsymbol{\delta}}
+  = \frac{1}{n}\,\mathbf{Z}'(\boldsymbol{\Sigma}^{-1} \otimes \mathbf{I}_n)
+    (\mathbf{y} - \mathbf{Z}\boldsymbol{\delta}).
+  \label{eq:8.5.31} \tag{8.5.31}
+\end{equation}
+(Doing the same for the more general case of FIML is not as easy because, although
+\eqref{eq:8.5.30} holds for FIML as well, the score $\frac{\partial Q_n}{\partial \boldsymbol{\delta}}$ is more complicated thanks to the
+term $\log(|\boldsymbol{\Gamma}|^2)$ in the FIML likelihood function. Put differently, if $|\boldsymbol{\Gamma}|$ is a constant
+(i.e., independent of $\boldsymbol{\delta}$), then $\frac{\partial Q_n}{\partial \boldsymbol{\delta}}$ for FIML is the same as \eqref{eq:8.5.31}.)
+Setting this
+equal to zero and solving for $\boldsymbol{\delta}$, we obtain
+\begin{equation}
+  \hat{\boldsymbol{\delta}}(\boldsymbol{\Sigma})
+  \equiv [\mathbf{Z}'(\boldsymbol{\Sigma}^{-1} \otimes \mathbf{I}_n)\mathbf{Z}]^{-1}
+    \mathbf{Z}'(\boldsymbol{\Sigma}^{-1} \otimes \mathbf{I}_n)\mathbf{y}.
+  \label{eq:8.5.32} \tag{8.5.32}
+\end{equation}
+Given some consistent estimator $\hat{\boldsymbol{\Sigma}}$ of $\boldsymbol{\Sigma}_0$,
+$\hat{\boldsymbol{\delta}}(\hat{\boldsymbol{\Sigma}})$ is the SUR estimator of $\boldsymbol{\delta}_0$ derived
+in Chapter~4.
+
+These two functions $(\hat{\boldsymbol{\delta}}(\boldsymbol{\Sigma}),\, \hat{\boldsymbol{\Sigma}}(\boldsymbol{\delta}))$ define a mapping from the parameter space
+for $(\boldsymbol{\delta}, \boldsymbol{\Sigma})$ to itself, and a solution to the first-order conditions for the maximization
+of $Q_n(\boldsymbol{\delta}, \boldsymbol{\Sigma})$ is a fixed point in this mapping. Such a fixed point can be calculated
+by the following \textbf{iterative SUR}. Let
+$(\hat{\boldsymbol{\delta}}^{(j)}, \hat{\boldsymbol{\Sigma}}^{(j)})$ be the estimate of
+$(\boldsymbol{\delta}_0, \boldsymbol{\Sigma}_0)$ in the
+$j$-th iteration. The estimate in the next iteration is
+\begin{equation}
+  \hat{\boldsymbol{\delta}}^{(j+1)} = \hat{\boldsymbol{\delta}}(\hat{\boldsymbol{\Sigma}}^{(j)}), \quad
+  \hat{\boldsymbol{\Sigma}}^{(j+1)} = \hat{\boldsymbol{\Sigma}}(\hat{\boldsymbol{\delta}}^{(j+1)}).
+  \label{eq:8.5.33} \tag{8.5.33}
+\end{equation}
+The first part of this iteration is the SUR estimation given $\hat{\boldsymbol{\Sigma}}^{(j)}$, while the latter
+part updates the estimate of $\boldsymbol{\Sigma}_0$ using the current estimate of $\boldsymbol{\delta}_0$. If this process
+converges, then the limit is a solution to the first-order conditions.
+
+\bigskip
+\noindent\rule{\textwidth}{0.4pt}
+\textbf{QUESTIONS FOR REVIEW}
+\medskip
+
+\begin{enumerate}
+\item (Deriving $f(\mathbf{y}_t \mid \mathbf{x}_t)$ from $f(\boldsymbol{\varepsilon}_t \mid \mathbf{x}_t)$)\quad
+  In this exercise, we wish to derive the
+  likelihood for observation~$t$ for the FIML model by the following fact from
+  probability theory:
+
+  \begin{quote}
+  \textit{Change of Variable Formula:}\quad Suppose $\boldsymbol{\varepsilon}$ is a continuous $M$-dimensional random vector with density $f_{\boldsymbol{\varepsilon}}(\boldsymbol{\varepsilon})$ and
+  $\mathbf{g}: \mathbb{R}^M \to \mathbb{R}^M$ is a one-to-one and differentiable mapping on an open set~$S$, with the inverse
+  mapping denoted as $\mathbf{g}^{-1}(\cdot)$. Let the $M \times M$ matrix $\mathbf{J}(\boldsymbol{\varepsilon})$ be the Jacobian
+  matrix $\frac{\partial \mathbf{g}(\boldsymbol{\varepsilon})}{\partial \boldsymbol{\varepsilon}'}$
+  (the $M \times M$ matrix of partial derivatives, whose $(i, j)$
+  element is $\frac{\partial g_i(\boldsymbol{\varepsilon})}{\partial \varepsilon_j}$).
+  Assume that $|\mathbf{J}(\boldsymbol{\varepsilon})|$ is not zero at any point in~$S$.
+  Then the density of $\mathbf{y} = \mathbf{g}(\boldsymbol{\varepsilon})$ is given by
+  \[
+    f(\mathbf{y}) = \frac{f_{\boldsymbol{\varepsilon}}(\mathbf{g}^{-1}(\mathbf{y}))}
+    {\text{abs}(|\mathbf{J}(\mathbf{g}^{-1}(\mathbf{y}))|)}.
+  \]
+  \end{quote}
+
+  (Note that $|\mathbf{J}(\mathbf{g}^{-1}(\mathbf{y}))|$ is a determinant, which may or may not be positive.)
+  Using this fact, derive the density of $\mathbf{y}_t \mid \mathbf{x}_t$ from the density of
+  $\boldsymbol{\varepsilon}_t \mid \mathbf{x}_t$
+  and verify that the associated log likelihood is given by \eqref{eq:8.5.16}.
+  \textbf{Hint:} The
+  inverse mapping $\mathbf{g}^{-1}(\mathbf{y}_t)$ is the left-hand side of \eqref{eq:8.5.8}. So
+  $\mathbf{J}(\boldsymbol{\varepsilon}_t) = \boldsymbol{\Gamma}_0^{-1}$. Also,
+  $\log(\text{abs}(|\boldsymbol{\Gamma}|)) = \frac{1}{2}\log(|\boldsymbol{\Gamma}|^2)$.
+
+\item (Instruments outside the system)\quad
+  Consider the complete system of simultaneous equations \eqref{eq:8.5.8} with $|\boldsymbol{\Gamma}_0| \neq 0$. Suppose that one of the $K$ predetermined
+  variables, say $x_{tK}$, does not appear in any of the $M$-equations. Let
+  $\hat{\mathbf{E}}^*(\mathbf{y} \mid \mathbf{x})$ be
+  the least squares projection of $\mathbf{y}$ on $\mathbf{x}$. Show that
+  $\hat{\mathbf{E}}^*(y_{tm} \mid \mathbf{x}_t) = \hat{\mathbf{E}}^*(y_{tm} \mid \tilde{\mathbf{x}}_t)$,
+  where $\tilde{\mathbf{x}}_t = (x_{t1}, \ldots, x_{t,K-1})'$ (so
+  $\mathbf{x}_t = (\tilde{\mathbf{x}}_t', x_{tK})'$).
+  (As you will show in Analytical Exercise~4, including $x_{tK}$ in addition to $\tilde{\mathbf{x}}_t$ in the list of instruments will
+  not change the asymptotic variance of the FIML estimator of $\boldsymbol{\delta}_0$; it probably
+  makes the small sample properties only worse.)
+
+\item Recall that in Example~8.1 $y_{t1}$ and $y_{t2}$ are the same variable. In the SUR model,
+  this cannot happen; that is, no two elements of $(y_{t1}, y_{t2}, \ldots, y_{tM})$ are the same
+  variable if the assumptions describing the model are satisfied. Prove this.
+  \textbf{Hint:}
+  Suppose $y_{t1}$ and $y_{t2}$ are the same variable. Then
+  \[
+    \varepsilon_{t1} - \varepsilon_{t2}
+    = \mathbf{z}_{t1}'\boldsymbol{\delta}_{0,1} - \mathbf{z}_{t2}'\boldsymbol{\delta}_{0,2}.
+  \]
+\end{enumerate}

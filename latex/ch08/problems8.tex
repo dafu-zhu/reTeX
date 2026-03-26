@@ -1,0 +1,261 @@
+% problems8.tex — Problem Set for Chapter 8
+
+\begin{problemset}
+
+\textbf{ANALYTICAL EXERCISES}
+
+\exercise[1]
+Show that
+\begin{equation}
+  \biggl|\frac{1}{n}\sum_{t=1}^{n}
+    (\mathbf{y}_t - \boldsymbol{\Pi}'\mathbf{x}_t)
+    (\mathbf{y}_t - \boldsymbol{\Pi}'\mathbf{x}_t)'\biggr|
+  \geq \biggl|\frac{1}{n}\sum_{t=1}^{n}
+    \hat{\mathbf{v}}_t \hat{\mathbf{v}}_t'\biggr|,
+  \tag{1}
+\end{equation}
+where $\hat{\mathbf{v}}_t \equiv \mathbf{y}_t - \hat{\boldsymbol{\Pi}}'\mathbf{x}_t$ and $\hat{\boldsymbol{\Pi}}$ is given in \eqref{eq:8.4.5}. (Since $\hat{\mathbf{v}}_t$ does not depend on
+$\boldsymbol{\Pi}$ by construction, this inequality shows that the left-hand side is minimized at
+$\boldsymbol{\Pi} = \hat{\boldsymbol{\Pi}}$.) \textbf{Hint:} Use the ``add-and-subtract'' strategy to derive
+\[
+  \mathbf{y}_t - \boldsymbol{\Pi}'\mathbf{x}_t
+  = \hat{\mathbf{v}}_t + (\hat{\boldsymbol{\Pi}} - \boldsymbol{\Pi})'\mathbf{x}_t.
+\]
+So
+\begin{align*}
+  \sum_{t=1}^{n}
+    &(\mathbf{y}_t - \boldsymbol{\Pi}'\mathbf{x}_t)
+    (\mathbf{y}_t - \boldsymbol{\Pi}'\mathbf{x}_t)' \\
+  &= \sum_{t=1}^{n} \hat{\mathbf{v}}_t\hat{\mathbf{v}}_t'
+    + (\hat{\boldsymbol{\Pi}} - \boldsymbol{\Pi})'
+    \biggl(\sum_{t=1}^{n} \mathbf{x}_t\hat{\mathbf{v}}_t'\biggr)
+    + \biggl(\sum_{t=1}^{n} \hat{\mathbf{v}}_t\mathbf{x}_t'\biggr)
+    (\hat{\boldsymbol{\Pi}} - \boldsymbol{\Pi}) \\
+  &\quad+ (\hat{\boldsymbol{\Pi}} - \boldsymbol{\Pi})'
+    \biggl(\sum_{t=1}^{n} \mathbf{x}_t\mathbf{x}_t'\biggr)
+    (\hat{\boldsymbol{\Pi}} - \boldsymbol{\Pi}) \\
+  &= \sum_{t=1}^{n} \hat{\mathbf{v}}_t\hat{\mathbf{v}}_t'
+    + (\hat{\boldsymbol{\Pi}} - \boldsymbol{\Pi})'
+    \biggl(\sum_{t=1}^{n} \mathbf{x}_t\mathbf{x}_t'\biggr)
+    (\hat{\boldsymbol{\Pi}} - \boldsymbol{\Pi})
+  \quad\biggl(\text{since }
+    \sum_{t=1}^{n} \mathbf{x}_t\hat{\mathbf{v}}_t' = \mathbf{0}\biggr).
+\end{align*}
+Then use the following result from matrix algebra:
+\begin{quote}
+Let $\mathbf{A}$ and $\mathbf{B}$ be two positive semidefinite matrices of the same size.
+Then $|\mathbf{A} + \mathbf{B}| \geq |\mathbf{A}|$.
+\end{quote}
+
+\exercise[2]
+($\hat{\boldsymbol{\Omega}}(\boldsymbol{\Pi})$ is positive definite.)\quad
+Under the conditions of the multivariate regression model, show that $\hat{\boldsymbol{\Omega}}(\boldsymbol{\Pi})$ defined in \eqref{eq:8.4.10} is positive definite for any
+given $\boldsymbol{\Pi}$. \textbf{Hint:} Derive
+$\mathbf{y}_t - \boldsymbol{\Pi}'\mathbf{x}_t = \mathbf{v}_t + (\boldsymbol{\Pi}_0 - \boldsymbol{\Pi})'\mathbf{x}_t$.
+Since $\{y_t, \mathbf{x}_t\}$ is i.i.d.,
+$\hat{\boldsymbol{\Omega}}(\boldsymbol{\Pi})$ converges almost surely to
+$\E\bigl[(\mathbf{y}_t - \boldsymbol{\Pi}'\mathbf{x}_t)(\mathbf{y}_t - \boldsymbol{\Pi}'\mathbf{x}_t)'\bigr]$.
+Show that
+\[
+  \E\bigl[(\mathbf{y}_t - \boldsymbol{\Pi}'\mathbf{x}_t)
+    (\mathbf{y}_t - \boldsymbol{\Pi}'\mathbf{x}_t)'\bigr]
+  = \boldsymbol{\Omega}_0
+    + (\boldsymbol{\Pi}_0 - \boldsymbol{\Pi})'\E(\mathbf{x}_t\mathbf{x}_t')
+      (\boldsymbol{\Pi}_0 - \boldsymbol{\Pi}).
+\]
+$\boldsymbol{\Omega}_0$ is positive definite by assumption.
+
+\exercise[3]
+(Optional, identification of $\boldsymbol{\delta}$ in FIML)\quad
+As noted in footnote~7 of Section~8.5,
+the FIML estimator of $\boldsymbol{\delta}_0$ is an extremum estimator whose objective function is
+\begin{equation}
+  Q_n(\boldsymbol{\delta}) = -|\hat{\boldsymbol{\Omega}}(\boldsymbol{\delta})|,
+  \tag{2}
+\end{equation}
+where
+\begin{equation}
+  \hat{\boldsymbol{\Omega}}(\boldsymbol{\delta})
+  \equiv \frac{1}{n}\sum_{t=1}^{n}
+    (\mathbf{y}_t + \boldsymbol{\Gamma}^{-1}\mathbf{B}\mathbf{x}_t)
+    (\mathbf{y}_t + \boldsymbol{\Gamma}^{-1}\mathbf{B}\mathbf{x}_t)'.
+  \tag{3}
+\end{equation}
+Let
+\begin{equation}
+  Q_0(\boldsymbol{\delta}) \equiv \plim_{n \to \infty} Q_n(\boldsymbol{\delta}).
+  \tag{4}
+\end{equation}
+To show the consistency of this extremum estimator, we would verify the two
+conditions of Proposition~7.1 of the previous chapter. Reproducing these two
+conditions in the current notation:
+
+\medskip
+\noindent\textbf{identification:}\quad $Q_0(\boldsymbol{\delta})$ is uniquely maximized on the compact parameter space
+at $\boldsymbol{\delta}_0$,
+
+\medskip
+\noindent\textbf{uniform convergence:}\quad $Q_n(\cdot)$ converges uniformly in probability to $Q_0(\cdot)$.
+
+\medskip
+In this exercise we prove that the rank condition for identification (that
+$\E(\mathbf{x}_t\mathbf{z}_{tm}')$
+be of full column rank for all~$m$) is equivalent to the above extremum estimator
+identification condition. In the proof, take for granted all the assumptions we
+made about FIML in the text.
+
+To set up the discussion, we need to introduce some more notation. Reproducing the $m$-th equation of the structural form from the text:
+\[
+  y_{tm} = \underset{(1 \times L_m)}{\mathbf{z}_{tm}'}
+  \underset{(L_m \times 1)}{\boldsymbol{\delta}_{0m}}
+  + \varepsilon_{tm}.
+  \tag{5}
+\]
+The regressors $\mathbf{z}_{tm}$ consist of $M_m$ endogenous variables and $K_m$ predetermined
+variables with $M_m + K_m = L_m$. Define
+\begin{align*}
+  \underset{(M_m \times M)}{\mathbf{S}_m}
+  &: \text{a matrix that selects those $M_m$ endogenous regressors from $\mathbf{y}_t$}, \\
+  \underset{(K_m \times K)}{\mathbf{C}_m}
+  &: \text{a matrix that selects those $K_m$ predetermined regressors from $\mathbf{x}_t$}.
+\end{align*}
+To illustrate, $\mathbf{S}_1$ and $\mathbf{C}_1$ for Example~8.1 with
+$\mathbf{y}_t = (p_t, q_t)'$ and $\mathbf{x}_t = (1, a_t, w_t)'$
+is
+\[
+  \mathbf{S}_1 = \begin{bmatrix} 1 & 0 \end{bmatrix}, \quad
+  \mathbf{C}_1 = \begin{bmatrix} 1 & 0 & 0 \\ 0 & 1 & 0 \end{bmatrix}.
+\]
+So the regressors in the $m$-th equation can be written as
+\[
+  \mathbf{z}_{tm}' = (\mathbf{y}_t'\mathbf{S}_m' \;:\; \mathbf{x}_t'\mathbf{C}_m').
+\]
+
+\begin{enumerate}[label=(\alph*)]
+\item Show that
+  \begin{equation}
+    \underset{(K \times L_m)}{\E(\mathbf{x}_t\mathbf{z}_{tm}')}
+    = \E(\mathbf{x}_t\mathbf{x}_t')
+    \underset{(K \times K)}{\phantom{x}}
+    \begin{bmatrix}
+      \boldsymbol{\Pi}_0\mathbf{S}_m' & \mathbf{C}_m' \\
+      \underset{(K \times M_m)}{\phantom{x}} & \underset{(K \times K_m)}{\phantom{x}}
+    \end{bmatrix}.
+    \underset{(K \times L_m)}{\phantom{x}}
+    \tag{6}
+  \end{equation}
+  \textbf{Hint:} Use the reduced form \eqref{eq:8.5.9} and the fact that $\E(\mathbf{x}_t\mathbf{v}_t') = \mathbf{0}$.
+
+  Since multiplication by a nonsingular matrix ($\E(\mathbf{x}_t\mathbf{x}_t')$ here) does not alter rank,
+  equation~(6) implies that the rank condition for identification is equivalent to
+  the condition that the rank of $[\boldsymbol{\Pi}_0\mathbf{S}_m' \;:\; \mathbf{C}_m']$ be $L_m$.
+
+\item Show that
+  \begin{equation}
+    \plim_{n\to\infty} \hat{\boldsymbol{\Omega}}(\boldsymbol{\delta})
+    = \boldsymbol{\Gamma}_0^{-1}\boldsymbol{\Sigma}_0(\boldsymbol{\Gamma}_0^{-1})'
+    + [\boldsymbol{\Pi}_0' + \boldsymbol{\Gamma}^{-1}\mathbf{B}]
+      \E(\mathbf{x}_t\mathbf{x}_t')
+      [\boldsymbol{\Pi}_0' + \boldsymbol{\Gamma}^{-1}\mathbf{B}]',
+    \tag{7}
+  \end{equation}
+  where $\boldsymbol{\Pi}_0' \equiv -\boldsymbol{\Gamma}_0^{-1}\mathbf{B}_0$.
+  \textbf{Hint:} Since $\{\mathbf{y}_t, \mathbf{x}_t\}$ is i.i.d., the probability limit is
+  given by
+  $\E\bigl[(\mathbf{y}_t + \boldsymbol{\Gamma}^{-1}\mathbf{B}\mathbf{x}_t)
+  (\mathbf{y}_t + \boldsymbol{\Gamma}^{-1}\mathbf{B}\mathbf{x}_t)'\bigr]$. Also,
+  \[
+    \mathbf{y}_t + \boldsymbol{\Gamma}^{-1}\mathbf{B}\mathbf{x}_t
+    = \mathbf{v}_t + (\boldsymbol{\Pi}_0' + \boldsymbol{\Gamma}^{-1}\mathbf{B})\mathbf{x}_t.
+  \]
+
+\item Show that $|\hat{\boldsymbol{\Omega}}(\boldsymbol{\delta})|$ is minimized only if
+  $\boldsymbol{\Gamma}\boldsymbol{\Pi}_0' + \mathbf{B} = \mathbf{0}$.
+  \textbf{Hint:} Since $\E(\mathbf{x}_t\mathbf{x}_t')$
+  is positive definite, the second term on the right-hand side of~(7) is zero only
+  if $\boldsymbol{\Pi}_0' + \mathbf{B}'(\boldsymbol{\Gamma}^{-1})' = \mathbf{0}$. Use the fact from matrix algebra noted in Exercise~1
+  above.
+
+  Therefore, the extremum estimator identification condition (that $Q_0(\boldsymbol{\delta})$ be maximized uniquely at $\boldsymbol{\delta}_0$) holds if and only if $(\boldsymbol{\Gamma}, \mathbf{B}) = (\boldsymbol{\Gamma}_0, \mathbf{B}_0)$ is the only solution to $\boldsymbol{\Gamma}\boldsymbol{\Pi}_0' + \mathbf{B} = \mathbf{0}$ viewed as a system of simultaneous equations for $(\boldsymbol{\Gamma}, \mathbf{B})$.
+
+\item Let $\boldsymbol{\alpha}_m'$ ($1 \times (M + K)$) be the $m$-th row of $[\boldsymbol{\Gamma} \;:\; \mathbf{B}]$, and let $\mathbf{e}_m'$ be a ($1 \times (M +
+  K)$) vector whose element corresponding to $y_{tm}$ is one and whose other
+  elements are zero. To illustrate, $\mathbf{e}_1'$ for Example~8.1 with
+  $\mathbf{y}_t = (p_t, q_t)'$ and
+  $\mathbf{x}_t = (1, a_t, w_t)'$ is $(0, 1, 0, 0, 0)$. Verify for Example~8.1 the general result
+  that
+  \begin{equation}
+    \underset{(1 \times (M+K))}{\boldsymbol{\alpha}_m'}
+    = \mathbf{e}_m'
+    - \underset{(1 \times (M_m + K_m))}{\boldsymbol{\delta}_m'}
+    \begin{bmatrix}
+      \mathbf{S}_m & \mathbf{0} \\
+      \underset{(M_m \times M)}{\phantom{x}} & \underset{(M_m \times K)}{\phantom{x}} \\
+      \mathbf{0} & \mathbf{C}_m \\
+      \underset{(K_m \times M)}{\phantom{x}} & \underset{(K_m \times K)}{\phantom{x}}
+    \end{bmatrix}.
+    \tag{8}
+  \end{equation}
+
+\item Rewrite $\boldsymbol{\Gamma}\boldsymbol{\Pi}_0' + \mathbf{B} = \mathbf{0}$ as
+  \begin{equation}
+    [\boldsymbol{\Gamma} \;:\; \mathbf{B}]
+    \begin{bmatrix} \boldsymbol{\Pi}_0' \\ \mathbf{I}_K \end{bmatrix} = \mathbf{0}.
+    \tag{9}
+  \end{equation}
+  Show that the $m$-th row of $\boldsymbol{\Gamma}\boldsymbol{\Pi}_0' + \mathbf{B} = \mathbf{0}$ can be written as
+  \begin{equation}
+    \boldsymbol{\delta}_m'
+    \begin{bmatrix} \mathbf{S}_m\boldsymbol{\Pi}_0' \\ \mathbf{C}_m \end{bmatrix}
+    = \boldsymbol{\pi}_{0m}',
+    \tag{10}
+  \end{equation}
+  where
+  \begin{equation}
+    \boldsymbol{\pi}_{0m} \equiv [\boldsymbol{\Pi}_0 \;:\; \mathbf{I}_K]\,\mathbf{e}_m.
+    \tag{11}
+  \end{equation}
+
+\item Verify that $\boldsymbol{\delta}_m = \boldsymbol{\delta}_{0m}$ is \emph{a} solution to~(10). Show that a necessary and
+  sufficient condition that $\boldsymbol{\delta}_m = \boldsymbol{\delta}_{0m}$ is the only solution to~(10) is the rank
+  condition for identification for equation~$m$.
+  \textbf{Hint:} Recall the following fact
+  from linear algebra: Suppose $\mathbf{A}\mathbf{x} = \mathbf{y}$ has a solution $\mathbf{x}_0$. A necessary and
+  sufficient condition that it is the only solution is that $\mathbf{A}$ is of full column rank.
+
+\item Explain why we can conclude that the only solution to $\boldsymbol{\Gamma}\boldsymbol{\Pi}_0' + \mathbf{B} = \mathbf{0}$ is
+  $(\boldsymbol{\Gamma}, \mathbf{B}) = (\boldsymbol{\Gamma}_0, \mathbf{B}_0)$.
+  \textbf{Hint:} Each element of $\boldsymbol{\delta}$ appears in either $\boldsymbol{\Gamma}$ or $\mathbf{B}$ only
+  once.
+\end{enumerate}
+
+\exercise[4]
+(Optional, instruments that do not show up in the system)\quad
+Consider the complete system of simultaneous equations discussed in Section~8.5. Let
+\[
+  \underset{(K \times 1)}{\mathbf{x}_t}
+  = \begin{bmatrix}
+      \tilde{\mathbf{x}}_t \\
+      \underset{((K-1) \times 1)}{\phantom{x}} \\
+      x_{tK}
+    \end{bmatrix}.
+\]
+Suppose that $x_{tK}$ does not appear in any of the $M$ structural equations. Show
+that dropping $x_{tK}$ from the list of instruments changes neither the rank condition for identification nor the asymptotic variance of the FIML estimator
+of $\boldsymbol{\delta}_0$. \textbf{Hint:} Define the two matrices, $\mathbf{S}_m$ and $\mathbf{C}_m$ as in Exercise~3, so that
+$\mathbf{z}_{tm}' = (\mathbf{y}_t'\mathbf{S}_m' \;:\; \mathbf{x}_t'\mathbf{C}_m')$
+and~(6) holds. FIML is asymptotically equivalent to 3SLS,
+so its asymptotic variance is given in (4.5.15). The last row of $\mathbf{C}_m'$ is a vector of
+zeros. Let $\tilde{\boldsymbol{\Pi}}_0$ ($(K-1) \times M$) be the matrix of reduced-form coefficients when
+$x_{tK}$ is dropped from the system. Then
+\[
+  \boldsymbol{\Pi}_0
+  = \begin{bmatrix}
+      \tilde{\boldsymbol{\Pi}}_0 \\
+      \underset{((K-1) \times M)}{\phantom{x}} \\
+      \mathbf{0}' \\
+      \underset{(1 \times M)}{\phantom{x}}
+    \end{bmatrix}.
+\]
+
+\end{problemset}

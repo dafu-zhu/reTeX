@@ -1,0 +1,366 @@
+% sec6_8.tex — Section 6.8: Application: Forward Exchange Rates as Optimal Predictors
+
+In foreign exchange markets, the percentage difference between the forward
+exchange rate and the spot exchange rate is called the \textbf{forward premium}. The
+relation between the forward premium and the expected rate of currency appreciation/depreciation
+over the life of the forward contract has been the subject of a
+large number of empirical studies. The simplest hypothesis about the relationship
+is that the two are the same. In this section, we test this hypothesis using the same
+weekly data set used by Bekaert and Hodrick (1993).
+
+The data cover the period of 1975--1989 and include the following variables:
+\begin{align*}
+  S_t &= \text{spot exchange rate, stated in units of the foreign currency per dollar} \\
+  &\quad \text{(e.g., 125 yen per dollar) on the Friday of week $t$,} \\
+  F_t &= \text{30-day forward exchange rate on Friday of week $t$, namely, the price} \\
+  &\quad \text{in foreign currency units of the dollar deliverable 30 days from Friday} \\
+  &\quad \text{of week $t$,} \\
+  S30_t &= \text{the spot rate on the delivery date on a 30-day forward contract made} \\
+  &\quad \text{on Friday of week $t$.}
+\end{align*}
+The important feature of the data is that the maturity of the contract covers several
+sampling intervals; the delivery date is after the Friday of week $t + 4$ but before the
+Friday of week $t + 5$.
+
+\subsection*{The Market Efficiency Hypothesis}
+
+To indicate the assumptions underlying the hypothesis, consider three strategies
+for investing dollar funds for 30~days at date $t$. The first is to invest in a domestic
+money market instrument (e.g., U.S.\ Treasury bills) whose maturity is 30~days. Let
+$i_t$ be the rate of return over the 30-day period. The second investment strategy is to
+convert dollars into foreign currency units, buy a 30-day money market instrument
+denominated in the foreign currency whose interest rate is denoted $i_t^*$, and convert
+back to dollars at maturity. The rate of return from this investment strategy is
+\[
+  S_t \cdot (1 + i_t^*) / S30_t.
+\]
+This strategy involves foreign exchange risk because at time $t$ of investing you
+do not know $S30_t$, which is the spot rate 30~days hence. The third investment
+strategy differs from the second in that it hedges against exchange risk by buying
+dollars forward at price $F_t$ at the same time the dollar fund is converted into foreign
+currency units. This hedged foreign investment provides a sure return equal to
+\[
+  S_t \cdot (1 + i_t^*) / F_t.
+\]
+Because the first and the third strategies involve no risk, arbitrage requires that the
+rates of return be the same:
+\[
+  1 + i_t = S_t \cdot (1 + i_t^*) / F_t.
+\]
+Taking logs of both sides and using the approximation $\log(1 + x) \approx x$, we obtain
+the \textbf{covered interest parity} equation:
+\begin{equation}
+  i_t = s_t - f_t + i_t^* \quad \text{or} \quad
+  f_t - s_t = i_t^* - i_t,
+  \label{eq:6.8.1}
+\end{equation}
+where lower case letters for $S$ and $F$ are natural logs. That is, the forward premium,
+$f_t - s_t$, equals the interest rate differential. This relationship holds almost exactly
+in real data. In fact, people routinely calculate the forward premium as the interest
+rate differential.
+
+The rate of return from the second investment strategy is uncertain, but if investors
+are risk-neutral, its expected return is equal to the sure rate of return. Furthermore,
+if their expectations are rational, the expected return is the conditional
+expectation based on the information currently available, so
+\begin{equation}
+  \E[S_t \cdot (1 + i_t^*) / S30_t \mid I_t] = S_t \cdot (1 + i_t^*) / F_t,
+  \label{eq:6.8.2}
+\end{equation}
+where $\E(\cdot \mid I_t)$ is the expectations operator and $I_t$ is the information set as of date
+$t$. Since $S_t$, $F_t$, and $i_t^*$ are known at date $t$, this equality reduces to
+\[
+  \E(F_t / S30_t \mid I_t) = 1.
+\]
+Again, by log approximation, $F_t / S30_t \approx 1 + f_t - s30_t$. Therefore,
+\begin{equation}
+  \E(s30_t \mid I_t) = f_t \quad \text{or} \quad
+  \E(\varepsilon_t \mid I_t) = 0 \quad \text{where } \varepsilon_t \equiv s30_t - f_t.
+  \label{eq:6.8.3}
+\end{equation}
+This is the market efficiency hypothesis. As is clear from the derivation, the
+hypothesis assumes risk-neutrality and rational expectations. The hypothesis is
+sometimes described as the forward rate being the optimal forecast of future spot
+rates, because the conditional expectation is the optimal forecast in that it minimizes
+the mean square error (see Proposition~2.7).
+
+\subsection*{Testing Whether the Unconditional Mean Is Zero}
+
+Taking the unconditional expectation of both sides of \eqref{eq:6.8.3}, we obtain the unconditional
+relationship:
+\begin{equation}
+  \E(s30_t) = \E(f_t) \quad \text{or} \quad \E(\varepsilon_t) = 0.
+  \label{eq:6.8.4}
+\end{equation}
+That is, the forecast must be correct on average. Figure~6.1 is a plot of the forecast
+error $\varepsilon_t$ for the yen/dollar exchange rate. It looks like a stationary series, and we
+proceed under the assumption that it is.\footnote{Using covered interest rate parity, $\varepsilon_t = (s30_t - s_t) - (i_t^* - i_t)$. If you believe that both the 30-day rate of change $s30_t - s_t$ and the interest rate differential $i_t^* - i_t$ are stationary, you have to believe that the forecast error is stationary.}
+Because the forecast error is observable,
+we can test the hypothesis that its unconditional mean is zero. This is in contrast
+to the Fama exercise, where the forecast error (about future inflation) is observable
+only up to a constant.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\textwidth,trim=50 350 50 350,clip]{figures/fig_6_1.png}
+\caption{Forecast Error, Yen/Dollar}
+\label{fig:6.1}
+\end{figure}
+
+To test the hypothesis of market efficiency, we need to derive the asymptotic
+distribution of the sample mean, $\bar{\varepsilon}$, under the hypothesis. The task is somewhat
+involved because $\{\varepsilon_t\}$ is serially correlated. To see why the forecast error has serial
+correlation, note that $I_t$, while including $\{\varepsilon_{t-5}, \varepsilon_{t-6}, \ldots\}$, does not include
+$\{\varepsilon_t, \ldots, \varepsilon_{t-4}\}$ because $\varepsilon_t$, which depends on $s30_t$, cannot be observed until after
+$t + 4$. Therefore,
+\begin{equation}
+  \E(\varepsilon_t \mid \varepsilon_{t-5}, \varepsilon_{t-6}, \ldots) = 0.
+  \label{eq:6.8.5}
+\end{equation}
+It follows that $\Cov(\varepsilon_t, \varepsilon_{t-j}) = 0$ for $j \geq 5$ but not necessarily for $j \leq 4$. In
+the Fama exercise, the ex-post real interest rate (which is the inflation forecast
+error plus a constant) was serially uncorrelated because the maturity for the interest
+rate and the sampling interval were the same. Here, the forecast error has serial
+correlation because the maturity of the forward contract (30~days) is longer than
+the sampling interval (a week). The estimated correlogram is displayed along with
+the two-standard error band in Figure~6.2.\footnote{Although theory implies that the population mean is zero, I subtracted the sample mean in the calculation of sample autocorrelations.}
+The standard error is calculated under
+the assumption that the forecast error is i.i.d. So it equals $1/\sqrt{n}$, as in Table~2.1.
+The pattern of autocorrelation is broadly consistent with the hypothesis: it stays
+well above two standard errors for the first four lags and generally lies within the
+band thereafter.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\textwidth,trim=50 350 50 350,clip]{figures/fig_6_2.png}
+\caption{Correlogram of $s30 - f$, Yen/Dollar}
+\label{fig:6.2}
+\end{figure}
+
+Under the null of market efficiency, since serial correlation vanishes after a
+finite lag, it is easy to see that $\{\varepsilon_t\}$ satisfies the essential part of Gordin's condition
+restricting serial correlation. By the Law of Iterated Expectations, \eqref{eq:6.8.5} implies
+$\E(\varepsilon_t \mid \varepsilon_{t-j}, \varepsilon_{t-j-1}, \ldots) = 0$ for $j \geq 5$, which immediately implies part~(b) of
+Gordin's condition. Since the revision of expectations, $r_{tj}$, is zero for $j \geq 5$, part
+(c) is satisfied, provided that $r_{tj}$ ($0 \leq j \leq 4$) have finite second moments. It then
+follows from Proposition~6.10 that
+\begin{equation}
+  \frac{\sqrt{n}\,\bar{\varepsilon}}{\sqrt{\gamma_0 + 2 \displaystyle\sum_{j=1}^{4} \gamma_j}}
+  = \frac{\bar{\varepsilon}}{\sqrt{\bigl(\gamma_0 + 2 \displaystyle\sum_{j=1}^{4} \gamma_j\bigr)/n}}
+  \dto N(0, 1).
+  \label{eq:6.8.6}
+\end{equation}
+Furthermore, the denominator is consistently estimated by replacing $\gamma_j$ by its sample
+counterpart $\hat{\gamma}_j$. So the ratio
+\begin{equation}
+  \frac{\bar{\varepsilon}}{\sqrt{\Bigl(\hat{\gamma}_0 + 2 \displaystyle\sum_{j=1}^{4} \hat{\gamma}_j\Bigr)/n}}
+  \label{eq:6.8.7}
+\end{equation}
+is also asymptotically standard normal. The denominator of this expression will be
+called the standard error of the sample mean.
+
+\begin{table}[H]
+\centering
+\caption{Means of Rates of Change, Forward Premiums,
+and Differences between the Two: 1975--1989}
+\label{tab:6.1}
+\smallskip
+\begin{tabular}{lccc}
+\toprule
+& \multicolumn{3}{c}{Means and Standard Deviations} \\
+\cmidrule(lr){2-4}
+Exchange & $s30 - s$ & $f - s$ & Difference \\
+rate & (actual rate & (expected rate & (unexpected rate \\
+& of change) & of change) & of change) \\
+\midrule
+\textyen/\$ & $-4.98$ & $-3.74$ & $-1.25$ \\
+& $(41.6)$ & $(3.65)$ & $(42.4)$ \\
+& & & standard error $= 3.56$ \\[4pt]
+DM/\$ & $-1.78$ & $-3.91$ & $2.13$ \\
+& $(40.6)$ & $(2.17)$ & $(41.1)$ \\
+& & & standard error $= 3.26$ \\[4pt]
+\pounds/\$ & $3.59$ & $2.16$ & $1.43$ \\
+& $(39.2)$ & $(3.49)$ & $(39.9)$ \\
+& & & standard error $= 3.29$ \\
+\bottomrule
+\end{tabular}
+
+\smallskip
+\footnotesize
+\textsc{Note:} $s30 - s$ is the rate of change over 30~days and $f - s$ is the forward
+premium, expressed as annualized percentage changes. Standard deviations are in
+parentheses. The standard errors are the values of the denominator of \eqref{eq:6.8.7}. The
+data are weekly, from 1975 to 1989. The sample size is 778.
+\end{table}
+
+Table~6.1 reports results for testing the implication that the
+unconditional mean of the forecast error is zero, for three foreign exchange rates
+against the dollar. The three currencies are the Deutsche mark, the British pound,
+and the Japanese yen. Columns~1 and~2 of the table report the mean and the standard
+deviation of the actual rate of change of the spot rate, $s30_t - s_t$, and the
+forward premium, $f_t - s_t$. (Because the spot rate is per dollar, a positive rate of
+change means that the dollar strengthened and the
+forward premium have been multiplied by 1,200 to express the rates in annualized
+percentages. The market efficiency hypothesis is that the forward premium is the
+expected rate of change of the spot rate. It is evident that the actual rate of change
+is much more volatile than the forward premium. The third column reports the
+sample mean of $\varepsilon_t$, which equals the difference between the first two columns for
+the sample mean. The numbers in parentheses below the sample mean are the standard
+errors calculated as described above. In no case is there significant evidence
+against the null hypothesis of zero mean.
+
+\subsection*{Regression Tests}
+
+The unconditional test, however, does not exploit the implication of market efficiency
+that the forecast error is orthogonal to conditioning information $I_t$. Probably
+the most important variable in the information set $I_t$ for future spot rates is
+the forward rate $f_t$. We can test whether the forecast error is uncorrelated with the
+forward rate by regressing $\varepsilon_t$ on the constant and $f_t$. This is equivalent to running
+the following regression
+\begin{equation}
+  s30_t = \beta_0 + \beta_1 f_t + \varepsilon_t,
+  \label{eq:6.8.8}
+\end{equation}
+and testing whether $\beta_0 = 0$ and $\beta_1 = 1$. Because the error term is the forecast error
+orthogonal to anything known at date $t$ including $f_t$, the regressors are guaranteed
+to be orthogonal to the error term. So it might appear that we can estimate \eqref{eq:6.8.8}
+by OLS and adjust for serial correlation in the error term as indicated in Section~6.6
+for correct inference.
+
+However, as the graph in Figure~6.3 suggests, the spot exchange rate looks like
+a process with increasing variance. As we will verify in Chapter~9, we cannot
+reject the hypothesis that the process has a unit root. The forward rate has the same
+property. (Its plot is not shown here because it is indistinguishable from the plot
+of the spot rate.) Thus, Assumption~3.2, which requires the regressor ($f_t$) and the
+dependent variable ($s30_t$) to be stationary, is not satisfied. The problem actually
+runs deeper. We have observed in Figure~6.1 that the \emph{difference} between $s30_t$ and
+$f_t$ looked like a stationary series. In the language to be introduced in Chapter~10,
+$s30_t$ and $f_t$ are ``cointegrated'' with a cointegrating vector of $(1, -1)$, in which case
+the OLS estimate of $\beta_1$ in \eqref{eq:6.8.8} converges quickly to~1. This can be verified in
+Figure~6.4 where $s30_t$ is plotted against $f_t$. If a regression line is fitted, its slope
+is 0.99. The problem from the point of view of testing market efficiency is that the
+OLS estimate converges to~1 \emph{regardless} of whether or not the hypothesis is true.
+Therefore, the test has no power.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\textwidth,trim=50 350 50 350,clip]{figures/fig_6_3.png}
+\caption{Yen/Dollar Spot Rate, Jan.\ 1975--Dec.\ 1989}
+\label{fig:6.3}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\textwidth,trim=50 350 50 350,clip]{figures/fig_6_4.png}
+\caption{Plot of $s30$ against $f$, Yen/Dollar}
+\label{fig:6.4}
+\end{figure}
+
+The problem can be dealt with by estimating a different regression,
+\begin{equation}
+  s30_t - s_t = \beta_0 + \beta_1 (f_t - s_t) + \varepsilon_t.
+  \label{eq:6.8.9}
+\end{equation}
+Judging from the plot of $s30_t - s_t$ and $f_t - s_t$ (not shown), it is reasonable to
+assume that they are stationary, which is consistent with Assumption~3.2 (ergodic
+stationarity). That the equation satisfies other GMM assumptions under market
+efficiency can be verified as follows. For $\beta_0 = 0$ and $\beta_1 = 1$, the error term $\varepsilon_t$
+equals the forecast error $s30_t - f_t$ and so the orthogonality conditions $\E(\varepsilon_t) = 0$ and
+$\E[(f_t - s_t) \cdot \varepsilon_t] = 0$ (Assumption~3.3 with $\mathbf{z}_t = \mathbf{x}_t$) are satisfied. The identification
+condition is that the second moment of $(1, f_t - s_t)$ be nonsingular, which is true if
+and only if $\Var(f_t - s_t) > 0$. This is evidently satisfied; if the population variance
+were zero, we would not observe any variations in $f_t - s_t$. This leaves us with
+Assumption~3.5$'$, which requires that there is not too much serial correlation in
+\[
+  \mathbf{g}_t \equiv \mathbf{x}_t \cdot \varepsilon_t =
+  \begin{bmatrix} \varepsilon_t \\ (f_t - s_t)\,\varepsilon_t \end{bmatrix}.
+\]
+As already noted, since $I_t$ includes $\{\varepsilon_{t-5}, \varepsilon_{t-6}, \ldots\}$, the forecast error satisfies
+\eqref{eq:6.8.5}. Review Question~3 will ask you to show that $\{\mathbf{g}_t\}$ inherits the same property,
+namely,
+\begin{equation}
+  \E(\mathbf{g}_t \mid \mathbf{g}_{t-5}, \mathbf{g}_{t-6}, \ldots) = \mathbf{0}.
+  \label{eq:6.8.10}
+\end{equation}
+So, as in the unconditional test, Gordin's condition is satisfied, provided that the
+relevant second moments are finite. Since $\E(\mathbf{g}_t \mathbf{g}_{t-j}') = \mathbf{0}$ for $j \geq 5$, the long-run
+covariance matrix $\mathbf{S}$ can be estimated as in \eqref{eq:6.6.4} with $q = 4$. (In the empirical
+exercise, you will be asked to estimate $\hat{\mathbf{S}}$ by the Bartlett kernel and also by
+VARHAC.)
+
+To summarize, the efficient GMM estimator of $\bm{\beta} = (\beta_0, \beta_1)'$ in \eqref{eq:6.8.9} is OLS
+and the consistent estimator of its asymptotic variance is given by
+\begin{equation}
+  \widehat{\avar(\hat{\bm{\beta}}_{\text{OLS}})}
+  = \mathbf{S}_{xx}^{-1}\,\hat{\mathbf{S}}\,\mathbf{S}_{xx}^{-1},
+  \label{eq:6.8.11}
+\end{equation}
+where $\hat{\mathbf{S}}$ is given in \eqref{eq:6.6.4} with $q = 4$. Table~6.2 reports the regression test results
+for the three currencies. The corresponding plot for the yen/\$ exchange rate is
+in Figure~6.5. Notice that the estimated slope coefficient is not only significantly
+different from~1 but also negative, for all three currencies. The null hypothesis
+implied by market efficiency that $\beta_0 = 0$ and $\beta_1 = 1$ can be rejected decisively.
+This is reflected in the too many observations in the north-west quadrant of Figure~6.5;
+too often expected dollar depreciation (negative $f_t - s_t$) is associated with
+actual dollar \emph{appreciation} (positive $s30_t - s_t$).
+
+\begin{table}[H]
+\centering
+\caption{Regression Tests of Market Efficiency: 1975--1989}
+\label{tab:6.2}
+\smallskip
+$s30_t - s_t = \beta_0 + \beta_1 (f_t - s_t) + \varepsilon_t$
+
+\medskip
+\begin{tabular}{lcccc}
+\toprule
+& \multicolumn{2}{c}{Regression Coefficients} & & Wald Statistic for \\
+\cmidrule(lr){2-3}
+Currency & Constant & Forward & $R^2$ & H${}_0$: $\beta_0 = 0$, $\beta_1 = 1$ \\
+& & premium & & \\
+\midrule
+\textyen/\$ & $-12.8$ & $-2.10$ & 0.034 & 18.6 \\
+& $(4.01)$ & $(0.738)$ & & $(p = 0.009\%)$ \\[4pt]
+DM/\$ & $-13.6$ & $-3.01$ & 0.026 & 8.7 \\
+& $(5.72)$ & $(1.37)$ & & $(p = 1.312\%)$ \\[4pt]
+\pounds/\$ & $7.96$ & $-2.02$ & 0.033 & 12.9 \\
+& $(3.54)$ & $(0.85)$ & & $(p = 0.156\%)$ \\
+\bottomrule
+\end{tabular}
+
+\smallskip
+\footnotesize
+\textsc{Note:} Standard errors are in parentheses. They are heteroskedasticity-robust and
+allow for serial correlation up to four lags calculated by the formula \eqref{eq:6.8.11}. The
+sample size is~778. Our results differ slightly from those in Bekaert and Hodrick
+(1993) because they used the Bartlett kernel-based estimator with $q(n) = 4$ to
+estimate $\hat{\mathbf{S}}$.
+\end{table}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\textwidth,trim=50 350 50 350,clip]{figures/fig_6_5.png}
+\caption{Plot of $s30 - s$ against $f - s$, Yen/Dollar}
+\label{fig:6.5}
+\end{figure}
+
+\subsection*{Questions for Review}
+
+\begin{enumerate}
+\item (The standard error in the unconditional test) \; Let $\varepsilon_t = s30_t - f_t$ and consider
+a regression of $\varepsilon_t$ on the constant. To account for serial correlation, use \eqref{eq:6.6.4}
+with $q = 4$ for $\hat{\mathbf{S}}$. Verify that the $t$-value for the hypothesis that the intercept is
+zero is given by \eqref{eq:6.8.7}.
+
+\item (Lack of identification) \; For simplicity suppose $F_t$ is the two-week forward
+exchange rate so that the $s30_t$ in \eqref{eq:6.8.9} can be replaced by $s_{t+2}$. Suppose that
+the spot exchange rate is a random walk and $I_t = \{s_t, s_{t-1}, \ldots\}$. What should
+$f_t$ be under the hypothesis? Which of the required assumptions are violated?
+[Answer: The identification condition.] Suppose, instead, that $s_t$ is AR(1)
+satisfying $s_t = c + \phi s_{t-1} + \eta_t$ where $\{\eta_t\}$ is i.i.d.\ and $|\phi| < 1$. Verify that
+$f_t = (1 + \phi) c + \phi^2 s_t$. \textbf{Hint:} $s_{t+2} = (1 + \phi) c + \phi^2 s_t + (\eta_{t+2} + \phi \eta_{t+1})$. Verify
+that $\varepsilon_t = \eta_{t+2} + \phi \eta_{t+1}$.
+
+\item Verify \eqref{eq:6.8.10}. \textbf{Hint:} $\E(\mathbf{g}_t \mid \mathbf{g}_{t-5}, \mathbf{g}_{t-6}, \ldots) = \E[\E(\mathbf{g}_t \mid I_t) \mid \mathbf{g}_{t-5}, \ldots]$
+by the Law of Iterated Expectations, since $(f_t - s_t)$ and $\varepsilon_t$ are both in $I_t$.
+\end{enumerate}

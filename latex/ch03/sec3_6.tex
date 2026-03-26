@@ -1,0 +1,286 @@
+% sec3_6.tex — Section 3.6: Testing Overidentifying Restrictions
+
+If the equation is exactly identified, then it is possible to choose $\tilde{\boldsymbol{\delta}}$
+so that all the elements of the sample moments $\mathbf{g}_n(\tilde{\boldsymbol{\delta}})$ are zero and
+the distance
+\[
+  J(\tilde{\boldsymbol{\delta}},\, \hat{\mathbf{W}})
+  \equiv n \cdot \mathbf{g}_n(\tilde{\boldsymbol{\delta}})'\,
+  \hat{\mathbf{W}}\, \mathbf{g}_n(\tilde{\boldsymbol{\delta}})
+\]
+is zero.  (The $\tilde{\boldsymbol{\delta}}$ that does it is the IV estimator.)  If the equation is
+overidentified, then the distance cannot be set to zero exactly, but we would expect the
+minimized distance to be close to zero.  It turns out that, if the weighting matrix
+$\hat{\mathbf{W}}$ is chosen optimally so that $\plim\, \hat{\mathbf{W}} = \mathbf{S}^{-1}$, then
+the minimized distance is asymptotically chi-squared.
+
+Let $\hat{\mathbf{S}}$ be a consistent estimator of $\mathbf{S}$, and consider first the case where the
+distance is evaluated at the true parameter value $\boldsymbol{\delta}$,
+$J(\boldsymbol{\delta}, \hat{\mathbf{S}}^{-1})$.  Since by definition
+$\mathbf{g}_n(\boldsymbol{\delta}) = \bar{\mathbf{g}}$
+$(\equiv \frac{1}{n} \sum_i \mathbf{g}_i)$ for
+$\tilde{\boldsymbol{\delta}} = \boldsymbol{\delta}$, the distance equals
+\begin{equation}
+  J(\boldsymbol{\delta}, \hat{\mathbf{S}}^{-1})
+  = n \cdot \bar{\mathbf{g}}'\, \hat{\mathbf{S}}^{-1}\, \bar{\mathbf{g}}
+  = (\sqrt{n}\, \bar{\mathbf{g}})'\, \hat{\mathbf{S}}^{-1}\,
+    (\sqrt{n}\, \bar{\mathbf{g}}).
+  \label{eq:3.6.1}
+\end{equation}
+Since $\sqrt{n}\, \bar{\mathbf{g}} \dto N(\mathbf{0}, \mathbf{S})$ and
+$\hat{\mathbf{S}} \pto \mathbf{S}$, its asymptotic distribution is $\chi^2(K)$ by
+Lemma~2.4(d).  Now if $\boldsymbol{\delta}$ is replaced by
+$\hat{\boldsymbol{\delta}}(\hat{\mathbf{S}}^{-1})$, then the degrees of freedom change
+from $K$ to $K - L$.  The intuitive reason is that we have to estimate $L$ parameters
+$\boldsymbol{\delta}$ before forming the sample average of $\mathbf{g}_i$.  (We encountered a similar
+situation in Chapter~1 in the context of the unbiased estimation of $\sigma^2$.)  We summarize
+this as
+
+\begin{proposition}[Hansen's test of overidentifying restrictions (Hansen, 1982)]
+\label{prop:3.6}
+\emph{Suppose there is available a consistent estimator, $\hat{\mathbf{S}}$, of
+$\mathbf{S}$ $(= \E(\mathbf{g}_i \mathbf{g}_i'))$.  Under Assumptions~3.1--3.5,}
+\[
+  J\bigl(\hat{\boldsymbol{\delta}}(\hat{\mathbf{S}}^{-1}),\,
+  \hat{\mathbf{S}}^{-1}\bigr)
+  \;\bigl(= n \cdot
+  \mathbf{g}_n(\hat{\boldsymbol{\delta}}(\hat{\mathbf{S}}^{-1}))'\,
+  \hat{\mathbf{S}}^{-1}\,
+  \mathbf{g}_n(\hat{\boldsymbol{\delta}}(\hat{\mathbf{S}}^{-1}))\bigr)
+  \dto \chi^2(K - L).
+\]
+\end{proposition}
+
+A formal proof is left as an optional exercise.  Because the $\hat{\mathbf{S}}$ given in
+\eqref{eq:3.5.10} is consistent (under the additional condition of Assumption~3.6), the
+minimized distance calculated in the second step of the efficient two-step GMM is
+asymptotically $\chi^2(K - L)$.
+
+Three points on the use and interpretation of the $J$ test are in order.
+
+\begin{itemize}
+\item This is a \textbf{specification test}, testing whether all the restrictions of the model
+  (which are the assumptions maintained in Proposition~3.6) are satisfied.  If the $J$
+  statistic of Proposition~3.6 is surprisingly large, it means that either the orthogonality
+  conditions (Assumption~3.3) or the other assumptions (or both) are likely
+  to be false.  Only when we are confident about those other assumptions can we
+  interpret the large $J$ statistic as evidence for the endogeneity of some of the $K$
+  instruments included in $\mathbf{x}_i$.
+
+\item Unlike the tests we have encountered so far, the test is not consistent against
+  some failures of the orthogonality conditions.  The essential reason is the loss of
+  degrees of freedom from $K$ to $K - L$.  It is easy to show that $\bar{\mathbf{g}}$ is related to its
+  sample counterpart, $\mathbf{g}_n(\hat{\boldsymbol{\delta}}(\hat{\mathbf{S}}^{-1}))$, as
+  \begin{equation}
+    \sqrt{n}\, \mathbf{g}_n(\hat{\boldsymbol{\delta}}(\hat{\mathbf{S}}^{-1}))
+    = \hat{\mathbf{B}}\, \sqrt{n}\, \bar{\mathbf{g}}, \quad
+    \hat{\mathbf{B}} \equiv \mathbf{I}_K
+    - \mathbf{S}_{\mathbf{xz}}
+      (\mathbf{S}_{\mathbf{xz}}' \hat{\mathbf{S}}^{-1} \mathbf{S}_{\mathbf{xz}})^{-1}
+      \mathbf{S}_{\mathbf{xz}}' \hat{\mathbf{S}}^{-1}.
+    \label{eq:3.6.2}
+  \end{equation}
+  The problem is that, since
+  $\hat{\mathbf{B}} \mathbf{S}_{\mathbf{xz}} = \mathbf{0}$, this matrix $\hat{\mathbf{B}}$ is not of full
+  column rank.  If the orthogonality conditions fail and $\E(\mathbf{g}_i) \neq \mathbf{0}$, then the
+  elements of $\sqrt{n}\, \bar{\mathbf{g}}$ will diverge to $+\infty$ or $-\infty$.  But, since
+  $\hat{\mathbf{B}}$ is not of full column rank,
+  $\hat{\mathbf{B}} \sqrt{n}\, \bar{\mathbf{g}}$ and hence
+  $J(\hat{\boldsymbol{\delta}}(\hat{\mathbf{S}}^{-1}), \hat{\mathbf{S}}^{-1})$ may remain finite
+  for some pattern of nonzero orthogonalities.\footnote{See Newey (1985, Section~3) for a
+  thorough treatment of this issue.}
+
+\item It is only recently that the small-sample properties of the test became a concern.
+  Several papers in the July 1996 issue of the \emph{Journal of Business and Economic
+  Statistics} report that the finite-sample or actual size of the $J$ test in small samples
+  far exceeds the nominal size (i.e., the test rejects too often).
+\end{itemize}
+
+%% ─── Testing Subsets of Orthogonality Conditions ───────────────────────────
+\subsection*{Testing Subsets of Orthogonality Conditions}
+
+Suppose we can divide the $K$ instruments into two groups: the vector $\mathbf{x}_{i1}$ of $K_1$
+variables that are known to satisfy the orthogonality conditions, and the vector
+$\mathbf{x}_{i2}$ of remaining $K - K_1$ variables that are suspect.  Since the ordering of instruments
+does not change the numerical values of the estimator and test statistics, we can
+assume without loss of generality that the last $K - K_1$ elements of $\mathbf{x}_i$ are the suspect
+instruments:
+\begin{equation}
+  \mathbf{x}_i = \begin{bmatrix} \mathbf{x}_{i1} \\ \mathbf{x}_{i2} \end{bmatrix}
+  \quad
+  \left\}
+  \begin{array}{l} K_1 \text{ rows,} \\ K - K_1 \text{ rows.} \end{array}
+  \right.
+  \label{eq:3.6.3}
+\end{equation}
+The part of the model we wish to test is
+\begin{equation}
+  \E(\mathbf{x}_{i2} \cdot \varepsilon_i) = \mathbf{0}.
+  \label{eq:3.6.4}
+\end{equation}
+This restriction is testable if there are at least as many nonsuspect instruments as
+there are coefficients so that $K_1 \geq L$.  The basic idea is to compare two $J$ statistics
+from two separate GMM estimators of the same coefficient vector $\boldsymbol{\delta}$, one using only
+the instruments included in $\mathbf{x}_{i1}$, and the other using also the suspect instruments
+$\mathbf{x}_{i2}$ in addition to $\mathbf{x}_{i1}$.  If the inclusion of the suspect instruments significantly
+increases the $J$ statistic, that is a good reason for doubting the predeterminedness of
+$\mathbf{x}_{i2}$.
+
+In accordance with the partition of $\mathbf{x}_i$, the sample orthogonality conditions
+$\mathbf{g}_n(\tilde{\boldsymbol{\delta}})$ and $\mathbf{S}$ can be written as
+\begin{equation}
+  \underset{(K \times 1)}{\mathbf{g}_n(\tilde{\boldsymbol{\delta}})}
+  = \begin{bmatrix}
+      \mathbf{g}_{1n}(\tilde{\boldsymbol{\delta}}) \\[-2pt]
+      {\scriptstyle (K_1 \times 1)} \\[4pt]
+      \mathbf{g}_{2n}(\tilde{\boldsymbol{\delta}}) \\[-2pt]
+      {\scriptstyle ((K - K_1) \times 1)}
+    \end{bmatrix}, \quad
+  \underset{(K \times K)}{\mathbf{S}}
+  = \begin{bmatrix}
+      \mathbf{S}_{11} & \mathbf{S}_{12} \\
+      \mathbf{S}_{21} & \mathbf{S}_{22}
+    \end{bmatrix},
+  \label{eq:3.6.5}
+\end{equation}
+where
+\[
+  \mathbf{S}_{11} = \E(\varepsilon_i^2\, \mathbf{x}_{i1} \mathbf{x}_{i1}'), \quad
+  \mathbf{S}_{12} = \E(\varepsilon_i^2\, \mathbf{x}_{i1} \mathbf{x}_{i2}'), \quad
+  \mathbf{S}_{21} = \E(\varepsilon_i^2\, \mathbf{x}_{i2} \mathbf{x}_{i1}'), \quad
+  \mathbf{S}_{22} = \E(\varepsilon_i^2\, \mathbf{x}_{i2} \mathbf{x}_{i2}').
+\]
+In particular, $\mathbf{g}_{1n}(\tilde{\boldsymbol{\delta}})$ can be written as
+\[
+  \mathbf{g}_{1n}(\tilde{\boldsymbol{\delta}})
+  = \frac{1}{n} \sum_{i=1}^{n} \mathbf{x}_{i1} \cdot
+    (y_i - \mathbf{z}_i' \tilde{\boldsymbol{\delta}})
+  \equiv \mathbf{s}_{\mathbf{x}_1 \mathbf{y}}
+  - \mathbf{S}_{\mathbf{x}_1 \mathbf{z}}\, \tilde{\boldsymbol{\delta}},
+\]
+where
+\begin{equation}
+  \mathbf{s}_{\mathbf{x}_1 \mathbf{y}}
+  \equiv \frac{1}{n} \sum_{i=1}^{n} \mathbf{x}_{i1} \cdot y_i, \quad
+  \mathbf{S}_{\mathbf{x}_1 \mathbf{z}}
+  \equiv \frac{1}{n} \sum_{i=1}^{n} \mathbf{x}_{i1}\, \mathbf{z}_i'.
+  \label{eq:3.6.6}
+\end{equation}
+
+For a consistent estimate $\hat{\mathbf{S}}$ of $\mathbf{S}$, the efficient GMM estimator using all the $K$
+instruments and its associated $J$ statistic have already been derived in this and the
+previous section.  Reproducing them,
+\begin{align}
+  \hat{\boldsymbol{\delta}}
+  &= (\mathbf{S}_{\mathbf{xz}}' \hat{\mathbf{S}}^{-1} \mathbf{S}_{\mathbf{xz}})^{-1}\,
+     \mathbf{S}_{\mathbf{xz}}' \hat{\mathbf{S}}^{-1} \mathbf{s}_{\mathbf{xy}},
+  \label{eq:3.6.7} \\
+  J &= n \cdot \mathbf{g}_n(\hat{\boldsymbol{\delta}})'\,
+     \hat{\mathbf{S}}^{-1}\, \mathbf{g}_n(\hat{\boldsymbol{\delta}}).
+  \label{eq:3.6.8}
+\end{align}
+The efficient GMM estimator of the \emph{same} coefficient vector $\boldsymbol{\delta}$ using only the first
+$K_1$ instruments and its associated $J$ statistic are obtained by replacing $\mathbf{x}_i$ by
+$\mathbf{x}_{i1}$ in these expressions.  So
+\begin{align}
+  \tilde{\boldsymbol{\delta}}
+  &= [\mathbf{S}_{\mathbf{x}_1 \mathbf{z}}'
+     (\hat{\mathbf{S}}_{11})^{-1}
+     \mathbf{S}_{\mathbf{x}_1 \mathbf{z}}]^{-1}\,
+     \mathbf{S}_{\mathbf{x}_1 \mathbf{z}}'
+     (\hat{\mathbf{S}}_{11})^{-1}
+     \mathbf{s}_{\mathbf{x}_1 \mathbf{y}},
+  \label{eq:3.6.9} \\
+  J_1 &= n \cdot \mathbf{g}_{1n}(\tilde{\boldsymbol{\delta}})'\,
+     (\hat{\mathbf{S}}_{11})^{-1}\,
+     \mathbf{g}_{1n}(\tilde{\boldsymbol{\delta}}),
+  \label{eq:3.6.10}
+\end{align}
+where $\hat{\mathbf{S}}_{11}$ is a consistent estimate of $\mathbf{S}_{11}$.
+
+The test is based on the following proposition specifying the asymptotic distribution
+of $J - J_1$ (the proof is left as an optional exercise).
+
+\begin{proposition}[testing a subset of orthogonality conditions\footnote{The test was
+developed in Newey (1985, Section~4) and Eichenbaum, Hansen, and Singleton (1985,
+Appendix~C).}]
+\label{prop:3.7}
+\emph{Suppose Assumptions~3.1--3.5 hold.  Let $\mathbf{x}_{i1}$ be a subvector of $\mathbf{x}_i$, and
+strengthen Assumption~3.4 by requiring that the rank condition for identification is
+satisfied for $\mathbf{x}_{i1}$ (so $\E(\mathbf{x}_{i1} \mathbf{z}_i')$ is of full column rank).  Then,
+for any consistent estimators $\hat{\mathbf{S}}$ of $\mathbf{S}$ and $\hat{\mathbf{S}}_{11}$ of
+$\mathbf{S}_{11}$,}
+\[
+  C \equiv J - J_1 \dto \chi^2(K - K_1),
+\]
+\emph{where $K = \#\mathbf{x}_i$ (dimension of $\mathbf{x}_i$),
+$K_1 = \#\mathbf{x}_{i1}$ (dimension of $\mathbf{x}_{i1}$), and $J$ and $J_1$ are defined in
+\eqref{eq:3.6.8} and \eqref{eq:3.6.10}.}
+\end{proposition}
+
+Clearly, the choice of $\hat{\mathbf{S}}$ and $\hat{\mathbf{S}}_{11}$ does not matter asymptotically as long
+as they are consistent.  But in finite samples, the test statistic $C$ can be negative.  This
+problem can be avoided and $C$ can be made nonnegative in finite samples if the same
+$\hat{\mathbf{S}}$ is used throughout, that is, if $\hat{\mathbf{S}}_{11}$ in \eqref{eq:3.6.9} and
+\eqref{eq:3.6.10} is the submatrix of $\hat{\mathbf{S}}$ in \eqref{eq:3.6.7} and \eqref{eq:3.6.8}.
+This is accomplished by taking the following steps:
+
+\begin{enumerate}
+\item[(1)] do the efficient two-step GMM with full instruments $\mathbf{x}_i$ to obtain
+  $\hat{\mathbf{S}}$ from the first step, $\hat{\boldsymbol{\delta}}$ and $J$ from the second step;
+
+\item[(2)] extract the leading $K_1 \times K_1$ submatrix $\hat{\mathbf{S}}_{11}$ from $\hat{\mathbf{S}}$
+  obtained from (1), calculate $\tilde{\boldsymbol{\delta}}$ by \eqref{eq:3.6.9} using this
+  $\hat{\mathbf{S}}_{11}$ and $J_1$ by \eqref{eq:3.6.10}.  Then take the difference in $J$.
+\end{enumerate}
+
+It is left as an optional analytical exercise to prove that $C$ calculated as just described
+is nonnegative in finite samples.
+
+We can use Proposition~3.7 to test for the endogeneity of a subset of regressors,
+as the next example illustrates.
+
+\begin{example}[testing whether schooling is predetermined in the wage equation]
+\label{ex:3.3}
+In the wage equation of Example~3.2, suppose schooling $S_i$ is
+suspected to be endogenous.  To test for the endogeneity of $S_i$, partition $\mathbf{x}_i$ as
+\[
+  \mathbf{x}_{i1} = \begin{bmatrix} 1 \\ \mathit{EXPR}_i \\ \mathit{AGE}_i \\
+  \mathit{MED}_i \end{bmatrix}, \quad
+  \mathbf{x}_{i2} = S_i.
+\]
+The vector of regressors, $\mathbf{z}_i$, is the same as in Example~3.2.  The first step is to
+do the efficient two-step GMM estimation of $\boldsymbol{\delta}$ with
+$\mathbf{x}_i \equiv (1, \mathit{EXPR}_i, \mathit{AGE}_i, \mathit{MED}_i, S_i)'$ as the instruments.
+This produces $J$ and the $5 \times 5$ matrix $\hat{\mathbf{S}}$.
+Second, extract the leading $4 \times 4$ submatrix $\hat{\mathbf{S}}_{11}$ corresponding to
+$\mathbf{x}_{i1}$ from $\hat{\mathbf{S}}$ and estimate the same coefficients $\boldsymbol{\delta}$ by GMM, this
+time with the fewer instruments $\mathbf{x}_{i1}$ and using this $\hat{\mathbf{S}}_{11}$.  The difference
+in the $J$ statistic from the two different GMM estimators of $\boldsymbol{\delta}$ should be
+asymptotically $\chi^2(1)$.
+\end{example}
+
+%% ─── Questions for Review ──────────────────────────────────────────────────
+\bigskip
+\begin{center}\rule{0.6\textwidth}{0.4pt}\end{center}
+\noindent\textsc{Questions for Review}
+\medskip
+
+\begin{enumerate}
+\item Does
+  $J(\hat{\boldsymbol{\delta}}(\hat{\mathbf{S}}^{-1}),\, \bar{\mathbf{S}}^{-1})
+  \dto \chi^2(K - L)$ where $\hat{\mathbf{S}}$ and $\bar{\mathbf{S}}$ are two different consistent
+  estimators of $\mathbf{S}$?
+
+\item Show:
+  $J(\hat{\boldsymbol{\delta}}(\hat{\mathbf{S}}^{-1}),\, \hat{\mathbf{S}}^{-1})
+  = n \cdot \mathbf{s}_{\mathbf{xy}}'\, \hat{\mathbf{S}}^{-1}\,
+  (\mathbf{s}_{\mathbf{xy}} - \mathbf{S}_{\mathbf{xz}}\,
+  \hat{\boldsymbol{\delta}}(\hat{\mathbf{S}}^{-1}))$.
+
+\item Can the degrees of freedom of the $C$ statistic be greater than $K - L$?
+  [Answer: No.]
+
+\item Suppose $K_1 = L$.  Does the numerical value of $C$ depend on the partition of
+  $\mathbf{x}_i$ between $\mathbf{x}_{i1}$ and $\mathbf{x}_{i2}$?
+\end{enumerate}

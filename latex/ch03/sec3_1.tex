@@ -1,0 +1,259 @@
+% sec3_1.tex — Section 3.1: Endogeneity Bias: Working's Example
+
+%% ─── A Simultaneous Equations Model of Market Equilibrium ──────────────────
+\subsection*{A Simultaneous Equations Model of Market Equilibrium}
+
+The classic illustration of biases created by endogenous regressors is Working
+(1927).  Consider the following simple model of demand and supply:
+\begin{align}
+  q_i^d &= \alpha_0 + \alpha_1 p_i + u_i, \quad \text{(demand equation)}
+  \label{eq:3.1.1a} \\
+  q_i^s &= \beta_0 + \beta_1 p_i + v_i, \quad \text{(supply equation)}
+  \label{eq:3.1.1b} \\
+  q_i^d &= q_i^s, \quad \text{(market equilibrium)}
+  \label{eq:3.1.1c}
+\end{align}
+where $q_i^d$ is the quantity demanded for the commodity in question (coffee, say) in
+period $i$, $q_i^s$ is the quantity supplied, and $p_i$ is the price.  The error term $u_i$
+in the demand equation represents factors that influence coffee demand other than price,
+such as the public's mood for coffee.  Depending on the value of $u_i$, the demand
+curve in the price-quantity plane shifts up or down.  Similarly, $v_i$ represents supply
+factors other than price.  We assume that $\E(u_i) = 0$ and $\E(v_i) = 0$ (if not, include
+the nonzero means in the intercepts $\alpha_0$ and $\beta_0$).  To avoid inessential complications,
+we also assume $\Cov(u_i, v_i) = 0$.  If we define $q_i = q_i^d = q_i^s$, the three-equation
+system \eqref{eq:3.1.1a}--\eqref{eq:3.1.1c} can be reduced to a two-equation system:
+\begin{align}
+  q_i &= \alpha_0 + \alpha_1 p_i + u_i, \quad \text{(demand equation)}
+  \label{eq:3.1.2a} \\
+  q_i &= \beta_0 + \beta_1 p_i + v_i. \quad \text{(supply equation)}
+  \label{eq:3.1.2b}
+\end{align}
+
+We say that a regressor is \textbf{endogenous} if it is not predetermined (i.e., not
+orthogonal to the error term), that is, if it does not satisfy the orthogonality condition.
+When the equation includes the intercept, the orthogonality condition is violated and
+hence the regressor is endogenous, if and only if the regressor is correlated with the
+error term.  In the present example, the regressor $p_i$ is necessarily endogenous in both
+equations.  To see why, treat \eqref{eq:3.1.2a}--\eqref{eq:3.1.2b} as a system of two
+simultaneous equations and solve for $(p_i, q_i)$ as
+\begin{align}
+  p_i &= \frac{\beta_0 - \alpha_0}{\alpha_1 - \beta_1}
+        + \frac{v_i - u_i}{\alpha_1 - \beta_1},
+  \label{eq:3.1.3a} \\
+  q_i &= \frac{\alpha_1 \beta_0 - \alpha_0 \beta_1}{\alpha_1 - \beta_1}
+        + \frac{\alpha_1 v_i - \beta_1 u_i}{\alpha_1 - \beta_1}.
+  \label{eq:3.1.3b}
+\end{align}
+So price is a function of the two error terms.  From \eqref{eq:3.1.3a}, we can calculate the
+covariance of the regressor $p_i$ with the demand shifter $u_i$ and the supply shifter $v_i$
+to be
+\begin{equation}
+  \Cov(p_i, u_i) = -\frac{\Var(u_i)}{\alpha_1 - \beta_1}, \quad
+  \Cov(p_i, v_i) = \frac{\Var(v_i)}{\alpha_1 - \beta_1},
+  \label{eq:3.1.4}
+\end{equation}
+which are not zero (unless $\Var(u_i) = 0$ and $\Var(v_i) = 0$).  Therefore, price is
+correlated positively with the demand shifter and negatively with the supply shifter,
+if the demand curve is downward-sloping ($\alpha_1 < 0$) and the supply curve upward-sloping
+($\beta_1 > 0$).  In this example, endogeneity is a result of market equilibrium.
+
+%% ─── Endogeneity Bias ─────────────────────────────────────────────────────
+\subsection*{Endogeneity Bias}
+
+When quantity is regressed on a constant and price, does it estimate the demand
+curve or the supply curve?  The answer is neither, because price is endogenous in
+both the demand and supply equations.  Recall from Section~2.9 that the OLS estimator
+is consistent for the least squares projection coefficients.  In the least squares
+projection of $q_i$ on a constant and $p_i$, the coefficient of $p_i$ is
+$\Cov(p_i, q_i)/\Var(p_i)$,\footnote{Fact: Let $\gamma$ be the least squares coefficients
+in $\tilde{\E}^*(y \mid 1, \mathbf{x}) = \alpha + \mathbf{x}'\gamma$.  Then
+$\gamma = \Var(\mathbf{x})^{-1}\Cov(\mathbf{x}, y)$.  Proving this was an analytical
+exercise for Chapter~2.} so,
+\begin{equation}
+  \plim \text{ of the OLS estimate of the price coefficient}
+  = \frac{\Cov(p_i, q_i)}{\Var(p_i)}.
+  \label{eq:3.1.5}
+\end{equation}
+To rewrite this ratio in relation to the price effect in the demand curve ($\alpha_1$), use the
+demand equation \eqref{eq:3.1.2a} to calculate $\Cov(p_i, q_i)$ as
+\begin{equation}
+  \Cov(p_i, q_i) = \alpha_1 \Var(p_i) + \Cov(p_i, u_i).
+  \label{eq:3.1.6}
+\end{equation}
+Substituting \eqref{eq:3.1.6} into \eqref{eq:3.1.5}, we obtain the expression for the
+asymptotic bias for $\alpha_1$
+\begin{equation}
+  \plim \text{ of the OLS estimate of the price coefficient}
+  - \alpha_1
+  = \frac{\Cov(p_i, u_i)}{\Var(p_i)}.
+  \label{eq:3.1.7}
+\end{equation}
+Similarly, the asymptotic bias for $\beta_1$, the price effect in the supply curve, is
+\begin{equation}
+  \plim \text{ of the OLS estimate of the price coefficient}
+  - \beta_1
+  = \frac{\Cov(p_i, v_i)}{\Var(p_i)}.
+  \label{eq:3.1.8}
+\end{equation}
+But, as seen from \eqref{eq:3.1.4}, $\Cov(p_i, u_i) \neq 0$ and $\Cov(p_i, v_i) \neq 0$,
+so the OLS estimate is consistent for neither $\alpha_1$ nor $\beta_1$.  This phenomenon is known as
+the \textbf{endogeneity bias}.  It is also known as the \textbf{simultaneous equations bias}
+or \textbf{simultaneity bias}, because the regressor and the error term are often related to
+each other through a system of simultaneous equations, as in the present example.
+
+In the extreme case of no demand shifters (so that $u_i = 0$ for all $i$), we have
+$\Cov(p_i, u_i) = 0$, and the formula \eqref{eq:3.1.7} indicates that the OLS estimate is
+consistent for the demand parameter $\alpha_1$.  In this case, the demand curve does not shift,
+and, as illustrated in Figure~3.1(a), all the observed combinations of price and quantity
+fall on the demand curve as the supply curve shifts.  In the other extreme case of no supply
+shifters, the observed price-quantity pairs trace out the supply curve (see
+Figure~3.1(b)).  In the general case of both curves shifting, the OLS estimate should be
+consistent for a weighted average of $\alpha_1$ and $\beta_1$.  This can be seen analytically by
+deriving yet another expression for the plim of the OLS estimate:
+\begin{equation}
+  \plim \text{ of the OLS estimate of the price coefficient}
+  = \frac{\alpha_1 \, \Var(v_i) + \beta_1 \, \Var(u_i)}{\Var(v_i) + \Var(u_i)}.
+  \label{eq:3.1.9}
+\end{equation}
+Proving this is a review question.
+
+%% ─── Figure 3.1 placeholder ─────────────────────────────────────────────
+\begin{figure}[htbp]
+  \centering
+  % TODO: Replace with actual figure
+  \includegraphics[width=0.9\textwidth,trim=50 350 50 350,clip]{figures/fig_3_1.png}
+  \caption{Supply and Demand Curves}
+  \label{fig:3.1}
+\end{figure}
+
+%% ─── Observable Supply Shifters ────────────────────────────────────────────
+\subsection*{Observable Supply Shifters}
+
+The reason neither the demand curve nor the supply curve is consistently estimated
+in the general case is that we cannot infer from data whether the change in price
+and quantity is due to a demand shift or a supply shift.  This suggests that it might
+be possible to estimate the demand curve (resp.\ the supply curve) if some of the
+factors that shift the supply curve (resp.\ the demand curve) are observable.  So
+suppose the supply shifter, $v_i$, can be divided into an observable factor $x_i$ and an
+unobservable factor $\zeta_i$ uncorrelated with $x_i$.\footnote{This decomposition is
+always possible.  If the least squares projection of $v_i$ on a constant and $x_i$ is
+$\gamma_0 + \beta_2 x_i$, define $\zeta_i \equiv v_i - \gamma_0 - \beta_2 x_i$, so
+$v_i = \zeta_i + \gamma_0 + \beta_2 x_i$.  By definition, $\zeta_i$ is uncorrelated with $x_i$.
+Substitute this equation into the original supply equation \eqref{eq:3.1.2b} and submerge
+$\gamma_0$ in the intercept.  This produces \eqref{eq:3.1.2bp}.}
+\begin{equation}
+  q_i = \beta_0 + \beta_1 p_i + \beta_2 x_i + \zeta_i
+  \quad \text{with } \beta_2 \neq 0. \quad \text{(supply)}
+  \label{eq:3.1.2bp}
+\end{equation}
+Now imagine that this observed supply shifter $x_i$ is predetermined (i.e., uncorrelated
+with the error term) in the demand equation; think of $x_i$ as the temperature
+in coffee-growing regions.  If the temperature ($x_i$) is uncorrelated with the unobserved
+taste for coffee ($u_i$), it should be possible to extract from price movements
+a component that is related to the temperature (the observed supply shifter) but
+uncorrelated with the demand shifter.  We can then estimate the demand curve
+by examining the relationship between coffee consumption and that component of
+price.  Let us formalize this argument.
+
+For the equation in question, a predetermined variable that is correlated with
+the endogenous regressor is called an \textbf{instrumental variable} or an \textbf{instrument}.
+We sometimes call it a \textbf{valid instrument} to emphasize that its correlation with the
+endogenous regressor is not zero.  In this example, the observable supply shifter $x_i$
+can serve as an instrument for the demand equation.  This can be seen easily.  Solve
+the system of two simultaneous equations \eqref{eq:3.1.2a} and \eqref{eq:3.1.2bp} for
+$(p_i, q_i)$:
+\begin{align}
+  p_i &= \frac{\beta_0 - \alpha_0}{\alpha_1 - \beta_1}
+        + \frac{\beta_2}{\alpha_1 - \beta_1}\, x_i
+        + \frac{\zeta_i - u_i}{\alpha_1 - \beta_1},
+  \label{eq:3.1.10a} \\
+  q_i &= \frac{\alpha_1 \beta_0 - \alpha_0 \beta_1}{\alpha_1 - \beta_1}
+        + \frac{\alpha_1 \beta_2}{\alpha_1 - \beta_1}\, x_i
+        + \frac{\alpha_1 \zeta_i - \beta_1 u_i}{\alpha_1 - \beta_1}.
+  \label{eq:3.1.10b}
+\end{align}
+Since $\Cov(x_i, \zeta_i) = 0$ by construction and $\Cov(x_i, u_i) = 0$ by assumption, it
+follows from \eqref{eq:3.1.10a} that
+\[
+  \Cov(x_i, p_i) = \frac{\beta_2}{\alpha_1 - \beta_1}\, \Var(x_i) \neq 0.
+\]
+So $x_i$ is indeed a valid instrument.
+
+With a valid instrument at hand, we can estimate the price coefficient $\alpha_1$ of
+the demand curve consistently.  Use the demand equation \eqref{eq:3.1.2a} to calculate, not
+$\Cov(p_i, q_i)$ as in \eqref{eq:3.1.6}, but $\Cov(x_i, q_i)$:
+\begin{align*}
+  \Cov(x_i, q_i) &= \alpha_1 \Cov(x_i, p_i) + \Cov(x_i, u_i) \\
+  &= \alpha_1 \Cov(x_i, p_i) \quad (\Cov(x_i, u_i) = 0 \text{ by assumption}).
+\end{align*}
+As we just verified, $\Cov(x_i, p_i) \neq 0$.  So we can divide both sides by $\Cov(x_i, p_i)$
+to obtain
+\begin{equation}
+  \alpha_1 = \frac{\Cov(x_i, q_i)}{\Cov(x_i, p_i)}.
+  \label{eq:3.1.11}
+\end{equation}
+A natural estimator that suggests itself is
+\begin{equation}
+  \hat{\alpha}_{1,\text{IV}}
+  = \frac{\text{sample covariance between } x_i \text{ and } q_i}
+         {\text{sample covariance between } x_i \text{ and } p_i}.
+  \label{eq:3.1.12}
+\end{equation}
+This estimator is called the \textbf{instrumental variables (IV) estimator} with $x_i$ as the
+instrument.  We sometimes say ``the endogenous regressor $p_i$ is instrumented by $x_i$.''
+
+Another popular procedure for consistently estimating $\alpha_1$ is the \textbf{two-stage least
+squares (2SLS)}.  It is so called because the procedure consists of running two
+regressions.  In the first stage, the endogenous regressor $p_i$ is regressed on a constant
+and the predetermined variable $x_i$, to obtain the fitted value, $\hat{p}_i$, of $p_i$.  The
+second stage is to regress the dependent variable $q_i$ on a constant and $\hat{p}_i$.  The use of
+$\hat{p}_i$ rather than $p_i$ distinguishes 2SLS from the simple-minded application of OLS
+to the demand equation.  The 2SLS estimator of $\alpha_1$ is the OLS estimate of the $\hat{p}_i$
+coefficient in the second-stage regression.  So it equals\footnote{Fact: In the regression
+of $y_i$ on a constant and $x_i$, the OLS estimator of the $x_i$ coefficient is the ratio of the
+sample covariance between $x_i$ and $y_i$ to the sample variance of $x_i$.  Proving this was a
+review question of Section~1.2.}
+\begin{equation}
+  \hat{\alpha}_{1,\text{2SLS}}
+  = \frac{\text{sample covariance between } \hat{p}_i \text{ and } q_i}
+         {\text{sample variance of } \hat{p}_i}.
+  \label{eq:3.1.13}
+\end{equation}
+
+To relate the regression in the second stage to the demand equation, rewrite
+\eqref{eq:3.1.2a} as
+\begin{equation}
+  q_i = \alpha_0 + \alpha_1 \hat{p}_i + [u_i + \alpha_1 (p_i - \hat{p}_i)].
+  \label{eq:3.1.14}
+\end{equation}
+The second stage regression estimates this equation, treating the bracketed term as
+the error term.  The OLS estimate of $\alpha_1$ is consistent for the following reason.  If the
+fitted value $\hat{p}_i$ were exactly equal to the least squares projection
+$\tilde{\E}^*(p_i \mid 1, x_i)$, then
+neither $u_i$ nor $(p_i - \hat{p}_i)$ would be correlated with $\hat{p}_i$: $u_i$ is uncorrelated because it is
+uncorrelated with $x_i$ and $\hat{p}_i$ is a linear function of $x_i$, and $(p_i - \hat{p}_i)$ is uncorrelated
+because it is a least squares projection error.  The fitted value $\hat{p}_i$ is not exactly equal
+to $\tilde{\E}^*(p_i \mid 1, x_i)$, but the difference between the two vanishes as the sample gets
+larger.  Therefore, asymptotically, $\hat{p}_i$ is uncorrelated with the error term in
+\eqref{eq:3.1.14}, making the 2SLS estimator consistent.  Furthermore, since the projection
+is the best linear predictor, the fitted value incorporates all of the effect of the supply
+shifter on price.  This suggests that minimizing the asymptotic variance is minimized for
+the 2SLS estimator.
+
+In the present example, the IV and 2SLS estimators are numerically the same
+(we will prove this in a more general context).  More generally, the 2SLS estimator
+can be written as an IV estimator with an appropriate choice of instruments, and
+the IV estimator, in turn, is a particular GMM estimator.
+
+%% ─── Questions for Review ──────────────────────────────────────────────────
+\bigskip
+\begin{center}\rule{0.6\textwidth}{0.4pt}\end{center}
+\noindent\textsc{Questions for Review}
+\medskip
+
+\begin{enumerate}
+\item In the simultaneous equations model \eqref{eq:3.1.2a}--\eqref{eq:3.1.2b},
+  suppose $\Cov(u_i, v_i)$ is not necessarily zero.  Is it necessarily true that price and the
+  demand shifter $u_i$ are positively correlated when $\alpha_1 < 0$ and $\beta_1 > 0$?
+  [Answer: No.]  Why?
+\end{enumerate}
