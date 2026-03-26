@@ -51,7 +51,7 @@ cp your_textbook.pdf pdfs/scanned.pdf
 ├── docs/
 │   ├── plan.md                  # Conversion plan template
 │   └── progress.md              # Section-level progress tracker
-├── book.conf                    # Book name (auto-generated)
+├── book.conf                    # Book name (auto-generated from PDF title)
 └── .gitignore
 ```
 

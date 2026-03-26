@@ -8,13 +8,12 @@ Convert a scanned PDF textbook to a multi-chapter LaTeX project.
 ## Pipeline (fully automated, non-stop)
 
 ### Phase 0: Setup (~2 min)
-1. Read first 15 pages of scanned PDF to determine: title, author, edition, page geometry, TOC structure, content characteristics
-2. Create directory structure: `latex/{ch01..chNN, backmatter, figures}`, `scripts/`
-3. Write `preamble.tex` matching source page geometry, with standard math packages and custom commands
-4. Write `main.tex` skeleton, `frontmatter.tex`, `book.conf` (book name in snake_case)
-5. Write `build.sh` and `extract_figures_v2.py`
-6. Configure exercise numbering style by reading the book's format
-7. Mark Phase 0 done in `progress.md`
+1. Read first 15 pages of scanned PDF to determine: title, author, edition, page geometry, TOC structure, content characteristics, exercise numbering style
+2. Derive `BOOK_NAME` from title: lowercase, spaces→underscores, drop subtitle (e.g., "Applied Partial Differential Equations" → `applied_partial_differential_equations`). Write to `book.conf`
+3. Create directory structure: `latex/{ch01..chNN, backmatter, figures}`, `scripts/`
+4. Write `preamble.tex` matching source page geometry, exercise label style, and PDF metadata (title/author)
+5. Write `main.tex` skeleton, `frontmatter.tex`
+6. Mark Phase 0 done in `progress.md`
 
 ### Phase 1: Content conversion (parallel agents)
 1. Launch N agents per batch (one per chapter), all concurrent
