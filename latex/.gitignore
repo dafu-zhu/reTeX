@@ -1,0 +1,6 @@
+# On output/* branches, un-ignore the conversion deliverables
+# that the root .gitignore excludes for master.
+!ch*/
+!backmatter/
+!frontmatter.tex
+!figures/*.png
