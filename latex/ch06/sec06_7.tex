@@ -1,0 +1,254 @@
+% sec06_7.tex — Section 6.7: Finite Element Method
+\section{Finite Element Method}
+\label{sec:fd-fem}
+
+In our modern world, many interesting physical problems formulated by partial differential equations are solved on computers (including personal computers).  Finite difference methods may be used to approximate the continuous partial differential equation by a large number of difference equations.  We describe another method known as the finite element method.  For more in-depth explanations, we refer the reader to Strang [1986].
+
+\subsection{Approximation with Nonorthogonal Functions (Weak Form of the Partial Differential Equation)}
+\label{sec:fd-fem-weak}
+
+We solve a relatively simple partial differential equation, Poisson's equation in two dimensions with homogeneous boundary conditions,
+\begin{equation}
+\laplacian u = f(x,y) \quad\text{with } u = 0 \text{ on the closed boundary},
+\label{eq:6.7.1}
+\end{equation}
+where $f(x,y)$ is given.  In problems whose geometry is not rectangular or circular, the method of separation of variables may be difficult or impossible.  As an example, we consider the complicated 10-sided polygonal geometry as illustrated in Figure~\ref{fig:6.7.1}.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch06/fig_6_7_1.png}
+\caption{Region (polygonal example).}
+\label{fig:6.7.1}
+\end{figure}
+
+We approximate the solution with a large number of \textbf{test functions} $T_i(x,y)$, which have nothing to do with the partial differential equation nor their eigenfunctions.  However, we assume the test functions satisfy the corresponding homogeneous boundary conditions:
+\begin{equation}
+T_i(x,y) = 0 \quad\text{on the closed boundary.}
+\label{eq:6.7.2}
+\end{equation}
+We introduce $U(x,y)$, \textbf{an approximation to the solution} $u(x,y)$ using a series (linear combination) of these test functions (instead of a series of eigenfunctions):
+\begin{equation}
+U(x,y) = \sum_{j=1}^{n} U_j T_j(x,y).
+\label{eq:6.7.3}
+\end{equation}
+In practice, we use a large number $n$ of test functions, and with computers today thousands are easily included.
+
+We cannot insist that our approximation satisfies the partial differential equation \eqref{eq:6.7.1}.  Instead, we determine the $n$ constants so that the approximation satisfies the $n$ conditions known as the weak form of the partial differential equation.  We insist that the left- and right-hand sides of the partial differential equation \eqref{eq:6.7.1} when multiplied by each trial function $T_i(x,y)$ and integrated over the entire region are the same:
+\begin{equation}
+\iint_R \laplacian u\,T_i\,dA = \iint_R f\,T_i\,dA,
+\label{eq:6.7.4}
+\end{equation}
+where $dA = dx\,dy$.  We can simplify this by integrating the left side by parts.  Using $\nabla\cdot(T_i\nabla u) = T_i\laplacian u + \nabla T_i \cdot \nabla u$, we obtain
+\begin{equation}
+\iint_R [\nabla\cdot(T_i\nabla u) - \nabla T_i \cdot \nabla u]\,dA = \iint_R f\,T_i\,dA.
+\label{eq:6.7.5}
+\end{equation}
+Now we use the (two-dimensional) divergence theorem ($\iint \nabla\cdot\vec{B}\,dA = \oint \vec{B}\cdot\hat{n}\,ds$, where $ds$ is differential arc length), and we obtain $\iint \nabla T_i \cdot \nabla u\,dA = \oint T_i\nabla u \cdot \hat{n}\,ds - \iint f\,T_i\,dA$.  Since the boundary contribution vanishes, $\oint T_i\nabla u \cdot \hat{n}\,ds = 0$, because the trial functions satisfy the homogeneous boundary conditions \eqref{eq:6.7.2}, we obtain the \textbf{weak form (Galerkin) of the partial differential equation}:
+\begin{equation}
+\iint_R \nabla T_i \cdot \nabla u\,dA = -\iint_R f\,T_i\,dA.
+\label{eq:6.7.6}
+\end{equation}
+
+All solutions $u(x,y)$ of the partial differential equation \eqref{eq:6.7.1} satisfy the weak form \eqref{eq:6.7.6}.  We insist that our approximation $U(x,y)$ \eqref{eq:6.7.3} satisfies the weak form:
+\begin{equation}
+\sum_{j=1}^{n} U_j \iint_R \nabla T_i \cdot \nabla T_j\,dA = -\iint_R f\,T_i\,dA.
+\label{eq:6.7.7}
+\end{equation}
+This is $n$ equations for the $n$ unknown coefficients $U_i$, (one equation for each test function).  We introduce the symmetric \textbf{stiffness matrix} $K$ with entries $K_{ij} = K_{ji}$:
+\begin{equation}
+K_{ij} = \iint_R \nabla T_i \cdot \nabla T_j\,dA
+\label{eq:6.7.8}
+\end{equation}
+and the vector $F$ with entries $F_i$:
+\begin{equation}
+F_i = -\iint_R f\,T_i\,dA.
+\label{eq:6.7.9}
+\end{equation}
+The $n$ equations, \eqref{eq:6.7.7}, can be written in matrix form:
+\begin{equation}
+\sum_{j=1}^{n} K_{ij} U_j = F_i,
+\label{eq:6.7.10}
+\end{equation}
+can be written in matrix form:
+\begin{equation}
+KU = F.
+\label{eq:6.7.11}
+\end{equation}
+With given test functions, the right-hand side of \eqref{eq:6.7.11} is known.  Our solution is
+\begin{equation}
+U = K^{-1}F.
+\label{eq:6.7.12}
+\end{equation}
+However, a computational solution will usually be obtained without finding the general inverse of the usually very large $n \times n$ matrix $K$.
+
+\paragraph{Orthogonal two-dimensional eigenfunctions.}
+If the boundary was exceptionally simple, then we could use trial functions that are two-dimensional eigenfunctions $T_i(x,y) = \phi_i(x,y)$ satisfying
+\begin{equation}
+\laplacian\phi_i = -\lambda_i\phi_i.
+\label{eq:6.7.13}
+\end{equation}
+These eigenfunctions are orthogonal in a two-dimensional sense (see Sec.~7.5):
+\begin{equation}
+\iint_R \phi_i\phi_j\,dA = 0 \quad\text{if } i \ne j.
+\label{eq:6.7.14}
+\end{equation}
+In the Exercises we show that integration by parts is not necessary, so that there is an alternate expression for the stiffness matrix that can be derived directly from \eqref{eq:6.7.4}:
+\begin{equation}
+K_{ij} = -\iint_R T_i\laplacian T_j\,dA = \lambda_j \iint_R \phi_i\phi_j\,dA,
+\label{eq:6.7.15}
+\end{equation}
+using \eqref{eq:6.7.13}.  Using the two-dimensional orthogonality of eigenfunctions \eqref{eq:6.7.14}, we see that the stiffness matrix is diagonal,
+\begin{equation}
+K_{ij} = 0 \quad\text{if } i \ne j.
+\label{eq:6.7.16}
+\end{equation}
+The diagonal elements from \eqref{eq:6.7.15} are given by
+\begin{equation}
+K_{ii} = \lambda_i\iint_R \phi_i^2\,dA.
+\label{eq:6.7.17}
+\end{equation}
+The approximate solution is given by the finite series \eqref{eq:6.7.3}, where the coefficients are easily determined from \eqref{eq:6.7.11} or \eqref{eq:6.7.12} (if $\lambda$ is not an eigenvalue):
+\begin{equation}
+U_i = \frac{F_i}{K_{ii}},
+\label{eq:6.7.18}
+\end{equation}
+where $K_{ii}$ is given by \eqref{eq:6.7.17}.  This approximate solution is a truncation of an infinite series of orthogonal functions.  An example of this infinite series is described in a small portion of Sec.~8.6.
+
+\paragraph{Galerkin numerical approximation for frequencies (eigenvalues).}
+Suppose we wish to obtain a numerical approximation to the frequencies of vibration of a membrane with shape perhaps as sketched in Figure~\ref{fig:6.7.1}.  In Sec.~7.2, it is shown that a vibrating membrane satisfies the two-dimensional wave equation $\partial^2 u/\partial t^2 = c^2\laplacian u$ with $u = 0$ on the boundary.  After separation of time, $u = \phi(x,y)h(t)$, the frequencies of vibration $c\sqrt{\lambda}$ are determined from the eigenvalue problem
+\begin{equation}
+\laplacian\phi = -\lambda\phi
+\label{eq:6.7.19}
+\end{equation}
+with $\phi = 0$ on the boundary.  Since \eqref{eq:6.7.19} corresponds to \eqref{eq:6.7.1} with the right-hand side $f(x) = -\lambda\phi$, the Galerkin method may be used to approximate the eigenvalues and the eigenfunctions.  The eigenfunction can be approximated by a series of test functions \eqref{eq:6.7.3}, $\phi(x,y) = \sum_{j=1}^{n}\phi_j T_j(x,y)$.  Using the weak form \eqref{eq:6.7.6} of the partial differential equation, the left-hand side of \eqref{eq:6.7.7} can be again written in terms of the stiffness matrix $K$.  However, the right-hand side of \eqref{eq:6.7.7} using $f(x) = -\lambda\phi$ involves a different matrix $M$, so that the matrix form \eqref{eq:6.7.11} becomes
+\begin{equation}
+K\boldsymbol{\phi} = \lambda M\boldsymbol{\phi},
+\label{eq:6.7.20}
+\end{equation}
+where we introduce the vector $\boldsymbol{\phi}$ with entries $\phi_j$ and where the symmetric \textbf{mass matrix} $M$ with entries given by
+\begin{equation}
+M_{ij} = \iint_R T_i T_j\,dA.
+\label{eq:6.7.21}
+\end{equation}
+The $n$ eigenvalues of \eqref{eq:6.7.20} or $M^{-1}K$ approximate the eigenvalues of \eqref{eq:6.7.19}.  The approximation improves as $n$ increases.  Strang [1986] shows that, instead of computing the eigenvalues of $M^{-1}K$ directly, it is better to use the Cholesky decomposition of the mass matrix $M$.
+
+\paragraph{Finite elements.}
+The trial functions we will use are not orthogonal so that the stiffness matrix will not be diagonal.  However, finite elements will yield a stiffness matrix that has many zeros, known as a \textbf{sparse} matrix.  In practice, the stiffness matrix is quite large and general methods to obtain its inverse as needed in \eqref{eq:6.7.12} are not practical.  However, there are practical methods to obtain the inverse since we will show that the stiffness matrix will be sparse.
+
+\subsection{The Simplest Triangular Finite Elements}
+\label{sec:fd-fem-triangular}
+
+One of the simplest ways to approximate any region is to break up the region into small triangles.  The approximation improves as the number of triangles increases (and the size of the largest triangle decreases).  We describe the method for a polygonal region.  There are many ways to divide the region up into triangles (forming a \textbf{triangular mesh}).  You can begin by dividing the region into triangles in a somewhat arbitrary way.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch06/fig_6_7_2.png}
+\caption{Triangulated region (not unique).}
+\label{fig:6.7.2}
+\end{figure}
+
+Let us first describe a very coarse mesh for our 10-sided figure (see Fig.~\ref{fig:6.7.1}).  We somewhat arbitrarily pick 4 interior points forming 16 triangles (see Figure~\ref{fig:6.7.2}).  In general,
+\begin{equation}
+\text{number of triangles} = \text{number of boundary triangles} - 2 + 2\,(\text{number of interior points}).
+\label{eq:6.7.22}
+\end{equation}
+This is easily seen by counting the interior angles of the triangles (180 times the number of triangles) in a different way.  Each interior point is completely surrounded (360 times the number of interior points) and the angles around the boundary points are the interior angles of a polygon (180 times number of sides minus two).
+
+The four interior points $(x_i, y_i)$ give four unknowns $U(x_i, y_i)$.  This gives us a four-dimensional vector space.  We choose the test functions as the simplest basis functions of the four-dimensional vector space.  We choose the test function $T_1(x,y)$ such that $T_1(x_1,y_1) = 1$, $T_1(x_2,y_2) = 0$, $T_1(x_3,y_3) = 0$, $T_1(x_4,y_4) = 0$.  Similarly, the test function $T_2(x,y)$ is chosen to satisfy $T_2(x_1,y_1) = 0$, $T_2(x_2,y_2) = 1$, $T_2(x_3,y_3) = 0$, and so on.  This is easily generalized to many more than three interior points (test functions).
+
+Our approximation to the partial differential equation is \eqref{eq:6.7.3}, a linear combination of the four test functions,
+\[
+U(x,y) = \sum_{j=1}^{4} U_j T_j(x,y).
+\]
+Note that we have the very nice property that
+\begin{equation}
+\begin{aligned}
+U(x_1,y_1) &= U_1 \\
+U(x_2,y_2) &= U_2 \\
+U(x_3,y_3) &= U_3 \\
+U(x_4,y_4) &= U_4.
+\end{aligned}
+\label{eq:6.7.23}
+\end{equation}
+Here the coefficients are precisely the function evaluated at the $n$th point.  That is why we use the notation $U_j$ for the coefficients.  In this way we have obtained a set of difference equations \eqref{eq:6.7.10} or \eqref{eq:6.7.11}, where the stiffness matrix will be shown to be sparse.  Because of \eqref{eq:6.7.23}, these represent difference equations for the value of $u$ at each interior point.  Thus, the difference equations derived by the finite element method are usually different from the difference equations that are derived by finite difference methods.
+
+Our trial functions need to be defined everywhere, not just at the interior points.  There are different finite elements, and we describe the simplest.  We assume each trial function is linear (and looks like a simple plane) in each triangular region.  Each trial function will be peaked at~1 and will linearly and continuously decay to~0 within the set of triangles that surrounds that vertex.  Each trial function looks like a pyramid.  \textbf{Each trial function will be identically zero for those regions that do not connect to the one peaked vertex.}  The four trial functions for this problem are illustrated in Fig.~\ref{fig:6.7.3}.  When there is a large number of degrees of freedom (vertices, trial functions), then each trial function is identically zero over most of region.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch06/fig_6_7_3.png}
+\caption{Four trial functions (one corresponds to each interior point).}
+\label{fig:6.7.3}
+\end{figure}
+
+\paragraph{Calculation of stiffness matrix.}
+The stiffness matrix,
+\begin{equation}
+K_{ij} = \iint_R \nabla T_i \cdot \nabla T_j\,dA,
+\label{eq:6.7.24}
+\end{equation}
+is best calculated by summing up (called \textbf{assembling}) its contributions for each small triangular finite element.  The entries of the stiffness matrix will be nonzero only for its diagonal entries and for entries corresponding to adjacent interior vertices.  The entries for the stiffness matrix will be zero corresponding to nonadjacent interior vertices (since each trial function is mostly zero).  \textbf{The stiffness matrix will be sparse} when there are many interior points.
+
+The diagonal entries of the stiffness matrix corresponding to a specific interior vertex will be assembled only from the triangles that surround that interior vertex.  The entries of the stiffness matrix corresponding to adjacent interior vertices will be assembled from the two small triangles with the side in common from the line connecting the two adjacent interior vertices.
+
+For a specific triangle with interior angles $\theta_i$, it can be shown (in the Exercises) that the diagonal contributions satisfy
+\[
+k_{11} = \text{portion of } K_{11} \text{ due to specific triangle} = \frac{1}{2\tan\theta_2} + \frac{1}{2\tan\theta_3},\ \text{etc.},
+\]
+and the contributions to adjacent vertices are
+\[
+k_{12} = \text{portion of } K_{12} \text{ due to specific triangle} = -\frac{1}{2\tan\theta_3},\ \text{etc.}
+\]
+
+\paragraph{Mesh refinement.}
+We begin with a specific mesh (for example, with four interior points as in Fig.~\ref{fig:6.7.2}).  Then it is usual to obtain a finer mesh by subdividing each triangle by connecting the midpoints of each side.  In this way each triangle becomes four similar triangles (see Figure~\ref{fig:6.7.4}).  Keeping similar triangles in the process can make numerical procedures somewhat easier since the above preceding formula shows that additional calculations are not needed for the stiffness matrix after the first mesh.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch06/fig_6_7_4.png}
+\caption{Refined mesh (each triangle).}
+\label{fig:6.7.4}
+\end{figure}
+
+\begin{exercises}{6.7}
+\item Consider a polygonal region of your choice.  Sketch the trial functions:
+\begin{enumerate}
+\item[(a)] Assuming 5~sided figure with 2~interior points
+\item[(b)] Assuming 5~sided figure with 3~interior points
+\item[(c)] Assuming 5~sided figure with 5~interior points
+\item[(d)] Assuming 5~sided figure with 7~interior points
+\end{enumerate}
+
+\item For the finite elements of Exercise~6.7.1, which entries of the stiffness matrix are zero?
+
+\item Derive a formula for $K_{ij}$ from \eqref{eq:6.7.4}.
+
+\item Show that $\iint_R (\nabla U)^2\,dA = U^T K U$.  Thus, the entire matrix $K$ can be identified by calculating this integral.
+
+\item Show (by completing the square of quadratics) that the minimum of
+\[
+\iint_R \left[\tfrac{1}{2}(\nabla U)^2 - f(x,y)U\right]\,dA,
+\]
+where $U$ satisfies \eqref{eq:6.7.3}, occurs when $KU = F$.
+
+\item Consider a somewhat arbitrary triangle (as illustrated in Figure~\ref{fig:6.7.5}) with $P_1 = (0,0)$, $P_2 = (L,0)$, $P_3 = (D,H)$ and interior angles $\theta_i$.  The solution on the triangle will be linear $U = a + bx + cy$.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch06/fig_6_7_5.png}
+\caption{Triangular finite element.}
+\label{fig:6.7.5}
+\end{figure}
+
+\begin{enumerate}
+\item[(a)] Show that $\iint_R (\nabla U)^2\,dA = (b^2 + c^2)\frac{1}{2}LH$.
+\item[(b)] The coefficients $a$, $b$, $c$ are determined by the conditions at the three vertices $U(P_i) = U_i$.  Demonstrate that $a = U_1$, $b = \frac{U_2 - U_1}{L}$, and $c = \frac{U_3 - U_1 - \frac{D}{L}(U_2 - U_1)}{H}$.
+\item[(c)] Show that $\frac{1}{\tan\theta_1} = \frac{D}{H}$, $\frac{1}{\tan\theta_2} = \frac{L - D}{H}$, and using $\tan\theta_3 = -\tan(\theta_1 + \theta_2)$, show that $\frac{1}{\tan\theta_1} + \frac{1}{\tan\theta_2} = \frac{L}{H} = \frac{D}{H} + \frac{D^2}{HL}$.
+\item[(d)] Using Exercise~6.7.4 and parts~(a),~(b),~(c) of this exercise, show that for the contribution from this one triangle, $K_{12} = -\frac{1}{2\tan\theta_3}$.  The other entries of the stiffness matrix follow in this way.
+\end{enumerate}
+
+\item Continue with part~(d) of Exercise~6.7.6 to obtain
+\begin{enumerate}
+\item[(a)] $K_{11}$ \qquad (b) $K_{22}$ \qquad (c) $K_{33}$ \qquad (d) $K_{23}$ \qquad (e) $K_{13}$
+\end{enumerate}
+\end{exercises}

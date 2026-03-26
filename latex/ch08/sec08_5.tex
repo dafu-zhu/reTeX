@@ -1,0 +1,309 @@
+% sec08_5.tex — Section 8.5: Forced Vibrating Membranes and Resonance
+\section{Forced Vibrating Membranes and Resonance}
+\label{sec:forced-membranes}
+
+The method of eigenfunction expansion may also be applied to nonhomogeneous partial differential equations with more than two independent variables.  An interesting example is a vibrating membrane of arbitrary shape.  In our previous analysis of membranes, vibrations were caused by the initial conditions.  Another mechanism that will put a membrane into motion is an external force.  The linear nonhomogeneous partial differential equation that describes a vibrating membrane is
+\begin{equation}
+\label{eq:8.5.1}
+\boxed{\pdd{u}{t} = c^2\laplacian u + Q(x,y,t),}
+\end{equation}
+where $Q(x,y,t)$ represents a time- and spatially dependent external force.  To be completely general, there should be some boundary condition along the boundary of the membrane.  However, it is more usual for a vibrating membrane to be fixed with zero vertical displacement.  Thus, we will specify this homogeneous boundary condition,
+\begin{equation}
+\label{eq:8.5.2}
+\boxed{u = 0,}
+\end{equation}
+on the entire boundary.  Both the initial position and initial velocity are specified:
+\begin{equation}
+\label{eq:8.5.3}
+\boxed{u(x,y,0) = \alpha(x,y)}
+\end{equation}
+\begin{equation}
+\label{eq:8.5.4}
+\boxed{\pd{u}{t}(x,y,0) = \beta(x,y).}
+\end{equation}
+
+To use the method of eigenfunction expansion, we must assume that we ``know'' the eigenfunctions of the related homogeneous problem.  By applying the method of separation of variables to \eqref{eq:8.5.1} with $Q(x,y,t) = 0$, where the boundary condition is \eqref{eq:8.5.2}, we obtain the problem satisfied by the eigenfunctions:
+\begin{equation}
+\label{eq:8.5.5}
+\laplacian\phi = -\lambda\phi,
+\end{equation}
+with $\phi = 0$ on the entire boundary.  We know that these eigenfunctions are complete, and that different eigenfunctions are orthogonal (in a two-dimensional sense) with weight~1.  We have also shown that $\lambda > 0$.  However, the specific eigenfunctions depend on the geometric shape of the region.  Recall that for a rectangle ($0\le x\le L$, $0\le y\le H$) the eigenvalues are $\lambda_{nm} = (n\pi/L)^2 + (m\pi/H)^2$, and the corresponding eigenfunctions are $\phi_{nm}(x,y) = \sin n\pi x/L\sin m\pi y/H$, where $n=1,2,3,\ldots$ and $m=1,2,3,\ldots$  Also for a circle of radius~$a$, we have shown that the eigenvalues are $\lambda_{mn} = (z_{mn}/a)^2$, where $z_{mn}$ are the $n$th zeros of the Bessel function of order~$m$, $J_m(z_{mn}) = 0$, and the corresponding eigenfunctions are both $J_m(z_{mn}r/a)\sin m\theta$ and $J_m(z_{mn}r/a)\cos m\theta$, where $n=1,2,3,\ldots$ and $m=0,1,2,3,\ldots$
+
+In general, we designate the related homogeneous eigenfunctions $\phi_i(x,y)$.  Any (piecewise smooth) function, including the desired solution for our forced vibrating membrane, may be expressed in terms of an infinite series of these eigenfunctions.  Thus,
+\begin{equation}
+\label{eq:8.5.6}
+\boxed{u(x,y,t) = \sum_i A_i(t)\,\phi_i(x,y).}
+\end{equation}
+Here the $\sum_i$ represents a summation over \emph{all} eigenfunctions.  For membranes it will include a double sum if we are able to separate variables for $\laplacian\phi + \lambda\phi = 0$.
+
+\textbf{Term-by-term differentiation.}
+We will obtain an ordinary differential equation for the time-dependent coefficients, $A_i(t)$.  The differential equation will be derived in two ways: direct substitution (with the necessary differentiation of infinite series of eigenfunctions) and use of the multidimensional Green's formula.  In either approach we need to assume there are no difficulties with the term-by-term differentiation of \eqref{eq:8.5.6} with respect to $t$.  Thus,
+\begin{equation}
+\label{eq:8.5.7}
+\pdd{u}{t} = \sum_i \odd{A_i}{t}\,\phi_i(x,y).
+\end{equation}
+Term-by-term spatial differentiations are allowed since both $u$ and $\phi_i$ solve the same homogeneous boundary conditions:
+\begin{equation}
+\label{eq:8.5.8}
+\laplacian u = \sum_i A_i(t)\,\laplacian\phi_i(x,y).
+\end{equation}
+This would not be valid if $u\neq 0$ on the entire boundary.  Since $\laplacian\phi_i = -\lambda_i\phi_i$, it follows that \eqref{eq:8.5.1} becomes
+\begin{equation}
+\label{eq:8.5.9}
+\sum_i \left(\odd{A_i}{t} + c^2\lambda_i A_i\right)\phi_i = Q(x,y,t).
+\end{equation}
+If we expand $Q(x,y,t)$ in terms of these same eigenfunctions,
+\begin{equation}
+\label{eq:8.5.10}
+Q(x,y,t) = \sum_i q_i(t)\,\phi_i(x,y),\quad\text{where}\quad
+q_i(t) = \frac{\iint Q\,\phi_i\dx\dy}{\iint \phi_i^2\dx\dy},
+\end{equation}
+then
+\begin{equation}
+\label{eq:8.5.11}
+\boxed{\odd{A_i}{t} + c^2\lambda_i A_i = q_i(t).}
+\end{equation}
+Thus, $A_i$ solves a linear nonhomogeneous second-order differential equation.
+
+\textbf{Green's formula.}
+An alternative way to derive \eqref{eq:8.5.11} is to use Green's formula.  We begin this derivation by determining $d^2 A_i/dt^2$ directly from \eqref{eq:8.5.7}, only using the two-dimensional orthogonality of $\phi_i(x,y)$ (with weight~1):
+\begin{equation}
+\label{eq:8.5.12}
+\odd{A_i}{t} = \frac{\iint \pdd{u}{t}\,\phi_i\dx\dy}{\iint \phi_i^2\dx\dy}.
+\end{equation}
+We then eliminate $\partial^2 u/\partial t^2$ from the partial differential equation \eqref{eq:8.5.1}:
+\begin{equation}
+\label{eq:8.5.13}
+\odd{A_i}{t} = \frac{\iint (c^2\laplacian u + Q)\,\phi_i\dx\dy}{\iint \phi_i^2\dx\dy}.
+\end{equation}
+Recognizing the latter integral as the generalized Fourier coefficients of $Q$ [see \eqref{eq:8.5.10}], we have that
+\begin{equation}
+\label{eq:8.5.14}
+\odd{A_i}{t} = q_i(t) + \frac{\iint c^2\laplacian u\;\phi_i\dx\dy}{\iint \phi_i^2\dx\dy}.
+\end{equation}
+It is now appropriate to use the two-dimensional version of Green's formula:
+\begin{equation}
+\label{eq:8.5.15}
+\iint (\phi_i\laplacian u - u\laplacian\phi_i)\dx\dy = \oint (\phi_i\nabla u - u\nabla\phi_i)\cdot\hat{\mathbf{n}}\ds,
+\end{equation}
+where $ds$ represents differential arc length along the boundary and $\hat{\mathbf{n}}$ is a unit outward normal to the boundary.  In our situation $u$ and $\phi_i$ satisfy homogeneous boundary conditions, and hence the boundary term in \eqref{eq:8.5.15} vanishes:
+\begin{equation}
+\label{eq:8.5.16}
+\iint (\phi_i\laplacian u - u\laplacian\phi_i)\dx\dy = 0.
+\end{equation}
+Equation \eqref{eq:8.5.16} is perhaps best remembered as $\iint [u\,L(v) - v\,L(u)]\dx\dy = 0$, where $L = \laplacian$.  If the membrane did not have homogeneous boundary conditions, then \eqref{eq:8.5.15} would be used instead of \eqref{eq:8.5.16}, as we did in Sec.~8.4.  The advantage of using Green's formula is that we can also solve the problem if the boundary condition was nonhomogeneous.
+
+Through the use of \eqref{eq:8.5.16},
+\[
+\iint \phi_i\laplacian u\dx\dy = \iint u\laplacian\phi_i\dx\dy = -\lambda_i\iint u\phi_i\dx\dy,
+\]
+since $\laplacian\phi_i + \lambda_i\phi_i = 0$ and since $A_i(t)$ is the generalized Fourier coefficient of $u(x,y,t)$:
+\begin{equation}
+\label{eq:8.5.17}
+A_i(t) = \frac{\iint u\,\phi_i\dx\dy}{\iint \phi_i^2\dx\dy}.
+\end{equation}
+Consequently, we derive from \eqref{eq:8.5.14} that
+\begin{equation}
+\label{eq:8.5.18}
+\boxed{\odd{A_i}{t} + c^2\lambda_i A_i = q_i,}
+\end{equation}
+the same second-order differential equation as already derived [see \eqref{eq:8.5.11}], justifying the simpler term-by-term differentiation performed there.
+
+\textbf{Variation of parameters.}
+We will need some facts about ordinary differential equations in order to solve \eqref{eq:8.5.11} or \eqref{eq:8.5.18}.  Equation \eqref{eq:8.5.18} is a second-order linear nonhomogeneous differential equation with constant coefficients (since $\lambda_i c^2$ is constant).  The general solution is a particular solution plus a linear combination of homogeneous solutions.  In this problem the homogeneous solutions are $\sin c\sqrt{\lambda_i}\,t$ and $\cos c\sqrt{\lambda_i}\,t$, representing the natural frequencies of oscillation of a membrane.  The membrane is being forced at frequency $\omega$.  A particular solution can always be obtained by variation of parameters.  However, the method of undetermined coefficients is usually easier and should be used if $q_i(t)$ is a polynomial, exponential, sine, or cosine (or products and/or sums of these).  Using the method of variation of parameters (see Sec.~9.3.2), it can be shown that the general solution of \eqref{eq:8.5.18} is
+\begin{equation}
+\label{eq:8.5.19}
+\boxed{A_i(t) = c_1\cos c\sqrt{\lambda_i}\,t + c_2\sin c\sqrt{\lambda_i}\,t
++ \int_0^t q_i(\tau)\,\frac{\sin c\sqrt{\lambda_i}(t-\tau)}{c\sqrt{\lambda_i}}\,d\tau.}
+\end{equation}
+Using this form, the initial conditions may be easily satisfied:
+\begin{align}
+\label{eq:8.5.20}
+A_i(0) &= c_1 \\
+\label{eq:8.5.21}
+\od{A_i}{t}(0) &= c_2\,c\sqrt{\lambda_i}.
+\end{align}
+From the initial conditions \eqref{eq:8.5.3} and \eqref{eq:8.5.4}, it follows that
+\begin{align}
+\label{eq:8.5.22}
+A_i(0) &= \frac{\iint \alpha(x,y)\,\phi_i(x,y)\dx\dy}{\iint \phi_i^2\dx\dy} \\[6pt]
+\label{eq:8.5.23}
+\od{A_i}{t}(0) &= \frac{\iint \beta(x,y)\,\phi_i(x,y)\dx\dy}{\iint \phi_i^2\dx\dy}.
+\end{align}
+
+The solution, in general, for a forced vibrating membrane is
+\[
+u(x,y,t) = \sum_i A_i(t)\,\phi_i(x,y),
+\]
+where $\phi_i$ is given by \eqref{eq:8.5.5} and $A_i(t)$ is determined by \eqref{eq:8.5.19}--\eqref{eq:8.5.23}.
+
+If there is no external force, $Q(x,y,t) = 0$ [i.e., $q_i(t) = 0$], then $A_i(t) = c_1\cos c\sqrt{\lambda_i}\,t + c_2\sin c\sqrt{\lambda_i}\,t$.  In this situation, the solution is
+\[
+u(x,y,t) = \sum_i (a_i\cos c\sqrt{\lambda_i}\,t + b_i\sin c\sqrt{\lambda_i}\,t)\,\phi_i(x,y),
+\]
+exactly the solution obtained by separation of variables.  The natural frequencies of oscillation of a membrane are $c\sqrt{\lambda_i}$.
+
+\textbf{Periodic forcing.}
+We have just completed the analysis of the vibrations of an arbitrarily shaped membrane with arbitrary external forcing.  We could easily specialize this result to rectangular and circular membranes.  Instead of doing that, we continue to analyze an arbitrarily shaped membrane.  However, let us suppose that the forcing function is purely oscillatory in time; specifically,
+\begin{equation}
+\label{eq:8.5.24}
+\boxed{Q(x,y,t) = \bar{Q}(x,y)\cos\omega t;}
+\end{equation}
+that is, the \textbf{forcing frequency} is $\omega$.  We do not specify the spatial dependence, $\bar{Q}(x,y)$.  The eigenfunction expansion of the forcing function is also needed.  From \eqref{eq:8.5.10} it follows that
+\begin{equation}
+\label{eq:8.5.25}
+q_i(t) = \gamma_i\cos\omega t,
+\end{equation}
+where $\gamma_i$ are constants,
+\[
+\gamma_i = \frac{\iint \bar{Q}(x,y)\,\phi_i(x,y)\dx\dy}{\iint \phi_i^2\dx\dy}.
+\]
+
+From \eqref{eq:8.5.18}, the generalized Fourier coefficients solve the second-order differential equation,
+\begin{equation}
+\label{eq:8.5.26}
+\odd{A_i}{t} + c^2\lambda_i A_i = \gamma_i\cos\omega t.
+\end{equation}
+Since the r.h.s.\ of \eqref{eq:8.5.26} is simple, a particular solution is more easily obtained by the method of undetermined coefficients [rather than by using the general form \eqref{eq:8.5.19}].  Homogeneous solutions are again a linear combination of $\sin c\sqrt{\lambda_i}\,t$ and $\cos c\sqrt{\lambda_i}\,t$, representing the natural frequencies $c\sqrt{\lambda_i}$ of the membrane.  The membrane is being forced at frequency $\omega$.
+
+The solution of \eqref{eq:8.5.26} is not difficult.  We might guess that a \emph{particular solution} is in the form
+\begin{equation}
+\label{eq:8.5.27}
+A_i(t) = B_i\cos\omega t.
+\end{equation}
+Substituting \eqref{eq:8.5.27} into \eqref{eq:8.5.26} shows that
+\[
+B_i(c^2\lambda_i - \omega^2) = \gamma_i \quad\text{or}\quad
+B_i = \frac{\gamma_i}{c^2\lambda_i - \omega^2},
+\]
+but this division is valid only if $\omega^2\neq c^2\lambda_i$.  The physical meaning of this result is that \emph{if the forcing frequency $\omega$ is different from a natural frequency}, then a particular solution is
+\begin{equation}
+\label{eq:8.5.28}
+A_i(t) = \frac{\gamma_i\cos\omega t}{c^2\lambda_i - \omega^2},
+\end{equation}
+and the general solution is
+\begin{equation}
+\label{eq:8.5.29}
+A_i(t) = \frac{\gamma_i\cos\omega t}{c^2\lambda_i - \omega^2}
++ c_1\cos c\sqrt{\lambda_i}\,t + c_2\sin c\sqrt{\lambda_i}\,t.
+\end{equation}
+$A_i(t)$ represents the amplitude of the mode $\phi(x,y)$.  Each mode is composed of a vibration at its natural frequency $c\sqrt{\lambda_i}$, and a vibration at the forcing frequency~$\omega$.  The closer these two frequencies are (for a given mode), the larger the amplitude of that mode.
+
+\textbf{Resonance.}
+However, \textbf{if the forcing frequency $\omega$ is the same as one of the natural frequencies} $c\sqrt{\lambda_i}$, then a phenomenon known as \textbf{resonance} occurs.  Mathematically, if $\omega^2 = c^2\lambda_i$, then for those modes [i.e., only those $\phi_i(x,y)$ such that $\omega^2 = c^2\lambda_i$], \eqref{eq:8.5.27} is not the appropriate solution since the r.h.s.\ of \eqref{eq:8.5.26} is a homogeneous solution.  Instead, the solution is not periodic in time.  The amplitude of oscillations grows proportional to $t$.  Some algebra shows that a particular solution of \eqref{eq:8.5.26} is
+\begin{equation}
+\label{eq:8.5.30}
+A_i(t) = \frac{\gamma_i}{2\omega}\,t\sin\omega t,
+\end{equation}
+and hence the general solution is
+\begin{equation}
+\label{eq:8.5.31}
+A_i(t) = \frac{\gamma_i}{2\omega}\,t\sin\omega t + c_1\cos\omega t + c_2\sin\omega t,
+\end{equation}
+where $\omega = c\sqrt{\lambda_i}$, for any mode that resonates.  At resonance, natural modes corresponding to the forcing frequency grow in time without a bound.  The other oscillating modes remain bounded.\footnote{This solution corresponds to the initial conditions $A_i(0) = 0$, $dA_i/dt = 0$.}
+
+After a while, the resonating modes will dominate.  Thus the spatial structure of a solution will be primarily due to the eigenfunctions of the resonant modes.  The other modes are not significantly excited.  We present a brief derivation of \eqref{eq:8.5.30}, which avoids some tedious algebra.  If $\omega^2\neq c^2\lambda_i$, we obtain the general solution \eqref{eq:8.5.29} relatively easily.  Unfortunately, we cannot take the limit as $\omega\to c\sqrt{\lambda_i}$ since the amplitude then approaches infinity.  However, from \eqref{eq:8.5.29} we see that
+\begin{equation}
+\label{eq:8.5.32}
+A_i(t) = \frac{\gamma_i}{c^2\lambda_i - \omega^2}(\cos\omega t - \cos c\sqrt{\lambda_i}\,t)
+\end{equation}
+is also an allowable solution\footnote{If the first derivative term were present in \eqref{eq:8.5.26}, representing a frictional force, then a particular solution must include both $\cos\omega t$ and $\sin\omega t$.} if $\omega^2\neq c^2\lambda_i$.  However, \eqref{eq:8.5.32} may have a limit as $\omega\to c\sqrt{\lambda_i}$, since $A_i(t)$ is in the form of $0/0$ as $\omega\to c\sqrt{\lambda_i}$.  We calculate the limit of \eqref{eq:8.5.32} as $\omega\to c\sqrt{\lambda_i}$ using l'H\^opital's rule:
+\[
+A_i(t) = \lim_{\omega\to c\sqrt{\lambda_i}} \frac{\gamma_i(\cos\omega t - \cos c\sqrt{\lambda_i}\,t)}{c^2\lambda_i - \omega^2}
+= \lim_{\omega\to c\sqrt{\lambda_i}} \frac{-\gamma_i t\sin\omega t}{-2\omega},
+\]
+verifying \eqref{eq:8.5.30}.
+
+The displacement of the resonated mode cannot grow indefinitely, as \eqref{eq:8.5.31} suggests.  The mathematics is correct, but some physical assumptions should be modified.  Perhaps it is appropriate to include a frictional force, which limits the growth as is shown in an exercise.  Alternatively, perhaps the mode grows to such a large amplitude that the linearization assumption, needed in a physical derivation of the two-dimensional wave equation, is no longer valid; a different partial differential equation should be appropriate for sufficiently large displacements.  Perhaps the amplitude growth due to resonance would result in the snapping of the membrane (but this is not likely to happen until after the linearization assumption has been violated).
+
+Note that we have demonstrated the result for any geometry.  The introduction of the details of rectangular or circular geometries might just cloud the basic mathematical and physical phenomena.
+
+Resonance for a vibrating membrane is similar mathematically to resonance for spring-mass systems (also without friction).  In fact, resonance occurs for any mechanical system when a forcing frequency equals on of the natural frequencies.  Disasters such as the infamous Tacoma Bridge collapse and various jet airplane crashes have been blamed on resonance phenomena.
+
+\begin{exercises}{8.5}
+
+\item By substitution show that
+\[
+y(t) = \frac{1}{\omega_0}\int_0^t f(\bar{t})\sin\omega_0(t-\bar{t})\,d\bar{t}
+\]
+is a particular solution of
+\[
+\odd{y}{t} + \omega_0^2\,y = f(t).
+\]
+What is the general solution?  What solution satisfies the initial conditions $y(0) = y_0$ and $\od{y}{t}(0) = v_0$?
+
+\item Consider a vibrating string with time-dependent forcing:
+\begin{alignat*}{2}
+\pdd{u}{t} &= c^2\pdd{u}{x} + Q(x,t) \\
+u(0,t) &= 0 \qquad& u(x,0) &= f(x) \\
+u(L,t) &= 0 & \pd{u}{t}(x,0) &= 0.
+\end{alignat*}
+\begin{enumerate}
+\item[(a)] Solve the initial value problem.
+\item[\starred(b)] Solve the initial value problem if $Q(x,t) = g(x)\cos\omega t$.  For what values of $\omega$ does resonance occur?
+\end{enumerate}
+
+\item Consider a vibrating string with friction with time-periodic forcing
+\begin{alignat*}{2}
+\pdd{u}{t} &= c^2\pdd{u}{x} - \beta\pd{u}{t} + g(x)\cos\omega t \\
+u(0,t) &= 0 \qquad& u(x,0) &= f(x) \\
+u(L,t) &= 0 & \pd{u}{t}(x,0) &= 0.
+\end{alignat*}
+\begin{enumerate}
+\item[(a)] Solve this initial value problem if $\beta$ is moderately small ($0 < \beta < 2c\pi/L$).
+\item[(b)] Compare this solution to Exercise~8.5.2(b).
+\end{enumerate}
+
+\item Solve the initial value problem for a vibrating string with time-dependent forcing.
+\[
+\pdd{u}{t} = c^2\pdd{u}{x} + Q(x,t),\quad u(x,0) = f(x),\quad \pd{u}{t}(x,0) = 0,
+\]
+subject to the following boundary conditions.  Do not reduce to homogeneous boundary conditions:
+\begin{enumerate}
+\item[(a)] $u(0,t) = A(t)$, \quad $u(L,t) = B(t)$
+\item[(b)] $u(0,t) = 0$, \quad $\pd{u}{x}(L,t) = 0$
+\item[(c)] $\pd{u}{x}(0,t) = A(t)$, \quad $u(L,t) = 0$
+\end{enumerate}
+
+\item Solve the initial value problem for a membrane with time-dependent forcing and fixed boundaries ($u=0$),
+\[
+\pdd{u}{t} = c^2\laplacian u + Q(x,y,t),
+\]
+\[
+u(x,y,0) = f(x,y),\quad \pd{u}{t}(x,y,0) = 0,
+\]
+if the membrane is
+\begin{enumerate}
+\item[(a)] a rectangle ($0 < x < L$, $0 < y < H$)
+\item[(b)] a circle ($r < a$)
+\item[\starred(c)] a semicircle ($0 < \theta < \pi$, $r < a$)
+\item[(d)] a circular annulus ($a < r < b$)
+\end{enumerate}
+
+\item Consider the displacement $u(r,\theta,t)$ of a forced semicircular membrane of radius $\alpha$ (Fig.~8.5.1) that satisfies the partial differential equation
+\[
+\frac{1}{c^2}\pdd{u}{t} = \frac{1}{r}\frac{\partial}{\partial r}\left(r\pd{u}{r}\right) + \frac{1}{r^2}\pdd{u}{\theta} + g(r,\theta,t),
+\]
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch08/fig_8_5_1.png}
+\caption{}
+\label{fig:8.5.1}
+\end{figure}
+
+with the homogeneous boundary conditions:
+\[
+u(r,0,t) = 0,\quad u(r,\pi,t) = 0,\quad\text{and}\quad \pd{u}{r}(\alpha,\theta,t) = 0
+\]
+and the initial conditions
+\[
+u(r,\theta,0) = H(r,\theta) \quad\text{and}\quad \pd{u}{t}(r,\theta,0) = 0.
+\]
+\begin{enumerate}
+\item[\starred(a)] Assume that $u(r,\theta,t) = \sum\sum a(t)\,\phi(r,\theta)$, where $\phi(r,\theta)$ are the eigenfunctions of the related homogeneous problem.  What initial conditions does $a(t)$ satisfy?  What differential equation does $a(t)$ satisfy?
+\item[(b)] What are the eigenfunctions?
+\item[(c)] Solve for $u(r,\theta,t)$.  (\textit{Hint:} See Exercise~8.5.1.)
+\end{enumerate}
+
+\end{exercises}

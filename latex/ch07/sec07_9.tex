@@ -1,0 +1,410 @@
+% sec07_9.tex — Section 7.9: Laplace's Equation in a Circular Cylinder
+\section{Laplace's Equation in a Circular Cylinder}
+\label{sec:7.9}
+
+\subsection{Introduction}
+\label{sec:7.9.1}
+
+Laplace's equation,
+\begin{equation}
+\laplacian u = 0,
+\label{eq:7.9.1}
+\end{equation}
+represents the steady-state heat equation (without sources).  We have solved Laplace's equation in a rectangle (Sec.~2.5.1) and Laplace's equation in a circle (Sec.~2.5.2).  In both cases, when variables were separated, oscillations occur in one direction, but not in the other.  Laplace's equation in a rectangular box can also be solved by the method of separation of variables.  As shown in some exercises in Chapter~7, the three independent variables yield two eigenvalue problems that have oscillatory solutions and solutions in one direction that are not oscillatory.
+
+A more interesting problem is to consider Laplace's equation in a circular cylinder of radius $a$ and height $H$.  Using circular cylindrical coordinates,
+\[
+\begin{aligned}
+x &= r\cos\theta \\
+y &= r\sin\theta \\
+z &= z,
+\end{aligned}
+\]
+Laplace's equation is
+\begin{equation}
+\frac{1}{r}\frac{\partial}{\partial r}\left(r\pd{u}{r}\right) + \frac{1}{r^2}\pdd{u}{\theta} + \pdd{u}{z} = 0.
+\label{eq:7.9.2}
+\end{equation}
+We prescribe $u$ (perhaps temperature) on the entire boundary of the cylinder:
+\[
+\begin{aligned}
+\text{top:} &\quad u(r,\theta,H) = \beta(r,\theta) \\
+\text{bottom:} &\quad u(r,\theta,0) = \alpha(r,\theta) \\
+\text{lateral side:} &\quad u(a,\theta,z) = \gamma(\theta,z).
+\end{aligned}
+\]
+There are three nonhomogeneous boundary conditions.  One approach is to break the problem up into the sum of three simpler problems, each solving Laplace's equation,
+\[
+\laplacian u_i = 0, \quad i = 1, 2, 3,
+\]
+where $u = u_1 + u_2 + u_3$.  This is illustrated in Fig.~7.9.1.  In this way each problem satisfies two homogeneous boundary conditions, but the sum satisfies the desired nonhomogeneous conditions.  We separate variables once, for all three cases, and then proceed to solve each problem individually.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch07/fig_7_9_1.png}
+\caption{Laplace's equation in a circular cylinder.}
+\label{fig:7.9.1}
+\end{figure}
+
+\subsection{Separation of Variables}
+\label{sec:7.9.2}
+
+We begin by looking for product solutions,
+\begin{equation}
+u(r,\theta,z) = f(r)g(\theta)h(z),
+\label{eq:7.9.3}
+\end{equation}
+for Laplace's equation.  Substituting \eqref{eq:7.9.3} into \eqref{eq:7.9.2} and dividing by $f(r)g(\theta)h(z)$ yields
+\begin{equation}
+\frac{1}{rf}\frac{d}{d r}\left(r\od{f}{r}\right) + \frac{1}{r^2}\frac{1}{g}\odd{g}{\theta} + \frac{1}{h}\odd{h}{z} = 0.
+\label{eq:7.9.4}
+\end{equation}
+We immediately can separate the $z$-dependence and hence
+\begin{equation}
+\frac{1}{h}\odd{h}{z} = \lambda.
+\label{eq:7.9.5}
+\end{equation}
+Do we expect oscillations in $z$?  From Fig.~7.9.1 we see that oscillations in $z$ should be expected for the $u_3$-problem but not necessarily for the $u_1$- or $u_2$-problem.  Perhaps $\lambda < 0$ for the $u_3$-problem, there are two homogeneous boundary conditions in $z$, and thus \eqref{eq:7.9.8} will become an eigenvalue problem [and \eqref{eq:7.9.9} will have nonoscillatory solutions].  However, for the $u_1$- and $u_2$-problems there do not exist two homogeneous boundary conditions in $z$.  Instead, there should be two homogeneous boundary conditions in $r$.  One of these is at $r = a$, which occurs due to the singular nature of polar (or circular cylindrical) coordinates at $r = 0$ and the singular nature of \eqref{eq:7.9.9} at $r = 0$:
+\begin{equation}
+|f(0)| < \infty.
+\label{eq:7.9.10}
+\end{equation}
+Thus, we will find that for the $u_1$- and $u_2$-problems, \eqref{eq:7.9.9} will be the eigenvalue problem.  The solution of \eqref{eq:7.9.9} will oscillate, whereas the solution of \eqref{eq:7.9.8} will not oscillate.  We next describe the details of all three problems.
+
+We do not specify $\lambda$ at this time.  The $r$ and $\theta$ parts also can be separated if \eqref{eq:7.9.4} is multiplied by $r^2$ [and \eqref{eq:7.9.5} is utilized]:
+\begin{equation}
+\frac{r}{f}\frac{d}{d r}\left(r\od{f}{r}\right) + \lambda r^2 = -\frac{1}{g}\odd{g}{\theta} = \mu.
+\label{eq:7.9.6}
+\end{equation}
+A second separation constant $\mu$ is introduced, with the anticipation that $\mu > 0$ because of the expected oscillations in $\theta$.  In fact, the implied periodic boundary conditions in $\theta$ for all three problems dictate that
+\begin{equation}
+\mu = m^2,
+\label{eq:7.9.7}
+\end{equation}
+and that $g(\theta)$ can be either $\sin m\theta$ or $\cos m\theta$, where $m$ is a nonnegative integer, $m = 0, 1, 2, \ldots\;$.  A Fourier series in $\theta$ will be appropriate for all these problems.
+
+In summary, the $\theta$-dependence is $\sin m\theta$ and $\cos m\theta$, and the remaining two differential equations are
+\begin{equation}
+\boxed{\odd{h}{z} = \lambda h}
+\label{eq:7.9.8}
+\end{equation}
+\begin{equation}
+r\frac{d}{d r}\left(r\od{f}{r}\right) + (\lambda r^2 - m^2)\,f = 0.
+\label{eq:7.9.9}
+\end{equation}
+These two differential equations contain only one unspecified parameter $\lambda$.  Only one will become an eigenvalue problem.  The eigenvalue problem needs two homogeneous boundary conditions.  Different results occur for the various problems, $u_1$, $u_2$, and $u_3$.  For the $u_3$-problem, there are two homogeneous boundary conditions in $z$, and thus \eqref{eq:7.9.8} will become an eigenvalue problem.  The $r$-dependent equation will then have nonoscillatory solutions.  However, for the $u_1$- and $u_2$-problems there do not exist two homogeneous boundary conditions in $z$.  Instead, there should be two homogeneous boundary conditions in $r$.
+
+\subsection{Zero Temperature on the Lateral Sides and on the Bottom or Top}
+\label{sec:7.9.3}
+
+The mathematical problem for $u_1$ is
+\begin{equation}
+\boxed{\laplacian u_1 = 0}
+\label{eq:7.9.11}
+\end{equation}
+\begin{equation}
+\boxed{u_1(r,\theta,0) = 0}
+\label{eq:7.9.12}
+\end{equation}
+\begin{equation}
+\boxed{u_1(r,\theta,H) = \beta(r,\theta)}
+\label{eq:7.9.13}
+\end{equation}
+\begin{equation}
+\boxed{u_1(a,\theta,z) = 0.}
+\label{eq:7.9.14}
+\end{equation}
+
+The temperature is zero on the bottom.  By separation of variables in which the nonhomogeneous condition \eqref{eq:7.9.13} is momentarily ignored, $u_1 = f(r)g(\theta)h(z)$.  The $z$-dependent equation, \eqref{eq:7.9.8}, satisfies only one homogeneous condition, $h(0) = 0$.  The $r$-dependent equation will become a boundary value problem determining the separation constant $\lambda$.  The two boundary conditions are
+\begin{equation}
+f(a) = 0
+\label{eq:7.9.15}
+\end{equation}
+\begin{equation}
+|f(0)| < \infty.
+\label{eq:7.9.16}
+\end{equation}
+The eigenvalue problem, \eqref{eq:7.9.9} with \eqref{eq:7.9.15} and \eqref{eq:7.9.16}, is one that was analyzed in Sec.~7.8.  There we showed that $\lambda > 0$ (by directly using the Rayleigh quotient).
+
+Furthermore, we showed that the general solution of \eqref{eq:7.9.9} is a linear combination of Bessel functions of order $m$ with argument $\sqrt{\lambda}\,r$:
+\begin{equation}
+f(r) = c_1 J_m\left(\sqrt{\lambda}\,r\right) + c_2 Y_m\left(\sqrt{\lambda}\,r\right) = c_1 J_m\left(\sqrt{\lambda}\,r\right),
+\label{eq:7.9.17}
+\end{equation}
+which has been simplified using the singularity condition, \eqref{eq:7.9.16}.  Then the homogeneous condition, \eqref{eq:7.9.15}, determines $\lambda$:
+\begin{equation}
+\boxed{J_m\left(\sqrt{\lambda}\,a\right) = 0.}
+\label{eq:7.9.18}
+\end{equation}
+Again $\sqrt{\lambda}\,a$ must be a zero of the $m$th Bessel function, and the notation $\lambda_{mn}$ is used to indicate the infinite number of eigenvalues for each $m$.  The eigenfunction $J_m\left(\sqrt{\lambda_{mn}}\,r\right)$ oscillates in $r$.
+
+Since $\lambda > 0$, the solution of \eqref{eq:7.9.8} that satisfies $h(0) = 0$ is proportional to
+\begin{equation}
+h(z) = \sinh\sqrt{\lambda}\,z.
+\label{eq:7.9.19}
+\end{equation}
+No oscillations occur in the $z$-direction.  There are thus two doubly infinite families of product solutions:
+\begin{equation}
+\sinh\sqrt{\lambda_{mn}}\,z\;J_m\left(\sqrt{\lambda_{mn}}\,r\right)
+\begin{Bmatrix} \sin m\theta \\ \cos m\theta \end{Bmatrix},
+\label{eq:7.9.20}
+\end{equation}
+oscillatory in $r$ and $\theta$, but nonoscillatory in $z$.  The principle of superposition implies that we should consider
+\begin{equation}
+\boxed{\begin{aligned}
+u(r,\theta,z) &= \sum_{m=0}^{\infty}\sum_{n=1}^{\infty} A_{mn}\sinh\sqrt{\lambda_{mn}}\,z\;J_m\left(\sqrt{\lambda_{mn}}\,r\right)\cos m\theta \\
+&\quad + \sum_{m=1}^{\infty}\sum_{n=1}^{\infty} B_{mn}\sinh\sqrt{\lambda_{mn}}\,z\;J_m\left(\sqrt{\lambda_{mn}}\,r\right)\sin m\theta.
+\end{aligned}}
+\label{eq:7.9.21}
+\end{equation}
+
+The nonhomogeneous boundary condition, \eqref{eq:7.9.13}, $u_1(r,\theta,H) = \beta(r,\theta)$, will determine the coefficients $A_{mn}$ and $B_{mn}$.  It will involve a Fourier series in $\theta$ and a Fourier-Bessel series in $r$.  Thus we can solve $A_{mn}$ and $B_{mn}$ using the two one-dimensional orthogonality formulas.  Alternatively, the coefficients are more easily calculated using the two-dimensional orthogonality of $J_m\left(\sqrt{\lambda_{mn}}\,r\right)\cos m\theta$ and $J_m\left(\sqrt{\lambda_{mn}}\,r\right)\sin m\theta$ (see Sec.~7.8).  We omit the details.
+
+In a similar manner, one can obtain $u_2$.  We leave as an exercise the solution of this problem.
+
+\subsection{Zero Temperature on the Top and Bottom}
+\label{sec:7.9.4}
+
+A somewhat different mathematical problem arises if we consider the situation in which the top and bottom are held at zero temperature.  The problem for $u_3$ is
+\begin{equation}
+\boxed{\laplacian u_3 = 0}
+\label{eq:7.9.22}
+\end{equation}
+\begin{equation}
+\boxed{u_3(r,\theta,0) = 0}
+\label{eq:7.9.23}
+\end{equation}
+\begin{equation}
+\boxed{u_3(r,\theta,H) = 0}
+\label{eq:7.9.24}
+\end{equation}
+\begin{equation}
+\boxed{u_3(a,\theta,z) = \gamma(\theta,z).}
+\label{eq:7.9.25}
+\end{equation}
+
+We may again use the results of the method of separation of variables.  The periodicity again implies that the $\theta$-part will relate to a Fourier series (i.e., $\sin m\theta$ and $\cos m\theta$).  However, unlike Sec.~7.9.3, the $z$-equation has two homogeneous boundary conditions:
+\begin{equation}
+\boxed{\odd{h}{z} = \lambda h}
+\label{eq:7.9.26}
+\end{equation}
+\begin{equation}
+\boxed{h(0) = 0}
+\label{eq:7.9.27}
+\end{equation}
+\begin{equation}
+\boxed{h(H) = 0.}
+\label{eq:7.9.28}
+\end{equation}
+This is the simplest Sturm-Liouville eigenvalue problem (in a somewhat different form).  In order for $h(z)$ to oscillate and satisfy \eqref{eq:7.9.27} and \eqref{eq:7.9.28}, the separation constant $\lambda$ must be negative.  In fact, we should recognize that
+\begin{equation}
+\lambda = -\left(\frac{n\pi}{H}\right)^2, \quad n = 1, 2, \ldots
+\label{eq:7.9.29}
+\end{equation}
+\begin{equation}
+h(z) = \sin\frac{n\pi z}{H}.
+\label{eq:7.9.30}
+\end{equation}
+The boundary conditions at top and bottom imply that we will be using an ordinary Fourier sine series in $z$.
+
+We have oscillations in $z$ and $\theta$.  The $r$-dependent solution should not be oscillatory; they satisfy \eqref{eq:7.9.9}, which using \eqref{eq:7.9.29} becomes
+\begin{equation}
+\boxed{r\frac{d}{d r}\left(r\od{f}{r}\right) + \left(-\left(\frac{n\pi}{H}\right)^2 r^2 - m^2\right)f = 0.}
+\label{eq:7.9.31}
+\end{equation}
+A homogeneous condition, in the form of a singularity condition, exists at $r = 0$,
+\begin{equation}
+|f(0)| < \infty,
+\label{eq:7.9.32}
+\end{equation}
+but there is no homogeneous condition at $r = a$.
+
+Equation \eqref{eq:7.9.31} looks similar to Bessel's differential equation but has the wrong sign in front of the $r^2$ term.  It cannot be changed into Bessel's differential equation using a real transformation.  If we let
+\begin{equation}
+s = i\left(\frac{n\pi}{H}\right)r
+\label{eq:7.9.33}
+\end{equation}
+where $i = \sqrt{-1}$, then \eqref{eq:7.9.31} becomes
+\[
+s\frac{d}{d s}\left(s\od{f}{s}\right) + (s^2 - m^2)f = 0 \quad\text{or}\quad s^2\odd{f}{s} + s\od{f}{s} + (s^2 - m^2)f = 0.
+\]
+We recognize this as exactly Bessel's differential equation, and thus
+\begin{equation}
+f = c_1 J_m(s) + c_2 Y(s) \quad\text{or}\quad f = c_1 J_m\left(i\frac{n\pi}{H}r\right) + c_2 Y_m\left(i\frac{n\pi}{H}r\right).
+\label{eq:7.9.34}
+\end{equation}
+Therefore, the solution of \eqref{eq:7.9.31} can be represented in terms of Bessel functions of an imaginary argument.  This is not very useful since Bessel functions are not usually tabulated in this form.
+
+Instead, we introduce a real transformation that eliminates the dependence on $n\pi/H$ of the differential equation:
+\[
+w = \frac{n\pi}{H}\,r.
+\]
+Then \eqref{eq:7.9.31} becomes
+\begin{equation}
+\boxed{w^2\odd{f}{w} + w\od{f}{w} + (-w^2 - m^2)\,f = 0.}
+\label{eq:7.9.35}
+\end{equation}
+Again the wrong sign appears for this to be Bessel's differential equation.  Equation \eqref{eq:7.9.35} is a modification of Bessel's differential equation, and its solutions, \emph{which have been well tabulated}, are known as \textbf{modified Bessel functions}.
+
+Equation \eqref{eq:7.9.35} has the same kind of singularity at $w = 0$ as Bessel's differential equation.  As such, the singular behavior could be determined by the method of Frobenius.  Thus, we can specify \emph{one solution to be well defined at} $w = 0$, called \textbf{the modified Bessel function of order} $m$ \textbf{of the first kind}, denoted $I_m(w)$.  Another independent solution, which is \emph{singular at the origin, is called the modified Bessel function of order} $m$ \textbf{of the second kind}, denoted $K_m(w)$.  Both $I_m(w)$ and $K_m(w)$ are well-tabulated functions.  We will need very little knowledge concerning $I_m(w)$ and $K_m(w)$.  The general solution of \eqref{eq:7.9.31} is thus
+\begin{equation}
+f = c_1 K_m\left(\frac{n\pi}{H}r\right) + c_2 I_m\left(\frac{n\pi}{H}r\right).
+\label{eq:7.9.36}
+\end{equation}
+Since $K_m$ is singular at $r = 0$ and $I_m$ is not, it follows that $c_1 = 0$ and $f(r)$ is proportional to $I_m(n\pi r/H)$.  We simply note that both $I_m(w)$ and $K_m(w)$ are nonoscillatory and are not zero for $w > 0$.  A discussion of this and further properties are given in Sec.~7.9.5.
+
+There are two doubly infinite families of product solutions:
+\begin{equation}
+I_m\left(\frac{n\pi}{H}r\right)\sin\frac{n\pi z}{H}
+\begin{Bmatrix} \sin m\theta \\ \cos m\theta \end{Bmatrix}.
+\label{eq:7.9.37}
+\end{equation}
+These solutions are oscillatory in $z$ and $\theta$, but nonoscillatory in $r$.  The principle of superposition, equivalent to a Fourier sine series in $z$ and a Fourier series in $\theta$, implies that
+\begin{equation}
+\boxed{\begin{aligned}
+u_3(r,\theta,z) &= \sum_{m=0}^{\infty}\sum_{n=1}^{\infty} E_{mn}\,I_m\left(\frac{n\pi}{H}r\right)\sin\frac{n\pi z}{H}\cos m\theta \\
+&\quad + \sum_{m=1}^{\infty}\sum_{n=1}^{\infty} F_{mn}\,I_m\left(\frac{n\pi}{H}r\right)\sin\frac{n\pi z}{H}\sin m\theta.
+\end{aligned}}
+\label{eq:7.9.38}
+\end{equation}
+The coefficients $E_{mn}$ and $F_{mn}$ can be determined [if $I_m(n\pi a/H) \neq 0$] from the nonhomogeneous equation \eqref{eq:7.9.25} either by two iterated one-dimensional orthogonality results or by one application of two-dimensional orthogonality.  We omit the details.
+
+In this way the solution for Laplace's equation inside a circular cylinder has been determined given any temperature distribution along the entire boundary.
+
+\subsection{Modified Bessel Functions}
+\label{sec:7.9.5}
+
+The differential equation that defines the modified Bessel functions is
+\begin{equation}
+w^2\odd{f}{w} + w\od{f}{w} + (-w^2 - m^2)\,f = 0.
+\label{eq:7.9.39}
+\end{equation}
+Two independent solutions are denoted $K_m(w)$ and $I_m(w)$.  The behavior in the neighborhood of the singular point $w = 0$ is determined by the roots of the indicial equation, $\pm m$, corresponding to approximate solutions near $w = 0$ of the forms $w^{\pm m}$ (for $m \neq 0$) and $w^0$ and $w^0\ln w$ (for $m = 0$).  We can choose the two independent solutions such that one is well behaved at $w = 0$ and the other singular.
+
+A good understanding of these functions comes from also analyzing their behavior as $w \to \infty$.  Roughly speaking, for large $w$ \eqref{eq:7.9.39} can be rewritten as
+\begin{equation}
+\odd{f}{w} \approx -\frac{1}{w}\od{f}{w} + f.
+\label{eq:7.9.40}
+\end{equation}
+Thinking of this as Newton's law for a particle with certain forces, the $-1/w\,df/dw$ term is a weak damping force tending to vanish as $w \to \infty$.  We might expect as $w \to \infty$ that
+\[
+\odd{f}{w} \approx f,
+\]
+which suggests that the solution should be a linear combination of an exponentially growing $e^w$ and exponentially decaying $e^{-w}$ term.  In fact, the weak damping has its effects (just as it did for ordinary Bessel functions).  We state (but do not prove) a more advanced result, namely that the asymptotic behavior for large $w$ of solutions of \eqref{eq:7.9.39} are approximately $e^{\pm w}/w^{1/2}$.  Thus, both $I_m(w)$ and $K_m(w)$ are linear combinations of these two, one exponentially growing and the other decaying.
+
+There is only one independent linear combination that decays as $w \to \infty$.  We \emph{define} $K_m(w)$ to be a solution that decays as $w \to \infty$.  It must be proportional to $e^{-w}/w^{1/2}$ and it is defined \emph{uniquely} by
+\begin{equation}
+\boxed{K_m(w) \sim \sqrt{\frac{\pi}{2}}\frac{e^{-w}}{w^{1/2}},}
+\label{eq:7.9.41}
+\end{equation}
+as $w \to \infty$.  As $w \to 0$ the behavior of $K_m(w)$ will be some linear combination of the two different behaviors (e.g., $w^m$ and $w^{-m}$ for $m \neq 0$).  In general, it will be composed of both and hence will be singular at $w = 0$.  In more advanced treatments it is shown that
+\begin{equation}
+\boxed{K_m(w) \sim \begin{cases} \ln w & m = 0 \\ \frac{1}{2}(m-1)!(\frac{1}{2}w)^{-m} & m \neq 0, \end{cases}}
+\label{eq:7.9.42}
+\end{equation}
+as $w \to 0$.  The most important facts about this function is that \textbf{the} $K_m(w)$ \textbf{exponentially decays as} $w \to \infty$ \textbf{but is singular at} $w = 0$.
+
+Since $K_m(w)$ is singular at $w = 0$, we would like to define a second solution $I_m(w)$ not singular at $w = 0$.  $I_m(w)$ is \emph{defined} uniquely such that
+\begin{equation}
+\boxed{I_m(w) \sim \frac{1}{m!}\left(\frac{1}{2}w\right)^m,}
+\label{eq:7.9.43}
+\end{equation}
+as $w \to 0$.  The most important facts about this function is that $I_m(w)$ \textbf{is well behaved at} $w = 0$ \textbf{but grows exponentially as} $w \to \infty$.
+
+As $w \to \infty$, the behavior of $I_m(w)$ will be some linear combination of the two different asymptotic behaviors ($e^{\pm w}/w^{1/2}$).  In general, it will be composed of both and hence is expected to exponentially grow as $w \to \infty$.  In more advanced works, it is shown that
+\begin{equation}
+\boxed{I_m(w) \sim \sqrt{\frac{1}{2\pi w}}\,e^w,}
+\label{eq:7.9.44}
+\end{equation}
+as $w \to \infty$.  The most important facts about this function is that $I_m(w)$ \textbf{is well behaved at} $w = 0$ \textbf{but grows exponentially as} $w \to \infty$.
+
+Some modified Bessel functions are sketched in Fig.~7.9.2.  Although we have not proved it, note that both $I_m(w)$ and $K_m(w)$ are not zero for $w > 0$.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch07/fig_7_9_2.png}
+\caption{Various modified Bessel functions (from Abramowitz and Stegun [1974]).}
+\label{fig:7.9.2}
+\end{figure}
+
+\begin{exercises}{7.9}
+
+\item Solve Laplace's equation inside a circular cylinder subject to the boundary conditions
+
+\begin{enumerate}
+\item[(a)] $u(r,\theta,0) = \alpha(r,\theta)$, \quad $u(r,\theta,H) = 0$, \quad $u(a,\theta,z) = 0$
+
+\item[\starred(b)] $u(r,\theta,0) = \alpha(r)\sin 7\theta$, \quad $u(r,\theta,H) = 0$, \quad $u(a,\theta,z) = 0$
+
+\item[(c)] $u(r,\theta,0) = 0$, \quad $u(r,\theta,H) = \beta(r)\cos 3\theta$, \quad $u(a,\theta,z) = 0$
+
+\item[(d)] $\pd{u}{z}(r,\theta,0) = \alpha(r)\sin 3\theta$, \quad $\pd{u}{z}(r,\theta,H) = 0$, \quad $\pd{u}{r}(a,\theta,z) = 0$
+
+\item[(e)] $\pd{u}{z}(r,\theta,0) = \alpha(r,\theta)$, \quad $\pd{u}{z}(r,\theta,H) = 0$, \quad $\pd{u}{r}(a,\theta,z) = 0$
+
+For (e) only, under what condition does a solution exist?
+\end{enumerate}
+
+\item Solve Laplace's equation inside a semicircular cylinder, subject to the boundary conditions
+
+\begin{enumerate}
+\item[(a)] $u(r,\theta,0) = 0$, \quad $u(r,\theta,H) = \alpha(r,\theta)$, \quad $u(r,0,z) = 0$, \\
+$u(r,\pi,z) = 0$, \quad $u(a,\theta,z) = 0$
+
+\item[\starred(b)] $u(r,\theta,0) = 0$, \quad $\pd{u}{z}(r,\theta,H) = 0$, \quad $u(r,0,z) = 0$, \\
+$u(r,\pi,z) = 0$, \quad $u(a,\theta,z) = \beta(\theta,z)$
+
+\item[(c)] $\pd{u}{z}u(r,\theta,0) = 0$, \quad $\pd{u}{z}(r,\theta,H) = 0$, \quad $\pd{u}{\theta}(r,0,z) = 0$, \\
+$\pd{u}{\theta}(r,\pi,z) = 0$, \quad $\pd{u}{r}(a,\theta,z) = \beta(\theta,z)$
+
+For (c) only, under what condition does a solution exist?
+
+\item[(d)] $u(r,\theta,0) = 0$, \quad $u(r,0,z) = 0$, \quad $u(r,\theta,H) = 0$, \\
+$\pd{u}{\theta}(r,\pi,z) = \alpha(r,z)$
+\end{enumerate}
+
+\item Solve the heat equation
+\[
+\pd{u}{t} = k\laplacian u
+\]
+inside a quarter-circular cylinder ($0 < \theta < \pi/2$ with radius $a$ and height $H$) subject to the initial condition
+\[
+u(r,\theta,z,0) = f(r,\theta,z).
+\]
+Briefly explain what temperature distribution you expect to be approached as $t \to \infty$.  Consider the following boundary conditions
+
+\begin{enumerate}
+\item[(a)] $u(r,\theta,0) = 0$, \quad $u(r,\theta,H) = 0$, \quad $u(r,0,z) = 0$, \\
+$u(r,\pi/2,z) = 0$, \quad $u(a,\theta,z) = 0$
+
+\item[\starred(b)] $\pd{u}{z}(r,\theta,0) = 0$, \quad $\pd{u}{z}(r,\theta,H) = 0$, \quad $\pd{u}{\theta}(r,0,z) = 0$, \\
+$\pd{u}{\theta}(r,\pi/2,z) = 0$, \quad $\pd{u}{r}(a,\theta,z) = 0$
+
+\item[(c)] $u(r,\theta,0) = 0$, \quad $u(r,\theta,H) = 0$, \quad $\pd{u}{\theta}(r,0,z) = 0$, \\
+$u(r,\pi/2,z) = 0$, \quad $\pd{u}{r}(a,\theta,z) = 0$
+\end{enumerate}
+
+\item Solve the heat equation
+\[
+\pd{u}{t} = k\laplacian u
+\]
+inside a cylinder (of radius $a$ and height $H$) subject to the initial condition,
+\[
+u(r,\theta,z,0) = f(r,z),
+\]
+independent of $\theta$, if the boundary conditions are
+
+\begin{enumerate}
+\item[\starred(a)] $u(r,\theta,0,t) = 0$, \quad $u(r,\theta,H,t) = 0$, \quad $u(a,\theta,z,t) = 0$
+
+\item[(b)] $\pd{u}{z}(r,\theta,0,t) = 0$, \quad $\pd{u}{z}(r,\theta,H,t) = 0$, \quad $\pd{u}{r}(a,\theta,z,t) = 0$
+
+\item[(c)] $u(r,\theta,0,t) = 0$, \quad $u(r,\theta,H,t) = 0$, \quad $\pd{u}{r}(a,\theta,z,t) = 0$
+\end{enumerate}
+
+\item Determine the three ordinary differential equations obtained by separation of variables for Laplace's equation in spherical coordinates
+\[
+0 = \frac{\partial}{\partial \rho}\left(\rho^2\pd{u}{\rho}\right) + \frac{1}{\sin\phi}\frac{\partial}{\partial \phi}\left(\sin\phi\pd{u}{\phi}\right) + \frac{1}{\sin^2\phi}\pdd{u}{\theta}.
+\]
+
+\end{exercises}

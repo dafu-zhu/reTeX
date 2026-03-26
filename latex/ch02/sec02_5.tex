@@ -1,0 +1,615 @@
+% sec02_5.tex — Section 2.5: Laplace's Equation: Solutions and Qualitative Properties
+\section{Laplace's Equation: Solutions and Qualitative Properties}
+\label{sec:2.5}
+
+\subsection{Laplace's Equation Inside a Rectangle}
+\label{sec:2.5.1}
+
+In order to obtain more practice, we consider a different kind of problem that can be analyzed by the method of separation of variables. We consider steady-state heat conduction in a two-dimensional region. To be specific, consider the equilibrium temperature inside a rectangle ($0 \le x \le L$, $0 \le y \le H$) when the temperature is a prescribed function of position (independent of time) on the boundary. The equilibrium temperature $u(x,y)$ satisfies Laplace's equation with the following boundary conditions:
+\begin{equation}
+\label{eq:2.5.1}
+\text{PDE:}\quad \boxed{\pdd{u}{x} + \pdd{u}{y} = 0}
+\end{equation}
+\begin{equation}
+\label{eq:2.5.2}
+\text{BC1:}\quad \boxed{u(0,y) = g_1(y)}
+\end{equation}
+\begin{equation}
+\label{eq:2.5.3}
+\text{BC2:}\quad \boxed{u(L,y) = g_2(y)}
+\end{equation}
+\begin{equation}
+\label{eq:2.5.4}
+\text{BC3:}\quad \boxed{u(x,0) = f_1(x)}
+\end{equation}
+\begin{equation}
+\label{eq:2.5.5}
+\text{BC4:}\quad \boxed{u(x,H) = f_2(x),}
+\end{equation}
+where $f_1(x)$, $f_2(x)$, $g_1(y)$, and $g_2(y)$ are given functions of $x$ and $y$, respectively. Here the partial differential equation is linear and homogeneous, but the boundary conditions, although linear, are not homogeneous. We will not be able to apply the method of separation of variables to this problem in its present form, because when we separate variables the boundary value problem (determining the separation constant) must have homogeneous boundary conditions. In this example all the boundary conditions are nonhomogeneous. We can get around this difficulty by noting that the original problem is nonhomogeneous due to the four nonhomogeneous boundary conditions. The idea behind the principle of superposition can be used sometimes for nonhomogeneous problems (see Exercise~2.2.4). We break our problem into four problems each having one nonhomogeneous condition. We let
+\begin{equation}
+\label{eq:2.5.6}
+u(x,y) = u_1(x,y) + u_2(x,y) + u_3(x,y) + u_4(x,y),
+\end{equation}
+where each $u_i(x,y)$ satisfies Laplace's equation with one nonhomogeneous boundary condition and the related three homogeneous boundary conditions, as diagrammed in Fig.~2.5.1.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch02/fig_2_5_1.png}
+\caption{Laplace's equation inside a rectangle.}
+\label{fig:2.5.1}
+\end{figure}
+
+Instead of directly solving for $u$, we will indicate how to solve for $u_1$, $u_2$, $u_3$, and $u_4$. Why does the sum satisfy our problem? We check to see that the PDE and the four nonhomogeneous BCs will be satisfied. Since $u_1$, $u_2$, $u_3$, and $u_4$ satisfy Laplace's equation, which is linear and homogeneous, $u \equiv u_1 + u_2 + u_3 + u_4$ also satisfies the same linear and homogeneous PDE by the principle of superposition. At $x = 0$, $u_1 = 0$, $u_2 = 0$, $u_3 = 0$, and $u_4 = g_1(y)$. Therefore, at $x = 0$, $u = u_1 + u_2 + u_3 + u_4 = g_1(y)$, the desired nonhomogeneous condition. In a similar manner we can check that all four nonhomogeneous conditions have been satisfied.
+
+The method to solve for any of the $u_i(x,y)$ is the same: Only certain details differ. We will only solve for $u_4(x,y)$, and leave the rest for the Exercises:
+\begin{equation}
+\label{eq:2.5.7}
+\text{PDE:}\quad \boxed{\pdd{u_4}{x} + \pdd{u_4}{y} = 0}
+\end{equation}
+\begin{equation}
+\label{eq:2.5.8}
+\text{BC1:}\quad \boxed{u_4(0,y) = g_1(y)}
+\end{equation}
+\begin{equation}
+\label{eq:2.5.9}
+\text{BC2:}\quad \boxed{u_4(L,y) = 0}
+\end{equation}
+\begin{equation}
+\label{eq:2.5.10}
+\text{BC3:}\quad \boxed{u_4(x,0) = 0}
+\end{equation}
+\begin{equation}
+\label{eq:2.5.11}
+\text{BC4:}\quad \boxed{u_4(x,H) = 0.}
+\end{equation}
+
+We propose to solve this problem by the method of separation of variables. We begin by ignoring the nonhomogeneous condition $u_4(0,y) = g_1(y)$. Eventually, we will add together product solutions to synthesize $g_1(y)$. We look for product solutions
+\begin{equation}
+\label{eq:2.5.12}
+u_4(x,y) = h(x)\phi(y).
+\end{equation}
+From the three homogeneous boundary conditions, we see that
+\begin{equation}
+\label{eq:2.5.13}
+h(L) = 0
+\end{equation}
+\begin{equation}
+\label{eq:2.5.14}
+\phi(0) = 0
+\end{equation}
+\begin{equation}
+\label{eq:2.5.15}
+\phi(H) = 0.
+\end{equation}
+Thus, the $y$-dependent solution $\phi(y)$ has two homogeneous boundary conditions, whereas the $x$-dependent solution has only one. If \eqref{eq:2.5.12} is substituted into Laplace's equation, we obtain
+\[
+\phi(y)\odd{h}{x} + h(x)\odd{\phi}{y} = 0.
+\]
+The variables can be separated by dividing by $h(x)\phi(y)$, so that
+\begin{equation}
+\label{eq:2.5.16}
+\frac{1}{h}\odd{h}{x} = -\frac{1}{\phi}\odd{\phi}{y}.
+\end{equation}
+The left-hand side is only a function of $x$, while the right-hand side is only a function of $y$. Both must equal a separation constant. Do we want to use $-\lambda$ or $\lambda$? One will be more convenient. If the separation constant is negative (as it was before), \eqref{eq:2.5.16} implies that $h(x)$ oscillates and $\phi(y)$ is composed of exponentials. This seems doubtful, since the homogeneous boundary conditions \eqref{eq:2.5.13}--\eqref{eq:2.5.15} show that the $y$-dependent solution satisfies two homogeneous boundary conditions; $\phi(y)$ must be zero at $y = 0$ and at $y = H$. Exponentials in $y$ are not expected to work. On the other hand, if the separation constant is positive, \eqref{eq:2.5.16} implies that $h(x)$ is composed of exponentials and $\phi(y)$ oscillates. This seems more reasonable, and we thus introduce the separation constant $\lambda$ (but we do \emph{not} assume $\lambda \ge 0$):
+\begin{equation}
+\label{eq:2.5.17}
+\frac{1}{h}\odd{h}{x} = -\frac{1}{\phi}\odd{\phi}{y} = \lambda.
+\end{equation}
+This results in two ordinary differential equations:
+\begin{align*}
+\odd{h}{x} &= \lambda h \\[4pt]
+\odd{\phi}{y} &= -\lambda\phi.
+\end{align*}
+The $x$-dependent problem is \emph{not} a boundary value problem, since it does not have two homogeneous boundary conditions:
+\begin{equation}
+\label{eq:2.5.18}
+\boxed{\odd{h}{x} = \lambda h}
+\end{equation}
+\begin{equation}
+\label{eq:2.5.19}
+\boxed{h(L) = 0.}
+\end{equation}
+
+However, the $y$-dependent problem is a boundary value problem and will be used to determine the eigenvalues $\lambda$ (separation constants):
+\begin{equation}
+\label{eq:2.5.20}
+\boxed{\odd{\phi}{y} = -\lambda\phi}
+\end{equation}
+\begin{equation}
+\label{eq:2.5.21}
+\boxed{\phi(0) = 0}
+\end{equation}
+\begin{equation}
+\label{eq:2.5.22}
+\boxed{\phi(H) = 0.}
+\end{equation}
+
+This boundary value problem is one that has arisen before, but here the length of the interval is $H$. All the eigenvalues are positive, $\lambda > 0$. Furthermore, the condition $\phi(H) = 0$ implies that
+\begin{equation}
+\label{eq:2.5.23}
+\boxed{\begin{aligned}
+\lambda &= \left(\frac{n\pi}{H}\right)^2 \\[4pt]
+\phi(y) &= \sin\frac{n\pi y}{H}
+\end{aligned}}
+\qquad n = 1, 2, 3, \ldots.
+\end{equation}
+
+To obtain product solutions we now must solve \eqref{eq:2.5.18} with \eqref{eq:2.5.19}. Since $\lambda = (n\pi/H)^2$,
+\begin{equation}
+\label{eq:2.5.24}
+\odd{h}{x} = \left(\frac{n\pi}{H}\right)^2 h.
+\end{equation}
+The general solution is a linear combination of exponentials or a linear combination of hyperbolic functions. Either can be used, but neither is particularly suited for solving the homogeneous boundary condition $h(L) = 0$. We can obtain our solution more expeditiously if we note that both $\cosh n\pi(x-L)/H$ and $\sinh n\pi(x-L)/H$ are linearly independent solutions of \eqref{eq:2.5.24}. The general solution can be written as a linear combination of these two:
+\begin{equation}
+\label{eq:2.5.25}
+h(x) = a_1\cosh\frac{n\pi}{H}(x-L) + a_2\sinh\frac{n\pi}{H}(x-L),
+\end{equation}
+although it should now be clear that $h(L) = 0$ implies that $a_1 = 0$ (since $\cosh 0 = 1$ and $\sinh 0 = 0$). As we could have guessed originally,
+\begin{equation}
+\label{eq:2.5.26}
+h(x) = a_2\sinh\frac{n\pi}{H}(x-L).
+\end{equation}
+The reason \eqref{eq:2.5.25} is the solution (besides the fact that it solves the DE) is that it is a simple translation of the more familiar solution, $\cosh n\pi x/L$ and $\sinh n\pi x/L$. We are allowed to translate solutions of differential equations only if the differential equation does not change (said to be \emph{invariant}) upon translation. Since \eqref{eq:2.5.24} has constant coefficients, thinking of the origin being at $x = L$ (namely, $x' = x - L$) does not affect the differential equation, since $d^2h/dx'^2 = (n\pi/H)^2 h$ according to the chain rule. For example, $\cosh n\pi x'/H = \cosh n\pi(x-L)/H$ is a solution.
+
+Product solutions are
+\begin{equation}
+\label{eq:2.5.27}
+u_4(x,y) = A\sin\frac{n\pi y}{H}\sinh\frac{n\pi}{H}(x-L).
+\end{equation}
+You might now check that Laplace's equation is satisfied as well as the three required homogeneous conditions. It is interesting to note that one part (the $y$) oscillates and the other (the $x$) does not. This is a general property of Laplace's equation, not restricted to this geometry (rectangle) or to these boundary conditions.
+
+We want to use these product solutions to satisfy the remaining condition, the nonhomogeneous boundary condition $u_4(0,y) = g_1(y)$. Product solutions do \emph{not} satisfy nonhomogeneous conditions. Instead, we again use the principle of superposition. If \eqref{eq:2.5.27} is a solution, so is
+\begin{equation}
+\label{eq:2.5.28}
+\boxed{u_4(x,y) = \sum_{n=1}^{\infty} A_n \sin\frac{n\pi y}{H}\sinh\frac{n\pi}{H}(x-L).}
+\end{equation}
+Evaluating at $x = 0$ will determine the coefficients $A_n$ from the nonhomogeneous boundary condition:
+\[
+g_1(y) = \sum_{n=1}^{\infty} A_n\sin\frac{n\pi y}{H}\sinh\frac{n\pi}{H}(-L).
+\]
+This is the same kind of series of sine functions already briefly discussed, if we associate $A_n\sinh n\pi(-L)/H$ as its coefficients. Thus (by the orthogonality of $\sin n\pi y/H$ for $y$ between $0$ and $H$),
+\[
+A_n\sinh\frac{n\pi}{H}(-L) = \frac{2}{H}\int_0^H g_1(y)\sin\frac{n\pi y}{H}\dy.
+\]
+Since $\sinh n\pi(-L)/H$ is never zero, we can divide by it and obtain finally a formula for the coefficients:
+\begin{equation}
+\label{eq:2.5.29}
+\boxed{A_n = \frac{2}{H\sinh n\pi(-L)/H}\int_0^H g_1(y)\sin\frac{n\pi y}{H}\dy.}
+\end{equation}
+Equation \eqref{eq:2.5.28} with coefficients determined by \eqref{eq:2.5.29} is only the solution for $u_4(x,y)$. The original $u(x,y)$ is obtained by adding together four such solutions.
+
+\subsection{Laplace's Equation for a Circular Disk}
+\label{sec:2.5.2}
+
+Suppose that we had a thin circular disk of radius $a$ (with constant thermal properties and no sources) with the temperature prescribed on the boundary, as illustrated in Fig.~2.5.2. If the temperature on the boundary is independent of time, then it is reasonable to determine the equilibrium temperature distribution. The temperature satisfies Laplace's equation, $\laplacian u = 0$. The geometry of this problem suggests that we use polar coordinates, so that $u = u(r,\theta)$. In particular, on the circle $r = a$ the temperature distribution is a prescribed function of $\theta$, $u(a,\theta) = f(\theta)$. The problem we want to solve is
+
+\begin{equation}
+\label{eq:2.5.30}
+\text{PDE:}\quad
+\boxed{\laplacian u = \frac{1}{r}\frac{\partial}{\partial r}\!\left(r\pd{u}{r}\right) + \frac{1}{r^2}\pdd{u}{\theta} = 0}
+\end{equation}
+\begin{equation}
+\label{eq:2.5.31}
+\text{BC:}\quad
+\boxed{u(a,\theta) = f(\theta).}
+\end{equation}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch02/fig_2_5_2.png}
+\caption{Laplace's equation inside a circular disk.}
+\label{fig:2.5.2}
+\end{figure}
+
+At first glance it would appear that we cannot use separation of variables because there are no homogeneous subsidiary conditions. However, the introduction of polar coordinates requires some discussion that will illuminate the use of the method of separation of variables. If we solve Laplace's equation on a rectangle (see Sec.~2.5.1), $0 \le x \le L$, $0 \le y \le H$, then conditions are necessary at the endpoints of the definition of the variables, $x = 0$, $L$ and $y = 0$, $H$. Fortunately, these coincide with the physical boundaries. However, for polar coordinates, $0 \le r \le a$ and $-\pi \le \theta \le \pi$ (where there is some freedom in our definition of the angle $\theta$). Mathematically, we need conditions at the endpoints of the coordinate system, $r = 0$, $a$ and $\theta = -\pi$, $\pi$. Here, only $r = a$ corresponds to a physical boundary. Polar coordinates are singular at $r = 0$; for physical reasons we will prescribe that the temperature is finite or, equivalently, \textbf{bounded} there:
+\begin{equation}
+\label{eq:2.5.32}
+\text{boundedness at origin}\quad \boxed{|u(0,\theta)| < \infty.}
+\end{equation}
+Conditions are needed at $\theta = \pm\pi$ for mathematical reasons. It is similar to the circular wire situation. $\theta = -\pi$ corresponds to the same points as $\theta = \pi$. Although there really is not a boundary, we say that the temperature is continuous there and the heat flow in the $\theta$-direction is continuous, which imply
+\begin{equation}
+\label{eq:2.5.33}
+\text{periodicity}\quad
+\boxed{\begin{aligned}
+u(r,-\pi) &= u(r,\pi) \\[4pt]
+\pd{u}{\theta}(r,-\pi) &= \pd{u}{\theta}(r,\pi),
+\end{aligned}}
+\end{equation}
+as though the two regions were in perfect thermal contact there (see Exercise~1.3.2). Equations \eqref{eq:2.5.33} are called \textbf{periodicity conditions}; they are equivalent to $u(r,\theta) = u(r,\theta + 2\pi)$. We note that subsidiary conditions \eqref{eq:2.5.32} and \eqref{eq:2.5.33} are all linear and homogeneous (it's easy to check that $u \equiv 0$ satisfies these three conditions). In this form the mathematical problem appears somewhat similar to Laplace's equation inside a rectangle. There are four conditions. Here, fortunately, only one is nonhomogeneous, $u(a,\theta) = f(\theta)$. This problem is thus suited for the method of separation of variables.
+
+We look for special product solutions,
+\begin{equation}
+\label{eq:2.5.34}
+u(r,\theta) = \phi(\theta)G(r),
+\end{equation}
+which satisfy the PDE \eqref{eq:2.5.30} and the three homogeneous conditions \eqref{eq:2.5.32} and \eqref{eq:2.5.33}. Note that \eqref{eq:2.5.34} does \emph{not} satisfy the nonhomogeneous boundary condition \eqref{eq:2.5.31}. Substituting \eqref{eq:2.5.34} into the periodicity conditions shows that
+\begin{equation}
+\label{eq:2.5.35}
+\begin{aligned}
+\phi(-\pi) &= \phi(\pi) \\[4pt]
+\od{\phi}{\theta}(-\pi) &= \od{\phi}{\theta}(\pi);
+\end{aligned}
+\end{equation}
+the $\theta$-dependent part also satisfies the \textbf{periodic boundary conditions}. The product form will satisfy Laplace's equation if
+\[
+\frac{1}{r}\frac{d}{d r}\!\left(r\od{G}{r}\right)\phi(\theta) + \frac{1}{r^2}G(r)\odd{\phi}{\theta} = 0.
+\]
+The variables are \emph{not} separated by dividing by $G(r)\phi(\theta)$ since $1/r^2$ remains multiplying the $\theta$-dependent terms. Instead, divide by $(1/r^2)G(r)\phi(\theta)$, in which case
+\begin{equation}
+\label{eq:2.5.36}
+\frac{r}{G}\frac{d}{d r}\!\left(r\od{G}{r}\right) = -\frac{1}{\phi}\odd{\phi}{\theta} = \lambda.
+\end{equation}
+The separation constant is introduced as $\lambda$ (rather than $-\lambda$) since there are two homogeneous conditions in $\theta$, \eqref{eq:2.5.35}, and we therefore expect oscillations in $\theta$.
+
+Equation \eqref{eq:2.5.36} yields two ordinary differential equations. The boundary value problem to determine the separation constant is
+\begin{equation}
+\label{eq:2.5.37}
+\boxed{\begin{aligned}
+\odd{\phi}{\theta} &= -\lambda\phi \\[4pt]
+\phi(-\pi) &= \phi(\pi) \\[4pt]
+\od{\phi}{\theta}(-\pi) &= \od{\phi}{\theta}(\pi).
+\end{aligned}}
+\end{equation}
+The eigenvalues $\lambda$ are determined in the usual way. In fact, this is one of the three standard problems, the identical problem as for the circular wire (with $L = \pi$). Thus, the eigenvalues are
+\begin{equation}
+\label{eq:2.5.38}
+\lambda = \left(\frac{n\pi}{L}\right)^2 = n^2,
+\end{equation}
+with the corresponding eigenfunctions being both
+\begin{equation}
+\label{eq:2.5.39}
+\sin n\theta \quad\text{and}\quad \cos n\theta.
+\end{equation}
+The case $n = 0$ must be included (with only a constant being the eigenfunction).
+
+The $r$-dependent equation is
+\begin{equation}
+\label{eq:2.5.40}
+\frac{r}{G}\frac{d}{d r}\!\left(r\od{G}{r}\right) = \lambda = n^2,
+\end{equation}
+which when written in the more usual form becomes
+\begin{equation}
+\label{eq:2.5.41}
+r^2\odd{G}{r} + r\od{G}{r} - n^2 G = 0.
+\end{equation}
+Here, the condition at $r = 0$ has been prescribed: $|u(0,\theta)| < \infty$. For the product solutions, $u(r,\theta) = \phi(\theta)G(r)$, it follows that the condition at the origin is that $G(r)$ must be bounded,
+\begin{equation}
+\label{eq:2.5.42}
+|G(0)| < \infty.
+\end{equation}
+
+Equation \eqref{eq:2.5.41} is linear and homogeneous but has nonconstant coefficients. There are exceedingly few second-order linear equations with nonconstant coefficients that we can solve easily. Equation \eqref{eq:2.5.41} has only one nonconstant coefficient, so it is not an eigenvalue problem. The equation is known by a number of different names: \textbf{equidimensional} or \textbf{Cauchy} or \textbf{Euler}. The simplest way to solve \eqref{eq:2.5.41} is to note that for the linear differential operator in \eqref{eq:2.5.41}, any power $G = r^p$ reproduces itself.\footnote{For constant-coefficient linear differential operators, exponentials reproduce themselves.} On substituting $G = r^p$ into \eqref{eq:2.5.41}, we determine that $[p(p-1) + p - n^2]r^p = 0$. Thus, there usually are two distinct solutions in the form $r^p$,
+\[
+p = \pm n,
+\]
+except when $n = 0$, in which case there is only one independent solution in the form $r^p$. For $n \ne 0$, the general solution of \eqref{eq:2.5.41} is
+\begin{equation}
+\label{eq:2.5.43}
+G = c_1 r^n + c_2 r^{-n}.
+\end{equation}
+For $n = 0$ (and $n = 0$ is important since $\lambda = 0$ is an eigenvalue in this problem), one solution is $r^0 = 1$ or any constant. A second solution for $n = 0$ is most easily obtained from \eqref{eq:2.5.40}. If $n = 0$, $\frac{d}{dr}(r\frac{dG}{dr}) = 0$. By integration, $r\,dG/dr$ is constant, or, equivalently, $dG/dr$ is proportional to $1/r$. The second independent solution is thus $\ln r$. Thus, for $n = 0$, the general solution of \eqref{eq:2.5.41} is
+\begin{equation}
+\label{eq:2.5.44}
+G = \bar{c}_1 + \bar{c}_2 \ln r.
+\end{equation}
+Equation \eqref{eq:2.5.41} has only one homogeneous condition to be imposed, $|G(0)| < \infty$. The boundedness condition would not have imposed any restrictions on the problems we have studied previously. However, here \eqref{eq:2.5.43} or \eqref{eq:2.5.44} shows that solutions may approach $\infty$ as $r \to 0$. Thus, for $|G(0)| < \infty$, $c_2 = 0$ in \eqref{eq:2.5.43} and $\bar{c}_2 = 0$ in \eqref{eq:2.5.44}. The $r$-dependent solution (which is bounded at $r = 0$) is
+\[
+G(r) = c_1 r^n \qquad n \ge 0,
+\]
+where for $n = 0$ this reduces to just an arbitrary constant.
+
+Product solutions by the method of separation of variables, which satisfy the three homogeneous conditions, are
+\[
+r^n\cos n\theta \quad (n \ge 0) \quad\text{and}\quad r^n\sin n\theta \quad (n \ge 1).
+\]
+Note that as in rectangular coordinates for Laplace's equation, oscillations occur in one variable (here $\theta$) and do not occur in the other variable ($r$). By the principle of superposition, the following solves Laplace's equation inside a circle:
+\begin{equation}
+\label{eq:2.5.45}
+\boxed{u(r,\theta) = \sum_{n=0}^{\infty} A_n r^n \cos n\theta + \sum_{n=1}^{\infty} B_n r^n \sin n\theta, \qquad \begin{aligned} 0 &\le r < a \\ -\pi &< \theta \le \pi. \end{aligned}}
+\end{equation}
+
+In order to solve the nonhomogeneous condition, $u(a,\theta) = f(\theta)$,
+\begin{equation}
+\label{eq:2.5.46}
+f(\theta) = \sum_{n=0}^{\infty} A_n a^n \cos n\theta + \sum_{n=1}^{\infty} B_n a^n \sin n\theta, \qquad -\pi < \theta \le \pi.
+\end{equation}
+The prescribed temperature is a linear combination of all sines and cosines (including a constant term, $n = 0$). This is exactly the same question that we answered in Sec.~2.4.2 with $L = \pi$ if we let $A_n a^n$ be the coefficient of $\cos n\theta$ and $B_n a^n$ be the coefficient of $\sin n\theta$. Using the orthogonality formulas, it follows that
+\begin{equation}
+\label{eq:2.5.47}
+\boxed{\begin{aligned}
+A_0 &= \frac{1}{2\pi}\int_{-\pi}^{\pi} f(\theta)\,d\theta \\[6pt]
+(n \ge 1) \quad A_n a^n &= \frac{1}{\pi}\int_{-\pi}^{\pi} f(\theta)\cos n\theta\,d\theta \\[6pt]
+B_n a^n &= \frac{1}{\pi}\int_{-\pi}^{\pi} f(\theta)\sin n\theta\,d\theta.
+\end{aligned}}
+\end{equation}
+Since $a^n \ne 0$, the coefficients $A_n$ and $B_n$ can be uniquely solved for from \eqref{eq:2.5.47}. Equation \eqref{eq:2.5.45} with coefficients given by \eqref{eq:2.5.47} determines the steady-state temperature distribution inside a circle. The solution is relatively complicated, often requiring the numerical evaluation of two infinite series. For additional interpretations of this solution, see Chapter~9, on Green's functions.
+
+\subsection{Fluid Flow Past a Circular Cylinder (Lift)}
+\label{sec:2.5.3}
+
+In heat flow, conservation of thermal energy can be used to derive Laplace's equation $\laplacian u = 0$ under certain assumptions. In fluid dynamics, conservation of mass and conservation of momentum can be used to also derive Laplace's equation:
+\[
+\laplacian\psi = 0,
+\]
+in the following way. In the Exercises, it is shown that \textbf{conservation of mass} for a fluid along with the assumption of a constant mass density $\rho$ yields
+\begin{equation}
+\label{eq:2.5.48}
+\nabla\cdot\vec{u} = 0 \quad\text{or in two dimensions}\quad \pd{u}{x} + \pd{v}{y} = 0,
+\end{equation}
+where the velocity has $x$ and $y$ components $\vec{u} = (u,v)$. A \textbf{stream function} $\psi$ is often introduced that automatically satisfies \eqref{eq:2.5.48}:
+\begin{equation}
+\label{eq:2.5.49}
+u = \pd{\psi}{y} \quad\text{and}\quad v = -\pd{\psi}{x}.
+\end{equation}
+Often streamlines ($\psi = \text{constant}$) are graphed that will be parallel to the fluid flow. It can be shown that in some circumstances the fluid is irrotational ($\nabla\times\vec{u} = 0$) so that the stream function satisfies Laplace's equation
+\begin{equation}
+\label{eq:2.5.50}
+\boxed{\laplacian\psi = 0.}
+\end{equation}
+
+The simplest example is a constant flow in the $x$-direction $\vec{u} = (U,0)$, in which case the stream function is $\psi = Uy$, clearly satisfying Laplace's equation.
+
+As a first step in designing airplane wings, scientists have considered the flow around a circular cylinder of radius $a$. For more details we refer the interested reader to Acheson~[1990].
+
+The velocity potential must satisfy Laplace's equation, which as before in polar coordinates is \eqref{eq:2.5.30}. We will assume that far from the cylinder the flow is uniform so that as an approximation for large $r$,
+\begin{equation}
+\label{eq:2.5.51}
+\psi \approx Uy = Ur\sin\theta,
+\end{equation}
+since we will use polar coordinates. The boundary condition is that the radial component of the fluid flow must be zero at $r = a$. The fluid flow must be parallel to the boundary, and hence we can assume
+\begin{equation}
+\label{eq:2.5.52}
+\psi(a,\theta) = 0.
+\end{equation}
+By separation of variables, including the $n = 0$ case given by \eqref{eq:2.5.44},
+\begin{equation}
+\label{eq:2.5.53}
+\psi(r,\theta) = c_2 + c_1\ln r + \sum_{n=1}^{\infty}(A_n r^n + B_n r^{-n})\sin n\theta,
+\end{equation}
+where the $\cos n\theta$ terms could be included (but would vanish). By applying the boundary condition at $r = a$, we find
+\begin{align*}
+c_2 + c_1\ln a &= 0 \\
+A_n a^n + B_n a^{-n} &= 0,
+\end{align*}
+so that
+\begin{equation}
+\label{eq:2.5.54}
+\psi(r,\theta) = c_1\ln\frac{r}{a} + \sum_{n=1}^{\infty} A_n\!\left(r^n - \frac{a^{2n}}{r^n}\right)\sin n\theta.
+\end{equation}
+In order for the fluid velocity to be approximately a constant at infinity with $\psi \approx Ur\sin\theta$ for large $r$, $A_n = 0$ for $n \ge 2$ and $A_1 = U$. Thus,
+\begin{equation}
+\label{eq:2.5.55}
+\boxed{\psi(r,\theta) = c_1\ln\frac{r}{a} + U\!\left(r - \frac{a^2}{r}\right)\sin\theta.}
+\end{equation}
+
+It can be shown in general that the fluid velocity in polar coordinates can be obtained from the stream function: $u_r = \frac{1}{r}\frac{\partial\psi}{\partial\theta}$, $u_\theta = -\frac{\partial\psi}{\partial r}$. Thus, the $\theta$-component of the fluid velocity is $u_\theta = -\frac{c_1}{r} - U(1 + \frac{a^2}{r^2})\sin\theta$. The \textbf{circulation} is defined to be $\oint_0^{2\pi} u_\theta r\,d\theta = -2\pi c_1$. For a given velocity at infinity, different flows depending on the circulation around a cylinder are illustrated in Figure~2.5.3.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch02/fig_2_5_3.png}
+\caption{Flow past cylinder and lift $= 2\pi\rho c_1 U$.}
+\label{fig:2.5.3}
+\end{figure}
+
+The \textbf{pressure} $p$ of the fluid exerts a force in the direction opposite to the outward normal to the cylinder $(\frac{x}{a},\frac{y}{a}) = (\cos\theta,\sin\theta)$. The \textbf{drag} ($x$-direction) and \textbf{lift} ($y$-direction) forces (per unit length in the $z$ direction) exerted by the fluid on the cylinder are
+\begin{equation}
+\label{eq:2.5.56}
+\vec{F} = -\int_0^{2\pi} p(\cos\theta,\sin\theta)\,a\,d\theta.
+\end{equation}
+For steady flows such as this one, the pressure is determined from \textbf{Bernoulli's condition}
+\begin{equation}
+\label{eq:2.5.57}
+p + \tfrac{1}{2}\rho|\vec{u}|^2 = \text{constant}.
+\end{equation}
+Thus, the pressure is lower where the velocity is higher. If the circulation is clockwise around the cylinder (a negative circulation), then intuitively (which can be verified) the velocity will be higher above the cylinder than below and the pressure will be lower on the top of the cylinder and hence lift (a positive force in the $y$-direction) will be generated. At the cylinder $u_r = 0$, so that there $|\vec{u}|^2 = u_\theta^2$. It can be shown that the $x$-component of the force, the drag, is zero, but the $y$-component the lift is given by (since the integral involving the constant vanishes)
+\begin{equation}
+\label{eq:2.5.58}
+F_y = \frac{1}{2}\rho\int_0^{2\pi}\left[-\frac{c_1}{r} - U\!\left(1+\frac{a^2}{r^2}\right)\sin\theta\right]^2\sin\theta\,a\,d\theta.
+\end{equation}
+\begin{equation}
+\label{eq:2.5.59}
+F_y = \rho\frac{c_1}{a}U2\int_0^{2\pi}\sin^2\theta\,a\,d\theta = \rho 2\pi c_1 U,
+\end{equation}
+which has been simplified since $\int_0^{2\pi}\sin\theta\,d\theta = \int_0^{2\pi}\sin^3\theta\,d\theta = 0$ due to the oddness of the $\sin$ function. The lift vanishes if the circulation is zero. A negative circulation (positive $c_1$) results in a lift force on the cylinder in the fluid.
+
+In the real world the drag is more complicated. Boundary layers exist due to the viscous nature of the fluid. The pressure is continuous across the boundary layer so that the preceding analysis is still often valid. However, things get much more complicated when the boundary layer separates from the cylinder, in which case a more substantial drag force occurs (which has been ignored in this elementary treatment). A plane will fly if the lift is greater than the weight of the plane. However, to fly fast, a powerful engine is necessary to apply a force in the $x$-direction to overcome the drag.
+
+\subsection{Qualitative Properties of Laplace's Equation}
+\label{sec:2.5.4}
+
+Sometimes the method of separation of variables will not be appropriate. If quantitative information is desired, numerical methods (see Chapter~13) may be necessary. In this subsection we briefly describe some qualitative properties that may be derived for Laplace's equation.
+
+\paragraph{Mean value theorem.}
+Our solution of Laplace's equation inside a circle, obtained in Sec.~2.5.2 by the method of separation of variables, yields an important result. If we evaluate the temperature at the origin, $r = 0$, we discover from \eqref{eq:2.5.45} that
+\[
+u(0,\theta) = a_0 = \frac{1}{2\pi}\int_{-\pi}^{\pi} f(\theta)\,d\theta;
+\]
+the temperature there equals the average value of the temperature at the edges of the circle. This is called the \textbf{mean value property} for Laplace's equation. It holds in general in the following specific sense. Suppose that we wish to solve Laplace's equation in any region $R$ (see Fig.~2.5.4). Consider \emph{any} point $P$ inside $R$ and a circle of any radius $r_0$ (such that the circle is inside $R$). Let the temperature on the circle be $f(\theta)$. Our previous analysis still holds, and thus \textbf{the temperature at any point is the average of the temperature along any circle of radius $r_0$} (\emph{lying inside $R$}) \textbf{centered at that point}.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch02/fig_2_5_4.png}
+\caption{Circle within any region.}
+\label{fig:2.5.4}
+\end{figure}
+
+\paragraph{Maximum principles.}
+We can use this to prove the \textbf{maximum principle} for Laplace's equation: \textbf{In steady state the temperature cannot attain its maximum in the interior} (unless the temperature is a constant everywhere) assuming no sources. The proof is by contradiction. Suppose that the maximum was at point $P$, as illustrated in Fig.~2.5.3. However, this should be the average of all points on any circle (consider the circle drawn). It is impossible for the temperature at $P$ to be larger. This contradicts the original assumption, which thus cannot hold. We should not be surprised by the maximum principle. If the temperature was largest at point $P$, then in time the concentration of heat energy would diffuse and in steady state could not be in the interior. By letting $\psi = -u$, we can also show that the temperature cannot attain its minimum in the interior. It follows that in steady state \textbf{the maximum and minimum temperatures occur on the boundary}.
+
+\paragraph{Wellposedness and uniqueness.}
+The maximum principle is a very important tool for further analysis of partial differential equations, especially establishing qualitative properties (see, e.g., Protter and Weinberger [1967]). We say that a problem is \textbf{wellposed} if there exists a unique solution that depends continuously on the nonhomogeneous data (i.e., the solution varies a small amount if the data are slightly changed). This is an important concept for physical problems. If the solution changed dramatically with only a small change in the data, then any physical measurement would have to be exact in order for the solution to be reliable. Fortunately, most standard problems in partial differential equations are wellposed. For example, the maximum principle can be used to prove that $\laplacian u = 0$ with $u$ specified as $u = f(\vec{x})$ on the boundary is wellposed.
+
+Suppose that we vary the boundary data a small amount such that
+\[
+\laplacian v = 0 \quad\text{with}\quad v = g(\vec{x})
+\]
+on the boundary, where $g(\vec{x})$ is nearly the same as $f(\vec{x})$ everywhere on the boundary. We consider the difference between these two solutions, $w = u - v$. Due to the linearity,
+\[
+\laplacian w = 0 \quad\text{with}\quad w = f(\vec{x}) - g(\vec{x})
+\]
+on the boundary. The maximum (and minimum) principles for Laplace's equation imply that the maximum and minimum occur on the boundary. Thus, at any point inside,
+\begin{equation}
+\label{eq:2.5.60}
+\min(f(\vec{x}) - g(\vec{x})) \le w \le \max(f(\vec{x}) - g(\vec{x})).
+\end{equation}
+Since $g(\vec{x})$ is nearly the same as $f(\vec{x})$ everywhere, $w$ is small, and thus the solution $v$ is nearly the same as $u$; the solution of Laplace's equation slightly varies if the boundary data are slightly altered.
+
+We can also prove that the solution of Laplace's equation is unique. We prove this by contradiction. Suppose that there are two solutions, $u$ and $v$ as previously, that satisfy the same boundary condition [i.e., let $(f(\vec{x}) = g(\vec{x}))$]. If we again consider the difference ($w = u - v$), then the maximum and minimum principles imply [see \eqref{eq:2.5.60}] that inside the region
+\[
+0 \le w \le 0.
+\]
+We conclude that $w = 0$ everywhere inside, and thus $u = v$ proving that if a solution exists, it must be unique. These properties (uniqueness and continuous dependence on the data) show that Laplace's equation with $u$ specified on the boundary is a wellposed problem.
+
+\paragraph{Solvability condition.}
+If on the boundary the heat flow $-K_0\nabla u\cdot\hat{\vec{n}}$ is specified instead of the temperature, Laplace's equation may have no solutions [for a one-dimensional example, see Exercise~1.4.7(b)]. To show this, we integrate $\laplacian u = 0$ over the entire two-dimensional region
+\[
+0 = \iint \laplacian u\dx\dy = \iint \nabla\cdot(\nabla u)\dx\dy.
+\]
+Using the (two-dimensional) divergence theorem, we conclude that (see Exercise~1.5.8)
+\begin{equation}
+\label{eq:2.5.61}
+0 = \oint \nabla u\cdot\hat{\vec{n}}\ds.
+\end{equation}
+Since $\nabla u\cdot\hat{\vec{n}}$ is proportional to the heat flow through the boundary, \eqref{eq:2.5.61} implies that the \emph{net} heat flow through the boundary must be zero in order for a steady state to exist. This is clear physically, because otherwise the thermal energy inside, violating the steady-state assumption. Equation \eqref{eq:2.5.61} is called the \textbf{solvability condition} or \textbf{compatibility condition} for Laplace's equation.
+
+\begin{exercises}{2.5}
+
+\item Solve Laplace's equation inside a rectangle $0 \le x \le L$, $0 \le y \le H$, with the following boundary conditions:
+\begin{enumerate}
+\item[\starred(a)] $\pd{u}{x}(0,y) = 0$, \quad $\pd{u}{x}(L,y) = 0$, \quad $u(x,0) = 0$, \quad $u(x,H) = f(x)$
+\item[(b)] $\pd{u}{x}(0,y) = g(y)$, \quad $\pd{u}{x}(L,y) = 0$, \quad $u(x,0) = 0$, \quad $u(x,H) = 0$
+\item[\starred(c)] $\pd{u}{x}(0,y) = 0$, \quad $u(L,y) = g(y)$, \quad $u(x,0) = 0$, \quad $u(x,H) = 0$
+\item[(d)] $u(0,y) = g(y)$, \quad $u(L,y) = 0$, \quad $\pd{u}{y}(x,0) = 0$, \quad $u(x,H) = 0$
+\item[\starred(e)] $u(0,y) = 0$, \quad $u(L,y) = 0$, \quad $u(x,0) - \pd{u}{y}(x,0) = 0$, \quad $u(x,H) = f(x)$
+\item[(f)] $u(0,y) = f(y)$, \quad $u(L,y) = 0$, \quad $\pd{u}{y}(x,0) = 0$, \quad $\pd{u}{y}(x,H) = 0$
+\item[(g)] $\pd{u}{x}(0,y) = 0$, \quad $\pd{u}{x}(L,y) = 0$, \quad $\pd{u}{y}(x,0) = 0$, \quad $u(x,H) = \begin{cases} 0 & x > L/2 \\ 1 & x < L/2 \end{cases}$
+\end{enumerate}
+
+\item Consider $u(x,y)$ satisfying Laplace's equation inside a rectangle ($0 < x < L$, $0 < y < H$) subject to the boundary conditions
+\[
+\pd{u}{x}(0,y) = 0 \qquad \pd{u}{x}(L,y) = 0 \qquad \pd{u}{y}(x,0) = 0 \qquad \pd{u}{y}(x,H) = f(x).
+\]
+\begin{enumerate}
+\item[\starred(a)] \emph{Without} solving this problem, briefly explain the physical condition under which there is a solution to this problem.
+\item[(b)] Solve this problem by the method of separation of variables. Show that the method works only under the condition of part~(a).
+\end{enumerate}
+\item[(c)] The solution [part~(b)] has an arbitrary constant. Determine it by consideration of the time-dependent heat equation \eqref{eq:2.5.10} subject to the initial condition
+\[
+u(x,y,0) = g(x,y).
+\]
+
+\item\starred{} Solve Laplace's equation \emph{outside} a circular disk ($r \ge a$) subject to the boundary condition
+\begin{enumerate}
+\item[(a)] $u(a,\theta) = \ln 2 + 4\cos 3\theta$
+\item[(b)] $u(a,\theta) = f(\theta)$
+\end{enumerate}
+You may assume that $u(r,\theta)$ remains finite as $r \to \infty$.
+
+\item\starred{} For Laplace's equation inside a circular disk ($r \le a$), using \eqref{eq:2.5.45} and \eqref{eq:2.5.47}, show that
+\[
+u(r,\theta) = \frac{1}{\pi}\int_{-\pi}^{\pi} f(\bar\theta)\left[-\frac{1}{2} + \sum_{n=0}^{\infty}\left(\frac{r}{a}\right)^n \cos n(\theta - \bar\theta)\right]\,d\bar\theta.
+\]
+Using $\cos z = \text{Re}\,[e^{iz}]$, sum the resulting geometric series to obtain Poisson's integral formula.
+
+\item Solve Laplace's equation inside the quarter-circle of radius $1$ ($0 \le \theta \le \pi/2$, $0 \le r \le 1$) subject to the boundary conditions
+\begin{enumerate}
+\item[\starred(a)] $\pd{u}{\theta}(r,0) = 0$, \quad $u\!\left(r,\frac{\pi}{2}\right) = 0$, \quad $u(1,\theta) = f(\theta)$
+\item[(b)] $\pd{u}{\theta}(r,0) = 0$, \quad $\pd{u}{\theta}\!\left(r,\frac{\pi}{2}\right) = 0$, \quad $u(1,\theta) = f(\theta)$
+\item[\starred(c)] $u(r,0) = 0$, \quad $u\!\left(r,\frac{\pi}{2}\right) = 0$, \quad $\pd{u}{r}(1,\theta) = f(\theta)$
+\item[(d)] $\pd{u}{\theta}(r,0) = 0$, \quad $\pd{u}{\theta}\!\left(r,\frac{\pi}{2}\right) = 0$, \quad $\pd{u}{r}(1,\theta) = g(\theta)$
+\end{enumerate}
+Show that the solution [part~(d)] exists only if $\int_0^{\pi/2} g(\theta)\,d\theta = 0$. Explain this condition physically.
+
+\item Solve Laplace's equation inside a semicircle of radius $a$ ($0 < r < a$, $0 < \theta < \pi$) subject to the boundary conditions
+\begin{enumerate}
+\item[\starred(a)] $u = 0$ on the diameter and $u(a,\theta) = g(\theta)$
+\item[(b)] the diameter is insulated and $u(a,\theta) = g(\theta)$
+\end{enumerate}
+
+\item Solve Laplace's equation inside a $60^\circ$ wedge of radius $a$ subject to the boundary conditions
+\begin{enumerate}
+\item[(a)] $u(r,0) = 0$, \quad $u\!\left(r,\frac{\pi}{3}\right) = 0$, \quad $u(a,\theta) = f(\theta)$
+\item[\starred(b)] $\pd{u}{\theta}(r,0) = 0$, \quad $\pd{u}{\theta}\!\left(r,\frac{\pi}{3}\right) = 0$, \quad $u(a,\theta) = f(\theta)$
+\end{enumerate}
+
+\item Solve Laplace's equation inside a circular annulus ($a < r < b$) subject to the boundary conditions
+\begin{enumerate}
+\item[\starred(a)] $u(a,\theta) = f(\theta)$, \quad $u(b,\theta) = g(\theta)$
+\item[(b)] $\pd{u}{r}(a,\theta) = 0$, \quad $u(b,\theta) = g(\theta)$
+\item[(c)] $\pd{u}{r}(a,\theta) = f(\theta)$, \quad $\pd{u}{r}(b,\theta) = g(\theta)$
+\end{enumerate}
+If there is a solvability condition, state it and explain it physically.
+
+\item\starred{} Solve Laplace's equation inside a $90^\circ$ sector of a circular annulus ($a < r < b$, $0 < \theta < \pi/2$) subject to the boundary conditions
+\begin{enumerate}
+\item[(a)] $u(r,0) = 0$, \quad $u(r,\pi/2) = 0$, \quad $u(a,\theta) = 0$, \quad $u(b,\theta) = f(\theta)$
+\item[(b)] $u(r,0) = 0$, \quad $u(r,\pi/2) = f(r)$, \quad $u(a,\theta) = 0$, \quad $u(b,\theta) = 0$
+\end{enumerate}
+
+\item Using the maximum principles for Laplace's equation, prove that the solution of Poisson's equation, $\laplacian u = g(\vec{x})$, subject to $u = f(\vec{x})$ on the boundary, is unique.
+
+\item Do Exercise~1.5.8.
+
+\item
+\begin{enumerate}
+\item[(a)] Using the divergence theorem, determine an alternative expression for $\iint u\,\laplacian u\dx\dy\,dz$.
+\item[(b)] Using part~(a), prove that the solution of Laplace's equation $\laplacian u = 0$ (with $u$ given on the boundary) is unique.
+\item[(c)] Modify part~(b) if $\nabla u\cdot\hat{\vec{n}} = 0$ on the boundary.
+\item[(d)] Modify part~(b) if $\nabla u\cdot\hat{\vec{n}} + hu = 0$ on the boundary. Show that Newton's law of cooling corresponds to $h < 0$.
+\end{enumerate}
+
+\item Prove that the temperature satisfying Laplace's equation cannot attain its minimum in the interior.
+
+\item Show that the ``backward'' heat equation
+\[
+\pd{u}{t} = -k\pdd{u}{x},
+\]
+subject to $u(0,t) = u(L,t) = 0$ and $u(x,0) = f(x)$, is \emph{not} well posed. [\emph{Hint:} Show that if the data are changed an arbitrarily small amount, for example,
+\[
+f(x) \to f(x) + \frac{1}{n}\sin\frac{n\pi x}{L}
+\]
+for large $n$, then the solution $u(x,t)$ changes by a large amount.]
+
+\item Solve Laplace's equation inside a semi-infinite strip ($0 < x < \infty$, $0 < y < H$) subject to the boundary conditions
+\begin{enumerate}
+\item[(a)] $\pd{u}{y}(x,0) = 0$, \quad $\pd{u}{y}(x,H) = 0$, \quad $u(0,y) = f(y)$
+\item[(b)] $u(x,0) = 0$, \quad $u(x,H) = 0$, \quad $u(0,y) = f(y)$
+\item[(c)] $u(x,0) = 0$, \quad $u(x,H) = 0$, \quad $\pd{u}{x}(0,y) = f(y)$
+\item[(d)] $\pd{u}{y}(x,0) = 0$, \quad $\pd{u}{y}(x,H) = 0$, \quad $\pd{u}{x}(0,y) = f(y)$
+\end{enumerate}
+Show that the solution [part~(d)] exists only if $\int_0^H f(y)\dy = 0$.
+
+\item Consider Laplace's equation inside a rectangle $0 \le x \le L$, $0 \le y \le H$, with the boundary conditions
+\[
+\pd{u}{x}(0,y) = 0, \quad \pd{u}{x}(L,y) = g(y), \quad \pd{u}{y}(x,0) = 0, \quad \pd{u}{y}(x,H) = f(x).
+\]
+\begin{enumerate}
+\item[(a)] What is the solvability condition and its physical interpretation?
+\item[(b)] Show that $u(x,y) = A(x^2 - y^2)$ is a solution if $f(x)$ and $g(y)$ are constants [under the conditions of part~(a)].
+\item[(c)] Under the conditions of part~(a), solve the general case [nonconstant $f(x)$ and $g(y)$]. [\emph{Hints:} Use part~(b) and the fact that $f(x) = f_{\text{av}} + [f(x) - f_{\text{av}}]$, where $f_{\text{av}} = \frac{1}{L}\int_0^L f(x)\dx$.]
+\end{enumerate}
+
+\item Show that the mass density $\rho(x,t)$ satisfies $\pd{\rho}{t} + \nabla\cdot(\rho\vec{u}) = 0$ due to conservation of mass.
+
+\item If the mass density is constant, using the result of Exercise~2.5.17, show that $\nabla\cdot\vec{u} = 0$.
+
+\item Show that the streamlines are parallel to the fluid velocity.
+
+\item Show that anytime there is a stream function, $\nabla\times\vec{u} = 0$.
+
+\item From $u = \pd{\psi}{y}$ and $v = -\pd{\psi}{x}$, derive $u_r = \frac{1}{r}\pd{\psi}{\theta}$, $u_\theta = -\pd{\psi}{r}$.
+
+\item Show that the drag force is zero for a uniform flow past a cylinder including circulation.
+
+\item Consider the velocity $u_\theta$ at the cylinder. Where do the maximum and minimum occur?
+
+\item Consider the velocity $u_\theta$ at the cylinder. If the circulation is negative, show that the velocity will be larger above the cylinder than below.
+
+\item A stagnation point is a place where $\vec{u} = 0$. For what values of the circulation does a stagnation point exist on the cylinder?
+
+\item For what values of $\theta$ will $u_r = 0$ off the cylinder? For these $\theta$, where (for what values of $r$) will $u_\theta = 0$ also?
+
+\item Show that $\psi = \alpha\frac{\sin\theta}{r}$ satisfies Laplace's equation. Show that the streamlines are circles. Graph the streamlines.
+
+\end{exercises}

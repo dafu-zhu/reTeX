@@ -1,0 +1,602 @@
+% sec07_7.tex — Section 7.7: Vibrating Circular Membrane and Bessel Functions
+\section{Vibrating Circular Membrane and Bessel Functions}
+\label{sec:7.7}
+
+\subsection{Introduction}
+\label{sec:7.7.1}
+
+An interesting application of both one-dimensional (Sturm-Liouville) and multidimensional eigenvalue problems occurs when considering the vibrations of a circular membrane.  The vertical displacement $u$ satisfies the two-dimensional wave equation,
+\begin{equation}
+\text{PDE:}\quad
+\boxed{\pdd{u}{t} = c^2\laplacian u.}
+\label{eq:7.7.1}
+\end{equation}
+The geometry suggests that we use polar coordinates, in which case $u = u(r,\theta,t)$.  We assume that the membrane has zero displacement at the circular boundary, $r = a$:
+\begin{equation}
+\text{BC:}\quad
+\boxed{u(a,\theta,t) = 0.}
+\label{eq:7.7.2}
+\end{equation}
+The initial position and velocity are given:
+\begin{equation}
+\text{IC:}\quad
+\boxed{\begin{aligned}
+u(r,\theta,0) &= \alpha(r,\theta) \\
+\pd{u}{t}(r,\theta,0) &= \beta(r,\theta).
+\end{aligned}}
+\label{eq:7.7.3}
+\end{equation}
+
+\subsection{Separation of Variables}
+\label{sec:7.7.2}
+
+We first separate out the time variable by seeking product solutions,
+\begin{equation}
+u(r,\theta,t) = \phi(r,\theta)h(t).
+\label{eq:7.7.4}
+\end{equation}
+Then, as shown earlier, $h(t)$ satisfies
+\begin{equation}
+\odd{h}{t} = -\lambda c^2 h,
+\label{eq:7.7.5}
+\end{equation}
+where $\lambda$ is a separation constant.  From \eqref{eq:7.7.5}, the natural frequencies of vibration are $c\sqrt{\lambda}$ (if $\lambda > 0$).  In addition, $\phi(r,\theta)$ satisfies the two-dimensional eigenvalue problem
+\begin{equation}
+\boxed{\laplacian\phi + \lambda\phi = 0,}
+\label{eq:7.7.6}
+\end{equation}
+with $\phi = 0$ on the entire boundary, $r = a$:
+\begin{equation}
+\phi(a,\theta) = 0.
+\label{eq:7.7.7}
+\end{equation}
+
+We will attempt to obtain solutions of \eqref{eq:7.7.6} in the product form appropriate for polar coordinates,
+\begin{equation}
+\phi(r,\theta) = f(r)g(\theta),
+\label{eq:7.7.8}
+\end{equation}
+since for the circular membrane $0 < r < a$, $-\pi < \theta < \pi$.  This is equivalent to originally seeking solutions to the wave equation in the form of a product of functions of each independent variable, $u(r,\theta,t) = f(r)g(\theta)h(t)$.  We substitute \eqref{eq:7.7.8} into \eqref{eq:7.7.6}; in polar coordinates $\laplacian\phi = 1/r\;\partial/\partial r(r\;\partial\phi/\partial r) + 1/r^2\;\partial^2\phi/\partial\theta^2$, and thus $\laplacian\phi + \lambda\phi = 0$ becomes
+\begin{equation}
+\frac{g(\theta)}{r}\frac{d}{d r}\left(r\od{f}{r}\right) + \frac{f(r)}{r^2}\odd{g}{\theta} + \lambda f(r)g(\theta) = 0.
+\label{eq:7.7.9}
+\end{equation}
+$r$ and $\theta$ may be separated by multiplying by $r^2$ and dividing by $f(r)g(\theta)$:
+\begin{equation}
+-\frac{1}{g}\odd{g}{\theta} = \frac{r}{f}\frac{d}{d r}\left(r\od{f}{r}\right) + \lambda r^2 = \mu.
+\label{eq:7.7.10}
+\end{equation}
+We introduce a second separation constant $\mu$ because our experience with circular regions (see Secs.~2.4.2 and 2.5.2) suggests that $g(\theta)$ must oscillate in order to satisfy the periodic boundary conditions in $\theta$.  Our three differential equations, with two separation constants, are thus
+\begin{equation}
+\boxed{\odd{h}{t} = -\lambda c^2 h}
+\label{eq:7.7.11}
+\end{equation}
+\begin{equation}
+\boxed{\odd{g}{\theta} = -\mu g}
+\label{eq:7.7.12}
+\end{equation}
+\begin{equation}
+\boxed{r\frac{d}{d r}\left(r\od{f}{r}\right) + (\lambda r^2 - \mu)\,f = 0.}
+\label{eq:7.7.13}
+\end{equation}
+Two of these equations must be eigenvalue problems.  However, ignoring the initial conditions, the only given boundary condition is $u(a,\theta,t) = 0$ or $\phi(a,\theta) = 0$.  We must remember that $-\pi < \theta < \pi$ and $0 < r < a$.  This is equivalent to originally seeking solutions to the wave equation in the form of a product of functions of each independent variable, $u(r,\theta,t) = f(r)g(\theta)h(t)$.  Thus, both $\theta$ and $r$ are defined over finite intervals.  As such there should be boundary conditions at both ends.  The periodic nature of the solution in $\theta$ implies that
+\begin{equation}
+g(-\pi) = g(\pi)
+\label{eq:7.7.14}
+\end{equation}
+\begin{equation}
+\od{g}{\theta}(-\pi) = \od{g}{\theta}(\pi).
+\label{eq:7.7.15}
+\end{equation}
+We already have a condition at $r = a$.  Polar coordinates are singular at $r = 0$; a singularity condition must be introduced there.  Since the displacement must be finite, we conclude that
+\begin{equation}
+\boxed{|f(0)| < \infty.}
+\label{eq:7.7.16}
+\end{equation}
+
+\subsection{Eigenvalue Problems (One Dimensional)}
+\label{sec:7.7.3}
+
+After separating variables, we have obtained two eigenvalue problems.  We are quite familiar with the $\theta$-eigenvalue problem, \eqref{eq:7.7.12} with \eqref{eq:7.7.14} and \eqref{eq:7.7.15}.  Although it is not a regular Sturm-Liouville problem due to the periodic boundary conditions, we know that the eigenvalues are
+\begin{equation}
+\mu_m = m^2, \quad m = 0, 1, 2, \ldots.
+\label{eq:7.7.16b}
+\end{equation}
+The corresponding eigenfunctions are both
+\begin{equation}
+g(\theta) = \sin m\theta \quad\text{and}\quad g(\theta) = \cos m\theta,
+\label{eq:7.7.17}
+\end{equation}
+although for $m = 0$ this reduces to one eigenfunction (not two as for $m \neq 0$).  This eigenvalue problem generates a full Fourier series in $\theta$, as we already know.  $m$ is the number of crests in the $\theta$-direction.
+
+\emph{For each integral value of} $m$, \eqref{eq:7.7.13} helps to define an eigenvalue problem for $\lambda$:
+\begin{equation}
+\boxed{r\frac{d}{d r}\left(r\od{f}{r}\right) + (\lambda r^2 - m^2)\,f = 0}
+\label{eq:7.7.18}
+\end{equation}
+\begin{equation}
+\boxed{f(a) = 0}
+\label{eq:7.7.19}
+\end{equation}
+\begin{equation}
+\boxed{|f(0)| < \infty.}
+\label{eq:7.7.20}
+\end{equation}
+
+Since \eqref{eq:7.7.18} has nonconstant coefficients, it is not surprising that \eqref{eq:7.7.18} is somewhat difficult to analyze.  Equation \eqref{eq:7.7.18} can be put in the Sturm-Liouville form by dividing it by $r$:
+\begin{equation}
+\boxed{\frac{d}{d r}\left(r\od{f}{r}\right) + \left(\lambda r - \frac{m^2}{r}\right)f = 0,}
+\label{eq:7.7.21}
+\end{equation}
+or $Lf + \lambda rf = 0$, where $L = d/dr\,(r\;d/dr) - m^2/r$.  By comparison to the general Sturm-Liouville differential equation,
+\[
+\frac{d}{d x}\left[p(x)\od{\phi}{x}\right] + q\phi + \lambda\sigma\phi = 0,
+\]
+with independent variable $r$, we have that $x = r$, $p(r) = r$, $\sigma(r) = r$, and $q(r) = -m^2/r$.  Our problem is not a regular Sturm-Liouville problem due to the behavior at the origin ($r = 0$):
+
+\begin{enumerate}
+\item The boundary condition at $r = 0$, \eqref{eq:7.7.20}, is of the correct form.
+\item $p = 0$ and $\sigma = 0$ at $r = 0$ (and hence is not positive everywhere).
+\item $q(r)$ approaches $\infty$ as $r \to 0$ [and hence $q(r)$ is not continuous] if $m \neq 0$.
+\end{enumerate}
+
+However, we claim that all the statements concerning regular Sturm-Liouville problems are still valid for this important singular Sturm-Liouville problem.  To begin with there are an infinite number of eigenvalues (for each $m$).  We designate the eigenvalues as $\lambda_{nm}$, where $m = 0, 1, 2, \ldots$ and $n = 1, 2, \ldots$, and the eigenfunctions $f_{nm}(r)$.  \emph{For each fixed} $m$, these eigenfunctions are orthogonal with weight $r$ [see \eqref{eq:7.7.21}], since it can be shown that the boundary terms vanish in Green's formula (see Exercise~5.5.1).  Thus,
+\begin{equation}
+\int_0^a f_{mn_1}f_{mn_2}\,r\,dr = 0 \quad\text{for } n_1 \neq n_2.
+\label{eq:7.7.22}
+\end{equation}
+Shortly, we will state more explicit facts about these eigenfunctions.
+
+\subsection{Bessel's Differential Equation}
+\label{sec:7.7.4}
+
+The $r$-dependent separation of variables solution satisfies a ``singular'' Sturm-Liouville differential equation, \eqref{eq:7.7.21}.  An alternative form is obtained by using the product rule of differentiation and by multiplying by $r$:
+\begin{equation}
+\boxed{r^2\odd{f}{r} + r\od{f}{r} + (\lambda r^2 - m^2)\,f = 0.}
+\label{eq:7.7.23}
+\end{equation}
+There is some additional analysis of \eqref{eq:7.7.23} that can be performed.  Equation \eqref{eq:7.7.23} contains two parameters, $m$ and $\lambda$.  We already know that $m$ is an integer, but the allowable values of $\lambda$ are as yet unknown.  It would be quite tedious to solve numerically \eqref{eq:7.7.23} for various values of $\lambda$ (for different integral values of $m$).  Instead, we might notice that the simple scaling transformation,
+\begin{equation}
+\boxed{z = \sqrt{\lambda}\,r,}
+\label{eq:7.7.24}
+\end{equation}
+removes the dependence of the differential equation on $\lambda$:
+\begin{equation}
+\boxed{z^2\odd{f}{z} + z\od{f}{z} + (z^2 - m^2)\,f = 0.}
+\label{eq:7.7.25}
+\end{equation}
+
+We note that the change of variables \eqref{eq:7.7.24} may be performed since we showed in Sec.~7.6 from the multidimensional Rayleigh quotient that $\lambda > 0$ (for $\laplacian\phi + \lambda\phi = 0$ anytime $\phi = 0$ on the entire boundary, as it is here).  We can also show that $\lambda > 0$ for this problem using the one-dimensional Rayleigh quotient based on \eqref{eq:7.7.18}--\eqref{eq:7.7.20} (see Exercise~7.7.13).  Equation \eqref{eq:7.7.25} has the advantage of not depending on $\lambda$; less work is necessary to compute solutions of \eqref{eq:7.7.25} than of \eqref{eq:7.7.23}.  However, we have gained more than that since \eqref{eq:7.7.25} has been investigated for over 150 years.  It is now known as \textbf{Bessel's differential equation of order} $m$.
+
+\subsection{Singular Points and Bessel's Differential Equation}
+\label{sec:7.7.5}
+
+In this subsection we \emph{briefly} develop some of the properties of Bessel's differential equation.  Equation \eqref{eq:7.7.25} is a second-order linear differential equation with variable coefficients.  We will not be able to obtain an exact closed-form solution of \eqref{eq:7.7.25} \emph{involving elementary functions}.  To analyze a differential equation, one of the first things we should do is search for any special values of $z$ that might cause some difficulties.  $z = 0$ is a singular point of \eqref{eq:7.7.25}.
+
+Perhaps we should define a singular point of a differential equation.  We refer to the standard form:
+\[
+\odd{f}{z} + a(z)\od{f}{z} + b(z)f = 0.
+\]
+If $a(z)$ and $b(z)$ and all their derivatives are finite at $z = z_0$, then $z = z_0$ is called an \textbf{ordinary point}.  Otherwise, $z = z_0$ is a \textbf{singular point}.  For Bessel's differential equation, $a(z) = 1/z$ and $b(z) = 1 - m^2/z^2$.  All finite $z$ except $z = 0$ are ordinary points.  $z = 0$ is a singular point [since, for example, $a(0)$ does not exist].
+
+In the neighborhood of any ordinary point, it is known from the theory of differential equations that all solutions of the differential equation are well behaved [i.e., $f(z)$ and all its derivatives exist at any ordinary point].  We thus are guaranteed that all solutions of Bessel's differential equation are well behaved at every finite point except possibly at $z = 0$.  The only difficulty can occur in the neighborhood of $z = 0$.  We will investigate the expected behavior of solutions of Bessel's differential equation in the neighborhood of $z = 0$.  We will describe a crude (but important) approximation.  If $z$ is very close to 0, then we should expect that $z^2f$ in Bessel's differential equation can be ignored, since it is much smaller than $m^2f$.\footnote{In other problems, if $\lambda = 0$, then the transformation \eqref{eq:7.7.24} is invalid.  However, \eqref{eq:7.7.24} is unnecessary for $\lambda = 0$ since in this case \eqref{eq:7.7.23} becomes an equidimensional equation and can be solved (as in Sec.~2.5.2).}  We do not ignore $z^2\,d^2f/dz^2$ or $z\,df/dz$ because although $z$ is small, it is possible that derivatives of $f$ are large enough so that $z\,df/dz$ is as large as $-m^2 f$.  Dropping $z^2 f$ yields
+\begin{equation}
+z^2\odd{f}{z} + z\od{f}{z} - m^2 f \approx 0,
+\label{eq:7.7.26}
+\end{equation}
+a valid approximation near $z = 0$.  The advantage of this \emph{approximation} is that \eqref{eq:7.7.26} is exactly solvable, since it is an equidimensional (also known as Cauchy or Euler) equation (see Sec.~2.5.2).  Equation \eqref{eq:7.7.26} can be solved by seeking solutions in the form
+\begin{equation}
+f \approx z^s.
+\label{eq:7.7.27}
+\end{equation}
+By substituting \eqref{eq:7.7.27} into \eqref{eq:7.7.26} we obtain a quadratic equation for $s$,
+\begin{equation}
+s(s-1) + s - m^2 = 0,
+\label{eq:7.7.28}
+\end{equation}
+known as the \textbf{indicial equation}.  Thus, $s^2 = m^2$, and the two roots (indices) are $s = \pm m$.  If $m \neq 0$ (in which case we assume $m > 0$), then we obtain two independent approximate solutions.
+\begin{equation}
+f \approx z^m \quad\text{and}\quad f \approx z^{-m} \quad (m > 0).
+\label{eq:7.7.29}
+\end{equation}
+However, if $m = 0$, we only obtain one independent solution $f \approx z^0 = 1$.  A second solution is easily derived from \eqref{eq:7.7.26}.  If $m = 0$,
+\[
+z^2\odd{f}{z} + z\od{f}{z} \approx 0 \quad\text{or}\quad z\frac{d}{d z}\left(z\od{f}{z}\right) \approx 0.
+\]
+Thus, $z\,df/dz$ is constant and, in addition to $f \approx 1$, it is also possible for $f \approx \ln z$.  In summary, for $m = 0$, two independent solutions have the expected behavior near $z = 0$,
+\begin{equation}
+f \approx 1 \quad\text{and}\quad f \approx \ln z \quad (m = 0).
+\label{eq:7.7.30}
+\end{equation}
+
+The general solution of Bessel's differential equation will be a linear combination of two independent solutions, satisfying \eqref{eq:7.7.29} if $m \neq 0$ and \eqref{eq:7.7.30} if $m = 0$.  We have only obtained the expected approximate behavior near $z = 0$.  More will be discussed in the next subsection.  Because of the singular point at $z = 0$, it is possible for solutions not to be well behaved at $z = 0$.  We see from \eqref{eq:7.7.29} and \eqref{eq:7.7.30} that independent solutions of Bessel's differential equation can be chosen such that one is well behaved at $z = 0$ and one solution is not well behaved at $z = 0$ [note that for one solution $\lim_{z\to 0}f(z) = \pm\infty$].
+
+\subsection{Bessel Functions and Their Asymptotic Properties (near \texorpdfstring{$z = 0$}{z = 0})}
+\label{sec:7.7.6}
+
+We continue to discuss Bessel's differential equation of order $m$,
+\begin{equation}
+z^2\odd{f}{z} + z\od{f}{z} + (z^2 - m^2)\,f = 0.
+\label{eq:7.7.31}
+\end{equation}
+
+As motivated by the previous discussion, we claim there are two types of solutions, solutions that are well behaved near $z = 0$ and solutions that are singular at $z = 0$.  Different values of $m$ yield a different differential equation.  Its corresponding solution will depend on $m$.  We introduce the standard notation for a \emph{well-behaved solution} of \eqref{eq:7.7.31}, $J_m(z)$, called the \textbf{Bessel function of the first kind of order} $m$.  In a similar vein, we introduce the notation for a singular solution of Bessel's differential equation, $Y_m(z)$, called the \textbf{Bessel function of the second kind of order} $m$.  You can solve a lot of problems using Bessel's differential equation by just remembering that $Y_m(z)$ \emph{approaches} $\pm\infty$ \emph{as} $z \to 0$.
+
+The general solution of any linear homogeneous second-order differential equation is a linear combination of two independent solutions.  Thus, the general solution of Bessel's differential equation \eqref{eq:7.7.31} is
+\begin{equation}
+\boxed{f = c_1 J_m(z) + c_2 Y_m(z).}
+\label{eq:7.7.32}
+\end{equation}
+Precise definitions of $J_m(z)$ and $Y_m(z)$ are given in Sec.~7.8.  However, for our immediate purposes, we simply note that they satisfy the following asymptotic properties \emph{for small} $z$ ($z \to 0$):
+\begin{equation}
+\boxed{\begin{aligned}
+J_m(z) &\sim \begin{cases} 1 & m = 0 \\ \dfrac{1}{2^m m!}\,z^m & m > 0 \end{cases} \\[10pt]
+Y_m(z) &\sim \begin{cases} \dfrac{2}{\pi}\ln z & m = 0 \\[6pt] -\dfrac{2^m(m-1)!}{\pi}\,z^{-m} & m > 0. \end{cases}
+\end{aligned}}
+\label{eq:7.7.33}
+\end{equation}
+It should be seen that \eqref{eq:7.7.33} is consistent with our approximate behavior, \eqref{eq:7.7.29} and \eqref{eq:7.7.30}.  We see that $J_m(z)$ is bounded as $z \to 0$ whereas $Y_m(z)$ is not.
+
+\subsection{Eigenvalue Problem Involving Bessel Functions}
+\label{sec:7.7.7}
+
+In this section we determine the eigenvalues of the singular Sturm-Liouville problem ($m$ fixed):
+\begin{equation}
+\boxed{\frac{d}{d r}\left(r\od{f}{r}\right) + \left(\lambda r - \frac{m^2}{r}\right)f = 0}
+\label{eq:7.7.34}
+\end{equation}
+\begin{equation}
+\boxed{f(a) = 0}
+\label{eq:7.7.35}
+\end{equation}
+\begin{equation}
+\boxed{|f(0)| < \infty.}
+\label{eq:7.7.36}
+\end{equation}
+
+By the change of variables $z = \sqrt{\lambda}\,r$, \eqref{eq:7.7.34} becomes Bessel's differential equation,
+\[
+z^2\odd{f}{z} + z\od{f}{z} + (z^2 - m^2)\,f = 0.
+\]
+The general solution is a linear combination of Bessel functions, $f = c_1 J_m(z) + c_2 Y_m(z)$.  The scale change implies that in terms of the radial coordinate $r$,
+\begin{equation}
+\boxed{f = c_1 J_m(\sqrt{\lambda}\,r) + c_2 Y_m(\sqrt{\lambda}\,r).}
+\label{eq:7.7.37}
+\end{equation}
+Applying the homogeneous boundary conditions \eqref{eq:7.7.35} and \eqref{eq:7.7.36} will determine the eigenvalues.  $f(0)$ must be finite.  However, $Y_m(0)$ is infinite.  Thus, $c_2 = 0$, implying that
+\begin{equation}
+\boxed{f = c_1 J_m(\sqrt{\lambda}\,r).}
+\label{eq:7.7.38}
+\end{equation}
+We see that $\sqrt{\lambda}\,a$ must be a zero of the Bessel function $J_m(z)$.  Later in Sec.~7.8.1, we show that a Bessel function is a decaying oscillation.  There is an infinite number of zeros of each Bessel function $J_m(z)$.  Let $z_{mn}$ designate the $n$th zero of $J_m(z)$.  Then
+\begin{equation}
+\sqrt{\lambda}\,a = z_{mn} \quad\text{or}\quad \lambda_{mn} = \left(\frac{z_{mn}}{a}\right)^2.
+\label{eq:7.7.40}
+\end{equation}
+Thus, the condition $f(a) = 0$ determines the eigenvalues:
+\begin{equation}
+\boxed{J_m(\sqrt{\lambda}\,a) = 0.}
+\label{eq:7.7.39}
+\end{equation}
+For each $m$, there is an infinite number of eigenvalues, and \eqref{eq:7.7.40} is analogous to $\lambda = (n\pi/L)^2$, where $n\pi$ are the zeros of $\sin x$.
+
+\textbf{Example.}  Consider $J_0(z)$, sketched in detail in Fig.~7.7.1.  From accurate tables, it is known that the first zero of $J_0(z)$ is $z = 2.4048255577\ldots\;$.  Other zeros are recorded in Fig.~7.7.1.  The eigenvalues are $\lambda_{0n} = (z_{0n}/a)^2$.  Separate tables of the zeros are available.  The \emph{Handbook of Mathematical Functions} (Abramowitz and Stegun [1974]) is one source.  Alternatively, over 700 pages are devoted to Bessel functions in \emph{A Treatise on the Theory of Bessel Functions} by Watson [1995].
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch07/fig_7_7_1.png}
+\caption{Sketch of $J_0(z)$ and its zeros.}
+\label{fig:7.7.1}
+\end{figure}
+
+\textbf{Eigenfunctions.}  The eigenfunctions are thus
+\begin{equation}
+J_m\left(\sqrt{\lambda_{mn}}\,r\right) = J_m\left(z_{mn}\frac{r}{a}\right),
+\label{eq:7.7.41}
+\end{equation}
+for $m = 0, 1, 2, \ldots$, $n = 1, 2, \ldots\;$.  For each $m$, these are an infinite set of eigenfunctions for the singular Sturm-Liouville problem, \eqref{eq:7.7.34}--\eqref{eq:7.7.36}.  \emph{For fixed} $m$ they are orthogonal with weight $r$ [as already discussed, see \eqref{eq:7.7.22}]:
+\begin{equation}
+\int_0^a J_m\left(\sqrt{\lambda_{mp}}\,r\right)J_m\left(\sqrt{\lambda_{mq}}\,r\right)r\,dr = 0, \quad p \neq q.
+\label{eq:7.7.42}
+\end{equation}
+
+It is known that this infinite set of eigenfunctions ($m$ fixed) is complete.  Thus, any piecewise smooth function of $r$ can be represented by a generalized Fourier series of the eigenfunctions:
+\begin{equation}
+\alpha(r) = \sum_{n=1}^{\infty} a_n J_m\left(\sqrt{\lambda_{mn}}\,r\right),
+\label{eq:7.7.43}
+\end{equation}
+where $m$ is fixed.  This is sometimes known as a \textbf{Fourier-Bessel series}.  The coefficients can be determined by the orthogonality of the Bessel functions (with weight $r$):
+\begin{equation}
+a_n = \frac{\int_0^a \alpha(r)J_m\left(\sqrt{\lambda_{mn}}\,r\right)r\,dr}{\int_0^a J_m^2\left(\sqrt{\lambda_{mn}}\,r\right)r\,dr}.
+\label{eq:7.7.44}
+\end{equation}
+This illustrates the one-dimensional orthogonality of the Bessel functions.  We omit the evaluation of the normalization integrals $\int_0^a J_m^2\left(\sqrt{\lambda_{mn}}\,r\right)r\,dr$ (e.g., see Churchill [1972] and Berg and McGregor [1966]).
+
+\subsection{Initial Value Problem for a Vibrating Circular Membrane}
+\label{sec:7.7.8}
+
+The vibrations $u(r,\theta,t)$ of a circular membrane are described by the two-dimensional wave equation, \eqref{eq:7.7.1}, with $u$ being fixed on the boundary, \eqref{eq:7.7.2}, subject to the initial conditions \eqref{eq:7.7.3}.  When we apply the method of separation of variables, we obtain four families of product solutions, $u(r,\theta,t) = f(r)g(\theta)h(t)$:
+\begin{equation}
+J_m\left(\sqrt{\lambda_{mn}}\,r\right)
+\begin{Bmatrix} \cos m\theta \\ \sin m\theta \end{Bmatrix}
+\begin{Bmatrix} \cos c\sqrt{\lambda_{mn}}\,t \\ \sin c\sqrt{\lambda_{mn}}\,t \end{Bmatrix}.
+\label{eq:7.7.45}
+\end{equation}
+
+To simplify the algebra, we will assume that the membrane is initially at rest,
+\[
+\pd{u}{t}(r,\theta,0) = \beta(r,\theta) = 0.
+\]
+Thus, the $\sin c\sqrt{\lambda_{mn}}\,t$ terms in \eqref{eq:7.7.45} will not be necessary.  Then according to the principle of superposition, we attempt to satisfy the initial value problem by considering the infinite linear combination of the remaining product solutions:
+\begin{equation}
+\boxed{\begin{aligned}
+u(r,\theta,t) &= \sum_{m=0}^{\infty}\sum_{n=1}^{\infty} A_{mn} J_m\left(\sqrt{\lambda_{mn}}\,r\right)\cos m\theta\cos c\sqrt{\lambda_{mn}}\,t \\
+&\quad + \sum_{m=1}^{\infty}\sum_{n=1}^{\infty} B_{mn} J_m\left(\sqrt{\lambda_{mn}}\,r\right)\sin m\theta\cos c\sqrt{\lambda_{mn}}\,t.
+\end{aligned}}
+\label{eq:7.7.46}
+\end{equation}
+The initial position $u(r,\theta,0) = \alpha(r,\theta)$ implies that
+\begin{equation}
+\alpha(r,\theta) = \sum_{m=0}^{\infty}\left(\sum_{n=1}^{\infty} A_{mn} J_m\left(\sqrt{\lambda_{mn}}\,r\right)\right)\cos m\theta + \sum_{m=1}^{\infty}\left(\sum_{n=1}^{\infty} B_{mn} J_m\left(\sqrt{\lambda_{mn}}\,r\right)\right)\sin m\theta.
+\label{eq:7.7.47}
+\end{equation}
+By properly arranging the terms in \eqref{eq:7.7.47}, we see that this is an ordinary Fourier series in $\theta$.  Their Fourier coefficients are Fourier-Bessel series (note that $m$ is fixed).  Thus, the coefficients may be determined by the orthogonality of $J_m$ (weight $r$ [as in \eqref{eq:7.7.44}]).  As such we can determine the coefficients by repeated application of one-dimensional orthogonality.  Two families of coefficients $A_{mn}$ and $B_{mn}$ (including $m = 0$) can be determined from one initial condition since the periodicity in $\theta$ yielded two eigenfunctions corresponding to each eigenvalue.
+
+However, it is somewhat easier to determine all the coefficients using two-dimensional orthogonality.  Recall that for the two-dimensional eigenvalue problem,
+\[
+\laplacian\phi + \lambda\phi = 0
+\]
+with $\phi = 0$ on the circle of radius $a$, the two-dimensional eigenfunctions are the doubly infinite families
+\begin{equation}
+\phi_\lambda(r,\theta) = J_m\left(\sqrt{\lambda_{mn}}\,r\right)
+\begin{Bmatrix} \cos m\theta \\ \sin m\theta \end{Bmatrix}.
+\label{eq:7.7.48a}
+\end{equation}
+Thus,
+\begin{equation}
+\alpha(r,\theta) = \sum_\lambda A_\lambda\phi_\lambda(r,\theta),
+\label{eq:7.7.48}
+\end{equation}
+where $\sum_\lambda$ stands for a summation over all eigenfunctions [actually two double sums, including both $\sin m\theta$ and $\cos m\theta$ as in \eqref{eq:7.7.47}].  These eigenfunctions $\phi_\lambda(r,\theta)$ are orthogonal (in a two-dimensional sense) with weight 1.  We then immediately calculate $A_\lambda$ (representing both $A_{mn}$ and $B_{mn}$),
+\begin{equation}
+A_\lambda = \frac{\int\!\!\int\alpha(r,\theta)\phi_\lambda(r,\theta)\dA}{\int\!\!\int\phi_\lambda^2(r,\theta)\dA}.
+\label{eq:7.7.49}
+\end{equation}
+Here $dA = r\,dr\,d\theta$.  In two dimensions the weighting function is constant.  However, for geometric reasons $dA = r\,dr\,d\theta$.  Thus, \textbf{the weight} $r$ \textbf{that appears in the one-dimensional orthogonality of Bessel functions is just a geometric factor}.
+
+\subsection{Circularly Symmetric Case}
+\label{sec:7.7.9}
+
+In this subsection, as an example, we consider the vibrations of a circular membrane, with $u = 0$ on the circular boundary, in the case in which the initial conditions are circularly symmetric (meaning independent of $\theta$).  We could consider this as a special case of the general problem, analyzed in Sec.~7.7.8.  An alternative method, which yields the same result, is to reformulate the problem.  The symmetry of the problem, including the initial conditions suggests that the entire solution should be circularly symmetric; there should be no dependence on the angle $\theta$.  Thus,
+\[
+u = u(r,t) \quad\text{and}\quad \laplacian u = \frac{1}{r}\frac{\partial}{\partial r}\left(r\pd{u}{r}\right) \quad\text{since}\quad \pdd{u}{\theta} = 0.
+\]
+The mathematical formulation is thus
+\begin{equation}
+\text{PDE:}\quad
+\boxed{\pdd{u}{t} = \frac{c^2}{r}\frac{\partial}{\partial r}\left(r\pd{u}{r}\right)}
+\label{eq:7.7.50}
+\end{equation}
+\begin{equation}
+\text{BC:}\quad
+\boxed{u(a,t) = 0}
+\label{eq:7.7.51}
+\end{equation}
+\begin{equation}
+\text{IC:}\quad
+\boxed{\begin{aligned}
+u(r,0) &= \alpha(r) \\
+\pd{u}{t}(r,0) &= \beta(r).
+\end{aligned}}
+\label{eq:7.7.52}
+\end{equation}
+
+We note that the partial differential equation has two independent variables.  We need not study this problem in this chapter, which is reserved for more than two variables.  We could have analyzed this problem earlier.  However, as we will see, Bessel functions are the radially dependent functions, and thus it is more natural to discuss this problem in the present part of this text.
+
+We will apply the method of separation of variables to \eqref{eq:7.7.50}--\eqref{eq:7.7.52}.  Looking for product solutions,
+\begin{equation}
+u(r,t) = \phi(r)h(t),
+\label{eq:7.7.53}
+\end{equation}
+yields
+\begin{equation}
+\frac{1}{c^2}\frac{1}{h}\odd{h}{t} = \frac{1}{r\phi}\frac{d}{d r}\left(r\od{\phi}{r}\right) = -\lambda,
+\label{eq:7.7.54}
+\end{equation}
+where $-\lambda$ is introduced because we suspect that the displacement oscillates in time.  The time-dependent equation,
+\[
+\odd{h}{t} = -\lambda c^2 h,
+\]
+has solutions $\sin c\sqrt{\lambda}\,t$ and $\cos c\sqrt{\lambda}\,t$ if $\lambda > 0$.  The eigenvalue problem for the separation constant is
+\begin{equation}
+\boxed{\frac{d}{d r}\left(r\od{\phi}{r}\right) + \lambda r\phi = 0}
+\label{eq:7.7.55}
+\end{equation}
+\begin{equation}
+\boxed{\phi(a) = 0}
+\label{eq:7.7.56}
+\end{equation}
+\begin{equation}
+\boxed{|\phi(0)| < \infty.}
+\label{eq:7.7.57}
+\end{equation}
+
+Since \eqref{eq:7.7.55} is in the form of a Sturm-Liouville equation, we immediately know that eigenfunctions corresponding to distinct eigenvalues are orthogonal with weight $r$.
+
+From the Rayleigh quotient we could show that $\lambda > 0$.  Thus, we may use the transformation
+\begin{equation}
+z = \sqrt{\lambda}\,r,
+\label{eq:7.7.58}
+\end{equation}
+in which case \eqref{eq:7.7.55} becomes
+\begin{equation}
+\frac{d}{d z}\left(z\od{\phi}{z}\right) + z\phi = 0 \quad\text{or}\quad z^2\odd{\phi}{z} + z\od{\phi}{z} + z^2\phi = 0.
+\label{eq:7.7.59}
+\end{equation}
+We may recall that Bessel's differential equation of order $m$ is
+\begin{equation}
+z^2\odd{\phi}{z} + z\od{\phi}{z} + (z^2 - m^2)\phi = 0,
+\label{eq:7.7.60}
+\end{equation}
+with solutions being Bessel functions of order $m$, $J_m(z)$ and $Y_m(z)$.  A comparison with \eqref{eq:7.7.60} shows that \eqref{eq:7.7.59} is Bessel's differential equation of order 0.  The general solution of \eqref{eq:7.7.59} is thus a linear combination of the zeroth-order Bessel functions:
+\begin{equation}
+\phi = c_1 J_0(z) + c_2 Y_0(z) = c_1 J_0\left(\sqrt{\lambda}\,r\right) + c_2 Y_0\left(\sqrt{\lambda}\,r\right),
+\label{eq:7.7.61}
+\end{equation}
+in terms of the radial variable.  The singularity condition at the origin \eqref{eq:7.7.57} shows that $c_2 = 0$, since $Y_0\left(\sqrt{\lambda}\,r\right)$ has a logarithmic singularity at $r = 0$:
+\begin{equation}
+\phi = c_1 J_0\left(\sqrt{\lambda}\,r\right).
+\label{eq:7.7.62}
+\end{equation}
+Finally, the eigenvalues are determined by the condition at $r = a$, \eqref{eq:7.7.56}, in which case
+\begin{equation}
+J_0\left(\sqrt{\lambda}\,a\right) = 0.
+\label{eq:7.7.63}
+\end{equation}
+Thus, $\sqrt{\lambda}\,a$ must be a zero of the zeroth Bessel function.  We thus obtain an infinite number of eigenvalues, which we label $\lambda_1, \lambda_2, \ldots\;$.
+
+We have obtained two infinite families of product solutions
+\[
+J_0\left(\sqrt{\lambda_n}\,r\right)\sin c\sqrt{\lambda_n}\,t \quad\text{and}\quad J_0\left(\sqrt{\lambda_n}\,r\right)\cos c\sqrt{\lambda_n}\,t.
+\]
+According to the principle of superposition, we seek solutions to our original problem, \eqref{eq:7.7.50}--\eqref{eq:7.7.52} in the form
+\begin{equation}
+\boxed{u(r,t) = \sum_{n=1}^{\infty} a_n J_0\left(\sqrt{\lambda_n}\,r\right)\cos c\sqrt{\lambda_n}\,t + \sum_{n=1}^{\infty} b_n J_0\left(\sqrt{\lambda_n}\,r\right)\sin c\sqrt{\lambda_n}\,t.}
+\label{eq:7.7.64}
+\end{equation}
+As before, we determine the coefficients $a_n$ and $b_n$ from the initial conditions.  $u(r,0) = \alpha(r)$ implies that
+\begin{equation}
+\alpha(r) = \sum_{n=1}^{\infty} a_n J_0\left(\sqrt{\lambda_n}\,r\right).
+\label{eq:7.7.65}
+\end{equation}
+The coefficients $a_n$ are thus the Fourier-Bessel coefficients (of order 0) of $\alpha(r)$.  Since $J_0\left(\sqrt{\lambda_n}\,r\right)$ forms an orthogonal set with weight $r$, we can easily determine $a_n$,
+\begin{equation}
+\boxed{a_n = \frac{\int_0^a \alpha(r)J_0\left(\sqrt{\lambda_n}\,r\right)r\,dr}{\int_0^a J_0^2\left(\sqrt{\lambda_n}\,r\right)r\,dr}.}
+\label{eq:7.7.66}
+\end{equation}
+
+In a similar manner, the initial condition $\partial u/\partial t\,(r,0) = \beta(r)$ determines $b_n$.
+
+\begin{exercises}{7.7}
+
+\item[\starred] Solve as simply as possible:
+\[
+\pdd{u}{t} = c^2\laplacian u
+\]
+with $u(a,\theta,t) = 0$, $u(r,\theta,0) = 0$, and $\pd{u}{t}(r,\theta,0) = \alpha(r)\sin 3\theta$.
+
+\item Solve as simply as possible:
+\[
+\pdd{u}{t} = c^2\laplacian u \quad\text{subject to}\quad \pd{u}{r}(a,\theta,t) = 0
+\]
+with initial conditions
+\begin{enumerate}
+\item[(a)] $u(r,\theta,0) = 0$, \quad $\pd{u}{t}(r,\theta,0) = \beta(r)\cos 5\theta$
+\item[(b)] $u(r,\theta,0) = 0$, \quad $\pd{u}{t}(r,\theta,0) = \beta(r)$
+\item[(c)] $u(r,\theta,0) = \alpha(r,\theta)$, \quad $\pd{u}{t}(r,\theta,0) = 0$
+\item[\starred(d)] $u(r,\theta,0) = 0$, \quad $\pd{u}{t}(r,\theta,0) = \beta(r,\theta)$
+\end{enumerate}
+
+\item Consider a vibrating quarter-circular membrane, $0 < r < a$, $0 < \theta < \pi/2$, with $u = 0$ on the entire boundary.
+
+\begin{enumerate}
+\item[\starred(a)] Determine an expression for the frequencies of vibration.
+\item[(b)] Solve the initial value problem if
+\[
+u(r,\theta,0) = g(r,\theta), \qquad \pd{u}{t}(r,\theta,0) = 0.
+\]
+\end{enumerate}
+
+\item Consider the displacement $u(r,\theta,t)$ of a ``pie-shaped'' membrane of radius $a$ (and angle $\pi/3 = 60^\circ$) that satisfies
+\[
+\pdd{u}{t} = c^2\laplacian u.
+\]
+Assume that $\lambda > 0$.  Determine the natural frequencies of oscillation if the boundary conditions are
+\begin{enumerate}
+\item[(a)] $u(r,0,t) = 0$, \quad $u(r,\pi/3,t) = 0$, \quad $\pd{u}{r}(a,\theta,t) = 0$
+\item[(b)] $u(r,0,t) = 0$, \quad $u(r,\pi/3,t) = 0$, \quad $u(r,a,\theta,t) = 0$
+\end{enumerate}
+
+\item[\starred] Consider the displacement $u(r,\theta,t)$ of a membrane whose shape is a $90^\circ$ sector of an annulus, $a < r < b$, $0 < \theta < \pi/2$, with the conditions that $u = 0$ on the entire boundary.  Determine the natural frequencies of vibration.
+
+\item Consider the circular membrane satisfying
+\[
+\pdd{u}{t} = c^2\laplacian u
+\]
+subject to the boundary condition
+\[
+u(a,\theta,t) = -\pd{u}{r}(a,\theta,t).
+\]
+\begin{enumerate}
+\item[(a)] Show that this membrane only oscillates.
+\item[(b)] Obtain an expression that determines the natural frequencies.
+\item[(c)] Solve the initial value problem if
+\[
+u(r,\theta,0) = 0, \qquad \pd{u}{t}(r,\theta,0) = \alpha(r)\sin 3\theta.
+\]
+\end{enumerate}
+
+\item Solve the heat equation
+\[
+\pd{u}{t} = k\laplacian u
+\]
+inside a circle of radius $a$ with zero temperature around the entire boundary, if initially
+\[
+u(r,\theta,0) = f(r,\theta).
+\]
+Briefly analyze $\lim_{t\to\infty}u(r,\theta,t)$.  Compare this to what you expect to occur using physical reasoning as $t \to \infty$.
+
+\item[\starred] Reconsider Exercise~7.7.7, but with the entire boundary insulated.
+
+\item Solve the heat equation
+\[
+\pd{u}{t} = k\laplacian u
+\]
+inside a semicircle of radius $a$ and briefly analyze the $\lim_{t\to\infty}$ if the initial conditions are
+\[
+u(r,\theta,0) = f(r,\theta)
+\]
+and the boundary conditions are
+
+\begin{enumerate}
+\item[(a)] $u(r,0,t) = 0$, \quad $u(r,\pi,t) = 0$, \quad $\pd{u}{r}(a,\theta,t) = 0$
+
+\item[\starred(b)] $\pd{u}{\theta}(r,0,t) = 0$, \quad $\pd{u}{\theta}(r,\pi,t) = 0$, \quad $u(a,\theta,t) = 0$
+
+\item[(c)] $\pd{u}{\theta}(r,0,t) = 0$, \quad $\pd{u}{\theta}(r,\pi,t) = 0$, \quad $u(a,\theta,t) = 0$
+
+\item[(d)] $u(r,0,t) = 0$, \quad $u(r,\pi,t) = 0$, \quad $u(a,\theta,t) = 0$
+\end{enumerate}
+
+\item[\starred] Solve for $u(r,t)$ if it satisfies the circularly symmetric heat equation
+\[
+\pd{u}{t} = k\frac{1}{r}\frac{\partial}{\partial r}\left(r\pd{u}{r}\right)
+\]
+subject to the conditions
+\[
+\begin{aligned}
+u(a,t) &= 0 \\
+u(r,0) &= f(r).
+\end{aligned}
+\]
+Briefly analyze the $\lim_{t\to\infty}$.
+
+\item Reconsider Exercise~7.7.10 with the boundary condition
+\[
+\pd{u}{r}(a,t) = 0.
+\]
+
+\item For the following differential equations, what is the expected approximate behavior of all solutions near $x = 0$?
+
+\begin{enumerate}
+\item[\starred(a)] $x^2\odd{y}{x} + (x-6)y = 0$
+\item[(b)] $x^2\odd{y}{x} + (x^2 + \tfrac{3}{16})y = 0$
+\item[(c)] $x^2\odd{y}{x} + (x + x^2)\od{y}{x} + 4y = 0$
+\item[(d)] $x^2\odd{y}{x} + (x + x^2)\od{y}{x} - 4y = 0$
+\item[\starred(e)] $x^2\odd{y}{x} - 4x\od{y}{x} + (6+x^3)y = 0$
+\item[(f)] $x^2\odd{y}{x} + (x + \tfrac{1}{4})y = 0$
+\end{enumerate}
+
+\item Using the one-dimensional Rayleigh quotient, show that $\lambda > 0$ as defined by \eqref{eq:7.7.18}--\eqref{eq:7.7.20}.
+
+\end{exercises}

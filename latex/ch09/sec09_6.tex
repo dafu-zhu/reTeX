@@ -1,0 +1,197 @@
+% sec09_6.tex — Section 9.6: Perturbed Eigenvalue Problems
+\section{Perturbed Eigenvalue Problems}
+\label{sec:perturbed-eig}
+
+%% ────────────────────────────────────────────────────────────────
+\subsection{Introduction}
+\label{sec:perturbed-intro}
+
+When a small change (called a \textbf{perturbation}) is made to a problem that we know how to solve, then the resulting problem may not have a simple exact solution.  Here, we will develop an approximate (asymptotic) procedure to analyze perturbed eigenvalue problems.  Nonhomogeneous boundary value problems with nontrivial homogeneous solutions will occur, and hence our development in Section~9.4 of the Fredholm alternative will be helpful.  We begin with an elementary mathematical example before considering the more interesting case of a perturbed circular membrane.
+
+%% ────────────────────────────────────────────────────────────────
+\subsection{Mathematical Example}
+\label{sec:perturbed-math}
+
+The simplest example of a perturbed eigenvalue problem is
+\begin{equation}
+\label{eq:9.6.1}
+\boxed{\odd{\phi}{x} + (\lambda + \epsilon f(x))\,\phi = 0}
+\end{equation}
+with
+\begin{equation}
+\label{eq:9.6.2}
+\phi(0) = 0 \quad\text{and}\quad \phi(L) = 0.
+\end{equation}
+If $\epsilon = 0$, this is the usual eigenvalue problem [$\lambda = (n\pi/L)^2$, $\phi = \sin n\pi x/L$].  If $\epsilon$ is a small nonzero parameter, then the coefficient deviates from a constant by a small given amount, $\epsilon f(x)$.  It is known that the eigenvalues and eigenfunctions are well-behaved functions of $\epsilon$:
+\begin{equation}
+\label{eq:9.6.3}
+\lambda = \lambda_0 + \epsilon\lambda_1 + \cdots \quad\text{and}\quad \phi = \phi_0 + \epsilon\phi_1 + \cdots.
+\end{equation}
+This is called a \textbf{perturbation expansion}.  By substituting \eqref{eq:9.6.3} into \eqref{eq:9.6.1}, we obtain
+\begin{equation}
+\label{eq:9.6.4}
+\odd{}{x}(\phi_0+\epsilon\phi_1+\cdots) + [\lambda_0+\epsilon\lambda_1+\cdots+\epsilon f(x)](\phi_0+\epsilon\phi_1+\cdots) = 0.
+\end{equation}
+Equation~\eqref{eq:9.6.4} is valid for all $\epsilon$.  The terms without $\epsilon$ must equal zero (resulting from letting $\epsilon = 0$).  Thus,
+\begin{equation}
+\label{eq:9.6.5}
+\odd{\phi_0}{x} + \lambda_0\phi_0 = 0.
+\end{equation}
+The boundary conditions [obtained by substituting \eqref{eq:9.6.3} into \eqref{eq:9.6.2}] are $\phi_0(0) = 0$ and $\phi_0(L) = 0$.  Consequently, as expected, the \emph{leading order} eigenvalues $\lambda_0$ and corresponding eigenfunctions $\phi_0$ are the same as those of the unperturbed problem ($\epsilon = 0$):
+\begin{equation}
+\label{eq:9.6.6}
+\lambda_0 = \left(\frac{n\pi}{L}\right)^2 \quad\text{and}\quad \phi_0 = \sin\frac{n\pi x}{L},
+\end{equation}
+where $n = 1,2,3,\ldots$.  A more precise notation would be $\lambda_n^{(0)}$.
+
+The $\epsilon$ terms in \eqref{eq:9.6.4} must also vanish:
+\begin{equation}
+\label{eq:9.6.7}
+\odd{\phi_1}{x} + \lambda_0\phi_1 = -f(x)\phi_0 - \lambda_1\phi_0,
+\end{equation}
+where
+\begin{equation}
+\label{eq:9.6.8}
+\phi_1(0) = 0 \quad\text{and}\quad \phi_1(L) = 0
+\end{equation}
+follows from \eqref{eq:9.6.2}.  This is a nonhomogeneous differential equation with homogeneous boundary conditions.  We note that $\phi_0 = \sin n\pi x/L$ is a nontrivial homogeneous solution satisfying the homogeneous boundary conditions.  Thus, by the Fredholm alternative, there is a solution to \eqref{eq:9.6.7}--\eqref{eq:9.6.8} only if the right-hand side of \eqref{eq:9.6.7} is orthogonal to $\phi_0$:
+\begin{equation}
+\label{eq:9.6.9}
+0 = \int_0^L f(x)\phi_0^2\dx + \lambda_1\int_0^L\phi_0^2\dx.
+\end{equation}
+From \eqref{eq:9.6.9} we determine the resulting perturbation of the eigenvalue:
+\begin{equation}
+\label{eq:9.6.10}
+\boxed{\lambda_1 = -\frac{\displaystyle\int_0^L f(x)\phi_0^2\dx}{\displaystyle\int_0^L\phi_0^2\dx} = -\frac{2}{L}\int_0^L f(x)\phi_0^2\dx.}
+\end{equation}
+Instead of using the Fredholm alternative, we could have applied the method of eigenfunction expansion to \eqref{eq:9.6.7} with \eqref{eq:9.6.8}.  In this latter way, we obtain $\phi_1$ as well as $\lambda_1$ given by \eqref{eq:9.6.10}.
+
+%% ────────────────────────────────────────────────────────────────
+\subsection{Vibrating Nearly Circular Membrane}
+\label{sec:perturbed-membrane}
+
+For a physical problem involving similar ideas, consider the vibrations of a nearly circular membrane with mass impurities.  We have already determined (see Section~7.7) the natural frequencies for a circular membrane with constant mass density.  We want to know how these frequencies are changed due to small changes in both the density and geometry.  In general, a vibrating membrane satisfies the two-dimensional wave equation
+\begin{equation}
+\label{eq:9.6.11}
+\pdd{u}{t} = c^2\laplacian u,
+\end{equation}
+where $c^2 = T/\rho$ may be a function of $r$ and $\theta$.  We assume that $u = 0$ on the boundary.  By separating variables, $u(r,\theta,t) = \phi(r,\theta)h(t)$, we obtain
+\begin{equation}
+\label{eq:9.6.12}
+\odd{h}{t} = -\lambda h \quad\text{and}\quad \laplacian\phi = -\frac{\lambda}{c^2}\phi.
+\end{equation}
+Here, the separation constants $\lambda$ are such that $\sqrt{\lambda}$ are the natural frequencies of oscillation.
+
+We want to consider the case in which the constant mass density is slightly perturbed (perhaps due to a small imperfection), $\rho = \rho_0 + \epsilon\rho_1(r,\theta)$, where the perturbation of the density $\epsilon\rho_1(r,\theta)$ is given and $\epsilon$ is a very small parameter ($0 < |\epsilon| \ll 1$).  Thus
+\[
+\frac{1}{c^2} = \frac{\rho}{T} = \frac{\rho_0+\epsilon\rho_1(r,\theta)}{T} = \frac{1}{c_0^2} + \epsilon\frac{\rho_1(r,\theta)}{T},
+\]
+where $c_0$ is the sound speed for a uniform membrane.  The perturbed eigenvalue problem is to solve the partial differential equation
+\begin{equation}
+\label{eq:9.6.13}
+\boxed{\laplacian\phi = -\lambda\left(\frac{1}{c_0^2} + \epsilon\frac{\rho_1(r,\theta)}{T}\right)\phi,}
+\end{equation}
+subject to $\phi = 0$ on the boundary:
+\begin{equation}
+\label{eq:9.6.14}
+\boxed{\phi(a+\epsilon g(\theta),\theta) = 0,}
+\end{equation}
+since we express a perturbed circle as $r = a + \epsilon g(\theta)$ with $g(\theta)$ given.
+
+\textbf{Boundary condition.}
+The boundary condition \eqref{eq:9.6.14} is somewhat difficult; we may wish to consider the simple case in which the boundary is circular [$r = a$ or $g(\theta)=0$].  In general, $\phi = 0$ along a complicated boundary, which is near to the simpler boundary $r = a$.  This suggests that we utilize a Taylor series, in which case \eqref{eq:9.6.14} may be replaced by
+\begin{equation}
+\label{eq:9.6.15}
+\phi + \epsilon g(\theta)\pd{\phi}{r} + \frac{\epsilon^2 g^2(\theta)}{2!}\pdd{\phi}{r} + \cdots = 0,
+\end{equation}
+evaluated at $r = a$.
+
+\textbf{Perturbation expansion.}
+To solve \eqref{eq:9.6.13} with \eqref{eq:9.6.15}, we assume the eigenvalues and eigenfunctions depend on the small parameter such that
+\begin{equation}
+\label{eq:9.6.16}
+\phi = \phi_0 + \epsilon\phi_1 + \cdots \quad\text{and}\quad \lambda = \lambda_0 + \epsilon\lambda_1 + \cdots.
+\end{equation}
+We substitute \eqref{eq:9.6.16} into \eqref{eq:9.6.13} and \eqref{eq:9.6.15}.  The terms of order $\epsilon^0$ are
+\begin{equation}
+\label{eq:9.6.17}
+\laplacian\phi_0 = -\frac{\lambda_0}{c_0^2}\phi_0
+\end{equation}
+with $\phi_0 = 0$ at $r = a$.  Thus, $\lambda_0$ and $\phi_0$ are known unperturbed eigenvalues and eigenfunctions for a circular membrane with uniform density $\rho_0$ (see Sec.~7.7).  We are most interested in determining $\lambda_1$, the leading-order change of each eigenvalue due to the perturbed density and shape.
+
+We will determine $\lambda_1$ by considering the equations for $\phi_1$ obtained by keeping only the $\epsilon$ terms when the perturbation expansions \eqref{eq:9.6.16} are substituted into \eqref{eq:9.6.13} and \eqref{eq:9.6.15}:
+\begin{equation}
+\label{eq:9.6.18}
+\laplacian\phi_1 + \frac{\lambda_0}{c_0^2}\phi_1 = -\frac{\lambda_1}{c_0^2}\phi_0 - \frac{\lambda_0}{T}\rho_1(r,\theta)\phi_0,
+\end{equation}
+subject to the boundary condition (at $r = a$)
+\begin{equation}
+\label{eq:9.6.19}
+\phi_1 = -g(\theta)\pd{\phi_0}{r}.
+\end{equation}
+The right-hand side of \eqref{eq:9.6.18} contains the known perturbation of the density $\rho_1$ and the unknown perturbation of each eigenvalue $\lambda_1$, whereas the right-hand side of \eqref{eq:9.6.19} involves the known perturbation of the shape ($r = a + \epsilon g(\theta)$).
+
+\textbf{Compatibility condition.}
+Boundary value problem \eqref{eq:9.6.18} with \eqref{eq:9.6.19} is a nonhomogeneous partial differential equation with nonhomogeneous boundary conditions.  Most importantly, there is a nontrivial homogeneous solution, $\phi_{1_h} = \phi_0$; the leading-order eigenfunction satisfies the \emph{corresponding homogeneous} partial differential equation and the \emph{homogeneous} boundary conditions [see \eqref{eq:9.6.17}].  Thus, there is a solution to \eqref{eq:9.6.18}--\eqref{eq:9.6.19} only if the compatibility equation is valid.  This is most easily obtained using Green's formula (with $u = \phi_0$ and $v = \phi_1$):
+\begin{equation}
+\label{eq:9.6.20}
+\iint [\phi_0 L(\phi_1) - \phi_1 L(\phi_0)]\dA = \oint(\phi_0\nabla\phi_1 - \phi_1\nabla\phi_0)\cdot\hat{\mathbf{n}}\ds.
+\end{equation}
+The right-hand side of \eqref{eq:9.6.20} does not vanish since $\phi_1$ does not satisfy homogeneous boundary conditions.  Using \eqref{eq:9.6.17} and \eqref{eq:9.6.18}--\eqref{eq:9.6.19} yields the solvability condition
+\begin{equation}
+\label{eq:9.6.21}
+-\iint\phi_0\left(\frac{\lambda_1}{c_0^2}\phi_0 + \frac{\lambda_0}{T}\rho_1(r,\theta)\phi_0\right)\dA = \oint g(\theta)\pd{\phi_0}{r}\nabla\phi_0\cdot\hat{\mathbf{n}}\ds.
+\end{equation}
+
+We easily determine the perturbed eigenvalue $\lambda_1$ from \eqref{eq:9.6.21}:
+\begin{equation}
+\label{eq:9.6.22}
+\boxed{\lambda_1 = \frac{\dfrac{\lambda_0}{T}\displaystyle\iint\rho_1(r,\theta)\phi_0^2\,r\,dr\,d\theta + \int_0^{2\pi}g(\theta)\left(\pd{\phi_0}{r}\right)^2 a\,d\theta}{-\dfrac{1}{c_0^2}\displaystyle\iint\phi_0^2\,r\,dr\,d\theta},}
+\end{equation}
+using $\nabla\phi_0\cdot\hat{\mathbf{n}} = \partial\phi_0/\partial r$ (evaluated at $r = a$), $dA = r\,dr\,d\theta$, and $ds = a\,d\theta$.  The eigenvalues decrease if the density is increased ($\rho_1 > 0$) or if the membrane is enlarged [$g(\theta) > 0$].
+
+As is elaborated on in the Exercises, this result is valid only if there is one eigenfunction $\phi_0$ corresponding to the eigenvalue $\lambda_0$.  In fact, for a circular membrane, there are usually two eigenfunctions corresponding to each eigenvalue (from $\sin m\theta$ and $\cos m\theta$).  Both must be considered.
+
+\textbf{Fredholm alternative.}
+If $g(\theta) = 0$, then $\phi_0$ and $\phi_1$ satisfy the same set of homogeneous boundary conditions.  Then \eqref{eq:9.6.21} is equivalent to the Fredholm alternative; that is, solutions exist to \eqref{eq:9.6.18} with \eqref{eq:9.6.19} if and only if the right-hand side of \eqref{eq:9.6.18} is orthogonal to the homogeneous solution $\phi_0$.  Equation~\eqref{eq:9.6.21} shows the appropriate modification for nonhomogeneous boundary conditions.
+
+%% ────────────────────────────────────────────────────────────────
+\begin{exercises}{9.6}
+
+\item Consider the perturbed eigenvalue problem \eqref{eq:9.6.1}.  Determine the perturbations of the eigenvalue $\lambda_1$ if
+\begin{enumerate}
+\item[(a)] $\od{\phi}{x}(0) = 0$ and $\od{\phi}{x}(L) = 0$
+\item[(b)] $\phi(0) = 0$ and $\od{\phi}{x}(L) = 0$
+\item[(c)] $\phi(0) = 0$ and $\phi(L) = 0$
+\end{enumerate}
+
+\item Reconsider Exercise~9.6.1.  Determine the perturbations of the eigenvalues $\lambda_1$ and the eigenfunctions $\phi_1$ using the method of eigenfunction expansion:
+\begin{enumerate}
+\item[(a)] $\od{\phi}{x}(0) = 0$ and $\od{\phi}{x}(L) = 0$
+\item[(b)] $\phi(0) = 0$ and $\od{\phi}{x}(L) = 0$
+\item[(c)] $\phi(0) = 0$ and $\phi(L) = 0$
+\end{enumerate}
+
+\item Reconsider Exercise~9.6.1 subject to the periodic boundary conditions $\phi(-L) = \phi(L)$ and $d\phi/dx(-L) = d\phi/dx(L)$.  For $n \neq 0$, the eigenvalue problem is \textbf{degenerate} if $\epsilon = 0$; that is, there is more than one eigenfunction ($\sin n\pi x/L$ and $\cos n\pi x/L$) corresponding to the same eigenvalue.  \emph{Determine the perturbed eigenvalues} $\lambda_1$.  Show that if $\epsilon \neq 0$, there is one eigenfunction for each eigenvalue, but as $\epsilon \to 0$, two eigenvalues will approach each other (\textbf{coalesce}), yielding eigenvalues with two eigenfunctions.  [\textit{Hint:} It is necessary to consider a linear combination of both eigenfunctions ($\epsilon = 0$).  For each eigenvalue, \emph{determine the specific combination of these eigenfunctions that is the unique eigenfunction when $\epsilon \neq 0$.}]
+
+\item Reconsider Exercise~9.6.1 subject to the boundary conditions $\phi(0) = 0$ and $\phi(L) = 0$.  Do additional calculations to obtain $\lambda_2$.  Insist that the eigenfunctions are normalized, $\int_0^L\phi^2\dx = 1$.  This is solved for $\lambda_1$ in the text.
+
+\item Consider the \emph{nonlinearly} perturbed eigenvalue problem:
+\[
+\odd{\phi}{x} + \lambda\phi = \epsilon\phi^3
+\]
+with $\phi(0)=0$ and $\phi(L)=0$.  Determine the perturbation of the eigenvalue $\lambda_1$.  Since the problem is nonlinear, the amplitude is important.  Assume $\int_0^L\phi^2\dx = a^2$.  Sketch $a$ as a function of $\lambda$.
+
+\item Consider a vibrating string with approximately uniform tension $T$ and mass density $\rho_0 + \epsilon\rho_1(x)$ subject to fixed boundary conditions.  Determine the changes in the natural frequencies induced by the mass variation.
+
+\item Consider a uniform membrane of fixed shape with known frequencies and known natural modes of vibration.  Suppose the mass density is perturbed.  Determine how the frequencies are perturbed.  You may assume there is only one mode of vibration for each frequency.
+
+\item For a circular membrane, determine the change in the natural frequencies of the circularly symmetric ($m = 0$) eigenfunctions due to small mass and shape variations.
+
+\item Consider a circular membrane $r = a$.  For noncircularly symmetric eigenfunctions ($m \neq 0$), \eqref{eq:9.6.18} is valid with $\phi_0 = c_1\phi_0^{(1)} + c_2\phi_0^{(2)}$, where $\phi_0^{(1)}$ and $\phi_0^{(2)}$ are two mutually orthogonal eigenfunctions corresponding to the same eigenvalue $\lambda_0$.  Here $c_1$ and $c_2$ are arbitrary constants.
+\begin{enumerate}
+\item[(a)] Determine a homogeneous linear system of equations for $c_1$ and $c_2$ derived from the fact that $\phi_1$ has two homogeneous solutions $\phi_0^{(1)}$ and $\phi_0^{(2)}$.  This will be the compatibility condition for \eqref{eq:9.6.18} with \eqref{eq:9.6.19}.
+\item[(b)] Solve the linear system of part~(a) to determine the perturbed frequencies and the corresponding natural modes of vibration.
+\end{enumerate}
+
+\end{exercises}

@@ -1,0 +1,453 @@
+% sec10_4.tex — Section 10.4: Fourier Transform and the Heat Equation
+\section{Fourier Transform and the Heat Equation}
+\label{sec:ft-heat}
+
+%% ── 10.4.1 ──────────────────────────────────────────────────────
+\subsection{Heat Equation}
+\label{subsec:ft-heat-eq}
+
+We begin to illustrate how to use Fourier transforms to solve the heat equation on an infinite interval.  Earlier we showed that $e^{-i\omega x}e^{-k\omega^2 t}$ for all $\omega$ solves the heat equation, $\pd{u}{t} = k\pdd{u}{x}$.  A generalized principle of superposition showed that the heat equation is solved by
+\boxed{\begin{equation}
+\label{eq:heat-ft-sol}
+u(x,t) = \int_{-\infty}^{\infty} c(\omega)\,e^{-i\omega x}\,e^{-k\omega^2 t}\,d\omega.
+\end{equation}}
+
+The initial condition $u(x,0) = f(x)$ is satisfied if
+\begin{equation}
+\label{eq:heat-ft-ic}
+f(x) = \int_{-\infty}^{\infty} c(\omega)\,e^{-i\omega x}\,d\omega.
+\end{equation}
+From the definition of the Fourier transform ($\gamma = 1$), we observe that \eqref{eq:heat-ft-ic} is a Fourier integral representation of $f(x)$.  Thus, $c(\omega)$ is the Fourier transform of the initial temperature distribution $f(x)$:
+\boxed{\begin{equation}
+\label{eq:heat-ft-coeff}
+c(\omega) = \frac{1}{2\pi}\int_{-\infty}^{\infty} f(x)\,e^{i\omega x}\dx.
+\end{equation}}
+
+Equations \eqref{eq:heat-ft-sol} and \eqref{eq:heat-ft-coeff} describe the solution of our initial value problem for the heat equation.\footnote{In particular, in Exercise~10.4.2 we show that $u \to 0$ as $x \to \infty$, even though $e^{-i\omega x} \not\to 0$ as $x \to \infty$.}
+
+In this form, this solution is too complicated to be of frequent use.  We therefore describe a simplification.  We substitute $c(\omega)$ into the solution, recalling that the $x$ in \eqref{eq:heat-ft-coeff} is a dummy variable (and hence we introduce $\bar{x}$):
+\[
+u(x,t) = \int_{-\infty}^{\infty}\left[\frac{1}{2\pi}\int_{-\infty}^{\infty} f(\bar{x})\,e^{i\omega\bar{x}}\,d\bar{x}\right]e^{-i\omega x}\,e^{-k\omega^2 t}\,d\omega.
+\]
+Instead of doing the $\bar{x}$ integration first, we interchange the orders:
+\begin{equation}
+\label{eq:heat-ft-interchange}
+u(x,t) = \frac{1}{2\pi}\int_{-\infty}^{\infty} f(\bar{x})\left[\int_{-\infty}^{\infty} e^{-k\omega^2 t}\,e^{-i\omega(x-\bar{x})}\,d\omega\right]d\bar{x}.
+\end{equation}
+Equation \eqref{eq:heat-ft-interchange} shows the importance of $g(x)$, the inverse Fourier transform of $e^{-k\omega^2 t}$:
+\begin{equation}
+\label{eq:heat-g-def}
+g(x) = \int_{-\infty}^{\infty} e^{-k\omega^2 t}\,e^{-i\omega x}\,d\omega.
+\end{equation}
+Thus, the integrand of \eqref{eq:heat-ft-interchange} contains $g(x-\bar{x})$, not $g(x)$.
+
+\textbf{Influence function.}  We need to determine the function $g(x)$ whose Fourier transform is $e^{-k\omega^2 t}$ [and then make it a function of $x-\bar{x}$, $g(x-\bar{x})$].  $e^{-k\omega^2 t}$ is a Gaussian.  From the previous section (or most tables of Fourier transforms; see Sec.~10.4.4), letting $\alpha = kt$, we obtain the Gaussian $g(x) = \sqrt{\pi/kt}\,e^{-x^2/4kt}$, and thus the solution of the heat equation is
+\boxed{\begin{equation}
+\label{eq:heat-influence-sol}
+u(x,t) = \int_{-\infty}^{\infty} f(\bar{x})\,\frac{1}{\sqrt{4\pi kt}}\,e^{-(x-\bar{x})^2/4kt}\,d\bar{x}.
+\end{equation}}
+
+This form clearly shows the solution's dependence on the entire initial temperature distribution, $u(x,0) = f(x)$.  Each initial temperature ``influences'' the temperature at time $t$.  We define
+\boxed{\begin{equation}
+\label{eq:influence-function}
+G(x,t;\bar{x},0) = \frac{1}{\sqrt{4\pi kt}}\,e^{-(x-\bar{x})^2/4kt}
+\end{equation}}
+and call it the \textbf{influence function}.  Its relationship to an infinite space Green's function for the heat equation will be explained in Chapter~11.  Equation \eqref{eq:influence-function} measures in some sense the effect of the initial ($t=0$) temperature at position $\bar{x}$ on the temperature at time $t$ at location $x$.  As $t \to 0$, the influence function becomes more and more concentrated.  In fact, in Exercise~10.3.18 it is shown that
+\[
+\lim_{t\to 0+}\frac{1}{\sqrt{4\pi kt}}\,e^{-(x-\bar{x})^2/4kt} = \delta(x-\bar{x})
+\]
+(the Dirac delta function of Chapter~9), thus verifying that \eqref{eq:heat-influence-sol} satisfies the initial conditions.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch10/fig_fundamental-sol.png}
+\caption{Fundamental solution for the heat equation.}
+\label{fig:fundamental-sol}
+\end{figure}
+
+The solution \eqref{eq:heat-influence-sol} of the heat equation on an infinite domain was derived in a complicated fashion using Fourier transforms.  We required that $\int_{-\infty}^{\infty}|f(x)|\dx < \infty$, a restriction on the initial temperature distribution, in order for the Fourier transform to exist.  However, the final form of the solution does not even refer to Fourier transforms.  Thus, we never need to calculate any Fourier transforms to utilize \eqref{eq:heat-influence-sol}.  In fact, we claim that the restriction $\int_{-\infty}^{\infty}|f(x)|\dx < \infty$ on \eqref{eq:heat-influence-sol} is not necessary.  Equation \eqref{eq:heat-influence-sol} is valid (although the derivation we gave is not), roughly speaking, whenever the integral in \eqref{eq:heat-influence-sol} converges.
+
+\textbf{Fundamental solution of the heat equation.}  We consider solving the heat equation subject to an initial condition concentrated at $x = 0$, $u(x,0) = f(x) = \delta(x)$, where $\delta(x)$ is the Dirac delta function with properties described in section~9.3.4.  According to \eqref{eq:heat-influence-sol}, the solution of the heat equation with this initial condition is
+\boxed{\begin{equation}
+\label{eq:fundamental-sol}
+u(x,t) = \int_{-\infty}^{\infty}\delta(\bar{x})\,\frac{1}{\sqrt{4\pi kt}}\,e^{-(x-\bar{x})^2/4kt}\,d\bar{x} = \frac{1}{\sqrt{4\pi kt}}\,e^{-x^2/4kt},
+\end{equation}}
+using the basic property of the Dirac delta function.  This is one of the most elementary solutions of the heat equation on an infinite domain, and it is called the \textbf{fundamental solution}.  It is sketched in Figure~\ref{fig:fundamental-sol}.  The fundamental solution of the heat equation is the same as the infinite space Green's function for the heat equation, which will be explained in Chapter~11.
+
+\textbf{Example.}  To investigate how discontinuous initial conditions propagate, we consider the following interesting initial value problem:
+\[
+u(x,0) = f(x) = \begin{cases} 0 & x < 0 \\ 100 & x > 0. \end{cases}
+\]
+We thus ask how the thermal energy, initially uniformly concentrated in the right half of a rod, diffuses into the entire rod.  According to \eqref{eq:heat-influence-sol},
+\[
+u(x,t) = \frac{100}{\sqrt{4\pi kt}}\int_0^{\infty} e^{-(x-\bar{x})^2/4kt}\,d\bar{x} = \frac{100}{\sqrt{\pi}}\int_{-x/\sqrt{4kt}}^{\infty} e^{-z^2}\,dz,
+\]
+where the integral has been simplified by introducing the change of variables, $z = (\bar{x}-x)/\sqrt{4kt}$ ($dz = d\bar{x}/\sqrt{4kt}$).  The integrand no longer depends on any parameters.  The integral represents the area under a Gaussian (or normal) curve as illustrated in Fig.~\ref{fig:gaussian-area}.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch10/fig_gaussian-area.png}
+\caption{Area under a Gaussian.}
+\label{fig:gaussian-area}
+\end{figure}
+
+Due to the evenness of $e^{-z^2}$,
+\[
+\int_{-x/\sqrt{4kt}}^{\infty} = \int_0^{\infty} + \int_0^{x/\sqrt{4kt}}.
+\]
+Since, as shown earlier, $\int_0^{\infty} e^{-z^2}\,dz = \sqrt{\pi}/2$,
+\begin{equation}
+\label{eq:heat-step-sol}
+u(x,t) = 50 + \frac{100}{\sqrt{\pi}}\int_0^{x/\sqrt{4kt}} e^{-z^2}\,dz.
+\end{equation}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch10/fig_const-temp.png}
+\caption{Curves of constant temperatures.}
+\label{fig:const-temp}
+\end{figure}
+
+The temperature is constant whenever $x/\sqrt{4kt}$ is constant, the parabolas sketched in the $x$-$t$ plane in Fig.~\ref{fig:const-temp}.  $x/\sqrt{4kt}$ is called the \textbf{similarity variable}.  For example, the distance between $60^\circ$ and $75^\circ$ increases proportionally to $\sqrt{t}$.  The temperature distribution spreads out, a phenomenon known as \textbf{diffusion}.  The temperature distribution given by \eqref{eq:heat-step-sol} is sketched in Fig.~\ref{fig:temp-diffusion} for various fixed values of $t$.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch10/fig_temp-diffusion.png}
+\caption{Temperature diffusion in an infinite rod.}
+\label{fig:temp-diffusion}
+\end{figure}
+
+We note that the temperature is nonzero at all $x$ for any positive $t$ ($t > 0$) even though $u = 0$ for $x < 0$ at $t = 0$.  The \textbf{thermal energy spreads at an infinite propagation speed}.  This is a fundamental property of the diffusion equation.  It contrasts with the finite propagation speed of the wave equation (see also Sec.~10.6.1).
+
+The area under the normal curve is well tabulated.  We can express our solution in terms of the \textbf{error function}, $\text{erf}\,z = (2/\sqrt{\pi})\int_0^z e^{-t^2}\,dt$, or the \textbf{complementary error function}, $\erfc z = (2/\sqrt{\pi})\int_z^{\infty} e^{-t^2}\,dt = 1 - \text{erf}\,z$.  Using these functions, the solution satisfying
+\[
+u(x,0) = \begin{cases} 0 & x < 0 \\ 100 & x > 0 \end{cases}
+\]
+is
+\[
+\boxed{u(x,t) = 50\left[1 + \text{erf}\left(\frac{x}{\sqrt{4kt}}\right)\right] = 50\left[2 - \erfc\left(\frac{x}{\sqrt{4kt}}\right)\right].}
+\]
+
+\textbf{Similarity solution.}  We seek very special solutions of the diffusion equation, $\pd{u}{t} = k\pdd{u}{x}$, with the property that the solutions remain the same under the elementary spatial scaling $x = Lx'$.  The partial differential equation will remain the same only if time is scaled, $t = L^2 t'$.  For the solution to be the same in both scalings,
+\[
+u(x,t) = f(x/t^{1/2}),
+\]
+and $\xi = x/t^{1/2}$ is called the \textbf{similarity variable}.  Since $\pd{u}{t} = -\frac{1}{2}\frac{x}{t^{3/2}}f'(\xi)$ and $\pdd{u}{x} = \frac{1}{t}f''(\xi)$, it follows that $f(\xi)$ solves the following linear ordinary differential equation:
+\[
+-\frac{1}{2}\xi f' = kf''.
+\]
+This is a first-order equation for $f'$, whose general solution (following from separation) is
+\[
+f' = c_1\,e^{-\xi^2/4k}.
+\]
+Integrating yields a similarity solution of the diffusion equation
+\[
+u(x,t) = f(x/t^{1/2}) = c_2 + c_1\int_0^{x/t^{1/2}} e^{-s^2/4k}\,ds = c_2 + c_3\int_0^{x/\sqrt{4kt}} e^{-z^2}\,dz,
+\]
+where the dimensionless form ($s = \sqrt{4k}\,z$) is better.  This can also be derived by dimensional analysis.  These \textbf{self-similar solutions} must have very special self-similar initial conditions, which have a step at $x = 0$, so that these solutions correspond precisely to \eqref{eq:heat-step-sol}.  The fundamental solution \eqref{eq:fundamental-sol} could be obtained by instead assuming $u = t^{-1/2}g(\xi)$, which can be shown to be correct for the Dirac delta function initial condition.  There are other solutions that can be obtained in related ways, but we restrict our attention to these elementary results.
+
+%% ── 10.4.2 ──────────────────────────────────────────────────────
+\subsection{Fourier Transforming the Heat Equation: Transforms of Derivatives}
+\label{subsec:ft-derivatives}
+
+We have solved the heat equation on an infinite interval:
+\begin{equation}
+\label{eq:heat-inf-repeat}
+\begin{aligned}
+\pd{u}{t} &= k\pdd{u}{x}, \quad -\infty < x < \infty \\
+u(x,0) &= f(x).
+\end{aligned}
+\end{equation}
+Using separation of variables, we motivated the introduction of Fourier transforms.  If we know that we should be using Fourier transforms, we can avoid separating variables.  Here we describe this simpler method; we Fourier transform in the spatial variable the entire problem.  From the heat equation, \eqref{eq:heat-inf-repeat}, the Fourier transform of $\pd{u}{t}$ equals $k$ times the Fourier transform of $\pdd{u}{x}$:
+\begin{equation}
+\label{eq:ft-heat-eq}
+\mathcal{F}\left[\pd{u}{t}\right] = k\mathcal{F}\left[\pdd{u}{x}\right].
+\end{equation}
+Thus, we need to calculate Fourier transforms of derivatives of $u(x,t)$.  We begin by defining the spatial Fourier transform of $u(x,t)$,
+\begin{equation}
+\label{eq:ft-u-def}
+\mathcal{F}[u] = \overline{U}(\omega,t) = \frac{1}{2\pi}\int_{-\infty}^{\infty} u(x,t)\,e^{i\omega x}\dx.
+\end{equation}
+Note that it is also a function of time; it is an ordinary Fourier transform with $t$ fixed.  To obtain a Fourier transform (in space), we multiply by $e^{i\omega x}$ and integrate.  Spatial Fourier transforms of time derivatives are not difficult:
+\begin{equation}
+\label{eq:ft-time-deriv}
+\mathcal{F}\left[\pd{u}{t}\right] = \frac{1}{2\pi}\int_{-\infty}^{\infty}\pd{u}{t}\,e^{i\omega x}\dx = \frac{\partial}{\partial t}\left[\frac{1}{2\pi}\int_{-\infty}^{\infty} u(x,t)\,e^{i\omega x}\dx\right] = \frac{\partial}{\partial t}\overline{U}(\omega,t).
+\end{equation}
+\begin{center}
+\fbox{\parbox{0.8\textwidth}{
+The spatial Fourier transform of a time derivative equals the time derivative of the spatial Fourier transform.
+}}
+\end{center}
+
+More interesting (and useful) results occur for the spatial Fourier transform of spatial derivatives:
+\begin{equation}
+\label{eq:ft-space-deriv-ibp}
+\mathcal{F}\left[\pd{u}{x}\right] = \frac{1}{2\pi}\int_{-\infty}^{\infty}\pd{u}{x}\,e^{i\omega x}\dx = \frac{u\,e^{i\omega x}}{2\pi}\bigg|_{-\infty}^{\infty} - \frac{i\omega}{2\pi}\int_{-\infty}^{\infty} u(x,t)\,e^{i\omega x}\dx,
+\end{equation}
+which has been simplified using integration by parts:
+\[
+df = \pd{u}{x}\dx, \quad g = e^{i\omega x}, \qquad f = u, \quad dg = i\omega e^{i\omega x}\dx.
+\]
+If $u \to 0$ as $x \to \pm\infty$, then the endpoint contributions of integration by parts vanish.  Thus, \eqref{eq:ft-space-deriv-ibp} becomes
+\boxed{\begin{equation}
+\label{eq:ft-first-space}
+\mathcal{F}\left[\pd{u}{x}\right] = -i\omega\,\mathcal{F}[u] = -i\omega\,\overline{U}(\omega,t).
+\end{equation}}
+
+In a similar manner, Fourier transforms of higher derivatives may be obtained:
+\begin{equation}
+\label{eq:ft-second-space}
+\mathcal{F}\left[\pdd{u}{x}\right] = -i\omega\,\mathcal{F}\left[\pd{u}{x}\right] = (-i\omega)^2\,\overline{U}(\omega,t).
+\end{equation}
+
+\begin{center}
+\fbox{\parbox{0.8\textwidth}{
+In general, the Fourier transform of the $n$th derivative of a function with respect to $x$ equals $(-i\omega)^n$ times the Fourier transform of the function, assuming that $u(x,t) \to 0$ sufficiently fast as $x \to \pm\infty$.\footnote{We also need higher derivatives to vanish as $x \to \pm\infty$.  Furthermore, each integration by parts is not valid unless the appropriate function is continuous.}
+}}
+\end{center}
+
+By applying the Fourier transform to the heat equation, \eqref{eq:heat-inf-repeat}, we obtain (using \eqref{eq:ft-heat-eq}).  Because of the properties of the Fourier transform of derivatives, \eqref{eq:ft-heat-eq} becomes
+\begin{equation}
+\label{eq:ft-heat-ode}
+\frac{\partial}{\partial t}\overline{U}(\omega,t) = k(-i\omega)^2\,\overline{U}(\omega,t) = -k\omega^2\,\overline{U}(\omega,t).
+\end{equation}
+
+\begin{center}
+\fbox{\parbox{0.8\textwidth}{
+The Fourier transform operation converts a linear partial differential equation with constant coefficients into an ordinary differential equation, since spatial derivatives are transformed into algebraic multiples of the transform.
+}}
+\end{center}
+
+Equation \eqref{eq:ft-heat-ode} is a first-order constant-coefficient differential equation.  Its general solution is
+\[
+\overline{U}(\omega,t) = c\,e^{-k\omega^2 t}.
+\]
+However, $\partial/\partial t$ is an ordinary derivative \textit{keeping $\omega$ fixed}, and thus $c$ is constant if $\omega$ is fixed.  For other fixed values of $\omega$, $c$ may be a different constant; $c$ depends on $\omega$.  $c$ is actually an \textit{arbitrary function of} $\omega$, $c(\omega)$.  Indeed, you may easily verify by substitution that
+\begin{equation}
+\label{eq:ft-heat-sol-omega}
+\overline{U}(\omega,t) = c(\omega)\,e^{-k\omega^2 t}
+\end{equation}
+solves \eqref{eq:ft-heat-ode}.  To determine $c(\omega)$ we note from \eqref{eq:ft-heat-sol-omega} that $c(\omega)$ equals the initial value of the transform [obtained by transforming the initial condition, $f(x)$]: $c(\omega) = 1/2\pi\int_{-\infty}^{\infty}f(x)\,e^{i\omega x}\dx$.
+\begin{equation}
+\label{eq:ft-heat-sol-omega-b}
+\overline{U}(\omega,t) = F(\omega)\,e^{-k\omega^2 t}.
+\end{equation}
+
+This is the same result as obtained by separation of variables.  We could reproduce the entire solution obtained earlier.  Instead, we will show a simpler way to obtain those results.
+
+%% ── 10.4.3 ──────────────────────────────────────────────────────
+\subsection{Convolution Theorem}
+\label{subsec:convolution}
+
+We observe that $\overline{U}(\omega,t)$ is the product of two functions of $\omega$, $c(\omega)$ and $e^{-k\omega^2 t}$, \textit{both transforms of other functions}; $c(\omega)$ is the transform of the initial condition $f(x)$, and $e^{-k\omega^2 t}$ is the transform of some function (fortunately, since $e^{-k\omega^2 t}$ is a Gaussian, we know that it is the transform of another Gaussian, $\sqrt{\pi/kt}\,e^{-x^2/4kt}$).  The mathematical problem of inverting a transform that is a product of transforms of known functions occurs very frequently (especially in using the Fourier transform to solve partial differential equations).  Thus, we study this problem in some generality.
+
+Suppose that $F(\omega)$ and $G(\omega)$ are the Fourier transforms of $f(x)$ and $g(x)$, respectively:
+\begin{equation}
+\label{eq:ft-fg-defs}
+\begin{aligned}
+F(\omega) &= \frac{1}{2\pi}\int_{-\infty}^{\infty}f(x)\,e^{i\omega x}\dx, \quad G(\omega) = \frac{1}{2\pi}\int_{-\infty}^{\infty}g(x)\,e^{i\omega x}\dx \\
+f(x) &= \int_{-\infty}^{\infty}F(\omega)\,e^{-i\omega x}\,d\omega, \quad g(x) = \int_{-\infty}^{\infty}G(\omega)\,e^{-i\omega x}\,d\omega.
+\end{aligned}
+\end{equation}
+We will determine the function $h(x)$ whose Fourier transform $H(\omega)$ equals the product of the two transforms:
+\boxed{\begin{equation}
+\label{eq:ft-product}
+H(\omega) = F(\omega)\,G(\omega)
+\end{equation}}
+\begin{equation}
+\label{eq:h-inverse}
+h(x) = \int_{-\infty}^{\infty}H(\omega)\,e^{-i\omega x}\,d\omega = \int_{-\infty}^{\infty}F(\omega)\,G(\omega)\,e^{-i\omega x}\,d\omega.
+\end{equation}
+We eliminate either $F(\omega)$ or $G(\omega)$ using \eqref{eq:ft-fg-defs}; it does not matter which:
+\[
+h(x) = \frac{1}{2\pi}\int_{-\infty}^{\infty}F(\omega)\left[\int_{-\infty}^{\infty}g(\bar{x})\,e^{i\omega\bar{x}}\,d\bar{x}\right]e^{-i\omega x}\,d\omega.
+\]
+Assuming that we can interchange orders of integration, we obtain
+\[
+h(x) = \frac{1}{2\pi}\int_{-\infty}^{\infty}g(\bar{x})\left[\int_{-\infty}^{\infty}F(\omega)\,e^{-i\omega(x-\bar{x})}\,d\omega\right]d\bar{x}.
+\]
+We now recognize the inner integral as $f(x-\bar{x})$ [see \eqref{eq:ft-fg-defs}], and thus
+\boxed{\begin{equation}
+\label{eq:convolution-1}
+h(x) = \frac{1}{2\pi}\int_{-\infty}^{\infty}g(\bar{x})\,f(x-\bar{x})\,d\bar{x}.
+\end{equation}}
+
+The integral in \eqref{eq:convolution-1} is called the \textbf{convolution} of $g(x)$ and $f(x)$; it is sometimes denoted $g * f$.  \textbf{The inverse Fourier transform of the product of two Fourier transforms is $1/2\pi$ times the convolution of the two functions.}
+
+If we let $x - \bar{x} = w$ ($d\bar{x} = -dw$ but $\int_{\infty}^{-\infty} = -\int_{-\infty}^{\infty}$), we obtain an alternative form,
+\boxed{\begin{equation}
+\label{eq:convolution-2}
+h(x) = \frac{1}{2\pi}\int_{-\infty}^{\infty}f(w)\,g(x-w)\,dw,
+\end{equation}}
+which would be denoted $f * g$.  Thus, $g * f = f * g$.
+
+\textbf{Heat equation.}  We now apply the convolution theorem to our partial differential equation.  The transform $\overline{U}(\omega,t)$ of the solution $u(x,t)$ is the product of $c(\omega)$ and $e^{-k\omega^2 t}$, where $c(\omega)$ is the transform of the initial temperature distribution and $e^{-k\omega^2 t}$ is the transform of $\sqrt{\pi/kt}\,e^{-x^2/4kt}$.  Thus, according to the convolution theorem,
+\[
+\boxed{u(x,t) = \frac{1}{2\pi}\int_{-\infty}^{\infty}f(\bar{x})\sqrt{\frac{\pi}{kt}}\,e^{-(x-\bar{x})^2/4kt}\,d\bar{x}.}
+\]
+
+This is the same result as obtained (and discussed) earlier.  In summary, the procedure is as follows:
+\begin{enumerate}
+\item Fourier transform the partial differential equation in one of the variables.
+\item Solve the ordinary differential equation.
+\item Apply the initial conditions, determining the initial Fourier transform.
+\item Use the convolution theorem.
+\end{enumerate}
+By using the convolution theorem, we avoid for each problem substituting the inverse Fourier transform and interchanging the order of integration.
+
+\textbf{Parseval's identity.}  Since $h(x)$ is the inverse Fourier transform of $F(\omega)G(\omega)$, the convolution theorem can be stated in the following form:
+\begin{equation}
+\label{eq:parseval-conv}
+\frac{1}{2\pi}\int_{-\infty}^{\infty}g(\bar{x})\,f(x-\bar{x})\,d\bar{x} = \int_{-\infty}^{\infty}F(\omega)\,G(\omega)\,e^{-i\omega x}\,d\omega.
+\end{equation}
+Equation \eqref{eq:parseval-conv} is valid for all $x$.  In particular, at $x = 0$,
+\begin{equation}
+\label{eq:parseval-x0}
+\frac{1}{2\pi}\int_{-\infty}^{\infty}g(\bar{x})\,f(-\bar{x})\,d\bar{x} = \int_{-\infty}^{\infty}F(\omega)\,G(\omega)\,d\omega.
+\end{equation}
+An interesting result occurs if we pick $g(x)$ such that
+\boxed{\begin{equation}
+\label{eq:g-star-def}
+g^*(x) = f(-x).
+\end{equation}}
+Here $*$ is the complex conjugate.  [For real functions, $g(x)$ is the reflection of $f(x)$ around $x = 0$.]  In general, their Fourier transforms are related:
+\begin{equation}
+\label{eq:ft-star-relation}
+\begin{aligned}
+F(\omega) &= \frac{1}{2\pi}\int_{-\infty}^{\infty}f(x)\,e^{i\omega x}\dx = \frac{1}{2\pi}\int_{-\infty}^{\infty}f(-s)\,e^{-i\omega s}\,ds \\
+&= \frac{1}{2\pi}\int_{-\infty}^{\infty}g^*(x)\,e^{-i\omega x}\dx = G^*(\omega),
+\end{aligned}
+\end{equation}
+where we let $s = -x$.  Thus, \eqref{eq:parseval-x0} becomes \textbf{Parseval's identity}:
+\boxed{\begin{equation}
+\label{eq:parseval}
+\frac{1}{2\pi}\int_{-\infty}^{\infty}g(x)\,g^*(x)\dx = \int_{-\infty}^{\infty}G(\omega)\,G^*(\omega)\,d\omega,
+\end{equation}}
+where $g(x)\,g^*(x) = |g(x)|^2$ and $G(\omega)\,G^*(\omega) = |G(\omega)|^2$.  We showed a similar relationship for all generalized Fourier series (see Sec.~5.10).  This result, \eqref{eq:parseval}, is given the following interpretation.  Often energy per unit distance is proportional to $|g(x)|^2$, and thus $1/2\pi\int_{-\infty}^{\infty}|g(x)|^2\dx$ represents the total energy.  From \eqref{eq:parseval}, $|G(\omega)|^2$ may be defined as the energy per unit wave number (the \textbf{spectral energy density}).  All the energy is contained within all the wave numbers.  \textbf{The Fourier transform $G(\omega)$ of a function $g(x)$ is a complex quantity whose magnitude squared is the spectral energy density (the amount of energy per unit wave number)}.
+
+%% ── 10.4.4 ──────────────────────────────────────────────────────
+\subsection{Summary of Properties of the Fourier Transform}
+\label{subsec:ft-summary}
+
+Tables of Fourier transforms exist and can be very helpful.  The results we have obtained are summarized in Table~\ref{tab:ft-summary}.
+
+We list below some important and readily available tables of Fourier transforms.  Beware of various different notations.
+
+F.~Oberhettinger, \textit{Tabellen zur Fourier Transformation}, Springer-Verlag, New York, 1957.
+
+R.V.~Churchill, \textit{Operational Mathematics}, 3rd ed., McGraw-Hill, New York, 1972.
+
+G.A.~Campbell and R.M.~Foster, \textit{Fourier Integrals for Practical Applications}, Van Nostrand, Princeton, NJ, 1948.
+
+\begin{table}[H]
+\centering
+\caption{Fourier Transform}
+\label{tab:ft-summary}
+\begin{tabular}{lll}
+\toprule
+$f(x) = \displaystyle\int_{-\infty}^{\infty}F(\omega)\,e^{-i\omega x}\,d\omega$ & $F(\omega) = \displaystyle\frac{1}{2\pi}\int_{-\infty}^{\infty}f(x)\,e^{i\omega x}\dx$ & Reference \\
+\midrule
+$e^{-\alpha x^2}$ & $\dfrac{1}{\sqrt{4\pi\alpha}}\,e^{-\omega^2/4\alpha}$ & \multirow{2}{*}{Gaussian (Sec.~10.3.3)} \\[4pt]
+$\sqrt{\dfrac{\pi}{\beta}}\,e^{-x^2/4\beta}$ & $e^{-\beta\omega^2}$ & \\[8pt]
+$\pd{f}{t}$ & $\pd{F}{t}$ & \multirow{3}{*}{Derivatives (Sec.~10.4.2)} \\[4pt]
+$\pd{f}{x}$ & $-i\omega F(\omega)$ & \\[4pt]
+$\pdd{f}{x}$ & $(-i\omega)^2 F(\omega)$ & \\[8pt]
+$\dfrac{1}{2\pi}\displaystyle\int_{-\infty}^{\infty}f(\bar{x})\,g(x-\bar{x})\,d\bar{x}$ & $F(\omega)\,G(\omega)$ & Convolution (Sec.~10.4.3) \\[8pt]
+$\delta(x - x_0)$ & $\dfrac{1}{2\pi}\,e^{i\omega x_0}$ & Dirac delta function (Exercise~10.3.18) \\[4pt]
+$f(x-\beta)$ & $e^{i\omega\beta}\,F(\omega)$ & Shifting theorem (Exercise~10.3.5) \\[4pt]
+$xf(x)$ & $-i\dfrac{dF}{d\omega}$ & Multiplication by $x$ (Exercise~10.3.8) \\[4pt]
+$\dfrac{2\alpha}{x^2+\alpha^2}$ & $e^{-|\omega|\alpha}$ & Exercise~10.3.7 \\[4pt]
+$f(x) = \begin{cases} 0 & |x|>a \\ 1 & |x|<a \end{cases}$ & $\dfrac{1}{\pi}\dfrac{\sin a\omega}{\omega}$ & Exercise~10.3.6 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{exercises}{10.4}
+\item Using Green's formula, show that
+\[
+\mathcal{F}\left[\odd{f}{x}\right] = -\omega^2 F(\omega) + \frac{e^{i\omega x}}{2\pi}\left(\od{f}{x} - i\omega f\right)\bigg|_{-\infty}^{\infty}.
+\]
+
+\item For the heat equation, $u(x,t)$ is given by \eqref{eq:heat-ft-sol}.  Show that $u \to 0$ as $x \to \infty$ even though $\phi(x) = e^{-i\omega x}$ does not decay as $x \to \infty$.  (\textit{Hint:} Integrate by parts.)
+
+\item[\starred 10.4.3.] \textbf{(a)} Solve the diffusion equation with \textbf{convection}:
+\[
+\pd{u}{t} = k\pdd{u}{x} + c\pd{u}{x}, \quad -\infty < x < \infty, \qquad u(x,0) = f(x).
+\]
+[\textit{Hint:} Use the convolution theorem and the shift theorem (see Exercise~10.3.5).]
+
+\textbf{(b)} Consider the initial condition to be $\delta(x)$.  Sketch the corresponding $u(x,t)$ for various values of $t > 0$.  Comment on the significance of the convection term $c\,\partial u/\partial x$.
+
+\item \textbf{(a)} Solve
+\[
+\pd{u}{t} = k\pdd{u}{x} - \gamma u, \quad -\infty < x < \infty, \qquad u(x,0) = f(x).
+\]
+\textbf{(b)} Does your solution suggest a simplifying transformation?
+
+\item Consider
+\[
+\pd{u}{t} = k\pdd{u}{x} + Q(x,t), \quad -\infty < x < \infty, \qquad u(x,0) = f(x).
+\]
+\begin{enumerate}
+\item[(a)] Show that a particular solution for the Fourier transform $\overline{U}$ is
+\[
+\overline{U} = e^{-k\omega^2 t}\int_0^t \overline{Q}(\omega,\tau)\,e^{k\omega^2 \tau}\,d\tau.
+\]
+\item[(b)] Determine $\overline{U}$.
+\item[\starred (c)] Solve for $u(x,t)$ (in the simplest form possible).
+\end{enumerate}
+
+\item[\starred 10.4.6.] The \textbf{Airy function} $\text{Ai}(x)$ is the unique solution of
+\[
+\odd{y}{x} - xy = 0
+\]
+that satisfies
+\begin{enumerate}
+\item[(1)] $\lim_{x\to\pm\infty} y = 0$
+\item[(2)] $y(0) = 3^{-2/3}/\Gamma(\frac{2}{3}) = 3^{-2/3}\Gamma(\frac{1}{3})\sqrt{3}/2\pi = 1/\pi\int_0^{\infty}\cos(\omega^3/3)\,d\omega$ (it is not necessary to look at Exercises~10.3.15 and~10.4.17).
+\end{enumerate}
+Determine a Fourier transform representation of the solution of this problem, $\text{Ai}(x)$.  (\textit{Hint:} See Exercise~10.3.8.)
+
+\item \textbf{(a)} Solve the \textbf{linearized Korteweg--deVries equation}
+\[
+\pd{u}{t} = k\frac{\partial^3 u}{\partial x^3}, \quad -\infty < x < \infty, \qquad u(x,0) = f(x).
+\]
+\textbf{(b)} Use the convolution theorem to simplify.
+
+\textbf{\starred (c)} See Exercise~10.4.6 for a further simplification.
+
+\textbf{(d)} Specialize your result to the case in which
+\[
+f(x) = \begin{cases} 0 & x < 0 \\ 1 & x > 0. \end{cases}
+\]
+
+\item Solve
+\[
+\pdd{u}{x} + \pdd{u}{y} = 0, \quad 0 < x < L, \quad -\infty < y < \infty
+\]
+subject to $u(0,y) = g_1(y)$ and $u(L,y) = g_2(y)$.
+
+\item Solve
+\[
+\pdd{u}{x} + \pdd{u}{y} = 0, \quad y > 0, \quad -\infty < x < \infty
+\]
+subject to $u(x,0) = f(x)$.
+
+(\textit{Hint:} If necessary, see Sec.~10.6.3.)
+
+\item Solve
+\[
+\pdd{u}{t} = c^2\pdd{u}{x}, \quad -\infty < x < \infty
+\]
+with $u(x,0) = f(x)$, $t > 0$, and $\pd{u}{t}(x,0) = 0$.
+
+(\textit{Hint:} If necessary, see Sec.~10.6.1.)
+
+\item Derive an expression for the Fourier transform of the product $f(x)g(x)$.
+
+\item Solve the heat equation, $-\infty < x < \infty$,
+\[
+\pd{u}{t} = k\pdd{u}{x} \qquad t > 0
+\]
+subject to the condition $u(x,0) = f(x)$.
+\end{exercises}

@@ -1,0 +1,40 @@
+% sec07_1.tex — Section 7.1: Introduction
+\section{Introduction}
+\label{sec:7.1}
+
+In our discussion of partial differential equations, we have solved many problems by the method of separation of variables, but all involved only two independent variables:
+\[
+\pdd{u}{x} + \pdd{u}{y} = 0
+\]
+\[
+\pd{u}{t} = k\pdd{u}{x} \qquad\qquad \pdd{u}{t} = c^2\pdd{u}{x}
+\]
+\[
+c\rho\pd{u}{t} = \frac{\partial}{\partial x}\left(K_0\pd{u}{x}\right) \qquad\qquad \rho\pdd{u}{t} = T_0\pdd{u}{x}.
+\]
+
+In this chapter we show how to extend the method of separation of variables to problems with more than two independent variables.
+
+In particular, we discuss techniques to analyze the heat equation (with constant thermal properties) in two and three dimensions,
+\begin{equation}
+\pd{u}{t} = k\left(\pdd{u}{x} + \pdd{u}{y}\right) \qquad\text{(two dimensions)}
+\label{eq:7.1.1}
+\end{equation}
+\begin{equation}
+\pd{u}{t} = k\left(\pdd{u}{x} + \pdd{u}{y} + \pdd{u}{z}\right) \qquad\text{(three dimensions)}
+\label{eq:7.1.2}
+\end{equation}
+for various physical regions with various boundary conditions.  Also of interest will be the steady-state heat equation, Laplace's equation, in three dimensions,
+\[
+\pdd{u}{x} + \pdd{u}{y} + \pdd{u}{z} = 0.
+\]
+
+In all these problems, the partial differential equation has at least three independent variables.  Other physical problems, not related to the flow of thermal energy, may also involve more than two independent variables.  For example, the vertical displacement $u$ of a vibrating membrane satisfies the two-dimensional wave equation
+\[
+\pdd{u}{t} = c^2\left(\pdd{u}{x} + \pdd{u}{y}\right).
+\]
+It should also be mentioned that in acoustics, the perturbed pressure $u$ satisfies the three-dimensional wave equation
+\[
+\pdd{u}{t} = c^2\left(\pdd{u}{x} + \pdd{u}{y} + \pdd{u}{z}\right).
+\]
+We will discuss and analyze some of these problems.

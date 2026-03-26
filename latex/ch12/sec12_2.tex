@@ -1,0 +1,265 @@
+% sec12_2.tex — Section 12.2: Characteristics for First-Order Wave Equations
+\section{Characteristics for First-Order Wave Equations}
+\label{sec:first-order-char}
+
+\subsection{Introduction}
+\label{sec:first-order-char-intro}
+
+The one-dimensional wave equation can be rewritten as
+\boxed{\begin{equation}
+\label{eq:12.2.1}
+\pdd{u}{t} - c^2\pdd{u}{x} = 0.
+\end{equation}}
+A short calculation shows that it can be ``factored'' in two ways:
+\[
+\left(\frac{\partial}{\partial t} + c\frac{\partial}{\partial x}\right)\left(\pd{u}{t} - c\pd{u}{x}\right) = 0
+\]
+\[
+\left(\frac{\partial}{\partial t} - c\frac{\partial}{\partial x}\right)\left(\pd{u}{t} + c\pd{u}{x}\right) = 0,
+\]
+since the mixed second-derivative terms vanish in both.  If we let
+\boxed{\begin{equation}
+\label{eq:12.2.2}
+w = \pd{u}{t} - c\pd{u}{x}
+\end{equation}}
+\boxed{\begin{equation}
+\label{eq:12.2.3}
+v = \pd{u}{t} + c\pd{u}{x},
+\end{equation}}
+we see that the one-dimensional wave equation (involving second derivatives) yields two \textbf{first-order wave equations}:
+\boxed{\begin{equation}
+\label{eq:12.2.4}
+\pd{w}{t} + c\pd{w}{x} = 0
+\end{equation}}
+\boxed{\begin{equation}
+\label{eq:12.2.5}
+\pd{v}{t} - c\pd{v}{x} = 0.
+\end{equation}}
+
+\subsection{Method of Characteristics for First-Order Partial Differential Equations}
+\label{sec:char-first-order-pde}
+
+We begin by discussing either one of these simple first-order partial differential equations:
+\boxed{\begin{equation}
+\label{eq:12.2.6}
+\pd{w}{t} + c\pd{w}{x} = 0.
+\end{equation}}
+The methods we will develop will be helpful in analyzing the one-dimensional wave equation \eqref{eq:12.2.1}.  We consider the rate of change of $w(x(t),t)$ as measured by a moving observer, $x = x(t)$.  The chain rule\footnote{Here $d/dt$ as measured by a moving observer is sometimes called the \emph{substantial derivative}.} implies that
+\boxed{\begin{equation}
+\label{eq:12.2.7}
+\frac{d}{d t}w(x(t),t) = \pd{w}{t} + \od{x}{t}\pd{w}{x}.
+\end{equation}}
+The first term, $\partial w/\partial t$, represents the change in $w$ at the fixed position, while the term $(dx/dt)(\partial w/\partial x)$ represents the change due to the fact that the observer moves into a region of possibly different $w$.  Compare \eqref{eq:12.2.7} with the partial differential equation for $w$, equation \eqref{eq:12.2.6}.  It is apparent that \emph{if} the observer moves with velocity $c$, that is, if
+\boxed{\begin{equation}
+\label{eq:12.2.8}
+\od{x}{t} = c,
+\end{equation}}
+then
+\boxed{\begin{equation}
+\label{eq:12.2.9}
+\od{w}{t} = 0.
+\end{equation}}
+Thus, $w$ is constant.  An observer moving with this special speed $c$ would measure no changes in $w$.
+
+\textbf{Characteristics.}  In this way, the partial differential equation \eqref{eq:12.2.6} has been replaced by two ordinary differential equations, \eqref{eq:12.2.8} and \eqref{eq:12.2.9}.  Integrating \eqref{eq:12.2.8} yields
+\boxed{\begin{equation}
+\label{eq:12.2.10}
+x = ct + x_0,
+\end{equation}}
+the equation for the family of parallel \textbf{characteristics}\footnote{A characteristic is a curve along which a PDE reduces to an ODE.} of \eqref{eq:12.2.6}, sketched in Fig.~12.2.1.  Note that at $t = 0$, $x = x_0$.  $w(x,t)$ is constant \emph{along this line} (not necessarily constant everywhere).  $w$ \textbf{propagates} as a \textbf{wave} with \textbf{wave speed $c$} [see \eqref{eq:12.2.8}].
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch12/fig_12_2_1.png}
+\caption{Characteristics for the first-order wave equation.}
+\label{fig:12.2.1}
+\end{figure}
+
+\textbf{General solution.}  If $w(x,t)$ is given initially at $t = 0$,
+\begin{equation}
+\label{eq:12.2.11}
+w(x,0) = P(x),
+\end{equation}
+then let us determine $w$ at the point $(x,t)$.  Since $w$ is constant along the characteristic,
+\[
+w(x,t) = w(x_0,0) = P(x_0).
+\]
+Given $x$ and $t$, the parameter is known from the characteristic, $x_0 = x - ct$, and thus
+\boxed{\begin{equation}
+\label{eq:12.2.12}
+w(x,t) = P(x-ct),
+\end{equation}}
+which we call the general solution of \eqref{eq:12.2.6}.
+
+We can think of $P(x)$ as being an arbitrary function.  To verify this, we substitute \eqref{eq:12.2.12} back into the partial differential equation \eqref{eq:12.2.6}.  Using the chain rule,
+\[
+\pd{w}{x} = \frac{dP}{d(x-ct)}\cdot\frac{\partial(x-ct)}{\partial x} = \frac{dP}{d(x-ct)}
+\]
+and
+\[
+\pd{w}{t} = \frac{dP}{d(x-ct)}\cdot\frac{\partial(x-ct)}{\partial t} = -c\frac{dP}{d(x-ct)}.
+\]
+Thus, it is verified that \eqref{eq:12.2.6} is satisfied by \eqref{eq:12.2.12}.  The general solution of a first-order partial differential equation contains an arbitrary function, while the general solution to ordinary differential equations contains arbitrary constants.
+
+\textbf{Example.}  Consider
+\[
+\pd{w}{t} + 2\pd{w}{x} = 0,
+\]
+subject to the initial condition
+\[
+w(x,0) = \begin{cases} 0 & x < 0 \\ 4x & 0 < x < 1 \\ 0 & x > 1. \end{cases}
+\]
+
+We have shown that $w$ is constant along the characteristics $x - 2t = \text{constant}$, keeping its same shape moving at velocity $2$ (to the right).  The important characteristics, $x = 2t + 0$ and $x = 2t + 1$, as well as a sketch of the solution at various times, appear in Fig.~12.2.2.  $w(x,t) = 0$ if $x > 2t + 1$ or if $x < 2t$.  Otherwise, by shifting,
+\[
+w(x,t) = 4(x - 2t) \quad \text{if } 2t < x < 2t + 1.
+\]
+To derive this analytic solution, we use the characteristic that starts at $x = x_0$:
+\[
+x = 2t + x_0.
+\]
+Along this characteristic, $w(x,t)$ is constant.  If $0 < x_0 < 1$, then
+\[
+w(x,t) = w(x_0,0) = 4x_0 = 4(x - 2t),
+\]
+as before.  This is valid if $0 < x_0 < 1$ or, equivalently, $0 < x - 2t < 1$.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch12/fig_12_2_2.png}
+\caption{Propagation for the first-order wave equation.}
+\label{fig:12.2.2}
+\end{figure}
+
+\textbf{Same shape.}  In general, $w(x,t) = P(x-ct)$.  \emph{At fixed $t$, the solution of the first-order wave equation is the same shape shifted a distance $ct$} (distance $=$ velocity times time).  We illustrate this in Fig.~12.2.3.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch12/fig_12_2_3.png}
+\caption{Shape invariance for the first-order wave equation.}
+\label{fig:12.2.3}
+\end{figure}
+
+\textbf{Example to solve initial value problem and find general solution.}  Consider
+\begin{equation}
+\label{eq:12.2.13}
+\pd{w}{t} + 3t^2\pd{w}{x} = 2tw,
+\end{equation}
+subject to the initial conditions $w(x,0) = P(x)$.  By the method of characteristics,
+\begin{equation}
+\label{eq:12.2.14}
+\text{if } \od{x}{t} = 3t^2,
+\end{equation}
+\begin{equation}
+\label{eq:12.2.15}
+\text{then } \od{w}{t} = 2tw.
+\end{equation}
+The characteristics are not straight lines but satisfy
+\begin{equation}
+\label{eq:12.2.16}
+x = t^3 + x_0,
+\end{equation}
+where the characteristics start ($t = 0$) at $x = x_0$.  Along the characteristics, by integrating the ODE \eqref{eq:12.2.15}, we obtain
+\begin{equation}
+\label{eq:12.2.17}
+w = k e^{t^2}.
+\end{equation}
+To satisfy the initial condition at $x_0$, $w(x_0,0) = P(x_0)$, we have $P(x_0) = k$, so that the solution of the initial value problem by the method of characteristics is
+\begin{equation}
+\label{eq:12.2.18}
+w(x,t) = P(x_0)e^{t^2} = P(x - t^3)e^{t^2}.
+\end{equation}
+Since $P(x - t^3)$ is an arbitrary function of $(x - t^3)$, \eqref{eq:12.2.18} is the general solution of the partial differential equation \eqref{eq:12.2.13}.  \textbf{The method of characteristics can be used to determine the general solution in a slightly different way.  The arbitrary constants that solve the ordinary differential equations are arbitrary functions of each other.}  In this way, $k$ in \eqref{eq:12.2.17} is an arbitrary function of $x_0 = x - t^3$, and we obtain directly from \eqref{eq:12.2.17} the general solution of this partial differential equation:
+\begin{equation}
+\label{eq:12.2.19}
+w(x,t) = f(x - t^3)e^{t^2},
+\end{equation}
+where $f$ is an arbitrary function of $x - t^3$.  The initial value problem could now be solved from the general solution \eqref{eq:12.2.19}.
+
+\textbf{Summary.}  The method of characteristics solves the first-order wave equation \eqref{eq:12.2.6}.  In Sections~12.3--12.5, this method is applied to solve the wave equation \eqref{eq:12.1.1}.  The reader may proceed directly to Sec.~12.6, where the method of characteristics is described for quasilinear partial differential equations.
+
+\begin{exercises}{12.2}
+
+\item \label{ex:12.2.1}
+Show that the wave equation can be considered as the following system of two coupled first-order partial differential equations:
+\begin{align*}
+\pd{u}{t} - c\pd{u}{x} &= w \\
+\pd{w}{t} + c\pd{w}{x} &= 0.
+\end{align*}
+
+\item\starred \label{ex:12.2.2}
+Solve
+\[
+\pd{w}{t} - 3\pd{w}{x} = 0 \quad \text{with } w(x,0) = \cos x.
+\]
+
+\item \label{ex:12.2.3}
+Solve
+\[
+\pd{w}{t} + 4\pd{w}{x} = 0 \quad \text{with } w(0,t) = \sin 3t.
+\]
+
+\item \label{ex:12.2.4}
+Solve
+\[
+\pd{w}{t} + c\pd{w}{x} = 0 \qquad (c > 0)
+\]
+for $x > 0$ and $t > 0$ if
+\begin{align*}
+w(x,0) &= f(x) \quad x > 0 \\
+w(0,t) &= h(t) \quad t > 0.
+\end{align*}
+
+\item \label{ex:12.2.5}
+Solve using the method of characteristics (if necessary, see Sec.~12.6):
+\begin{enumerate}
+\item[(a)] $\displaystyle \pd{w}{t} + c\pd{w}{x} = e^{2x}$ with $w(x,0) = f(x)$
+
+\item[(b)]\starred\ $\displaystyle \pd{w}{t} + x\pd{w}{x} = 1$ with $w(x,0) = f(x)$
+
+\item[(c)] $\displaystyle \pd{w}{t} + t\pd{w}{x} = 1$ with $w(x,0) = f(x)$
+
+\item[(d)]\starred\ $\displaystyle \pd{w}{t} + 3t\pd{w}{x} = w$ with $w(x,0) = f(x)$
+\end{enumerate}
+
+\item\starred \label{ex:12.2.6}
+Consider (if necessary, see Sec.~12.6):
+\[
+\pd{u}{t} + 2u\pd{u}{x} = 0 \quad \text{with} \quad u(x,0) = f(x).
+\]
+Show that the characteristics are straight lines.
+
+\item \label{ex:12.2.7}
+Consider Exercise~12.2.6 with
+\[
+u(x,0) = f(x) = \begin{cases} 1 & x < 0 \\ 1 + x/L & 0 < x < L \\ 2 & x > L. \end{cases}
+\]
+\begin{enumerate}
+\item[(a)] Determine equations for the characteristics.  Sketch the characteristics.
+\item[(b)] Determine the solution $u(x,t)$.  Sketch $u(x,t)$ for $t$ fixed.
+\end{enumerate}
+
+\item\starred \label{ex:12.2.8}
+Consider Exercise~12.2.6 with
+\[
+u(x,0) = f(x) = \begin{cases} 1 & x < 0 \\ 2 & x > 0. \end{cases}
+\]
+Obtain the solution $u(x,t)$ by considering the limit as $L \to 0$ of the characteristics obtained in Exercise~12.2.7.  Sketch characteristics and $u(x,t)$ for $t$ fixed.
+
+\item \label{ex:12.2.9}
+As motivated by the analysis of a moving observer, make a change of independent variables from $(x,t)$ to a coordinate system moving with velocity $c$, $(\xi, t')$, where $\xi = x - ct$ and $t' = t$, in order to solve \eqref{eq:12.2.6}.
+
+\item \label{ex:12.2.10}
+For the first-order ``quasilinear'' partial differential equation
+\[
+a\pd{u}{x} + b\pd{u}{y} = c,
+\]
+where $a$, $b$, and $c$ are functions of $x$, $y$ and $u$, show that the method of characteristics (if necessary, see Sec.~12.6) yields
+\[
+\frac{dx}{a} = \frac{dy}{b} = \frac{du}{c}.
+\]
+
+\item \label{ex:12.2.11}
+Do any of the following exercises from Sec.~12.6: 12.6.1, 12.6.2, 12.6.3, 12.6.8, 12.6.10, 12.6.11.
+
+\end{exercises}

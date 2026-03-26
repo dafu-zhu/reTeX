@@ -1,0 +1,140 @@
+% sec06_5.tex — Section 6.5: Wave Equation
+\section{Wave Equation}
+\label{sec:fd-wave}
+
+We may also compute solutions to the one-dimensional wave equation by introducing finite difference approximations.  Using \textbf{centered differences in space and time}, the wave equation,
+\begin{equation}
+\boxed{\pdd{u}{t} = c^2\,\pdd{u}{x},}
+\label{eq:6.5.1}
+\end{equation}
+becomes the following partial difference equation,
+\begin{equation}
+\boxed{\frac{u_j^{(m+1)} - 2u_j^{(m)} + u_j^{(m-1)}}{(\Delta t)^2} = c^2\,\frac{u_{j+1}^{(m)} - 2u_j^{(m)} + u_{j-1}^{(m)}}{(\Delta x)^2}.}
+\label{eq:6.5.2}
+\end{equation}
+The truncation error is the sum of a term of $O(\Delta x)^2$ and one of $O(\Delta t)^2$.  By solving \eqref{eq:6.5.2} for $u_j^{(m+1)}$, the solution may be marched forward in time.  Three levels of time are involved in \eqref{eq:6.5.2}, as indicated in Fig.~\ref{fig:6.5.1}.  $u(x,t)$ is needed ``initially'' at two values of $t$ ($0$ and $-\Delta t$) to start the calculation.  We use the two initial conditions for the wave equation, $u(x,0) = f(x)$ and $\partial u/\partial t(x,0) = g(x)$, to compute at $m = 0$ and at $m = -1$.  Using a centered difference in time for $\partial u/\partial t$ [so as to maintain an $O(\Delta t)^2$ truncation error] yields
+\begin{align}
+u_j^{(0)} &= f(x_j) = f(j\Delta x) \label{eq:6.5.3} \\
+\frac{u_j^{(1)} - u_j^{(-1)}}{2\Delta t} &= g(x_j) = g(j\Delta x). \label{eq:6.5.4}
+\end{align}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch06/fig_6_5_1.png}
+\caption{Marching forward in time for the wave equation.}
+\label{fig:6.5.1}
+\end{figure}
+
+To begin the calculation we must compute $u_j^{(-1)}$.  The initial conditions, \eqref{eq:6.5.3} and \eqref{eq:6.5.4}, are two equations in three unknowns, $u_j^{(-1)}$, $u_j^{(0)}$, $u_j^{(1)}$.  The partial difference equation at $t = 0$ provides a third equation:
+\begin{equation}
+u_j^{(1)} = 2u_j^{(0)} - u_j^{(-1)} + \frac{c^2}{(\Delta x/\Delta t)^2}\left(u_{j-1}^{(0)} - 2u_j^{(0)} + u_{j+1}^{(0)}\right).
+\label{eq:6.5.5}
+\end{equation}
+$u_j^{(1)}$ may be eliminated from \eqref{eq:6.5.4} and \eqref{eq:6.5.5} since $u_j^{(0)}$ is known from \eqref{eq:6.5.3}.  In this way we can solve for $u_j^{(-1)}$.  Once $u_j^{(-1)}$ and $u_j^{(0)}$ are known, the later values of $u$ may be computed via \eqref{eq:6.5.2}.  Boundary conditions may be analyzed as before.
+
+\paragraph{Stability.}
+Our limited experience should already suggest that a stability analysis is important.  To determine if any spatially periodic waves grow, we substitute
+\begin{equation}
+u_j^{(m)} = Q^{t/\Delta t}e^{i\alpha x}
+\label{eq:6.5.6}
+\end{equation}
+into \eqref{eq:6.5.2}, yielding
+\begin{equation}
+Q - 2 + \frac{1}{Q} = \sigma,
+\label{eq:6.5.7}
+\end{equation}
+where
+\begin{equation}
+\sigma = \frac{c^2}{(\Delta x/\Delta t)^2}\left(e^{i\alpha\Delta x} - 2 + e^{-i\alpha\Delta x}\right) = \frac{2c^2}{(\Delta x/\Delta t)^2}\left[\cos(\alpha\Delta x) - 1\right].
+\label{eq:6.5.8}
+\end{equation}
+Equation~\eqref{eq:6.5.7} is a quadratic equation for $Q$ since \eqref{eq:6.5.2} involves three time levels and two time differences:
+\begin{equation}
+Q^2 - (\sigma + 2)\,Q + 1 = 0 \quad\text{and thus}\quad Q = \frac{\sigma + 2 \pm \sqrt{(\sigma+2)^2 - 4}}{2}.
+\label{eq:6.5.9}
+\end{equation}
+The two roots correspond to two ways in which waves evolve in time.  If $-2 < \sigma + 2 < 2$, the roots are complex conjugates of each other.  In this case (as discussed earlier)
+\[
+Q^m = (re^{i\theta})^m = r^m e^{im\theta},
+\]
+where $r = |Q|$ and $\theta = \arg Q$.  Since
+\[
+|Q|^2 = \frac{(\sigma + 2)^2}{4} + \frac{4 - (\sigma+2)^2}{4} = 1,
+\]
+the solution oscillates for fixed $x$ as $m$ (time) increases if $-2 < \sigma + 2 < 2$.  This is similar to the wave equation itself, which permits time-periodic solutions when the spatial part is periodic (e.g., $\sin n\pi x/L\cos n\pi ct/L$).  If $\sigma + 2 > 2$ or $\sigma + 2 < -2$, the roots are real with product equal to~1 [see \eqref{eq:6.5.9}].  Thus, one root will be greater than one in absolute value, giving rise to an unstable behavior.
+
+The solution will be stable if $-2 < \sigma + 2 < 2$ or $-4 < \sigma < 0$.  From \eqref{eq:6.5.8} we conclude that our numerical scheme is stable if
+\begin{equation}
+\boxed{\frac{c}{\Delta x/\Delta t} \le 1,}
+\label{eq:6.5.10}
+\end{equation}
+known as the \textbf{Courant stability condition} (for the wave equation).  Here $c$ is the speed of propagation of signals for the wave equation and $\Delta x/\Delta t$ is the speed of propagation of signals for the discretization of the wave equation.  Thus, we conclude that for stability, \textbf{the numerical scheme must have a greater propagation speed than the wave equation itself}.  In this way the numerical scheme will be able to account for the real signals being propagated.  The stability condition again limits the size of the time step, in this case
+\begin{equation}
+\Delta t \le \frac{\Delta x}{c}.
+\label{eq:6.5.11}
+\end{equation}
+
+\paragraph{Convergence.}
+The time-dependent part oscillates if $-2 < \sigma + 2 < 2$ (the criterion for stability):
+\begin{equation}
+Q^{t/\Delta t} = e^{i\frac{t}{\Delta t}\arg Q}.
+\label{eq:6.5.12}
+\end{equation}
+We note that if $\alpha\Delta x$ is small (where $\alpha$ is the wave number, usually $n\pi/L$), then $\cos(\alpha\Delta X) \approx 1 - \frac{1}{2}(\alpha\Delta x)^2$ from its Taylor series.  Thus, the parameter $\sigma$ is small and negative:
+\[
+\sigma \approx -\frac{1}{2}(\alpha\Delta x)^2\,\frac{2c^2}{(\Delta x/\Delta t)^2}.
+\]
+In this case the temporal frequency of the solutions of the partial difference equations is
+\begin{equation}
+\frac{\arg Q}{\Delta t} = \frac{\tan^{-1}\!\left(\frac{\sqrt{4 - (\sigma+2)^2}}{\sigma + 2}\right)}{\Delta t} \approx \frac{\left(\frac{\sqrt{4 - (\sigma+2)^2}}{\sigma + 2}\right)}{\Delta t} \approx \frac{(\sqrt{-\sigma})}{\Delta t} \approx c\alpha,
+\label{eq:6.5.13}
+\end{equation}
+since $\sigma$ is very small and negative and $\tan\phi \approx \phi$ for small angles $\phi$.  Equation~\eqref{eq:6.5.13} shows that the temporal frequency of the partial difference equation approaches the frequency of the partial differential equation.  Perhaps this is clearer by remembering that $\alpha$ is the wave number usually $n\pi/L$.  Thus, if $\alpha\Delta x$ is small, the partial difference equation has solutions that are approximately the same as the partial differential equation:
+\[
+Q^{t/\Delta t}e^{i\alpha x} = e^{i\frac{t}{\Delta t}\arg Q}e^{i\alpha x} \approx e^{i\alpha x}e^{ic\alpha t}.
+\]
+
+It can also be shown that the error (difference between the solutions of the partial difference and differential equations at fixed $x$ and $t$) is $O(\Delta t)$ if $\alpha\Delta x$ is small.  It is usual to compute with fixed $\Delta x/\Delta t$.  To improve a computation, we cut $\Delta x$ in half (and thus $\Delta t$ will be decreased by a factor of~2).  Thus, if $\alpha\Delta x \ll 1$ with $\Delta x/\Delta t$ fixed, numerical errors (at fixed $x$ and $t$) are cut in half if the discretization step size $\Delta x$ is halved (and time step $\Delta t$ is halved).  All computations should be done satisfying the Courant stability condition \eqref{eq:6.5.10}.
+
+\begin{exercises}{6.5}
+\item Modify the Courant stability condition for the wave equation to account for the boundary condition $u(0) = 0$ and $u(L) = 0$.
+
+\item Consider the wave equation subject to the initial conditions
+\[
+u(x,0) = \begin{cases} 1 & \frac{L}{4} < x < \frac{3L}{4} \\ 0 & \text{otherwise}\end{cases}
+\]
+\[
+\pd{u}{t}(x,0) = 0
+\]
+and the boundary conditions
+\begin{align*}
+u(0,t) &= 0 \\
+u(L,t) &= 0.
+\end{align*}
+Use nine interior mesh points and compute using centered differences in space and time.  Compare to the exact solution.
+\begin{enumerate}
+\item[(a)] $\Delta t = \Delta x/2c$ \qquad (b) $\Delta t = \Delta x/c$ \qquad (c) $\Delta t = 2\Delta x/c$
+\end{enumerate}
+
+\item For the wave equation, $u(x,t) = f(x - ct)$ is a solution, where $f$ is an arbitrary function.  If $c = \Delta x/\Delta t$, show that $u_j^m = f(x_j - ct_m)$ is a solution of \eqref{eq:6.5.2} for arbitrary $f$.
+
+\item Show that the conclusion of Exercise~6.5.3 is not valid if $c \ne \Delta x/\Delta t$.
+
+\item Consider the first-order wave equation
+\[
+\pd{u}{t} + c\,\pd{u}{x} = 0.
+\]
+\begin{enumerate}
+\item[(a)] Determine a partial difference equation by using a forward difference in time and a centered difference in space.
+\item[\starred (b)] Analyze the stability of this scheme (without boundary conditions).
+\end{enumerate}
+
+\item[\starred 6.5.6.] Modify Exercise~6.5.5 for centered difference in space and time.
+
+\item Solve on a computer [using \eqref{eq:6.5.2}] the wave equation $\partial^2 u/\partial t^2 = \partial^2 u/\partial x^2$ with $u(0,t) = 0$, $u(1,t) = 0$, $u(x,0) = \sin\pi x$ and $\partial u/\partial t(x,0) = 0$ with $\Delta x = 1/100$.  For the initial condition for the first derivative $\partial u/\partial t(x,0) = 0$, use a forward difference instead of the centered difference \eqref{eq:6.5.4}.  Compare to analytic solution at $x = 1/2$, $t = 1$ by computing the error there (the difference between the analytic solution and the numerical solution).  Pick $\Delta t$ so that
+\begin{enumerate}
+\item[(a)] $\Delta x/\Delta t = 1.5$ \qquad (b) $\Delta x/\Delta t = 0.5$
+\item[(c)] To improve the calculation in part~(a), let $\Delta x = 1/200$ but keep $\Delta x/\Delta t = 1.5$.
+\item[(d)] Compare the errors in parts~(a) and~(c).
+\end{enumerate}
+\end{exercises}

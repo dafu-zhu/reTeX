@@ -1,0 +1,45 @@
+% sec09_2.tex — Section 9.2: One-Dimensional Heat Equation
+\section{One-Dimensional Heat Equation}
+\label{sec:greens-heat-1d}
+
+Consider the one-dimensional heat equation with a source and homogeneous boundary conditions:
+\begin{equation}
+\label{eq:9.2.1}
+\pd{u}{t} = k\pdd{u}{x} + Q(x,t),
+\end{equation}
+with $u(0,t) = 0$, $u(L,t) = 0$, and $u(x,0) = g(x)$.  In Chapter~8 we showed, using the method of eigenfunction expansion with $\phi_n = \sin n\pi x/L$, that the solution may be written as
+\begin{equation}
+\label{eq:9.2.2}
+u(x,t) = \int_0^L g(x_0) G(x,t;x_0,0)\dx_0 + \int_0^L \int_0^t Q(x_0,t_0) G(x,t;x_0,t_0)\,dt_0\dx_0,
+\end{equation}
+where the Green's function for this time-dependent problem is
+\begin{equation}
+\label{eq:9.2.3}
+G(x,t;x_0,t_0) = \sum_{n=1}^{\infty} \frac{2}{L}\sin\frac{n\pi x_0}{L}\sin\frac{n\pi x}{L}\,e^{-k(n\pi/L)^2(t-t_0)}.
+\end{equation}
+
+\subsection*{Steady-state Green's function}
+
+Suppose the source is steady, $Q(x,t) = Q(x)$.  As $t\to\infty$, $G(x,t;x_0,0)\to 0$ so that the influence of the initial condition vanishes.  However, the steady source still contributes.  Since
+\[
+\int_0^t e^{-k(n\pi/L)^2(t-t_0)}\,dt_0 = \frac{1 - e^{-k(n\pi/L)^2 t}}{k(n\pi/L)^2},
+\]
+as $t\to\infty$ we obtain the \textbf{steady-state} solution
+\begin{equation}
+\label{eq:9.2.4}
+\boxed{u(x) = \int_0^L Q(x_0)\,G(x,x_0)\dx_0,}
+\end{equation}
+where the steady-state Green's function is
+\begin{equation}
+\label{eq:9.2.5}
+G(x,x_0) = -\sum_{n=1}^{\infty} \frac{2}{L}\,\frac{\sin n\pi x_0/L\;\sin n\pi x/L}{k(n\pi/L)^2}.
+\end{equation}
+
+The steady-state temperature satisfies
+\begin{equation}
+\label{eq:9.2.6}
+k\odd{u}{x} = -Q(x),
+\end{equation}
+with $u(0) = 0$ and $u(L) = 0$.  Writing $f(x) = -Q(x)/k$, we have $d^2u/dx^2 = f(x)$.  The Green's function $G(x,x_0)$ is the \textbf{influence function}: it represents the influence of a source at position $x_0$ on the solution at position $x$.  Note that $G(x,x_0) = G(x_0,x)$; this symmetry will be discussed in detail later.
+
+In the following sections, we will develop several independent methods for obtaining Green's functions directly, without taking the limit of the time-dependent problem.

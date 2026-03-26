@@ -1,0 +1,149 @@
+% sec08_4.tex — Section 8.4: Method of Eigenfunction Expansion Using Green's Formula
+\section{Method of Eigenfunction Expansion Using Green's Formula (With or Without Homogeneous Boundary Conditions)}
+\label{sec:eigenfunction-green}
+
+In this section we reinvestigate problems that may have nonhomogeneous boundary conditions.  We still use the method of eigenfunction expansion.  For example, consider
+\begin{equation}
+\label{eq:8.4.1}
+\text{PDE:}\quad \boxed{\pd{u}{t} = k\pdd{u}{x} + Q(x,t)}
+\end{equation}
+\begin{equation}
+\label{eq:8.4.2}
+\text{BC:}\quad \boxed{\begin{aligned} u(0,t) &= A(t) \\ u(L,t) &= B(t) \end{aligned}}
+\end{equation}
+\begin{equation}
+\label{eq:8.4.3}
+\text{IC:}\quad \boxed{u(x,0) = f(x).}
+\end{equation}
+The eigenfunctions of the related homogeneous problem,
+\begin{align}
+\label{eq:8.4.4}
+\odd{\phi_n}{x} + \lambda_n\phi_n &= 0 \\
+\label{eq:8.4.5}
+\phi_n(0) &= 0 \\
+\label{eq:8.4.6}
+\phi_n(L) &= 0,
+\end{align}
+are known to be $\phi_n(x) = \sin n\pi x/L$, corresponding to the eigenvalues $\lambda_n = (n\pi/L)^2$.  Any piecewise smooth function can be expanded in terms of these eigenfunctions.  Thus, even though $u(x,t)$ satisfies nonhomogeneous boundary conditions, it is still true that
+\begin{equation}
+\label{eq:8.4.7}
+\boxed{u(x,t) = \sum_{n=1}^{\infty} b_n(t)\,\phi_n(x).}
+\end{equation}
+Actually, the equality in \eqref{eq:8.4.7} cannot be valid at $x=0$ and at $x=L$ since $\phi_n(x)$ satisfies homogeneous boundary conditions, while $u(x,t)$ does not.  Nonetheless, we use the $=$ notation, where we understand that the $\sim$ notation is more proper.  It is difficult to determine $b_n(t)$ by substituting \eqref{eq:8.4.7} into \eqref{eq:8.4.1}; the required term-by-term differentiations with respect to $x$ are not justified since $u(x,t)$ and $\phi_n(x)$ do not satisfy the same homogeneous boundary conditions [$\partial^2 u/\partial x^2 \neq \sum_{n=1}^{\infty} b_n(t)\,d^2\phi_n/dx^2$].  However, term-by-term time derivatives in \eqref{eq:8.4.7} were shown valid in Sec.~3.4:
+\begin{equation}
+\label{eq:8.4.8}
+\pd{u}{t} = \sum_{n=1}^{\infty} \od{b_n}{t}\,\phi_n(x).
+\end{equation}
+
+We will determine a first-order differential equation for $b_n(t)$.  Unlike in Sec.~8.3, it will be obtained \emph{without} calculating spatial derivatives of an infinite series of eigenfunctions.  From \eqref{eq:8.4.8} it follows that
+\begin{equation}
+\label{eq:8.4.9}
+\od{b_n}{t} = \frac{\int_0^L \left[k\pdd{u}{x} + Q(x,t)\right]\phi_n(x)\dx}{\int_0^L \phi_n^2(x)\dx}.
+\end{equation}
+Already we note the importance of the generalized Fourier series of $Q(x,t)$:
+\[
+Q(x,t) = \sum_{n=1}^{\infty} q_n(t)\,\phi_n(x),\quad\text{where}\quad
+q_n(t) = \frac{\int_0^L Q(x,t)\,\phi_n(x)\dx}{\int_0^L \phi_n^2(x)\dx}.
+\]
+Thus, \eqref{eq:8.4.9} simplifies to
+\begin{equation}
+\label{eq:8.4.10}
+\od{b_n}{t} = q_n(t) + \frac{\int_0^L k\pdd{u}{x}\,\phi_n(x)\dx}{\int_0^L \phi_n^2(x)\dx}.
+\end{equation}
+
+We will show how to evaluate the integral in \eqref{eq:8.4.10} in terms of $b_n(t)$, yielding a first-order differential equation.
+
+If we integrate $\int_0^L \partial^2 u/\partial x^2\;\phi_n(x)\dx$ twice by parts, then we would obtain the desired result.  However, this would be a considerable effort.  There is a better way; we have already performed the required integration by parts in a more general context.  Perhaps the operator notation, $L\equiv \partial^2/\partial x^2$, will help to remind you of the result we need.  Using $L = \partial^2/\partial x^2$,
+\[
+\int_0^L \pdd{u}{x}\,\phi_n(x)\dx = \int_0^L \phi_n\,L(u)\dx.
+\]
+Now this may be simplified by employing Green's formula (derived by repeated integrations in Section~5.5).  Let us restate \textbf{Green's formula}:
+\begin{equation}
+\label{eq:8.4.11}
+\boxed{\int_0^L [u\,L(v) - v\,L(u)]\dx = p\left(u\od{v}{x} - v\od{u}{x}\right)\bigg|_0^L,}
+\end{equation}
+where $L$ is any Sturm--Liouville operator ($L \equiv d/dx(p\,d/dx) + q$).  In our context, $L = \partial^2/\partial x^2$ (i.e., $p=1$, $q=0$).  Partial derivatives may be used, since $\partial/\partial x = d/dx$ with $t$ fixed.  Thus,
+\begin{equation}
+\label{eq:8.4.12}
+\int_0^L \left(u\pdd{v}{x} - v\pdd{u}{x}\right)\dx = \left(u\pd{v}{x} - v\pd{u}{x}\right)\bigg|_0^L.
+\end{equation}
+Here we let $v = \phi_n(x)$.  Often both $u$ and $\phi_n$ satisfy the same homogeneous boundary conditions, and the right-hand side vanishes.  Here $\phi_n(x) = \sin n\pi x/L$ satisfies homogeneous boundary conditions, but $u(x,t)$ does not [$u(0,t) = A(t)$ and $u(L,t) = B(t)$].  Using $d\phi_n/dx = (n\pi/L)\cos n\pi x/L$, the right-hand side of \eqref{eq:8.4.12} simplifies to $(n\pi/L)[B(t)(-1)^n - A(t)]$.  Furthermore, $\int_0^L u\,d^2\phi_n/dx^2\dx = -\lambda_n\int_0^L u\phi_n\dx$ since $d^2\phi_n/dx^2 + \lambda_n\phi_n = 0$.  Thus, \eqref{eq:8.4.12} becomes
+\[
+\int_0^L \phi_n\pdd{u}{x}\dx = -\lambda_n\int_0^L u\phi_n\dx - \frac{n\pi}{L}[B(t)(-1)^n - A(t)].
+\]
+Since $b_n(t)$ are the generalized Fourier coefficients of $u(x,t)$, we know that
+\[
+b_n(t) = \frac{\int_0^L u\,\phi_n\dx}{\int_0^L \phi_n^2\dx}.
+\]
+Finally, \eqref{eq:8.4.10} reduces to a first-order differential equation for $b_n(t)$:
+\begin{equation}
+\label{eq:8.4.13}
+\boxed{\od{b_n}{t} + k\lambda_n b_n = q_n(t) + \frac{k(n\pi/L)[A(t)-(-1)^n B(t)]}{\int_0^L \phi_n^2(x)\dx}.}
+\end{equation}
+The nonhomogeneous terms arise in two ways: $q_n(t)$ is due to the source terms in the PDE, while the term involving $A(t)$ and $B(t)$ is a result of the nonhomogeneous boundary conditions at $x=0$ and $x=L$.  Equation \eqref{eq:8.4.13} is again solved by introducing the integrating factor $e^{k\lambda_n t}$.  The required initial condition for $b_n(t)$ follows from the given initial condition, $u(x,0) = f(x)$:
+\begin{align*}
+f(x) &= \sum_{n=1}^{\infty} b_n(0)\,\phi_n(x) \\
+b_n(0) &= \frac{\int_0^L f(x)\,\phi_n(x)\dx}{\int_0^L \phi_n^2(x)\dx}.
+\end{align*}
+
+It is interesting to note that the differential equation for the coefficients $b_n(t)$ for problems with nonhomogeneous boundary conditions is quite similar to the one that occurred in the preceding section for homogeneous boundary conditions; only the nonhomogeneous term is modified.
+
+If the boundary conditions are homogeneous, $u(0,t) = 0$ and $u(L,t) = 0$, then \eqref{eq:8.4.13} reduces to
+\[
+\od{b_n}{t} + k\lambda_n b_n = q_n(t),
+\]
+the differential equation derived in the preceding section.  Using Green's formula is an alternative procedure to derive the eigenfunction expansion.  It can be used even if the boundary conditions are homogeneous.  In fact, it is this derivation that justifies the differentiation of infinite series of eigenfunctions used in Sec.~8.3.
+
+We now have two procedures to solve nonhomogeneous partial differential equations with nonhomogeneous boundary conditions.  By subtracting any function that just solves the nonhomogeneous boundary conditions, we can solve a related problem with homogeneous boundary conditions by the eigenfunction expansion method.  Alternatively, we can solve directly the original problem with nonhomogeneous boundary conditions by the method of eigenfunction expansions.  In both cases we need the eigenfunction expansion of some function $w(x,t)$:
+\[
+w(x,t) = \sum_{n=1}^{\infty} a_n(t)\,\phi_n(x).
+\]
+If $w(x,t)$ satisfies the same homogeneous boundary conditions as $\phi_n(x)$, then we claim that this series will converge reasonably fast.  However, if $w(x,t)$ satisfies nonhomogeneous boundary conditions (at $x=0$ and $x=L$), then not only will the series not satisfy the boundary conditions, but the series will converge more slowly everywhere.  Thus, \emph{the advantage of reducing a problem to homogeneous boundary conditions is that the corresponding series converges faster}.
+
+\begin{exercises}{8.4}
+
+\item In these exercises, do not make a reduction to homogeneous boundary conditions.  Solve the initial value problem for the heat equation with time-dependent sources
+\begin{align*}
+\pd{u}{t} &= k\pdd{u}{x} + Q(x,t) \\
+u(x,0) &= f(x)
+\end{align*}
+subject to the following boundary conditions:
+\begin{enumerate}
+\item[(a)] $u(0,t) = A(t)$, \quad $\pd{u}{x}(L,t) = B(t)$
+\item[\starred(b)] $\pd{u}{x}(0,t) = A(t)$, \quad $\pd{u}{x}(L,t) = B(t)$
+\end{enumerate}
+
+\item Use the method of eigenfunction expansions to solve, without reducing to homogeneous boundary conditions:
+\begin{align*}
+\pd{u}{t} &= k\pdd{u}{x} \\[4pt]
+u(x,0) = f(x)\qquad u(0,t) &= A \\ u(L,t) &= B
+\end{align*}
+constants.
+
+\item Consider
+\[
+c(x)\rho(x)\pd{u}{t} = \frac{\partial}{\partial x}\left[K_0(x)\pd{u}{x}\right] + q(x)u + f(x,t)
+\]
+\begin{align*}
+u(x,0) &= g(x) & u(0,t) &= \alpha(t) \\
+& & u(L,t) &= \beta(t).
+\end{align*}
+Assume that the eigenfunctions $\phi_n(x)$ of the related homogeneous problem are known.
+\begin{enumerate}
+\item[(a)] Solve without reducing to a problem with homogeneous boundary conditions.
+\item[(b)] Solve by first reducing to a problem with homogeneous boundary conditions.
+\end{enumerate}
+
+\item Reconsider
+\begin{align*}
+\pd{u}{t} &= k\pdd{u}{x} + Q(x,t) \\
+u(x,0) &= f(x) & u(0,t) &= 0 \\
+& & u(L,t) &= 0.
+\end{align*}
+Assume that the solution $u(x,t)$ has the appropriate smoothness, so that it may be represented by a Fourier cosine series
+\[
+u(x,t) = \sum_{n=0}^{\infty} c_n(t)\cos\frac{n\pi x}{L}.
+\]
+Solve for $dc_n/dt$.  Show that $c_n$ satisfies a first-order nonhomogeneous ordinary differential equation, but part of the nonhomogeneous term is not known.  Make a brief philosophical conclusion.
+
+\end{exercises}

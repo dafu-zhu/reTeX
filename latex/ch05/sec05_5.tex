@@ -1,0 +1,556 @@
+% sec05_5.tex — Section 5.5: Self-Adjoint Operators and Sturm-Liouville Eigenvalue Problems
+\section{Self-Adjoint Operators and Sturm--Liouville Eigenvalue Problems}
+\label{sec:sl-selfadjoint}
+
+\paragraph{Introduction.}
+In this section we prove some of the properties of regular Sturm--Liouville eigenvalue problems:
+\begin{align}
+\label{eq:sa-sl}
+& \boxed{\frac{d}{d x}\left[p(x)\od{\phi}{x}\right] + q(x)\phi + \lambda\sigma(x)\phi = 0} \\[6pt]
+\label{eq:sa-bc-a}
+& \boxed{\beta_1\phi(a) + \beta_2\od{\phi}{x}(a) = 0} \\[6pt]
+\label{eq:sa-bc-b}
+& \boxed{\beta_3\phi(b) + \beta_4\od{\phi}{x}(b) = 0,}
+\end{align}
+where $\beta_i$ are real and where, on the finite interval $(a \le x \le b)$, $p$, $q$, $\sigma$ are real continuous functions and $p$, $\sigma$ are positive [$p(x) > 0$ and $\sigma(x) > 0$].  At times we will make some comments on the validity of our results if some of these restrictions are removed.
+
+The proofs of these statements are somewhat difficult.  We will not prove that there are an infinite number of eigenvalues.  We will have to rely for understanding on the examples already presented and on some further examples developed in later sections.  For Sturm--Liouville eigenvalue problems that are \textit{not} regular, there may be no eigenvalues at all.  However, in most cases of physical interest (on finite intervals) there will still be an infinite number of discrete eigenvalues.  We also will not attempt to prove that any piecewise smooth function can be expanded in terms of the eigenfunctions of a regular Sturm--Liouville problem (known as the completeness property).  We will not attempt to prove that each succeeding eigenfunction has one additional zero (oscillates one more time).
+
+\paragraph{Linear operators.}
+The proofs we will investigate are made easier to follow by the introduction of \textit{operator} notation.  Let $L$ stand for the linear differential operator $d/dx[p(x)\,d/dx] + q(x)$.  An operator acts on a function and yields another function.  The notation means that for this $L$ acting on the function $y(x)$,
+\begin{equation}
+\label{eq:operator-L}
+L(y) \equiv \frac{d}{d x}\left[p(x)\od{y}{x}\right] + q(x)y.
+\end{equation}
+Thus, $L(y)$ is just a shorthand notation.  For example, if $L \equiv d^2/dx^2 + 6$, then $L(y) = d^2y/dx^2 + 6y$ or $L(e^{2x}) = 4e^{2x} + 6e^{2x} = 10e^{2x}$.
+
+The Sturm--Liouville differential equation is rather cumbersome to write over and over again.  The use of the linear operator notation is somewhat helpful.  Using the operator notation
+\begin{equation}
+\label{eq:sl-operator}
+L(\phi) + \lambda\sigma(x)\phi = 0,
+\end{equation}
+where $\lambda$ is an eigenvalue and $\phi$ the corresponding eigenfunction, $L$ can operate on any function, not just an eigenfunction.
+
+\paragraph{Lagrange's identity.}
+Most of the proofs we will present concerning Sturm--Liouville eigenvalue problems are immediate consequences of an interesting and fundamental formula known as \textbf{Lagrange's identity}.  For convenience, we will use the operator notation.  We calculate $uL(v) - vL(u)$, where $u$ and $v$ are \textit{any two functions} (not necessarily eigenfunctions).  Recall that
+\[
+L(u) = \frac{d}{d x}\left(p\od{u}{x}\right) + qu \quad \text{and} \quad L(v) = \frac{d}{d x}\left(p\od{v}{x}\right) + qv,
+\]
+and hence
+\begin{equation}
+\label{eq:uLv-vLu}
+uL(v) - vL(u) = u\frac{d}{d x}\left(p\od{v}{x}\right) + uqv - v\frac{d}{d x}\left(p\od{u}{x}\right) - vqu,
+\end{equation}
+where a simple cancellation of $uqv - vqu$ should be noted.  The right-hand side of \eqref{eq:uLv-vLu} is manipulated to an exact differential:
+\begin{equation}
+\label{eq:lagrange-identity}
+\boxed{uL(v) - vL(u) = \frac{d}{d x}\left[p\!\left(u\od{v}{x} - v\od{u}{x}\right)\right],}
+\end{equation}
+known as the \textbf{differential form of Lagrange's identity}.  To derive \eqref{eq:lagrange-identity}, we note from the product rule that
+\[
+u\frac{d}{d x}\left(p\od{v}{x}\right) = \frac{d}{d x}\left[u\left(p\od{v}{x}\right)\right] - \left(p\od{v}{x}\right)\od{u}{x},
+\]
+and similarly
+\[
+v\frac{d}{d x}\left(p\od{u}{x}\right) = \frac{d}{d x}\left[v\left(p\od{u}{x}\right)\right] - \left(p\od{u}{x}\right)\od{v}{x}.
+\]
+Equation \eqref{eq:lagrange-identity} follows by subtracting these two.  Later [see \eqref{eq:lagrange-diff}] we will use the differential form, \eqref{eq:lagrange-identity}.
+
+\paragraph{Green's formula.}
+The integral form of Lagrange's identity is also known as \textbf{Green's formula}.  It follows by integrating \eqref{eq:lagrange-identity}:
+\begin{equation}
+\label{eq:greens-formula}
+\boxed{\int_a^b [uL(v) - vL(u)]\dx = p\!\left(u\od{v}{x} - v\od{u}{x}\right)\bigg|_a^b}
+\end{equation}
+for any functions\footnote{The integration requires $du/dx$ and $dv/dx$ to be continuous.} $u$ and $v$.  This is a very useful formula.
+
+\paragraph{Example.}
+If $p = 1$ and $q = 0$ (in which case $L = d^2/dx^2$), \eqref{eq:lagrange-identity} simply states that
+\[
+u\odd{v}{x} - v\odd{u}{x} = \frac{d}{d x}\left(u\od{v}{x} - v\od{u}{x}\right),
+\]
+which is easily independently checked.  For this example, Green's formula is
+\[
+\int_a^b \left(u\odd{v}{x} - v\odd{u}{x}\right)\dx = \left(u\od{v}{x} - v\od{u}{x}\right)\bigg|_a^b.
+\]
+
+\paragraph{Self-adjointness.}
+As an important case of Green's formula, suppose that $u$ and $v$ are any two functions, but with the additional restriction that the boundary terms happen to vanish,
+\[
+p\!\left(u\od{v}{x} - v\od{u}{x}\right)\bigg|_a^b = 0.
+\]
+Then, from \eqref{eq:greens-formula}, $\int_a^b [uL(v) - vL(u)]\dx = 0$.
+
+Let us show how it is possible for the boundary terms to vanish.  Instead of being arbitrary functions, we restrict $u$ and $v$ to \textit{both} satisfy the same set of homogeneous \textit{boundary conditions}.  For example, suppose that $u$ and $v$ are \textit{any} two functions that satisfy the following set of boundary conditions:
+\begin{align*}
+\phi(a) &= 0 \\
+\od{\phi}{x}(b) + h\phi(b) &= 0.
+\end{align*}
+Since both $u$ and $v$ satisfy these conditions, it follows that
+\[
+u(a) = 0 \quad \text{and} \quad \od{v}{x}(b) + hv(b) = 0;
+\]
+\[
+v(a) = 0 \quad \text{and} \quad \od{v}{x}(b) + hv(b) = 0;
+\]
+otherwise, $u$ and $v$ are arbitrary.  In this case, the boundary terms for Green's formula vanish:
+\begin{align*}
+p\!\left(u\od{v}{x} - v\od{u}{x}\right)\bigg|_a^b &= p(b)\left[u(b)\od{v}{x}(b) - v(b)\od{u}{x}(b)\right] \\
+&= p(b)[-u(b)hv(b) + v(b)hu(b)] = 0.
+\end{align*}
+Thus, for any functions $u$ and $v$ both satisfying these homogeneous boundary conditions, we know that
+\[
+\int_a^b [uL(v) - vL(u)]\dx = 0.
+\]
+
+In fact, we claim (see Exercise~5.5.1) that the boundary terms also vanish for any two functions $u$ and $v$ that both satisfy the same set of boundary conditions of the type that occur in the regular Sturm--Liouville eigenvalue problems \eqref{eq:sa-bc-a} and \eqref{eq:sa-bc-b}.  Thus, when discussing any regular Sturm--Liouville eigenvalue problem, we have the following theorem:
+\begin{equation}
+\label{eq:self-adjoint-thm}
+\boxed{\text{If } u \text{ and } v \text{ are any two functions satisfying the same set of} \\
+\text{homogeneous boundary conditions (of the regular Sturm--} \\
+\text{Liouville type), then } \int_a^b [uL(v) - vL(u)]\dx = 0.}
+\end{equation}
+When \eqref{eq:self-adjoint-thm} is valid, we say that the operator $L$ (with the corresponding boundary conditions) is \textbf{self-adjoint}.\footnote{We usually avoid in this text an explanation of an \textbf{adjoint} operator.  Here $L$ equals its adjoint and so is called \textit{self-adjoint}.}
+
+The boundary terms also vanish in circumstances other than for boundary conditions of the regular Sturm--Liouville type.  Two important further examples will be discussed briefly.  The \textbf{periodic boundary condition} can be generalized (for nonconstant-coefficient operators) to
+\[
+\phi(a) = \phi(b) \quad \text{and} \quad p(a)\od{\phi}{x}(a) = p(b)\od{\phi}{x}(b).
+\]
+In this situation, \eqref{eq:self-adjoint-thm} also can be shown (see Exercise~5.5.1) to be valid.  Another example in which the boundary terms in Green's formula vanish is the ``singular'' case.  The singular case occurs if the coefficient of the second derivative of the differential operator is zero at an endpoint; for example, if $p(x) = 0$ at $x = 0$ [i.e., $p(0) = 0$].  At a singular endpoint, a singularity condition is imposed.  The usual singularity condition at $x = 0$ is $\phi(0)$ bounded.  It can also be shown that \eqref{eq:self-adjoint-thm} is valid (see Exercise~5.5.1) if both $u$ and $v$ satisfy this singularity condition at $x = 0$ and any regular Sturm--Liouville type of boundary condition at $x = b$.
+
+\paragraph{Orthogonal eigenfunctions.}
+We now will show the usefulness of Green's formula.  We will begin by proving the important orthogonality relationship for Sturm--Liouville eigenvalue problems.  For many types of boundary conditions, \textbf{eigenfunctions corresponding to different eigenvalues are orthogonal with weight $\bm{\sigma(x)}$}.  To prove that statement, let $\lambda_n$ and $\lambda_m$ be eigenvalues with corresponding eigenfunctions $\phi_n(x)$ and $\phi_m(x)$.  Using the operator notation, the differential equations satisfied by these eigenfunctions are
+\begin{align}
+\label{eq:Lphi-n}
+L(\phi_n) + \lambda_n\sigma(x)\phi_n &= 0 \\
+\label{eq:Lphi-m}
+L(\phi_m) + \lambda_m\sigma(x)\phi_m &= 0.
+\end{align}
+In addition, both $\phi_n$ and $\phi_m$ satisfy the same set of homogeneous boundary conditions.  Since $u$ and $v$ are arbitrary functions, we may let $u = \phi_m$ and $v = \phi_n$ in Green's formula:
+\[
+\int_a^b [\phi_m L(\phi_n) - \phi_n L(\phi_m)]\dx = p(x)\!\left(\phi_m\od{\phi_n}{x} - \phi_n\od{\phi_m}{x}\right)\bigg|_a^b.
+\]
+$L(\phi_n)$ and $L(\phi_m)$ may be eliminated from \eqref{eq:Lphi-n} and \eqref{eq:Lphi-m}.  Thus,
+\begin{equation}
+\label{eq:orthog-deriv}
+(\lambda_m - \lambda_n)\int_a^b \phi_n\phi_m\sigma\dx = p(x)\!\left(\phi_m\od{\phi_n}{x} - \phi_n\od{\phi_m}{x}\right)\bigg|_a^b,
+\end{equation}
+corresponding to multiplying \eqref{eq:Lphi-n} by $\phi_m$, multiplying \eqref{eq:Lphi-m} by $\phi_n$, subtracting the two, and then integrating.  We avoided these steps (especially the integration) by applying Green's formula.  For many different kinds of boundary conditions (i.e., regular Sturm--Liouville types, periodic case, and the singular case), the boundary terms vanish if $u$ and $v$ both satisfy the same set of homogeneous boundary conditions.  Since $u$ and $v$ are eigenfunctions, they satisfy this condition, and thus \eqref{eq:orthog-deriv} implies that
+\begin{equation}
+\label{eq:orthog-result}
+(\lambda_m - \lambda_n)\int_a^b \phi_n\phi_m\sigma\dx = 0.
+\end{equation}
+If $\lambda_m \neq \lambda_n$, then it immediately follows that
+\begin{equation}
+\label{eq:orthogonality-proof}
+\boxed{\int_a^b \phi_n\phi_m\sigma\dx = 0.}
+\end{equation}
+In other words, eigenfunctions ($\phi_n$ and $\phi_m$) corresponding to different eigenvalues ($\lambda_n \neq \lambda_m$) are orthogonal with weight $\sigma(x)$.
+
+\paragraph{Real eigenvalues.}
+We can use the orthogonality of eigenfunctions to prove that the eigenvalues are real.  Suppose that $\lambda$ is a complex eigenvalue and $\phi(x)$ the corresponding eigenfunction (also allowed to be complex since the differential equation defining the eigenfunction would be complex):
+\begin{equation}
+\label{eq:complex-eigen}
+L(\phi) + \lambda\sigma\phi = 0.
+\end{equation}
+We introduce the notation $\overline{\phantom{z}}$ for the complex conjugate (e.g., if $z = x + iy$, then $\bar{z} = x - iy$).  Note that if $z = 0$, then $\bar{z} = 0$.  Thus, the complex conjugate of \eqref{eq:complex-eigen} is also valid:
+\begin{equation}
+\label{eq:conj-1}
+L(\bar{\phi}) + \bar{\lambda}\sigma\bar{\phi} = 0,
+\end{equation}
+assuming that the coefficient $\sigma$ is real and hence $\bar{\sigma} = \sigma$.  The complex conjugate of $L(\phi)$ is exactly $L$ operating on the complex conjugate of $\phi$, $\overline{L(\phi)} = L(\bar{\phi})$, since the coefficients of the linear differential operator are also real (see Exercise~5.5.7).  Thus,
+\begin{equation}
+\label{eq:conj-2}
+L(\bar{\phi}) + \bar{\lambda}\sigma\bar{\phi} = 0.
+\end{equation}
+If $\phi$ satisfies boundary conditions with real coefficients, then $\bar{\phi}$ satisfies the same boundary conditions.  For example, if $d\phi/dx + h\phi = 0$ at $x = a$, then by complex conjugates, $d\bar{\phi}/dx + h\bar{\phi} = 0$ at $x = a$.  Equation \eqref{eq:conj-2} and the boundary conditions show that $\bar{\phi}$ satisfies the Sturm--Liouville eigenvalue problem, but with the eigenvalue being $\bar{\lambda}$.  We have thus proved the following theorem:\footnote{A ``similar'' type of theorem follows from the quadratic formula: For a quadratic equation with real coefficients, if $\lambda$ is a complex root, then so is $\bar{\lambda}$.  This also holds for any algebraic equation with real coefficients.}  \textbf{If $\lambda$ is a complex eigenvalue with corresponding eigenfunction $\phi$, then $\bar{\lambda}$ is also an eigenvalue with corresponding eigenfunction $\bar{\phi}$.}
+
+However, we will show that $\lambda$ cannot be complex.  As we have shown, if $\lambda$ is an eigenvalue, then so too is $\bar{\lambda}$.  According to our fundamental orthogonality theorem, the corresponding eigenfunctions ($\phi$ and $\bar{\phi}$) must be orthogonal (with weight $\sigma$).  Thus, from \eqref{eq:orthog-result},
+\begin{equation}
+\label{eq:real-proof}
+(\lambda - \bar{\lambda})\int_a^b \phi\bar{\phi}\sigma\dx = 0.
+\end{equation}
+Since $\phi\bar{\phi} = |\phi|^2 \ge 0$ (and $\sigma > 0$), the integral in \eqref{eq:real-proof} is $\ge 0$.  In fact, the integral can equal zero only if $\phi \equiv 0$, which is prohibited since $\phi$ is an eigenfunction.  Thus, \eqref{eq:real-proof} implies that $\lambda = \bar{\lambda}$, and hence $\lambda$ is real; \textbf{all the eigenvalues are real}.  The eigenfunctions can always be chosen to be real.
+
+\paragraph{Unique eigenfunctions (regular and singular cases).}
+We next prove that there is only one eigenfunction corresponding to an eigenvalue (except for the case of periodic boundary conditions).  Suppose that there are two different eigenfunctions $\phi_1$ and $\phi_2$ corresponding to the same eigenvalue $\lambda$.  We say $\lambda$ is a ``multiple'' eigenvalue with multiplicity~2.  In this case, both
+\begin{equation}
+\label{eq:multiple-eigen}
+\begin{aligned}
+L(\phi_1) + \lambda\sigma\phi_1 &= 0 \\
+L(\phi_2) + \lambda\sigma\phi_2 &= 0.
+\end{aligned}
+\end{equation}
+Since $\lambda$ is the same in both expressions,
+\begin{equation}
+\label{eq:multiple-subtract}
+\phi_2 L(\phi_1) - \phi_1 L(\phi_2) = 0.
+\end{equation}
+This can be integrated by some simple manipulations.  However, we avoid this algebra by simply quoting the differential form of Lagrange's identity:
+\begin{equation}
+\label{eq:lagrange-diff}
+\phi_2 L(\phi_1) - \phi_1 L(\phi_2) = \frac{d}{d x}\left[p\!\left(\phi_2\od{\phi_1}{x} - \phi_1\od{\phi_2}{x}\right)\right].
+\end{equation}
+From \eqref{eq:multiple-subtract} it follows that
+\begin{equation}
+\label{eq:wronskian-const}
+p\!\left(\phi_1\od{\phi_2}{x} - \phi_2\od{\phi_1}{x}\right) = \text{constant}.
+\end{equation}
+
+Often we can evaluate the constant from one of the boundary conditions.  For example, if $d\phi/dx + h\phi = 0$ at $x = a$, a short calculation shows that the constant $= 0$.  In fact, we claim (Exercise~5.5.10) that the constant also equals zero if \textit{at least one of the boundary conditions is of the regular Sturm--Liouville type (or of the singular type)}.  For any of these boundary conditions it follows that
+\begin{equation}
+\label{eq:unique-1}
+\phi_1\od{\phi_2}{x} - \phi_2\od{\phi_1}{x} = 0.
+\end{equation}
+This is equivalent to $d/dx(\phi_2/\phi_1) = 0$, and hence \textit{for these boundary conditions}
+\begin{equation}
+\label{eq:unique-2}
+\phi_2 = c\phi_1.
+\end{equation}
+This shows that any two eigenfunctions $\phi_1$ and $\phi_2$ corresponding to the same eigenvalue must be an integral multiple of each other \textit{for the preceding boundary conditions}.  The two eigenfunctions are dependent; there is only one linearly independent eigenfunction; the eigenfunction is unique.
+
+\paragraph{Nonunique eigenfunctions (periodic case).}
+For periodic boundary conditions, we \textit{cannot} conclude that the constant in \eqref{eq:wronskian-const} must be zero.  Thus, it is possible that $\phi_2 \neq c\phi_1$ and that there \textit{might} be two different eigenfunctions corresponding to the same eigenvalue.
+
+For example, consider the simple eigenvalue problem with periodic boundary conditions,
+\begin{equation}
+\label{eq:periodic-example}
+\begin{aligned}
+\odd{\phi}{x} + \lambda\phi &= 0 \\
+\phi(-L) &= \phi(L) \\
+\od{\phi}{x}(-L) &= \od{\phi}{x}(L).
+\end{aligned}
+\end{equation}
+We know that the eigenvalue 0 has any constant as the unique eigenfunction.  The other eigenvalues, $(n\pi/L)^2$, $n = 1, 2, \ldots$, each have two linearly independent eigenfunctions, $\sin n\pi x/L$ and $\cos n\pi x/L$.  This, we know, gives rise to a Fourier series.  However, \eqref{eq:periodic-example} is not a regular Sturm--Liouville eigenvalue problem, since the boundary conditions are not of the prescribed form.  Our theorem about unique eigenfunctions does not apply; we \textit{may} have two\footnote{No more than two independent eigenfunctions are possible, since the differential equation is of second order.} eigenfunctions corresponding to the same eigenvalue.  Note that it is still \textit{possible} to have only one eigenfunction, as occurs for $\lambda = 0$.
+
+\paragraph{Nonunique eigenfunctions (Gram--Schmidt orthogonalization).}
+We can solve for generalized Fourier coefficients (and correspondingly we are able to solve some partial differential equations) because of the orthogonality of the eigenfunctions.  However, our theorem states that eigenfunctions \textit{corresponding to different eigenvalues} are automatically orthogonal [with weight $\sigma(x)$].  For the case of periodic (or mixed-type) boundary conditions, it is possible for there to be more than one independent eigenfunction corresponding to the same eigenvalue.  For these multiple eigenvalues the eigenfunctions are not automatically orthogonal to each other.  Note that the eigenfunctions may be constructed such that they are orthogonal by a process called Gram--Schmidt orthogonalization.
+
+\subsection*{Appendix to 5.5: Matrix Eigenvalue Problem and Orthogonality of Eigenvectors}
+
+The matrix eigenvalue problem
+\begin{equation}
+\label{eq:matrix-eigen}
+\bm{A}\bm{x} = \lambda\bm{x},
+\end{equation}
+where $\bm{A}$ is an $n \times n$ real matrix (with entries $a_{ij}$) and $\bm{x}$ is an $n$-dimensional column vector (with components $x_i$), has many properties similar to those of the Sturm--Liouville eigenvalue problem.
+
+\paragraph{Eigenvalues and eigenvectors.}
+For all values of $\lambda$, $\bm{x} = \bm{0}$ is a ``trivial'' solution of the homogeneous linear system \eqref{eq:matrix-eigen}.  We ask, for what values of $\lambda$ are there nontrivial solutions?  In general, \eqref{eq:matrix-eigen} can be rewritten as
+\begin{equation}
+\label{eq:matrix-char}
+(\bm{A} - \lambda\bm{I})\bm{x} = \bm{0},
+\end{equation}
+where $\bm{I}$ is the identity matrix.  According to the theory of linear equations (elementary linear algebra), a nontrivial solution exists only if
+\begin{equation}
+\label{eq:char-poly}
+\det[\bm{A} - \lambda\bm{I}] = 0.
+\end{equation}
+Such values of $\lambda$ are called \textbf{eigenvalues}, and the corresponding nonzero vectors $\bm{x}$ called \textbf{eigenvectors}.
+
+In general, \eqref{eq:char-poly} yields an $n$th-degree polynomial (known as the \textbf{characteristic polynomial}) that determines the eigenvalues; there will be $n$ eigenvalues (but they may not be distinct).  Corresponding to each distinct eigenvalue, there will be an eigenvector.
+
+\paragraph{Example.}
+If $\bm{A} = \begin{bmatrix} 2 & 1 \\ 6 & 1 \end{bmatrix}$, then the eigenvalues satisfy
+\[
+0 = \det\begin{bmatrix} 2-\lambda & 1 \\ 6 & 1-\lambda \end{bmatrix} = (2-\lambda)(1-\lambda) - 6 = \lambda^2 - 3\lambda - 4 = (\lambda - 4)(\lambda + 1),
+\]
+the characteristic polynomial.  The eigenvalues are $\lambda = 4$ and $\lambda = -1$.  For $\lambda = 4$, \eqref{eq:matrix-eigen} becomes
+\[
+2x_1 + x_2 = 4x_1 \quad \text{and} \quad 6x_1 + x_2 = 4x_2,
+\]
+or, equivalently, $x_2 = 2x_1$.  The eigenvector $\begin{bmatrix} x_1 \\ x_2 \end{bmatrix} = x_1\begin{bmatrix} 1 \\ 2 \end{bmatrix}$ is an arbitrary multiple of $\begin{bmatrix} 1 \\ 2 \end{bmatrix}$ for $\lambda = 4$.  For $\lambda = -1$,
+\[
+2x_1 + x_2 = -x_1 \quad \text{and} \quad 6x_1 + x_2 = -x_2,
+\]
+and thus the eigenvector $\begin{bmatrix} x_1 \\ x_2 \end{bmatrix} = x_1\begin{bmatrix} 1 \\ -3 \end{bmatrix}$ is an arbitrary multiple of $\begin{bmatrix} 1 \\ -3 \end{bmatrix}$.
+
+\paragraph{Green's formula.}
+The matrix $\bm{A}$ may be thought of as a linear operator in the same way that
+\[
+L = \frac{d}{d x}\left(p\frac{d}{d x}\right) + q
+\]
+is a linear differential operator.  $\bm{A}$ operates on $n$-dimensional vectors producing an $n$-dimensional vector, while $L$ operates on functions and yields a function.  In analyzing the Sturm--Liouville eigenvalue problem, Green's formula was important:
+\[
+\int_a^b [uL(v) - vL(u)]\dx = p\!\left(u\od{v}{x} - v\od{u}{x}\right)\bigg|_a^b,
+\]
+where $u$ and $v$ are arbitrary functions.  Often, the boundary terms vanished.  For vectors, the dot product is analogous to integration, $\bm{a}\cdot\bm{b} = \sum_i a_ib_i$, where $a_i$ and $b_i$ are the $i$th components of, respectively, $\bm{a}$ and $\bm{b}$.  By direct analogy to Green's formula, we would be led to investigate $\bm{u}\cdot\bm{A}\bm{v}$ and $\bm{v}\cdot\bm{A}\bm{u}$, where $\bm{u}$ and $\bm{v}$ are arbitrary vectors.  Instead, we analyze $\bm{u}\cdot\bm{A}\bm{v}$ and $\bm{v}\cdot\bm{B}\bm{u}$, where $\bm{B}$ is any $n \times n$ matrix:
+\begin{align*}
+\bm{u}\cdot\bm{A}\bm{v} &= \textstyle\sum_i(u_i\sum_j a_{ij}v_j) = \sum_i\sum_j a_{ij}u_iv_j \\
+\bm{v}\cdot\bm{B}\bm{u} &= \textstyle\sum_i(v_i\sum_j b_{ij}u_j) = \sum_i\sum_j b_{ij}u_jv_i = \sum_i\sum_j b_{ji}u_iv_j,
+\end{align*}
+where an alternative expression for $\bm{v}\cdot\bm{B}\bm{u}$ was derived by interchanging the roles of $i$ and $j$.  Thus,
+\[
+\bm{u}\cdot\bm{A}\bm{v} - \bm{v}\cdot\bm{B}\bm{u} = \sum_i\sum_j (a_{ij} - b_{ji})u_iv_j.
+\]
+If we let $\bm{B}$ equal the transpose of $\bm{A}$ (i.e., $b_{ji} = a_{ij}$), whose notation is $\bm{B} = \bm{A}^t$, then we have the following theorem:
+\begin{equation}
+\label{eq:greens-matrix}
+\boxed{\bm{u}\cdot\bm{A}\bm{v} - \bm{v}\cdot\bm{A}^t\bm{u} = 0,}
+\end{equation}
+analogous to Green's formula.
+
+\paragraph{Self-adjointness.}
+The difference between $\bm{A}$ and its transpose, $\bm{A}^t$, in \eqref{eq:greens-matrix} causes insurmountable difficulties for us.  We will thus restrict our attention to \textbf{symmetric} matrices, in which case $\bm{A} = \bm{A}^t$.  For symmetric matrices,
+\begin{equation}
+\label{eq:symmetric-green}
+\boxed{\bm{u}\cdot\bm{A}\bm{v} - \bm{v}\cdot\bm{A}\bm{u} = 0,}
+\end{equation}
+and we will be able to use this result to prove the same theorems about eigenvalues and eigenvectors for matrices as we proved about Sturm--Liouville eigenvalue problems.
+
+\paragraph{For symmetric matrices, eigenvectors corresponding to different eigenvalues are orthogonal.}
+To prove this, suppose that $\bm{u}$ and $\bm{v}$ are eigenvectors corresponding to $\lambda_1$ and $\lambda_2$, respectively:
+\[
+\bm{A}\bm{u} = \lambda_1\bm{u} \quad \text{and} \quad \bm{A}\bm{v} = \lambda_2\bm{v}.
+\]
+If we directly apply \eqref{eq:symmetric-green}, then
+\[
+(\lambda_2 - \lambda_1)\bm{u}\cdot\bm{v} = 0.
+\]
+Thus, if $\lambda_1 \neq \lambda_2$ (different eigenvalues), the corresponding eigenvectors are orthogonal in the sense that
+\begin{equation}
+\label{eq:ortho-vectors}
+\bm{u}\cdot\bm{v} = 0.
+\end{equation}
+We leave as an exercise the proof that the eigenvalues of a symmetric real matrix are real.
+
+\paragraph{Example.}
+The eigenvalues of the real symmetric matrix $\begin{bmatrix} 6 & 2 \\ 2 & 3 \end{bmatrix}$ are determined from $(6 - \lambda)(3 - \lambda) - 4 = \lambda^2 - 9\lambda + 14 = (\lambda - 7)(\lambda - 2) = 0$.  For $\lambda = 2$, the eigenvector satisfies
+\[
+6x_1 + 2x_2 = 2x_1, \quad 2x_1 + 3x_2 = 2x_2,
+\]
+and hence $\begin{bmatrix} x_1 \\ x_2 \end{bmatrix} = x_1\begin{bmatrix} 1 \\ -2 \end{bmatrix}$.  For $\lambda = 7$, it follows that
+\[
+6x_1 + 2x_2 = 7x_1 \quad \text{and} \quad 2x_1 + 3x_2 = 7x_2,
+\]
+and the eigenvector is $\begin{bmatrix} x_1 \\ x_2 \end{bmatrix} = x_2\begin{bmatrix} 2 \\ 1 \end{bmatrix}$.  As we have just proved for any real symmetric matrix, the eigenvectors are orthogonal, $\begin{bmatrix} 1 \\ -2 \end{bmatrix}\cdot\begin{bmatrix} 2 \\ 1 \end{bmatrix} = 2 - 2 = 0$.
+
+\paragraph{Eigenvector expansions.}
+\textit{For real symmetric matrices} it can be shown that if an eigenvalue repeats $R$ times, there will be $R$ independent eigenvectors corresponding to that eigenvalue.  These eigenvectors are automatically orthogonal to any eigenvectors corresponding to a different eigenvalue.  The Gram--Schmidt procedure can be applied so that all $R$ eigenvectors corresponding to the same eigenvalue can be constructed to be mutually orthogonal.  In this manner, for real symmetric $n \times n$ matrices, $n$ orthogonal eigenvectors can always be obtained.  Since these vectors are orthogonal, they span the $n$-dimensional vector space and may be chosen as basis vectors.  Any vector $\bm{v}$ may be represented in a series of the eigenvectors:
+\begin{equation}
+\label{eq:vector-expansion}
+\bm{v} = \sum_{i=1}^{n} c_i\bm{\phi}_i,
+\end{equation}
+where $\bm{\phi}_i$ is the $i$th eigenvector.  For regular Sturm--Liouville eigenvalue problems, the eigenfunctions are complete, meaning that any (piecewise smooth) function can be represented in terms of an eigenfunction expansion
+\begin{equation}
+\label{eq:function-expansion}
+f(x) \sim \sum_{i=1}^{\infty} c_i\phi_i(x).
+\end{equation}
+
+This is analogous to \eqref{eq:vector-expansion}.  In \eqref{eq:function-expansion} the Fourier coefficients $c_i$ are determined by the orthogonality of the eigenfunctions.  Similarly, the coordinates $c_i$ in \eqref{eq:vector-expansion} are determined by the orthogonality of the eigenvectors.  We dot Equation \eqref{eq:vector-expansion} into $\bm{\phi}_m$:
+\[
+\bm{v}\cdot\bm{\phi}_m = \sum_{i=1}^{n} c_i\bm{\phi}_i\cdot\bm{\phi}_m = c_m\bm{\phi}_m\cdot\bm{\phi}_m,
+\]
+since $\bm{\phi}_i\cdot\bm{\phi}_m = 0$, $i \neq m$, determining $c_m$.
+
+\paragraph{Linear systems.}
+Sturm--Liouville eigenvalue problems arise in separating variables for partial differential equations.  One way in which the matrix eigenvalue problem occurs is in ``separating'' a linear homogeneous system of ordinary differential equations with constant coefficients.  We will be \textit{very} brief.  A linear homogeneous first-order system of differential equations may be represented by
+\begin{equation}
+\label{eq:linear-system}
+\boxed{\od{\bm{v}}{t} = \bm{A}\bm{v},}
+\end{equation}
+where $\bm{A}$ is an $n \times n$ matrix and $\bm{v}$ is the desired $n$-dimensional vector solution.  $\bm{v}$ usually satisfies given initial conditions, $\bm{v}(0) = \bm{v}_0$.  We seek special solutions of the form of simple exponentials:
+\begin{equation}
+\label{eq:exponential-soln}
+\boxed{\bm{v}(t) = e^{\lambda t}\bm{\phi},}
+\end{equation}
+where $\bm{\phi}$ is a constant vector.  This is analogous to seeking product solutions by the method of separation of variables.  Since $d\bm{v}/dt = \lambda e^{\lambda t}\bm{\phi}$, it follows that
+\begin{equation}
+\label{eq:matrix-eig-system}
+\bm{A}\bm{\phi} = \lambda\bm{\phi}.
+\end{equation}
+Thus, there exist solutions to \eqref{eq:linear-system} of the form \eqref{eq:exponential-soln} if $\lambda$ is an eigenvalue of $\bm{A}$ and $\bm{\phi}$ is a corresponding eigenvector.  We now restrict our attention to \textit{real symmetric matrices} $\bm{A}$.  There will always be $n$ mutually orthogonal eigenvectors $\bm{\phi}_i$.  We have obtained $n$ special solutions to the linear homogeneous system \eqref{eq:linear-system}.  A \textit{principle of superposition} exists, and hence a linear combination of these solutions also satisfies \eqref{eq:linear-system}:
+\begin{equation}
+\label{eq:general-soln}
+\boxed{\bm{v} = \sum_{i=1}^{n} c_i e^{\lambda_i t}\bm{\phi}_i.}
+\end{equation}
+We attempt to determine $c_i$ so that \eqref{eq:general-soln} satisfies the initial conditions, $\bm{v}(0) = \bm{v}_0$:
+\[
+\bm{v}_0 = \sum_{i=1}^{n} c_i\bm{\phi}_i.
+\]
+Here, the orthogonality of the eigenvectors is helpful, and thus, as before,
+\[
+c_i = \frac{\bm{v}_0\cdot\bm{\phi}_i}{\bm{\phi}_i\cdot\bm{\phi}_i}.
+\]
+
+\begin{exercises}{5.5}
+
+\item A Sturm--Liouville eigenvalue problem is called self-adjoint if
+\[
+p\!\left(u\od{v}{x} - v\od{u}{x}\right)\bigg|_a^b = 0
+\]
+because then $\int_a^b [uL(v) - vL(u)]\dx = 0$ for any two functions $u$ and $v$ satisfying the boundary conditions.  Show that the following yield self-adjoint problems:
+\begin{enumerate}
+\item $\phi(0) = 0$ and $\phi(L) = 0$
+\item $\displaystyle\od{\phi}{x}(0) = 0$ and $\phi(L) = 0$
+\item $\displaystyle\od{\phi}{x}(0) - h\phi(0) = 0$ and $\displaystyle\od{\phi}{x}(L) = 0$
+\item $\phi(a) = \phi(b)$ and $p(a)\displaystyle\od{\phi}{x}(a) = p(b)\od{\phi}{x}(b)$
+\item $\phi(a) = \phi(b)$ and $\displaystyle\od{\phi}{x}(a) = \od{\phi}{x}(b)$ [self-adjoint only if $p(a) = p(b)$]
+\item $\phi(L) = 0$ and [in the situation in which $p(0) = 0$] $\phi(0)$ bounded and $\lim_{x\to 0} p(x)\displaystyle\od{\phi}{x} = 0$
+\item\starred\ Under what conditions is the following self-adjoint (if $p$ is constant)?
+\begin{align*}
+\phi(L) + \alpha\phi(0) + \beta\od{\phi}{x}(0) &= 0 \\
+\od{\phi}{x}(L) + \gamma\phi(0) + \delta\od{\phi}{x}(0) &= 0
+\end{align*}
+\end{enumerate}
+
+\item Prove that the eigenfunctions corresponding to different eigenvalues (of the following eigenvalue problem) are orthogonal:
+\[
+\frac{d}{d x}\left[p(x)\od{\phi}{x}\right] + q(x)\phi + \lambda\sigma(x)\phi = 0
+\]
+with the boundary conditions
+\begin{align*}
+\phi(1) &= 0 \\
+\phi(2) - 2\od{\phi}{x}(2) &= 0.
+\end{align*}
+What is the weighting function?
+
+\item Consider the eigenvalue problem $L(\phi) = -\lambda\sigma(x)\phi$, subject to a given set of homogeneous boundary conditions.  Suppose that
+\[
+\int_a^b [uL(v) - vL(u)]\dx = 0
+\]
+for all functions $u$ and $v$ satisfying the same set of boundary conditions.  Prove that eigenfunctions corresponding to different eigenvalues are orthogonal (with what weight?).
+
+\item Give an example of an eigenvalue problem with more than one eigenfunction corresponding to an eigenvalue.
+
+\item Consider
+\[
+L = \odd{}{x} + 6\frac{d}{d x} + 9.
+\]
+\begin{enumerate}
+\item Show that $L(e^{rx}) = (r+3)^2e^{rx}$.
+\item Use part (a) to obtain solutions of $L(y) = 0$ (a second-order constant-coefficient differential equation).
+\item If $z$ depends on $x$ and a parameter $r$, show that
+\[
+\frac{\partial}{\partial r}L(z) = L\!\left(\pd{z}{r}\right).
+\]
+\item Using part (c), evaluate $L(\partial z/\partial r)$ if $z = e^{rx}$.
+\item Obtain a second solution of $L(y) = 0$, using part (d).
+\end{enumerate}
+
+\item Prove that if $x$ is a root of a sixth-order polynomial \textit{with real coefficients}, then $\bar{x}$ is also a root.
+
+\item For
+\[
+L = \frac{d}{d x}\left(p\frac{d}{d x}\right) + q
+\]
+with $p$ and $q$ real, carefully show that
+\[
+\overline{L(\phi)} = L(\bar{\phi}).
+\]
+
+\item Consider a fourth-order linear differential operator,
+\[
+L = \frac{d^4}{dx^4}.
+\]
+\begin{enumerate}
+\item Show that $uL(v) - vL(u)$ is an exact differential.
+\item Evaluate $\int_0^1 [uL(v) - vL(u)]\dx$ in terms of the boundary data for any functions $u$ and $v$.
+\item Show that $\int_0^1 [uL(v) - vL(u)]\dx = 0$ if $u$ and $v$ are any two functions satisfying the boundary conditions
+\begin{align*}
+\phi(0) &= 0, \qquad \phi(1) = 0 \\
+\od{\phi}{x}(0) &= 0, \qquad \odd{\phi}{x}(1) = 0.
+\end{align*}
+\item Give another example of boundary conditions such that
+\[
+\int_0^1 [uL(v) - vL(u)]\dx = 0.
+\]
+\item For the eigenvalue problem [using the boundary conditions in part (c)]
+\[
+\frac{d^4\phi}{dx^4} + \lambda e^x\phi = 0,
+\]
+show that the eigenfunctions corresponding to different eigenvalues are orthogonal.  What is the weighting function?
+\end{enumerate}
+
+\item\starred\ For the eigenvalue problem
+\[
+\frac{d^4\phi}{dx^4} + \lambda e^x\phi = 0
+\]
+subject to the boundary conditions
+\begin{align*}
+\phi(0) &= 0, \qquad \phi(1) = 0 \\
+\od{\phi}{x}(0) &= 0, \qquad \odd{\phi}{x}(1) = 0,
+\end{align*}
+show that the eigenvalues are less than or equal to zero ($\lambda \le 0$).  (Don't worry; in a physical context that is exactly what is expected.)  Is $\lambda = 0$ an eigenvalue?
+
+\item
+\begin{enumerate}
+\item Show that \eqref{eq:wronskian-const} yields \eqref{eq:unique-1} if at least one of the boundary conditions is of the regular Sturm--Liouville type.
+\item Do part (a) if one boundary condition is of the singular type.
+\end{enumerate}
+
+\item\starred\
+\begin{enumerate}
+\item Suppose that
+\[
+L = p(x)\odd{}{x} + r(x)\frac{d}{d x} + q(x).
+\]
+Consider
+\[
+\int_a^b vL(u)\dx.
+\]
+By repeated integration by parts, determine the adjoint operator $L^*$ such that
+\[
+\int_a^b [uL^*(v) - vL(u)]\dx = H(x)\bigg|_a^b.
+\]
+What is $H(x)$?  Under what conditions does $L = L^*$, the \textbf{self-adjoint} case?  [\textit{Hint}: Show that
+\[
+L^* = p\odd{}{x} + \left(2\od{p}{x} - r\right)\frac{d}{d x} + \left(\odd{p}{x} - \od{r}{x} + q\right).\,]
+\]
+\item If
+\[
+u(0) = 0 \quad \text{and} \quad \od{u}{x}(L) + u(L) = 0,
+\]
+what boundary conditions should $v(x)$ satisfy for $H(x)|_0^L = 0$, called the \textbf{adjoint} boundary conditions?
+\end{enumerate}
+
+\item Consider nonself-adjoint operators as in Exercise~5.5.11.  The eigenvalues $\lambda$ may be complex as well as their corresponding eigenfunctions $\phi$.
+\begin{enumerate}
+\item Show that if $\lambda$ is a complex eigenvalue with corresponding eigenfunction $\phi$, then the complex conjugate $\bar{\lambda}$ is also an eigenvalue with eigenfunction $\bar{\phi}$.
+\item The eigenvalues of the adjoint $L^*$ may be different from the eigenvalues of $L$.  Using the result of Exercise~5.5.11, show that the eigenfunctions of $L(\phi) + \lambda\sigma\phi = 0$ and eigenfunctions of $L^*(\psi) + \nu\sigma\psi = 0$ are orthogonal with weight $\sigma$ (in a complex sense) to eigenfunctions of $L^*$: $\int_a^b \phi_n\bar{\psi}_m\sigma\dx = 0$ if the eigenvalues are different.  Assume that $\psi$ satisfies adjoint boundary conditions.  You should also use part (a).
+\end{enumerate}
+
+\item Using the result of Exercise~5.5.11, prove the following part of the \textbf{Fredholm alternative} (for operators that are not necessarily self-adjoint): A solution of $L(u) = f(x)$ subject to homogeneous boundary conditions may exist only if $f(x)$ is orthogonal to all solutions of the homogeneous adjoint problem.
+
+\item If $L$ is the following first-order linear differential operator
+\[
+L = p(x)\frac{d}{d x},
+\]
+then determine the adjoint operator $L^*$ such that
+\[
+\int_a^b [uL^*(v) - vL(u)]\dx = B(x)\bigg|_a^b.
+\]
+What is $B(x)$?  [\textit{Hint}: Consider $\int_a^b vL(u)\dx$ and integrate by parts.]
+
+\item Consider the eigenvalue problem $\frac{d}{d r}(r\od{\phi}{r}) + \lambda r\phi = 0$ $(0 < r < 1)$, subject to the boundary conditions $|\phi(0)| < \infty$ (you may also assume $\od{\phi}{r}$ is bounded) and $\od{\phi}{r}(1) = 0$.  Prove that eigenfunctions corresponding to different eigenvalues are orthogonal.  (With what weight?)
+
+\item Consider the one-dimensional wave equation for nonconstant density so that
+\[
+\pdd{u}{t} = c^2(x)\pdd{u}{x}
+\]
+subject to the boundary conditions $u(0,t) = 0$, $u(L,t) = 0$ and the initial conditions $u(x,0) = 0$, $\pd{u}{t}(x,0) = f(x)$.  [\textit{Hint}: Suppose it is known that if $u(x,t) = \phi(x)G(t)$, then
+\[
+\frac{1}{G}\odd{G}{t} = \frac{c^2(x)}{\phi}\odd{\phi}{x} = -\lambda.\,]
+\]
+\begin{enumerate}
+\item With the initial conditions $u(x,0) = 0$, $\pd{u}{t}(x,0) = f(x)$, prove that eigenfunctions corresponding to different eigenvalues are orthogonal (with what weight?).
+\item With the initial conditions $u(x,0) = f(x)$, $\pd{u}{t}(x,0) = 0$, assume eigenfunctions are orthogonal (with what weight?).  Derive coefficients using orthogonality.
+\end{enumerate}
+
+\item Consider the one-dimensional wave equation with $c$ constant,
+\[
+\pdd{u}{t} = c^2\pdd{u}{x} + q(x,t),
+\]
+subject to the boundary conditions $u(0,t) = 0$, $u(L,t) = 0$, and the initial conditions $u(x,0) = f(x)$, $\pd{u}{t}(x,0) = 0$.
+\begin{enumerate}
+\item Use the method of eigenfunction expansion (justify spatial term-by-term differentiation)
+\[
+u(x,t) = \sum b_n(t)\phi_n(x).
+\]
+What are the eigenfunctions $\phi_n(x)$?  What ordinary differential equation does $b_n(t)$ satisfy?  Do not solve this ordinary differential equation.
+\item What is the general solution of the differential equation for $b_n(t)$ if $q(x,t) = 0$?  Solve for $b_n(t)$ including initial conditions.
+\end{enumerate}
+
+\item Prove Green's formula for the Sturm--Liouville operator $L(y) = \frac{d}{d x}(p\od{y}{x}) + qy$.
+
+\end{exercises}

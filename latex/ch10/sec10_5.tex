@@ -1,0 +1,457 @@
+% sec10_5.tex — Section 10.5: Fourier Sine and Cosine Transforms
+\section{Fourier Sine and Cosine Transforms: The Heat Equation on Semi-Infinite Intervals}
+\label{sec:ft-sine-cosine}
+
+%% ── 10.5.1 ──────────────────────────────────────────────────────
+\subsection{Introduction}
+\label{subsec:ft-sc-intro}
+
+The Fourier series has been introduced to solve partial differential equations on the finite interval $-L < x < L$ with periodic boundary conditions.  For problems defined on the interval $0 < x < L$, special cases of Fourier series, the sine and cosine series, were analyzed in order to satisfy the appropriate boundary conditions.
+
+On an infinite interval, $-\infty < x < \infty$, instead we use the Fourier transform.  In this section we show how to solve partial differential equations on a semi-infinite interval, $0 < x < \infty$.  We will introduce special cases of the Fourier transform, known as the \textbf{sine and cosine transforms}.  The modifications of the Fourier transform will be similar to the ideas we used for series on finite intervals.
+
+%% ── 10.5.2 ──────────────────────────────────────────────────────
+\subsection{Heat Equation on a Semi-Infinite Interval I}
+\label{subsec:heat-semi-1}
+
+We will motivate the introduction of Fourier sine and cosine transforms by considering a simple physical problem.  If the temperature is fixed at $0^\circ$ at $x = 0$, then the mathematical problem for heat diffusion on a semi-infinite interval $x > 0$ is
+\begin{equation}
+\label{eq:semi-pde}
+\text{PDE:}\quad \boxed{\pd{u}{t} = k\pdd{u}{x}, \quad x > 0}
+\end{equation}
+\begin{equation}
+\label{eq:semi-bc}
+\text{BC:}\quad \boxed{u(0,t) = 0}
+\end{equation}
+\begin{equation}
+\label{eq:semi-ic}
+\text{IC:}\quad \boxed{u(x,0) = f(x).}
+\end{equation}
+
+Here, we have one boundary condition, which is homogeneous.
+
+If we separate variables, $u(x,t) = \phi(x)\,h(t)$, for the heat equation, we obtain as before
+\begin{equation}
+\label{eq:semi-time-ode}
+\od{h}{t} = -\lambda k h
+\end{equation}
+\boxed{\begin{equation}
+\label{eq:semi-space-ode}
+\odd{\phi}{x} = -\lambda\phi.
+\end{equation}}
+
+The boundary conditions to determine the allowable eigenvalues $\lambda$ are
+\boxed{\begin{equation}
+\label{eq:semi-bc-phi0}
+\phi(0) = 0
+\end{equation}}
+\boxed{\begin{equation}
+\label{eq:semi-bc-bounded}
+\lim_{x\to\infty}|\phi(x)| < \infty.
+\end{equation}}
+
+The latter condition corresponds to $\lim_{x\to\infty}u(x,t) = 0$, since we usually assume that $\lim_{x\to\infty}f(x) = 0$.
+
+There are nontrivial solutions of \eqref{eq:semi-space-ode} with \eqref{eq:semi-bc-phi0} and \eqref{eq:semi-bc-bounded} only for all positive $\lambda$ ($\lambda > 0$),
+\begin{equation}
+\label{eq:semi-eigenfunction}
+\phi(x) = c_1\sin\sqrt{\lambda}\,x = c_1\sin\omega x,
+\end{equation}
+where, as with the Fourier transform, we prefer the variable $\omega = \sqrt{\lambda}$.  Here $\omega > 0$ only.  The corresponding time-dependent part is
+\begin{equation}
+\label{eq:semi-time-sol}
+h(t) = c\,e^{-k t\omega^2},
+\end{equation}
+and thus product solutions are
+\begin{equation}
+\label{eq:semi-product}
+u(x,t) = A\sin\omega x\,e^{-k\omega^2 t}.
+\end{equation}
+
+The generalized principle of superposition implies that we should seek a solution to the initial value problem in the form
+\boxed{\begin{equation}
+\label{eq:semi-superposition}
+u(x,t) = \int_0^{\infty}A(\omega)\sin\omega x\,e^{-k\omega^2 t}\,d\omega.
+\end{equation}}
+
+The initial condition $u(x,0) = f(x)$ is satisfied if
+\begin{equation}
+\label{eq:semi-ic-integral}
+f(x) = \int_0^{\infty}A(\omega)\sin\omega x\,d\omega.
+\end{equation}
+In the next subsection, we will show that $A(\omega)$ is the Fourier sine transform of $f(x)$; we will show that $A(\omega)$ can be determined from \eqref{eq:semi-ic-integral}:
+\boxed{\begin{equation}
+\label{eq:sine-coeff}
+A(\omega) = \frac{2}{\pi}\int_0^{\infty}f(x)\sin\omega x\dx.
+\end{equation}}
+
+%% ── 10.5.3 ──────────────────────────────────────────────────────
+\subsection{Fourier Sine and Cosine Transforms}
+\label{subsec:ft-sc-transforms}
+
+In the preceding subsection we are asked to represent a function using only sine functions.  We already know how to represent a function using complex exponentials, the Fourier transform:
+\begin{equation}
+\label{eq:ft-general-f}
+f(x) = \frac{1}{\gamma}\int_{-\infty}^{\infty}F(\omega)\,e^{-i\omega x}\,d\omega
+\end{equation}
+\begin{equation}
+\label{eq:ft-general-F}
+F(\omega) = \frac{\gamma}{2\pi}\int_{-\infty}^{\infty}f(x)\,e^{i\omega x}\dx.
+\end{equation}
+Recall that \eqref{eq:ft-general-f}--\eqref{eq:ft-general-F} is valid for any $\gamma$.
+
+\textbf{Fourier sine transform.}  Since we only want to use $\sin\omega x$ (for all $\omega$), we consider cases in which $f(x)$ is an odd function.  If our physical region is $x \ge 0$, then our functions do not have physical meaning for $x < 0$.  In this case we can define these functions in any way we choose for $x < 0$; we introduce the odd extension of the given $f(x)$.  If $f(x)$ is odd in this way, then its Fourier transform $F(\omega)$ can be simplified:
+\begin{equation}
+\label{eq:ft-odd-simplify}
+F(\omega) = \frac{\gamma}{2\pi}\int_{-\infty}^{\infty}f(x)(\cos\omega x + i\sin\omega x)\dx = \frac{2i\gamma}{2\pi}\int_0^{\infty}f(x)\sin\omega x\dx,
+\end{equation}
+since $f(x)\cos\omega x$ is odd in $x$ and $f(x)\sin\omega x$ is even in $x$.  Note that $F(\omega)$ is an odd function of $\omega$ [when $f(x)$ is an odd function of $x$].  Thus, in a similar manner,
+\begin{equation}
+\label{eq:ft-odd-inverse}
+f(x) = \frac{1}{\gamma}\int_{-\infty}^{\infty}F(\omega)(\cos\omega x - i\sin\omega x)\,d\omega = \frac{-2i}{\gamma}\int_0^{\infty}F(\omega)\sin\omega x\,d\omega.
+\end{equation}
+We can choose $\gamma$ in any way that we wish.  Note that the product of the coefficients in front of both integrals must be $(2i\gamma/2\pi)\cdot(-2i/\gamma) = 2/\pi$ for Fourier transforms rather than $1/2\pi$.  For convenience, we let $-2i/\gamma = 1$ (i.e., $\gamma = -2i$) so that \textit{if $f(x)$ is odd},
+\boxed{\begin{equation}
+\label{eq:sine-inverse}
+f(x) = \int_0^{\infty}F(\omega)\sin\omega x\,d\omega
+\end{equation}}
+\boxed{\begin{equation}
+\label{eq:sine-forward}
+F(\omega) = \frac{2}{\pi}\int_0^{\infty}f(x)\sin\omega x\dx.
+\end{equation}}
+
+Others may prefer a symmetric definition, $-2i/\gamma = \sqrt{2/\pi}$.  These are called the \textbf{Fourier sine transform pair}.  $F(\omega)$ is called the \textbf{sine transform} of $f(x)$, sometimes denoted $S[f(x)]$, while $f(x)$ is the \textbf{inverse sine transform} of $F(\omega)$, $S^{-1}[F(\omega)]$.  Equations \eqref{eq:sine-inverse} and \eqref{eq:sine-forward} are related to the formulas for the Fourier transform of an odd function of $x$.
+
+If the sine transform representation of $f(x)$ \eqref{eq:sine-inverse} is utilized, then zero is always obtained at $x = 0$.  This occurs even if $\lim_{x\to 0}f(x) \ne 0$.  Equation \eqref{eq:sine-inverse} as written is not always valid at $x = 0$.  Instead, the odd extension of $f(x)$ has a jump discontinuity at $x = 0$ [if $\lim_{x\to 0}f(x) \ne 0$], from $-f(0)$ to $f(0)$.  The Fourier sine transform representation of $f(x)$ converges to the average, which is zero (at $x = 0$).
+
+\textbf{Fourier cosine transform.}  Similarly, \textit{if $f(x)$ is an even function}, we can derive the \textbf{Fourier cosine transform pair}:
+\boxed{\begin{equation}
+\label{eq:cosine-inverse}
+f(x) = \int_0^{\infty}F(\omega)\cos\omega x\,d\omega
+\end{equation}}
+\boxed{\begin{equation}
+\label{eq:cosine-forward}
+F(\omega) = \frac{2}{\pi}\int_0^{\infty}f(x)\cos\omega x\dx.
+\end{equation}}
+
+Other forms are equivalent (as long as the product of the two numerical factors is again $2/\pi$).  $F(\omega)$ is called the \textbf{cosine transform} of $f(x)$, sometimes denoted $C[f(x)]$, while $f(x)$ is the \textbf{inverse cosine transform} of $F(\omega)$, $C^{-1}[F(\omega)]$.  Again if $f(x)$ is defined only for $x > 0$, then in order to use the Fourier cosine transform, we must introduce the even extension of $f(x)$.
+
+Short tables of both the Fourier sine and cosine transforms appear at the end of this section (Tables~\ref{tab:sine-transform} and~\ref{tab:cosine-transform}).
+
+%% ── 10.5.4 ──────────────────────────────────────────────────────
+\subsection{Transforms of Derivatives}
+\label{subsec:ft-sc-derivatives}
+
+In Sec.~10.5.2 we derived important properties of the Fourier transform of derivatives.  Here, similar results for the Fourier sine and cosine transform will be shown.
+
+Our definitions of the Fourier cosine and sine transforms are
+\boxed{\begin{equation}
+\label{eq:cosine-def}
+C[f(x)] = \frac{2}{\pi}\int_0^{\infty}f(x)\cos\omega x\dx
+\end{equation}}
+\boxed{\begin{equation}
+\label{eq:sine-def}
+S[f(x)] = \frac{2}{\pi}\int_0^{\infty}f(x)\sin\omega x\dx.
+\end{equation}}
+
+Integration by parts can be used to obtain formulas for the transforms of first derivatives:
+\begin{align*}
+C\left[\od{f}{x}\right] &= \frac{2}{\pi}\int_0^{\infty}\od{f}{x}\cos\omega x\dx = \frac{2}{\pi}f(x)\cos\omega x\bigg|_0^{\infty} + \omega\frac{2}{\pi}\int_0^{\infty}f(x)\sin\omega x\dx \\
+S\left[\od{f}{x}\right] &= \frac{2}{\pi}\int_0^{\infty}\od{f}{x}\sin\omega x\dx = \frac{2}{\pi}f(x)\sin\omega x\bigg|_0^{\infty} - \omega\frac{2}{\pi}\int_0^{\infty}f(x)\cos\omega x\dx.
+\end{align*}
+We have assumed that $f(x)$ is continuous.  We obtain the following formulas:
+\boxed{\begin{equation}
+\label{eq:cosine-first-deriv}
+C\left[\od{f}{x}\right] = -\frac{2}{\pi}f(0) + \omega\,S[f]
+\end{equation}}
+\boxed{\begin{equation}
+\label{eq:sine-first-deriv}
+S\left[\od{f}{x}\right] = -\omega\,C[f],
+\end{equation}}
+assuming that $f(x) \to 0$ as $x \to \infty$.  Sine and cosine transforms of first derivatives always involve the other type of semi-infinite transform.  Thus, if a partial differential equation contains first derivatives with respect to a potential variable to be transformed, the Fourier sine or Fourier cosine transform will never work.  Do not use Fourier sine or cosine transforms in this situation.  Note that for the heat equation, $\pd{u}{t} = k\,\pdd{u}{x}$, the variable to be transformed is $x$.  No first derivatives in $x$ appear.
+
+Transforms of second derivatives have simpler formulas.  According to \eqref{eq:cosine-first-deriv} and \eqref{eq:sine-first-deriv},
+\boxed{\begin{equation}
+\label{eq:cosine-second-deriv}
+C\left[\odd{f}{x}\right] = -\frac{2}{\pi}\od{f}{x}(0) + \omega\,S\left[\od{f}{x}\right] = -\frac{2}{\pi}\od{f}{x}(0) - \omega^2\,C[f]
+\end{equation}}
+\boxed{\begin{equation}
+\label{eq:sine-second-deriv}
+S\left[\odd{f}{x}\right] = -\omega\,C\left[\od{f}{x}\right] = \frac{2}{\pi}\omega f(0) - \omega^2\,S[f].
+\end{equation}}
+
+We learn some important principles from \eqref{eq:cosine-second-deriv} and \eqref{eq:sine-second-deriv}.  \textbf{In order to use the Fourier cosine transform} to solve a partial differential equation (containing a second derivative) defined on a semi-infinite interval ($x \ge 0$), $\boldsymbol{df/dx(0)}$ \textbf{must be known}.  Similarly, \textbf{the Fourier sine transform may be used for semi-infinite problems if $\boldsymbol{f(0)}$ is given}.  Furthermore, problems are more readily solved if the boundary conditions are homogeneous.  If $f(0) = 0$, then a Fourier sine transform will often yield a relatively simple solution.  If $df/dx(0) = 0$, then a Fourier cosine transform will often be extremely convenient.  These conditions are not surprising.  If $f(0) = 0$, separation of variables motivates the use of sines only.  Similarly, $df/dx(0) = 0$ implies the use of cosines.
+
+%% ── 10.5.5 ──────────────────────────────────────────────────────
+\subsection{Heat Equation on a Semi-Infinite Interval II}
+\label{subsec:heat-semi-2}
+
+Let us show how to utilize the formulas for the transforms of derivatives to solve partial differential equations.  We consider a problem that is somewhat more general than the one presented earlier.  Suppose that we are interested in the heat flow in a semi-infinite region with the temperature prescribed as a function of time at $x = 0$:
+\begin{equation}
+\label{eq:semi2-pde}
+\text{PDE:}\quad \boxed{\pd{u}{t} = k\pdd{u}{x}}
+\end{equation}
+\begin{equation}
+\label{eq:semi2-bc}
+\text{BC:}\quad \boxed{u(0,t) = g(t)}
+\end{equation}
+\begin{equation}
+\label{eq:semi2-ic}
+\text{IC:}\quad \boxed{u(x,0) = f(x).}
+\end{equation}
+
+The boundary condition $u(0,t) = g(t)$ is nonhomogeneous.  We cannot use the method of separation of variables.  Since $0 < x < \infty$, we may wish to use a transform.  Since $u$ is specified at $x = 0$, we should try to use Fourier sine transforms (and not the Fourier cosine transform).  Thus, we introduce $\overline{U}(\omega,t)$, the Fourier sine transform of $u(x,t)$:
+\begin{equation}
+\label{eq:semi2-st-def}
+\overline{U}(\omega,t) = \frac{2}{\pi}\int_0^{\infty}u(x,t)\sin\omega x\dx.
+\end{equation}
+
+The partial differential equation \eqref{eq:semi2-pde} becomes an ordinary differential equation,
+\begin{equation}
+\label{eq:semi2-ode}
+\pd{\overline{U}}{t} = k\left(\frac{2}{\pi}\omega g(t) - \omega^2\overline{U}\right),
+\end{equation}
+using \eqref{eq:sine-second-deriv}.  The initial condition yields the initial value of the Fourier sine transform:
+\begin{equation}
+\label{eq:semi2-ic-st}
+\overline{U}(\omega,0) = \frac{2}{\pi}\int_0^{\infty}f(x)\sin\omega x\dx.
+\end{equation}
+Solving \eqref{eq:semi2-ode} is somewhat complicated in general (involving the integrating factor $e^{k\omega^2 t}$; see Sec.~8.3).  We leave discussion of this to the Exercises.
+
+\textbf{Example.}  \textit{In the special case with homogeneous boundary conditions}, $g(t) = 0$, it follows from \eqref{eq:semi2-ode} that
+\begin{equation}
+\label{eq:semi2-homog-sol}
+\overline{U}(\omega,t) = c(\omega)\,e^{-k\omega^2 t},
+\end{equation}
+where, from the initial condition,
+\begin{equation}
+\label{eq:semi2-homog-c}
+c(\omega) = \frac{2}{\pi}\int_0^{\infty}f(x)\sin\omega x\dx.
+\end{equation}
+The solution is thus
+\begin{equation}
+\label{eq:semi2-homog-u}
+u(x,t) = \int_0^{\infty}c(\omega)\,e^{-k\omega^2 t}\sin\omega x\,d\omega.
+\end{equation}
+This is the solution obtained earlier by separation of variables.  To simplify this solution, we note that $c(\omega)$ is an odd function of $\omega$.  Thus,
+\begin{equation}
+\label{eq:semi2-odd-ext}
+u(x,t) = \frac{1}{2}\int_{-\infty}^{\infty}c(\omega)\,e^{-k\omega^2 t}\sin\omega x\,d\omega = \int_{-\infty}^{\infty}\frac{c(\omega)}{2i}\,e^{-k\omega^2 t}\,e^{i\omega x}\,d\omega.
+\end{equation}
+
+If we introduce the odd extension of $f(x)$, then
+\begin{equation}
+\label{eq:semi2-odd-coeff}
+\frac{c(\omega)}{2i} = \frac{2}{\pi}\int_0^{\infty}f(x)\,\frac{\sin\omega x}{2i}\dx = \frac{1}{\pi}\int_{-\infty}^{\infty}f(x)\,\frac{\sin\omega x}{2i}\dx = \frac{1}{2\pi}\int_{-\infty}^{\infty}f(x)\,e^{-i\omega x}\dx.
+\end{equation}
+We note that \eqref{eq:semi2-odd-ext} and \eqref{eq:semi2-odd-coeff} are exactly the results for the heat equation on an infinite interval.  Thus,
+\[
+u(x,t) = \frac{1}{\sqrt{4\pi kt}}\int_{-\infty}^{\infty}f(\bar{x})\,e^{-(x-\bar{x})^2/4kt}\,d\bar{x}.
+\]
+Here, $f(x)$ has been extended to $-\infty < x < \infty$ as an odd function [$f(-x) = -f(x)$].  In order to only utilize $f(\bar{x})$ for $\bar{x} > 0$, we use the oddness property
+\[
+u(x,t) = \frac{1}{\sqrt{4\pi kt}}\left[\int_{-\infty}^{0}-f(-\bar{x})\,e^{-(x-\bar{x})^2/4kt}\,d\bar{x} + \int_0^{\infty}f(\bar{x})\,e^{-(x-\bar{x})^2/4kt}\,d\bar{x}\right].
+\]
+In the first integral we let $\bar{x} = -\bar{x}$ (and then replace $\bar{x}$ by $\bar{x}$).  In this manner
+\begin{equation}
+\label{eq:semi2-influence-sol}
+u(x,t) = \frac{1}{\sqrt{4\pi kt}}\int_0^{\infty}f(\bar{x})\left[e^{-(x-\bar{x})^2/4kt} - e^{-(x+\bar{x})^2/4kt}\right]d\bar{x}.
+\end{equation}
+The influence function for the initial condition is in brackets.  We will discuss this solution further in Chapter~11.  An equivalent (and simpler) method to obtain \eqref{eq:semi2-influence-sol} from \eqref{eq:semi2-homog-sol} and \eqref{eq:semi2-homog-c} is to use the convolution theorem for Fourier sine transforms (see Exercise~10.5.6).
+
+%% ── 10.5.6 ──────────────────────────────────────────────────────
+\subsection{Tables of Fourier Sine and Cosine Transforms}
+\label{subsec:ft-sc-tables}
+
+We present short tables of the Fourier sine transform (Table~\ref{tab:sine-transform}) and Fourier cosine transform (Table~\ref{tab:cosine-transform}).
+
+\begin{table}[H]
+\centering
+\caption{Fourier Sine Transform}
+\label{tab:sine-transform}
+\begin{tabular}{lll}
+\toprule
+$f(x) = \displaystyle\int_0^{\infty}F(\omega)\sin\omega x\,d\omega$ & $S[f(x)] = F(\omega) = \dfrac{2}{\pi}\displaystyle\int_0^{\infty}f(x)\sin\omega x\dx$ & Reference \\
+\midrule
+$\od{f}{x}$ & $-\omega\,C[f(x)]$ & \multirow{2}{*}{\parbox{3cm}{Derivatives\\(Sec.~10.5.4)}} \\[4pt]
+$\odd{f}{x}$ & $\dfrac{2}{\pi}\omega f(0) - \omega^2 F(\omega)$ & \\[8pt]
+$\dfrac{x}{x^2+\beta^2}$ & $e^{-\omega\beta}$ & Exercise~10.5.1 \\[4pt]
+$e^{-\epsilon x}$ & $\dfrac{2}{\pi}\cdot\dfrac{\omega}{\epsilon^2+\omega^2}$ & Exercise~10.5.2 \\[4pt]
+$e^{-\alpha x^2}$ & $2\dfrac{1}{\sqrt{4\pi\alpha}}\,e^{-\omega^2/4\alpha}$ & Exercise~10.5.3 \\[4pt]
+$1$ & $\dfrac{2}{\pi}\cdot\dfrac{1}{\omega}$ & Exercise~10.5.9 \\[8pt]
+$\dfrac{1}{\pi}\displaystyle\int_0^{\infty}f(\bar{x})[g(x-\bar{x}) - g(x+\bar{x})]\,d\bar{x}$ & & Convolution \\
+$= \dfrac{1}{\pi}\displaystyle\int_0^{\infty}g(\bar{x})[f(x+\bar{x}) - f(\bar{x}-x)]\,d\bar{x}$ & $S[f(x)]\,C[g(x)]$ & (Exercise~10.5.6) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{Fourier Cosine Transform}
+\label{tab:cosine-transform}
+\begin{tabular}{lll}
+\toprule
+$f(x) = \displaystyle\int_0^{\infty}F(\omega)\cos\omega x\,d\omega$ & $C[f(x)] = F(\omega) = \dfrac{2}{\pi}\displaystyle\int_0^{\infty}f(x)\cos\omega x\dx$ & Reference \\
+\midrule
+$\od{f}{x}$ & $-\dfrac{2}{\pi}f(0) + \omega\,S[f(x)]$ & \multirow{2}{*}{\parbox{3cm}{Derivatives\\(Sec.~10.5.4)}} \\[4pt]
+$\odd{f}{x}$ & $-\dfrac{2}{\pi}\od{f}{x}(0) - \omega^2 F(\omega)$ & \\[8pt]
+$\dfrac{\beta}{x^2+\beta^2}$ & $e^{-\omega\beta}$ & Exercise~10.5.1 \\[4pt]
+$e^{-\epsilon x}$ & $\dfrac{2}{\pi}\cdot\dfrac{\epsilon}{\epsilon^2+\omega^2}$ & Exercise~10.5.2 \\[4pt]
+$e^{-\alpha x^2}$ & $2\dfrac{1}{\sqrt{4\pi\alpha}}\,e^{-\omega^2/4\alpha}$ & Exercise~10.5.3 \\[8pt]
+$\displaystyle\int_0^{\infty}g(\bar{x})[f(x-\bar{x}) + f(x+\bar{x})]\,d\bar{x}$ & $F(\omega)\,G(\omega)$ & Convolution (Exercise~10.5.7) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{exercises}{10.5}
+\item Consider $F(\omega) = e^{-\beta\omega}$, $\beta > 0$, $(\omega \ge 0)$.
+\begin{enumerate}
+\item[(a)] Derive the inverse Fourier sine transform of $F(\omega)$.
+\item[(b)] Derive the inverse Fourier cosine transform of $F(\omega)$.
+\end{enumerate}
+
+\item Consider $f(x) = e^{-\alpha x}$, $\alpha > 0$ \quad ($x \ge 0$).
+\begin{enumerate}
+\item[(a)] Derive the Fourier sine transform of $f(x)$.
+\item[(b)] Derive the Fourier cosine transform of $f(x)$.
+\end{enumerate}
+
+\item[\starred 10.5.3.] Derive \textit{either} the Fourier cosine transform of $e^{-\alpha x^2}$ or the Fourier sine transform of $e^{-\alpha x^2}$.
+
+\item
+\begin{enumerate}
+\item[(a)] Derive \eqref{eq:cosine-second-deriv} using Green's formula.
+\item[(b)] Do the same for \eqref{eq:sine-second-deriv}.
+\end{enumerate}
+
+\item
+\begin{enumerate}
+\item[(a)] Show that the Fourier sine transform of $f(x)$ is an odd function of $\omega$ (if defined for all $\omega$).
+\item[(b)] Show that the Fourier cosine transform of $f(x)$ is an even function of $\omega$ (if defined for all $\omega$).
+\end{enumerate}
+
+\item There is an interesting convolution-type theorem for Fourier sine transforms.  Suppose that we want $h(x)$ but know its sine transform $H(\omega)$ to be a product
+\[
+H(\omega) = \overline{S}(\omega)\,\overline{C}(\omega),
+\]
+where $\overline{S}(\omega)$ is the sine transform of $s(x)$ and $\overline{C}(\omega)$ is the \textit{cosine} transform of $c(x)$.  Assuming that $c(x)$ is even and $s(x)$ is odd, show that
+\[
+h(x) = \frac{1}{\pi}\int_0^{\infty}s(\bar{x})[c(x-\bar{x})-c(x+\bar{x})]\,d\bar{x} = \frac{1}{\pi}\int_0^{\infty}c(\bar{x})[s(x+\bar{x})-s(\bar{x}-x)]\,d\bar{x}.
+\]
+
+\item Derive the following: If a Fourier cosine transform in $x$, $H(\omega)$, is the product of two Fourier cosine transforms,
+\[
+H(\omega) = F(\omega)\,G(\omega),
+\]
+then
+\[
+h(x) = \frac{1}{\pi}\int_0^{\infty}g(\bar{x})[f(x-\bar{x})+f(x+\bar{x})]\,d\bar{x}.
+\]
+In this result $f$ and $g$ can be interchanged.
+
+\item Solve \eqref{eq:semi-pde}--\eqref{eq:semi-ic} using the convolution theorem of Exercise~10.5.6.  Exercise~10.5.3 may be of some help.
+
+\item Let $S[f(x)]$ designate the Fourier sine transform.
+\begin{enumerate}
+\item[(a)] Show that
+\[
+S[e^{-\epsilon x}] = \frac{2}{\pi}\frac{\omega}{\epsilon^2+\omega^2} \quad \text{for } \epsilon > 0.
+\]
+Show that $\lim_{\epsilon\to 0+}S[e^{-\epsilon x}] = 2/\pi\omega$.  We will let $S[1] = 2/\pi\omega$.  Why isn't $S[1]$ technically defined?
+\item[(b)] Show that
+\[
+S^{-1}\left[\frac{2/\pi}{\omega}\right] = \frac{2}{\pi}\int_0^{\infty}\frac{\sin z}{z}\,dz,
+\]
+which is known to equal~$1$.
+\end{enumerate}
+
+\item[\starred 10.5.10.] Determine the inverse cosine transform of $\omega e^{-\alpha\omega}$.  (\textit{Hint:} Use differentiation with respect to a parameter.)
+
+\item[\starred 10.5.11.] Consider
+\begin{align*}
+\pd{u}{t} &= k\pdd{u}{x}, \quad x > 0, \quad t > 0 \\
+u(0,t) &= 1 \\
+u(x,0) &= f(x).
+\end{align*}
+\begin{enumerate}
+\item[(a)] Solve directly using sine transforms.  (\textit{Hint:} Use Exercise~10.5.8 and the convolution theorem, Exercise~10.5.6.)
+\item[(b)] If $f(x) \to 1$ as $x \to \infty$, let $v(x,t) = u(x,t) - 1$ and solve for $v(x,t)$.
+\item[(c)] Compare part~(b) to part~(a).
+\end{enumerate}
+
+\item Solve
+\begin{align*}
+\pd{u}{t} &= k\pdd{u}{x} \quad (x > 0) \\
+\pd{u}{x}(0,t) &= 0 \\
+u(x,0) &= f(x).
+\end{align*}
+
+\item Solve \eqref{eq:semi2-pde}--\eqref{eq:semi2-ic} by solving \eqref{eq:semi2-ode}.
+
+\item Consider
+\begin{align*}
+\pd{u}{t} &= k\pdd{u}{x} - v_0\pd{u}{x} \quad (x > 0) \\
+u(0,t) &= 0 \\
+u(x,0) &= f(x).
+\end{align*}
+\begin{enumerate}
+\item[(a)] Show that the Fourier sine transform does not yield an immediate solution.
+\item[(b)] Instead, introduce
+\[
+u = e^{[x-(v_0/2)t]v_0/2k}\,w,
+\]
+and show that
+\begin{align*}
+\pd{w}{t} &= k\pdd{w}{x} \\
+w(0,t) &= 0 \\
+w(x,0) &= f(x)\,e^{-v_0 x/2k}.
+\end{align*}
+\item[(c)] Use part~(b) to solve for $u(x,t)$.
+\end{enumerate}
+
+\item Solve
+\begin{align*}
+\pdd{u}{x} + \pdd{u}{y} &= 0, \quad 0 < x < L, \quad 0 < y < \infty \\
+u(x,0) &= 0 \\
+u(0,y) &= g_1(y) \\
+u(L,y) &= g_2(y).
+\end{align*}
+(\textit{Hint:} If necessary, see Sec.~10.7.2.)
+
+\item Solve
+\begin{align*}
+\pdd{u}{x} + \pdd{u}{y} &= 0, \quad 0 < x < \infty, \quad 0 < y < \infty \\
+u(0,y) &= g(y) \\
+\frac{\partial}{\partial y}u(x,0) &= 0.
+\end{align*}
+(\textit{Hint:} If necessary, see Sec.~10.7.4.)
+
+\item The effect of periodic surface heating (either daily or seasonal) on the interior of the earth may be modeled by
+\begin{align*}
+\pd{u}{t} &= k\pdd{u}{x} \quad 0 < x < \infty \\
+u(x,0) &= 0 \\
+u(0,t) &= A\,e^{i\sigma_0 t},
+\end{align*}
+where the real part of $u(x,t)$ is the temperature (and $x$ measures distance from the surface).
+\begin{enumerate}
+\item[(a)] Determine $\overline{U}(\omega,t)$, the Fourier sine transform of $u(x,t)$.
+\item[\starred (b)] Approximate $\overline{U}(\omega,t)$ for large $t$.
+\item[(c)] Determine the inverse sine transform of part~(b) in order to obtain an approximation for $u(x,t)$ valid for large $t$.  [\textit{Hint:} See Exercise~10.5.2(a) or Table~\ref{tab:sine-transform}.]
+\item[(d)] Sketch the approximate temperature (for fixed large $t$).
+\item[(e)] At what distance below the surface are temperature variations negligible?
+\end{enumerate}
+
+\item Reconsider Exercise~10.5.17.  Determine $u(x,t)$ exactly.  (\textit{Hint:} See Exercise~10.5.6.)
+
+\item
+\begin{enumerate}
+\item[(a)] Determine a particular solution of Exercise~10.5.17, satisfying the boundary condition but not the initial condition, of the form $u(x,t) = F(x)G(t)$.
+\item[(b)] Compare part~(a) with either Exercise~10.5.17 or~10.5.18.
+\end{enumerate}
+
+\item Solve the heat equation, $0 < x < \infty$,
+\[
+\pd{u}{t} = k\pdd{u}{x},
+\]
+subject to the conditions $u(0,t) = 0$ and $u(x,0) = f(x)$.
+\end{exercises}

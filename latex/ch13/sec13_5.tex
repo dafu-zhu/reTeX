@@ -1,0 +1,159 @@
+% sec13_5.tex — Section 13.5: A Signal Problem for a Vibrating String of Finite Length
+\section{A Signal Problem for a Vibrating String of Finite Length}
+\label{sec:13.5}
+
+In partial differential equations the Laplace inversion integrals that are needed are often not as simple as in Sec.~13.4.  We illustrate this for a vibrating string of length $L$ initially at rest in the horizontal equilibrium position subject to the following time-dependent boundary condition at one end $x = L$:
+\begin{align}
+\text{PDE:}\quad &
+\begin{array}{|c|}
+\hline
+\displaystyle\pdd{u}{t} = c^2\pdd{u}{x} \\[4pt]
+\hline
+\end{array}
+\label{eq:13.5.1} \\[8pt]
+\text{BC:}\quad &
+\begin{array}{|c|}
+\hline
+u(0,t) = 0 \\
+u(L,t) = b(t) \\
+\hline
+\end{array}
+\label{eq:13.5.2} \\[8pt]
+\text{IC:}\quad &
+\begin{array}{|c|}
+\hline
+u(x,0) = 0 \\[2pt]
+\displaystyle\pd{u}{t}(x,0) = 0. \\
+\hline
+\end{array}
+\label{eq:13.5.3}
+\end{align}
+
+The zero initial conditions facilitate the use of the Laplace transform in $t$ of $u(x,t)$:
+\begin{equation}
+\overline{U}(x,s) = \int_0^{\infty} e^{-st}\,u(x,t)\dt.
+\label{eq:13.5.4}
+\end{equation}
+By transforming \eqref{eq:13.5.1}, $\overline{U}(x,s)$ satisfies the ordinary differential equation
+\begin{equation}
+s^2\overline{U} = c^2\frac{\partial^2\overline{U}}{\partial x^2},
+\label{eq:13.5.5}
+\end{equation}
+subject to the boundary conditions
+\begin{align}
+\overline{U}(0,s) &= 0 \label{eq:13.5.6}\\
+\overline{U}(L,s) &= B(s), \label{eq:13.5.7}
+\end{align}
+where $B(s)$ is the Laplace transform of $b(t)$.  We can easily determine $\overline{U}(x,s)$:
+\begin{equation}
+\overline{U}(x,s) = B(s)\,\frac{\sinh(s/c)x}{\sinh(s/c)L}.
+\label{eq:13.5.8}
+\end{equation}
+The convolution theorem implies that
+\begin{equation}
+u(x,t) = \int_0^t b(t_0)\,f(t-t_0)\,dt_0,
+\label{eq:13.5.9}
+\end{equation}
+where $f(t)$ is the inverse Laplace transform of
+\begin{equation}
+F(s) = \frac{\sinh(s/c)x}{\sinh(s/c)L}.
+\label{eq:13.5.10}
+\end{equation}
+
+To obtain this inverse Laplace transform is not straightforward.  One method to obtain the inverse transform of \eqref{eq:13.5.10} is to attempt to use our elementary tables, in which primarily exponentials appear.  We note that
+\[
+\frac{\sinh(s/c)x}{\sinh(s/c)L}
+= \frac{e^{(s/c)x} - e^{-(s/c)x}}{e^{(s/c)L} - e^{-(s/c)L}}
+= \frac{e^{(s/c)x} - e^{-(s/c)x}}{e^{(s/c)L}\bigl(1 - e^{-(2s/c)L}\bigr)}.
+\]
+However, due to the denominator, this cannot be analyzed in a simple way.  Instead, we can introduce an infinite series of exponentials based on the geometric series $[1/(1-x) = 1 + x + x^2 + \cdots$, if $|x| < 1]$:
+\begin{align}
+F(s) &= \frac{e^{(s/c)x} - e^{-(s/c)x}}{e^{(s/c)L}\bigl(1 - e^{-(2s/c)L}\bigr)} \notag\\
+     &= e^{-(s/c)L}\bigl(e^{(s/c)x} - e^{-(s/c)x}\bigr)
+        \bigl(1 + e^{-(2L/c)s} + e^{-(4L/c)s} + \cdots\bigr) \notag\\
+     &= \sum_{n=0}^{\infty}\left\{
+        \exp\!\left[-s\left(\frac{2nL - x + L}{c}\right)\right]
+        - \exp\!\left[-s\left(\frac{2nL + x + L}{c}\right)\right]
+        \right\}.
+\label{eq:13.5.11}
+\end{align}
+These are all decaying exponentials since $x < L$, and hence each can be inverted using formula (13.2.2n) in Table~13.2.1.  The Laplace transform is a linear combination of
+\[
+\exp\!\left[-s\left(\frac{2nL \pm x + L}{c}\right)\right]
+\qquad (n \ge 0).
+\]
+The inverse Laplace transform of $F(s)$ is thus a linear combination of Dirac delta functions, $\delta[t - (2nL \pm x + L)/c]$:
+\[
+f(t) = \sum_{n=0}^{\infty}\left[
+\delta\!\left(t - \frac{2nL - x + L}{c}\right)
+- \delta\!\left(t - \frac{2nL + x + L}{c}\right)
+\right].
+\]
+
+Since $f(t-t_0)$ in \eqref{eq:13.5.9} is the influence function for the boundary condition, these Dirac delta functions represent signals whose travel times are $(2nL \pm x + L)/c$ [elapsed from the signal time~$t_0$].  These can be interpreted as direct signals and their reflections off the boundaries $x_0 = 0$ and $x_0 = L$.  Since the nonhomogeneous boundary condition is at $x_0 = L$, we imagine these signals are initiated there (at $t = t_0$).  The signal can travel to $x$ in different ways, as illustrated in Fig.~13.5.1.  The direct signal must travel a distance $L - x$ at velocity~$c$, yielding the retarded time $(L-x)/c$ (corresponding to $n = 0$).  A signal can also arrive at $x$ by additionally making an integral number of complete circuits, an added travel distance of $2Ln$.  The other terms correspond to waves first reflecting off the wall $x_0 = 0$ before impinging on~$x$.  In this case the total travel distance is $L + x + 2nL$ ($n \ge 0$).  Further details of the solution are left as exercises.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch13/fig_13_5_1.png}
+\caption{Space-time signal paths.}
+\label{fig:13.5.1}
+\end{figure}
+
+Using Laplace transforms (and inverting in the way described in this section) yields a representation of the solution as an infinite sequence of reflecting waves.  Similar results can be obtained by the method of characteristics (see Chapter~12) or (in some cases) by using the method of images (sequences of infinite space Green's functions).
+
+Alternatively, in subsequent sections, we will describe the use of contour integrals in the complex plane to invert Laplace transforms.  This technique will yield a significantly different representation of the same solution.
+
+%% ── Exercises 13.5 ──────────────────────────────────────────────
+\begin{exercises}{13.5}
+
+\item Consider
+\begin{align*}
+\pdd{u}{t} &= c^2\pdd{u}{x}, \qquad -\infty < x < \infty \\
+u(x,0) &= f(x) \\
+\pd{u}{x}(x,0) &= g(x).
+\end{align*}
+Solve using Laplace transforms:
+\begin{enumerate}
+\item[(a)] if $g(x) = 0$
+\item[(b)] if $f(x) = 0$
+\end{enumerate}
+
+\item
+\begin{enumerate}
+\item[(a)] Using the results of this section, invert \eqref{eq:13.5.8} based on the convolution theorem.  Solve for $u(x,t)$.
+\item[(b)] Without using the convolution theorem, from \eqref{eq:13.5.8} and \eqref{eq:13.5.11}, determine $u(x,t)$.
+\end{enumerate}
+
+\item[\starred 13.5.3.] Solve for $u(x,t)$ using Laplace transforms:
+\[
+\pdd{u}{t} = c^2\pdd{u}{x}
+\]
+\[
+u(0,t) = 0, \qquad u(x,0) = 0
+\]
+\[
+\pd{u}{x}(L,t) = b(t), \qquad \pd{u}{t}(x,0) = 0.
+\]
+
+\item Reconsider Exercise~13.5.3 if instead
+\begin{enumerate}
+\item[(a)] $\pd{u}{x}(0,t) = 0$ and $u(L,t) = b(t)$
+\item[(b)] $\pd{u}{x}(0,t) = 0$ and $\pd{u}{x}(L,t) = b(t)$
+\end{enumerate}
+
+\item Solve for $u(x,t)$ using Laplace transforms
+\[
+\pd{u}{t} = k\pdd{u}{x}, \qquad -\infty < x < \infty
+\]
+\[
+u(x,0) = f(x).
+\]
+(\emph{Hint}: See Table~13.2.1 of Laplace transforms.)
+
+\item Solve for $u(x,t)$ using Laplace transforms:
+\[
+\pd{u}{t} = k\pdd{u}{x}
+\]
+subject to $u(x,0) = f(x)$, $u(0,t) = 0$, and $u(L,t) = 0$.  By what other method(s) can this representation of the solution be obtained?
+
+\end{exercises}

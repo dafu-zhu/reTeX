@@ -1,0 +1,122 @@
+% sec10_7.tex — Section 10.7: Scattering and Inverse Scattering
+\section{Scattering and Inverse Scattering}
+\label{sec:scattering}
+
+In our previous work we have studied eigenvalue problems with a discrete spectrum and eigenvalue problems with a continuous spectrum.  In this section, we briefly study an eigenvalue problem with both a continuous spectrum and a discrete spectrum.  One motivation of this is from separation of variables ($\psi(x,t) = e^{-i\lambda t}\phi(x)$) for the normalized version of the \textbf{Schr\"odinger equation} from quantum mechanics, $i\pd{\psi}{t} = -\pdd{\psi}{x} + u(x)\psi$.  If the potential $u(x)$ is time independent, then we obtain the boundary value problem
+\boxed{\begin{equation}
+\label{eq:schrodinger-ode}
+\odd{\phi}{x} + (\lambda - u(x))\phi = 0.
+\end{equation}}
+
+We will assume $u(x)$ decays sufficiently fast as $x \to \pm\infty$ so that we will be interested in solutions to the partial differential equation that decay to zero as $x \to \pm\infty$.  If $u(x) = 0$, then $\lambda = k^2 > 0$ is the continuous spectrum so that $\phi(x) = e^{\pm ikx}$ corresponds to the Fourier transform.  If $u(x) \ne 0$, then the differential equation \eqref{eq:schrodinger-ode} usually cannot be solved exactly, so that we will discuss theoretical aspects of \eqref{eq:schrodinger-ode}.  We claim that there is always a continuous spectrum analogous to the Fourier transform and there may also be a discrete spectrum.
+
+\textbf{Continuous spectrum.}  If $u(x) \to 0$ sufficiently fast as $x \to \pm\infty$, then intuitively (which can be derived mathematically) $\phi(x)$ should be approximated by $e^{\pm ikx}$ as $x \to \pm\infty$.  It is helpful to imagine that $e^{-ikx}$ corresponds to a left-going wave [since the corresponding time dependent solution $e^{-ikx}e^{-ik^2 t} = e^{-ik(x+kt)}$ is left-going for $k > 0$] and that $e^{+ikx}$ corresponds to a right-going wave.  We analyze a special solution of \eqref{eq:schrodinger-ode} that corresponds to an incoming wave (left-going from the right as $x \to +\infty$) of unit amplitude.  The variable coefficient (potential) $u(x)$ causes some reflection and the amplitude transmitted is also changed so that
+\boxed{\begin{equation}
+\label{eq:scatter-right}
+\phi(x) \sim e^{-ikx} + R(k)\,e^{+ikx} \quad \text{as } x \to +\infty
+\end{equation}}
+\boxed{\begin{equation}
+\label{eq:scatter-left}
+\phi(x) \sim T(k)\,e^{-ikx} \quad \text{as } x \to -\infty,
+\end{equation}}
+where $R(k)$ is called the \textbf{reflection coefficient} and $T(k)$ the \textbf{transmission coefficient}.  The reflection and transmission coefficients are complex and can be shown to satisfy a conservation of energy equation $|R|^2 + |T|^2 = 1$.  Other solutions to \eqref{eq:schrodinger-ode} can be obtained.
+
+\textbf{Discrete spectrum.}  There can be a discrete set of negative eigenvalues $\lambda$ that satisfy \eqref{eq:schrodinger-ode} subject to the boundary condition that $\phi(x) \to 0$ as $x \to \pm\infty$:
+\boxed{\begin{equation}
+\label{eq:discrete-eigenvalues}
+\lambda = -\kappa_n^2 \;(\text{with } \kappa_n > 0),\quad n = 1,2,\ldots N.
+\end{equation}}
+
+The corresponding eigenfunctions $\phi_n(x)$ are known as \textbf{bound states} and may be chosen to satisfy
+\begin{equation}
+\label{eq:bound-asymptotic}
+\phi_n(x) \sim c_n\,e^{-\kappa_n x} \quad \text{as } x \to +\infty
+\end{equation}
+\boxed{\begin{equation}
+\label{eq:bound-normalization}
+\int_{-\infty}^{\infty}\phi_n^2(x)\dx = 1.
+\end{equation}}
+
+In order for the integral to be finite, the eigenfunction must decay exponentially both as $x \to \pm\infty$.  Other normalizations of \eqref{eq:bound-normalization} of the bound states are possible.
+
+In general for bound states ($\lambda < 0$), it can be shown from differential equation \eqref{eq:schrodinger-ode} that if the coefficient $\lambda - u(x) < 0$ for all $x$, then the solution is like an exponential of one kind for all $x$ and cannot be a bound state.  Thus we conclude that a necessary (but not sufficient) condition for a bound state is that $u(x)$ must be less than zero somewhere.
+
+\textbf{Example of continuous spectrum: Delta function potential.}  As an elementary example, we assume the potential $u(x)$ is a Dirac delta function
+\begin{equation}
+\label{eq:delta-potential}
+u(x) = U\delta(x),
+\end{equation}
+and we assume $\phi$ is continuous and $\frac{d\phi}{dx}$ satisfies the corresponding jump condition.  The differential equation is easy for $x \ne 0$ so that \eqref{eq:scatter-right} and \eqref{eq:scatter-left} are valid not only asymptotically but also for $x > 0$ and $x < 0$, respectively.  Continuity of $\phi(x)$ at $x = 0$ implies
+\begin{equation}
+\label{eq:delta-continuity}
+1 + R(k) = T(k).
+\end{equation}
+The jump condition $\frac{d\phi}{dx}\big|_{0-}^{0+} = U\phi(0)$ becomes
+\begin{equation}
+\label{eq:delta-jump}
+-ik + ikR(k) + ikT(k) = UT(k).
+\end{equation}
+Some elementary algebraic steps are necessary to show that $R(k) = \frac{U}{2ik-U}$ and $T(k) = \frac{2ik}{2ik-U}$.  In this example we can show that $|R|^2 + |T|^2 = 1$, which is a general result.
+
+\textbf{Example of discrete eigenvalues and eigenfunctions: Delta function potential.}  For the delta function potential \eqref{eq:delta-potential}, \eqref{eq:bound-asymptotic} is valid for $x > 0$, while it is simpler to note that $\phi_n(x) = b_n\,e^{\kappa_n x}$ for $x < 0$.  Continuity at $x = 0$ implies that $b_n = c_n$.  The jump condition at $x = 0$, $\frac{d\phi_n}{dx}\big|_{0-}^{0+} = U\phi_n(0)$, becomes $-c_n\kappa_n - c_n\kappa_n = Uc_n$.  From this we obtain
+\begin{equation}
+\label{eq:delta-kappa}
+\kappa_n = -\frac{1}{2}U.
+\end{equation}
+Since $\kappa_n > 0$, there are no discrete eigenvalues for the delta function potential if $U > 0$, but there is exactly one discrete negative eigenvalue if $U < 0$, namely
+\begin{equation}
+\label{eq:delta-eigenvalue}
+\lambda = -\kappa_n^2 = -\frac{1}{4}U^2.
+\end{equation}
+
+A bound state only exists for the negative delta function, which is consistent with the necessary condition mentioned previously: that $u(x)$ must be less than zero somewhere for a bound state to exist.
+
+\textbf{Inverse scattering.}  For a long time theorists wondered whether a unique potential could be determined from the reflection and transmission coefficients.  In the early 1950s Gelfand and Levitan [1955] proved the remarkable result that the potential could be uniquely determined if the reflection and transmission coefficients were supplemented by the knowledge of the discrete spectrum.  In particular, the potential could be reconstructed from
+\boxed{\begin{equation}
+\label{eq:inverse-potential}
+u(x) = -2\frac{d}{d x}K(x,x),
+\end{equation}}
+where $K(x,y)$ is the unique solution of the Gelfand-Levitan-Marchenko nonhomogeneous linear integral equation
+\boxed{\begin{equation}
+\label{eq:glm-equation}
+K(x,y) + F(x+y) + \int_x^{\infty}K(x,z)\,F(y+z)\,dz = 0, \quad \text{for } y > x.
+\end{equation}}
+
+The kernel and nonhomogeneous term $F(s)$ is the generalized inverse Fourier transform of the reflection coefficient $R(k)$ \eqref{eq:scatter-right} and hence includes contributions from the discrete spectrum \eqref{eq:bound-asymptotic} as well:
+\boxed{\begin{equation}
+\label{eq:glm-F}
+F(s) = \sum_{n=1}^{N}c_n^2\,e^{-\kappa_n s} + \frac{1}{2\pi}\int_{-\infty}^{\infty}R(k)\,e^{iks}\,dk.
+\end{equation}}
+
+Here $\lambda = -\kappa_n^2$ are the discrete eigenvalues, and $c_n$ are related to the bound states.
+
+\begin{exercises}{10.7}
+\item Consider the step potential $u(x) = U$ for $-1 < x < 1$ and $u(x) = 0$ otherwise.
+\begin{enumerate}
+\item[(a)] Find reflection and transmission coefficients if $U < 0$.
+\item[(b)] By solving \eqref{eq:schrodinger-ode}, determine the discrete spectrum ($\lambda = -\kappa^2$ with $\kappa > 0$).  [\textit{Hints:} (i)~Since we claim $\lambda - u(x)$ must be greater than zero somewhere, you may assume $U < \lambda = -\kappa^2$.  (ii)~The algebra is easier if even and odd bound states are analyzed separately.]
+\item[(c)] Find reflection and transmission coefficients (for all positive $\lambda$) if $U > 0$.
+\end{enumerate}
+
+\item Show that $|R|^2 + |T|^2 = 1$ for the delta function potential in the text.
+
+\item
+\begin{enumerate}
+\item[(a)] Show that the Wronskian $W(\phi_1,\phi_2) = \phi_1\phi_{2x} - \phi_2\phi_{1x}$ of two independent solutions of \eqref{eq:schrodinger-ode} is a constant.
+\item[(b)] $\phi(x)$ satisfying \eqref{eq:scatter-right} and \eqref{eq:scatter-left} and its complex conjugate $\phi^*(x)$ are two linearly independent solutions of \eqref{eq:schrodinger-ode}.  By computing the Wronskian of these two solutions using the asymptotic conditions as $x \to \pm\infty$, show that $|R|^2 + |T|^2 = 1$.
+\end{enumerate}
+
+\item \textbf{Orthogonality conditions}
+\begin{enumerate}
+\item[(a)] Show that the discrete eigenfunctions are orthogonal to eigenfunctions of the continuous spectrum.
+\item[(b)] Show that one discrete eigenfunction is orthogonal to another discrete eigenfunction.
+\end{enumerate}
+
+\item
+\begin{enumerate}
+\item[(a)] Show that a pole of the transmission coefficient in the upper half complex $k$-plane corresponds to a value of the discrete spectrum.
+\item[(b)] Verify that this occurs for the delta function example in the text.
+\end{enumerate}
+
+\item A \textbf{reflectionless potential} is one in which the reflection coefficient is zero for all $k$.  Find an example of a reflectionless potential by solving the Gelfand-Levitan-Marchenko integral equation \eqref{eq:glm-equation}.  Assume there is one discrete eigenvalue $\lambda = -\kappa^2$ and assume the corresponding coefficient $c^2$ is given.  [Hint: The integral equation is separable.]
+\end{exercises}

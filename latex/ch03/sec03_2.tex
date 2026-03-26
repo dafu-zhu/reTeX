@@ -1,0 +1,148 @@
+% sec03_2.tex — Section 3.2: Statement of Convergence Theorem
+\section{Statement of Convergence Theorem}
+\label{sec:convergence-theorem}
+
+\textbf{Definitions of Fourier coefficients and a Fourier series.}  We will be forced to distinguish carefully between a function $f(x)$ and its Fourier series over the interval $-L \le x \le L$:
+\begin{equation}
+\label{eq:fourier-series-def}
+\text{Fourier series } = a_0 + \sum_{n=1}^{\infty} a_n \cos \frac{n\pi x}{L} + \sum_{n=1}^{\infty} b_n \sin \frac{n\pi x}{L}.
+\end{equation}
+The infinite series may not even converge, and if it converges, it may not converge to $f(x)$.  However, if the series converges, we learned in Chapter~2 how to determine the \textbf{Fourier coefficients} $a_0$, $a_n$, $b_n$ using certain orthogonality integrals, (2.3.32).  We will use those results as the definition of the Fourier coefficients:
+\begin{equation}
+\label{eq:fourier-coeffs}
+\boxed{
+\begin{aligned}
+a_0 &= \frac{1}{2L} \int_{-L}^{L} f(x) \dx \\[6pt]
+a_n &= \frac{1}{L} \int_{-L}^{L} f(x) \cos \frac{n\pi x}{L} \dx \\[6pt]
+b_n &= \frac{1}{L} \int_{-L}^{L} f(x) \sin \frac{n\pi x}{L} \dx.
+\end{aligned}
+}
+\end{equation}
+
+\textbf{The Fourier series of $f(x)$ over the interval $-L \le x \le L$ is defined to be the infinite series \eqref{eq:fourier-series-def}, where the Fourier coefficients are given by \eqref{eq:fourier-coeffs}.}  We immediately note that a Fourier series does not exist unless, for example, $a_0$ exists [i.e., unless $|\int_{-L}^{L} f(x) \dx| < \infty$].  This eliminates certain functions from our consideration.  For example, we do not ask what is the Fourier series of $f(x) = 1/x^2$.
+
+Even in situations in which $\int_{-L}^{L} f(x) \dx$ exists, the infinite series may not converge; furthermore, if it converges, it may not converge to $f(x)$.  We use the notation
+\begin{equation}
+\label{eq:fourier-tilde}
+f(x) \sim a_0 + \sum_{n=1}^{\infty} a_n \cos \frac{n\pi x}{L} + \sum_{n=1}^{\infty} b_n \sin \frac{n\pi x}{L},
+\end{equation}
+where $\sim$ means that $f(x)$ is on the left-hand side and the Fourier series of $f(x)$ (on the interval $-L \le x \le L$) is on the right-hand side (even if the series diverges), but the two functions may be completely different.  The symbol $\sim$ is read as ``has the Fourier series (on a given interval).''
+
+\textbf{Convergence theorem for Fourier series.}  At first we state a theorem summarizing certain properties of Fourier series:
+
+\begin{center}
+\fbox{\parbox{0.85\textwidth}{
+If $f(x)$ is \textit{piecewise smooth} on the interval $-L \le x \le L$, then the Fourier series of $f(x)$ converges
+\begin{enumerate}
+\item to the \textit{periodic extension} of $f(x)$, where the periodic extension is continuous;
+\item to the average of the two limits, usually
+\[
+\frac{1}{2}\left[f(x+) + f(x-)\right],
+\]
+where the periodic extension has a \textit{jump discontinuity}.
+\end{enumerate}
+}}
+\end{center}
+
+We refer to this as \textbf{Fourier's theorem}.  It is proved in many of the references listed in the Bibliography.
+
+Mathematically, if $f(x)$ is piecewise smooth, then for $-L < x < L$ (excluding the endpoints),
+\begin{equation}
+\label{eq:fourier-convergence}
+\frac{f(x+) + f(x-)}{2} = a_0 + \sum_{n=1}^{\infty} a_n \cos \frac{n\pi x}{L} + \sum_{n=1}^{\infty} b_n \sin \frac{n\pi x}{L},
+\end{equation}
+where the Fourier coefficients are given by \eqref{eq:fourier-coeffs}.  \textit{At points where $f(x)$ is continuous}, $f(x+) = f(x-)$ and hence \eqref{eq:fourier-convergence} implies that for $-L < x < L$,
+\begin{equation}
+\label{eq:fourier-continuous}
+f(x) = a_0 + \sum_{n=1}^{\infty} a_n \cos \frac{n\pi x}{L} + \sum_{n=1}^{\infty} b_n \sin \frac{n\pi x}{L}.
+\end{equation}
+
+The Fourier series actually converges to $f(x)$ at points between $-L$ and $+L$, where $f(x)$ is continuous.  At the endpoints, $x = L$ or $x = -L$, the infinite series converges to the average of the two values of the periodic extension.  Outside the range $-L \le x \le L$, the Fourier series converges to a value easily determined using the known periodicity (with period $2L$) of the Fourier series.
+
+We have derived the Fourier series using the orthogonality of the eigenfunctions.  However, we want to remember the result, not the detailed calculation of the trigonometric integrals.  We may want to just memorize \eqref{eq:fourier-continuous}, the handy phrase ``$\frac{n\pi x}{L}$,'' and the coefficients of the series by practice or tables.  Note that the orthogonality of the eigenfunctions follows automatically from the differential equation and the homogeneous boundary conditions.
+
+\textbf{Sketching Fourier series.}  Now we are ready to apply Fourier's theorem.  To sketch the Fourier series of $f(x)$ (on the interval $-L \le x \le L$), we
+
+\begin{center}
+\fbox{\parbox{0.8\textwidth}{
+\begin{enumerate}
+\item Sketch $f(x)$ (preferably for $-L \le x \le L$ only).
+\item Sketch the periodic extension of $f(x)$.
+\end{enumerate}
+}}
+\end{center}
+
+According to Fourier's theorem, the Fourier series converges (here \textit{converge} means ``equals'') to the periodic extension, where the periodic extension is continuous (which will be almost everywhere).  However, at points of jump discontinuity of the periodic extension, the Fourier series converges to the average.  Therefore, there is a third step:
+
+\begin{center}
+\fbox{\parbox{0.8\textwidth}{
+\begin{enumerate}
+\setcounter{enumi}{2}
+\item Mark an ``$\times$'' at the average of the two values at any jump discontinuity of the periodic extension.
+\end{enumerate}
+}}
+\end{center}
+
+\textbf{Example.}  Consider
+\begin{equation}
+\label{eq:step-function}
+f(x) = \begin{cases} 0 & x < \dfrac{L}{2} \\[6pt] 1 & x > \dfrac{L}{2}. \end{cases}
+\end{equation}
+We would like to determine the Fourier series of $f(x)$ on $-L \le x \le L$.  We begin by sketching $f(x)$ for all $x$ in Fig.~3.2.1 (although we need only the sketch for $-L \le x \le L$.)  Note that $f(x)$ is piecewise smooth, so we can apply Fourier's theorem.  The periodic extension of $f(x)$ is sketched in Fig.~3.2.2.  Often the understanding of the process is made clearer by sketching at least three full periods, $-3L \le x \le 3L$, even though in the applications to partial differential equations, only the interval $-L \le x \le L$ is absolutely needed.  The Fourier series of $f(x)$ equals the periodic extension of $f(x)$, wherever the periodic extension is continuous (i.e., at all $x$ except the points of jump discontinuity, which are $x = L/2$, $L$, $L/2 + 2L$, $-L$, $L/2 - 2L$, etc.).  According to Fourier's theorem, at these points of jump discontinuity, the Fourier series of $f(x)$ must converge to the average.  These points should be marked, perhaps with an $\times$, as in Fig.~3.2.2.  At $x = L/2$ and $x = L$ (as well as $x = L/2 \pm 2nL$ and $x = L \pm 2nL$), the Fourier series converges to the average, $\frac{1}{2}$.  In summary, for this example,
+\[
+a_0 + \sum_{n=1}^{\infty} a_n \cos \frac{n\pi x}{L} + \sum_{n=1}^{\infty} b_n \sin \frac{n\pi x}{L} = \begin{cases} \frac{1}{2} & x = -L \\ 0 & {-L < x < L/2} \\ \frac{1}{2} & x = L/2 \\ 1 & L/2 < x < L \\ \frac{1}{2} & x = L. \end{cases}
+\]
+Fourier series can converge to rather strange functions, but they are not so different from the original function.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch03/fig_3_2_1.png}
+\caption{Sketch of $f(x)$.}
+\label{fig:3.2.1}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch03/fig_3_2_2.png}
+\caption{Fourier series of $f(x)$.}
+\label{fig:3.2.2}
+\end{figure}
+
+\textbf{Fourier coefficients.}  For a given $f(x)$, it is \textit{not} necessary to calculate the Fourier coefficients in order to sketch the Fourier series of $f(x)$.  However, it is important to know how to calculate the Fourier coefficients, given by \eqref{eq:fourier-coeffs}.  The calculation of Fourier coefficients can be an algebraically involved process.  Sometimes it is an exercise in the method of integration by parts.  Often, calculations can be simplified by judiciously using integral tables or computer algebra systems.  In any event, we can always use a computer to approximate the coefficients numerically.  As an overly simple example but one that illustrates some important points, consider $f(x)$ given by \eqref{eq:step-function}.  From \eqref{eq:fourier-coeffs}, the coefficients are
+\begin{equation}
+\label{eq:a0-step}
+a_0 = \frac{1}{2L} \int_{-L}^{L} f(x) \dx = \frac{1}{2L} \int_{L/2}^{L} dx = \frac{1}{4},
+\end{equation}
+\begin{equation}
+\label{eq:an-step}
+a_n = \frac{1}{L} \int_{-L}^{L} f(x) \cos \frac{n\pi x}{L} \dx = \frac{1}{L} \int_{L/2}^{L} \cos \frac{n\pi x}{L} \dx = \frac{1}{n\pi} \sin \frac{n\pi x}{L} \bigg|_{L/2}^{L}
+= \frac{1}{n\pi} \left( \sin n\pi - \sin \frac{n\pi}{2} \right),
+\end{equation}
+\begin{equation}
+\label{eq:bn-step}
+b_n = \frac{1}{L} \int_{-L}^{L} f(x) \sin \frac{n\pi x}{L} \dx = \frac{1}{L} \int_{L/2}^{L} \sin \frac{n\pi x}{L} \dx = \frac{-1}{n\pi} \cos \frac{n\pi x}{L} \bigg|_{L/2}^{L}
+= \frac{1}{n\pi} \left( \cos \frac{n\pi}{2} - \cos n\pi \right).
+\end{equation}
+We omit simplifications that arise by noting that $\sin n\pi = 0$, $\cos n\pi = (-1)^n$, and so on.
+
+\begin{exercises}{3.2}
+\item For the following functions, sketch the Fourier series of $f(x)$ (on the interval $-L \le x \le L$).  Compare $f(x)$ to its Fourier series:
+\begin{enumerate}
+\item[\textbf{(a)}] $f(x) = 1$ \hfill \starred\textbf{(b)} $f(x) = x^2$
+\item[\textbf{(c)}] $f(x) = 1 + x$ \hfill \starred\textbf{(d)} $f(x) = e^x$
+\item[\textbf{(e)}] $f(x) = \begin{cases} x & x < 0 \\ 2x & x > 0 \end{cases}$ \hfill \starred\textbf{(f)} $f(x) = \begin{cases} 0 & x < 0 \\ 1+x & x > 0 \end{cases}$
+\item[\textbf{(g)}] $f(x) = \begin{cases} x & x < L/2 \\ 0 & x > L/2 \end{cases}$
+\end{enumerate}
+
+\item For the following functions, sketch the Fourier series of $f(x)$ (on the interval $-L \le x \le L$) and determine the Fourier coefficients:
+\begin{enumerate}
+\item[\starred\textbf{(a)}] $f(x) = x$ \hfill \textbf{(b)} $f(x) = e^{-x}$
+\item[\starred\textbf{(c)}] $f(x) = \sin \dfrac{\pi x}{L}$ \hfill \textbf{(d)} $f(x) = \begin{cases} 0 & x < 0 \\ x & x > 0 \end{cases}$
+\item[\textbf{(e)}] $f(x) = \begin{cases} 1 & |x| < L/2 \\ 0 & |x| > L/2 \end{cases}$ \hfill \starred\textbf{(f)} $f(x) = \begin{cases} 0 & x < 0 \\ 1 & x > 0 \end{cases}$
+\item[\textbf{(g)}] $f(x) = \begin{cases} 1 & x < 0 \\ 2 & x > 0 \end{cases}$
+\end{enumerate}
+
+\item Show that the Fourier series operation is linear: that is, show that the Fourier series of $c_1 f(x) + c_2 g(x)$ is the sum of $c_1$ times the Fourier series of $f(x)$ and $c_2$ times the Fourier series of $g(x)$.
+
+\item Suppose that $f(x)$ is piecewise smooth.  What value does the Fourier series of $f(x)$ converge to at the endpoint $x = -L$? at $x = L$?
+\end{exercises}

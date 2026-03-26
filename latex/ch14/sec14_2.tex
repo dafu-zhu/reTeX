@@ -1,0 +1,123 @@
+% sec14_2.tex — Section 14.2: Dispersive Waves and Group Velocity
+\section{Dispersive Waves and Group Velocity}
+\label{sec:dispersive-group-velocity}
+
+\subsection{Traveling Waves and the Dispersion Relation}
+\label{sec:traveling-waves-dispersion}
+
+A \textbf{traveling wave} is a wave of the form
+\begin{equation}
+\label{eq:14.2.1}
+u(x,t) = A e^{i(kx - \omega t)},
+\end{equation}
+where $A$ is the (constant) amplitude, $k$ is the \textbf{wave number}, and $\omega$ is the \textbf{frequency}.  The wave length is $L = 2\pi/k$ and the period is $T = 2\pi/\omega$.  The \textbf{phase velocity} (the velocity at which surfaces of constant phase move) is
+\begin{equation}
+\label{eq:14.2.2}
+\text{phase velocity} = \frac{\omega}{k}.
+\end{equation}
+
+If $u = Ae^{i(kx - \omega t)}$ is substituted into a linear partial differential equation with constant coefficients, then the frequency $\omega$ is determined as a function of the wave number $k$:
+\boxed{\begin{equation}
+\label{eq:14.2.3}
+\omega = \omega(k),
+\end{equation}}
+called the \textbf{dispersion relation}.  A partial differential equation is said to be \textbf{dispersive} if the phase velocity $\omega/k$ depends on $k$ (i.e., different wave lengths travel at different speeds).
+
+For example, for the one-dimensional wave equation $\pdd{u}{t} = c^2\pdd{u}{x}$, substituting \eqref{eq:14.2.1} yields
+\begin{equation}
+\label{eq:14.2.4}
+\omega^2 = c^2 k^2 \quad \text{or} \quad \omega = \pm ck.
+\end{equation}
+The phase velocity is $\omega/k = \pm c$, which is independent of $k$, so the wave equation is \emph{not} dispersive.
+
+A simple example of a dispersive wave equation is
+\begin{equation}
+\label{eq:14.2.5}
+\pd{u}{t} = -\pd{u}{x} + \frac{\partial^3 u}{\partial x^3},
+\end{equation}
+which is a linearized version of the \textbf{Korteweg-de~Vries (KdV) equation}.  Substituting \eqref{eq:14.2.1} yields the dispersion relation
+\begin{equation}
+\label{eq:14.2.6}
+\omega = ck + \beta k^3,
+\end{equation}
+where the phase velocity $\omega/k = c + \beta k^2$ depends on $k$, confirming that \eqref{eq:14.2.5} is dispersive.
+
+A fundamental property of dispersive waves is that a group or packet of waves (a superposition of waves with nearly equal wave numbers) does not maintain its shape as it propagates.  This is in contrast to waves described by the one-dimensional wave equation, for which the wave form propagates unchanged at velocity $c$.
+
+\subsection{Group Velocity}
+\label{sec:group-velocity}
+
+Consider the simplest wave packet: the superposition of two traveling waves with different but close wave numbers $k$ and $k + \Delta k$:
+\begin{equation}
+\label{eq:14.2.7}
+u = A e^{i(kx - \omega(k)t)} + A e^{i((k+\Delta k)x - \omega(k + \Delta k)t)}.
+\end{equation}
+This can be written as a single traveling wave modulated by a slowly varying envelope.  By factoring,
+\begin{equation}
+\label{eq:14.2.8}
+u = 2A\cos\!\biggl(\frac{\Delta k}{2}\Bigl(x - \frac{\omega(k+\Delta k) - \omega(k)}{\Delta k}\,t\Bigr)\biggr) e^{i(kx - \omega(k)t)}.
+\end{equation}
+The individual waves move with the phase velocity $\omega/k$, but the envelope (the group of waves) moves with a different velocity.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch14/fig_14_2_1.png}
+\caption{Group and phase velocity.}
+\label{fig:14.2.1}
+\end{figure}
+
+However, the wave envelope or the group of waves moves with an entirely different velocity $\frac{\omega(k+\Delta k)-\omega(k)}{\Delta k}$.  In the limit as $\Delta k \to 0$, this is called the \textbf{group velocity}:
+\boxed{\begin{equation}
+\label{eq:14.2.9}
+\text{group velocity} \equiv \od{\omega}{k}.
+\end{equation}}
+
+In some sense, to be discussed later in more detail, the amplitude of a group of dispersive waves moves with the group velocity.  Energy moves with the group velocity.  The individual waves appear to move through the wave envelope since the phase velocity is usually different from the group velocity.
+
+\textbf{Example.}  For the linearized KdV equation, the dispersion relation is \eqref{eq:14.2.6}, $\omega = ck + \beta k^3$.  In this case
+\begin{align*}
+\text{phase velocity} &= \frac{\omega}{k} = c + \beta k^2 \\[4pt]
+\text{group velocity} &= \od{\omega}{k} = c + 3\beta k^2.
+\end{align*}
+It is even possible that the group velocity is in the opposite direction from the phase velocity.  This could occur, for example, if $c + 3\beta k^2 > 0$, while $c + \beta k^2 < 0$.
+
+\textbf{Water waves.}  For surface water waves, it is known that the dispersion relation is $\omega^2 = gk\tanh kh$, where $g = 9.8$~m/s$^2$ is the gravitational constant and $h$ is the constant depth of the water.  For deep water waves, $kh \gg 1$, so that $\tanh kh \simeq 1$, the dispersion relation can be approximated by $\omega^2 = gk$ or $\omega = \pm\sqrt{gk}$.  For deep water waves, $\frac{\omega}{k} = \pm\sqrt{\frac{g}{k}}$ while the group velocity is $\od{\omega}{k} = \pm\frac{1}{2}\sqrt{\frac{g}{k}}$.  For deep water waves, the group velocity is half the phase velocity.  Most of the waves at a beach are generated from storms far away.  Most of these waves are deep water waves since the typical depth of the ocean is 5~km.  The group velocity is $\frac{1}{2}\sqrt{\frac{gL}{2\pi}}$, since the wave number can be related to the wave length $L = \frac{2\pi}{k}$.  The longer waves have larger group velocities.  If a localized storm generates waves of all wave lengths, the longer waves move faster and will arrive at a distant shoreline sooner.  Thus, the changing frequencies at the shoreline are due to these different arrival times.  (The frequency observed at a beach is meaningful since the frequency of a wave stays the same as the depth changes slowly.)  Thus, at the beach the longer waves with smaller frequencies (longer periods) will be observed first and will be a precursor to the other waves (and perhaps the storm system itself coming ashore).  The interested reader is referred to Kinsman~[1984].
+
+\begin{exercises}{14.2}
+\item For the following one-dimensional partial differential equations, find the dispersion relation:
+\begin{enumerate}
+\item[(a)] $\pdd{u}{t} = c^2\pdd{u}{x}$
+\item[(b)] $\pdd{u}{t} = -\gamma^2\frac{\partial^4 u}{\partial x^4}$
+\item[\starred (c)] $i\pd{u}{t} = \pdd{u}{x}$
+\item[(d)] $\pdd{u}{t} = c^2\pdd{u}{x} - u$
+\end{enumerate}
+
+\item For the following two-dimensional partial differential equations, find the dispersion relation:
+\begin{enumerate}
+\item[(a)] $\pdd{u}{t} = c^2\bigl(\pdd{u}{x} + \pdd{u}{y}\bigr)$
+\item[(b)] $\pdd{u}{t} = c_1^2\pdd{u}{x} + c_2^2\pdd{u}{y}$
+\end{enumerate}
+
+\item Show that any linear partial differential equation with a one mode dispersion relation $\omega = \omega(k)$ will have real solutions if the dispersion relation is odd, $\omega(-k) = -\omega(k)$.
+
+\item Show that any linear partial differential equation (with higher spatial dimensions) with a one mode dispersion relation $\omega = \omega(\vec{k})$ will have real solutions if the dispersion relation is odd, $\omega(-\vec{k}) = -\omega(\vec{k})$.
+
+\item[\starred] Water waves satisfy $\pdd{\phi}{x} + \pdd{\phi}{y} = 0$ for $y \le 0$, where $\phi$ is a velocity potential such that the fluid velocity can be found from $\vec{u} = \nabla\phi$.  The boundary condition at a flat bottom $y = -h$ is $\pd{\phi}{y} = 0$ there.  For water waves of very small amplitude (still of great physical interest), the boundary condition at the unknown free surface $y = s(x,t)$ can be approximated by the two conditions, $\pd{\phi}{t} + gs = 0$ and $\pd{s}{t} = \pd{\phi}{y}$, applied at $y = 0$, where $g$ is the gravitational constant.  Find the dispersion relation by assuming $\phi = A(y)e^{i(kx - \omega t)}$ and $s = Be^{i(kx - \omega t)}$.
+
+\item Determine the dispersion relation for water waves with surface tension by replacing $\pd{\phi}{t} + gs = 0$ by $\pd{\phi}{t} + gs - \frac{\gamma}{\rho}\pdd{s}{x} = 0$, where $\gamma$ is the coefficient of surface tension and $\rho$ is the constant mass density of water [Whitham(1999)].
+
+\item[\starred] Determine the dispersion relation for deep water waves by solving Exercise 14.2.5 with the condition $\pd{\phi}{y} \to 0$ as $y \to -\infty$ instead of $\pd{\phi}{y} = 0$ at $y = -h$.
+
+\item Derive the dispersion relation for an internal wave assuming a two-fluid model with density $\rho_1$ for $y \ge 0$ and density $\rho_2$ for $y \le 0$.  In Exercise 14.2.5 one of the boundary conditions corresponding to zero pressure is now replaced by the pressure being continuous: $\rho_1\bigl(\pd{\phi}{t} + gs\bigr) = \rho_2\bigl(\pd{\phi}{t} + gs\bigr)$ at $y = 0$.  The other condition at $y = 0$ holds for both fluids.  Assume $y \to \pm\infty$.
+
+\item Compare phase and group velocities for
+\begin{enumerate}
+\item[(a)] $\pd{u}{t} = \beta\frac{\partial^3 u}{\partial x^3}$
+\item[(b)] $i\pd{u}{t} = \pdd{u}{x}$
+\item[(c)] $\pdd{u}{t} = c^2\pdd{u}{x} - u$.  Show that the phase velocity is greater than the sound speed c, but the group velocity is less than the sound speed c.
+\end{enumerate}
+
+\item Determine the group velocity for water waves satisfying $\omega^2 = gk\tanh kh$.
+
+\item Tsunamis (water waves generated by earthquakes) are long waves with $kh \ll 1$.  Show that long waves satisfy $\omega = \pm k\sqrt{gh}$.  Approximate the phase (and group velocity) for tsunamis assuming the ocean is 5~km deep.
+\end{exercises}

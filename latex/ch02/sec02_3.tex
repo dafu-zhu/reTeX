@@ -1,0 +1,644 @@
+% sec02_3.tex — Section 2.3: Heat Equation with Zero Temperatures at Finite Ends
+\section{Heat Equation with Zero Temperatures at Finite Ends}
+\label{sec:2.3}
+
+\subsection{Introduction}
+\label{sec:2.3.1}
+
+Partial differential equation \eqref{eq:2.1.1} is linear but it is homogeneous only if there are no sources, $Q(x,t) = 0$. The boundary conditions \eqref{eq:2.1.3} are also linear, and they too are homogeneous only if $T_1(t) = 0$ and $T_2(t) = 0$. We thus first propose to study
+
+\begin{equation}
+\label{eq:2.3.1}
+\text{PDE:}\quad
+\boxed{\pd{u}{t} = k\pdd{u}{x}} \qquad
+\begin{aligned}
+0 &< x < L \\
+t &> 0
+\end{aligned}
+\end{equation}
+
+\begin{equation}
+\label{eq:2.3.2}
+\text{BC:}\quad
+\boxed{\begin{aligned}
+u(0,t) &= 0 \\
+u(L,t) &= 0
+\end{aligned}}
+\end{equation}
+
+\begin{equation}
+\label{eq:2.3.3}
+\text{IC:}\quad
+\boxed{u(x,0) = f(x).}
+\end{equation}
+
+The problem consists of a linear homogeneous partial differential equation with linear homogeneous boundary conditions. There are two reasons for our investigating this type of problem, \eqref{eq:2.3.1}--\eqref{eq:2.3.3}, besides the fact that we claim it can be solved by the method of separation of variables. First, this problem is a relevant physical problem corresponding to a one-dimensional rod ($0 < x < L$) with no sources and both ends immersed in a $0^\circ$ temperature bath. We are very interested in predicting how the initial thermal energy (represented by the initial condition) changes in this relatively simple physical situation. Second, it will turn out that in order to solve the nonhomogeneous problem \eqref{eq:2.1.1}--\eqref{eq:2.1.3}, we will need to know how to solve the homogeneous problem, \eqref{eq:2.3.1}--\eqref{eq:2.3.3}.
+
+\subsection{Separation of Variables}
+\label{sec:2.3.2}
+
+In the \textbf{method of separation of variables}, we attempt to determine solutions in the product form
+\begin{equation}
+\label{eq:2.3.4}
+\boxed{u(x,t) = \phi(x)G(t),}
+\end{equation}
+where $\phi(x)$ is only a function of $x$ and $G(t)$ only a function of $t$. Equation \eqref{eq:2.3.4} must satisfy the \emph{linear homogeneous} partial differential equation \eqref{eq:2.3.1} and boundary conditions \eqref{eq:2.3.2}, but for the moment we set aside (ignore) the initial condition. The \textbf{product solution}, \eqref{eq:2.3.4}, usually does not satisfy the initial conditions. Later we will explain how to satisfy the initial conditions.
+
+Let us be clear from the beginning---we do not give any reasons why we chose the form \eqref{eq:2.3.4}. (Daniel Bernoulli invented this technique in the 1700s. It works because it reduces a PDE to ODEs, as we shall see.) We substitute the assumed product form, \eqref{eq:2.3.4}, into the partial differential equation \eqref{eq:2.3.1}:
+\begin{align*}
+\pd{u}{t} &= \phi(x)\od{G}{t} \\[4pt]
+\pdd{u}{x} &= \odd{\phi}{x} G(t),
+\end{align*}
+and consequently the heat equation \eqref{eq:2.3.1} implies that
+\begin{equation}
+\label{eq:2.3.5}
+\phi(x)\od{G}{t} = k\odd{\phi}{x} G(t).
+\end{equation}
+We note that we can ``separate variables'' by dividing both sides of \eqref{eq:2.3.5} by $\phi(x)G(t)$:
+\[
+\frac{1}{G}\od{G}{t} = k\frac{1}{\phi}\odd{\phi}{x}.
+\]
+Now the variables have been ``separated'' in the sense that the left-hand side is only a function of $t$ and the right-hand side only a function of $x$. We can continue in this way, but it is \emph{convenient} (i.e., not necessary) also to divide by the constant $k$, and thus
+\begin{equation}
+\label{eq:2.3.6}
+\underbrace{\frac{1}{kG}\od{G}{t}}_{\text{function of $t$ only}} = \underbrace{\frac{1}{\phi}\odd{\phi}{x}}_{\text{function of $x$ only}}.
+\end{equation}
+This could be obtained directly from \eqref{eq:2.3.5} by dividing by $k\phi(x)G(t)$. How is it possible for a function of time to equal a function of space? If $x$ and $t$ are both to be arbitrary independent variables, then $x$ cannot be a function of $t$ (or $t$ a function of $x$) as seems to be specified by \eqref{eq:2.3.6}. The important idea is that we claim it is necessary that both sides of \eqref{eq:2.3.6} must equal the same constant:
+\begin{equation}
+\label{eq:2.3.7}
+\boxed{\frac{1}{kG}\od{G}{t} = \frac{1}{\phi}\odd{\phi}{x} = -\lambda,}
+\end{equation}
+where $\lambda$ is an arbitrary \emph{constant} known as the \textbf{separation constant}.\footnote{As further explanation for the constant in \eqref{eq:2.3.7}, let us say the following. Suppose that the left-hand side of \eqref{eq:2.3.7} is some function of $t$, $(1/kG)\,dG/dt = w(t)$. If we differentiate with respect to $x$, we get zero: $0 = d/dx(1/\phi\;d^2\phi/dx^2)$. Since $1/\phi\;d^2\phi/dx^2$ is only a function of $x$, this implies that $1/\phi\;d^2\phi/dx^2$ must be a constant, its derivative equaling zero. In this way \eqref{eq:2.3.7} follows.} We will explain momentarily the mysterious minus sign, which was introduced only for convenience.
+
+Equation \eqref{eq:2.3.7} yields two ordinary differential equations, one for $G(t)$ and one for $\phi(x)$:
+\begin{equation}
+\label{eq:2.3.8}
+\boxed{\odd{\phi}{x} = -\lambda\phi}
+\end{equation}
+\begin{equation}
+\label{eq:2.3.9}
+\boxed{\od{G}{t} = -\lambda k G.}
+\end{equation}
+
+We reiterate that $\lambda$ is a constant, and it is the same constant that appears in both \eqref{eq:2.3.8} and \eqref{eq:2.3.9}. The product solutions, $u(x,t) = \phi(x)G(t)$, must also satisfy the two homogeneous boundary conditions. For example, $u(0,t) = 0$ implies that $\phi(0)G(t) = 0$. There are two possibilities. Either $G(t) \equiv 0$ (the meaning of $\equiv$ is identically zero, for all $t$) or $\phi(0) = 0$. If $G(t) \equiv 0$, then from \eqref{eq:2.3.4}, the assumed product solution is identically zero, $u(x,t) \equiv 0$. This is not very interesting. [$u(x,t) \equiv 0$ is called the \textbf{trivial solution} since $u(x,t) \equiv 0$ automatically satisfies any homogeneous PDE and any homogeneous BC.] Instead, we look for nontrivial solutions. For nontrivial solutions, we must have
+\begin{equation}
+\label{eq:2.3.10}
+\phi(0) = 0.
+\end{equation}
+By applying the other boundary condition, $u(L,t) = 0$, we obtain in a similar way that
+\begin{equation}
+\label{eq:2.3.11}
+\phi(L) = 0.
+\end{equation}
+Product solutions, in addition to satisfying two ordinary differential equations, \eqref{eq:2.3.8} and \eqref{eq:2.3.9}, must also satisfy boundary conditions \eqref{eq:2.3.10} and \eqref{eq:2.3.11}.
+
+\subsection{Time-Dependent Equation}
+\label{sec:2.3.3}
+
+The advantage of the product method is that it transforms a partial differential equation, which we do not know how to solve, into two ordinary differential equations. The boundary conditions impose two conditions on the $x$-dependent ordinary differential equation (ODE). The time-dependent equation has no additional conditions, just
+\begin{equation}
+\label{eq:2.3.12}
+\od{G}{t} = -\lambda k G.
+\end{equation}
+Let us solve \eqref{eq:2.3.12} first before we discuss solving the $x$-dependent ODE with its two homogeneous boundary conditions. Equation \eqref{eq:2.3.12} is a first-order linear homogeneous differential equation \emph{with constant coefficients}. We can obtain its general solution quite easily. Nearly all constant-coefficient (linear and homogeneous) ODEs can be solved by seeking exponential solutions, $G = e^{rt}$, where in this case by substitution the characteristic polynomial is $r = -\lambda k$. Therefore, the general solution of \eqref{eq:2.3.12} is
+\begin{equation}
+\label{eq:2.3.13}
+G(t) = ce^{-\lambda kt}.
+\end{equation}
+We have remembered that for linear homogeneous equations, if $e^{-\lambda kt}$ is a solution, then $ce^{-\lambda kt}$ is a solution (for any arbitrary multiplicative constant $c$). The time-dependent solution is a simple exponential. Recall that $\lambda$ is the separation constant, which for the moment is arbitrary. However, eventually we will discover that only certain values of $\lambda$ are allowable. If $\lambda > 0$, the solution exponentially decays as $t$ increases (since $k > 0$). If $\lambda < 0$, the solution exponentially increases, and if $\lambda = 0$, the solution remains constant in time. Since this is a heat conduction problem and the temperature $u(x,t)$ is proportional to $G(t)$, we do not \emph{expect} the solution to grow exponentially in time. Thus, we expect $\lambda \ge 0$; we have not proved that statement, but we will do so later. When we see any parameter we often automatically assume it is positive, even though we shouldn't. Thus, it is rather convenient that we have discovered that we expect $\lambda \ge 0$. In fact, that is why we introduced the expression $-\lambda$ when we separated variables [see \eqref{eq:2.3.7}]. If we had introduced $\mu$ (instead of $-\lambda$), then our previous arguments would have suggested that $\mu \le 0$. In summary, when separating variables in \eqref{eq:2.3.7}, we mentally solve the time-dependent equation and see that $G(t)$ does not exponentially grow only if the separation constant was $\le 0$. We then introduce $-\lambda$ for convenience, since we would now \emph{expect} $\lambda \ge 0$. We next show how we actually determine all allowable separation constants. We will verify mathematically that $\lambda \ge 0$, as we expect by the physical arguments presented previously.
+
+\subsection{Boundary Value Problem}
+\label{sec:2.3.4}
+
+The $x$-dependent part of the assumed product solution, $\phi(x)$, satisfies a second-order ODE with two homogeneous boundary conditions:
+\begin{equation}
+\label{eq:2.3.14}
+\boxed{\begin{aligned}
+\odd{\phi}{x} &= -\lambda\phi \\
+\phi(0) &= 0 \\
+\phi(L) &= 0.
+\end{aligned}}
+\end{equation}
+
+We call \eqref{eq:2.3.14} a \textbf{boundary value problem} for ordinary differential equations. In the usual first course in ordinary differential equations, only initial value problems are specified. For example (think of Newton's law of motion for a particle), we solve second-order differential equations ($m\,d^2y/d^2t = F$) subject to two initial conditions [$y(0)$ and $dy/dt(0)$ given] \emph{both at the same time}. Initial value problems are quite nice, as \emph{usually} there \emph{exist unique} solutions to initial value problems. However, \eqref{eq:2.3.14} is quite different. It is a boundary value problem, since the two conditions are not given at the same place (e.g., $x = 0$) but at two different places, $x = 0$ and $x = L$. There is no simple theory that guarantees that the solution exists or is unique to this type of problem. In particular, we note that $\phi(x) = 0$ satisfies the ODE and both homogeneous boundary conditions, no matter what the separation constant $\lambda$ is, even if $\lambda < 0$; it is referred to as the \textbf{trivial solution} of the boundary value problem. It corresponds to $u(x,t) \equiv 0$, since $u(x,t) = \phi(x)G(t)$. If solutions of \eqref{eq:2.3.14} had been unique, then $\phi(x) \equiv 0$ would be the only solution; we would not be able to obtain nontrivial solutions of a linear homogeneous PDE by the product (separation of variables) method. Fortunately, there are other solutions of \eqref{eq:2.3.14}. However, there do not exist nontrivial solutions of \eqref{eq:2.3.14} for all values of $\lambda$. Instead, we will show that there are certain special values of $\lambda$, called \textbf{eigenvalues}\footnote{The word \emph{eigenvalue} comes from the German word \emph{eigenwert}, meaning characteristic value.} of the boundary value problem \eqref{eq:2.3.14}, for which there are nontrivial solutions, $\phi(x)$. A nontrivial $\phi(x)$, which exists only for certain values of $\lambda$, is called an \textbf{eigenfunction} corresponding to the eigenvalue $\lambda$.
+
+Let us try to determine the eigenvalues $\lambda$. In other words, for what values of $\lambda$ are there nontrivial solutions of \eqref{eq:2.3.14}? We solve \eqref{eq:2.3.14} directly. The second-order ODE is linear and homogeneous with constant coefficients: Two independent solutions are usually obtained in the form of exponentials, $\phi = e^{rx}$. Substituting this exponential into the differential equation yields the characteristic polynomial $r^2 = -\lambda$. The solutions corresponding to the two roots have significantly different properties depending on the value of $\lambda$. There are four cases:
+\begin{enumerate}
+\item $\lambda > 0$, in which the two roots are purely imaginary and are complex conjugates of each other, $r = \pm i\sqrt{\lambda}$.
+\item $\lambda = 0$, in which the two roots coalesce and are equal, $r = 0, 0$.
+\item $\lambda < 0$, in which the two roots are real and unequal, $r = \pm\sqrt{-\lambda}$, one positive and one negative. (Note that in this case $-\lambda$ is positive, so that the square root operation is well defined.)
+\item $\lambda$ itself complex.
+\end{enumerate}
+
+We will ignore the last case (as most of you would have done anyway) since we will later (Chapter~5) prove that $\lambda$ is real in order for a nontrivial solution of the boundary value problem \eqref{eq:2.3.14} to exist. From the time-dependent solution, using physical reasoning, we expect that $\lambda \ge 0$; perhaps then it will be unnecessary to analyze case~3. However, we will demonstrate a mathematical reason for the omission of this case.
+
+\paragraph{Eigenvalues and eigenfunctions ($\lambda > 0$).}
+Let us first consider the case in which $\lambda > 0$. The boundary value problem is
+\begin{alignat}{2}
+\odd{\phi}{x} &= -\lambda\phi & \label{eq:2.3.15} \\[4pt]
+\phi(0) &= 0 & \label{eq:2.3.16} \\[4pt]
+\phi(L) &= 0 & \label{eq:2.3.17}
+\end{alignat}
+If $\lambda > 0$, exponential solutions have imaginary exponents, $e^{\pm i\sqrt{\lambda}\,x}$. In this case, the solutions oscillate. If we desire real independent solutions, the choices $\cos\sqrt{\lambda}\,x$ and $\sin\sqrt{\lambda}\,x$ are usually made ($\cos\sqrt{\lambda}\,x$ and $\sin\sqrt{\lambda}\,x$ are each linear combinations of $e^{\pm i\sqrt{\lambda}\,x}$). Thus, the general solution of \eqref{eq:2.3.15} is
+\begin{equation}
+\label{eq:2.3.18}
+\phi = c_1\cos\sqrt{\lambda}\,x + c_2\sin\sqrt{\lambda}\,x,
+\end{equation}
+an arbitrary linear combination of two independent solutions. (The linear combination may be chosen from any two independent solutions.) $\cos\sqrt{\lambda}\,x$ and $\sin\sqrt{\lambda}\,x$ are usually the most convenient, but $e^{i\sqrt{\lambda}\,x}$ and $e^{-i\sqrt{\lambda}\,x}$ can be used. In some examples, other independent solutions are chosen. For example, Exercise~2.3.2(f) illustrates the advantage of sometimes choosing $\cos\sqrt{\lambda}(x-a)$ and $\sin\sqrt{\lambda}(x-a)$ as independent solutions.
+
+We now apply the boundary conditions. $\phi(0) = 0$ implies that
+\[
+0 = c_1.
+\]
+The cosine term vanishes, since the solution must be zero at $x = 0$. Thus, $\phi(x) = c_2\sin\sqrt{\lambda}\,x$. Only the boundary condition at $x = L$ has not been satisfied. $\phi(L) = 0$ implies that
+\[
+0 = c_2\sin\sqrt{\lambda}\,L.
+\]
+Either $c_2 = 0$ or $\sin\sqrt{\lambda}\,L = 0$. If $c_2 = 0$, then $\phi(x) \equiv 0$ since we already determined that $c_1 = 0$. This is the trivial solution, and we are searching for those values of $\lambda$ that have nontrivial solutions. The eigenvalues $\lambda$ must satisfy
+\begin{equation}
+\label{eq:2.3.19}
+\sin\sqrt{\lambda}\,L = 0.
+\end{equation}
+$\sqrt{\lambda}\,L$ must be a zero of the sine function. A sketch of $\sin z$ (see Fig.~2.3.1) or our knowledge of the sine function shows that $\sqrt{\lambda}\,L = n\pi$. $\sqrt{\lambda}\,L$ must equal an integral multiple of $\pi$, where $n$ is a positive integer since $\sqrt{\lambda} > 0$ ($n = 0$ is not appropriate since we assumed that $\lambda > 0$ in this derivation). The \textbf{eigenvalues} $\lambda$ are
+\begin{equation}
+\label{eq:2.3.20}
+\lambda = \left(\frac{n\pi}{L}\right)^2, \qquad n = 1, 2, 3, \ldots.
+\end{equation}
+The eigenfunction corresponding to the eigenvalue $\lambda = (n\pi/L)^2$ is
+\begin{equation}
+\label{eq:2.3.21}
+\phi(x) = c_2\sin\sqrt{\lambda}\,x = c_2\sin\frac{n\pi x}{L},
+\end{equation}
+where $c_2$ is an arbitrary multiplicative constant. Often we pick a convenient value for $c_2$; for example, $c_2 = 1$. We should remember, though, that any specific eigenfunction can always be multiplied by an arbitrary constant, since the PDE and BCs are linear and homogeneous.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch02/fig_2_3_1.png}
+\caption{Zeros of $\sin z$.}
+\label{fig:2.3.1}
+\end{figure}
+
+\paragraph{Eigenvalue ($\lambda = 0$).}
+Now we will determine if $\lambda = 0$ is an eigenvalue for \eqref{eq:2.3.15} subject to the boundary conditions \eqref{eq:2.3.16}, \eqref{eq:2.3.17}. $\lambda = 0$ is a special case. If $\lambda = 0$, \eqref{eq:2.3.15} implies that
+\[
+\phi = c_1 + c_2 x,
+\]
+corresponding to the double-zero roots, $r = 0, 0$ of the characteristic polynomial.\footnote{Please do \emph{not} say that $\phi = c_1\cos\sqrt{\lambda}\,x + c_2\sin\sqrt{\lambda}\,x$ is the general solution for $\lambda = 0$. If you do that, you find for $\lambda = 0$ that the general solution is an arbitrary constant. Although an arbitrary constant solves \eqref{eq:2.3.15} when $\lambda = 0$, \eqref{eq:2.3.15} is still a linear second-order differential equation; its general solution must be a linear combination of \emph{two} independent solutions. It is possible to choose $\sin\sqrt{\lambda}\,x/\sqrt{\lambda}$ as a second independent solution so that as $\lambda \to 0$ it agrees with the solution $x$. However, this involves too much work. It is better just to consider $\lambda = 0$ as a separate case.} To determine whether $\lambda = 0$ is an eigenvalue, the homogeneous boundary conditions must be applied. $\phi(0) = 0$ implies that $0 = c_1$, and thus $\phi = c_2 x$. In addition, $\phi(L) = 0$ implies that $0 = c_2 L$. Since the length $L$ of the rod is positive ($\ne 0$), $c_2 = 0$ and thus $\phi(x) \equiv 0$. This is the trivial solution, so we say that $\lambda = 0$ is \emph{not} an eigenvalue for \emph{this} problem [\eqref{eq:2.3.15} and \eqref{eq:2.3.16}, \eqref{eq:2.3.17}]. Be wary, though; $\lambda = 0$ is an eigenvalue for other problems and should be looked at individually for any new problem you may encounter.
+
+\paragraph{Eigenvalues ($\lambda < 0$).}
+Are there any negative eigenvalues? If $\lambda < 0$, the solution of
+\begin{equation}
+\label{eq:2.3.22}
+\odd{\phi}{x} = -\lambda\phi
+\end{equation}
+is not difficult, but you may have to be careful. The roots of the characteristic polynomial are $r = \pm\sqrt{-\lambda}$, so solutions are $e^{\sqrt{-\lambda}\,x}$ and $e^{-\sqrt{-\lambda}\,x}$. If you do not like the notation $\sqrt{-\lambda}$, you may prefer what is equivalent (if $\lambda < 0$), namely $\sqrt{|\lambda|}$. However, $\sqrt{|\lambda|} \ne \sqrt{\lambda}$ since $\lambda < 0$. It is convenient to let
+\[
+\lambda = -s
+\]
+in the case in which $\lambda < 0$. Then $s > 0$, and the differential equation \eqref{eq:2.3.22} becomes
+\begin{equation}
+\label{eq:2.3.23}
+\odd{\phi}{x} = s\phi.
+\end{equation}
+Two independent solutions are $e^{+\sqrt{s}\,x}$ and $e^{-\sqrt{s}\,x}$, since $s > 0$. The general solution is
+\begin{equation}
+\label{eq:2.3.24}
+\phi = c_1 e^{\sqrt{s}\,x} + c_2 e^{-\sqrt{s}\,x}.
+\end{equation}
+Frequently, we instead use the hyperbolic functions. As a review, the definitions of the hyperbolic functions are
+\[
+\cosh z \equiv \frac{e^z + e^{-z}}{2} \quad\text{and}\quad \sinh z \equiv \frac{e^z - e^{-z}}{2},
+\]
+simple linear combinations of exponentials. These are sketched in Fig.~2.3.2. Note that $\sinh 0 = 0$ and $\cosh 0 = 1$ (the results analogous to those for trigonometric functions). Also note that $d/dz\cosh z = \sinh z$ and $d/dz\sinh z = \cosh z$, quite similar to trigonometric functions, but easier to remember because of the lack of the annoying appearance of any minus signs in the differentiation formulas. If hyperbolic functions are used instead of exponentials, the general solution of \eqref{eq:2.3.23} can be written as
+\begin{equation}
+\label{eq:2.3.25}
+\phi = c_3\cosh\sqrt{s}\,x + c_4\sinh\sqrt{s}\,x,
+\end{equation}
+a form equivalent to \eqref{eq:2.3.24}. To determine if there are any negative eigenvalues ($\lambda < 0$, but $s > 0$ since $\lambda = -s$), we again apply the boundary conditions. Either form \eqref{eq:2.3.24} or \eqref{eq:2.3.25} can be used; the same answer is obtained either way. From \eqref{eq:2.3.25}, $\phi(0) = 0$ implies that $0 = c_3$, and hence $\phi = c_4\sinh\sqrt{s}\,x$. The other boundary condition, $\phi(L) = 0$, implies that $c_4\sinh\sqrt{s}\,L = 0$. Since $\sqrt{s}\,L > 0$ and since $\sinh$ is never zero for a positive argument (see Fig.~2.3.2), it follows that $c_4 = 0$. Thus, $\phi(x) \equiv 0$. The only solution of \eqref{eq:2.3.23} for $\lambda < 0$ that solves the homogeneous boundary conditions is the trivial solution. Thus, there are no negative eigenvalues. For this example, the existence of negative eigenvalues would have corresponded to exponential growth in time. We did not expect such solutions on physical grounds, and here we have verified mathematically in an explicit manner that there cannot be any negative eigenvalues for this problem. In some other problems there can be negative eigenvalues.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch02/fig_2_3_2.png}
+\caption{Hyperbolic functions.}
+\label{fig:2.3.2}
+\end{figure}
+
+\paragraph{Eigenfunctions---summary.}
+We summarize our results for the boundary value problem resulting from separation of variables:
+\begin{center}
+\fbox{\parbox{0.8\textwidth}{
+\begin{alignat*}{2}
+\odd{\phi}{x} + \lambda\phi &= 0 \\
+\phi(0) &= 0 \\
+\phi(L) &= 0.
+\end{alignat*}
+}}
+\end{center}
+
+This boundary value problem will arise many times in the text. It is helpful to nearly memorize the result that the eigenvalues $\lambda$ are all positive (not zero or negative),
+\[
+\boxed{\lambda = \left(\frac{n\pi}{L}\right)^2,}
+\]
+where $n$ is any positive integer, $n = 1, 2, 3, \ldots$, and the corresponding eigenfunctions are
+\[
+\boxed{\phi(x) = \sin\frac{n\pi x}{L}.}
+\]
+
+If we introduce the notation $\lambda_1$ for the first (or lowest) eigenvalue, $\lambda_2$ for the next, and so on, we see that $\lambda_n = (n\pi/L)^2$, $n = 1, 2, \ldots$. The corresponding eigenfunctions are sometimes denoted $\phi_n(x)$, the first few of which are sketched in Fig.~2.3.3. All eigenfunctions are (of course) zero at both $x = 0$ and $x = L$. Notice that $\phi_1(x) = \sin\pi x/L$ has no zeros for $0 < x < L$, and $\phi_2(x) = \sin 2\pi x/L$ has one zero for $0 < x < L$. In fact, $\phi_n(x) = \sin n\pi x/L$ has $n - 1$ zeros for $0 < x < L$. We will claim later (see Sec.~5.3) that, remarkably, this is a general property of eigenfunctions.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch02/fig_2_3_3.png}
+\caption{Eigenfunctions $\sin n\pi x/L$ and their zeros.}
+\label{fig:2.3.3}
+\end{figure}
+
+\paragraph{Spring-mass analog.}
+We have obtained solutions of $d^2\phi/dx^2 = -\lambda\phi$. Here we present the analog of this to a spring-mass system, which some of you may find helpful. A spring-mass system subject to Hooke's law satisfies $m\,d^2y/dt^2 = -ky$, where $k > 0$ is the spring constant. Thus, if $\lambda > 0$, the ODE \eqref{eq:2.3.15} may be thought of as a spring-mass system with a restoring force. Thus, if $\lambda > 0$ the solution should oscillate. It should not be surprising that the BCs \eqref{eq:2.3.16}, \eqref{eq:2.3.17} can be satisfied for $\lambda > 0$; a nontrivial solution of the ODE, which is zero at $x = 0$, has a chance of being zero again at $x = L$ since there is a restoring force and the solution of the ODE oscillates. We have shown that this can happen for specific values of $\lambda > 0$. However, if $\lambda < 0$, then the force is not restoring. It would seem less likely that a nontrivial solution that is zero at $x = 0$ could possibly be zero again at $x = L$. We must not always trust our intuition entirely, so we have verified these facts mathematically.
+
+\subsection{Product Solutions and the Principle of Superposition}
+\label{sec:2.3.5}
+
+In summary, we obtained product solutions of the heat equation, $\partial u/\partial t = k\partial^2 u/\partial x^2$, satisfying the specific homogeneous boundary conditions $u(0,t) = 0$ and $u(L,t) = 0$ only corresponding to $\lambda > 0$. These solutions, $u(x,t) = \phi(x)G(t)$, have $G(t) = ce^{-\lambda kt}$ and $\phi(x) = c_2\sin\sqrt{\lambda}\,x$, where we determined from the boundary conditions [$\phi(0) = 0$ and $\phi(L) = 0$] the allowable values of the separation constant $\lambda$, $\lambda = (n\pi/L)^2$. Here $n$ is a positive integer. Thus, product solutions of the heat equation are
+\begin{equation}
+\label{eq:2.3.26}
+u(x,t) = B\sin\frac{n\pi x}{L}\,e^{-k(n\pi/L)^2 t}, \qquad n = 1, 2, \ldots,
+\end{equation}
+where $B$ is an arbitrary constant ($B = cc_2$). This is a different solution for each $n$. Note that as $t$ increases, these special solutions exponentially decay, in particular, for these solutions, $\lim_{t\to\infty} u(x,t) = 0$. In addition, $u(x,t)$ satisfies a special initial condition, $u(x,0) = B\sin n\pi x/L$.
+
+\paragraph{Initial value problems.}
+We can use the simple product solutions \eqref{eq:2.3.26} to satisfy an initial value problem if the initial condition happens to be just right. For example, suppose we wish to solve the following initial value problem:
+\begin{alignat*}{2}
+\text{PDE:}& \qquad \pd{u}{t} &= k\pdd{u}{x} \\
+\text{BC:}& \qquad u(0,t) &= 0 \\
+& \qquad u(L,t) &= 0 \\
+\text{IC:}& \qquad u(x,0) &= 4\sin\frac{3\pi x}{L}.
+\end{alignat*}
+Our product solution $u(x,t) = B\sin n\pi x/L \cdot e^{-k(n\pi/L)^2 t}$ satisfies the initial condition $u(x,0) = B\sin n\pi x/L$. Thus, by picking $n = 3$ and $B = 4$, we will have satisfied the initial condition. Our solution of this example is thus
+\[
+u(x,t) = 4\sin\frac{3\pi x}{L}\,e^{-k(3\pi/L)^2 t}.
+\]
+It can be proved that this physical problem (as well as most we consider) has a unique solution. Thus, it does not matter what procedure we used to obtain the solution.
+
+\paragraph{Principle of superposition.}
+The product solutions appear to be very special, since they may be used directly only if the initial condition happens to be of the appropriate form. However, we wish to show that these solutions are useful in many other situations; in fact, in all situations. Consider the same PDE and BCs, but instead subject to the initial condition
+\[
+u(x,0) = 4\sin\frac{3\pi x}{L} + 7\sin\frac{8\pi x}{L}.
+\]
+The solution of this problem can be obtained by adding together two simpler solutions obtained by the product method:
+\[
+u(x,t) = 4\sin\frac{3\pi x}{L}\,e^{-k(3\pi/L)^2 t} + 7\sin\frac{8\pi x}{L}\,e^{-k(8\pi/L)^2 t}.
+\]
+We immediately see that this solves the initial condition (substitute $t = 0$) as well as the boundary conditions (substitute $x = 0$ and $x = L$). Only slightly more work shows that the partial differential equation has been satisfied. This is an illustration of the principle of superposition.
+
+\paragraph{Superposition (extended).}
+The principle of superposition can be extended to show that if $u_1, u_2, u_3, \ldots, u_M$ are solutions of a linear homogeneous problem, then any linear combination of these is also a solution, $c_1 u_1 + c_2 u_2 + c_3 u_3 + \cdots + c_M u_M = \sum_{n=1}^M c_n u_n$, where $c_n$ are arbitrary constants. Since we know from the method of separation of variables that $\sin n\pi x/L \cdot e^{-k(n\pi/L)^2 t}$ is a solution of the heat equation (solving zero boundary conditions) for all positive $n$, it follows that any linear combination of these solutions is also a solution of the linear homogeneous heat equation. Thus,
+\begin{equation}
+\label{eq:2.3.27}
+u(x,t) = \sum_{n=1}^{M} B_n \sin\frac{n\pi x}{L}\,e^{-k(n\pi/L)^2 t}
+\end{equation}
+solves the heat equation (with zero boundary conditions) for any finite $M$. We have added solutions to the heat equation, keeping in mind that the ``amplitude'' $B$ could be different for each solution, yielding the subscript $B_n$. Equation \eqref{eq:2.3.27} shows that we can solve the heat equation if initially
+\begin{equation}
+\label{eq:2.3.28}
+u(x,0) = f(x) = \sum_{n=1}^{M} B_n \sin\frac{n\pi x}{L},
+\end{equation}
+that is, if the initial condition equals a finite sum of the appropriate sine functions. What should we do in the usual situation in which $f(x)$ is \emph{not} a finite linear combination of the appropriate sine functions? We claim that the theory of Fourier series (to be described with considerable detail in Chapter~3) states that
+\begin{enumerate}
+\item Any function $f(x)$ (with certain very reasonable restrictions, to be discussed later) can be approximated (in some sense) by a finite linear combination of $\sin n\pi x/L$.
+\item The approximation may not be very good for small $M$, but gets to be a better and better approximation as $M$ is increased (see Sec.~5.10).
+\item If we consider the limit as $M \to \infty$, then not only is \eqref{eq:2.3.28} the best approximation to $f(x)$ using combinations of the eigenfunctions, but (again in some sense) the resulting infinite series will converge to $f(x)$ [with some restrictions on $f(x)$, to be discussed].
+\end{enumerate}
+We thus claim (and clarify and make precise in Chapter~3) that ``any'' initial condition $f(x)$ can be written as an infinite linear combination of $\sin n\pi x/L$, known as a type of \textbf{Fourier series}:
+\begin{equation}
+\label{eq:2.3.29}
+f(x) = \sum_{n=1}^{\infty} B_n \sin\frac{n\pi x}{L}.
+\end{equation}
+What is more important is that we also claim that the corresponding infinite series is the solution of our heat conduction problem:
+\begin{equation}
+\label{eq:2.3.30}
+\boxed{u(x,t) = \sum_{n=1}^{\infty} B_n \sin\frac{n\pi x}{L}\,e^{-k(n\pi/L)^2 t}.}
+\end{equation}
+
+Analyzing infinite series such as \eqref{eq:2.3.29} and \eqref{eq:2.3.30} is not easy. We must discuss the convergence of these series as well as briefly discuss the validity of an infinite series solution of our entire problem. For the moment, let us ignore these somewhat theoretical issues and concentrate on the construction of these infinite series solutions.
+
+\subsection{Orthogonality of Sines}
+\label{sec:2.3.6}
+
+One very important practical point has been neglected. Equation \eqref{eq:2.3.30} is our solution with the coefficients $B_n$ satisfying \eqref{eq:2.3.29} (from the initial conditions), but how do we determine the coefficients $B_n$? We assume it is possible that
+\begin{equation}
+\label{eq:2.3.31}
+\boxed{f(x) = \sum_{n=1}^{\infty} B_n \sin\frac{n\pi x}{L},}
+\end{equation}
+where this is to hold over the region of the one-dimensional rod, $0 \le x \le L$. We will assume that standard mathematical operations are also valid for infinite series. Equation \eqref{eq:2.3.31} represents one equation in an infinite number of unknowns, but it should be valid at every value of $x$. If we substitute a thousand different values of $x$ into \eqref{eq:2.3.31}, each of the thousand equations would hold, but there would still be an infinite number of unknowns. This is not an efficient way to determine the $B_n$. Instead, we frequently will employ an extremely important technique based on noticing (perhaps from a table of integrals) that the eigenfunctions $\sin n\pi x/L$ satisfy the following integral property:
+\begin{equation}
+\label{eq:2.3.32}
+\boxed{\int_0^L \sin\frac{n\pi x}{L}\sin\frac{m\pi x}{L}\dx = \begin{cases} 0 & m \ne n \\ L/2 & m = n, \end{cases}}
+\end{equation}
+where $m$ and $n$ are positive integers.
+
+To use these conditions, \eqref{eq:2.3.32}, to determine $B_n$, we multiply both sides of \eqref{eq:2.3.31} by $\sin m\pi x/L$ (for any fixed integer $m$, independent of the ``dummy'' index $n$):
+\begin{equation}
+\label{eq:2.3.33}
+f(x)\sin\frac{m\pi x}{L} = \sum_{n=1}^{\infty} B_n \sin\frac{n\pi x}{L}\sin\frac{m\pi x}{L}.
+\end{equation}
+Next we integrate \eqref{eq:2.3.33} from $x = 0$ to $x = L$:
+\begin{equation}
+\label{eq:2.3.34}
+\int_0^L f(x)\sin\frac{m\pi x}{L}\dx = \sum_{n=1}^{\infty} B_n \int_0^L \sin\frac{n\pi x}{L}\sin\frac{m\pi x}{L}\dx.
+\end{equation}
+For finite series, the integral of a sum of terms equals the sum of the integrals. We assume that this is valid for this infinite series. Now we evaluate the infinite sum. From the integral property \eqref{eq:2.3.32}, we see that each term of the sum is zero whenever $n \ne m$. In summing over $n$, eventually $n$ equals $m$. It is only for that one value of $n$ (i.e., $n = m$) that there is a contribution to the infinite sum. The only term that appears on the right-hand side of \eqref{eq:2.3.34} occurs when $n$ is replaced by $m$:
+\[
+\int_0^L f(x)\sin\frac{m\pi x}{L}\dx = B_m \int_0^L \sin^2\frac{m\pi x}{L}\dx.
+\]
+Since the integral on the right equals $L/2$, we can solve for $B_m$:
+\begin{equation}
+\label{eq:2.3.35}
+B_m = \frac{\displaystyle\int_0^L f(x)\sin\frac{m\pi x}{L}\dx}{\displaystyle\int_0^L \sin^2\frac{m\pi x}{L}\dx} = \frac{2}{L}\int_0^L f(x)\sin\frac{m\pi x}{L}\dx.
+\end{equation}
+
+This result is very important and so is the method by which it was obtained. Try to \emph{learn} both. The integral in \eqref{eq:2.3.35} is considered to be known since $f(x)$ is the given initial condition. The integral cannot usually be evaluated, in which case numerical integrations (on a computer) may need to be performed to get explicit numbers for $B_m$, $m = 1, 2, 3, \ldots$.
+
+You will find that the formula \eqref{eq:2.3.32}, $\int_0^L \sin^2 n\pi x/L\dx = L/2$, is quite useful in many different circumstances, including applications having nothing to do with the material of this text. One reason for this applicability is that there are many periodic phenomena in nature ($\sin\omega t$), and usually energy or power is proportional to the square ($\sin^2\omega t$). The average energy is then proportional to $\int_0^{2\pi/\omega}\sin^2\omega t\dt$ divided by the period $2\pi/\omega$. It is worthwhile to memorize that the average over a full period of sine or cosine squared is $\frac{1}{2}$. Thus, \emph{the integral over any number of complete periods of the square of a sine or cosine is one-half the length of the interval}. In this way $\int_0^L \sin^2 n\pi x/L\dx = L/2$, since the interval $0$ to $L$ is either a complete or a half period of $\sin n\pi x/L$.
+
+\paragraph{Orthogonality.}
+Whenever $\int_0^L A(x)B(x)\dx = 0$, we say that the functions $A(x)$ and $B(x)$ are \textbf{orthogonal} over the interval $0 \le x \le L$. We borrow the terminology ``orthogonal'' from perpendicular vectors because $\int_0^L A(x)B(x)\dx = 0$ is analogous to a zero dot product, as is explained further in the appendix to this section. A set of functions each member of which is orthogonal to every \emph{other} member is called an \textbf{orthogonal set of functions}. An example is that of the functions $\sin n\pi x/L$, the eigenfunctions of the boundary value problem
+\[
+\odd{\phi}{x} + \lambda\phi = 0 \quad\text{with}\quad \phi(0) = 0 \quad\text{and}\quad \phi(L) = 0.
+\]
+They are mutually orthogonal because of \eqref{eq:2.3.32}. Therefore, we call \eqref{eq:2.3.32} an orthogonality condition.
+
+In fact, we will discover that for most other boundary value problems, the eigenfunctions will form an orthogonal set of functions (with certain modifications discussed in Chapter~5 with respect to Sturm-Liouville eigenvalue problems).
+
+\subsection{Formulation, Solution, and Interpretation of an Example}
+\label{sec:2.3.7}
+
+As an example, let us analyze our solution in the case in which the initial temperature is constant, $100^\circ$C. This corresponds to a physical problem that is easy to reproduce in the laboratory. Take a one-dimensional rod and place the entire rod in a large tub of boiling water ($100^\circ$C). Let it sit there for a long while (we expect) the rod will be at $100^\circ$C throughout. Now insulate the lateral sides (if that had not been done earlier) and suddenly (at $t = 0$) immerse the two ends in large well-stirred baths of ice water, $0^\circ$C. The mathematical problem is
+\begin{alignat}{2}
+\text{PDE:}&\quad \pd{u}{t} = k\pdd{u}{x} \qquad & t > 0,\quad 0 < x < L \label{eq:2.3.36} \\
+\text{BC:}&\quad u(0,t) = 0 \qquad & t > 0 \label{eq:2.3.37} \\
+&\quad u(L,t) = 0 & \notag \\
+\text{IC:}&\quad u(x,0) = 100 \qquad & 0 < x < L. \label{eq:2.3.38}
+\end{alignat}
+According to \eqref{eq:2.3.30} and \eqref{eq:2.3.35}, the solution is
+\begin{equation}
+\label{eq:2.3.39}
+u(x,t) = \sum_{n=1}^{\infty} B_n \sin\frac{n\pi x}{L}\,e^{-k(n\pi/L)^2 t},
+\end{equation}
+where
+\begin{equation}
+\label{eq:2.3.40}
+B_n = \frac{2}{L}\int_0^L f(x)\sin\frac{n\pi x}{L}\dx
+\end{equation}
+and $f(x) = 100$. Recall that the coefficient $B_n$ was determined by having \eqref{eq:2.3.39} satisfy the initial condition,
+\begin{equation}
+\label{eq:2.3.41}
+f(x) = \sum_{n=1}^{\infty} B_n \sin\frac{n\pi x}{L}.
+\end{equation}
+
+We calculate the coefficients $B_n$ from \eqref{eq:2.3.40}:
+\begin{equation}
+\label{eq:2.3.42}
+B_n = \frac{2}{L}\int_0^L 100\sin\frac{n\pi x}{L}\dx = \frac{200}{L}\left(-\frac{L}{n\pi}\cos\frac{n\pi x}{L}\right)\bigg|_0^L = \frac{200}{n\pi}(1 - \cos n\pi) = \begin{cases} 0 & n \text{ even} \\ \dfrac{400}{n\pi} & n \text{ odd}
+\end{cases}
+\end{equation}
+since $\cos n\pi = (-1)^n$, which equals $1$ for $n$ even and $-1$ for $n$ odd. The solution \eqref{eq:2.3.39} is graphed in Fig.~2.3.4. The series \eqref{eq:2.3.41} will be studied further in Chapter~3. In particular, we must explain the intriguing situation that the initial temperature equals 100 everywhere, but the series \eqref{eq:2.3.41} equals 0 at $x = 0$ and $x = L$ (due to the boundary conditions).
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch02/fig_2_3_4.png}
+\caption{Time dependence of temperature $u(x,t)$.}
+\label{fig:2.3.4}
+\end{figure}
+
+\paragraph{Approximations to the initial value problem.}
+We have now obtained the solution to the initial value problem \eqref{eq:2.3.36}--\eqref{eq:2.3.38} for the heat equation with zero boundary conditions ($x = 0$ and $x = L$) and initial temperature distribution equaling 100. The solution is \eqref{eq:2.3.39}, with $B_n$ given by \eqref{eq:2.3.42}. The solution is quite complicated, involving an infinite series. What can we say about it?
+
+First, we notice that $\lim_{t\to\infty} u(x,t) = 0$. This is not surprising physically since both ends are at $0^\circ$; we expect all the initial heat energy contained in the rod to flow out the ends. The equilibrium problem, $d^2u/dx^2 = 0$ with $u(0) = 0$ and $u(L) = 0$, has a unique solution, $u \equiv 0$, agreeing with the limit as $t$ tends to infinity of the time-dependent problem.
+
+One question of importance that we can answer is the manner in which the solution approaches steady state. If $t$ is large, what is the approximate temperature distribution, and how does it differ from the steady state $0^\circ$? We note that each term in \eqref{eq:2.3.39} decays at a different rate. The more oscillations in space, the faster the decay. If $t$ is such that $kt(\pi/L)^2$ is large, then each succeeding term is much smaller than the first. We can then approximate the infinite series by only the first term:
+\begin{equation}
+\label{eq:2.3.43}
+u(x,t) \approx \frac{400}{\pi}\sin\frac{\pi x}{L}\,e^{-k(\pi/L)^2 t}.
+\end{equation}
+The larger $t$ is, the better this is as an approximation. Even if $kt(\pi/L)^2 = \frac{1}{2}$, this is not a bad approximation since
+\[
+\frac{e^{-k(3\pi/L)^2 t}}{e^{-k(\pi/L)^2 t}} = e^{-8(\pi/L)^2 kt} = e^{-4} \approx 0.018\ldots.
+\]
+Thus, if $kt(\pi/L)^2 \ge \frac{1}{2}$, we can use the simple approximation. We see that for these times the spatial dependence of the temperature is just the simple rise and fall of $\sin\pi x/L$, as illustrated in Fig.~2.3.5. The peak amplitude, occurring in the middle $x = L/2$, decays exponentially in time. For $kt(\pi/L)^2$ less than $\frac{1}{3}$, the spatial dependence cannot be approximated by one simple sinusoidal function; more tens are necessary in the series. The solution can be easily computed, using a finite number of terms. In some cases many terms may be necessary, and there would be better ways to calculate $u(x,t)$.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch02/fig_2_3_5.png}
+\caption{Time dependence of temperature (using the infinite series) compared to the first term. Note the first term is a good approximation if the time is not too small.}
+\label{fig:2.3.5}
+\end{figure}
+
+\subsection{Summary}
+\label{sec:2.3.8}
+
+Let us summarize the method of separation of variables as it appears for the one example:
+\begin{alignat*}{2}
+\text{PDE:}& \qquad \pd{u}{t} &= k\pdd{u}{x} \\
+\text{BC:}& \qquad u(0,t) &= 0 \\
+& \qquad u(L,t) &= 0 \\
+\text{IC:}& \qquad u(x,0) &= f(x).
+\end{alignat*}
+\begin{enumerate}
+\item Make sure that you have a linear and homogeneous PDE with linear and homogeneous BC.
+\item Temporarily ignore the nonzero IC.
+\item Separate variables (determine differential equations implied by the assumption of product solutions) and introduce a separation constant.
+\item Determine separation constants as the eigenvalues of a boundary value problem.
+\item Solve other differential equations. Record all product solutions of the PDE obtainable by this method.
+\item Apply the principle of superposition (for a linear combination of all product solutions).
+\item Attempt to satisfy the initial condition.
+\item Determine coefficients using the orthogonality of the eigenfunctions.
+\end{enumerate}
+These steps should be \emph{understood}, not memorized. It is important to note that
+\begin{enumerate}
+\item The principle of superposition applies to solutions of the PDE (do not add up solutions of various different ordinary differential equations).
+\item Do not apply the initial condition $u(x,0) = f(x)$ until \emph{after} the principle of superposition.
+\end{enumerate}
+
+\paragraph{Appendix to 2.3: Orthogonality of Functions}
+
+Two vectors $\vec{A}$ and $\vec{B}$ are orthogonal if $\vec{A}\cdot\vec{B} = 0$. In component form, $\vec{A} = a_1\hat{\imath} + a_2\hat{\jmath} + a_3\hat{k}$ and $\vec{B} = b_1\hat{\imath} + b_2\hat{\jmath} + b_3\hat{k}$; $\vec{A}$ and $\vec{B}$ are orthogonal if $\sum_i a_i b_i = 0$. A function $A(x)$ can be thought of as a vector. If only three values of $x$ are important, $x_1$, $x_2$, and $x_3$, then the components of the function $A(x)$ (thought of as a vector) are $A(x_1) \equiv a_1$, $A(x_2) \equiv a_2$, and $A(x_3) \equiv a_3$. The function $A(x)$ is orthogonal to the function $B(x)$ (by definition) if $\sum_i a_i b_i = 0$. However, in our problems, all values of $x$ between $0$ and $L$ are important. \emph{The function $A(x)$ can be thought of as an infinite-dimensional vector}, whose components are $A(x_i)$ for all $x_i$ on some interval. In this manner the function $A(x)$ would be said to be orthogonal to $B(x)$ if $\sum_i A(x_i)B(x_i) = 0$, where the summation was to include all points between $0$ and $L$. It is thus natural to \emph{define} the function $A(x)$ to be orthogonal to $B(x)$ if $\int_0^L A(x)B(x)\dx = 0$. The integral replaces the vector dot product; both are examples of ``inner products.''
+
+In vectors, we have the three mutually perpendicular (orthogonal) unit vectors $\hat{\imath}$, $\hat{\jmath}$, and $\hat{k}$, known as the standard basis vectors. In component form,
+\[
+\vec{A} = a_1\hat{\imath} + a_2\hat{\jmath} + a_3\hat{k}.
+\]
+$a_1$ is the projection of $\vec{A}$ in the $\hat{\imath}$ direction, and so on. Sometimes we wish to represent $\vec{A}$ in terms of other mutually orthogonal vectors (which may not be unit vectors) $\vec{u}$, $\vec{v}$, and $\vec{w}$, called an \emph{orthogonal set of vectors}. Then
+\[
+\vec{A} = \alpha_u \vec{u} + \alpha_v \vec{v} + \alpha_w \vec{w}.
+\]
+To determine the coordinates $\alpha_u, \alpha_v, \alpha_w$ with respect to this orthogonal set, $\vec{u}$, $\vec{v}$, and $\vec{w}$, we can form certain dot products. For example,
+\[
+\vec{A}\cdot\vec{u} = \alpha_u\vec{u}\cdot\vec{u} + \alpha_v\vec{v}\cdot\vec{u} + \alpha_w\vec{w}\cdot\vec{u}.
+\]
+Note that $\vec{v}\cdot\vec{u} = 0$ and $\vec{w}\cdot\vec{u} = 0$, since we assumed that this new set was mutually orthogonal. Thus, we can easily solve for the coordinate $\alpha_u$, of $\vec{A}$ in the $\vec{u}$-direction,
+\begin{equation}
+\label{eq:2.3.45}
+\alpha_u = \frac{\vec{A}\cdot\vec{u}}{\vec{u}\cdot\vec{u}}
+\end{equation}
+($\alpha_u\vec{u}$ is the vector projection of $\vec{A}$ in the $\vec{u}$ direction.)
+
+For functions, we can do a similar thing. If $f(x)$ can be represented by a linear combination of the orthogonal set, $\sin n\pi x/L$, then
+\[
+f(x) = \sum_{n=1}^{\infty} B_n \sin\frac{n\pi x}{L},
+\]
+where the $B_n$ may be interpreted as the coordinates of $f(x)$ with respect to the ``direction'' (basis vector) $\sin n\pi x/L$. To determine these coordinates, we take the inner product with an arbitrary basis function (vector) $\sin n\pi x/L$, where the inner product of two functions is the integral of their product. Thus, as before,
+\[
+\int_0^L f(x)\sin\frac{m\pi x}{L}\dx = \sum_{n=1}^{\infty} B_n \int_0^L \sin\frac{n\pi x}{L}\sin\frac{m\pi x}{L}\dx.
+\]
+Since $\sin n\pi x/L$ is an orthogonal set of functions, $\int_0^L \sin n\pi x/L\sin m\pi x/L\dx = 0$ for $n \ne m$. Hence, we solve for the coordinate (coefficient) $B_n$:
+\begin{equation}
+\label{eq:2.3.46}
+B_n = \frac{\displaystyle\int_0^L f(x)\sin n\pi x/L\dx}{\displaystyle\int_0^L \sin^2 n\pi x/L\dx}.
+\end{equation}
+This is seen to be the same idea as the projection formula \eqref{eq:2.3.45}. Our standard formula \eqref{eq:2.3.33}, $\int_0^L \sin^2 n\pi x/L\dx = L/2$, returns \eqref{eq:2.3.46} to the more familiar form,
+\begin{equation}
+\label{eq:2.3.47}
+B_n = \frac{2}{L}\int_0^L f(x)\sin\frac{n\pi x}{L}\dx.
+\end{equation}
+Both formulas \eqref{eq:2.3.45} and \eqref{eq:2.3.46} are divided by something. In \eqref{eq:2.3.45} it is $\vec{u}\cdot\vec{u}$, or the length of the vector $\vec{u}$ squared. Thus, $\int_0^L \sin^2 n\pi x/L\dx$ may be thought of as the length squared of $\sin n\pi x/L$ (although here \emph{length} means nothing other than the square root of the integral). In this manner the length squared of the function $\sin n\pi x/L$ is $L/2$, which is an explanation of the appearance of the term $2/L$ in \eqref{eq:2.3.47}.
+
+\begin{exercises}{2.3}
+
+\item For the following partial differential equations, what ordinary differential equations are implied by the method of separation of variables?
+\begin{enumerate}
+\item[\starred (a)] $\displaystyle\pd{u}{t} = \frac{k}{r}\frac{\partial}{\partial r}\!\left(r\pd{u}{r}\right)$
+\qquad
+(b) $\displaystyle\pd{u}{t} = k\pdd{u}{x} - v_0\pd{u}{x}$
+\item[\starred (c)] $\displaystyle\pdd{u}{x} + \pdd{u}{y} = 0$
+\qquad
+(d) $\displaystyle\pd{u}{t} = \frac{k}{r^2}\frac{\partial}{\partial r}\!\left(r^2\pd{u}{r}\right)$
+\item[\starred (e)] $\displaystyle\pd{u}{t} = k\frac{\partial^4 u}{\partial x^4}$
+\qquad
+\starred (f) $\displaystyle\pdd{u}{t} = c^2\pdd{u}{x}$
+\end{enumerate}
+
+\item Consider the differential equation
+\[
+\odd{\phi}{x} + \lambda\phi = 0.
+\]
+Determine the eigenvalues $\lambda$ (and corresponding eigenfunctions) if $\phi$ satisfies the following boundary conditions. Analyze three cases ($\lambda > 0$, $\lambda = 0$, $\lambda < 0$). You may assume that the eigenvalues are real.
+\begin{enumerate}
+\item[(a)] $\phi(0) = 0$ and $\phi(\pi) = 0$
+\item[\starred (b)] $\phi(0) = 0$ and $\phi(1) = 0$
+\item[(c)] $\dfrac{d\phi}{dx}(0) = 0$ and $\dfrac{d\phi}{dx}(L) = 0$ (If necessary, see Sec.~2.4.1.)
+\item[\starred (d)] $\phi(0) = 0$ and $\dfrac{d\phi}{dx}(L) = 0$
+\item[(e)] $\dfrac{d\phi}{dx}(0) = 0$ and $\phi(L) = 0$
+\item[\starred (f)] $\phi(a) = 0$ and $\phi(b) = 0$ (You may assume that $\lambda > 0$.)
+\item[(g)] $\phi(0) = 0$ and $\dfrac{d\phi}{dx}(L) + \phi(L) = 0$ (If necessary, see Sec.~5.8.)
+\end{enumerate}
+
+\item Consider the heat equation
+\[
+\pd{u}{t} = k\pdd{u}{x},
+\]
+subject to the boundary conditions
+\[
+u(0,t) = 0 \quad\text{and}\quad u(L,t) = 0.
+\]
+Solve the initial value problem if the temperature is initially
+\begin{enumerate}
+\item[(a)] $u(x,0) = 6\sin\dfrac{9\pi x}{L}$
+\qquad
+(b) $u(x,0) = 3\sin\dfrac{\pi x}{L} - \sin\dfrac{3\pi x}{L}$
+\item[\starred (c)] $u(x,0) = 2\cos\dfrac{3\pi x}{L}$
+\qquad
+(d) $u(x,0) = \begin{cases} 1 & 0 < x \le L/2 \\ 2 & L/2 < x < L \end{cases}$
+\end{enumerate}
+[Your answer in part (c) may involve certain integrals that do not need to be evaluated.]
+
+\item Consider
+\[
+\pd{u}{t} = k\pdd{u}{x},
+\]
+subject to $u(0,t) = 0$, $u(L,t) = 0$, and $u(x,0) = f(x)$.
+\begin{enumerate}
+\item[\starred(a)] What is the total heat energy in the rod as a function of time?
+\item[(b)] What is the flow of heat energy out of the rod at $x = 0$? at $x = L$?
+\item[\starred(c)] What relationship should exist between parts (a) and (b)?
+\end{enumerate}
+
+\item Evaluate (be careful if $n = m$)
+\[
+\int_0^L \sin\frac{n\pi x}{L}\sin\frac{m\pi x}{L}\dx \qquad\text{for } n > 0, m > 0.
+\]
+Use the trigonometric identity
+\[
+\sin a\sin b = \tfrac{1}{2}\left[\cos(a-b) - \cos(a+b)\right].
+\]
+
+\item\starred{} Evaluate
+\[
+\int_0^L \cos\frac{n\pi x}{L}\cos\frac{m\pi x}{L}\dx \qquad\text{for } n \ge 0, m \ge 0.
+\]
+Use the trigonometric identity
+\[
+\cos a\cos b = \tfrac{1}{2}\left[\cos(a+b) + \cos(a-b)\right].
+\]
+(Be careful if $a - b = 0$ or $a + b = 0$.)
+
+\item Consider the following boundary value problem (if necessary, see Sec.~2.4.1):
+\[
+\pd{u}{t} = k\pdd{u}{x} \quad\text{with}\quad \pd{u}{x}(0,t) = 0,\quad \pd{u}{x}(L,t) = 0, \quad\text{and}\quad u(x,0) = f(x).
+\]
+\begin{enumerate}
+\item[(a)] Give a one-sentence physical interpretation of this problem.
+\item[(b)] Solve by the method of separation of variables. First show that there are no separated solutions which exponentially grow in time. [\emph{Hint:} The answer is
+\[
+u(x,t) = A_0 + \sum_{n=1}^{\infty} A_n e^{-\lambda_n kt}\cos\frac{n\pi x}{L}.]
+\]
+What is $\lambda_n$?
+\item[(c)] Show that the initial condition, $u(x,0) = f(x)$, is satisfied if
+\[
+f(x) = A_0 + \sum_{n=1}^{\infty} A_n\cos\frac{n\pi x}{L}.
+\]
+\item[(d)] Using Exercise~2.3.6, solve for $A_0$ and $A_n$ ($n \ge 1$).
+\item[(e)] What happens to the temperature distribution as $t \to \infty$? Show that it approaches the steady-state temperature distribution (see Sec.~1.4).
+\end{enumerate}
+
+\item\starred{} Consider
+\[
+\pd{u}{t} = k\pdd{u}{x} - \alpha u.
+\]
+This corresponds to a one-dimensional rod either with heat loss through the lateral sides with outside temperature $0^\circ$ ($\alpha > 0$, see Exercise~1.2.4) or with insulated lateral sides with a heat sink proportional to the temperature. Suppose the boundary conditions are
+\[
+u(0,t) = 0 \quad\text{and}\quad u(L,t) = 0.
+\]
+\begin{enumerate}
+\item[(a)] What are the possible equilibrium temperature distributions if $\alpha > 0$?
+\item[(b)] Solve the time-dependent problem [$u(x,0) = f(x)$] if $\alpha > 0$. Analyze the temperature for large time ($t\to\infty$) and compare to part (a).
+\end{enumerate}
+
+\item\starred{} Redo Exercise~2.3.8 if $\alpha < 0$. [Be especially careful if $-\alpha/k = (n\pi/L)^2$.]
+
+\item For two- and three-dimensional vectors, the fundamental property of dot products, $\vec{A}\cdot\vec{B} = |\vec{A}||\vec{B}|\cos\theta$, implies that
+\begin{equation}
+\label{eq:2.3.44}
+|\vec{A}\cdot\vec{B}| \le |\vec{A}||\vec{B}|.
+\end{equation}
+In this exercise we generalize this to $n$-dimensional vectors and functions, in which case \eqref{eq:2.3.44} is known as \textbf{Schwarz's inequality}. [The names of Cauchy and Buniakovsky are also associated with \eqref{eq:2.3.44}.]
+\begin{enumerate}
+\item[(a)] Show that $|\vec{A} - \gamma\vec{B}|^2 > 0$ implies \eqref{eq:2.3.44}, where $\gamma = \vec{A}\cdot\vec{B}/\vec{B}\cdot\vec{B}$.
+\item[(b)] Express the inequality using both
+\[
+\vec{A}\cdot\vec{B} = \sum_{n=1}^{\infty} a_n b_n = \sum_{n=1}^{\infty} a_n c_n\frac{b_n}{c_n}.
+\]
+\item[\starred(c)] Generalize \eqref{eq:2.3.44} to functions. [\emph{Hint:} Let $\vec{A}\cdot\vec{B}$ mean the integral $\int_0^L A(x)B(x)\dx$.]
+\end{enumerate}
+
+\item Solve Laplace's equation inside a rectangle:
+\[
+\laplacian u = \pdd{u}{x} + \pdd{u}{y} = 0
+\]
+subject to the boundary conditions
+\begin{alignat*}{2}
+u(0,y) &= g(y) & u(x,0) &= 0 \\
+u(L,y) &= 0 \qquad & u(x,H) &= 0.
+\end{alignat*}
+(\emph{Hint:} If necessary, see Sec.~2.5.1.)
+
+\end{exercises}

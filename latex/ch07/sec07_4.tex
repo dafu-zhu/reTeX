@@ -1,0 +1,185 @@
+% sec07_4.tex — Section 7.4: Statements and Illustrations of Theorems
+\section{Statements and Illustrations of Theorems for the Eigenvalue Problem \texorpdfstring{$\laplacian\phi + \lambda\phi = 0$}{nabla squared phi + lambda phi = 0}}
+\label{sec:7.4}
+
+In solving the heat equation and the wave equation in any two- or three-dimensional region $R$ (with constant physical properties, such as density), we have shown that the spatial part $\phi(x,y,z)$ of product form solutions $u(x,y,z,t) = \phi(x,y,z)h(t)$ satisfies the following multidimensional eigenvalue problem:
+\begin{equation}
+\boxed{\laplacian\phi + \lambda\phi = 0,}
+\label{eq:7.4.1}
+\end{equation}
+with
+\begin{equation}
+a\phi + b\nabla\phi\cdot\hat{n} = 0
+\label{eq:7.4.2}
+\end{equation}
+on the entire boundary.  Here $a$ and $b$ can depend on $x$, $y$, and $z$.  This eigenvalue problem [with boundary condition \eqref{eq:7.4.2}] is directly analogous to the one-dimensional regular Sturm-Liouville eigenvalue problem.  We prefer to deal with a somewhat simpler case, \eqref{eq:7.4.1}, corresponding to $p = \sigma = 1$ and $q = 0$.  We will state and prove results for \eqref{eq:7.4.1}.  We leave the discussion of (7.4.3) to some exercises (in Sec.~7.5).
+
+Equation \eqref{eq:7.4.1} is known as the \textbf{Helmholtz equation}.  It can be generalized to
+\begin{equation}
+\nabla\cdot(p\nabla\phi) + q\phi + \lambda\sigma\phi = 0,
+\label{eq:7.4.3}
+\end{equation}
+where $p$, $q$ and $\sigma$ are functions of $x$, $y$, and $z$.
+
+Only for very simple geometries (for example, rectangles, see Sec.~7.3, or circles, see Sec.~7.7) can \eqref{eq:7.4.1} be solved explicitly.  In other situations, we may have to rely on numerical treatments.  However, certain general properties of \eqref{eq:7.4.1} are quite useful, all analogous to results we understand for the one-dimensional Sturm-Liouville eigenvalue problem.  The reasons for the analogy will be discussed in the next section.
+
+We begin by simply stating the theorems for the two-dimensional case of \eqref{eq:7.4.1} and \eqref{eq:7.4.2}:
+
+\begin{enumerate}
+\item All the eigenvalues are real.
+\item There exists an infinite number of eigenvalues.  There is a smallest eigenvalue, but no largest one.
+\item Corresponding to an eigenvalue, there \emph{may} be many eigenfunctions (unlike regular Sturm-Liouville eigenvalue problems).
+\item The eigenfunctions $\phi(x,y)$ form a ``complete'' set, meaning that any piecewise smooth function $f(x,y)$ can be represented by a generalized Fourier series of the eigenfunctions:
+\begin{equation}
+f(x,y) \sim \sum_{\lambda} a_\lambda \phi_\lambda(x,y).
+\label{eq:7.4.4}
+\end{equation}
+Here $\sum_\lambda a_\lambda \phi_\lambda$ means a linear combination of all the eigenfunctions.  The series converges in the mean if the coefficients $a_\lambda$ are chosen correctly.
+\item Eigenfunctions belonging to different eigenvalues ($\lambda_1$ and $\lambda_2$) are orthogonal relative to the weight $\sigma$ ($\sigma = 1$) over the entire region $R$.  Mathematically,
+\begin{equation}
+\iint_R \phi_{\lambda_1}\phi_{\lambda_2}\dx\dy = 0 \quad\text{if } \lambda_1 \neq \lambda_2,
+\label{eq:7.4.5}
+\end{equation}
+where $\iint_R\dx\dy$ represents an integral over the entire region $R$.  Furthermore, different eigenfunctions belonging to the same eigenvalue can be made orthogonal to each other (as well as all other eigenfunctions) by a procedure shown in the appendix of this section known as the Gram-Schmidt method.
+\item An eigenvalue $\lambda$ can be related to the eigenfunction by the Rayleigh quotient:
+\begin{equation}
+\lambda = \frac{-\oint\phi\nabla\phi\cdot\hat{n}\ds + \iint_R |\nabla\phi|^2\dx\dy}{\iint_R \phi^2\dx\dy}.
+\label{eq:7.4.6}
+\end{equation}
+The boundary conditions often simplify the boundary integral.
+\end{enumerate}
+
+Here $\hat{n}$ is a unit outward normal and $\oint ds$ is a closed line integral over the entire boundary of the plane two-dimensional region, where $ds$ is the differential arc length.  The three-dimensional result is nearly identical; $\iint$ must be replaced by $\iiint$ and the boundary line integral $\oint ds$ must be replaced by the boundary surface integral $\oiint dS$, where $dS$ is the differential surface area.
+
+\textbf{Example.}  We will prove some of these statements in Sec.~7.5.  To understand their meaning, we will show how the example of Sec.~7.3 illustrates most of these theorems.  For the vibrations of a rectangular ($0 < x < L$, $0 < y < H$) membrane with fixed zero boundary conditions, we have shown that the relevant eigenvalue problem is
+\begin{equation}
+\begin{aligned}
+\laplacian\phi + \lambda\phi &= 0 \\
+\phi(0,y) = 0 \quad \phi(x,0) &= 0 \\
+\phi(L,y) = 0 \quad \phi(x,H) &= 0.
+\end{aligned}
+\label{eq:7.4.7}
+\end{equation}
+We have determined the eigenvalues and corresponding eigenfunctions are
+\begin{equation}
+\lambda_{nm} = \left(\frac{n\pi}{L}\right)^2 + \left(\frac{m\pi}{H}\right)^2 \quad\text{with}\quad
+\phi_{nm}(x,y) = \sin\frac{n\pi x}{L}\sin\frac{m\pi y}{H}.
+\label{eq:7.4.8}
+\end{equation}
+
+\begin{enumerate}
+\item \textbf{Real eigenvalues.}  In our calculation of the eigenvalues for \eqref{eq:7.4.7} we \emph{assumed} that the eigenfunctions existed in a product form.  Under that assumption, \eqref{eq:7.4.8} showed the eigenvalues to be real.  Our theorem guarantees that the eigenvalues will always be real.
+
+\item \textbf{Ordering of eigenvalues.}  There is a doubly infinite set of eigenvalues for \eqref{eq:7.4.7}, namely $\lambda_{nm} = (n\pi/L)^2 + (m\pi/H)^2$ for $n = 1, 2, 3, \ldots$ and $m = 1, 2, 3, \ldots\;$.  There is a smallest eigenvalue, $\lambda_{11} = (\pi/L)^2 + (\pi/H)^2$, but no largest eigenvalue.
+
+\item \textbf{Multiple eigenvalues.}  For $\laplacian\phi + \lambda\phi = 0$, our theorem states that, in general, it is possible for there to be more than one eigenfunction corresponding to the same eigenvalue.  To illustrate this, consider \eqref{eq:7.4.7} in the case in which $L = 2H$.  Then
+\begin{equation}
+\lambda_{nm} = \frac{\pi^2}{4H^2}\left(n^2 + 4m^2\right)
+\label{eq:7.4.9}
+\end{equation}
+with
+\begin{equation}
+\phi_{nm} = \sin\frac{n\pi x}{2H}\sin\frac{m\pi y}{H}.
+\label{eq:7.4.10}
+\end{equation}
+We note that it is possible to have different eigenfunctions corresponding to the same eigenvalue.  For example, $n = 4$, $m = 1$ and $n = 2$, $m = 2$, yield the same eigenvalue:
+\[
+\lambda_{41} = \lambda_{22} = \frac{\pi^2}{4H^2}\,20.
+\]
+It is not surprising that the eigenvalue is the same, since a membrane vibrating in these modes has cells of the same dimensions: one $H \times H/2$ and the other $H/2 \times H$.  By symmetry they will have the same natural frequency (and hence the same eigenvalue since the natural frequency is $c\sqrt{\lambda}$).  In fact, in general by symmetry [as well as by formula \eqref{eq:7.4.9}] $\lambda_{(2n)m} = \lambda_{(2m)n}$.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch07/fig_7_4_1.png}
+\caption{Nodal curves for eigenfunctions with the same eigenvalue (symmetric).}
+\label{fig:7.4.1}
+\end{figure}
+
+However, it is also possible for more than one eigenfunction to occur for reasons having nothing to do with symmetry.  For example, $n = 1$, $m = 4$ and $n = 7$, $m = 2$ yield the same eigenvalue $\lambda_{14} = \lambda_{72} = (\pi^2/4H^2)65$.  The corresponding eigenfunctions are $\phi_{14} = \sin\pi x/2H\sin 4\pi y/H$ and $\phi_{72} = \sin 7\pi x/2H\sin 2\pi y/H$, which are sketched in Fig.~7.4.2.  It is only coincidental that both of these shapes vibrate with the same frequency.  In these situations, it is possible for two eigenfunctions to correspond to the same eigenvalue.  We can find situations with even more multiplicities (or degeneracies).  Since $\lambda_{14} = \lambda_{72} = (\pi^2/4H^2)65$, it is also true that $\lambda_{28} = \lambda_{(14)4} = (\pi^2/4H^2)260$.
+
+However, by symmetry $\lambda_{28} = \lambda_{(16)1}$ and $\lambda_{(14)4} = \lambda_{87}$.  Thus,
+\[
+\lambda_{28} = \lambda_{(16)1} = \lambda_{(14)4} = \lambda_{87} = \left(\frac{\pi^2}{4H^2}\right)260.
+\]
+Here there are four eigenfunctions corresponding to the same eigenvalue.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch07/fig_7_4_2.png}
+\caption{Nodal curves for eigenfunctions with the same eigenvalue (asymmetric).}
+\label{fig:7.4.2}
+\end{figure}
+
+\item[4a.] \textbf{Series of eigenfunctions.}  According to this theorem, \eqref{eq:7.4.4}, the eigenfunctions of $\laplacian\phi + \lambda\phi = 0$ can always be used to represent any piecewise smooth function $f(x,y)$.  In our illustrative example, \eqref{eq:7.4.7}, $\sum_\lambda$ becomes a double sum,
+\begin{equation}
+f(x,y) \sim \sum_{n=1}^{\infty}\sum_{m=1}^{\infty} a_{nm}\sin\frac{n\pi x}{L}\sin\frac{m\pi y}{H}.
+\label{eq:7.4.11}
+\end{equation}
+
+\item[5.] \textbf{Orthogonality of eigenfunctions.}  We will show that the multidimensional orthogonality of the eigenfunctions, as expressed by \eqref{eq:7.4.5} for any two different eigenfunctions, can be used to determine the generalized Fourier coefficients in \eqref{eq:7.4.4}.  We will do this in exactly the way we did for one-dimensional Sturm-Liouville eigenfunction expansions.  We simply multiply \eqref{eq:7.4.4} by $\phi_\lambda$ and integrate over the entire region $R$:
+\begin{equation}
+\iint_R f\phi_\lambda\dx\dy = \sum_\lambda a_\lambda \iint_R \phi_\lambda\phi_{\lambda_1}\dx\dy.
+\label{eq:7.4.12}
+\end{equation}
+Since the eigenfunctions are all orthogonal to each other (with weight 1 because $\laplacian\phi + \lambda\phi = 0$), it follows that
+\begin{equation}
+\iint_R f\phi_\lambda\dx\dy = a_\lambda \iint_R \phi_\lambda^2\dx\dy,
+\label{eq:7.4.13}
+\end{equation}
+or, equivalently,
+\begin{equation}
+a_\lambda = \frac{\iint_R f\phi_\lambda\dx\dy}{\iint_R \phi_\lambda^2\dx\dy}.
+\label{eq:7.4.14}
+\end{equation}
+There is no difficulty in forming \eqref{eq:7.4.14} from \eqref{eq:7.4.13} since the denominator of \eqref{eq:7.4.14} is necessarily positive.
+
+For the special case that occurs for a rectangle with fixed zero boundary conditions, \eqref{eq:7.4.7}, the generalized Fourier coefficients $a_{nm}$ are given by \eqref{eq:7.4.14}:
+\begin{equation}
+a_{nm} = \frac{\int_0^H\int_0^L f(x,y)\sin\frac{n\pi x}{L}\sin\frac{m\pi y}{H}\dx\dy}{\int_0^H\int_0^L \sin^2\frac{n\pi x}{L}\sin^2\frac{m\pi y}{H}\dx\dy}.
+\label{eq:7.4.15}
+\end{equation}
+The integral in the denominator may be easily shown to equal $(L/2)(H/2)$ by calculating two one-dimensional integrals; in this way we rederive \eqref{eq:7.3.30}.
+
+In this case, \eqref{eq:7.4.11}, the generalized Fourier coefficient $a_{nm}$ can be evaluated in two equivalent ways:
+
+\begin{enumerate}
+\item[(a)] Using one two-dimensional orthogonality formula for the eigenfunctions of $\laplacian\phi + \lambda\phi = 0$
+\item[(b)] Using two one-dimensional orthogonality formulas
+\end{enumerate}
+
+\item[4b.] \textbf{Convergence.}  As with any Sturm-Liouville eigenvalue problem (see Sec.~5.10), a \emph{finite} series of the eigenfunctions of $\laplacian\phi + \lambda\phi = 0$ may be used to approximate a function $f(x,y)$.  In particular, we could show that if we measure error in the mean-square sense,
+\begin{equation}
+E \equiv \iint_R \left(f - \sum_\lambda a_\lambda \phi_\lambda\right)^2\dx\dy,
+\label{eq:7.4.16}
+\end{equation}
+with weight function 1, then this mean-square error is minimized by the coefficients $a_\lambda$ being chosen by \eqref{eq:7.4.14}, the generalized Fourier coefficients.  It is known that the approximation improves as the number of terms increases.  Furthermore, $E \to 0$ as all the eigenfunctions are included.  We say that the series $\sum_\lambda a_\lambda\phi_\lambda$ \textbf{converges in the mean} to $f$.
+\end{enumerate}
+
+\begin{exercises}{7.4}
+
+\item Consider the eigenvalue problem
+\[
+\begin{aligned}
+\laplacian\phi + \lambda\phi &= 0 \\
+\pd{\phi}{x}(0,y) &= 0 \qquad \phi(x,0) = 0 \\
+\pd{\phi}{x}(L,y) &= 0 \qquad \phi(x,H) = 0.
+\end{aligned}
+\]
+
+\begin{enumerate}
+\item[\starred(a)] Show that there is a doubly infinite set of eigenvalues.
+\item[(b)] If $L = H$, show that most eigenvalues have more than one eigenfunction.
+\item[(c)] Derive that the eigenfunctions are orthogonal in a two-dimensional sense using two one-dimensional orthogonality relations.
+\end{enumerate}
+
+\item Without using the explicit solution of \eqref{eq:7.4.7}, show that $\lambda \geq 0$ from the Rayleigh quotient, \eqref{eq:7.4.6}.
+
+\item If necessary, see Sec.~7.5:
+\begin{enumerate}
+\item[(a)] Derive that $\iint(u\laplacian v - v\laplacian u)\dx\dy = \oint(u\nabla v - v\nabla u)\cdot\hat{n}\ds$.
+\item[(b)] From part~(a), derive \eqref{eq:7.4.5}.
+\end{enumerate}
+
+\item Derive \eqref{eq:7.4.6}.  If necessary, see Sec.~7.6.  [\emph{Hint:} Multiply \eqref{eq:7.4.1} by $\phi$ and integrate.]
+
+\end{exercises}

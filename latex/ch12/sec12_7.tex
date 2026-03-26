@@ -1,0 +1,199 @@
+% sec12_7.tex — Section 12.7: First-Order Nonlinear Partial Differential Equations
+\section{First-Order Nonlinear Partial Differential Equations}
+\label{sec:nonlinear-first-order}
+
+\subsection{Eikonal Equation Derived from the Wave Equation}
+\label{sec:eikonal}
+
+For simplicity we consider the two-dimensional wave equation
+\begin{equation}
+\label{eq:12.7.1}
+\pdd{E}{t} = c^2\!\left(\pdd{E}{x} + \pdd{E}{y}\right).
+\end{equation}
+Plane waves and their reflections were analyzed in Sec.~4.6.  Nearly plane waves exist under many circumstances.  If the coefficient $c$ is not constant but varies slowly, then over a few wave lengths the wave sees nearly constant $c$.  However, over long distances (relative to short wave lengths) we may be interested in the effects of variable $c$.  Another situation in which nearly plane waves arise is the reflection of a plane wave by a curved boundary (or reflection and refraction by a curved interface between two medias with different indices of refraction).  We assume the radius of curvature of the boundary is much longer than typical wave lengths.  In many of these situations the temporal frequency $\omega$ is fixed (by an incoming plane wave).  Thus,
+\begin{equation}
+\label{eq:12.7.2}
+E = A(x,y)e^{-i\omega t},
+\end{equation}
+where $A(x,y)$ satisfies the \textbf{Helmholtz} or \textbf{reduced wave equation}:
+\begin{equation}
+\label{eq:12.7.3}
+-\omega^2 A = c^2\!\left(\pdd{A}{x} + \pdd{A}{y}\right).
+\end{equation}
+Again the temporal frequency $\omega$ is fixed (and given), but $c = c(x,y)$ for inhomogeneous media or $c = \text{constant}$ for uniform media.  In uniform media ($c = \text{constant}$), plane waves of the form $E = A_0 e^{i(k_1 x + k_2 y - \omega t)}$ or
+\begin{equation}
+\label{eq:12.7.4}
+A = A_0 e^{i(k_1 x + k_2 y)}
+\end{equation}
+exist if
+\begin{equation}
+\label{eq:12.7.5}
+\omega^2 = c^2(k_1^2 + k_2^2).
+\end{equation}
+For nearly plane waves, we introduce the phase $u(x,y)$ of the reduced wave equation:
+\begin{equation}
+\label{eq:12.7.6}
+A(x,y) = R(x,y)e^{iu(x,y)}.
+\end{equation}
+The wave numbers $k_1$ and $k_2$ for uniform media are usually called $p$ and $q$, respectively, and are defined by
+\begin{align}
+\label{eq:12.7.7}
+p &= \pd{u}{x} \\
+\label{eq:12.7.8}
+q &= \pd{u}{y}.
+\end{align}
+As an approximation (which can be derived using perturbation methods), it can be shown that the (slowly varying) wave numbers satisfy \eqref{eq:12.7.5}, corresponding to the given temporal frequency associated with plane waves,
+\boxed{\begin{equation}
+\label{eq:12.7.9}
+\omega^2 = c^2(p^2 + q^2).
+\end{equation}}
+This is a first-order nonlinear partial differential equation (not quasilinear) for the phase $u(x,y)$, known as the \textbf{eikonal equation}:
+\boxed{\begin{equation}
+\label{eq:12.7.10}
+\frac{\omega^2}{c^2} = \left(\pd{u}{x}\right)^2 + \left(\pd{u}{y}\right)^2,
+\end{equation}}
+where $\omega$ is a fixed reference temporal frequency and $c = c(x,y)$ for inhomogeneous media or $c = \text{constant}$ for uniform media.  Sometimes the \textbf{index of refraction} $n(x,y)$ is introduced proportional to $\frac{1}{c}$.  The amplitude $R(x,y)$ solves equations (which we do not discuss) known as the transport equations, which describe the propagation of energy of these nearly plane waves.
+
+\subsection{Solving the Eikonal Equation in Uniform Media and Reflected Waves}
+\label{sec:eikonal-uniform}
+
+The simplest example of the eikonal equation \eqref{eq:12.7.10} occurs in uniform media ($c = \text{constant}$):
+\begin{equation}
+\label{eq:12.7.11}
+\left(\pd{u}{x}\right)^2 + \left(\pd{u}{y}\right)^2 = \frac{\omega^2}{c^2},
+\end{equation}
+where $\omega$ and $c$ are constants.  Rather than solve for $u(x,y)$ directly, we will show that it is easier to solve first for $p = \frac{\partial u}{\partial x}$ and $q = \frac{\partial u}{\partial y}$.  Thus, we consider
+\begin{equation}
+\label{eq:12.7.12}
+p^2 + q^2 = \frac{\omega^2}{c^2}.
+\end{equation}
+Differentiating \eqref{eq:12.7.11} or \eqref{eq:12.7.12} with respect to $x$ yields
+\[
+p\pd{p}{x} + q\pd{q}{x} = 0.
+\]
+Since $\frac{\partial q}{\partial x} = \frac{\partial p}{\partial y}$, $p$ satisfies a first-order quasilinear partial differential equation:
+\begin{equation}
+\label{eq:12.7.13}
+p\pd{p}{x} + q\pd{p}{y} = 0.
+\end{equation}
+Equation \eqref{eq:12.7.13} may be solved by the method of characteristics [see specifically \eqref{eq:12.6.7}]:
+\begin{equation}
+\label{eq:12.7.14}
+\frac{dx}{p} = \frac{dy}{q} = \frac{dp}{0}.
+\end{equation}
+If there is a boundary condition for $p$, then \eqref{eq:12.7.14} can be solved for $p$ since $q = \pm\sqrt{\frac{\omega^2}{c^2} - p^2}$ [from \eqref{eq:12.7.12}].  Since \eqref{eq:12.7.14} shows that $p$ is constant along each characteristic, it also follows from \eqref{eq:12.7.14} that each characteristic is a straight line.  In this way $p$ can be determined.  However, given $p = \frac{\partial u}{\partial x}$, integrating for $u$ is not completely straightforward.
+
+We have differentiated the eikonal equation with respect to $x$.  If instead we differentiate with respect to $y$, we obtain
+\[
+p\pd{q}{y} + q\pd{q}{y} = 0.
+\]
+A first-order quasilinear partial differential equation for $q$ can be obtained by again using $\frac{\partial q}{\partial x} = \frac{\partial p}{\partial y}$:
+\begin{equation}
+\label{eq:12.7.15}
+p\pd{q}{x} + q\pd{q}{y} = 0.
+\end{equation}
+Thus, $\frac{dx}{p} = \frac{dy}{q} = \frac{dq}{0}$, which when combined with \eqref{eq:12.7.14} yields the more general result
+\begin{equation}
+\label{eq:12.7.16}
+\frac{dx}{p} = \frac{dy}{q} = \frac{dp}{0} = \frac{dq}{0}.
+\end{equation}
+However, usually we want to determine $u$ so that we wish to determine how $u$ varies along this characteristic: $du = \frac{\partial u}{\partial x}dx + \frac{\partial u}{\partial y}dy = p\,dx + q\,dy = p^2\frac{dx}{p} + q^2\frac{dy}{q} = (p^2 + q^2)\frac{dx}{p}$, where we have used \eqref{eq:12.7.16} and \eqref{eq:12.7.12}.  Thus, for the eikonal equation,
+\begin{equation}
+\label{eq:12.7.17}
+\frac{dx}{p} = \frac{dy}{q} = \frac{dp}{0} = \frac{dq}{0} = \frac{du}{\omega^2/c^2}.
+\end{equation}
+The characteristics are straight lines since $p$ and $q$ are constants along the characteristics.
+
+\textbf{Reflected waves.}  We consider $e^{i(\vec{k}_I\cdot\vec{x} - \omega t)}$, an elementary incoming plane wave where $\vec{k}_I$ represents the given constant incoming wave number vector and where $\omega = c|\vec{k}_I|$.  We assume the plane wave reflects off a curved boundary (as illustrated in Fig.~12.7.1), which we represent with a parameter $\tau$ as $x = x_0(\tau)$ and $y = y_0(\tau)$, and we wish to determine the phase $u(x,y)$ of the reflected wave.  We introduce the unknown reflected wave, $R(x,y)e^{iu(x,y)}e^{-i\omega t}$, and we wish to determine the phase $u(x,y)$ of the reflected wave.  The eikonal equation $\frac{\omega^2}{c^2} = p^2 + q^2 = |\vec{k}_I|^2$ can be interpreted as saying the slowly varying reflected wave number vector $(p,q)$ has the same length as the constant incoming wave number vector (physically the slowly varying reflected wave will always have the same wave length as the incident wave).  We assume the boundary condition on the curved boundary is that the total field is zero (other boundary conditions yield the same equations for the phase):  $0 = e^{i(\vec{k}_I\cdot\vec{x} - \omega t)} + R(x,y)e^{iu(x,y)}e^{-i\omega t}$.  Thus, on the boundary the phase of the incoming wave and the phase of the reflected wave must be the same:
+\begin{equation}
+\label{eq:12.7.18}
+u(x_0, y_0) = \vec{k}_I \cdot \vec{x}_0,
+\end{equation}
+Taking the derivative of \eqref{eq:12.7.18} with respect to the parameter $\tau$ shows that
+\begin{equation}
+\label{eq:12.7.19}
+\pd{u}{x}\od{x_0}{\tau} + \pd{u}{y}\od{y_0}{\tau} = p\od{x_0}{\tau} + q\od{y_0}{\tau} = \vec{k}_R \cdot \od{\vec{x}_0}{\tau} = \vec{k}_I \cdot \od{\vec{x}_0}{\tau},
+\end{equation}
+where we have noted that $(p,q)$ is the unknown reflected wave number vector $\vec{k}_R$ (because $p$ and $q$ are constant along the characteristic).  Since $\frac{d\vec{x}_0}{d\tau}$ is a vector tangent to the boundary, \eqref{eq:12.7.19} shows that the tangential component of the incident and reflecting wave number vectors are the same.  Since the magnitude of the incident and reflecting wave number vectors are the same, it follows that \textbf{the normal component of the reflected wave must be minus the normal component of the incident wave}.  Thus, the angle of reflection off a curved boundary is the same as the angle of incidence.  Thus at any point along the boundary the constant value of $p$ and $q$ is known for the reflected wave.  Because $q = \pm\sqrt{\frac{\omega^2}{c^2} - p^2}$, there are two solutions of the eikonal equation; one represents the incoming wave and the other (of interest to us) the reflected wave.  To obtain the phase of the reflected wave, we must solve the characteristic equations \eqref{eq:12.7.17} for the eikonal equation with the boundary condition specified by \eqref{eq:12.7.18}.  Since for uniform media $\frac{\omega^2}{c^2} = |\vec{k}_I|^2$ is a constant, the differential equation for $u$ along the characteristic, $\frac{du}{dx} = \frac{|\vec{k}_I|^2}{p}$, can be integrated (since $p$ is constant) using the boundary condition to give
+\[
+u(x,y) = \frac{|\vec{k}_I|^2}{p}(x - x_0) + \vec{k}_I \cdot \vec{x}_0,
+\]
+along a specific characteristic.  The equation for the characteristics $p(y - y_0) = q(x - x_0)$ corresponds to the angle of reflection equaling the angle of incidence.  Since $p^2 + q^2 = |\vec{k}_I|^2$, the more pleasing representation of the phase (solution of the eikonal equation) follows along a specific characteristic:
+\begin{equation}
+\label{eq:12.7.20}
+u(x,y) = p(x - x_0) + q(y - y_0) + \vec{k}_I \cdot \vec{x}_0,
+\end{equation}
+where $u(x_0, y_0) = \vec{k}_I \cdot \vec{x}_0$ is the phase of the incident wave on the boundary.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch12/fig_12_7_1.png}
+\caption{Reflected wave from curved boundary.}
+\label{fig:12.7.1}
+\end{figure}
+
+\textbf{Wave front.}  The characteristic direction is the direction the light propagates.  For the eikonal equation, according to \eqref{eq:12.7.14}, $\frac{dx}{p} = \frac{dy}{q}$.  This is also valid for nonuniform media.  Light propagates (characteristic direction) in the direction of the gradient of the phase, $\nabla u$, since $\nabla u = \frac{\partial u}{\partial x}\vec{i} + \frac{\partial u}{\partial y}\vec{j} = p\vec{i} + q\vec{j} = \frac{p}{dx}(dx\,\vec{i} + dy\,\vec{j})$.  Thus, \textbf{light rays propagate normal to the wave fronts}.
+
+\subsection{First-Order Nonlinear Partial Differential Equations}
+\label{sec:general-nonlinear}
+
+Any first-order nonlinear partial differential equation can be put in the form
+\boxed{\begin{equation}
+\label{eq:12.7.21}
+F\!\left(x, y, u, \pd{u}{x}, \pd{u}{y}\right) = 0.
+\end{equation}}
+As with the eikonal equation example of the previous subsection, we show that $p = \frac{\partial u}{\partial x}$ and $q = \frac{\partial u}{\partial y}$ solve quasilinear partial differential equations, and hence \eqref{eq:12.7.21} can be solved by the method of characteristics.  Using $p$ and $q$,
+\begin{equation}
+\label{eq:12.7.22}
+F(x, y, u, p, q) = 0.
+\end{equation}
+Taking the partial derivative of \eqref{eq:12.7.22} with respect to $x$, we obtain
+\[
+F_x + F_u p + F_p \pd{p}{x} + F_q \pd{q}{x} = 0,
+\]
+where we use the subscript notation for partial derivatives.  For example, $F_u \equiv \frac{\partial F}{\partial u}$, keeping $x$, $y$, $p$, $q$ constant.  Since $\frac{\partial q}{\partial x} = \frac{\partial p}{\partial y}$, we obtain a quasilinear partial differential equation for $p$:
+\[
+F_p\pd{p}{x} + F_q\pd{p}{y} = -F_x - F_u p.
+\]
+Thus, the method of characteristics for $p$ yields
+\begin{equation}
+\label{eq:12.7.23}
+\frac{dx}{F_p} = \frac{dy}{F_q} = \frac{dp}{-F_x - F_u p}.
+\end{equation}
+Similarly, taking the partial derivative of \eqref{eq:12.7.22} with respect to $y$ yields
+\[
+F_y + F_u q + F_p\pd{q}{x} + F_q\pd{q}{y} = 0.
+\]
+Here $\frac{\partial q}{\partial x} = \frac{\partial p}{\partial y}$ yields a quasilinear partial differential equation for $q$:
+\[
+F_p\pd{q}{x} + F_q\pd{q}{y} = -F_y - F_u q.
+\]
+The characteristic direction is the same as in \eqref{eq:12.7.23}, so that \eqref{eq:12.7.23} is amended to become
+\begin{equation}
+\label{eq:12.7.24}
+\frac{dx}{F_p} = \frac{dy}{F_q} = \frac{dp}{-F_x - F_u p} = \frac{dq}{-F_y - F_u q}.
+\end{equation}
+In order to solve for $u$, we want to derive a differential equation for $u(x,y)$ along the characteristics:
+\[
+du = \pd{u}{x}dx + \pd{u}{y}dy = p\,dx + q\,dy = pF_p\frac{dx}{F_p} + qF_q\frac{dy}{F_q} = (pF_p + qF_q)\frac{dx}{F_p}.
+\]
+The complete system to solve for $p$, $q$, and $u$ is
+\boxed{\begin{equation}
+\label{eq:12.7.25}
+\frac{dx}{F_p} = \frac{dy}{F_q} = \frac{dp}{-F_x - F_u p} = \frac{dq}{-F_y - F_u q} = \frac{du}{pF_p + qF_q}.
+\end{equation}}
+
+\begin{exercises}{12.7}
+
+\item \label{ex:12.7.1}
+Show that light rays propagate normal to the wave fronts for nonuniform media.
+
+\item \label{ex:12.7.2}
+For the normalized eikonal equation for uniform media, $\left(\frac{\partial u}{\partial x}\right)^2 + \left(\frac{\partial u}{\partial y}\right)^2 = 1$,
+\begin{enumerate}
+\item[(a)] Derive a partial differential equation for $q$ without using \eqref{eq:12.7.25}.
+\item[(b)] Use the method of characteristics for $q$, assuming $q$ is given at $y = 0$.
+\item[(c)] Show that the result is the same as using \eqref{eq:12.7.25}.
+\end{enumerate}
+
+\end{exercises}

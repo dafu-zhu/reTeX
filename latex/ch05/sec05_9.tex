@@ -1,0 +1,147 @@
+% sec05_9.tex — Section 5.9: Large Eigenvalues (Asymptotic Behavior)
+\section{Large Eigenvalues (Asymptotic Behavior)}
+\label{sec:sl-large-eigen}
+
+For the variable-coefficient case, the eigenvalues for the Sturm--Liouville differential equation,
+\begin{equation}
+\label{eq:le-sl}
+\frac{d}{d x}\left[p(x)\od{\phi}{x}\right] + [\lambda\sigma(x) + q(x)]\phi = 0,
+\end{equation}
+usually must be calculated numerically.  We know that there will be an infinite number of eigenvalues with no largest one.  Thus, there will be an infinite sequence of large eigenvalues.  In this section we state and explain reasonably good approximations to these large eigenvalues and corresponding eigenfunctions.  Thus, numerical solutions will be needed for only the first few eigenvalues and eigenfunctions.
+
+A careful derivation with adequate explanations of the asymptotic method would be lengthy.  Nonetheless, some motivation for our result will be presented.  We begin by attempting to approximate solutions of the differential equation \eqref{eq:le-sl} if the unknown eigenvalue $\lambda$ is large ($\lambda \gg 1$).  Interpreting \eqref{eq:le-sl} as a spring-mass system ($x$ is time, $\phi$ is position) with time-varying parameters is helpful.  Then \eqref{eq:le-sl} has a large restoring force [$-\lambda\sigma(x)\phi$] such that we expect the solution to have rapid oscillation in $x$.  Alternatively, we know that eigenfunctions corresponding to large eigenvalues have many zeros.  Since the solution oscillates rapidly, over a few periods (each small) the variable coefficients are approximately constant.  Thus, near any point $x_0$, the differential equation may be approximated crudely by one with constant coefficients:
+\begin{equation}
+\label{eq:le-local}
+p(x_0)\odd{\phi}{x} + \lambda\sigma(x_0)\phi \approx 0,
+\end{equation}
+since in addition $\lambda\sigma(x) \gg q(x)$.  According to \eqref{eq:le-local}, the solution is expected to oscillate with ``local'' spatial (circular) frequency
+\begin{equation}
+\label{eq:le-frequency}
+\text{frequency} = \sqrt{\frac{\lambda\sigma(x_0)}{p(x_0)}}.
+\end{equation}
+This frequency is large ($\lambda \gg 1$), and thus the period is small, as assumed.  The frequency (and period) depends on $x$, but it varies slowly; that is, over a few periods (a short distance) the period hardly changes.  After many periods, the frequency (and period) may change appreciably.  This slowly varying period will be illustrated in Fig.~\ref{fig:5.9.1}.
+
+From \eqref{eq:le-local} one might expect the amplitude of oscillation to be constant.  However, \eqref{eq:le-local} is only an approximation.  Instead, we should expect the amplitude to be approximately constant over each period.  Thus, both the amplitude and frequency are slowly varying:
+\begin{equation}
+\label{eq:le-slowly-varying}
+\phi(x) = A(x)\cos\psi(x),
+\end{equation}
+where sines can also be used.  The appropriate asymptotic formula for the phase $\psi(x)$ can be obtained using the ideas we have just outlined.  Since the period is small, only the values of $x$ near any $x_0$ are needed to understand the oscillation implied by \eqref{eq:le-slowly-varying}.  Using the Taylor series of $\psi(x)$, we obtain
+\begin{equation}
+\label{eq:le-local-phase}
+\phi(x) = A(x)\cos[\psi(x_0) + (x - x_0)\psi'(x_0) + \cdots].
+\end{equation}
+This is an oscillation with local frequency $\psi'(x_0)$.  Thus, \textbf{the derivative of the phase is the local frequency}.  From \eqref{eq:le-local} we have motivated that the local frequency should be $[\lambda\sigma(x_0)/p(x_0)]^{1/2}$.  Thus, we expect
+\begin{equation}
+\label{eq:le-phase-deriv}
+\psi'(x_0) = \lambda^{1/2}\left[\frac{\sigma(x_0)}{p(x_0)}\right]^{1/2}.
+\end{equation}
+This reasoning turns out to determine the phase correctly:
+\begin{equation}
+\label{eq:le-phase}
+\psi(x) = \lambda^{1/2}\int^x \left[\frac{\sigma(x_0)}{p(x_0)}\right]^{1/2}dx_0.
+\end{equation}
+Note that the phase does not equal the frequency times $x$ (unless the frequency is constant).
+
+Precise asymptotic techniques\footnote{These results can be derived by various ways, such as the W.K.B.(J.) method (which should be called the Liouville--Green method) or the method of multiple scales.  References for these asymptotic techniques include books by Bender and Orszag [1999], Kevorkian and Cole [1996], and Nayfeh [2002].} beyond the scope of this text determine the slowly varying amplitude.  It is known that two independent solutions of the differential equation can be approximated accurately (if $\lambda$ is large) by
+\begin{equation}
+\label{eq:le-wkb}
+\boxed{\phi(x) \approx (\sigma p)^{-1/4}\exp\left[\pm i\lambda^{1/2}\int^x \left(\frac{\sigma}{p}\right)^{1/2}dx_0\right],}
+\end{equation}
+where sines and cosines may be used instead.  A rough sketch of these solutions (using sines or cosines) is given in Fig.~\ref{fig:5.9.1}.  The solution oscillates rapidly.  The \textbf{envelope} of the wave is the slowly varying function $(\sigma p)^{-1/4}$, indicating the relatively slow amplitude variation.  The local frequency is $(\lambda\sigma/p)^{1/2}$, corresponding to the period $2\pi/(\lambda\sigma/p)^{1/2}$.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch05/fig_5_9_1.png}
+\caption{Liouville--Green asymptotic solution of differential equation showing rapid oscillation (or, equivalently, relatively slowly varying amplitude).}
+\label{fig:5.9.1}
+\end{figure}
+
+To determine the large eigenvalues, we must apply the boundary conditions to the general solution \eqref{eq:le-wkb}.  For example, if $\phi(0) = 0$, then
+\begin{equation}
+\label{eq:le-sine-soln}
+\phi(x) = (\sigma p)^{-1/4}\sin\left(\lambda^{1/2}\int_0^x \left(\frac{\sigma}{p}\right)^{1/2}dx_0\right) + \cdots.
+\end{equation}
+The second boundary condition, for example, $\phi(L) = 0$, determines the eigenvalues:
+\[
+0 = \sin\left(\lambda^{1/2}\int_0^L \left(\frac{\sigma}{p}\right)^{1/2}dx_0\right) + \cdots.
+\]
+Thus, we derive the asymptotic formula for the large eigenvalues $\lambda^{1/2}\int_0^L (\sigma/p)^{1/2}dx_0 \approx n\pi$, or, equivalently,
+\begin{equation}
+\label{eq:le-asymptotic}
+\lambda \sim \left[n\pi \bigg/ \int_0^L \left(\frac{\sigma}{p}\right)^{1/2}dx_0\right]^2,
+\end{equation}
+valid if $n$ is large.  Often, this formula is reasonably accurate even when $n$ is not very large.  The eigenfunctions are given approximately by \eqref{eq:le-sine-soln}, where \eqref{eq:le-asymptotic} should be used.  Note that $q(x)$ does not appear in these asymptotic formulas; $q(x)$ does not affect the eigenvalue to \textit{leading} order.  However, more accurate formulas exist that take $q(x)$ into account.
+
+\paragraph{Example.}
+Consider the eigenvalue problem
+\begin{align*}
+\odd{\phi}{x} + \lambda(1+x)\phi &= 0 \\
+\phi(0) &= 0 \\
+\phi(1) &= 0.
+\end{align*}
+Here $p(x) = 1$, $\sigma(x) = 1 + x$, $q(x) = 0$, and $L = 1$.  Our asymptotic formula \eqref{eq:le-asymptotic} for the eigenvalues is
+\begin{equation}
+\label{eq:le-example}
+\lambda \sim \left[\frac{n\pi}{\displaystyle\int_0^1 (1+x_0)^{1/2}\dx_0}\right]^2 = \frac{n^2\pi^2}{\left[\frac{2}{3}(1+x_0)^{3/2}\big|_0^1\right]^2} = \frac{n^2\pi^2}{\frac{4}{9}(2^{3/2}-1)^2}.
+\end{equation}
+
+In Table~\ref{tab:le-comparison} we compare numerical results (using an accurate numerical scheme on the computer) with the asymptotic formula.  Equation \eqref{eq:le-example} is even a reasonable approximation if $n = 1$.  The percent or relative error of the asymptotic formula improves as $n$ increases.  However, the error stays about the same (though small).  There are improvements to \eqref{eq:le-asymptotic} that account for the approximately constant error.
+
+\begin{table}[H]
+\centering
+\caption{Eigenvalues $\lambda_n$}
+\label{tab:le-comparison}
+\begin{tabular}{@{}cccc@{}}
+\toprule
+& Numerical answer* & Asymptotic formula & \\
+$n$ & (assumed accurate) & \eqref{eq:le-example} & Error \\
+\midrule
+1 & 6.548395 & 6.642429 & 0.094034 \\
+2 & 26.464937 & 26.569718 & 0.104781 \\
+3 & 59.674174 & 59.781865 & 0.107691 \\
+4 & 106.170023 & 106.278872 & 0.108849 \\
+5 & 165.951321 & 166.060737 & 0.109416 \\
+6 & 239.0177275 & 239.1274615 & 0.109734 \\
+7 & 325.369115 & 325.479045 & 0.109930 \\
+\bottomrule
+\multicolumn{4}{@{}l}{*Courtesy of E.~C.\ Gartland, Jr.}
+\end{tabular}
+\end{table}
+
+\begin{exercises}{5.9}
+
+\item Estimate (to leading order) the large eigenvalues and corresponding eigenfunctions for
+\[
+\frac{d}{d x}\left(p(x)\od{\phi}{x}\right) + [\lambda\sigma(x) + q(x)]\phi = 0
+\]
+if the boundary conditions are
+\begin{enumerate}
+\item $\displaystyle\od{\phi}{x}(0) = 0$ and $\displaystyle\od{\phi}{x}(L) = 0$
+\item\starred\ $\phi(0) = 0$ and $\displaystyle\od{\phi}{x}(L) = 0$
+\item $\phi(0) = 0$ and $\displaystyle\od{\phi}{x}(L) + h\phi(L) = 0$
+\end{enumerate}
+
+\item Consider
+\[
+\odd{\phi}{x} + \lambda(1+x)\phi = 0
+\]
+subject to $\phi(0) = 0$ and $\phi(1) = 0$.  Roughly sketch the eigenfunctions for $\lambda$ large.  Take into account amplitude and period variations.
+
+\item Consider for $\lambda \gg 1$
+\[
+\odd{\phi}{x} + [\lambda\sigma(x) + q(x)]\phi = 0.
+\]
+\begin{enumerate}
+\item\starred\ Substitute
+\[
+\phi = A(x)\exp\left[i\lambda^{1/2}\int^x \sigma^{1/2}(x_0)\dx_0\right].
+\]
+Determine a differential equation for $A(x)$.
+\item Let $A(x) = A_0(x) + \lambda^{-1/2}A_1(x) + \cdots$.  Solve for $A_0(x)$ and $A_1(x)$.  Verify \eqref{eq:le-wkb}.
+\item Suppose that $\phi(0) = 0$.  Use $A_1(x)$ to improve \eqref{eq:le-sine-soln}.
+\item Use part (c) to improve \eqref{eq:le-asymptotic} if $\phi(L) = 0$.
+\item\starred\ Obtain a recursion formula for $A_n(x)$.
+\end{enumerate}
+
+\end{exercises}

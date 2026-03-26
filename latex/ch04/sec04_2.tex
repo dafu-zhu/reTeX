@@ -1,0 +1,101 @@
+% sec04_2.tex — Section 4.2: Derivation of a Vertically Vibrating String
+\section{Derivation of a Vertically Vibrating String}
+\label{sec:vibrating-string-derivation}
+
+A vibrating string is a complicated physical system.  We would like to present a simple derivation.  A string vibrates only if it is tightly stretched.  Consider a horizontally stretched string in its equilibrium configuration, as illustrated in Fig.~4.2.1.  We imagine that the ends are tied down in some way (to be described in Sec.~4.3), maintaining the tightly stretched nature of the string.  You may wish to think of stringed musical instruments as examples.  We begin by tracking the motion of each particle that comprises the string.  We let $\alpha$ be the $x$-coordinate of a particle when the string is in the horizontal equilibrium position.  The string moves in time; it is located somewhere other than the equilibrium position at time $t$, as illustrated in Fig.~4.2.1.  The trajectory of particle $\alpha$ is indicated with both horizontal and vertical components.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch04/fig_4_2_1.png}
+\caption{Vertical and horizontal displacements of a particle on a highly stretched string.}
+\label{fig:4.2.1}
+\end{figure}
+
+We will assume that the slope of the string is small, in which case it can be shown that the horizontal displacement $v$ can be neglected.  As an approximation, \textbf{the motion is entirely vertical}, $x = \alpha$.  In this situation, the vertical displacement $u$ depends on $x$ and $t$:
+\begin{equation}
+y = u(x,t).
+\label{eq:4.2.1}
+\end{equation}
+Derivations including the effect of a horizontal displacement are necessarily complicated (see Weinberger [1965] and Antman [1980]).  In general ($x \neq \alpha$), it is best to let $y = u(\alpha, t)$.
+
+\paragraph{Newton's law.}
+We consider an infinitesimally thin segment of the string contained between $x$ and $x + \Delta x$ (as illustrated in Fig.~4.2.2).  In the unperturbed (yet stretched) horizontal position, we assume that the \textbf{mass density} $\rho_0(x)$ is known.  For the thin segment, the total mass is approximately $\rho_0(x)\,\Delta x$.  Our object is to derive a partial differential equation describing how the displacement $u$ changes in time.  Accelerations are due to forces; we must use Newton's law.  For simplicity we will analyze Newton's law for a point mass:
+\begin{equation}
+\vec{F} = m\vec{a}.
+\label{eq:4.2.2}
+\end{equation}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch04/fig_4_2_2.png}
+\caption{Stretching of a finite segment of string, illustrating the tensile forces.}
+\label{fig:4.2.2}
+\end{figure}
+
+We must discuss the forces acting on this segment of the string.  There are body forces, which we assume act only in the vertical direction (e.g., the gravitational force), as well as forces acting on the ends of the segment of string.  We assume that the string is \textbf{perfectly flexible}; it offers no resistance to bending.  This means that the force exerted by the rest of the string on the endpoints of the segment of the string is in the direction tangent to the string.  This tangential force is known as the \textbf{tension} in the string, and we denote its magnitude by $T(x,t)$.  In Fig.~4.2.2 we show that the force due to the tension (exerted by the rest of the string) pulls at both ends in the direction of the tangent, trying to stretch the small segment.  To obtain components of the tensile force, the angle $\theta$ between the horizon and the string is introduced.  The angle depends on both the position $x$ and time $t$.  Furthermore, the slope of the string may be represented as either $dy/dx$ or $\tan\theta$:
+\begin{equation}
+\frac{dy}{dx} = \tan\theta(x,t) = \pd{u}{x}.
+\label{eq:4.2.3}
+\end{equation}
+
+The horizontal component of Newton's law prescribes the horizontal motion, which we claim is small and can be neglected.  The vertical equation of motion states that the mass $\rho_0(x)\,\Delta x$ times the vertical component of acceleration ($\partial^2 u/\partial t^2$, where $\partial/\partial t$ is used since $x$ is fixed for this motion) equals the vertical component of the tensile forces plus the vertical component of the body forces:
+\begin{equation}
+\rho_0(x)\,\Delta x\,\pdd{u}{t} = T(x+\Delta x,t)\sin\theta(x+\Delta x,t) - T(x,t)\sin\theta(x,t) + \rho_0(x)\,\Delta x\; Q(x,t),
+\label{eq:4.2.4}
+\end{equation}
+where $T(x,t)$ is the magnitude of the tensile force and $Q(x,t)$ is the vertical component of the body force per unit mass.  Dividing \eqref{eq:4.2.4} by $\Delta x$ and taking the limit as $\Delta x \to 0$ yields
+\begin{equation}
+\rho_0(x)\pdd{u}{t} = \frac{\partial}{\partial x}\bigl[T(x,t)\sin\theta(x,t)\bigr] + \rho_0(x)Q(x,t).
+\label{eq:4.2.5}
+\end{equation}
+For small angles $\theta$,
+\[
+\pd{u}{x} = \tan\theta = \frac{\sin\theta}{\cos\theta} \approx \sin\theta,
+\]
+and hence \eqref{eq:4.2.5} becomes
+\begin{equation}
+\rho_0(x)\pdd{u}{t} = \frac{\partial}{\partial x}\!\left(T\pd{u}{x}\right) + \rho_0(x)Q(x,t).
+\label{eq:4.2.6}
+\end{equation}
+
+\paragraph{Perfectly elastic strings.}
+The tension of a string is determined by experiments.  Real strings are nearly \textbf{perfectly elastic}, by which we mean that the magnitude of the tensile force $T(x,t)$ depends only on the local stretching of the string.  Since the angle $\theta$ is assumed to be small, the stretching of the string is nearly the same as for the unperturbed highly stretched horizontal string, where the tension is constant, $T_0$ (to be in equilibrium).  Thus, \textbf{the tension $T(x,t)$ may be approximated by a constant} $T_0$.  Consequently, the small vertical vibrations of a highly stretched string are governed by
+\begin{equation}
+\rho_0(x)\pdd{u}{t} = T_0\pdd{u}{x} + Q(x,t)\rho_0(x).
+\label{eq:4.2.7}
+\end{equation}
+
+\paragraph{One-dimensional wave equation.}
+If the only body force per unit mass is gravity, then $Q(x,t) = -g$ in \eqref{eq:4.2.7}.  In many such situations, this force is small (relative to the tensile force $\rho_0 g \ll |T_0\partial^2 u/\partial x^2|$) and can be neglected.  Alternatively, gravity sags the string, and we can calculate the vibrations with respect to the sagged equilibrium position.  In either way we are often led to investigate \eqref{eq:4.2.7} in the case in which $Q(x,t) = 0$,
+\begin{equation}
+\rho_0(x)\pdd{u}{t} = T_0\pdd{u}{x}
+\label{eq:4.2.8}
+\end{equation}
+or
+\begin{equation}
+\boxed{\pdd{u}{t} = c^2\pdd{u}{x},}
+\label{eq:4.2.9}
+\end{equation}
+where $c^2 = T_0/\rho_0(x)$.  Equation~\eqref{eq:4.2.9} is called the \textbf{one-dimensional wave equation}.  The notation $c^2$ is introduced because $T_0/\rho_0(x)$ has the dimensions of velocity squared.  We will show that $c$ is a very important velocity.  For a uniform string, $c$ is constant.
+
+\begin{exercises}{4.2}
+
+\item
+\begin{enumerate}
+\item[(a)] Using Equation~\eqref{eq:4.2.7}, compute the sagged equilibrium position $u_E(x)$ if $Q(x,t)=-g$.  The boundary conditions are $u(0)=0$ and $u(L)=0$.
+
+\item[(b)] Show that $v(x,t)=u(x,t)-u_E(x)$ satisfies~\eqref{eq:4.2.9}.
+\end{enumerate}
+
+\item Show that $c^2$ has the dimensions of velocity squared.
+
+\item Consider a particle whose $x$-coordinate (in horizontal equilibrium) is designated by $\alpha$.  If its vertical and horizontal displacements are $u$ and $v$, respectively, determine its position $x$ and $y$.  Then show that
+\[
+\frac{dy}{dx} = \frac{\partial u/\partial\alpha}{1+\partial v/\partial\alpha}.
+\]
+
+\item Derive equations for horizontal and vertical displacements without ignoring $v$.  Assume that the string is perfectly flexible and that the tension is determined by an experimental law.
+
+\item Derive the partial differential equation for a vibrating string in the simplest possible manner.  You may assume the string has constant mass density $\rho_0$, you may assume the tension $T_0$ is constant, and you may assume small displacements (with small slopes).
+
+\end{exercises}

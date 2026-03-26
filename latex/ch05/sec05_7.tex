@@ -1,0 +1,115 @@
+% sec05_7.tex — Section 5.7: Worked Example: Vibrations of a Nonuniform String
+\section{Worked Example: Vibrations of a Nonuniform String}
+\label{sec:sl-vibrating-string}
+
+Some additional applications of the Rayleigh quotient are best illustrated in a physical problem.  Consider the vibrations of a nonuniform string [constant tension $T_0$, but variable mass density $\rho(x)$] without sources ($Q = 0$).  We assume that both ends are fixed with zero displacement.  The mathematical equations for the initial value problem are
+\begin{align}
+\label{eq:vs-pde}
+\text{PDE:}\quad & \boxed{\rho\pdd{u}{t} = T_0\pdd{u}{x}} \\[6pt]
+\label{eq:vs-bc}
+\text{BC:}\quad & \boxed{\begin{aligned} u(0,t) &= 0 \\ u(L,t) &= 0 \end{aligned}} \\[6pt]
+\label{eq:vs-ic}
+\text{IC:}\quad & \boxed{\begin{aligned} u(x,0) &= f(x) \\ \pd{u}{t}(x,0) &= g(x). \end{aligned}}
+\end{align}
+
+Again since the partial differential equation and the boundary conditions are linear and homogeneous, we are able to apply the method of separation of variables.  We look for product solutions:
+\begin{equation}
+\label{eq:vs-product}
+u(x,t) = \phi(x)h(t),
+\end{equation}
+ignoring the nonzero initial conditions.  It can be shown that $h(t)$ satisfies
+\begin{equation}
+\label{eq:vs-time}
+\odd{h}{t} = -\lambda h,
+\end{equation}
+while the spatial part solves the following regular Sturm--Liouville eigenvalue problem:
+\begin{equation}
+\label{eq:vs-spatial}
+\begin{aligned}
+T_0\odd{\phi}{x} + \lambda\rho(x)\phi &= 0 \\
+\phi(0) &= 0 \\
+\phi(L) &= 0.
+\end{aligned}
+\end{equation}
+
+Usually, we presume that the infinite sequence of eigenvalues $\lambda_n$ and corresponding eigenfunctions $\phi_n(x)$ are known.  However, in order to analyze \eqref{eq:vs-time}, it is necessary to know something about $\lambda$.  From physical reasoning, we certainly expect $\lambda > 0$ since we expect oscillations, and we expect oscillations, but we will show that the Rayleigh quotient easily guarantees that $\lambda > 0$.  For \eqref{eq:vs-spatial}, the Rayleigh quotient \eqref{eq:rayleigh-quotient-main} becomes
+\begin{equation}
+\label{eq:vs-rayleigh}
+\lambda = \frac{\displaystyle T_0\int_0^L (d\phi/dx)^2\dx}{\displaystyle\int_0^L \phi^2\rho(x)\dx}.
+\end{equation}
+Clearly, $\lambda \ge 0$ (and as before it is impossible for $\lambda = 0$ in this case).  Thus, $\lambda > 0$.
+
+We now are assured that the solution of \eqref{eq:vs-time} is a linear combination of $\sin\sqrt{\lambda}t$ and $\cos\sqrt{\lambda}t$.  There are two families of product solutions of the partial differential equation, $\sin\sqrt{\lambda_n}t\;\phi_n(x)$ and $\cos\sqrt{\lambda_n}t\;\phi_n(x)$.  According to the principle of superposition, the solution is
+\begin{equation}
+\label{eq:vs-solution}
+\boxed{u(x,t) = \sum_{n=1}^{\infty} a_n\sin\sqrt{\lambda_n}t\;\phi_n(x) + \sum_{n=1}^{\infty} b_n\cos\sqrt{\lambda_n}t\;\phi_n(x).}
+\end{equation}
+We need to show only that the two families of coefficients can be obtained from the initial conditions:
+\begin{equation}
+\label{eq:vs-ic-expand}
+f(x) = \sum_{n=1}^{\infty} b_n\phi_n(x) \quad \text{and} \quad g(x) = \sum_{n=1}^{\infty} a_n\sqrt{\lambda_n}\phi_n(x).
+\end{equation}
+Thus, $b_n$ are the generalized Fourier coefficient of the initial position $f(x)$, while $a_n\sqrt{\lambda_n}$ are the generalized Fourier coefficients for the initial velocity $g(x)$.  Thus, due to the orthogonality of the eigenfunction [with weight $\rho(x)$], we can easily determine $a_n$ and $b_n$:
+\begin{align}
+\label{eq:vs-bn}
+b_n &= \frac{\displaystyle\int_0^L f(x)\phi_n(x)\rho(x)\dx}{\displaystyle\int_0^L \phi_n^2\rho\dx}. \\[6pt]
+\label{eq:vs-an}
+\boxed{a_n\sqrt{\lambda_n} = \frac{\displaystyle\int_0^L g(x)\phi_n(x)\rho(x)\dx}{\displaystyle\int_0^L \phi_n^2\rho\dx},}
+\end{align}
+
+The Rayleigh quotient can be used to obtain additional information about the lowest eigenvalue $\lambda_1$.  (Note that the lowest frequency of vibration is $\sqrt{\lambda_1}$.)  We know that
+\begin{equation}
+\label{eq:vs-min}
+\lambda_1 = \min\frac{\displaystyle T_0\int_0^L (du/dx)^2\dx}{\displaystyle\int_0^L u^2\rho(x)\dx}.
+\end{equation}
+We have already shown (see Section~\ref{sec:sl-rayleigh}) how to use trial functions to obtain an upper bound on the lowest eigenvalue.  This is not always convenient since the denominator in \eqref{eq:vs-min} depends on the mass density $\rho(x)$.  Instead, we will develop another method for an upper bound.  By this method we will also obtain a lower bound.
+
+Let us suppose, as is usual, that the variable mass density has upper and lower bounds,
+\[
+0 < \rho_{\min} \le \rho(x) \le \rho_{\max}.
+\]
+For any $u(x)$ it follows that
+\[
+\rho_{\min}\int_0^L u^2\dx \le \int_0^L u^2\rho(x)\dx \le \rho_{\max}\int_0^L u^2\dx.
+\]
+Consequently, from \eqref{eq:vs-min},
+\begin{equation}
+\label{eq:vs-bounds}
+\frac{T_0}{\rho_{\max}}\min\frac{\displaystyle\int_0^L (du/dx)^2\dx}{\displaystyle\int_0^L u^2\dx} \le \lambda_1 \le \frac{T_0}{\rho_{\min}}\min\frac{\displaystyle\int_0^L (du/dx)^2\dx}{\displaystyle\int_0^L u^2\dx}.
+\end{equation}
+We can evaluate the expressions in \eqref{eq:vs-bounds}, since we recognize the minimum of $\int_0^L (du/dx)^2\dx / \int_0^L u^2\dx$ subject to $u(0) = 0$ and $u(L) = 0$ as the lowest eigenvalue of a different problem: namely, one with constant coefficients,
+\begin{align*}
+\odd{\phi}{x} + \bar{\lambda}\phi &= 0 \\
+\phi(0) = 0 \quad &\text{and} \quad \phi(L) = 0.
+\end{align*}
+We already know that $\bar{\lambda} = (n\pi/L)^2$, and hence the lowest eigenvalue for this problem is $\bar{\lambda}_1 = (\pi/L)^2$.  But the minimization property of the Rayleigh quotient implies that
+\[
+\bar{\lambda}_1 = \min\frac{\displaystyle\int_0^L (du/dx)^2\dx}{\displaystyle\int_0^L u^2\dx}.
+\]
+Finally, we have proved that the lowest eigenvalue of our problem with variable coefficients satisfies the following inequality:
+\[
+\frac{T_0}{\rho_{\max}}\left(\frac{\pi}{L}\right)^2 \le \lambda_1 \le \frac{T_0}{\rho_{\min}}\left(\frac{\pi}{L}\right)^2.
+\]
+We have obtained an upper and a lower bound for the smallest eigenvalue.  By taking square roots,
+\[
+\frac{\pi}{L}\sqrt{\frac{T_0}{\rho_{\max}}} \le \sqrt{\lambda_1} \le \frac{\pi}{L}\sqrt{\frac{T_0}{\rho_{\min}}}.
+\]
+The physical meaning of this is clear: the lowest frequency of oscillation of a variable string lies in between the lowest frequencies of vibration of two constant-density strings, one with the minimum density and the other with the maximum.  Similar results concerning the higher frequencies of vibration are also valid but are harder to prove (see Weinberger [1965] or Courant and Hilbert [1953]).
+
+\begin{exercises}{5.7}
+
+\item\starred\ Determine an upper and a (nonzero) lower bound for the lowest frequency of vibration of a nonuniform string fixed at $x = 0$ and $x = 1$ with $c^2 = 1 + 4\alpha^2\left(x - \frac{1}{2}\right)^2$.
+
+\item Consider heat flow in a one-dimensional rod without sources with nonconstant thermal properties.  Assume that the temperature is zero at $x = 0$ and $x = L$.  Suppose that $c\rho_{\min} \le c\rho \le c\rho_{\max}$, and $K_{\min} \le K_0(x) \le K_{\max}$.  Obtain an upper and (nonzero) lower bound on the slowest exponential rate of decay of the product solution.
+
+\item Assume (5.7.1)--(5.7.6) are valid.  Consider the one-dimensional wave equation with nonconstant density so that $c^2(x)$
+\[
+\pdd{u}{t} = c^2(x)\pdd{u}{x}.
+\]
+\begin{enumerate}
+\item Prove that eigenfunctions corresponding to different eigenvalues are orthogonal (with what weight?).
+\item Use the Rayleigh quotient to prove that $\lambda > 0$.
+\item Solve the initial value problem.  You may assume the eigenfunctions are known.  Derive coefficients using orthogonality.
+\end{enumerate}
+
+\end{exercises}

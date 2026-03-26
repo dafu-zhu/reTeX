@@ -1,0 +1,474 @@
+% sec05_8.tex — Section 5.8: Boundary Conditions of the Third Kind
+\section{Boundary Conditions of the Third Kind}
+\label{sec:sl-third-kind}
+
+\paragraph{Introduction.}
+So far we have analyzed two general varieties of boundary value problems: very specific, easily solved ones (such as the ones that give rise to Fourier sine series, Fourier cosine series, or Fourier series), and somewhat abstract Sturm--Liouville eigenvalue problems, where our theorems guaranteed many needed properties.  In one case the differential equation had constant coefficients (with simple boundary conditions), and in the other we discussed differential equations with variable coefficients.
+
+In this section we analyze problems with a boundary condition of the third kind.  The boundary value problems will also be easily solved (since the differential equation will still have constant coefficients).  However, due to its boundary conditions, it will illustrate more convincingly the general ideas of Sturm--Liouville eigenvalue problems.
+
+\paragraph{Physical examples.}
+We consider some simple problems with constant physical parameters.  Heat flow in a uniform rod satisfies
+\begin{equation}
+\label{eq:tk-heat}
+\pd{u}{t} = k\pdd{u}{x},
+\end{equation}
+while a uniform vibrating string solves
+\begin{equation}
+\label{eq:tk-wave}
+\pdd{u}{t} = c^2\pdd{u}{x}.
+\end{equation}
+In either case we suppose that the left end is fixed, but the right end satisfies a homogeneous boundary condition of the third kind:
+\begin{align}
+\label{eq:tk-bc1}
+u(0,t) &= 0 \\
+\label{eq:tk-bc2}
+\pd{u}{x}(L,t) &= -hu(L,t).
+\end{align}
+Recall that, for heat conduction, \eqref{eq:tk-bc2} corresponds to Newton's law of cooling if $h > 0$, and for the vibrating string problem, \eqref{eq:tk-bc2} corresponds to a restoring force if $h > 0$, the so-called elastic boundary condition.  We note that usually in physical problems $h \ge 0$.  However, for mathematical reasons we will investigate both cases with $h < 0$ and $h \ge 0$.  If $h < 0$, the vibrating string has a destabilizing force at the right end, while for the heat flow problem, thermal energy is being constantly put into the rod through the right end.
+
+\paragraph{Sturm--Liouville eigenvalue problem.}
+After separation of variables,
+\begin{equation}
+\label{eq:tk-sep}
+u(x,t) = G(t)\phi(x),
+\end{equation}
+the time part satisfies the following ordinary differential equations:
+\begin{align}
+\label{eq:tk-time-heat}
+\text{heat flow:}\quad & \od{G}{t} = -\lambda kG \\
+\label{eq:tk-time-wave}
+\text{vibrating string:}\quad & \odd{G}{t} = -\lambda c^2G.
+\end{align}
+We wish to concentrate on the effect of the third type of boundary condition \eqref{eq:tk-bc2}.  For either physical problem, the spatial part, $\phi(x)$, satisfies the following regular Sturm--Liouville eigenvalue problem:
+\begin{align}
+\label{eq:tk-sl}
+& \boxed{\odd{\phi}{x} + \lambda\phi = 0} \\[6pt]
+\label{eq:tk-sl-bc1}
+& \boxed{\phi(0) = 0} \\[6pt]
+\label{eq:tk-sl-bc2}
+& \boxed{\od{\phi}{x}(L) + h\phi(L) = 0,}
+\end{align}
+where $h$ is a given fixed constant.  If $h \ge 0$, this is what we call the ``physical'' case, while if $h < 0$, we call it the ``nonphysical'' case.  Although the differential equation \eqref{eq:tk-sl} has constant coefficients, the boundary conditions will give rise to some new ideas.  For the moment we ignore certain aspects of our theory of Sturm--Liouville eigenvalue problems (except for the fact that the eigenvalues are real).  In solving \eqref{eq:tk-sl} we must consider three distinct cases: $\lambda > 0$, $\lambda < 0$, and $\lambda = 0$.  This will be especially important when we analyze the nonphysical case $h < 0$.
+
+\paragraph{Positive eigenvalues.}
+If $\lambda > 0$, the solution of the differential equation is a linear combination of sines and cosines:
+\begin{equation}
+\label{eq:tk-pos-soln}
+\phi(x) = c_1\cos\sqrt{\lambda}x + c_2\sin\sqrt{\lambda}x.
+\end{equation}
+The boundary condition $\phi(0) = 0$ implies that $0 = c_1$, and hence
+\begin{equation}
+\label{eq:tk-phi-sin}
+\boxed{\phi(x) = c_2\sin\sqrt{\lambda}x.}
+\end{equation}
+Clearly, sine functions are needed to satisfy the zero condition at $x = 0$.  We will need the first derivative,
+\[
+\od{\phi}{x} = c_2\sqrt{\lambda}\cos\sqrt{\lambda}x.
+\]
+Thus, the boundary condition of the third kind, \eqref{eq:tk-sl-bc2}, implies that
+\begin{equation}
+\label{eq:tk-transcendental-pre}
+c_2(\sqrt{\lambda}\cos\sqrt{\lambda}L + h\sin\sqrt{\lambda}L) = 0.
+\end{equation}
+If $c_2 = 0$, \eqref{eq:tk-phi-sin} shows that $\phi \equiv 0$, which cannot be an eigenfunction.  Thus, eigenvalues exist for $\lambda > 0$ for all values of $\lambda$ that satisfy
+\begin{equation}
+\label{eq:tk-transcendental}
+\sqrt{\lambda}\cos\sqrt{\lambda}L + h\sin\sqrt{\lambda}L = 0.
+\end{equation}
+The more elementary case $h = 0$ will be analyzed later.  Equation \eqref{eq:tk-transcendental} is a transcendental equation for the positive eigenvalues $\lambda$ (if $h \neq 0$).  In order to solve \eqref{eq:tk-transcendental}, it is convenient to divide by $\cos\sqrt{\lambda}L$ to obtain an expression for $\tan\sqrt{\lambda}L$:
+\begin{equation}
+\label{eq:tk-tan}
+\boxed{\tan\sqrt{\lambda}L = -\frac{\sqrt{\lambda}}{h}.}
+\end{equation}
+We are allowed to divide by $\cos\sqrt{\lambda}L$ because it is not zero [if $\cos\sqrt{\lambda}L = 0$, then $\sin\sqrt{\lambda}L \neq 0$ and \eqref{eq:tk-transcendental} would not be satisfied].  We could have obtained an expression for cotangent rather than tangent by dividing \eqref{eq:tk-transcendental} by $\sin\sqrt{\lambda}L$, but we are presuming that the reader feels more comfortable with the tangent function.
+
+\paragraph{Graphical technique ($\lambda > 0$).}
+Equation \eqref{eq:tk-tan} is a transcendental equation.  We cannot solve it exactly.  However, let us describe a \textit{graphical technique} to obtain information about the eigenvalues.  In order to graph the solution of a transcendental equation, we introduce an artificial coordinate $z$.  Let
+\begin{equation}
+\label{eq:tk-z-tan}
+z = \tan\sqrt{\lambda}L
+\end{equation}
+and thus also
+\begin{equation}
+\label{eq:tk-z-line}
+z = -\frac{\sqrt{\lambda}}{h}.
+\end{equation}
+Now the simultaneous solution of \eqref{eq:tk-z-tan} and \eqref{eq:tk-z-line} (i.e., their points of intersection) corresponds to solutions of \eqref{eq:tk-tan}.  Equation \eqref{eq:tk-z-tan} is a pure tangent function (not compressed) as a function of $\sqrt{\lambda}L$, where $\sqrt{\lambda}L > 0$ since $\lambda > 0$.  We sketch \eqref{eq:tk-z-tan} in Fig.~\ref{fig:5.8.1}.  We note that the tangent function is periodic with period $\pi$; it is zero at $\sqrt{\lambda}L = 0, \pi, 2\pi$, and so on, and it approaches $\pm\infty$ as $\sqrt{\lambda}L$ approaches $\pi/2, 3\pi/2, 5\pi/2$, and so on.  We will intersect the tangent function with \eqref{eq:tk-z-line}.  Since we are sketching our curves as functions of $\sqrt{\lambda}L$, we will express \eqref{eq:tk-z-line} as a function of $\sqrt{\lambda}L$.  This is easily done by multiplying the numerator and denominator of \eqref{eq:tk-z-line} by $L$:
+\begin{equation}
+\label{eq:tk-z-line-scaled}
+z = -\frac{\sqrt{\lambda}L}{hL}.
+\end{equation}
+As a function of $\sqrt{\lambda}L$, \eqref{eq:tk-z-line-scaled} is a straight line with slope $-1/hL$.  However, this line is sketched quite differently depending on whether $h > 0$ (physical case) or $h < 0$ (nonphysical case).
+
+\paragraph{Positive eigenvalues (physical case, $h > 0$).}
+The intersection of the two curves is sketched in Fig.~\ref{fig:5.8.1} for the physical case ($h > 0$).  There are an infinite number of intersections; each corresponds to a positive eigenvalue.  (We exclude $\sqrt{\lambda}L = 0$ since we have assumed throughout that $\lambda > 0$.)  The eigenfunctions are $\phi = \sin\sqrt{\lambda}x$, where the allowable eigenvalues are determined graphically.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch05/fig_5_8_1.png}
+\caption{Graphical determination of positive eigenvalues ($h > 0$).}
+\label{fig:5.8.1}
+\end{figure}
+
+We cannot determine these eigenvalues exactly.  However, we know from Fig.~\ref{fig:5.8.1} that
+\begin{align}
+\label{eq:tk-bound1}
+\frac{\pi}{2} &< \sqrt{\lambda_1}L < \pi, \\
+\label{eq:tk-bound2}
+\frac{3\pi}{2} &< \sqrt{\lambda_2}L < 2\pi,
+\end{align}
+and so on.  It is interesting to note that as $n$ increases, the intersecting points more closely approach the position of the vertical portions of the tangent function.  We thus are able to obtain the following approximate (asymptotic) formula for the eigenvalues:
+\begin{equation}
+\label{eq:tk-asymptotic}
+\sqrt{\lambda_n}L \sim \left(n - \frac{1}{2}\right)\pi
+\end{equation}
+as $n \to \infty$.  This becomes more and more accurate as $n \to \infty$.  An asymptotic formula for the large eigenvalues similar to \eqref{eq:tk-asymptotic} exists even for cases where the differential equation cannot be explicitly solved.  We will discuss this in Section~\ref{sec:sl-large-eigen}.
+
+To obtain accurate values, a numerical method such as Newton's method (as often described in elementary calculus texts) can be used.  A practical scheme is to use Newton's numerical method for the first few roots, until you reach a root whose solution is reasonably close to the asymptotic formula, \eqref{eq:tk-asymptotic} (or improvements to this elementary asymptotic formula).  Then, for larger roots, the asymptotic formula \eqref{eq:tk-asymptotic} is accurate enough.
+
+\paragraph{Positive eigenvalues (nonphysical case, $h < 0$).}
+The nonphysical case ($h < 0$) also will be a good illustration of various general ideas concerning Sturm--Liouville eigenvalue problems.  If $h < 0$, positive eigenvalues again are determined by graphically sketching \eqref{eq:tk-tan}, $\tan\sqrt{\lambda}L = -\sqrt{\lambda}/h$.  The straight line (here with positive slope) must intersect the tangent function.  It intersects the ``first branch'' of the tangent function only if the slope of the straight line is greater than~1.  We are using the property of the tangent function that its slope is~1 at $x = 0$ and its slope increases along the first branch.  Thus, if $h < 0$ (the nonphysical case), there are two major subcases ($-1/hL > 1$ and $0 < -1/hL < 1$) and a minor subcase ($-1/hL = 1$).  We sketch these three cases in Fig.~\ref{fig:5.8.2}.  In each of these three figures, there are an infinite number of intersections, corresponding to an infinite number of positive eigenvalues.  The eigenfunctions are again $\sin\sqrt{\lambda}x$.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch05/fig_5_8_2.png}
+\caption{Graphical determination of positive eigenvalues: (a) $0 > hL > -1$; (b) $hL = -1$; (c) $hL < -1$.}
+\label{fig:5.8.2}
+\end{figure}
+
+In these cases, the graphical solutions also show that the large eigenvalues are approximately located at the singularities of the tangent function.  Equation \eqref{eq:tk-asymptotic} is again asymptotic; the larger is $n$, the more accurate is \eqref{eq:tk-asymptotic}.
+
+\paragraph{Zero eigenvalue.}
+Is $\lambda = 0$ an eigenvalue for \eqref{eq:tk-sl}--\eqref{eq:tk-sl-bc2}?  Equation \eqref{eq:tk-pos-soln} is not the general solution of \eqref{eq:tk-sl} if $\lambda = 0$.  Instead, the eigenfunction must be a straight line:
+\begin{equation}
+\label{eq:tk-zero-phi}
+\phi = c_1 + c_2 x;
+\end{equation}
+the boundary condition $\phi(0) = 0$ makes $c_1 = 0$, insisting that the straight line goes through the origin,
+\begin{equation}
+\label{eq:tk-zero-phi2}
+\phi = c_2 x.
+\end{equation}
+Finally, $d\phi/dx(L) + h\phi(L) = 0$ implies that
+\begin{equation}
+\label{eq:tk-zero-cond}
+c_2(1 + hL) = 0.
+\end{equation}
+If $hL \neq -1$ (including all physical situations, $h > 0$), it follows that $c_2 = 0$, $\phi = 0$, and thus $\lambda = 0$ is not an eigenvalue.  However, if $hL = -1$, then from \eqref{eq:tk-zero-cond} $c_2$ is arbitrary, and $\lambda = 0$ is an eigenvalue with eigenfunction $x$.
+
+\paragraph{Negative eigenvalues.}
+We do not expect any negative eigenvalues in the physical situations [see \eqref{eq:tk-time-heat} and \eqref{eq:tk-time-wave}].  If $\lambda < 0$, we introduce $s = -\lambda$, so that $s > 0$.  Then \eqref{eq:tk-sl} becomes
+\begin{equation}
+\label{eq:tk-neg-ode}
+\odd{\phi}{x} = s\phi.
+\end{equation}
+The zero boundary condition at $x = 0$ suggests that it is more convenient to express the general solution of \eqref{eq:tk-neg-ode} in terms of the hyperbolic functions:
+\begin{equation}
+\label{eq:tk-neg-soln}
+\phi = c_1\cosh\sqrt{s}x + c_2\sinh\sqrt{s}x.
+\end{equation}
+Only the hyperbolic sines are needed, since $\phi(0) = 0$ implies that $c_1 = 0$:
+\begin{equation}
+\label{eq:tk-neg-sinh}
+\begin{aligned}
+\phi &= c_2\sinh\sqrt{s}x \\
+\od{\phi}{x} &= c_2\sqrt{s}\cosh\sqrt{s}x.
+\end{aligned}
+\end{equation}
+The boundary condition of the third kind, $d\phi/dx(L) + h\phi(L) = 0$, implies that
+\begin{equation}
+\label{eq:tk-neg-trans}
+c_2(\sqrt{s}\cosh\sqrt{s}L + h\sinh\sqrt{s}L) = 0.
+\end{equation}
+At this point it is apparent that the analysis for $\lambda < 0$ directly parallels that which occurred for $\lambda > 0$ (with hyperbolic functions replacing the trigonometric functions).  Thus, since $c_2 \neq 0$,
+\begin{equation}
+\label{eq:tk-tanh}
+\boxed{\tanh\sqrt{s}L = -\frac{\sqrt{s}}{h} = -\frac{\sqrt{s}L}{hL}.}
+\end{equation}
+
+\paragraph{Graphical solution for negative eigenvalues.}
+Negative eigenvalues are determined by the graphical solution of transcendental equation \eqref{eq:tk-tanh}.  Here properties of the hyperbolic tangent function are quite important.  $\tanh$ is sketched as a function of $\sqrt{s}L$ in Fig.~\ref{fig:5.8.3}.  Let us note some properties of the $\tanh$ function that follow from its definition:
+\[
+\tanh x = \frac{\sinh x}{\cosh x} = \frac{e^x - e^{-x}}{e^x + e^{-x}}.
+\]
+As $\sqrt{s}L \to \infty$, $\tanh\sqrt{s}L$ asymptotes to~1.  We will also need to note that the slope\footnote{$d/dx\,\tanh x = \operatorname{sech}^2 x = 1/\cosh^2 x$.} of $\tanh$ equals~1 at $\sqrt{s}L = 0$ and decreases toward zero as $\sqrt{s}L \to \infty$.  This function must be intersected with the straight line implied by the r.h.s.\ of \eqref{eq:tk-tanh}.  The same four cases appear, as sketched in Fig.~\ref{fig:5.8.3}.  In physical situations ($h > 0$), there are no intersections with $\sqrt{s}L > 0$; there are no negative eigenvalues in the physical situations ($h > 0$).  All the eigenvalues are nonnegative.  However, if $hL < -1$ (and only in these situations), then there is exactly one intersection; there is one negative eigenvalue (if $hL < -1$).  If we denote the intersection by $s = s_1$, the negative eigenvalue is $\lambda = -s_1$, and the corresponding eigenfunction is $\phi = \sinh\sqrt{s_1}x$.  In nonphysical situations, there are a finite number of negative eigenvalues (one if $hL < -1$, none otherwise).
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch05/fig_5_8_3.png}
+\caption{Graphical determination of negative eigenvalues.}
+\label{fig:5.8.3}
+\end{figure}
+
+\paragraph{Special case $h = 0$.}
+Although if $h = 0$, the boundary conditions are not of the third kind, the eigenvalues and eigenfunctions are still of interest.  If $h = 0$, then all eigenvalues are positive [see \eqref{eq:tk-zero-cond} and \eqref{eq:tk-neg-trans}] and easily explicitly determined from \eqref{eq:tk-transcendental}:
+\[
+\lambda = \left[\frac{(n - 1/2)\pi}{L}\right]^2, \quad n = 1, 2, 3\ldots.
+\]
+The eigenfunctions are $\sin\sqrt{\lambda}x$.
+
+\paragraph{Summary.}
+We have shown there to be five somewhat different cases depending on the value of the parameter $h$ in the boundary condition.  Table~\ref{tab:tk-summary} summarizes the eigenvalues and eigenfunctions for these cases.
+
+\begin{table}[H]
+\centering
+\caption{Eigenfunctions for \eqref{eq:tk-sl}--\eqref{eq:tk-sl-bc2}}
+\label{tab:tk-summary}
+\begin{tabular}{@{}llccc@{}}
+\toprule
+& & $\lambda > 0$ & $\lambda = 0$ & $\lambda < 0$ \\
+\midrule
+Physical & $h > 0$ & $\sin\sqrt{\lambda}x$ & & \\[6pt]
+& $h = 0$ & $\sin\sqrt{\lambda}x$ & & \\[6pt]
+& $-1 < hL < 0$ & $\sin\sqrt{\lambda}x$ & & \\[6pt]
+Nonphysical & $hL = -1$ & $\sin\sqrt{\lambda}x$ & $x$ & \\[6pt]
+& $hL < -1$ & $\sin\sqrt{\lambda}x$ & & $\sinh\sqrt{s_1}x$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+In some sense there are only three cases: If $-1 < hL$, all the eigenvalues are positive; if $hL = -1$, there are no negative eigenvalues, but zero is an eigenvalue; and if $hL < -1$, there are still an infinite number of positive eigenvalues, but there is also one negative one.
+
+\paragraph{Rayleigh quotient.}
+We have shown by explicitly solving the eigenvalue problem,
+\begin{align}
+\label{eq:tk-rq-ode}
+\odd{\phi}{x} + \lambda\phi &= 0 \\
+\label{eq:tk-rq-bc1}
+\phi(0) &= 0 \\
+\label{eq:tk-rq-bc2}
+\od{\phi}{x}(L) + h\phi(L) &= 0,
+\end{align}
+that in physical problems ($h \ge 0$) all the eigenvalues are positive, while in nonphysical problems ($h < 0$) there may or may not be negative eigenvalues.  We will show that the Rayleigh quotient is consistent with this result:
+\begin{equation}
+\label{eq:tk-rq}
+\lambda = \frac{\displaystyle -p\phi\od{\phi}{x}\bigg|_a^b + \int_a^b \left[p\!\left(\od{\phi}{x}\right)^{\!2} - q\phi^2\right]\dx}{\displaystyle\int_a^b \phi^2\sigma\dx} = \frac{\displaystyle h\phi^2(L) + \int_0^L \left(\od{\phi}{x}\right)^{\!2}\dx}{\displaystyle\int_0^L \phi^2\dx},
+\end{equation}
+since from \eqref{eq:tk-rq-ode}, $p(x) = 1$, $\sigma(x) = 1$, $q(x) = 0$, and $a = 0$, $b = L$, and where the boundary conditions \eqref{eq:tk-rq-bc1} and \eqref{eq:tk-rq-bc2} have been utilized to simplify the boundary terms in the Rayleigh quotient.  If $h \ge 0$ (the physical cases), it readily follows from \eqref{eq:tk-rq} that the eigenvalues must be positive, exactly what we concluded by doing the explicit calculations.  However, if $h < 0$ (nonphysical case), the numerator of the Rayleigh quotient contains a negative term $h\phi^2(L)$ and a positive term $\int_0^L (d\phi/dx)^2\dx$.  It is impossible to make any conclusions concerning the sign of $\lambda$.  Thus, it may be possible to have negative eigenvalues if $h < 0$.  However, we are unable to conclude that there must be negative eigenvalues.  A negative eigenvalue occurs only when $|h\phi^2(L)| > \int_0^L (d\phi/dx)^2\dx$.  From the Rayleigh quotient we cannot determine when this happens.  It is only from an explicit calculation that we know that a negative eigenvalue occurs only if $hL < -1$.
+
+\paragraph{Zeros of eigenfunctions.}
+The Sturm--Liouville eigenvalue problem that we have been discussing in this section,
+\begin{equation}
+\label{eq:tk-zeros-prob}
+\begin{aligned}
+\odd{\phi}{x} + \lambda\phi &= 0 \\
+\phi(0) &= 0 \\
+\od{\phi}{x}(L) + h\phi(L) &= 0,
+\end{aligned}
+\end{equation}
+is a good example for illustrating the general theorem concerning the zeros of the eigenfunctions.  The theorem states that the eigenfunction corresponding to the lowest eigenvalue has no zeros in the interior.  More generally, the $n$th eigenfunction has $n-1$ zeros.
+
+There are five cases of \eqref{eq:tk-zeros-prob} worthy of discussion: $h > 0$, $h = 0$, $-1 < hL < 0$, $hL = -1$, $hL < -1$.  However, the line of reasoning used in investigating the zeros of the eigenfunctions is quite similar in all cases.  For that reason we will analyze only one case ($hL < -1$) and leave the others for the exercises.  In this case ($hL < -1$) there is one negative eigenvalue (with corresponding eigenfunction $\sinh\sqrt{s_1}x$) and an infinite number of positive eigenvalues (with corresponding eigenfunctions $\sin\sqrt{\lambda}x$).  We will need to analyze carefully the positive eigenvalues and so we reproduce Fig.~\ref{fig:5.8.2}c (as Fig.~\ref{fig:5.8.4}), used for the graphical determination of the eigenvalues in $hL < -1$.  We designate the intersections starting from $\lambda_n$, $n = 2$, since the lowest eigenvalue is negative, $\lambda_1 = -s_1$.  Graphically, we are able to obtain bounds for these eigenvalues:
+\begin{align}
+\label{eq:tk-zeros-bound1}
+\pi &< \sqrt{\lambda_2}L < \frac{3\pi}{2} \\
+\label{eq:tk-zeros-bound2}
+2\pi &< \sqrt{\lambda_3}L < \frac{5\pi}{2},
+\end{align}
+which is easily generalized as
+\begin{equation}
+\label{eq:tk-zeros-gen}
+(n-1)\pi < \sqrt{\lambda_n}L < (n - 1/2)\pi, \quad n \ge 2.
+\end{equation}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch05/fig_5_8_4.png}
+\caption{Positive eigenvalues ($hL < -1$).}
+\label{fig:5.8.4}
+\end{figure}
+
+Let us investigate zeros of the eigenfunctions.  The lowest eigenfunction is $\sinh\sqrt{s_1}x$.  Since the hyperbolic sine function is never zero (except at the end $x = 0$), we have verified one part of the theorem.  The eigenfunction corresponding to the lowest eigenvalue does not have a zero in the interior.  The other eigenfunctions are $\sin\sqrt{\lambda_n}x$, sketched in Fig.~\ref{fig:5.8.5}.  In this figure the endpoint $x = 0$ is clearly marked, but $x = L$ depends on $\lambda$.  For example, for $\lambda_3$, the endpoint $x = L$ occurs at $\sqrt{\lambda_3}L$, which is sketched in Fig.~\ref{fig:5.8.5} due to \eqref{eq:tk-zeros-bound2}.  As $x$ varies from 0 to $L$, the eigenfunction is sketched in Fig.~\ref{fig:5.8.5} up to the dashed line.  This eigenfunction has two zeros ($\sqrt{\lambda_3}x = \pi$ and $2\pi$).  This reasoning can be used for any of these eigenfunctions.  Thus, the number of zeros for the $n$th eigenfunction corresponding to $\lambda_n$ is $n-1$, exactly as the general theorem specifies.  Our theorem does \textit{not} state that the eigenfunction corresponding to the lowest \textit{positive} eigenvalue has no zeros.  Instead, \textbf{the eigenfunction corresponding to the lowest eigenvalue has no zeros}.  To repeat, in this example the lowest eigenvalue is negative and \textit{its} corresponding eigenfunction has no zeros.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch05/fig_5_8_5.png}
+\caption{Zeros of the eigenfunctions $\sin\sqrt{\lambda}x$.}
+\label{fig:5.8.5}
+\end{figure}
+
+\paragraph{Heat flow with a nonphysical boundary condition.}
+To understand further the boundary condition of the third kind, let us complete the investigation of one example.  We consider heat flow in a uniform rod:
+\begin{equation}
+\label{eq:tk-heat-example}
+\begin{aligned}
+\text{PDE:}\quad & \pd{u}{t} = k\pdd{u}{x} \\
+\text{BC1:}\quad & u(0,t) = 0 \\
+\text{BC2:}\quad & \pd{u}{x}(L,t) = -hu(L,t) \\
+\text{IC:}\quad & u(x,0) = f(x).
+\end{aligned}
+\end{equation}
+We assume that the temperature is zero at $x = 0$ and that the ``nonphysical'' case ($h < 0$) of the boundary condition of the third kind is imposed at $x = L$.  Thermal energy flows into the rod at $x = L$ [if $u(L,t) > 0$].
+
+Separating variables,
+\begin{equation}
+u(x,t) = \phi(x)G(t),
+\end{equation}
+yields
+\begin{align}
+\label{eq:tk-heat-G}
+& \boxed{\od{G}{t} = -\lambda kG} \\[6pt]
+\label{eq:tk-heat-phi}
+& \boxed{\odd{\phi}{x} + \lambda\phi = 0} \\[6pt]
+\label{eq:tk-heat-bc1}
+& \boxed{\phi(0) = 0} \\[6pt]
+\label{eq:tk-heat-bc2}
+& \boxed{\od{\phi}{x}(L) + h\phi(L) = 0.}
+\end{align}
+The time part is an exponential, $G = ce^{-\lambda kt}$.  Here, we consider only the case in which
+\begin{center}
+\fbox{\parbox{0.8\textwidth}{
+$hL < -1.$
+}}
+\end{center}
+
+Then there exists one negative eigenvalue ($\lambda_1 = -s_1$), with corresponding eigenfunction $\sinh\sqrt{s_1}x$, where $s_1$ is determined as the unique solution of $\tanh\sqrt{s}L = -\sqrt{s}/h$.  \textit{The time part exponentially grows.}  All the other eigenvalues $\lambda_n$ are positive.  For these the eigenfunctions are $\sin\sqrt{\lambda_n}x$ (where $\tan\sqrt{\lambda}x = -\sqrt{\lambda}/h$ has an infinite number of solutions), while the corresponding time-dependent part exponentially decays, being proportional to $e^{-\lambda kt}$.  The forms of the product solutions are $\sin\sqrt{\lambda}x\,e^{-\lambda kt}$ and $\sinh\sqrt{s_1}x\,e^{s_1kt}$.  Here, the somewhat ``abstract'' notation may be considered more convenient; the product solutions are $\phi_n(x)e^{-\lambda_n kt}$, where the eigenfunctions are
+\[
+\phi_n(x) = \begin{cases} \sinh\sqrt{s_1}x & n = 1 \\ \sin\sqrt{\lambda_n}x & n > 1. \end{cases}
+\]
+According to the principle of superposition, we attempt to satisfy the initial value problem with a linear combination of \textit{all} possible production solutions:
+\[
+u(x,t) = \sum_{n=1}^{\infty} a_n\phi_n(x)e^{-\lambda_n kt}.
+\]
+The initial condition, $u(x,0) = f(x)$, implies that
+\[
+f(x) = \sum_{n=1}^{\infty} a_n\phi_n(x).
+\]
+Since the coefficient $\sigma(x) = 1$ in \eqref{eq:tk-heat-phi}, the eigenfunctions $\phi_n(x)$ are orthogonal with weight~1.  Thus, we know that the generalized Fourier coefficients of the initial condition $f(x)$ are
+\[
+a_n = \frac{\displaystyle\int_0^L f(x)\phi_n(x)\dx}{\displaystyle\int_0^L \phi_n^2\dx} = \begin{cases} \displaystyle\int_0^L f(x)\sinh\sqrt{s_1}x\dx \bigg/ \int_0^L \sinh^2\sqrt{s_1}x\dx & n = 1 \\[12pt] \displaystyle\int_0^L f(x)\sin\sqrt{\lambda_n}x\dx \bigg/ \int_0^L \sin^2\sqrt{\lambda_n}x\dx & n \ge 2. \end{cases}
+\]
+In particular, we could show $\int_0^L \sin^2\sqrt{\lambda_n}x\dx \neq L/2$.  Perhaps we should emphasize one additional point.  We have utilized the theorem that states that eigenfunctions corresponding to different eigenvalues are orthogonal; it is guaranteed that $\int_0^L \sin\sqrt{\lambda_n}x\sin\sqrt{\lambda_m}x\dx = 0$ ($n \neq m$) and $\int_0^L \sin\sqrt{\lambda_n}x\sinh\sqrt{s_1}x\dx = 0$.  We do not need to verify these by integration (although it can be done).
+
+Other problems with boundary conditions of the third kind appear in the Exercises.
+
+\begin{exercises}{5.8}
+
+\item Consider
+\[
+\pd{u}{t} = k\pdd{u}{x}
+\]
+subject to $u(0,t) = 0$, $\pd{u}{x}(L,t) = -hu(L,t)$, and $u(x,0) = f(x)$.
+\begin{enumerate}
+\item Solve if $hL > -1$.
+\item Solve if $hL = -1$.
+\end{enumerate}
+
+\item Consider the eigenvalue problem \eqref{eq:tk-sl}--\eqref{eq:tk-sl-bc2}.  Show that the $n$th eigenfunction has $n-1$ zeros in the interior if
+\begin{enumerate}
+\item $h > 0$ \qquad\qquad (b) $h = 0$
+\item\starred\ $-1 < hL < 0$ \qquad (d) $hL = -1$
+\end{enumerate}
+
+\item Consider the eigenvalue problem
+\[
+\odd{\phi}{x} + \lambda\phi = 0,
+\]
+subject to $\od{\phi}{x}(0) = 0$ and $\od{\phi}{x}(L) + h\phi(L) = 0$ with $h > 0$.
+\begin{enumerate}
+\item Prove that $\lambda > 0$ (without solving the differential equation).
+\item\starred\ Determine all eigenvalues graphically.  Obtain upper and lower bounds.  Estimate the large eigenvalues.
+\item Show that the $n$th eigenfunction has $n - 1$ zeros in the interior.
+\end{enumerate}
+
+\item Redo Exercise~5.8.3 parts (b) and (c) only if $h < 0$.
+
+\item Consider
+\[
+\pd{u}{t} = k\pdd{u}{x}
+\]
+with $\pd{u}{x}(0,t) = 0$, $\pd{u}{x}(L,t) = -hu(L,t)$, and $u(x,0) = f(x)$.
+\begin{enumerate}
+\item Solve if $h > 0$.
+\item Solve if $h < 0$.
+\end{enumerate}
+
+\item Consider (with $h > 0$)
+\[
+\pdd{u}{t} = c^2\pdd{u}{x}
+\]
+\begin{align*}
+\pd{u}{x}(0,t) - hu(0,t) &= 0, \qquad u(x,0) = f(x) \\
+\pd{u}{x}(L,t) &= 0, \qquad \pd{u}{t}(x,0) = g(x).
+\end{align*}
+[\textit{Hint}: Suppose it is known that if $u(x,t) = \phi(x)G(t)$, then
+\[
+\frac{1}{c^2G}\odd{G}{t} = \frac{1}{\phi}\odd{\phi}{x} = -\lambda.\,]
+\]
+\begin{enumerate}
+\item Show that there are an infinite number of different frequencies of oscillation.
+\item Estimate the large frequencies of oscillation.
+\item Solve the initial value problem.
+\end{enumerate}
+
+\item\starred\ Consider the eigenvalue problem
+\[
+\odd{\phi}{x} + \lambda\phi = 0 \quad \text{subject to} \quad \phi(0) = 0 \quad \text{and} \quad \phi(\pi) - 2\od{\phi}{x}(0) = 0.
+\]
+\begin{enumerate}
+\item Show that usually
+\[
+\int_0^{\pi}\left(u\odd{v}{x} - v\odd{u}{x}\right)\dx \neq 0
+\]
+for any two functions $u$ and $v$ satisfying these homogeneous boundary conditions.
+\item Determine all positive eigenvalues.
+\item Determine all negative eigenvalues.
+\item Is $\lambda = 0$ an eigenvalue?
+\item Is it possible that there are other eigenvalues besides those determined in parts (b)--(d)?  \textit{Briefly} explain.
+\end{enumerate}
+
+\item Consider the boundary value problem
+\[
+\odd{\phi}{x} + \lambda\phi = 0 \quad \text{with}\quad \begin{aligned} \phi(0) - \od{\phi}{x}(0) &= 0 \\ \phi(1) + \od{\phi}{x}(1) &= 0. \end{aligned}
+\]
+\begin{enumerate}
+\item Using the Rayleigh quotient, show that $\lambda \ge 0$.  Why is $\lambda > 0$?
+\item Prove that eigenfunctions corresponding to different eigenvalues are orthogonal.
+\item\starred\ Show that
+\[
+\tan\sqrt{\lambda} = \frac{2\sqrt{\lambda}}{\lambda - 1}.
+\]
+Determine the eigenvalues graphically.  Estimate the large eigenvalues.
+\end{enumerate}
+
+\item Consider the eigenvalue problem
+\[
+\odd{\phi}{x} + \lambda\phi = 0 \quad \text{with} \quad \phi(0) = \od{\phi}{x}(0) \quad \text{and} \quad \phi(1) = \beta\od{\phi}{x}(1).
+\]
+For what values (if any) of $\beta$ is $\lambda = 0$ an eigenvalue?
+
+\item Consider the special case of the eigenvalue problem of Section~\ref{sec:sl-third-kind}:
+\[
+\odd{\phi}{x} + \lambda\phi = 0 \quad \text{with} \quad \phi(0) = 0 \quad \text{and} \quad \od{\phi}{x}(1) + \phi(1) = 0.
+\]
+\begin{enumerate}
+\item\starred\ Determine the lowest eigenvalue to at least two or three significant figures using tables or a calculator.
+\item\starred\ Determine the lowest eigenvalue using a root-finding algorithm (e.g., Newton's method) on a computer.
+\item Compare either part (a) or (b) to the bound obtained using the Rayleigh quotient [see Exercise~5.6.1(c)].
+\end{enumerate}
+
+\item Determine all negative eigenvalues for
+\[
+\odd{\phi}{x} + 5\phi = -\lambda\phi \quad \text{with} \quad \phi(0) = 0 \quad \text{and} \quad \phi(\pi) = 0.
+\]
+
+\item Consider $\partial^2u/\partial t^2 = c^2\partial^2u/\partial x^2$ with the boundary conditions
+\begin{align*}
+u &= 0 & \text{at } x &= 0 \\
+m\pdd{u}{t} &= -T_0\pd{u}{x} - ku & \text{at } x &= L.
+\end{align*}
+\begin{enumerate}
+\item Give a brief physical interpretation of the boundary conditions.
+\item Show how to determine the frequencies of oscillation.  Estimate the large frequencies of oscillation.
+\item \textit{Without} attempting to use the Rayleigh quotient, explicitly determine if there are any separated solutions that do not oscillate in time.  (\textit{Hint}: There are none.)
+\item Show that the boundary condition is \textit{not} self-adjoint: that is, show
+\[
+\int_0^L \left(u_n\odd{u_m}{x} - u_m\odd{u_n}{x}\right)\dx \neq 0
+\]
+even when $u_n$ and $u_m$ are eigenfunctions corresponding to different eigenvalues.
+\end{enumerate}
+
+\item\starred\ Simplify $\int_0^L \sin^2\sqrt{\lambda}x\dx$ when $\lambda$ is given by \eqref{eq:tk-tan}.
+
+\end{exercises}

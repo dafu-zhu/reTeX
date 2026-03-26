@@ -1,0 +1,287 @@
+% sec05_3.tex — Section 5.3: Sturm-Liouville Eigenvalue Problems
+\section{Sturm--Liouville Eigenvalue Problems}
+\label{sec:sl-eigenvalue}
+
+\subsection{General Classification}
+\label{subsec:sl-classification}
+
+\paragraph{Differential equation.}
+A boundary value problem consists of a linear homogeneous differential equation and corresponding linear homogeneous boundary conditions.  All of the differential equations for boundary value problems that have been formulated in this text can be put in the following form:
+\begin{equation}
+\label{eq:sl-general}
+\boxed{\frac{d}{d x}\left(p\od{\phi}{x}\right) + q\phi + \lambda\sigma\phi = 0,}
+\end{equation}
+where $\lambda$ is the eigenvalue.  Here the variable $x$ is defined on a finite interval $a < x < b$.  Four examples are as follows:
+\begin{enumerate}
+\item \textit{Simplest case}: $\displaystyle\odd{\phi}{x} + \lambda\phi = 0$; in which case, $p = 1$, $q = 0$, $\sigma = 1$.
+
+\item \textit{Heat flow in a nonuniform rod}: $\displaystyle\frac{d}{d x}\left(K_0\od{\phi}{x}\right) + \alpha\phi + \lambda c\rho\phi = 0$; in which case, $p = K_0$, $q = \alpha$, $\sigma = c\rho$.
+
+\item \textit{Vibrations of a nonuniform string}: $\displaystyle T_0\odd{\phi}{x} + \alpha\phi + \lambda\rho_0\phi = 0$; in which case, $p = T_0$ (constant), $q = \alpha$, $\sigma = \rho_0$ (see Exercise~5.3.1).
+
+\item \textit{Circularly symmetric heat flow}: $\displaystyle\frac{d}{d r}\left(r\od{\phi}{r}\right) + \lambda r\phi = 0$; here the independent variable $x = r$ and $p(x) = x$, $q(x) = 0$, $\sigma(x) = x$.
+\end{enumerate}
+
+Many interesting results are known concerning any equation in the form \eqref{eq:sl-general}.  Equation \eqref{eq:sl-general} is known as a \textbf{Sturm--Liouville differential equation}, named after two famous mathematicians active in the mid-1800s who studied it.
+
+\paragraph{Boundary conditions.}
+The linear homogeneous boundary conditions that we have studied are of the form to follow.  We also introduce some mathematical terminology:
+
+\begin{table}[H]
+\centering
+\begin{tabular}{@{}llll@{}}
+\toprule
+& Heat flow & Vibrating string & Mathematical terminology \\
+\midrule
+$\phi = 0$ & Fixed (zero) temperature & Fixed (zero) displacement & First kind or Dirichlet condition \\[6pt]
+$\displaystyle\od{\phi}{x} = 0$ & Insulated & Free & Second kind or Neumann condition \\[6pt]
+$\displaystyle\od{\phi}{x} = \pm h\phi$ & (Homogeneous) Newton's & (Homogeneous) Elastic & Third kind or Robin condition \\
+$\begin{pmatrix} +\text{left end} \\ -\text{right end}\end{pmatrix}$ & law of cooling $0^\circ$ outside & boundary condition & \\
+& temperature, $h = H/K_0$, $h > 0$ & $h = k/T_0$, $h > 0$ & \\
+& (physical) & (physical) & \\[6pt]
+$\phi(-L) = \phi(L)$ & Perfect thermal contact & --- & Periodicity condition \\
+$\displaystyle\od{\phi}{x}(-L) = \od{\phi}{x}(L)$ & & & (example of mixed type) \\[6pt]
+$|\phi(0)| < \infty$ & Bounded temperature & --- & Singularity condition \\
+\bottomrule
+\end{tabular}
+\label{tab:bc-types}
+\end{table}
+
+\subsection{Regular Sturm--Liouville Eigenvalue Problem}
+\label{subsec:regular-sl}
+
+A regular Sturm--Liouville eigenvalue problem consists of the Sturm--Liouville differential equation,
+\begin{equation}
+\label{eq:sl-regular}
+\boxed{\frac{d}{d x}\left(p(x)\od{\phi}{x}\right) + q(x)\phi + \lambda\sigma(x)\phi = 0, \qquad a < x < b,}
+\end{equation}
+subject to the boundary conditions that we have discussed (excluding periodic and singular cases):
+\begin{equation}
+\label{eq:sl-bc}
+\boxed{\begin{aligned}
+\beta_1\phi(a) + \beta_2\od{\phi}{x}(a) &= 0 \\
+\beta_3\phi(b) + \beta_4\od{\phi}{x}(b) &= 0,
+\end{aligned}}
+\end{equation}
+where $\beta_i$ are real.  In addition, to be called regular, the coefficients $p$, $q$, and $\sigma$ must be real and continuous everywhere (including the endpoints) and $p > 0$ and $\sigma > 0$ everywhere (also including the endpoints).  For the regular Sturm--Liouville eigenvalue problem, many important general theorems exist.  In Section~\ref{sec:sl-selfadjoint} we will prove these results, and in Sections~\ref{sec:sl-vibrating-string} and \ref{sec:sl-third-kind} we will develop some more interesting examples that illustrate the significance of the general theorems.
+
+\paragraph{Statement of theorems.}
+At first let us just state (in one place) all the theorems we will discuss more fully later (and in some cases prove).  For any regular Sturm--Liouville problem, all of the following theorems are valid:
+
+\begin{center}
+\fbox{\parbox{0.8\textwidth}{
+\begin{enumerate
+}}
+\end{center}
+\item All the eigenvalues $\lambda$ are real.
+\item There exist an infinite number of eigenvalues:
+\[
+\lambda_1 < \lambda_2 < \cdots < \lambda_n < \lambda_{n+1} < \cdots.
+\]
+\begin{enumerate}
+\item There is a smallest eigenvalue, usually denoted $\lambda_1$.
+\item There is not a largest eigenvalue and $\lambda_n \to \infty$ as $n \to \infty$.
+\end{enumerate}
+\item Corresponding to each eigenvalue $\lambda_n$, there is an eigenfunction, denoted $\phi_n(x)$ (which is unique to within an arbitrary multiplicative constant).  $\phi_n(x)$ has exactly $n-1$ zeros for $a < x < b$.
+\item The eigenfunctions $\phi_n(x)$ form a ``complete'' set, meaning that any piecewise smooth function $f(x)$ can be represented by a generalized Fourier series of the eigenfunctions:
+\[
+f(x) \sim \sum_{n=1}^{\infty} a_n\phi_n(x).
+\]
+Furthermore, this infinite series converges to $[f(x{+}) + f(x{-})]/2$ for $a < x < b$ (if the coefficients $a_n$ are properly chosen).
+\item Eigenfunctions belonging to different eigenvalues are orthogonal relative to the weight function $\sigma(x)$.  In other words,
+\[
+\int_a^b \phi_n(x)\phi_m(x)\sigma(x)\dx = 0 \quad \text{if } \lambda_n \neq \lambda_m.
+\]
+\item Any eigenvalue can be related to its eigenfunction by the \textbf{Rayleigh quotient}:
+\[
+\lambda = \frac{-p\phi\,d\phi/dx\big|_a^b + \int_a^b [p(d\phi/dx)^2 - q\phi^2]\dx}{\int_a^b \phi^2\sigma\dx},
+\]
+where the boundary conditions may somewhat simplify this expression.
+\end{enumerate}}
+
+It should be mentioned that for Sturm--Liouville eigenvalue problems that are not ``regular,'' these theorems may be valid.
+
+\subsection{Example and Illustration of Theorems}
+\label{subsec:sl-illustration}
+
+We will individually illustrate the meaning of these theorems (before proving many of them in Section~\ref{sec:sl-selfadjoint}) by referring to the simplest example of a regular Sturm--Liouville problem:
+\begin{equation}
+\label{eq:simple-sl}
+\boxed{\begin{aligned}
+\odd{\phi}{x} + \lambda\phi &= 0 \\
+\phi(0) &= 0 \\
+\phi(L) &= 0.
+\end{aligned}}
+\end{equation}
+
+The constant-coefficient differential equation has zero boundary conditions at both ends.  As we already know, the eigenvalues and corresponding eigenfunctions are
+\[
+\lambda_n = \left(\frac{n\pi}{L}\right)^2 \quad\text{with}\quad \phi_n(x) = \sin\frac{n\pi x}{L}, \quad n = 1, 2, 3, \ldots,
+\]
+giving rise to a Fourier sine series.
+
+\paragraph{1.\ Real eigenvalues.}
+Our theorem claims that all eigenvalues $\lambda$ of a regular Sturm--Liouville problem are real.  Thus, the eigenvalues of \eqref{eq:simple-sl} should all be real.  We know that the eigenvalues are $(n\pi/L)^2$, $n = 1, 2, \ldots$\,.  However, in determining this result we analyzed three cases: $\lambda > 0$, $\lambda = 0$, and $\lambda < 0$.  We did not bother to look for complex eigenvalues because it is a relatively difficult task and we would have obtained no additional eigenvalues other than $(n\pi/L)^2$.  This theorem (see Section~\ref{sec:sl-selfadjoint} for its proof) is thus very useful.  It guarantees that we do not even have to consider $\lambda$ being complex.
+
+\paragraph{2.\ Ordering of eigenvalues.}
+There is an infinite number of eigenvalues for \eqref{eq:simple-sl}, namely, $\lambda = (n\pi/L)^2$ for $n = 1, 2, 3, \ldots$\,.  Sometimes we use the notation $\lambda_n = (n\pi/L)^2$.  Note that there is a smallest eigenvalue, $\lambda_1 = (\pi/L)^2$, but no largest eigenvalue, since $\lambda_n \to \infty$ as $n \to \infty$.  Our theorem claims that this idea is valid for any regular Sturm--Liouville problem.
+
+\paragraph{3.\ Zeros of eigenfunctions.}
+For the eigenvalues of \eqref{eq:simple-sl}, $\lambda_n = (n\pi/L)^2$, the eigenfunctions are known to be $\sin n\pi x/L$.  We use the notation $\phi_n(x) = \sin n\pi x/L$.  The eigenfunction is unique (to within an arbitrary multiplicative constant).
+
+An important and interesting aspect of this theorem is that we claim that for all regular Sturm--Liouville problems, the $n$th eigenfunction has exactly $(n-1)$ zeros, not counting the endpoints.  The eigenfunction $\phi_1$ corresponding to the smallest eigenvalue ($\lambda_1$, $n = 1$) should have no zeros in the interior.  The eigenfunction $\phi_2$ corresponding to the next-smallest eigenvalue ($\lambda_2$, $n = 2$) should have exactly one zero in the interior, and so on.  We use our eigenvalue problem \eqref{eq:simple-sl} to illustrate these properties.  The eigenfunctions $\phi_n(x) = \sin n\pi x/L$ are sketched in Fig.~\ref{fig:5.3.1} for $n = 1, 2, 3$.  Note that the theorem is verified (since we count zeros only at interior points); $\sin\pi x/L$ has no zeros between $x = 0$ and $x = L$, $\sin 2\pi x/L$ has one zero between $x = 0$ and $x = L$, and $\sin 3\pi x/L$ has two zeros between $x = 0$ and $x = L$.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch05/fig_5_3_1.png}
+\caption{Zeros of eigenfunctions $\sin n\pi x/L$.}
+\label{fig:5.3.1}
+\end{figure}
+
+\paragraph{4.\ Series of eigenfunctions.}
+According to this theorem, the eigenfunctions can always be used to represent any piecewise smooth function $f(x)$,
+\begin{equation}
+\label{eq:gen-fourier-series}
+\boxed{f(x) \sim \sum_{n=1}^{\infty} a_n\phi_n(x).}
+\end{equation}
+Thus, for our example \eqref{eq:simple-sl},
+\[
+f(x) \sim \sum_{n=1}^{\infty} a_n \sin\frac{n\pi x}{L}.
+\]
+We recognize this as a Fourier sine series.  We know that any piecewise smooth function can be represented by a Fourier sine series and the infinite series converges to $[f(x{+}) + f(x{-})]/2$ for $0 < x < L$.  It converges to $f(x)$ for $0 < x < L$ if $f(x)$ is continuous there.  This theorem thus claims that the convergence properties of Fourier sine series are valid for all series of eigenfunctions of any regular Sturm--Liouville eigenvalue problem.  Equation \eqref{eq:gen-fourier-series} is referred to as an expansion of $f(x)$ in terms of the eigenfunctions $\phi_n(x)$ or, more simply, as an eigenfunction expansion.  It is also called a \textbf{generalized Fourier series of $\bm{f(x)}$}.  The coefficients $a_n$ are called the coefficients of the eigenfunction expansion or the \textbf{generalized Fourier coefficients}.  The fact that rather arbitrary functions may be represented in terms of an infinite series of eigenfunctions will enable us to solve partial differential equations by the method of separation of variables.
+
+\paragraph{5.\ Orthogonality of eigenfunctions.}
+The preceding theorem enables a function to be represented by a series of eigenfunctions, \eqref{eq:gen-fourier-series}.  Here we will show how to determine the generalized Fourier coefficients, $a_n$.  According to the important theorem we are now describing, the eigenfunctions of any regular Sturm--Liouville eigenvalue problem will always be orthogonal.  The theorem states that a weight $\sigma(x)$ must be introduced into the orthogonality relation:
+\begin{equation}
+\label{eq:orthogonality}
+\boxed{\int_a^b \phi_n(x)\phi_m(x)\sigma(x)\dx = 0 \quad \text{if } \lambda_n \neq \lambda_m.}
+\end{equation}
+Here $\sigma(x)$ is the possibly variable coefficient that multiplies the eigenvalue $\lambda$ in the differential equation defining the eigenvalue problem.  Since corresponding to each eigenvalue there is only one eigenfunction, the statement ``if $\lambda_n \neq \lambda_m$'' in \eqref{eq:orthogonality} may be replaced by ``if $n \neq m$.''  For the Fourier sine series example, the defining differential equation is $d^2\phi/dx^2 + \lambda\phi = 0$, and hence a comparison with the form of the general Sturm--Liouville problem shows that $\sigma(x) = 1$.  Thus, in this case the weight is 1, and the orthogonality condition, $\int_0^L \sin n\pi x/L \sin m\pi x/L\dx = 0$, follows if $n \neq m$, as we already know.
+
+As with Fourier sine series, we use the orthogonality condition to determine the generalized Fourier coefficients.  In order to utilize the orthogonality condition \eqref{eq:orthogonality}, we must multiply \eqref{eq:gen-fourier-series} by $\phi_m(x)$ \textit{and} $\sigma(x)$.  Thus,
+\[
+f(x)\phi_m(x)\sigma(x) = \sum_{n=1}^{\infty} a_n\phi_n(x)\phi_m(x)\sigma(x),
+\]
+where we assume these operations on infinite series are valid, and hence introduce equal signs.  Integrating from $x = a$ to $x = b$ yields
+\[
+\int_a^b f(x)\phi_m(x)\sigma(x)\dx = \sum_{n=1}^{\infty} a_n \int_a^b \phi_n(x)\phi_m(x)\sigma(x)\dx.
+\]
+Since the eigenfunctions are orthogonal [with weight $\sigma(x)$], all the integrals on the right-hand side vanish except when $n$ reaches $m$:
+\[
+\int_a^b f(x)\phi_m(x)\sigma(x)\dx = a_m \int_a^b \phi_m^2(x)\sigma(x)\dx.
+\]
+The integral on the right is nonzero since the weight $\sigma(x)$ must be positive (from the definition of a regular Sturm--Liouville problem), and hence we may divide by it to determine the generalized Fourier coefficient $a_m$:
+\begin{equation}
+\label{eq:gen-fourier-coeff}
+\boxed{a_m = \frac{\displaystyle\int_a^b f(x)\phi_m(x)\sigma(x)\dx}{\displaystyle\int_a^b \phi_m^2(x)\sigma(x)\dx}.}
+\end{equation}
+In the example of a Fourier sine series, $a = 0$, $b = L$, $\phi_n = \sin n\pi x/L$, and $\sigma(x) = 1$.  Thus, if we recall the known integral that $\int_0^L \sin^2 n\pi x/L\dx = L/2$, \eqref{eq:gen-fourier-coeff} reduces to the well-known formula for the coefficients of the Fourier sine series.  It is not always possible to evaluate the integral in the denominator of \eqref{eq:gen-fourier-coeff} in a simple way.
+
+\paragraph{6.\ Rayleigh quotient.}
+In Section~\ref{sec:sl-rayleigh} we will prove that the eigenvalue may be related to its eigenfunction in the following way:
+\begin{equation}
+\label{eq:rayleigh-quotient}
+\lambda = \frac{\displaystyle -p\phi\,\od{\phi}{x}\bigg|_a^b + \int_a^b \left[p\!\left(\od{\phi}{x}\right)^{\!2} - q\phi^2\right]\dx}{\displaystyle\int_a^b \phi^2\sigma\dx},
+\end{equation}
+known as the \textbf{Rayleigh quotient}.  The numerator contains integrated terms and terms evaluated at the boundaries.  Since the eigenfunctions cannot be determined without knowing the eigenvalues, this expression is never used directly to determine the eigenvalues.
+
+However, interesting and significant results can be obtained from the Rayleigh quotient without solving the differential equation.  Consider the Fourier sine series example \eqref{eq:simple-sl} that we have been analyzing: $a = 0$, $b = L$, $p(x) = 1$, $q(x) = 0$, and $\sigma(x) = 1$.  Since $\phi(0) = 0$ and $\phi(L) = 0$, the Rayleigh quotient implies that
+\begin{equation}
+\label{eq:rayleigh-simple}
+\lambda = \frac{\displaystyle\int_0^L (d\phi/dx)^2\dx}{\displaystyle\int_0^L \phi^2\dx}.
+\end{equation}
+Although this does not determine $\lambda$, since $\phi$ is unknown, it gives useful information.  Both the numerator and the denominator are $\ge 0$.  Since $\phi$ cannot be identically zero and be called an eigenfunction, the denominator cannot be zero.  Thus, $\lambda \ge 0$ follows from \eqref{eq:rayleigh-simple}.  Without solving the differential equation, we immediately conclude that there cannot be any negative eigenvalues.  Now we can simply apply the Rayleigh quotient to eliminate the possibility of negative eigenvalues \textit{for this example}.  Sometimes, as we shall see later, we can also show that $\lambda \ge 0$ in harder problems.
+
+Furthermore, even the possibility of $\lambda = 0$ can sometimes be analyzed using the Rayleigh quotient.  For the simple problem \eqref{eq:simple-sl} with zero boundary conditions, $\phi(0) = 0$ and $\phi(L) = 0$, let us see if it is possible for $\lambda = 0$ directly from \eqref{eq:rayleigh-simple}.  $\lambda = 0$ only if $d\phi/dx = 0$ for all $x$.  Then, by integration, $\phi$ must be a constant for all $x$.  However, from the boundary conditions [either $\phi(0) = 0$ or $\phi(L) = 0$], that constant must be zero.  Thus, $\lambda = 0$ only if $\phi = 0$ everywhere.  But if $\phi = 0$ everywhere, we do not call $\phi$ an eigenfunction.  Thus, $\lambda = 0$ is not an eigenvalue \textit{in this case}, and we have further concluded that $\lambda > 0$; all the eigenvalues must be positive.  This is concluded \textit{without} using solutions of the differential equation.  The known eigenvalues in this example, $\lambda_n = (n\pi/L)^2$, $n = 1, 2, \ldots$, are clearly consistent with the conclusions from the Rayleigh quotient.  Other applications of the Rayleigh quotient will appear in later sections.
+
+\begin{exercises}{5.3}
+
+\item\starred\ Show that the partial differential equation may be put into Sturm--Liouville form.
+
+\item Consider
+\[
+\rho\pdd{u}{t} = T_0\pdd{u}{x} + \alpha u + \beta\pd{u}{t}.
+\]
+\begin{enumerate}
+\item Give a brief physical interpretation.  What signs must $\alpha$ and $\beta$ have to be physical?
+\item Allow $\rho$, $\alpha$, and $\beta$ to be functions of $x$.  Show that separation of variables works only if $\beta = c\rho$, where $c$ is a constant.
+\item If $\beta = c\rho$, show that the spatial equation is a Sturm--Liouville differential equation.  Solve the time equation.
+\end{enumerate}
+
+\item\starred\ Consider the non-Sturm--Liouville differential equation
+\[
+\odd{\phi}{x} + \alpha(x)\od{\phi}{x} + [\lambda\beta(x) + \gamma(x)]\phi = 0.
+\]
+Multiply this equation by $H(x)$.  Determine $H(x)$ such that the equation may be reduced to the standard Sturm--Liouville form:
+\[
+\frac{d}{d x}\left[p(x)\od{\phi}{x}\right] + [\lambda\sigma(x) + q(x)]\phi = 0.
+\]
+Given $\alpha(x)$, $\beta(x)$, and $\gamma(x)$, what are $p(x)$, $\sigma(x)$, and $q(x)$?
+
+\item Consider heat flow with convection:
+\[
+\pd{u}{t} = k\pdd{u}{x} - V_0\pd{u}{x}.
+\]
+\begin{enumerate}
+\item Show that the spatial ordinary differential equation obtained by separation of variables is not in Sturm--Liouville form.
+\item\starred\ Solve the initial boundary value problem
+\begin{align*}
+u(0,t) &= 0 \\
+u(L,t) &= 0 \\
+u(x,0) &= f(x).
+\end{align*}
+\item Solve the initial boundary value problem
+\begin{align*}
+\pd{u}{x}(0,t) &= 0 \\
+\pd{u}{x}(L,t) &= 0 \\
+u(x,0) &= f(x).
+\end{align*}
+\end{enumerate}
+
+\item For the Sturm--Liouville eigenvalue problem,
+\[
+\odd{\phi}{x} + \lambda\phi = 0 \quad \text{with} \quad \od{\phi}{x}(0) = 0 \quad \text{and} \quad \od{\phi}{x}(L) = 0,
+\]
+verify the following general properties:
+\begin{enumerate}
+\item There is an infinite number of eigenvalues with a smallest but no largest.
+\item The $n$th eigenfunction has $n-1$ zeros.
+\item The eigenfunctions are complete and orthogonal.
+\item What does the Rayleigh quotient say concerning negative and zero eigenvalues?
+\end{enumerate}
+
+\item Redo Exercise~5.3.5 for the Sturm--Liouville eigenvalue problem
+\[
+\odd{\phi}{x} + \lambda\phi = 0 \quad \text{with} \quad \od{\phi}{x}(0) = 0 \quad \text{and} \quad \phi(L) = 0.
+\]
+
+\item Which of statements 1--5 of the theorems of this section are valid for the following eigenvalue problem?
+\[
+\odd{\phi}{x} + \lambda\phi = 0 \quad \text{with}\quad \phi(-L) = \phi(L), \quad \od{\phi}{x}(-L) = \od{\phi}{x}(L).
+\]
+
+\item Show that $\lambda \ge 0$ for the eigenvalue problem
+\[
+\odd{\phi}{x} + (\lambda - x^2)\phi = 0 \quad \text{with} \quad \od{\phi}{x}(0) = 0, \quad \od{\phi}{x}(1) = 0.
+\]
+Is $\lambda = 0$ an eigenvalue?
+
+\item Consider the eigenvalue problem
+\begin{equation}
+\label{eq:equidimensional}
+x^2\odd{\phi}{x} + x\od{\phi}{x} + \lambda\phi = 0 \quad \text{with} \quad \phi(1) = 0 \quad \text{and} \quad \phi(b) = 0.
+\end{equation}
+\begin{enumerate}
+\item Show that multiplying by $1/x$ puts this in the Sturm--Liouville form.  (This multiplicative factor is derived in Exercise~5.3.3.)
+\item Show that $\lambda \ge 0$.
+\item\starred\ Since \eqref{eq:equidimensional} is an equidimensional equation, determine all positive eigenvalues.  Is $\lambda = 0$ an eigenvalue?  Show that there is an infinite number of eigenvalues with a smallest but no largest.
+\item The eigenfunctions are orthogonal with what weight according to Sturm--Liouville theory?  Verify the orthogonality using properties of integrals.
+\item Show that the $n$th eigenfunction has $n-1$ zeros.
+\end{enumerate}
+
+\item Reconsider Exercise~5.3.9 with the boundary conditions
+\[
+\od{\phi}{x}(1) = 0 \quad \text{and} \quad \od{\phi}{x}(b) = 0.
+\]
+
+\end{exercises}

@@ -1,0 +1,100 @@
+% sec02_2.tex — Section 2.2: Linearity
+\section{Linearity}
+\label{sec:2.2}
+
+As in the study of ordinary differential equations, the concept of linearity will be very important for us. A \textbf{linear operator} $L$ by definition satisfies
+\begin{equation}
+\label{eq:2.2.1}
+\boxed{L(c_1 u_1 + c_2 u_2) = c_1 L(u_1) + c_2 L(u_2)}
+\end{equation}
+for any two functions $u_1$ and $u_2$, where $c_1$ and $c_2$ are arbitrary constants. $\partial/\partial t$ and $\partial^2/\partial x^2$ are examples of linear operators since they satisfy \eqref{eq:2.2.1}:
+\begin{align*}
+\frac{\partial}{\partial t}(c_1 u_1 + c_2 u_2) &= c_1 \pd{u_1}{t} + c_2 \pd{u_2}{t} \\[6pt]
+\pdd{}{x}(c_1 u_1 + c_2 u_2) &= c_1 \pdd{u_1}{x} + c_2 \pdd{u_2}{x}.
+\end{align*}
+
+It can be shown (see Exercise~2.2.1) that any linear combination of linear operators is a linear operator. Thus, the \textbf{heat operator}
+\[
+\frac{\partial}{\partial t} - k\pdd{}{x}
+\]
+is also a linear operator.
+
+A \textbf{linear equation} for $u$ is of the form
+\begin{equation}
+\label{eq:2.2.2}
+L(u) = f,
+\end{equation}
+where $L$ is a linear operator and $f$ is known. Examples of \emph{linear partial differential equations} are
+\begin{alignat}{2}
+\pd{u}{t} &= k\pdd{u}{x} + f(x,t) & \label{eq:2.2.3} \\[6pt]
+\pd{u}{t} &= k\pdd{u}{x} + \alpha(x,t)u + f(x,t) & \label{eq:2.2.4} \\[6pt]
+\pdd{u}{x} + \pdd{u}{y} &= 0 & \label{eq:2.2.5} \\[6pt]
+\pd{u}{t} &= \frac{\partial^3 u}{\partial x^3} + \alpha(x,t)u. & \label{eq:2.2.6}
+\end{alignat}
+
+Examples of \emph{nonlinear} partial differential equations are
+\begin{alignat}{2}
+\pd{u}{t} &= k\pdd{u}{x} + \alpha(x,t)u^4 & \label{eq:2.2.7} \\[6pt]
+\pd{u}{t} + u\pd{u}{x} &= \frac{\partial^3 u}{\partial x^3}. & \label{eq:2.2.8}
+\end{alignat}
+The $u^4$ and $u\,\partial u/\partial x$ terms are nonlinear; they do not satisfy \eqref{eq:2.2.1}.
+
+If $f = 0$, then \eqref{eq:2.2.2} becomes $L(u) = 0$, called a \textbf{linear homogeneous} equation. Examples of linear homogeneous partial differential equations include the heat equation,
+\begin{equation}
+\label{eq:2.2.9}
+\pd{u}{t} - k\pdd{u}{x} = 0,
+\end{equation}
+as well as \eqref{eq:2.2.5} and \eqref{eq:2.2.6}. From \eqref{eq:2.2.1} it follows that $L(0) = 0$ (let $c_1 = c_2 = 0$). Therefore, $u = 0$ is always a solution of a linear homogeneous equation. For example, $u = 0$ satisfies the heat equation \eqref{eq:2.2.9}. We call $u = 0$ the \emph{trivial} solution of a linear homogeneous equation. The simplest way to test whether an equation is homogeneous is to substitute the function $u$ identically equal to zero. If $u \equiv 0$ satisfies a linear equation, then it must be that $f = 0$ and hence the linear equation is homogeneous. Otherwise, the equation is said to be \textbf{nonhomogeneous} [e.g., \eqref{eq:2.2.3} and \eqref{eq:2.2.4}].
+
+The fundamental property of linear operators \eqref{eq:2.2.1} allows solutions of linear equations to be added together in the following sense:
+
+\begin{center}
+\fbox{\parbox{0.8\textwidth}{
+\textbf{Principle of Superposition.}
+If $u_1$ and $u_2$ satisfy a linear \emph{homogeneous} equation, then an arbitrary linear combination of them, $c_1 u_1 + c_2 u_2$, also satisfies the same linear homogeneous equation.
+}}
+\end{center}
+
+The proof of this relies on the definition of a linear operator. Suppose that $u_1$ and $u_2$ are two solutions of a linear homogeneous equation. That means that $L(u_1) = 0$ and $L(u_2) = 0$. Let us calculate $L(c_1 u_1 + c_2 u_2)$. From the definition of a linear operator,
+\[
+L(c_1 u_1 + c_2 u_2) = c_1 L(u_1) + c_2 L(u_2).
+\]
+Since $u_1$ and $u_2$ are homogeneous solutions, it follows that $L(c_1 u_1 + c_2 u_2) = 0$. This means that $c_1 u_1 + c_2 u_2$ satisfies the linear homogeneous equation $L(u) = 0$ if $u_1$ and $u_2$ satisfy the \emph{same} linear homogeneous equation.
+
+The concepts of linearity and homogeneity also apply to boundary conditions, in which case the variables are evaluated at specific points. Examples of \emph{linear} boundary conditions are the conditions we have discussed:
+\begin{alignat}{2}
+u(0,t) &= f(t) & \label{eq:2.2.10} \\[6pt]
+\pd{u}{x}(L,t) &= g(t) & \label{eq:2.2.11} \\[6pt]
+\pd{u}{x}(0,t) &= 0 & \label{eq:2.2.12} \\[6pt]
+-K_0 \pd{u}{x}(L,t) &= h[u(L,t) - g(t)]. & \label{eq:2.2.13}
+\end{alignat}
+
+A \emph{nonlinear} boundary condition, for example, would be
+\begin{equation}
+\label{eq:2.2.14}
+\pd{u}{x}(L,t) = u^2(L,t).
+\end{equation}
+
+Only \eqref{eq:2.2.12} is satisfied by $u \equiv 0$ (of the linear conditions) and hence is homogeneous. It is not necessary that a boundary condition be $u(0,t) = 0$ for $u \equiv 0$ to satisfy it.
+
+\begin{exercises}{2.2}
+
+\item Show that any linear combination of linear operators is a linear operator.
+
+\item
+\begin{enumerate}
+\item[(a)] Show that $L(u) = \frac{\partial}{\partial x}\left[K_0(x)\pd{u}{x}\right]$ is a linear operator.
+\item[(b)] Show that usually $L(u) = \frac{\partial}{\partial x}\left[K_0(x,u)\pd{u}{x}\right]$ is not a linear operator.
+\end{enumerate}
+
+\item Show that $\pd{u}{t} = k\pdd{u}{x} + Q(u,x,t)$ is linear if $Q = \alpha(x,t)u + \beta(x,t)$ and, in addition, homogeneous if $\beta(x,t) = 0$.
+
+\item In this exercise we derive superposition principles for nonhomogeneous problems.
+\begin{enumerate}
+\item[(a)] Consider $L(u) = f$. If $u_p$ is a particular solution, $L(u_p) = f$, and if $u_1$ and $u_2$ are homogeneous solutions, $L(u_i) = 0$, show that $u = u_p + c_1 u_1 + c_2 u_2$ is another particular solution.
+\item[(b)] If $L(u) = f_1 + f_2$, where $u_{p_i}$ is a particular solution corresponding to $f_i$, what is a particular solution for $f_1 + f_2$?
+\end{enumerate}
+
+\item If $L$ is a linear operator, show that $L\!\left(\sum_{n=1}^{M} c_n u_n\right) = \sum_{n=1}^{M} c_n L(u_n)$. Use this result to show that the principle of superposition may be extended to any finite number of homogeneous solutions.
+
+\end{exercises}

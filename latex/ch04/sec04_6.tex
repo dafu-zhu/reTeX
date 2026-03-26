@@ -1,0 +1,178 @@
+% sec04_6.tex — Section 4.6: Reflection and Refraction of Electromagnetic (Light) and Acoustic (Sound) Waves
+\section{Reflection and Refraction of Electromagnetic (Light) and Acoustic (Sound) Waves}
+\label{sec:reflection-refraction}
+
+Disturbances in a uniform media frequently satisfy the \textbf{three-dimensional wave equation}:
+\begin{equation}
+\pdd{u}{t} = c^2\left(\pdd{u}{x} + \pdd{u}{y} + \frac{\partial^2 u}{\partial z^2}\right).
+\label{eq:4.6.1}
+\end{equation}
+In a fluid, small displacements $u$ to a uniform mass density $\rho$ and pressure $p$ satisfy \eqref{eq:4.6.1}, where the coefficient $c$ satisfies $c^2 = \frac{\partial p}{\partial\rho}$.  In electrodynamics, each component of a system of vector fields satisfies \eqref{eq:4.6.1}, where $c^2 = c_{\text{light}}^2/\mu\epsilon$ can be related to the speed of light in a vacuum $c_{\text{light}}^2$ and the permeability $\mu$ and the dielectric constant $\epsilon$.
+
+Special \textbf{plane traveling wave} solutions of \eqref{eq:4.6.1} exist of the form
+\begin{equation}
+u = Ae^{i(k_1 x + k_2 y + k_3 z - \omega t)} = Ae^{i(\vec{k}\cdot\vec{x} - \omega t)}.
+\label{eq:4.6.2}
+\end{equation}
+(The real or imaginary part has physical significance.)  $A$ is the constant amplitude.  The vector $\vec{k}$, called the \textbf{wave vector}, is in the direction of the wave (perpendicular to the \textbf{wave fronts} $\vec{k}\cdot\vec{x} - \omega t = \text{constant}$).  The magnitude of the wave vector $k \equiv |\vec{k}|$ is the \textbf{wave number} since it can be shown (see the Exercises) to equal the number of waves in $2\pi$ distance in the direction of the wave (in the $\vec{k}$-direction).  (The \textbf{wave length} $= \frac{2\pi}{k}$.)
+
+The temporal frequency $\omega$ for plane wave solutions of the wave equations is determined by substituting \eqref{eq:4.6.2} into \eqref{eq:4.6.1}:
+\begin{equation}
+\omega^2 = c^2 k^2,
+\label{eq:4.6.3}
+\end{equation}
+where $k^2 = k_1^2 + k_2^2 + k_3^2$.  It is important that $\omega$ is a function of $k$ satisfying \eqref{eq:4.6.3}.  As in one dimension, it can be shown that
+\begin{equation}
+\text{traveling wave or phase velocity} = \frac{\omega}{k} = \pm c.
+\label{eq:4.6.4}
+\end{equation}
+The plane wave solution corresponds to one component of a multidimensional Fourier series (transform---see Chapter~10) if the wave equation is defined in a finite (infinite) region.  As we show in the next subsection, frequently plane waves are considered to be generated at infinity.
+
+\subsection{Snell's Law of Refraction}
+\label{sec:snell}
+
+We assume that we have two different materials (different mass densities for sound waves or different dielectric constants for electromagnetic waves) extending to infinity with a plane boundary between them.  We assume the wave speed is $c_+$ for $z > 0$ and $c_-$ for $z < 0$, as shown in Fig.~4.6.1.  We assume that there is an \textbf{incident} plane wave satisfying \eqref{eq:4.6.2} (with wave vector $\vec{k}_I$ and frequency $\omega = \omega_+(k_I) = c_+ k_I$) propagating from infinity with $z > 0$ with amplitude $A = 1$, which we normalize to 1.  We assume that the incident wave makes an angle $\theta_I$ with the normal.
+
+We assume that there is a \textbf{reflected} wave in the upper media satisfying \eqref{eq:4.6.2} [with unknown wave vector $\vec{k}_R$ and frequency $\omega = \omega_+(k_R) = c_+ k_R$] with unknown complex amplitude $R$.  Due to the wave equation being linear, the solution in the upper media is the sum of the incident and reflected waves:
+\begin{equation}
+u = e^{i(\vec{k}_I\cdot\vec{x} - \omega_+(c_+ k_I)t)} + Re^{i(\vec{k}_R\cdot\vec{x} - \omega_+(c_+ k_R)t)} \quad\text{for } z > 0.
+\label{eq:4.6.5}
+\end{equation}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch04/fig_4.6.1.png}
+\caption{Reflected and refracted (transmitted) waves.}
+\label{fig:4.6.1}
+\end{figure}
+
+We will show that the wave vector of the reflected wave is determined by the familiar relationship that the angle of reflection equals the angle of incidence.
+
+In the lower media $z < 0$, we assume that a \textbf{refracted wave} exists, which we call a \textbf{transmitted wave} and introduce the subscript $T$.  We assume that the transmitted wave satisfies \eqref{eq:4.6.2} (with unknown wave number vector $\vec{k}_T$ and frequency $\omega = \omega_-(k_T) = c_- k_T$) with unknown complex amplitude $T$:
+\begin{equation}
+u = Te^{i(\vec{k}_T\cdot\vec{x} - \omega_-(c_- k_T)t)} \quad\text{for } z < 0.
+\label{eq:4.6.6}
+\end{equation}
+In addition, we will show that this refracted wave may or may not exist as prescribed by Snell's law of refraction.
+
+There are two boundary conditions that must be satisfied at the interface between the two materials $z = 0$.  One of the conditions is that $u$ must be continuous.  At $z = 0$,
+\begin{equation}
+e^{i(\vec{k}_I\cdot\vec{x} - \omega_+(c_+ k_I)t)} + Re^{i(\vec{k}_R\cdot\vec{x} - \omega_+(c_+ k_R)t)} = Te^{i(\vec{k}_T\cdot\vec{x} - \omega_-(c_- k_T)t)}.
+\label{eq:4.6.7}
+\end{equation}
+Since this must hold for all time, the frequencies of the three waves must be the same:
+\begin{equation}
+\omega_+(k_I) = \omega_+(k_R) = \omega_-(k_T).
+\label{eq:4.6.8}
+\end{equation}
+From the frequency equation \eqref{eq:4.6.3}, we conclude that the reflected wave has the same wavelength as the incident wave, but the refracted wave has a different wavelength:
+\begin{equation}
+c_+ k_I = c_+ k_R = c_- k_T.
+\label{eq:4.6.9}
+\end{equation}
+From \eqref{eq:4.6.7}, $k_1$ and $k_2$ (the projection of $\vec{k}$ in the $x$- and $y$-directions) must be the same for all three waves.  Since $k_I = k_R$, the $z$-component of the reflected wave must be minus the $z$-component of the incident wave.  Thus, the \textbf{angle of reflection equals the angle of incidence},
+\begin{equation}
+\theta_R = \theta_I,
+\label{eq:4.6.10}
+\end{equation}
+where the angles are measured with respect to the normal to the surface.  Note that $\vec{k}\cdot\vec{x} = k\,|\vec{x}|\cos\phi$ is the same for all three waves, where $\phi$ is the angle between $\vec{k}$ and $\vec{x}$ with $z = 0$.  Thus, for the transmitted wave, the angle of transmission (refraction) satisfies
+\[
+k_I\sin\theta_I = k_T\sin\theta_T.
+\]
+Using \eqref{eq:4.6.9}, \textbf{Snell's law} follows:
+\begin{equation}
+\boxed{\frac{\sin\theta_T}{\sin\theta_I} = \frac{k_I}{k_T} = \frac{c_-}{c_+}.}
+\label{eq:4.6.11}
+\end{equation}
+
+Many important and well-known results from optics follow from Snell's law.  For example, in the usual case of the upper media ($c_+$) being air and the lower media ($c_-$) water, then it is known that $c_+ > c_-$.  In this case, from Snell's law \eqref{eq:4.6.11} $\sin\theta_T < \sin\theta_I$, so that the transmitted wave is refracted toward the normal (as shown in Fig.~4.6.1).
+
+If $c_+ < c_-$, then Snell's law \eqref{eq:4.6.11} predicts in some cases that $\sin\theta_T > 1$, which is impossible.  There is a critical angle of incidence $\sin\theta_I = \frac{c_+}{c_-}$ at which total internal reflection first occurs.  For larger angles, the transmitted solution is not a plane wave but is an evanescent wave exponentially decaying, as we describe in a later subsection.  The refracted plane wave does not exist.
+
+\subsection{Intensity (Amplitude) of Reflected and Refracted Waves}
+\label{sec:intensity}
+
+Here we will assume that a refracted plane wave exists.  With these laws for the reflected and refracted waves, the one boundary condition \eqref{eq:4.6.7} for the continuity of $u$ becomes simply
+\begin{equation}
+1 + R = T.
+\label{eq:4.6.12}
+\end{equation}
+We cannot solve for either amplitude $R$ or $T$ without the second boundary condition.  The second boundary condition can be slightly different in different physical applications.  Thus, the results of this subsection do not apply to all physical problems, but the method we use may be applied in all cases and the results obtained may be slightly different.
+
+We assume the second boundary condition is $\frac{\partial u}{\partial z} = 0$ at $z = 0$.  From \eqref{eq:4.6.5} and \eqref{eq:4.6.6}, it follows that
+\begin{equation}
+k_{3_I} + k_{3_R}R = k_{3_T}T.
+\label{eq:4.6.13}
+\end{equation}
+From Fig.~4.6.1, the $z$-components of the wave number of three waves satisfy
+\begin{equation}
+\begin{aligned}
+k_{3_I} &= -k_I\cos\theta_I \\
+k_{3_R} &= k_R\cos\theta_R = k_I\cos\theta_I \\
+k_{3_T} &= -k_T\cos\theta_T = -k_I\frac{\sin\theta_I}{\sin\theta_T}\cos\theta_T,
+\end{aligned}
+\label{eq:4.6.14}
+\end{equation}
+where we have recalled that the reflected wave satisfies $k_{3_R} = -k_{3_I}$ and we have used Snell's law \eqref{eq:4.6.11} to simplify the $z$-component of the wave number of the transmitted wave.  Using \eqref{eq:4.6.14}, the second boundary condition \eqref{eq:4.6.13} becomes (after dividing by $-k_I\cos\theta_I$)
+\begin{equation}
+1 - R = \frac{\sin\theta_I}{\sin\theta_T}\frac{\cos\theta_T}{\cos\theta_I}T.
+\label{eq:4.6.15}
+\end{equation}
+The complex amplitudes of reflection and transmission can be determined by adding the two linear equations, \eqref{eq:4.6.12} and \eqref{eq:4.6.15},
+\begin{align}
+T &= \frac{2}{1 + \dfrac{\sin\theta_I}{\sin\theta_T}\dfrac{\cos\theta_T}{\cos\theta_I}} = \frac{2\sin\theta_T\cos\theta_I}{\sin(\theta_T + \theta_I)} \notag\\[10pt]
+R &= \frac{2\sin\theta_T\cos\theta_I - \sin(\theta_T+\theta_I)}{\sin(\theta_T+\theta_I)} = \frac{\sin(\theta_T - \theta_I)}{\sin(\theta_T + \theta_I)}. \notag
+\end{align}
+
+\subsection{Total Internal Reflection}
+\label{sec:total-internal-reflection}
+
+If $\sin\theta_I\frac{c_-}{c_+} > 1$, then Snell's law cannot be satisfied for a plane transmitted (refracted) wave $u = Te^{i(\vec{k}_T\cdot\vec{x} - \omega_-(c_- k_T)t)}$ in the lower media.  Because of the boundary condition at $z=0$, the $x$- and $y$-components of the wave number of a solution must be the same as for the incident wave.  Thus, the transmitted wave number should satisfy $\vec{k}_T = (k_{1_I}, k_{2_I}, k_{3_T})$.  If we apply Snell's law \eqref{eq:4.6.11} and solve for $k_{3_T}$,
+\begin{equation}
+k_{3_T} = \pm\sqrt{k_I^2\left(\frac{c_+^2}{c_-^2} - \sin^2\theta_I\right)},
+\label{eq:4.6.16}
+\end{equation}
+since $k_1^2 + k_2^2 = k^2\sin^2\theta$.  We find that $k_{3_T}$ is imaginary, suggesting that there are solutions of the wave equation (in the lower media),
+\begin{equation}
+\pdd{u}{t} = c_-^2\left(\pdd{u}{x} + \pdd{u}{y} + \frac{\partial^2 u}{\partial z^2}\right),
+\label{eq:4.6.17}
+\end{equation}
+which exponentially grow and decay in $z$.  We look for a product solution of the form
+\begin{equation}
+u(x,y,z,t) = w(z)e^{i(k_1 x + k_2 y - \omega t)},
+\label{eq:4.6.18}
+\end{equation}
+where $k_1$ and $k_2$ are the wave numbers associated with the incident wave and $\omega$ is the frequency of the incident wave.  We insist that \eqref{eq:4.6.18} satisfy \eqref{eq:4.6.17} so that
+\[
+\frac{d^2 w}{dz^2} = \left(k_1^2 + k_2^2 - \frac{\omega^2}{c_-^2}\right)w = k_I^2\left(\sin^2\theta_I - \frac{c_+^2}{c_-^2}\right)w.
+\]
+Thus, $w(z)$ is a linear combination of exponentially growing and decaying terms in $z$.  Since we want our solution to decay exponentially as $z \to -\infty$, we choose the solution to the wave equation in the lower media to be
+\[
+u(x,y,z,t) = Te^{k_I\sqrt{\sin^2\theta_I - \frac{c_+^2}{c_-^2}}\cdot z}\, e^{i(k_1 x + k_2 y - \omega t)},
+\]
+instead of the plane wave.  This is a horizontal two-dimensional plane wave whose amplitude exponentially decays in the $-z$-direction.  It is called an \textbf{evanescent} wave (exponentially decaying in the $-z$-direction).
+
+The continuity of $u$ and $\frac{\partial u}{\partial z}$ at $z = 0$ is satisfied if
+\begin{equation}
+1 + R = T
+\label{eq:4.6.19}
+\end{equation}
+\begin{equation}
+ik_{3_I}(1-R) = Tk_I\sqrt{\sin^2\theta_I - \frac{c_+^2}{c_-^2}}.
+\label{eq:4.6.20}
+\end{equation}
+These equations can be simplified and solved for the reflection coefficient and $T$ (the amplitude of the evanescent wave at $z = 0$).  $R$ (and $T$) will be complex, corresponding to phase shifts of the reflected (and evanescent) wave.
+
+\begin{exercises}{4.6}
+
+\item Show that for a plane wave given by \eqref{eq:4.6.2}, the number of waves in $2\pi$ distance in the direction of the wave (the $\vec{k}$-direction) is $k \equiv |\vec{k}|$.
+
+\item Show that the phase of a plane wave stays the same moving in the direction of the wave if the velocity is $\frac{\omega}{k}$.
+
+\item In optics, the index of refraction is defined as $n = \frac{c_{\text{light}}}{c}$.  Express Snell's law using the indices of refraction.
+
+\item Find $R$ and $T$ for the evanescent wave by solving the simultaneous equations \eqref{eq:4.6.19} and \eqref{eq:4.6.20}.
+
+\item Find $R$ and $T$ by assuming that $k_{3_I} = \pm i\beta$, where $\beta$ is defined by \eqref{eq:4.6.16}.  Which sign do we use to obtain exponential decay as $z \to -\infty$?
+
+\end{exercises}

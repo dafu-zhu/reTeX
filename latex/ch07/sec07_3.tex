@@ -1,0 +1,367 @@
+% sec07_3.tex — Section 7.3: Vibrating Rectangular Membrane
+\section{Vibrating Rectangular Membrane}
+\label{sec:7.3}
+
+In this section we analyze the vibrations of a rectangular membrane, as sketched in Fig.~7.3.1.  The vertical displacement $u(x,y,t)$ of the membrane satisfies the two-dimensional wave equation,
+\begin{equation}
+\boxed{\pdd{u}{t} = c^2\left(\pdd{u}{x} + \pdd{u}{y}\right).}
+\label{eq:7.3.1}
+\end{equation}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch07/fig_7_3_1.png}
+\caption{Rectangular membrane.}
+\label{fig:7.3.1}
+\end{figure}
+
+We suppose that the boundary is given such that all four sides are fixed with zero displacement:
+\begin{align}
+u(0,y,t) &= 0 & u(x,0,t) &= 0 \label{eq:7.3.2} \\
+u(L,y,t) &= 0 & u(x,H,t) &= 0. \label{eq:7.3.3}
+\end{align}
+We ask what is the displacement of the membrane at time $t$ if the initial position and velocity are given:
+\begin{align}
+u(x,y,0) &= \alpha(x,y) \label{eq:7.3.4} \\
+\pd{u}{t}(x,y,0) &= \beta(x,y). \label{eq:7.3.5}
+\end{align}
+
+As we indicated in Sec.~7.2.1, since the partial differential equation and the boundary conditions are linear and homogeneous, we apply the method of separation of variables.  First, we separate only the time variable by seeking product solutions in the form
+\begin{equation}
+u(x,y,t) = h(t)\phi(x,y).
+\label{eq:7.3.6}
+\end{equation}
+According to our earlier calculation, we are able to introduce a separation constant $-\lambda$, and the following two equations result:
+\begin{equation}
+\odd{h}{t} = -\lambda c^2 h
+\label{eq:7.3.7}
+\end{equation}
+\begin{equation}
+\pdd{\phi}{x} + \pdd{\phi}{y} = -\lambda\phi.
+\label{eq:7.3.8}
+\end{equation}
+We will show that $\lambda > 0$, in which case $h(t)$ is a linear combination of $\sin c\sqrt{\lambda}\,t$ and $\cos c\sqrt{\lambda}\,t$.  The homogeneous boundary conditions imply that the eigenvalue problem is
+\begin{equation}
+\boxed{\pdd{\phi}{x} + \pdd{\phi}{y} = -\lambda\phi}
+\label{eq:7.3.9}
+\end{equation}
+\begin{equation}
+\boxed{\begin{aligned}
+\phi(0,y) &= 0 & \phi(x,0) &= 0 \\
+\phi(L,y) &= 0 & \phi(x,H) &= 0;
+\end{aligned}}
+\label{eq:7.3.10}
+\end{equation}
+that is, $\phi = 0$ along the entire boundary.  We call \eqref{eq:7.3.9}--\eqref{eq:7.3.10} a two-dimensional eigenvalue problem.
+
+The eigenvalue problem itself is a linear homogeneous PDE in two independent variables with homogeneous boundary conditions.  As such (since the boundaries are simple), we can expect that \eqref{eq:7.3.9}--\eqref{eq:7.3.10} can be solved by separation of variables in Cartesian coordinates.  In other words, we look for product solutions of \eqref{eq:7.3.9}--\eqref{eq:7.3.10} in the form
+\begin{equation}
+\phi(x,y) = f(x)g(y).
+\label{eq:7.3.11}
+\end{equation}
+Before beginning our calculations, let us note that it follows from \eqref{eq:7.3.6} that our assumption \eqref{eq:7.3.11} is equivalent to
+\begin{equation}
+u(x,y,t) = f(x)g(y)h(t)
+\label{eq:7.3.12}
+\end{equation}
+a product of functions of each independent variable.  We claim, as we show in an appendix to this section, that we could obtain the same result by substituting \eqref{eq:7.3.12} into the wave equation \eqref{eq:7.3.1} as we now obtain by substituting \eqref{eq:7.3.11} into the two-dimensional eigenvalue problem \eqref{eq:7.3.9}:
+\begin{equation}
+g(y)\odd{f}{x} + f(x)\odd{g}{y} = -\lambda f(x)g(y).
+\label{eq:7.3.13}
+\end{equation}
+The $x$ and $y$ parts may be separated by dividing \eqref{eq:7.3.13} by $f(x)g(y)$ and rearranging terms:
+\begin{equation}
+\frac{1}{f}\odd{f}{x} = -\lambda - \frac{1}{g}\odd{g}{y} = -\mu.
+\label{eq:7.3.14}
+\end{equation}
+Since the first expression is only a function of $x$, while the second is only a function of $y$ we introduce a \emph{second} separation constant.  We choose it to be $-\mu$ so that the easily solved equation, $d^2f/dx^2 = -\mu f$ has oscillatory solutions (as expected) if $\mu > 0$.  Two ordinary differential equations result from separation of a partial differential equation with two independent variables:
+\begin{equation}
+\boxed{\odd{f}{x} = -\mu f}
+\label{eq:7.3.15}
+\end{equation}
+\begin{equation}
+\boxed{\odd{g}{y} = -(\lambda - \mu)g.}
+\label{eq:7.3.16}
+\end{equation}
+Equations \eqref{eq:7.3.15} and \eqref{eq:7.3.16} contain \emph{two} separation constants $\lambda$ and $\mu$, both of which must be determined.  In addition, $h(t)$ solves an ordinary differential equation:
+\begin{equation}
+\boxed{\odd{h}{t} = -\lambda c^2 h.}
+\label{eq:7.3.17}
+\end{equation}
+
+When we separate variables for a partial differential equation in three variables, $u(x,y,t) = f(x)g(y)h(t)$, we obtain three ordinary differential equations, one a function of each independent coordinate.  However, there will be only \emph{two} separation constants.
+
+To determine the separation constants, we need to use the homogeneous boundary conditions \eqref{eq:7.3.10}.  The product form \eqref{eq:7.3.11} then implies that
+\begin{equation}
+\begin{aligned}
+f(0) &= 0 \quad\text{and}\quad f(L) = 0 \\
+g(0) &= 0 \quad\text{and}\quad g(H) = 0.
+\end{aligned}
+\label{eq:7.3.18}
+\end{equation}
+Of our three ordinary differential equations, only two will be eigenvalue problems.  There are homogeneous boundary conditions in $x$ and $y$.  Thus,
+\begin{equation}
+\odd{f}{x} = -\mu f \qquad\text{with}\quad f(0) = 0 \;\text{ and }\; f(L) = 0
+\label{eq:7.3.19}
+\end{equation}
+is a Sturm-Liouville eigenvalue problem in the $x$-variable, where $\mu$ is the eigenvalue and $f(x)$ is the eigenfunction.  Similarly, the $y$-dependent problem is a regular Sturm-Liouville eigenvalue problem:
+\begin{equation}
+\odd{g}{y} = -(\lambda - \mu)g \qquad\text{with}\quad g(0) = 0 \;\text{ and }\; g(H) = 0.
+\label{eq:7.3.20}
+\end{equation}
+Here $\lambda$ is the eigenvalue and $g(y)$ the corresponding eigenfunction.
+
+Not only are both \eqref{eq:7.3.19} and \eqref{eq:7.3.20} Sturm-Liouville eigenvalue problems, but they are both ones we should be quite familiar with.  Without going through the well-known details, the eigenvalues are
+\begin{equation}
+\mu_n = \left(\frac{n\pi}{L}\right)^2, \quad n = 1, 2, 3, \ldots,
+\label{eq:7.3.21}
+\end{equation}
+and the corresponding eigenfunctions are
+\begin{equation}
+f_n(x) = \sin\frac{n\pi x}{L}.
+\label{eq:7.3.22}
+\end{equation}
+This determines the allowable values of the separation constant $\mu_n$.
+
+\emph{For each value of} $\mu_n$, \eqref{eq:7.3.20} is still an eigenvalue problem.  There is an infinite number of eigenvalues $\lambda$ for each $n$.  Thus, $\lambda$ should be double subscripted, $\lambda_{nm}$.  In fact, from \eqref{eq:7.3.20} the eigenvalues are
+\begin{equation}
+\lambda_{nm} - \mu_n = \left(\frac{m\pi}{H}\right)^2, \quad m = 1, 2, 3, \ldots,
+\label{eq:7.3.23}
+\end{equation}
+where we \emph{must} use a different index to represent the various $y$-eigenvalues (for each value of $n$).  The corresponding $y$-eigenfunction is
+\begin{equation}
+g_{nm}(y) = \sin\frac{m\pi y}{H}
+\label{eq:7.3.24}
+\end{equation}
+The separation constant $\lambda_{nm}$ now can be determined from \eqref{eq:7.3.23}:
+\begin{equation}
+\boxed{\lambda_{nm} = \mu_n + \left(\frac{m\pi}{H}\right)^2 = \left(\frac{n\pi}{L}\right)^2 + \left(\frac{m\pi}{H}\right)^2,}
+\label{eq:7.3.25}
+\end{equation}
+where $n = 1, 2, 3, \ldots$ and $m = 1, 2, 3, \ldots\;$.  The two-dimensional eigenvalue problem \eqref{eq:7.3.9} has eigenvalues $\lambda_{nm}$ given by \eqref{eq:7.3.25} and eigenfunctions given by the product of the two one-dimensional eigenfunctions.  Using the notation $\phi_{nm}(x,y)$ for the two-dimensional eigenfunction corresponding to the eigenvalue $\lambda_{nm}$, we have
+\begin{equation}
+\boxed{\phi_{nm}(x,y) = \sin\frac{n\pi x}{L}\sin\frac{m\pi y}{H}, \quad
+\begin{aligned}
+n &= 1, 2, 3, \ldots \\
+m &= 1, 2, 3, \ldots
+\end{aligned}}
+\label{eq:7.3.26}
+\end{equation}
+Note how easily the homogeneous boundary conditions are satisfied.
+
+From \eqref{eq:7.3.25} we have explicitly shown that all the eigenvalues are positive (for this problem).  Thus, the time-dependent part of the product solutions are (as previously guessed) $\sin c\sqrt{\lambda_{nm}}\,t$ and $\cos c\sqrt{\lambda_{nm}}\,t$, oscillations with natural frequencies $c\sqrt{\lambda_{nm}} = c\sqrt{(n\pi/L)^2 + (m\pi/H)^2}$, $n = 1, 2, 3, \ldots$ and $m = 1, 2, 3, \ldots\;$.  In considering the displacement $u$, we have obtained two doubly infinite families of product solutions: $\sin n\pi x/L\;\sin m\pi y/H\;\sin c\sqrt{\lambda_{nm}}\,t$ and $\sin n\pi x/L\;\sin m\pi y/H\;\cos c\sqrt{\lambda_{nm}}\,t$.  As with the vibrating string, each of these special product solutions is known as a mode of vibration.  We sketch in Fig.~7.3.2 a representation of some of these modes.  In each we sketch level contours of displacement in dotted lines at a fixed $t$.  As time varies the shape stays the same, only the amplitude varies periodically.  Each mode is a standing wave.  Curves along which the displacement is always zero in a mode are called \textbf{nodal curves} and are sketched in solid lines.  Cells are apparent with neighboring cells always being out of phase; that is, when one cell has a positive displacement the neighbor has negative displacement (as represented by the $+$ and $-$ signs).
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch07/fig_7_3_2.png}
+\caption{Nodal curves for modes of a vibrating rectangular membrane.}
+\label{fig:7.3.2}
+\end{figure}
+
+The principle of superposition implies that we should consider a linear combination of all possible product solutions.  Thus, we must include both families, summing over both $n$ and $m$,
+\begin{equation}
+\boxed{\begin{aligned}
+u(x,y,t) &= \sum_{m=1}^{\infty}\sum_{n=1}^{\infty} A_{nm}\sin\frac{n\pi x}{L}\sin\frac{m\pi y}{H}\cos c\sqrt{\lambda_{nm}}\,t \\
+&\quad + \sum_{m=1}^{\infty}\sum_{n=1}^{\infty} B_{nm}\sin\frac{n\pi x}{L}\sin\frac{m\pi y}{H}\sin c\sqrt{\lambda_{nm}}\,t.
+\end{aligned}}
+\label{eq:7.3.27}
+\end{equation}
+The two families of coefficients $A_{nm}$ and $B_{nm}$ hopefully will be determined from the two initial conditions.  For example, $u(x,y,0) = \alpha(x,y)$ implies that
+\begin{equation}
+\alpha(x,y) = \sum_{m=1}^{\infty}\left(\sum_{n=1}^{\infty} A_{nm}\sin\frac{n\pi x}{L}\right)\sin\frac{m\pi y}{H}.
+\label{eq:7.3.28}
+\end{equation}
+The series in \eqref{eq:7.3.28} is an example of what is called a \textbf{double Fourier series}.  Instead of discussing the theory, we show one method to calculate $A_{nm}$ from \eqref{eq:7.3.28}.  (In Sec.~7.4 we will discuss a simpler way.)  For \emph{fixed} $x$, we note that $\sum_{n=1}^{\infty} A_{nm}\sin n\pi x/L$ depends only on $m$; furthermore, it must be the coefficients of the Fourier sine series in $y$ of $\alpha(x,y)$ over $0 < y < H$.  From our theory of Fourier sine series, we therefore know that we may easily determine the coefficients:
+\begin{equation}
+\sum_{n=1}^{\infty} A_{nm}\sin\frac{n\pi x}{L} = \frac{2}{H}\int_0^H \alpha(x,y)\sin\frac{m\pi y}{H}\dy,
+\label{eq:7.3.29}
+\end{equation}
+for each $m$.  Equation \eqref{eq:7.3.29} is valid for all $x$ (not $y$, because $y$ is integrated from $0$ to $H$).  For each $m$, the left-hand side is a Fourier sine series in $x$; in fact, it is the Fourier sine series of the right-hand side, $2/H\int_0^H \alpha(x,y)\sin m\pi y/H\,dy$.  The coefficients of this Fourier sine series in $x$ are easily determined:
+\begin{equation}
+\boxed{A_{nm} = \frac{2}{L}\int_0^L\left[\frac{2}{H}\int_0^H \alpha(x,y)\sin\frac{m\pi y}{H}\dy\right]\sin\frac{n\pi x}{L}\dx.}
+\label{eq:7.3.30}
+\end{equation}
+This may be simplified to one double integral over the entire rectangular region, rather than two iterated one-dimensional integrals.  In this manner we have determined one set of coefficients from one of the initial conditions.
+
+The other coefficients $B_{nm}$ can be determined in a similar way.  In particular, from \eqref{eq:7.3.27}, $\partial u/\partial t(x,y,0) = \beta(x,y)$, which implies that
+\begin{equation}
+\beta(x,y) = \sum_{n=1}^{\infty}\sum_{m=1}^{\infty} c\sqrt{\lambda_{nm}}\,B_{nm}\sin\frac{n\pi x}{L}\sin\frac{m\pi y}{H}.
+\label{eq:7.3.31}
+\end{equation}
+Thus, again using a Fourier sine series in $y$ and a Fourier sine series in $x$, we obtain
+\begin{equation}
+\boxed{c\sqrt{\lambda_{nm}}\,B_{nm} = \frac{4}{LH}\int_0^L\int_0^H \beta(x,y)\sin\frac{m\pi y}{H}\sin\frac{n\pi x}{L}\dy\dx.}
+\label{eq:7.3.32}
+\end{equation}
+
+The solution of our initial value problem is the doubly infinite series given by \eqref{eq:7.3.27}, where the coefficients are determined by \eqref{eq:7.3.30} and \eqref{eq:7.3.32}.
+
+We have shown that when all three independent variables separate for a partial differential equation, there results three ordinary differential equations, two of which are eigenvalue problems.  In general, for a partial differential equation in $N$ variables that completely separates, there will be $N$ ordinary differential equations, $N - 1$ of which are one-dimensional eigenvalue problems (to determine the $N - 1$ separation constants).  We have already shown this for $N = 3$ (this section) and $N = 2$.
+
+\begin{exercises}{7.3}
+
+\item Consider the heat equation in a two-dimensional rectangular region $0 < x < L$, $0 < y < H$,
+\[
+\pd{u}{t} = k\left(\pdd{u}{x} + \pdd{u}{y}\right)
+\]
+subject to the initial condition
+\[
+u(x,y,0) = f(x,y).
+\]
+Solve the initial value problem and analyze the temperature as $t \to \infty$ if the boundary conditions are
+
+\begin{enumerate}
+\item[\starred(a)] $u(0,y,t) = 0$, \quad $u(L,y,t) = 0$, \quad $u(x,0,t) = 0$, \quad $u(x,H,t) = 0$
+
+\item[(b)] $\pd{u}{x}(0,y,t) = 0$, \quad $\pd{u}{x}(L,y,t) = 0$, \quad $\pd{u}{y}(x,0,t) = 0$, \quad $\pd{u}{y}(x,H,t) = 0$
+
+\item[\starred(c)] $\pd{u}{x}(0,y,t) = 0$, \quad $\pd{u}{x}(L,y,t) = 0$, \quad $u(x,0,t) = 0$, \quad $u(x,H,t) = 0$
+
+\item[(d)] $u(0,y,t) = 0$, \quad $\pd{u}{x}(L,y,t) = 0$, \quad $\pd{u}{y}(x,0,t) = 0$, \quad $\pd{u}{y}(x,H,t) = 0$
+
+\item[(e)] $u(0,y,t) = 0$, \quad $u(L,y,t) = 0$, \quad $u(x,0,t) = 0$, \\
+$\pd{u}{y}(x,H,t) + hu(x,H,t) = 0$. \quad ($h > 0$)
+\end{enumerate}
+
+\item Consider the heat equation in a three-dimensional box-shaped region, $0 < x < L$, $0 < y < H$, $0 < z < W$,
+\[
+\pd{u}{t} = k\left(\pdd{u}{x} + \pdd{u}{y} + \pdd{u}{z}\right)
+\]
+subject to the initial condition
+\[
+u(x,y,z,0) = f(x,y,z).
+\]
+Solve the initial value problem and analyze the temperature as $t \to \infty$ if the boundary conditions are
+
+\begin{enumerate}
+\item[(a)] $u(0,y,z,t) = 0$, \quad $\pd{u}{y}(x,0,z,t) = 0$, \quad $\pd{u}{z}(x,y,0,t) = 0$, \\
+$u(L,y,z,t) = 0$, \quad $\pd{u}{y}(x,H,z,t) = 0$, \quad $u(x,y,W,t) = 0$
+
+\item[\starred(b)] $\pd{u}{x}(0,y,z,t) = 0$, \quad $\pd{u}{y}(x,0,z,t) = 0$, \quad $\pd{u}{z}(x,y,0,t) = 0$, \\
+$\pd{u}{x}(L,y,z,t) = 0$, \quad $\pd{u}{y}(x,H,z,t) = 0$, \quad $\pd{u}{z}(x,y,W,t) = 0$
+\end{enumerate}
+
+\item Solve
+\[
+\pd{u}{t} = k_1\pdd{u}{x} + k_2\pdd{u}{y}
+\]
+on a rectangle ($0 < x < L$, $0 < y < H$) subject to
+\[
+\begin{aligned}
+u(x,y,0) = f(x,y) \qquad u(0,y,t) &= 0 \qquad \pd{u}{y}(x,0,t) = 0 \\
+u(L,y,t) &= 0 \qquad \pd{u}{y}(x,H,t) = 0.
+\end{aligned}
+\]
+
+\item Consider the wave equation for a vibrating rectangular membrane ($0 < x < L$, $0 < y < H$)
+\[
+\pdd{u}{t} = c^2\left(\pdd{u}{x} + \pdd{u}{y}\right)
+\]
+subject to the initial conditions
+\[
+u(x,y,0) = 0 \quad\text{and}\quad \pd{u}{t}(x,y,0) = f(x,y).
+\]
+Solve the initial value problem if
+
+\begin{enumerate}
+\item[(a)] $u(0,y,t) = 0$, \quad $u(L,y,t) = 0$, \quad $\pd{u}{y}(x,0,t) = 0$, \quad $\pd{u}{y}(x,H,t) = 0$
+
+\item[\starred(b)] $\pd{u}{x}(0,y,t) = 0$, \quad $\pd{u}{x}(L,y,t) = 0$, \quad $\pd{u}{y}(x,0,t) = 0$, \quad $\pd{u}{y}(x,H,t) = 0$
+\end{enumerate}
+
+\item Consider
+\[
+\pdd{u}{t} = c^2\left(\pdd{u}{x} + \pdd{u}{y}\right) - k\pd{u}{t} \quad\text{with } k > 0.
+\]
+
+\begin{enumerate}
+\item[(a)] Give a \emph{brief} physical interpretation of this equation.
+
+\item[(b)] Suppose that $u(x,y,t) = f(x)g(y)h(t)$.  What ordinary differential equations are satisfied by $f$, $g$, and $h$?
+\end{enumerate}
+
+\item Consider Laplace's equation
+\[
+\laplacian u = \pdd{u}{x} + \pdd{u}{y} + \pdd{u}{z} = 0
+\]
+in a right cylinder whose base is arbitrarily shaped (see Fig.~7.3.3).  The top is $z = H$ and the bottom is $z = 0$.  Assume that
+\[
+\begin{aligned}
+\pd{u}{z}(x,y,0) &= 0 \\
+u(x,y,H) &= f(x,y)
+\end{aligned}
+\]
+and $u = 0$ on the ``lateral'' sides.
+
+\begin{enumerate}
+\item[(a)] Separate the $z$-variable in general.
+
+\item[\starred(b)] Solve for $u(x,y,z)$ if the region is a rectangular box, $0 < x < L$, $0 < y < W$, $0 < z < H$.
+\end{enumerate}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch07/fig_7_3_3.png}
+\caption{}
+\label{fig:7.3.3}
+\end{figure}
+
+\item If possible, solve Laplace's equation
+\[
+\laplacian u = \pdd{u}{x} + \pdd{u}{y} + \pdd{u}{z} = 0,
+\]
+in a rectangular-shaped region, $0 < x < L$, $0 < y < W$, $0 < z < H$, subject to the boundary conditions
+
+\begin{enumerate}
+\item[(a)] $\pd{u}{x}(0,y,z) = 0$, \quad $u(x,0,z) = 0$, \quad $u(x,y,0) = f(x,y)$ \\
+$\pd{u}{x}(L,y,z) = 0$, \quad $u(x,W,z) = 0$, \quad $u(x,y,H) = 0$
+
+\item[(b)] $u(0,y,z) = 0$, \quad $u(x,0,z) = 0$, \quad $u(x,y,0) = 0$ \\
+$u(L,y,z) = 0$, \quad $u(x,W,z) = 0$, \quad $u(x,y,H) = f(x,z)$
+
+\item[\starred(c)] $\pd{u}{x}(0,y,z) = 0$, \quad $\pd{u}{y}(x,0,z) = 0$, \quad $\pd{u}{z}(x,y,0) = 0$ \\
+$\pd{u}{x}(L,y,z) = f(y,z)$, \quad $\pd{u}{y}(x,W,z) = 0$, \quad $\pd{u}{z}(x,y,H) = 0$
+
+\item[\starred(d)] $\pd{u}{x}(0,y,z) = 0$, \quad $\pd{u}{y}(x,0,z) = 0$, \quad $\pd{u}{z}(x,y,0) = 0$ \\
+$u(L,y,z) = g(y,z)$, \quad $\pd{u}{y}(x,W,z) = 0$, \quad $\pd{u}{z}(x,y,H) = 0$
+\end{enumerate}
+
+\end{exercises}
+
+\subsection*{Appendix to 7.3: Outline of Alternative Method to Separate Variables}
+
+An alternative (and equivalent) method to separate variables for
+\begin{equation}
+\pdd{u}{t} = c^2\left(\pdd{u}{x} + \pdd{u}{y}\right)
+\label{eq:7.3.33}
+\end{equation}
+is to assume product solutions of the form
+\begin{equation}
+u(x,y,t) = f(x)g(y)h(t).
+\label{eq:7.3.34}
+\end{equation}
+By substituting \eqref{eq:7.3.34} into \eqref{eq:7.3.33} and dividing by $c^2 f(x)g(y)h(t)$, we obtain
+\begin{equation}
+\frac{1}{c^2}\frac{1}{h}\odd{h}{t} = \frac{1}{f}\odd{f}{x} + \frac{1}{g}\odd{g}{y} = -\lambda,
+\label{eq:7.3.35}
+\end{equation}
+after introducing a separation constant $-\lambda$.  This shows that
+\begin{equation}
+\boxed{\odd{h}{t} = -\lambda c^2 h.}
+\label{eq:7.3.36}
+\end{equation}
+Equation \eqref{eq:7.3.35} can be separated further,
+\begin{equation}
+\frac{1}{f}\odd{f}{x} = -\lambda - \frac{1}{g}\odd{g}{y} = -\mu,
+\label{eq:7.3.37}
+\end{equation}
+enabling a second separation constant $-\mu$ to be introduced:
+\begin{equation}
+\boxed{\odd{f}{x} = -\mu f}
+\label{eq:7.3.38}
+\end{equation}
+\begin{equation}
+\boxed{\odd{g}{y} = -(\lambda - \mu)g.}
+\label{eq:7.3.39}
+\end{equation}
+In this way we have derived the same three ordinary differential equations (with two separation constants).

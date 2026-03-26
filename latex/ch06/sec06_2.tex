@@ -1,0 +1,216 @@
+% sec06_2.tex — Section 6.2: Finite Differences and Truncated Taylor Series
+\section{Finite Differences and Truncated Taylor Series}
+\label{sec:finite-differences}
+
+\paragraph{Polynomial approximations.}
+The fundamental technique for finite difference numerical calculations is based on polynomial approximations to $f(x)$ near $x = x_0$.  We let $x = x_0 + \Delta x$, so that $\Delta x = x - x_0$.  If we approximate $f(x)$ by a constant near $x = x_0$, we choose $f(x_0)$.  A better approximation (see Fig.~\ref{fig:6.2.1}) to $f(x)$ is its tangent line at $x = x_0$:
+\begin{equation}
+f(x) \approx f(x_0) + \underbrace{(x - x_0)}_{\Delta x}\,\od{f}{x}(x_0),
+\label{eq:6.2.1}
+\end{equation}
+a linear approximation (a first-order polynomial).  We can also consider a quadratic approximation to $f(x)$, $f(x) \approx f(x_0) + \Delta x\,f'(x_0) + (\Delta x)^2 f''(x_0)/2!$, whose value, first, and second derivatives at $x = x_0$ equal that for $f(x)$.  Each such succeeding higher-degree polynomial approximation to $f(x)$ is more and more accurate if $x$ is near enough to $x_0$ (i.e., if $\Delta x$ is small).
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch06/fig_6_2_1.png}
+\caption{Taylor polynomials.}
+\label{fig:6.2.1}
+\end{figure}
+
+\paragraph{Truncation error.}
+A formula for the error in these polynomial approximations is obtained directly from
+\begin{equation}
+f(x) = f(x_0) + \Delta x\,f'(x_0) + \cdots + \frac{(\Delta x)^n}{n!}\,f^{(n)}(x_0) + R_n,
+\label{eq:6.2.2}
+\end{equation}
+known as \textbf{the Taylor series with remainder}.  The remainder $R_n$ (also called the \textbf{truncation error}) is known to be in the form of the next term of the series, but evaluated at a usually unknown intermediate point:
+\begin{equation}
+R_n = \frac{(\Delta x)^{n+1}}{(n+1)!}\,f^{(n+1)}(\xi_{n+1}), \quad \text{where } x_0 < \xi_{n+1} < x = x_0 + \Delta x.
+\label{eq:6.2.3}
+\end{equation}
+For this to be valid, $f(x)$ must have $n+1$ continuous derivatives.
+
+\begin{example}
+The error in the tangent line approximation is given by \eqref{eq:6.2.3} with $n = 1$:
+\begin{equation}
+f(x_0 + \Delta x) = f(x_0) + \Delta x\,\od{f}{x}(x_0) + \frac{(\Delta x)^2}{2!}\,\odd{f}{x}(\xi_2),
+\label{eq:6.2.4}
+\end{equation}
+called the \textbf{extended mean value theorem}.  If $\Delta x$ is small, then $\xi_2$ is contained in a small interval, and the truncation error is almost determined (provided that $d^2f/dx^2$ is continuous),
+\[
+R \approx \frac{(\Delta x)^2}{2}\,\odd{f}{x}(x_0).
+\]
+We say that the truncation error is $O(\Delta x)^2$, ``order delta-$x$ squared,'' meaning that
+\[
+|R| \le C(\Delta x)^2,
+\]
+since we usually assume that $d^2f/dx^2$ is bounded ($|d^2f/dx^2| < M$).  Thus, $C = M/2$.
+\end{example}
+
+\paragraph{First-derivative approximations.}
+Through the use of Taylor series, we are able to approximate derivatives in various ways.  For example, from \eqref{eq:6.2.4},
+\begin{equation}
+\od{f}{x}(x_0) = \frac{f(x_0 + \Delta x) - f(x_0)}{\Delta x} - \frac{\Delta x}{2}\,\odd{f}{x}(\xi_2).
+\label{eq:6.2.5}
+\end{equation}
+We thus introduce a finite difference approximation, the \textbf{forward difference} approximation to $df/dx$:
+\begin{equation}
+\boxed{\od{f}{x}(x_0) \approx \frac{f(x_0 + \Delta x) - f(x_0)}{\Delta x}.}
+\label{eq:6.2.6}
+\end{equation}
+This is nearly the definition of the derivative.  Here we use a forward difference (but do not take the limit as $\Delta x \to 0$).  Since \eqref{eq:6.2.5} is valid for all $\Delta x$, we can let $\Delta x$ be replaced by $-\Delta x$ and derive the \textbf{backward difference} approximation to $df/dx$:
+\begin{equation}
+\od{f}{x}(x_0) = \frac{f(x_0 - \Delta x) - f(x_0)}{-\Delta x} + \frac{\Delta x}{2}\,\odd{f}{x}(\bar{\xi}_2)
+\label{eq:6.2.7}
+\end{equation}
+and hence
+\begin{equation}
+\boxed{\od{f}{x}(x_0) \approx \frac{f(x_0 - \Delta x) - f(x_0)}{-\Delta x} = \frac{f(x_0) - f(x_0 - \Delta x)}{\Delta x}.}
+\label{eq:6.2.8}
+\end{equation}
+By comparing \eqref{eq:6.2.5} to \eqref{eq:6.2.6} and \eqref{eq:6.2.7} to \eqref{eq:6.2.8}, we observe that the truncation error is $O(\Delta x)$ and nearly identical for both forward and backward difference approximations of the first derivative.
+
+To obtain a more accurate approximation for $df/dx(x_0)$, we can average the forward and backward approximations.  By adding \eqref{eq:6.2.5} and \eqref{eq:6.2.7},
+\begin{equation}
+2\,\od{f}{x}(x_0) = \frac{f(x_0 + \Delta x) - f(x_0 - \Delta x)}{\Delta x} + \frac{\Delta x}{2}\left[\odd{f}{x}(\bar{\xi}_2) - \odd{f}{x}(\xi_2)\right].
+\label{eq:6.2.9}
+\end{equation}
+Since $\bar{\xi}_2$ is near $\xi_2$, we expect the error nearly to cancel and thus be much less than $O(\Delta x)$.  To derive the error in this approximation, we return to the Taylor series for $f(x_0 - \Delta x)$ and $f(x_0 + \Delta x)$:
+\begin{align}
+f(x_0 + \Delta x) &= f(x_0) + \Delta x\,f'(x_0) + \frac{(\Delta x)^2}{2!}\,f''(x_0) + \frac{(\Delta x)^3}{3!}\,f'''(x_0) + \cdots \label{eq:6.2.10} \\
+f(x_0 - \Delta x) &= f(x_0) - \Delta x\,f'(x_0) + \frac{(\Delta x)^2}{2!}\,f''(x_0) - \frac{(\Delta x)^3}{3!}\,f'''(x_0) + \cdots. \label{eq:6.2.11}
+\end{align}
+Subtracting \eqref{eq:6.2.11} from \eqref{eq:6.2.10} yields
+\[
+f(x_0 + \Delta x) - f(x_0 - \Delta x) = 2\Delta x\,f'(x_0) + \frac{2}{3!}\,(\Delta x)^3\,f'''(x_0) + \cdots.
+\]
+We thus expect that
+\begin{equation}
+f'(x_0) = \frac{f(x_0 + \Delta x) - f(x_0 - \Delta x)}{2\Delta x} - \frac{(\Delta x)^2}{6}\,f'''(\xi_3),
+\label{eq:6.2.12}
+\end{equation}
+which is proved in an exercise.  This leads to the \textbf{centered difference} approximation to $df/dx(x_0)$:
+\begin{equation}
+\boxed{f'(x_0) \approx \frac{f(x_0 + \Delta x) - f(x_0 - \Delta x)}{2\Delta x}.}
+\label{eq:6.2.13}
+\end{equation}
+Equation~\eqref{eq:6.2.13} is usually preferable since it is more accurate [the truncation error is $O(\Delta x)^2$] and involves the same number (2) of function evaluations as both the forward and backward difference formulas.  However, as we will show later, it is not always better to use the centered difference formula.
+
+These finite difference approximations to $df/dx$ are \textbf{consistent}, meaning that the truncation error vanishes as $\Delta x \to 0$.  More accurate finite difference formulas exist, but they are used less frequently.
+
+\begin{example}
+Consider the numerical approximation of $df/dx(1)$ for $f(x) = \log x$ using $\Delta x = 0.1$.  Unlike practical problems, here we know the exact answer, $df/dx(1) = 1$.  Using a hand calculator [$x_0 = 1, \Delta x = 0.1, f(x_0 + \Delta x) = f(1.1) = \log(1.1) = 0.0953102$ and $f(x_0 - \Delta x) = \log(0.9) = -0.1053605$] yields the numerical results reported in Table~\ref{tab:6.2.1}.  Theoretically, the error should be an order of magnitude $\Delta x$ smaller for the centered difference.  We observe this phenomenon.  To understand the error further, we calculate the expected error $E$ using an estimate of the remainder.  For forward or backward differences,
+\[
+E \approx \left|\frac{\Delta x}{2}\,\odd{f}{x}(1)\right| = \frac{0.1}{2} = +0.05,
+\]
+whereas for a centered difference,
+\[
+E \approx \frac{(\Delta x)^2}{6}\,\frac{d^3 f}{dx^3}(1) = \frac{(0.1)^2}{6}\cdot 2 = 0.00333\ldots.
+\]
+
+\begin{table}[H]
+\centering
+\caption{}
+\label{tab:6.2.1}
+\begin{tabular}{@{}lccc@{}}
+\toprule
+ & Forward & Backward & Centered \\
+\midrule
+Difference formula & 0.953102 & 1.053605 & 1.00335 \\
+$|\text{Error}|$ & 4.6898\% & 5.3605\% & 0.335\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+These agree quite well with our actual tabulated errors.  Estimating the errors this way is rarely appropriate since usually the second and third derivatives are not known to begin with.
+\end{example}
+
+\paragraph{Second derivatives.}
+By adding \eqref{eq:6.2.10} and \eqref{eq:6.2.11}, we obtain
+\[
+f(x_0 + \Delta x) + f(x_0 - \Delta x) = 2f(x_0) + (\Delta x)^2\,f''(x_0) + \frac{2(\Delta x)^4}{4!}\,f^{(iv)}(x_0) + \cdots.
+\]
+We thus expect that
+\begin{equation}
+f''(x_0) = \frac{f(x_0 + \Delta x) - 2f(x_0) + f(x_0 - \Delta x)}{(\Delta x)^2} - \frac{(\Delta x)^2}{12}\,f^{(iv)}(\xi).
+\label{eq:6.2.14}
+\end{equation}
+This yields a finite difference approximation for the second derivative with an $O(\Delta x)^2$ truncation error:
+\begin{equation}
+\boxed{\odd{f}{x}(x_0) \approx \frac{f(x_0 + \Delta x) - 2f(x_0) + f(x_0 - \Delta x)}{(\Delta x)^2}.}
+\label{eq:6.2.15}
+\end{equation}
+Equation~\eqref{eq:6.2.15} is called the \textbf{centered difference} approximation for the second derivative since it also can be obtained by repeated application of the centered difference formulas for first derivatives (see Exercise~6.2.2).  The centered difference approximation for the second derivative involves three function evaluations, $f(x_0 - \Delta x)$, $f(x_0)$, and $f(x_0 + \Delta x)$.  The respective ``weights,'' $1/(\Delta x)^2$, $-2/(\Delta x)^2$, and $1/(\Delta x)^2$, are illustrated in Fig.~\ref{fig:6.2.2}.  In fact, in general, \emph{the weights must sum to zero for any finite difference approximation to any derivative}.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch06/fig_6_2_2.png}
+\caption{Weights for centered difference approximation of second derivative.}
+\label{fig:6.2.2}
+\end{figure}
+
+\paragraph{Partial derivatives.}
+In solving partial differential equations, we analyze functions of two or more variables, for example, $u(x,y)$, $u(x,t)$, and $u(x,y,t)$.  Numerical methods often use finite difference approximations.  Some (but not all) partial derivatives may be obtained using our earlier results for functions of one variable.  For example if $u(x,y)$, then $\partial u/\partial x$ is an ordinary derivative $du/dx$, keeping $y$ fixed.  We may use the forward, backward, or centered difference formulas.  Using the centered difference formula,
+\[
+\pd{u}{x}(x_0,y_0) \approx \frac{u(x_0 + \Delta x, y_0) - u(x_0 - \Delta x, y_0)}{2\Delta x}.
+\]
+For $\partial u/\partial y$ we keep $x$ fixed and thus obtain
+\[
+\pd{u}{y}(x_0,y_0) \approx \frac{u(x_0, y_0 + \Delta y) - u(x_0, y_0 - \Delta y)}{2\Delta y},
+\]
+using the centered difference formula.  These are both two-point formulas, which we illustrate in Fig.~\ref{fig:6.2.3}.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch06/fig_6_2_3.png}
+\caption{Points for first partial derivatives.}
+\label{fig:6.2.3}
+\end{figure}
+
+In physical problems we often need the Laplacian $\laplacian u = \partial^2 u/\partial x^2 + \partial^2 u/\partial y^2$.  We use the centered difference formula for second derivatives \eqref{eq:6.2.15}, adding the formula for $x$ fixed to the one for $y$ fixed:
+\begin{equation}
+\begin{split}
+\laplacian u(x_0,y_0) &\approx \frac{u(x_0+\Delta x,y_0) - 2u(x_0,y_0) + u(x_0-\Delta x,y_0)}{(\Delta x)^2} \\
+&\quad + \frac{u(x_0,y_0+\Delta y) - 2u(x_0,y_0) + u(x_0,y_0-\Delta y)}{(\Delta y)^2}.
+\end{split}
+\label{eq:6.2.16}
+\end{equation}
+Here the error is the larger of $O(\Delta x)^2$ and $O(\Delta y)^2$.  We often let $\Delta x = \Delta y$, obtaining the standard five-point finite difference approximation to the Laplacian $\laplacian$,
+\begin{equation}
+\boxed{\laplacian u(x_0,y_0) \approx \frac{u(x_0+\Delta x,y_0) + u(x_0-\Delta x,y_0) + u(x_0,y_0+\Delta y) + u(x_0,y_0-\Delta y) - 4u(x_0,y_0)}{(\Delta x)^2},}
+\label{eq:6.2.17}
+\end{equation}
+as illustrated in Fig.~\ref{fig:6.2.4}, where $\Delta x = \Delta y$.  Note that the relative weights again sum to zero.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch06/fig_6_2_4.png}
+\caption{Weights for the Laplacian ($\Delta x = \Delta y$).}
+\label{fig:6.2.4}
+\end{figure}
+
+Other formulas for derivatives may be found in ``Numerical Interpolation, Differentiation, and Integration'' by P.~J.~Davis and I.~Polonsky (Chapter~25 of Abramowitz and Stegun [1974]).
+
+\begin{exercises}{6.2}
+\item
+\begin{enumerate}
+\item[(a)] Show that the truncation error for the centered difference approximation of the first derivative \eqref{eq:6.2.13} is $-(\Delta x)^2 f'''(\xi_3)/6$.  [\emph{Hint:} Consider the Taylor series of $g(\Delta x) = f(x + \Delta x) - f(x - \Delta x)$ as a function of $\Delta x$ around $\Delta x = 0$.]
+
+\item[(b)] Explicitly show that \eqref{eq:6.2.13} is exact for any quadratic polynomial.
+\end{enumerate}
+
+\item Derive \eqref{eq:6.2.15} by twice using the centered difference approximation for first derivatives.
+
+\item Derive the truncation error for the centered difference approximation of the second derivative.
+
+\item Suppose that we did not know \eqref{eq:6.2.15} but thought it possible to approximate $d^2f/dx^2(x_0)$ by an unknown linear combination of the three function values, $f(x_0 - \Delta x)$, $f(x_0)$, and $f(x_0 + \Delta x)$:
+\[
+\odd{f}{x} \approx a\,f(x_0 - \Delta x) + b\,f(x_0) + c\,f(x_0 + \Delta x).
+\]
+Determine $a$, $b$, and $c$ by expanding the right-hand side in a Taylor series around $x_0$ using \eqref{eq:6.2.10} and \eqref{eq:6.2.11} and equating coefficients through $d^2f/dx^2(x_0)$.
+
+\item Derive the most accurate five-point approximation for $f'(x_0)$ involving $f(x_0)$, $f(x_0 \pm \Delta x)$, and $f(x_0 \pm 2\Delta x)$.  What is the order of magnitude of the truncation error?
+
+\item[\starred 6.2.6.] Derive an approximation for $\partial^2 u/\partial x\,\partial y$ whose truncation error is $O(\Delta x)^2$.  (\emph{Hint:} Twice apply the centered difference approximations for first-order partial derivatives.)
+
+\item How well does $\tfrac{1}{2}[f(x) + f(x + \Delta x)]$ approximate $f(x + \Delta x/2)$ (i.e., what is the truncation error)?
+\end{exercises}

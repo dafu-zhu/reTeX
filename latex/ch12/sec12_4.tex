@@ -1,0 +1,203 @@
+% sec12_4.tex — Section 12.4: Semi-Infinite Strings and Reflections
+\section{Semi-Infinite Strings and Reflections}
+\label{sec:semi-infinite}
+
+We will solve the one-dimensional wave equation on a semi-infinite interval, $x > 0$:
+\boxed{\begin{equation}
+\label{eq:12.4.1}
+\text{PDE:}\quad \pdd{u}{t} = c^2\pdd{u}{x}
+\end{equation}}
+\boxed{\begin{equation}
+\label{eq:12.4.2}
+\text{IC1:}\quad u(x,0) = f(x)
+\end{equation}}
+\boxed{\begin{equation}
+\label{eq:12.4.3}
+\text{IC2:}\quad \pd{u}{t}(x,0) = g(x).
+\end{equation}}
+A condition is necessary at the boundary $x = 0$.  We suppose that the string is fixed at $x = 0$:
+\boxed{\begin{equation}
+\label{eq:12.4.4}
+\text{BC:}\quad u(0,t) = 0.
+\end{equation}}
+Although a Fourier sine transform can be used, we prefer to indicate how to use the general solution and the method of characteristics:
+\boxed{\begin{equation}
+\label{eq:12.4.5}
+u(x,t) = F(x - ct) + G(x + ct).
+\end{equation}}
+As in Sec.~12.3, the initial conditions are satisfied if
+\begin{align}
+\label{eq:12.4.6}
+G(x) &= \frac{1}{2}f(x) + \frac{1}{2c}\int_0^x g(\bar{x})\,d\bar{x} \qquad x > 0 \\
+\label{eq:12.4.7}
+F(x) &= \frac{1}{2}f(x) - \frac{1}{2c}\int_0^x g(\bar{x})\,d\bar{x} \qquad x > 0.
+\end{align}
+However, it is very important to note that (unlike the case of the infinite string) \eqref{eq:12.4.6} and \eqref{eq:12.4.7} are valid only for $x > 0$; the arbitrary functions are only determined from the initial conditions for positive arguments.  In the general solution, $G(x + ct)$ requires only positive arguments of $G$ (since $x > 0$ and $t > 0$).  On the other hand, $F(x - ct)$ requires positive arguments if $x > ct$, but requires negative arguments if $x < ct$.  As indicated by a space-time diagram, Fig.~12.4.1, the information that there is a fixed end at $x = 0$ travels at a finite velocity $c$.  Thus, if $x > ct$, the string does not know that there is any boundary.  In this case ($x > ct$), the solution is obtained as before [using \eqref{eq:12.4.6} and \eqref{eq:12.4.7}],
+\begin{equation}
+\label{eq:12.4.8}
+u(x,t) = \frac{f(x-ct) + f(x+ct)}{2} + \frac{1}{2c}\int_{x-ct}^{x+ct} g(\bar{x})\,d\bar{x}, \qquad x > ct,
+\end{equation}
+d'Alembert's solution.  However, here this is not valid if $x < ct$.  Since $x + ct > 0$,
+\[
+G(x + ct) = \frac{1}{2}f(x + ct) + \frac{1}{2c}\int_0^{x+ct} g(\bar{x})\,d\bar{x},
+\]
+as determined earlier.  To obtain $F$ for negative arguments, we cannot use the initial conditions.  Instead, the boundary condition must be utilized.  $u(0,t) = 0$ implies that [from \eqref{eq:12.4.5}]
+\begin{equation}
+\label{eq:12.4.9}
+0 = F(-ct) + G(ct) \qquad \text{for } t > 0.
+\end{equation}
+Thus, $F$ for negative arguments is $-G$ of the corresponding positive argument:
+\begin{equation}
+\label{eq:12.4.10}
+F(z) = -G(-z) \qquad \text{for } z < 0.
+\end{equation}
+Thus, the solution for $x - ct < 0$ is
+\begin{align*}
+u(x,t) &= F(x - ct) + G(x + ct) = G(x + ct) - G(ct - x) \\
+&= \frac{1}{2}[f(x + ct) - f(ct - x)] + \frac{1}{2c}\left[\int_0^{x+ct} g(\bar{x})\,d\bar{x} - \int_0^{ct-x} g(\bar{x})\,d\bar{x}\right] \\
+&= \frac{1}{2}[f(x + ct) - f(ct - x)] + \frac{1}{2c}\int_{ct-x}^{x+ct} g(\bar{x})\,d\bar{x}.
+\end{align*}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch12/fig_12_4_1.png}
+\caption{Characteristic emanating from the boundary.}
+\label{fig:12.4.1}
+\end{figure}
+
+To interpret this solution, the method of characteristics is helpful.  Recall that for infinite problems, $u(x,t)$ is the sum of $F$ (moving to the right) and $G$ (moving to the left).  For semi-infinite problems with $x > ct$, the boundary does not affect the characteristics (see Fig.~12.4.2).  If $x < ct$, then Fig.~12.4.3 shows the left-moving characteristic ($G$ constant) not affected by the boundary, but the right-moving characteristic emanates from the boundary.  $F$ is constant moving to the right.  Due to the boundary condition, $F + G = 0$ at $x = 0$, the right-moving wave is minus the left-moving wave.  The wave inverts as it ``bounces off'' the boundary.  The resulting right-moving wave $-G(ct - x)$ is called the \textbf{reflected wave}.  For $x < ct$, the total solution is the reflected wave plus the as-yet unreflected left-moving wave:
+\[
+u(x,t) = G(x + ct) - G(-(x - ct)).
+\]
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch12/fig_12_4_2.png}
+\caption{Characteristics.}
+\label{fig:12.4.2}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch12/fig_12_4_3.png}
+\caption{Reflected characteristics.}
+\label{fig:12.4.3}
+\end{figure}
+
+The negatively reflected wave $-G(-(x - ct))$ moves to the right.  It behaves \emph{as if} initially at $t = 0$ it were $-G(-x)$.  If there were no boundary, the right-moving wave $F(x - ct)$ would be initially $F(x)$.  Thus, the reflected wave is exactly the wave that would have occurred if
+\[
+F(x) = -G(-x) \qquad \text{for } x < 0,
+\]
+or, equivalently,
+\[
+\frac{1}{2}f(x) - \frac{1}{2c}\int_0^x g(\bar{x})\,d\bar{x} = -\frac{1}{2}f(-x) - \frac{1}{2c}\int_0^{-x} g(\bar{x})\,d\bar{x}.
+\]
+One way to obtain this is to extend the initial position $f(x)$ for $x > 0$ as an odd function [such that $f(-x) = -f(x)$] and also extend the initial velocity $g(x)$ for $x > 0$ as an odd function [then its integral, $\int_0^x g(\bar{x})\,d\bar{x}$, will be an even function].  \emph{In summary, \textbf{the solution of the semi-infinite problem with $u = 0$ at $x = 0$ is the same as an infinite problem with the initial positions and velocities extended as odd functions.}}
+
+As further explanation, suppose that $u(x,t)$ is any solution of the wave equation.  Since the wave equation is unchanged when $x$ is replaced by $-x$, $u(-x,t)$ (and any multiple of it) is also a solution of the wave equation.  If the initial conditions satisfied by $u(x,t)$ are odd functions of $x$, then both $u(x,t)$ and $-u(-x,t)$ solve these initial conditions and the wave equation.  Since the initial value problem has a unique solution, $u(x,t) = -u(-x,t)$; that is, $u(x,t)$, which is odd initially, will remain odd for all time.  Thus, odd initial conditions yield a solution that will satisfy a zero boundary condition at $x = 0$.
+
+\textbf{Example.}  Consider a semi-infinite string $x > 0$ with a fixed end $u(0,t) = 0$, which is initially at rest, $\partial u/\partial t(x,0) = 0$, with an initial unit rectangular pulse,
+\[
+f(x) = \begin{cases} 1 & 4 < x < 5 \\ 0 & \text{otherwise.} \end{cases}
+\]
+Since $g(x) = 0$, it follows that
+\[
+F(x) = G(x) = \frac{1}{2}f(x) = \begin{cases} \frac{1}{2} & 4 < x < 5 \\ 0 & \text{otherwise (with $x > 0$).} \end{cases}
+\]
+$F$ moves to the right; $G$ moves to the left, negatively reflecting off $x = 0$.  This can also be interpreted as an initial condition (on an infinite domain) with $f(x)$ and $g(x)$ extended as odd functions.  The solution is sketched in Fig.~12.4.4.  Note the \emph{negative} reflection.
+
+Problems with nonhomogeneous boundary conditions at $x = 0$ can be analyzed in a similar way.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch12/fig_12_4_4.png}
+\caption{Reflected pulse.}
+\label{fig:12.4.4}
+\end{figure}
+
+\begin{exercises}{12.4}
+
+\item\starred \label{ex:12.4.1}
+Solve by the method of characteristics:
+\[
+\pdd{u}{t} = c^2\pdd{u}{x}, \qquad x > 0,
+\]
+subject to $u(x,0) = 0$, $\frac{\partial u}{\partial t}(x,0) = 0$, and $u(0,t) = h(t)$.
+
+\item\starred \label{ex:12.4.2}
+Determine $u(x,t)$ if
+\[
+\pdd{u}{t} = c^2\pdd{u}{x} \qquad \text{for } x < 0 \text{ only,}
+\]
+where
+\begin{align*}
+u(x,0) &= \cos x \quad & x &< 0 \\
+\pd{u}{t}(x,0) &= 0 \quad & x &< 0 \\
+u(0,t) &= e^{-t} \quad & t &> 0.
+\end{align*}
+Do not sketch the solution.  However, draw a space-time diagram, including all important characteristics.
+
+\item \label{ex:12.4.3}
+Consider the wave equation on a semi-infinite interval
+\[
+\pdd{u}{t} = c^2\pdd{u}{x} \qquad \text{for } 0 < x < \infty
+\]
+with the free boundary condition
+\[
+\pd{u}{x}(0,t) = 0
+\]
+and the initial conditions
+\[
+u(x,0) = \begin{cases} 0 & 0 < x < 2 \\ 1 & 2 < x < 3 \\ 0 & x > 3 \end{cases} \qquad \pd{u}{t}(x,0) = 0.
+\]
+Determine the solution.  Sketch the solution for various times.  (Assume that $u$ is continuous at $x = 0$, $t = 0$.)
+
+\item \label{ex:12.4.4}
+\begin{enumerate}
+\item[(a)] Solve for $x > 0$, $t > 0$ (using the method of characteristics):
+\[
+\pdd{u}{t} = c^2\pdd{u}{x}
+\]
+\begin{align*}
+u(x,0) &= f(x) \\
+\pd{u}{t}(x,0) &= g(x)
+\end{align*} \quad $x > 0$
+\[
+\pd{u}{x}(0,t) = 0 \qquad t > 0.
+\]
+(Assume that $u$ is continuous at $x = 0$, $t = 0$.)
+\item[(b)] Show that the solution of part (a) may be obtained by extending the initial position and velocity as even functions (around $x = 0$).
+\item[(c)] Sketch the solution if $g(x) = 0$ and
+\[
+f(x) = \begin{cases} 1 & 4 < x < 5 \\ 0 & \text{otherwise.} \end{cases}
+\]
+\end{enumerate}
+
+\item \label{ex:12.4.5}
+\begin{enumerate}
+\item[(a)] Show that if $u(x,t)$ and $\partial u/\partial t$ are initially even around $x = x_0$, $u(x,t)$ will remain even for all time.
+\item[(b)] Show that this type of even initial condition yields a solution that will satisfy a zero derivative boundary condition at $x = x_0$.
+\end{enumerate}
+
+\item\starred \label{ex:12.4.6}
+Solve ($x > 0$, $t > 0$)
+\[
+\pdd{u}{t} = c^2\pdd{u}{x}
+\]
+subject to the conditions $u(x,0) = 0$, $\frac{\partial u}{\partial t}(x,0) = 0$, and $\frac{\partial u}{\partial x}(0,t) = h(t)$.
+
+\item\starred \label{ex:12.4.7}
+Solve
+\[
+\pdd{u}{t} = c^2\pdd{u}{x} \quad x > 0, \quad t > 0
+\]
+subject to $u(x,0) = f(x)$, $\frac{\partial u}{\partial t}(x,0) = 0$, and $\frac{\partial u}{\partial x}(0,t) = h(t)$.  (Assume that $u$ is continuous at $x = 0$, $t = 0$.)
+
+\item \label{ex:12.4.8}
+Solve
+\[
+\pdd{u}{t} = c^2\pdd{u}{x} \quad \text{with } u(x,0) = 0 \text{ and } \pd{u}{t}(x,0) = 0,
+\]
+subject to $u(x,t) = g(t)$ along $x = \tfrac{c}{5}t$ ($c > 0$).
+
+\end{exercises}

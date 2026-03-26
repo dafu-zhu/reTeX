@@ -1,0 +1,12 @@
+% sec05_1.tex — Section 5.1: Introduction
+\section{Introduction}
+\label{sec:sl-intro}
+
+The method of separation of variables is quite successful in solving some homogeneous partial differential equations with homogeneous boundary conditions.  The boundary value problem that determines the needed eigenvalues (separation constants) has involved the simple ordinary differential equation
+\begin{equation}
+\label{eq:simple-ode}
+\odd{\phi}{x} + \lambda\phi = 0.
+\end{equation}
+Explicit solutions of this equation determined the eigenvalues $\lambda$ from the homogeneous boundary conditions.  The principle of superposition resulted in our needing to analyze infinite series.  We pursued three different cases (depending on the boundary conditions): Fourier sine series, Fourier cosine series, and Fourier series (both sines and cosines).  Fortunately, we verified by explicit integration that the eigenfunctions were orthogonal.  This enabled us to determine the coefficients of the infinite series from the remaining nonhomogeneous condition.
+
+In this section we explain and generalize these results.  We show that the orthogonality of the eigenfunctions can be derived even if we cannot solve the defining differential equation in terms of elementary functions [as in \eqref{eq:simple-ode}].  Instead, orthogonality is a direct result of the differential equation.  We investigate other boundary value problems resulting from separation of variables that yield other families of orthogonal functions.  These generalizations of Fourier series will not always involve sines and cosines since \eqref{eq:simple-ode} is not necessarily appropriate in every situation.

@@ -1,0 +1,30 @@
+% sec02_1.tex — Section 2.1: Introduction
+\section{Introduction}
+\label{sec:2.1}
+
+In Chapter~1 we developed from physical principles an understanding of the heat equation and its corresponding initial and boundary conditions. We are ready to pursue the mathematical solution of some typical problems involving partial differential equations. We will use a technique called the \textbf{method of separation of variables}. You will have to become an expert in this method, and so we will discuss quite a few examples. We will emphasize problem-solving techniques, but we must also understand how not to misuse the technique.
+
+A relatively simple but typical, problem for the equation of heat conduction occurs for a one-dimensional rod ($0 \le x \le L$) when all the thermal coefficients are constant. Then the PDE,
+\begin{equation}
+\label{eq:2.1.1}
+\pd{u}{t} = k \pdd{u}{x} + \frac{Q(x,t)}{c\rho}, \qquad
+\begin{aligned}
+t &> 0 \\
+0 &< x < L,
+\end{aligned}
+\end{equation}
+must be solved subject to the initial condition,
+\begin{equation}
+\label{eq:2.1.2}
+u(x,0) = f(x), \qquad 0 < x < L,
+\end{equation}
+and two boundary conditions. For example, if both ends of the rod have prescribed temperature, then
+\begin{equation}
+\label{eq:2.1.3}
+\begin{aligned}
+u(0,t) &= T_1(t) \\
+u(L,t) &= T_2(t).
+\end{aligned}
+\qquad t > 0
+\end{equation}
+The method of separation of variables is used when the partial differential equation and the boundary conditions are linear and homogeneous, concepts we now explain.

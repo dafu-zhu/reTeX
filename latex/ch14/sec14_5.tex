@@ -1,0 +1,193 @@
+% sec14_5.tex — Section 14.5: Group Velocity II and the Method of Stationary Phase
+\section{Group Velocity II and the Method of Stationary Phase}
+\label{sec:group-velocity-stationary-phase}
+
+The solution of linear dispersive partial differential equations with a dispersion relation $\omega = \omega(k)$ is of the form
+\begin{equation}
+\label{eq:14.5.1}
+u(x,t) = \int_{-\infty}^{\infty} G(k)e^{i(kx - \omega(k)t)}\,dk = \int_{-\infty}^{\infty} G(k)e^{it[k\frac{x}{t} - \omega(k)]}\,dk.
+\end{equation}
+The function $G(k)$ is related to the Fourier transform of the initial condition $u(x,0)$.  Although this integral can be numerically evaluated for fixed $x$ and $t$, this is a tedious process and little would be learned about the partial differential equation.  There are some well-known analytic approximations based on $t$ being large (with $\frac{x}{t}$ fixed), which we now discuss.
+
+\subsection{Method of Stationary Phase}
+\label{sec:stationary-phase}
+
+We begin by analyzing integrals depending on a parameter $t$:
+\boxed{\begin{equation}
+\label{eq:14.5.2}
+I(t) = \int_a^b G(k)e^{it\phi(k)}\,dk.
+\end{equation}}
+
+Later we will specialize our results to linear dispersive waves where the integral is specifically described by \eqref{eq:14.5.1}.  For large values of $t$, the integrand in \eqref{eq:14.5.2} oscillates quickly, as shown in Fig.~14.5.1.  We expect significant cancellation, so that we expect $I(t)$ to be small for large $t$.  In the Exercises (by integration by parts) it is shown that
+\[
+I(t) = O\Bigl(\frac{1}{t}\Bigr) \quad \text{if } \phi'(k) \neq 0.
+\]
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch14/fig_14_5_1.png}
+\caption{Oscillatory integral cancellation ($t$ large).}
+\label{fig:14.5.1}
+\end{figure}
+
+The formula by integration by parts includes a boundary contribution and an integral.  For infinite domains of integration, often the integral can be much smaller since the boundary contribution vanishes and the integral can be integrated by parts again, making it smaller.  If $\phi(k)$ is flat somewhere [$\phi'(k_0) = 0$], then there is less cancellation.  That part of the integrand contributes the most.  We claim that for large $t$ the largest contribution to the integral \eqref{eq:14.5.2} comes from points near where the phase is \textbf{stationary}, places $k_0$ where
+\boxed{\begin{equation}
+\label{eq:14.5.3}
+\phi'(k_0) = 0.
+\end{equation}}
+
+We begin by assuming that $\phi(k)$ has one stationary point between $a$ and $b$.  We claim that the largest contribution to the integral comes from a small neighborhood of $k_0$, so that for large $t$
+\[
+I(t) \sim \int_{k_0-\varepsilon}^{k_0+\varepsilon} G(k)e^{it\phi(k)}\,dk,
+\]
+where $\varepsilon$ is small (and to justify this approximation we must let $\varepsilon$ vanish in some way as $t \to \infty$).  Furthermore, $G(k)$ can be approximated by $G(k_0)$ [if $G(k_0) \neq 0$], and $\phi(k)$ can be approximated by its Taylor series around $k = k_0$:
+\[
+I(t) \sim G(k_0)\int_{k_0-\varepsilon}^{k_0+\varepsilon} e^{it[\phi(k_0) + \frac{(k-k_0)^2}{2}\phi''(k_0) + \cdots]}\,dk.
+\]
+Using \eqref{eq:14.5.3}, if we assume that $\varepsilon$ is small enough for large $t$ such that $\varepsilon^3 t$ is small, then the cubic multiplicative term $e^{it\frac{(k-k_0)^3}{3!}\phi'''(k_0)}$ can be approximated by 1.  Thus,
+\[
+I(t) \sim G(k_0)e^{it\phi(k_0)}\int_{k_0-\varepsilon}^{k_0+\varepsilon} e^{it\frac{(k-k_0)^2}{2}\phi''(k_0)}\,dk.
+\]
+The following linear change of variables simplifies the exponent in the integrand:
+\[
+y = (k - k_0)\Bigl(\frac{t\,|\phi''(k_0)|}{2}\Bigr)^{1/2},
+\]
+in which case
+\[
+I(t) \sim \frac{\sqrt{2}\,G(k_0)e^{it\phi(k_0)}}{(t\,|\phi''(k_0)|)^{1/2}}\int_{-\varepsilon(t|\phi''(k_0)|/2)^{1/2}}^{\varepsilon(t|\phi''(k_0)|/2)^{1/2}} e^{i(\operatorname{sign}\phi''(k_0))y^2}\,dy.
+\]
+We can choose $\varepsilon$ so that $\varepsilon t^{1/2}$ is large as $t \to \infty$.  However, recall that $\varepsilon^3 t$ must be small.  (For those of you who are skeptical, we can satisfy both by choosing $\varepsilon = t^{-p}$ for any $p$ between $\frac{1}{3}$ and $\frac{1}{2}$.)  In this way, the limits approach $\pm\infty$ as $t \to \infty$.  Thus,
+\[
+I(t) \sim \frac{2\sqrt{2}\,G(k_0)e^{it\phi(k_0)}}{(t\,|\phi''(k_0)|)^{1/2}}\int_0^{\infty} e^{i(\operatorname{sign}\phi''(k_0))y^2}\,dy.
+\]
+The integral is just a number, albeit an interesting one.  It is known that
+\[
+\int_0^{\infty}\cos(y^2)\,dy = \int_0^{\infty}\sin(y^2)\,dy = \frac{1}{2}\sqrt{\frac{\pi}{2}}.
+\]
+Thus, with a little gamesmanship (algebra based on $1 + i = \sqrt{2}e^{i\pi/4}$), we can obtain what is called the
+
+\begin{center}
+\fbox{\parbox{0.8\textwidth}{
+\textbf{Method of Stationary Phase
+}}
+\end{center}
+
+The asymptotic expansion of the integral $I(t) = \int_a^b G(k)e^{it\phi(k)}\,dk$ as $t \to \infty$ is given by
+\begin{equation}
+\label{eq:14.5.4}
+I(t) \sim \Bigl(\frac{2\pi}{t\,|\phi''(k_0)|}\Bigr)^{1/2} G(k_0)\,e^{it\phi(k_0)}\,e^{i(\operatorname{sign}\phi''(k_0))\frac{\pi}{4}}
+\end{equation}
+[assuming there is a simple stationary point $k_0$ satisfying $\phi'(k_0) = 0$ with $\phi''(k_0) \neq 0$].}
+
+The symbol $\sim$ (read ``is asymptotic to'') means that the right-hand side is a good approximation to the left and that approximation improves as $t$ increases.  The most important part of this result is that $I(t)$ is small for large $t$ but much larger than the contribution for regions without stationary points:
+\[
+I(t) = O\Bigl(\frac{1}{t^{1/2}}\Bigr),
+\]
+for a simple stationary point [assuming $\phi'(k_0) = 0$ with $\phi''(k_0) \neq 0$].  The asymptotic approximation to the integral is just the integrand of the integral evaluated at the stationary point multiplied by an amplitude factor and a phase factor.  In many applications the phase shift is not particularly important.
+
+If there is more than one stationary point, the approximation to the integral is the sum of the contribution from each stationary point since the integral can be broken up into pieces with one stationary point each.
+
+\subsection{Application to Linear Dispersive Waves}
+\label{sec:stationary-phase-dispersive}
+
+Here, we consider a linear dispersive partial differential equation that has elementary solutions of the form $e^{i(kx - \omega t)}$, where $\omega$ satisfies the dispersion relation $\omega = \omega(k)$.  Each mode of the solution to the initial value problem has the form
+\boxed{\begin{equation}
+\label{eq:14.5.5}
+u(x,t) = \int_{-\infty}^{\infty} A(k)e^{i(kx - \omega(k)t)}\,dk = \int_{-\infty}^{\infty} A(k)e^{it[k\frac{x}{t} - \omega(k)]}\,dk,
+\end{equation}}
+where $A(k)$ is related to the Fourier transform of the initial condition.  Usually this integral cannot be evaluated explicitly.  Numerical methods could be used, but little can be learned this way concerning the underlying physical processes.  However, important approximate behavior for large $x$ and $t$ can be derived using the method of stationary phase.  To use the method of stationary phase, we assume $t$ is large (and $\frac{x}{t}$ is fixed).  For large $t$, destructive interference occurs and the integral is small.  The largest contribution to the integral \eqref{eq:14.5.5} occurs from any point $k_0$
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch14/fig_14_5_2.png}
+\caption{Wave number moves with group velocity.}
+\label{fig:14.5.2}
+\end{figure}
+
+where the phase is stationary:
+\boxed{\begin{equation}
+\label{eq:14.5.6}
+\frac{x}{t} = \omega'(k_0).
+\end{equation}}
+
+Given $x$ and $t$, \eqref{eq:14.5.6} determines the stationary point $k_0$, as shown in Fig.~14.5.2.  According to the method of stationary phase \eqref{eq:14.5.4}, the following is a good approximation for large $x$ and $t$:
+\boxed{\begin{equation}
+\label{eq:14.5.7}
+u(x,t) \sim A(k_0)\biggl|\frac{2\pi}{t\omega''(k_0)}\biggr|^{1/2} e^{i[k_0 x - \omega(k_0)t]}\,e^{-i(\operatorname{sign}\omega''(k_0))\frac{\pi}{4}}
+\end{equation}}
+
+since $\phi'' = -\omega''$, where $k_0$ satisfies \eqref{eq:14.5.6}.  (We ignore in our discussion the usually constant phase factor.)  The solution \eqref{eq:14.5.7} looks like an elementary plane traveling wave with wave number $k_0$ and frequency $\omega(k_0)$, whose amplitude decays.  The solution is somewhat more complicated as the wave number and frequency depend on $x$ and $t$, satisfying \eqref{eq:14.5.6}.  However, the wave number and frequency are nearly constant since they change slowly in space and time.  Thus, the solution is said to be a \textbf{slowly varying dispersive wave}.  The solution is a relatively elementary sinusoidal wave with a specific wave length at any particular place, but the wavelength changes appreciably only over many wave lengths (see Fig.~14.5.3).
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch14/fig_14_5_3.png}
+\caption{Slowly varying dispersive wave.}
+\label{fig:14.5.3}
+\end{figure}
+
+Equation \eqref{eq:14.5.6} shows the importance of the group velocity.  The wave number is a function of $x$ and $t$.  To understand how the wave number travels, imagine an initial condition in which all the wave numbers are simultaneously concentrated near $x = 0$ at $t = 0$.  (This is a reasonable assumption since we are approximating the solution for large values of $x$, and from that point of view the initial condition is localized near $x = 0$.)  Equation \eqref{eq:14.5.6} shows that at later times each wave number is located at a position that is understood if \textbf{the wave number moves at its group velocity} $\omega'(k_0)$.  In more advanced discussions, it can be shown that the energy propagates with the group velocity (not the phase velocity).  Energy is propagated with all wave numbers.  If there is a largest group velocity, then energy cannot travel faster than it.  If one is located at a position such that $\frac{x}{t}$ is greater than the largest group velocity, then there are no stationary points.  If there are no stationary points, the solution \eqref{eq:14.5.5} is much smaller than the results \eqref{eq:14.5.7} obtained by the method of stationary phase.  It is possible for more than one point to be stationary (in which case the solution is the sum of terms of the form to be presented).
+
+The amplitude decays (as $t \to \infty$) because the partial differential equation is dispersive.  The solution is composed of waves of different wave lengths, and their corresponding phase velocities are different.  The wave then spreads apart (disperses).
+
+\begin{exercises}{14.5}
+\item Consider $u_t = u_{xxx}$.
+\begin{enumerate}
+\item[(a)] Solve the initial value problem.
+\item[(b)] Approximate the solution for large $x$ and $t$ using the method of stationary phase.
+\item[(c)] From (b), solve for the wave number as a function of $x$ and $t$.
+\item[(d)] From (b), graph lines in space-time along which the wave number is constant.
+\item[(e)] From (b), graph lines in space-time along which the phase is constant (called phase lines).
+\end{enumerate}
+
+\item Consider $u_t = iu_{xx}$.
+\begin{enumerate}
+\item[(a)] Solve the initial value problem.
+\item[(b)] Approximate the solution for large $x$ and $t$ using the method of stationary phase.
+\item[(c)] From (b), solve for the wave number as a function of $x$ and $t$.
+\item[(d)] From (b), graph lines in space-time along which the wave number is constant.
+\item[(e)] From (b), graph lines in space-time along which the phase is constant (called phase lines).
+\end{enumerate}
+
+\item Consider the dispersion relation $\omega = \frac{1}{3}k^3 - \frac{1}{2}k^2$.
+\begin{enumerate}
+\item[(a)] Find a partial differential equation with this dispersion relation.
+\item[\starred (b)] Where in space-time are there $0, 1, 2, 3, \ldots$ waves?
+\end{enumerate}
+
+\item Assume \eqref{eq:14.5.5} is valid for a dispersive wave.  Suppose the maximum of the group velocity $\omega'(k)$ occurs at $k = k_1$.  This also corresponds to a \textbf{rainbow caustic} (see Fig.~14.6.8).
+\begin{enumerate}
+\item[(a)] Show that there are two stationary points if $x < \omega'(k_1)t$ and no stationary points if $x > \omega'(k_1)t$.
+\item[(b)] State (but do not prove) the order of magnitude of the wave envelope in each region.
+\item[(c)] Show that $\omega''(k_1) = 0$ with usually $\omega'''(k_1) < 0$.
+\item[(d)] Approximate the integral in \eqref{eq:14.5.5} by the region near $k_1$ to derive
+\begin{equation}
+\label{eq:14.5.8}
+u(x,t) \sim A(k_1)e^{i(k_1 x - \omega(k_1)t)} \times \int_{k_1-\varepsilon}^{k_1+\varepsilon} e^{i[(k-k_1)(x - \omega'(k_1)t) - \frac{\omega'''(k_1)}{3!}(k-k_1)^3 t]}\,dk.
+\end{equation}
+\item[(e)] Introduce instead the integration variable $s$, $k - k_1 = \frac{s}{(\frac{t|\omega'''(k_1)|}{3!})^{1/3}}$, and show that the following integral is important: $\int_{-\infty}^{\infty} e^{i(\rho s + \frac{1}{3}s^3)}\,ds$, where $p = \frac{x - \omega'(k_1)t}{(\frac{t|\omega'''(k_1)|}{3!})^{1/3}}$.
+\item[(f)] The \textbf{Airy function} is defined as $\text{Ai}(z) = \frac{1}{\pi}\int_0^{\infty}\cos(zs + \frac{1}{3}s^3)\,ds$.  Do not show that it satisfies the ordinary differential equation $\text{Ai}''(z) = z\,\text{Ai}(z)$.  Express the wave solution in terms of this Airy function.
+\item[(g)] As $z \to \pm\infty$, the Airy function has the following well-known properties:
+\begin{equation}
+\label{eq:14.5.9}
+\text{Ai}(z) \sim \begin{cases} \frac{1}{2\sqrt{\pi}}\,|z|^{-1/4}\sin\bigl(\frac{2}{3}\,|z|^{3/2} + \frac{\pi}{4}\bigr) & z \to -\infty \\[6pt] \frac{1}{2\sqrt{\pi}}\,z^{-1/4}\exp\bigl(-\frac{2}{3}z^{3/2}\bigr) & z \to +\infty. \end{cases}
+\end{equation}
+Using this, show that the solution decays at the appropriate rates in each region.
+\end{enumerate}
+
+\item By integrating by parts, show that $I(t)$ given by \eqref{eq:14.5.2} is $O\bigl(\frac{1}{t}\bigr)$ if $\phi'(k) \neq 0$.
+
+\item Approximate (for large $t$) $I(t)$ given by \eqref{eq:14.5.2} if there is one stationary point $k_0$ with $\phi'(k_0) = 0$ and $\phi''(k_0) = 0$ but $\phi'''(k_0) \neq 0$.  Do not prove your result.  What is the order of magnitude for large $t$?
+
+\item The coefficients of Fourier sine and cosine series can be observed to decay for large $n$.  If $f(x)$ is continuous [and $f'(x)$ is piecewise smooth], show by integrating by parts (twice) that \emph{for large $n$}
+\begin{enumerate}
+\item[(a)] $\frac{2}{L}\int_0^L f(x)\cos\frac{n\pi x}{L}\,dx = O\bigl(\frac{1}{n^2}\bigr)$
+\item[(b)] $\frac{2}{L}\int_0^L f(x)\sin\frac{n\pi x}{L}\,dx = O\bigl(\frac{1}{n^2}\bigr)$ if $f(0) = f(L) = 0$
+\end{enumerate}
+
+\item Consider $u_{tt} = u_{xx} - u$.
+\begin{enumerate}
+\item[(a)] Solve the initial value problem.
+\item[(b)] Approximate the solution for large $x$ and large $t$ using the method of stationary phase.
+\item[(c)] Assume the group velocity is zero at $k = 0$, the group velocity steadily increases, and the group velocity approaches one as $k \to \infty$.  How many wave numbers are there as a function of $x$ and $t$?
+\end{enumerate}
+\end{exercises}

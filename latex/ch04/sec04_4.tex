@@ -1,0 +1,225 @@
+% sec04_4.tex — Section 4.4: Vibrating String with Fixed Ends
+\section{Vibrating String with Fixed Ends}
+\label{sec:vibrating-string-fixed}
+
+In this section we solve the one-dimensional wave equation, which represents a uniform vibrating string without external forces,
+\begin{equation}
+\text{PDE:}\quad \boxed{\pdd{u}{t} = c^2\pdd{u}{x},}
+\label{eq:4.4.1}
+\end{equation}
+where $c^2 = T_0/\rho_0$, subject to the simplest homogeneous boundary conditions,
+\begin{equation}
+\text{BC1:}\quad \boxed{\begin{aligned} u(0,t) &= 0 \\ u(L,t) &= 0, \end{aligned}}
+\label{eq:4.4.2}
+\end{equation}
+both ends being fixed with zero displacement.  Since the partial differential equation \eqref{eq:4.4.1} contains the second time derivative, two initial conditions are needed.  We prescribe both $u(x,0)$ and $\partial u/\partial t(x,0)$:
+\begin{equation}
+\text{IC:}\quad \boxed{\begin{aligned} u(x,0) &= f(x) \\ \pd{u}{t}(x,0) &= g(x), \end{aligned}}
+\label{eq:4.4.3}
+\end{equation}
+corresponding to being given the initial position and the initial velocity of each segment of the string.  These two initial conditions are not surprising, as the wave equation was derived from Newton's law by analyzing each segment of the string as a particle; ordinary differential equations for particles require both initial position and velocity.
+
+Since both the partial differential equation and the boundary conditions are linear and homogeneous, the method of separation of variables is attempted.  As with the heat equation the nonhomogeneous initial conditions are put aside temporarily.  We look for special product solutions of the form
+\begin{equation}
+u(x,t) = \phi(x)h(t).
+\label{eq:4.4.4}
+\end{equation}
+Substituting \eqref{eq:4.4.4} into \eqref{eq:4.4.1} yields
+\begin{equation}
+\phi(x)\frac{d^2 h}{dt^2} = c^2 h(t)\frac{d^2\phi}{dx^2}.
+\label{eq:4.4.5}
+\end{equation}
+Dividing by $\phi(x)h(t)$ separates the variables, but it is more convenient to divide additionally by the constant $c^2$, since then the resulting eigenvalue problem will not contain the parameter $c^2$:
+\begin{equation}
+\frac{1}{c^2}\frac{1}{h}\frac{d^2 h}{dt^2} = \frac{1}{\phi}\frac{d^2\phi}{dx^2} = -\lambda.
+\label{eq:4.4.6}
+\end{equation}
+A separation constant is introduced since $(1/c^2)(1/h)(d^2h/dt^2)$ depends only on $t$ and $(1/\phi)(d^2\phi/dx^2)$ depends only on $x$.  The minus sign is inserted \emph{purely for convenience}.  With this minus sign, let us explain why we expect that $\lambda > 0$.  We need the two ordinary differential equations that follow from \eqref{eq:4.4.6}:
+\begin{equation}
+\frac{d^2 h}{dt^2} = -\lambda c^2 h
+\label{eq:4.4.7}
+\end{equation}
+and
+\begin{equation}
+\frac{d^2\phi}{dx^2} = -\lambda\phi.
+\label{eq:4.4.8}
+\end{equation}
+The two homogeneous boundary conditions \eqref{eq:4.4.2} show that
+\begin{equation}
+\phi(0) = \phi(L) = 0.
+\label{eq:4.4.9}
+\end{equation}
+Thus, \eqref{eq:4.4.8} and \eqref{eq:4.4.9} form a boundary value problem.  Instead of first reviewing the solution of \eqref{eq:4.4.8} and \eqref{eq:4.4.9}, let us analyze the time-dependent ODE \eqref{eq:4.4.7}.  If $\lambda > 0$, the general solution of \eqref{eq:4.4.7} is a linear combination of sines and cosines,
+\begin{equation}
+h(t) = c_1\cos c\sqrt{\lambda}\,t + c_2\sin c\sqrt{\lambda}\,t.
+\label{eq:4.4.10}
+\end{equation}
+If $\lambda = 0$, $h(t) = c_1 + c_2 t$, and if $\lambda < 0$, $h(t)$ is a linear combination of exponentially growing and decaying solutions in time.  Since we are solving a vibrating string, it should seem more reasonable that the time-dependent solutions oscillate.  This does not prove that $\lambda > 0$.  Instead, it serves as an immediate motivation for choosing the minus sign in \eqref{eq:4.4.6}.  Now by analyzing the boundary value problem, we may indeed determine that the eigenvalues are nonnegative.
+
+The boundary value problem is
+\begin{align*}
+\frac{d^2\phi}{dx^2} &= -\lambda\phi \\
+\phi(0) &= 0 \\
+\phi(L) &= 0.
+\end{align*}
+Although we could solve this by proceeding through three cases, we ought to know that all the eigenvalues are positive.  In fact,
+\[
+\lambda = \left(\frac{n\pi}{L}\right)^2, \quad n = 1, 2, 3\ldots,
+\]
+and the corresponding eigenfunctions are $\sin n\pi x/L$.  The time-dependent part of the solution has been obtained previously, \eqref{eq:4.4.10}.  Thus, there are two families of product solutions: $\sin n\pi x/L\sin n\pi ct/L$ and $\sin n\pi x/L\cos n\pi ct/L$.  The principle of superposition then implies that we should be able to solve the initial value problem by considering a linear combination of all product solutions:
+\begin{equation}
+u(x,t) = \sum_{n=1}^{\infty}\left(A_n\sin\frac{n\pi x}{L}\cos\frac{n\pi ct}{L} + B_n\sin\frac{n\pi x}{L}\sin\frac{n\pi ct}{L}\right).
+\label{eq:4.4.11}
+\end{equation}
+The initial conditions \eqref{eq:4.4.3} are satisfied if
+\begin{equation}
+\begin{aligned}
+f(x) &= \sum_{n=1}^{\infty} A_n\sin\frac{n\pi x}{L} \\[6pt]
+g(x) &= \sum_{n=1}^{\infty} B_n\frac{n\pi c}{L}\sin\frac{n\pi x}{L}.
+\end{aligned}
+\label{eq:4.4.12}
+\end{equation}
+The boundary conditions have implied that sine series are important.  There are two initial conditions and two families of coefficients to be determined.  From our previous work on Fourier sine series, we know that $\sin n\pi x/L$ forms an orthogonal set.  $A_n$ will be the coefficients of the Fourier sine series of $f(x)$, and $B_n n\pi c/L$ will be for the Fourier sine series of $g(x)$:
+\begin{equation}
+\begin{aligned}
+A_n &= \frac{2}{L}\int_0^L f(x)\sin\frac{n\pi x}{L}\dx \\[6pt]
+B_n\frac{n\pi c}{L} &= \frac{2}{L}\int_0^L g(x)\sin\frac{n\pi x}{L}\dx.
+\end{aligned}
+\label{eq:4.4.13}
+\end{equation}
+
+Let us interpret these results in the context of musical stringed instruments (with fixed ends).  The vertical displacement is composed of a linear combination of simple product solutions,
+\[
+\sin\frac{n\pi x}{L}\left(A_n\cos\frac{n\pi ct}{L} + B_n\sin\frac{n\pi ct}{L}\right).
+\]
+These are called the \textbf{normal modes} of vibration.  The intensity of the sound produced depends on the amplitude,\footnote{$A_n\cos\omega t + B_n\sin\omega t = \sqrt{A_n^2+B_n^2}\sin(\omega t + \theta)$, where $\theta = \tan^{-1}A_n/B_n$.} $\sqrt{A_n^2+B_n^2}$.  The time dependence is simple harmonic with \textbf{circular frequency} (the number of oscillations in $2\pi$ units of time) equaling $n\pi c/L$, where $c = \sqrt{T_0/\rho_0}$.  The sound produced consists of the superposition of these infinite number of \textbf{natural frequencies} ($n = 1, 2, \ldots$).  The normal mode $n = 1$ is called the first harmonic or fundamental.  In the case of a vibrating string the fundamental mode has a circular frequency of $\pi c/L$.\footnote{Frequencies are usually measured in cycles per second, not cycles per $2\pi$ units of time.  The fundamental thus has a frequency of $c/2L$, cycles per second.}  The larger the natural frequency, the higher the pitch of the sound produced.  To produce a desired fundamental frequency, $c = \sqrt{T_0/\rho_0}$ or $L$ can be varied.  Usually, the mass density is fixed.  Thus, the instrument is tuned by varying the tension $T_0$; the larger $T_0$, the higher the fundamental frequency.  While playing a stringed instrument the musician can also vary the pitch by varying the effective length $L$, by clamping down the string.  Shortening $L$ makes the note higher.  The $n$th normal mode is called the $n$th harmonic.  For vibrating strings (with fixed ends), the frequencies of the higher harmonics are all integral multiples of the fundamental.  It is not necessarily true for other types of musical instruments.  This is thought to be pleasing to the ear.
+
+Let us attempt to illustrate the motion associated with each normal mode.  The fundamental and higher harmonics are sketched in Fig.~4.4.1.  To indicate what these look like, we sketch for various values of $t$.  At each $t$, each mode looks like a simple oscillation in $x$.  The amplitude varies periodically in time.  These are called \textbf{standing waves}.  In all cases there is no displacement at both ends due to the boundary conditions.  For the second harmonic ($n=2$), the displacement is also zero for all time in the middle $x = L/2$.  $x = L/2$ is called a \textbf{node} for the second harmonic.  Similarly, there are two nodes for the third harmonic.  This can be generalized: The $n$th harmonic has $n-1$ nodes.\footnote{You can visualize experimentally this result by rapidly oscillating at the appropriate frequency one end of a long rope that is tightly held at the other end.  The result appears more easily for an expandable spiral telephone cord or a ``slinky.''}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch04/fig_4_4_1.png}
+\caption{Normal modes of vibration for a string.}
+\label{fig:4.4.1}
+\end{figure}
+
+It is interesting to note that the vibration corresponding to the second harmonic looks like two identical strings each with length $L/2$ vibrating in the fundamental mode, since $x = L/2$ is a node.  We should find that the frequencies of vibration are identical; that is, the frequency for the fundamental ($n=1$) with length $L/2$ should equal the frequency for the second harmonic ($n=2$) with length $L$.  The formula for the frequency $\omega = n\pi c/L$ verifies this observation.
+
+Each standing wave can be shown to be composed of two traveling waves.  For example, consider the term $\sin n\pi x/L\sin n\pi ct/L$.  From trigonometric identities,
+\begin{equation}
+\sin\frac{n\pi x}{L}\sin\frac{n\pi ct}{L} = \underbrace{\frac{1}{2}\cos\frac{n\pi}{L}(x-ct)}_{\text{wave traveling to the right (with velocity $c$)}} - \underbrace{\frac{1}{2}\cos\frac{n\pi}{L}(x+ct)}_{\text{wave traveling to the left (with velocity $-c$)}}.
+\label{eq:4.4.14}
+\end{equation}
+In fact, since the solution \eqref{eq:4.4.11} to the wave equation consists of a superposition of standing waves, it can be shown that this solution is a combination of just two waves (each rather complicated)---one traveling to the left at velocity $-c$ with fixed shape and the other to the right at velocity $c$ with a different fixed shape.  We are claiming that the solution to the one-dimensional wave equation can be written as
+\[
+u(x,t) = R(x - ct) + S(x + ct),
+\]
+even if the boundary conditions are not fixed at $x = 0$ and $x = L$.  We will show and discuss this further in the Exercises and in Chapter~12.
+
+\begin{exercises}{4.4}
+
+\item Consider vibrating strings of uniform density $\rho_0$ and tension $T_0$.
+
+\begin{enumerate}
+\item[(a)]\starred What are the natural frequencies of a vibrating string of length $L$ fixed at both ends?
+
+\item[(b)]\starred What are the natural frequencies of a vibrating string of length $H$, which is fixed at $x = 0$ and ``free'' at the other end [i.e., $\partial u/\partial x(H,t) = 0$]?  Sketch a few modes of vibration as in Fig.~4.4.1.
+
+\item[(c)] Show that the modes of vibration for the \emph{odd} harmonics (i.e., $n = 1,3,5,\ldots$) of part~(a) are identical to modes of part~(b) if $H = L/2$.  Verify that their natural frequencies are the same.  Briefly explain using symmetry arguments.
+\end{enumerate}
+
+\item In Sec.~4.2 it was shown that the displacement $u$ of a nonuniform string satisfies
+\[
+\rho_0\pdd{u}{t} = T_0\pdd{u}{x} + Q,
+\]
+where $Q$ represents the vertical component of the body force per unit length.  If $Q = 0$, the partial differential equation is homogeneous.  A slightly different homogeneous equation occurs if $Q = \alpha u$.
+
+\begin{enumerate}
+\item[(a)] Show that if $\alpha < 0$, the body force is restoring (toward $u = 0$).  Show that if $\alpha > 0$, the body force tends to push the string further away from its unperturbed position $u = 0$.
+
+\item[(b)] Separate variables if $\rho_0(x)$ and $\alpha(x)$ but $T_0$ is constant for physical reasons.  Analyze the time-dependent ordinary differential equation.
+
+\item[(c)]\starred Specialize part~(b) to the constant coefficient case.  Solve the initial value problem if $\alpha < 0$:
+\begin{align*}
+u(0,t) &= 0, &\quad u(x,0) &= 0 \\
+u(L,t) &= 0, &\quad \pd{u}{t}(x,0) &= f(x).
+\end{align*}
+What are the frequencies of vibration?
+\end{enumerate}
+
+\item Consider a slightly damped vibrating string that satisfies
+\[
+\rho_0\pdd{u}{t} = T_0\pdd{u}{x} - \beta\pd{u}{t}.
+\]
+
+\begin{enumerate}
+\item[(a)] Briefly explain why $\beta > 0$.
+
+\item[(b)]\starred Determine the solution (by separation of variables) that satisfies the boundary conditions
+\[
+u(0,t) = 0 \quad\text{and}\quad u(L,t) = 0
+\]
+and the initial conditions
+\[
+u(x,0) = f(x) \quad\text{and}\quad \pd{u}{t}(x,0) = g(x).
+\]
+You can assume that this frictional coefficient $\beta$ is relatively small ($\beta^2 < 4\pi^2\rho_0 T_0/L^2$).
+\end{enumerate}
+
+\item Redo Exercise~4.4.3(b) by the eigenfunction expansion method.
+
+\item Redo Exercise~4.4.3(b) if $4\pi^2\rho_0 T_0/L^2 < \beta^2 < 16\pi^2\rho_0 T_0/L^2$.
+
+\item For \eqref{eq:4.4.1}--\eqref{eq:4.4.3}, from \eqref{eq:4.4.11} show that
+\[
+u(x,t) = R(x - ct) + S(x + ct),
+\]
+where $R$ and $S$ are some functions.
+
+\item If a vibrating string satisfying \eqref{eq:4.4.1}--\eqref{eq:4.4.3} is initially at rest, $g(x)=0$, show that
+\[
+u(x,t) = \frac{1}{2}\bigl[F(x - ct) + F(x + ct)\bigr],
+\]
+where $F(x)$ is the odd periodic extension of $f(x)$.  \emph{Hints:}
+\begin{enumerate}
+\item[1.] For all $x$, $F(x) = \sum_{n=1}^{\infty} A_n\sin\frac{n\pi x}{L}$.
+\item[2.] $\sin a\cos b = \frac{1}{2}[\sin(a+b) + \sin(a-b)]$.
+\end{enumerate}
+
+\item If a vibrating string satisfying \eqref{eq:4.4.1}--\eqref{eq:4.4.3} is initially unperturbed, $f(x) = 0$, with the initial velocity given, show that
+\[
+u(x,t) = \frac{1}{2c}\int_{x-ct}^{x+ct} G(\bar{x})\,d\bar{x},
+\]
+where $G(x)$ is the odd periodic extension of $g(x)$.  \emph{Hints:}
+\begin{enumerate}
+\item[1.] For all $x$, $G(x) = \sum_{n=1}^{\infty} B_n\frac{n\pi c}{L}\sin\frac{n\pi x}{L}$.
+\item[2.] $\sin a\sin b = \frac{1}{2}[\cos(a-b) - \cos(a+b)]$.
+\end{enumerate}
+See the comment after Exercise~4.4.7.
+
+\item From \eqref{eq:4.4.1}, derive conservation of energy for a vibrating string,
+\begin{equation}
+\frac{dE}{dt} = c^2\pd{u}{x}\pd{u}{t}\bigg|_0^L,
+\label{eq:4.4.15}
+\end{equation}
+where the total energy $E$ is the sum of the kinetic energy, defined by $\int_0^L \frac{1}{2}\left(\pd{u}{t}\right)^2\dx$, and the potential energy, defined by $\int_0^L \frac{c^2}{2}\left(\pd{u}{x}\right)^2\dx$.
+
+\item What happens to the total energy $E$ of a vibrating string (see Exercise~4.4.9)
+\begin{enumerate}
+\item[(a)] If $u(0,T) = 0$ and $u(L,t) = 0$?
+\item[(b)] If $\pd{u}{x}(0,t) = 0$ and $u(L,t) = 0$?
+\item[(c)] If $u(0,t) = 0$ and $\pd{u}{x}(L,t) = -\gamma u(L,t)$ with $\gamma > 0$?
+\item[(d)] If $\gamma < 0$ in part~(c)
+\end{enumerate}
+
+\item Show that the potential and kinetic energies (defined in Exercise~4.4.9) are equal for a traveling wave, $u = R(x - ct)$.
+
+\item Using \eqref{eq:4.4.15}, prove that the solution of \eqref{eq:4.4.1}--\eqref{eq:4.4.3} is unique.
+
+\item
+\begin{enumerate}
+\item[(a)] Using \eqref{eq:4.4.15}, calculate the energy of one normal mode.
+\item[(b)] Show that the total energy, when $u(x,t)$ satisfies \eqref{eq:4.4.11}, is the sum of the energies contained in each mode.
+\end{enumerate}
+
+\end{exercises}

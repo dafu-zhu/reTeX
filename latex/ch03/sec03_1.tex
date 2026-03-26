@@ -1,0 +1,44 @@
+% sec03_1.tex — Section 3.1: Introduction
+\section{Introduction}
+\label{sec:fourier-intro}
+
+In solving partial differential equations by the method of separation of variables, we have discovered that important conditions [e.g., the initial condition, $u(x,0) = f(x)$] could be satisfied only if $f(x)$ could be equated to an infinite linear combination of eigenfunctions of a given boundary value problem.  Three specific cases have been investigated.  One yielded a series involving sine functions, one yielded a series of cosines only (including a constant term), and the third yielded a series that included all of these previous terms.
+
+We will begin by investigating series with both sines and cosines, because we will show that the others are just special cases of this more general series.  For problems with the periodic boundary conditions on the interval $-L \le x \le L$, we asked whether the following infinite series (known as a \textbf{Fourier series}) makes sense:
+\begin{equation}
+\label{eq:fourier-series-intro}
+f(x) = a_0 + \sum_{n=1}^{\infty} a_n \cos \frac{n\pi x}{L} + \sum_{n=1}^{\infty} b_n \sin \frac{n\pi x}{L}.
+\end{equation}
+Does the infinite series converge?  Does it converge to $f(x)$?  Is the resulting infinite series really a solution of the partial differential equation (and does it also satisfy all the other subsidiary conditions)?  Mathematicians tell us that none of these questions have simple answers.  Nonetheless, \textit{Fourier series usually work quite well} (especially in situations where they arise naturally from physical problems).  Joseph Fourier developed this type of series in his famous treatise on heat flow in the early 1800s.
+
+The first difficulty that arises is that we claim (3.1.1) will not be valid for \textit{all} functions $f(x)$.  However, (3.1.1) will hold for some kinds of functions and will need only a small modification for other kinds of functions.  In order to communicate various concepts easily, we will discuss only functions $f(x)$ that are piecewise smooth.  A function $f(x)$ is \textbf{piecewise smooth} (on some interval) if the interval can be broken up into pieces (or sections) such that in each piece the function $f(x)$ is continuous\footnote{We do not give a definition of a continuous function here.  However, one known useful fact is that if a function approaches $\infty$ at some point, then it is not continuous in any interval including that point.} and its derivative $df/dx$ is also continuous.  The function $f(x)$ may not be continuous but the only kind of discontinuity allowed is a finite number of jump discontinuities.  A function $f(x)$ has a \textbf{jump discontinuity} at a point $x = x_0$ if the limit from the left $[f(x_0^-)]$ and the limit from the right $[f(x_0^+)]$ both exist (and are \textit{unequal}), as illustrated in Fig.~3.1.1.  An example of a piecewise smooth function is sketched in Fig.~3.1.2.  Note that $f(x)$ has two jump discontinuities at $x = x_1$ and at $x = x_3$.  Also, $f(x)$ is continuous for $x_1 \le x \le x_3$ but $df/dx$ is not continuous for $x_1 \le x \le x_3$.  Instead, $df/dx$ is continuous for $x_1 \le x \le x_2$ and $x_2 \le x \le x_3$.  The interval can be broken up into pieces in which both $f(x)$ and $df/dx$ are continuous.  In this case there are four pieces, $x \le x_1$, $x_1 \le x \le x_2$, $x_2 \le x \le x_3$, and $x \ge x_3$.  Almost all functions occurring in practice (and certainly most that we discuss in this book) will be piecewise smooth.  Let us briefly give an example of a function that is not piecewise smooth.  Consider $f(x) = x^{1/3}$, as sketched in Fig.~3.1.3.  It is \textit{not} piecewise smooth on any interval that includes $x = 0$, because $df/dx = 1/3 x^{-2/3}$ is $\infty$ at $x = 0$.  In other words, any region including $x = 0$ cannot be broken up into pieces such that $df/dx$ is continuous.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch03/fig_3_1_1.png}
+\caption{Jump discontinuity at $x = x_0$.}
+\label{fig:3.1.1}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch03/fig_3_1_2.png}
+\caption{Example of a piecewise smooth function.}
+\label{fig:3.1.2}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch03/fig_3_1_3.png}
+\caption{Example of a function that is not piecewise smooth.}
+\label{fig:3.1.3}
+\end{figure}
+
+Each function in the Fourier series is periodic with period $2L$.  Thus, the \textbf{Fourier series of $f(x)$ on the interval $-L \le x \le L$ is periodic with period $2L$}.  The function $f(x)$ does not need to be periodic.  We need the \textbf{periodic extension} of $f(x)$.  To sketch the periodic extension of $f(x)$, simply sketch $f(x)$ for $-L \le x \le L$ and then continually repeat the same pattern with period $2L$ by translating the original sketch for $-L \le x \le L$.  For example, let us sketch in Fig.~3.1.4 the periodic extension of $f(x) = \frac{3}{2}x$ [the function $f(x) = \frac{3}{2}x$ is sketched in dotted lines for $|x| > L$].  Note the difference between $f(x)$ and its periodic extension.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch03/fig_3_1_4.png}
+\caption{Periodic extension of $f(x) = \frac{3}{2}x$.}
+\label{fig:3.1.4}
+\end{figure}

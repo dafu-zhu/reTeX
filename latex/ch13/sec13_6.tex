@@ -1,0 +1,157 @@
+% sec13_6.tex — Section 13.6: The Wave Equation and its Green's Function
+\section{The Wave Equation and its Green's Function}
+\label{sec:13.6}
+
+The Laplace transform can be used to determine the relationship between solutions of nonhomogeneous partial differential equations and its corresponding Green's function.  Consider the wave equation on a finite interval ($0 < x < L$) with sources and time-dependent boundary conditions
+\begin{align}
+\text{PDE:}\quad &
+\begin{array}{|c|}
+\hline
+\displaystyle\pdd{u}{t} = c^2\pdd{u}{x} + q(x,t) \\[4pt]
+\hline
+\end{array}
+\label{eq:13.6.1} \\[8pt]
+\text{BC:}\quad &
+\begin{array}{|c|}
+\hline
+u(0,t) = a(t) \\
+u(L,t) = b(t) \\
+\hline
+\end{array}
+\label{eq:13.6.2} \\[8pt]
+\text{IC:}\quad &
+\begin{array}{|c|}
+\hline
+u(x,0) = f(x) \\[2pt]
+\displaystyle\pd{u}{t}(x,0) = g(x). \\
+\hline
+\end{array}
+\label{eq:13.6.3}
+\end{align}
+
+\textbf{Green's function.}
+The Green's function $G(x,t;x_0,t_0)$ satisfies
+\begin{align}
+\pdd{G}{t} &= c^2\pdd{G}{x} + \delta(x-x_0)\,\delta(t-t_0) \label{eq:13.6.4}\\
+G(0,t;x_0,t_0) &= 0 \label{eq:13.6.5}\\
+G(L,t;x_0,t_0) &= 0 \label{eq:13.6.6}
+\end{align}
+subject to the causality principle
+\begin{equation}
+G(x,t;x_0,t_0) = 0 \quad\text{for } t < t_0.
+\label{eq:13.6.7}
+\end{equation}
+
+\textbf{Laplace transform of Green's function.}
+In this section we determine the Green's function using the Laplace transform.  The transform of \eqref{eq:13.6.4}--\eqref{eq:13.6.6} yields
+\begin{align}
+s^2\overline{G} &= c^2\frac{\partial^2\overline{G}}{\partial x^2} + \delta(x-x_0)\,e^{-st_0} \label{eq:13.6.8}\\
+\overline{G}(0,s;x_0,t_0) &= 0 \label{eq:13.6.9}\\
+\overline{G}(L,s;x_0,t_0) &= 0, \label{eq:13.6.10}
+\end{align}
+where $\overline{G}(x,s;x_0,t_0)$ is the Laplace transform in time of $G(x,t;x_0,t_0)$.  The transform of \eqref{eq:13.6.4} simplifies because the causality principle implies that $G$ satisfies zero initial conditions (if $t_0 > 0$).
+
+The Laplace transform of the Green's function satisfies \eqref{eq:13.6.8}, an ordinary differential equation of the Green's function type.  To satisfy the boundary conditions, $\overline{G}(x,s;x_0,t_0)$ must be proportional to $\sinh(s/c)x$ for $x < x_0$ and proportional to $\sinh(s/c)(L-x)$ for $x > x_0$.  Since it will be symmetric, we know that
+\begin{equation}
+\overline{G}(x,s;x_0,t_0) = \begin{cases}
+\gamma\sinh\dfrac{s}{c}(L-x_0)\sinh\dfrac{s}{c}x & x < x_0 \\[8pt]
+\gamma\sinh\dfrac{s}{c}x_0\sinh\dfrac{s}{c}(L-x) & x > x_0,
+\end{cases}
+\label{eq:13.6.11}
+\end{equation}
+where $\gamma$ is a constant (independent of $x$ and $x_0$).  In this manner the continuity of $\overline{G}$ at $x = x_0$ is automatically satisfied.  The additional jump condition,
+\[
+0 = c^2\left.\od{\overline{G}}{x}\right|_{x_0-}^{x_0+} + e^{-st_0},
+\]
+determines $\gamma$:
+\[
+0 = -c^2\gamma\,\frac{s}{c}\left[\sinh\frac{s}{c}x_0\cosh\frac{s}{c}(L-x_0)
++ \sinh\frac{s}{c}(L-x_0)\cosh\frac{s}{c}x_0\right] + e^{-st_0}.
+\]
+By using an addition formula for hyperbolic functions [$\sinh(a+b) = \sinh a\cosh b + \cosh a\sinh b$], we obtain
+\begin{equation}
+\gamma = \frac{e^{-st_0}}{cs\sinh(s/c)L}.
+\label{eq:13.6.12}
+\end{equation}
+In Exercise~13.6.2 the Green's function itself is obtained by determining the inverse Laplace transform of \eqref{eq:13.6.11} with \eqref{eq:13.6.12}.
+
+\textbf{Representation of solution in terms of the Green's function.}
+We investigate further using Laplace transforms the relationships between $u(x,t)$ and its Green's function.  To simplify some of our work, we consider the special case of Sec.~13.5, $q(x,t)=0$, $a(t)=0$, $f(x)=0$, and $g(x)=0$; the only nonhomogeneous term is the boundary condition at $x=L$.  In the preceding section we showed \eqref{eq:13.5.8} that
+\begin{equation}
+\overline{U}(x,s) = B(s)\,\frac{\sinh(s/c)x}{\sinh(s/c)L}.
+\label{eq:13.6.13}
+\end{equation}
+Here we will relate this to the Laplace transform of the Green's function \eqref{eq:13.6.11} with \eqref{eq:13.6.12}.  Since the source satisfies $x_0 = L$, we need $\overline{G}$ for $x < x_0$:
+\begin{equation}
+\overline{G}(x,s;x_0,t_0) = \frac{e^{-st_0}\sinh(s/c)(L-x_0)\sinh(s/c)x}{cs\sinh(s/c)L}.
+\label{eq:13.6.14}
+\end{equation}
+To compare this with \eqref{eq:13.6.13}, we take the derivative with respect to $x_0$:
+\[
+\pd{\overline{G}}{x_0}(x,s;x_0,t_0)
+= -\frac{e^{-st_0}\cosh(s/c)(L-x_0)\sinh(s/c)x}{c^2\sinh(s/c)L}.
+\]
+We note that at $x_0 = L$ and $t_0 = 0$,
+\begin{equation}
+\pd{\overline{G}}{x_0}(x,s;L,0)
+= -\frac{\sinh(s/c)x}{c^2\sinh(s/c)L},
+\label{eq:13.6.15}
+\end{equation}
+similar to the term appearing in \eqref{eq:13.6.13}.  Thus,
+\[
+\overline{U}(x,s) = -c^2 B(s)\,\pd{\overline{G}}{x_0}(x,s;L,0).
+\]
+Using the convolution theorem, we obtain
+\[
+u(x,t) = -c^2\int_0^t b(t_0)\,\pd{G}{x_0}(x,t-t_0;L,0)\,dt_0,
+\]
+which may be replaced by the more usual expression,
+\boxed{\begin{equation}
+u(x,t) = -c^2\int_0^t b(t_0)\,\pd{G}{x_0}(x,t;L,t_0)\,dt_0,
+\label{eq:13.6.16}
+\end{equation}}
+due to the time-translation invariance of the Green's function.  Equation~\eqref{eq:13.6.16}, obtained using Laplace transforms, is equivalent to the representation formula obtained using Green's formula for the special case $q(x,t) = 0$, $a(t) = 0$, $f(x) = 0$, and $g(x) = 0$.  The general case (11.2.24) may be derived in the same way.
+
+%% ── Exercises 13.6 ──────────────────────────────────────────────
+\begin{exercises}{13.6}
+
+\item
+\begin{enumerate}
+\item[(a)] Determine the Laplace transform of $u(x,t)$ satisfying \eqref{eq:13.6.1}--\eqref{eq:13.6.3}.
+\item[(b)] Represent $u(x,t)$ in terms of its Green's function using Laplace transforms [i.e., use \eqref{eq:13.6.11} with \eqref{eq:13.6.12}].
+\end{enumerate}
+
+\item Determine the Green's function by inverting \eqref{eq:13.6.11} with \eqref{eq:13.6.12}.  Show that signals are appropriately reflected.
+
+\item Determine the Laplace transform of the Green's function for the wave equation if the boundary conditions are
+\begin{enumerate}
+\item[(a)] $u(0,t) = a(t)$ \quad and\quad $\pd{u}{x}(L,t) = b(t)$
+\item[(b)] $\pd{u}{x}(0,t) = a(t)$ \quad and\quad $\pd{u}{x}(L,t) = b(t)$
+\end{enumerate}
+
+\item Consider
+\begin{align*}
+\pd{u}{t} &= k\pdd{u}{x} + q(x,t), \qquad x > 0,\; t > 0 \\
+u(0,t) &= h(t) \\
+u(x,0) &= f(x).
+\end{align*}
+\begin{enumerate}
+\item[\starred(a)] Determine the Laplace transform of the Green's function for this exercise.
+\item[(b)] Determine $\overline{U}(x,s)$ if $f(x) = 0$ and $q(x,t) = 0$ (see Exercise~13.4.4).
+\item[(c)] By comparing parts~(a) and~(b), derive a representation of $u(x,t)$ in terms of the Green's function [if $f(x) = 0$ and $q(x,t) = 0$].  Compare to~(11.3.21).
+\item[(d)] From part~(a), determine the Green's function.  (\emph{Hint}: See Table~13.2.1 of Laplace transforms.)
+\end{enumerate}
+
+\item Reconsider Exercise~13.6.4 if
+\begin{enumerate}
+\item[(a)] $h(t) = 0$ and $q(x,t) = 0$
+\item[(b)] $h(t) = 0$ and $f(x) = 0$
+\end{enumerate}
+
+\item Reconsider Exercise~13.6.4 if, instead, the boundary condition were
+\[
+\pd{u}{x}(0,t) = h(t).
+\]
+[Restrict attention to $f(x) = 0$ and $q(x,t) = 0$.]
+
+\end{exercises}

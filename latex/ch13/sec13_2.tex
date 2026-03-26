@@ -1,0 +1,379 @@
+% sec13_2.tex — Section 13.2: Properties of the Laplace Transform
+\section{Properties of the Laplace Transform}
+\label{sec:13.2}
+
+%% ── 13.2.1 Introduction ──────────────────────────────────────────
+\subsection{Introduction}
+\label{sec:13.2.1}
+
+\textbf{Definition.}
+One technique for solving ordinary differential equations (mostly with constant coefficients) is to introduce the \textbf{Laplace transform of $f(t)$} as follows:
+\boxed{\begin{equation}
+\mathcal{L}[f(t)] = F(s) = \int_0^{\infty} f(t) e^{-st}\dt.
+\label{eq:13.2.1}
+\end{equation}}
+
+For the Laplace transform to be defined, the integral in \eqref{eq:13.2.1} must converge.
+For many functions, $f(t)$, $s$ is restricted.  For example, if $f(t)$ approaches a nonzero constant as $t\to\infty$, then the integral converges only if $s>0$.  If $s$ is complex,
+$s = \Real(s) + i\,\Imag(s)$ and $e^{-st} = e^{-\Real(s)t}[\cos(\Imag(s)t) - i\sin(\Imag(s)t)]$, then it follows in this case that $\Real(s) > 0$ for convergence.
+
+We will assume that the reader has studied (at least briefly) Laplace transforms.
+We will review quickly the important properties of Laplace transforms.  Tables exist,\footnote{Some better ones are in Churchill~[1972]; CRC Standard Mathematical Tables~[2002] (from Churchill's table); Abramowitz and Stegun~[1974] (also has Churchill's table); and Roberts and Kaufman~[1966].} and we include a short one here.  The Laplace transform of some elementary functions can be obtained by direct integration.  Some fundamental properties can be derived from the definition; these and others are summarized in Table~13.2.1.
+
+From the definition of the Laplace transform, $f(t)$ is only needed for $t > 0$.  So that there is no confusion, we usually define $f(t)$ to be zero for $t<0$.  One formula \eqref{eq:13.2.2l} requires the Heaviside unit step function:
+\begin{equation}
+H(t-b) = \begin{cases} 0 & t < b \\ 1 & t > b. \end{cases}
+\label{eq:13.2.2}
+\end{equation}
+
+\textbf{Inverse Laplace transforms.}
+If instead we are given $F(s)$ and want to calculate $f(t)$, then we can also use the same tables.  $f(t)$ is called the \textbf{inverse Laplace transform of $F(s)$}.  The notation $f(t) = \mathcal{L}^{-1}[F(s)]$ is also used.
+For example, from Table~13.2.1 the inverse Laplace transform of $1/(s-3)$ is $e^{3t}$,
+$\mathcal{L}^{-1}[1/(s-3)] = e^{3t}$.
+
+Not all functions of $s$ have inverse Laplace transforms.  From \eqref{eq:13.2.1} we notice that if $f(t)$ is any type of ordinary function, then $F(s) \to 0$ as $s \to \infty$.  All functions in our table have this property.
+
+%% ── Table 13.2.1 ─────────────────────────────────────────────────
+\begin{table}[H]
+\centering
+\caption{Laplace Transforms (short table of formulas and properties)}
+\label{tab:13.2.1}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{@{}lcc@{\qquad}r@{}}
+\toprule
+& $f(t)$ & $F(s) \equiv \mathcal{L}[f(t)] \equiv \displaystyle\int_0^{\infty} f(t)e^{-st}\dt$ & \\
+\midrule
+\multirow{7}{*}{\parbox{3cm}{Elementary functions\\(Exercises 13.2.1\\and 13.2.2)}}
+ & $1$ & $\dfrac{1}{s}$ & (13.2.2a) \\[6pt]
+ & $t^n\;(n > -1)$ & $\dfrac{n!}{s^{n+1}}$ & (13.2.2b) \\[6pt]
+ & $e^{at}$ & $\dfrac{1}{s-a}$ & (13.2.2c) \\[6pt]
+ & $\sin\omega t$ & $\dfrac{\omega}{s^2+\omega^2}$ & (13.2.2d) \\[6pt]
+ & $\cos\omega t$ & $\dfrac{s}{s^2+\omega^2}$ & (13.2.2e) \\[6pt]
+ & $\sinh at = \tfrac{1}{2}(e^{at}-e^{-at})$
+   & $\tfrac{1}{2}\!\left(\tfrac{1}{s-a}-\tfrac{1}{s+a}\right) = \dfrac{a}{s^2-a^2}$
+   & (13.2.2f) \\[6pt]
+ & $\cosh at = \tfrac{1}{2}(e^{at}+e^{-at})$
+   & $\tfrac{1}{2}\!\left(\tfrac{1}{s-a}+\tfrac{1}{s+a}\right) = \dfrac{s}{s^2-a^2}$
+   & (13.2.2g) \\[6pt]
+\midrule
+\multirow{5}{*}{\parbox{3cm}{Fundamental properties\\(Sec.~13.2.3 and\\Exercise~13.2.3)}}
+ & $\dfrac{df}{dt}$ & $sF(s) - f(0)$ & (13.2.2h) \\[6pt]
+ & $\dfrac{d^2 f}{dt^2}$ & $s^2 F(s) - sf(0) - \dfrac{df}{dt}(0)$ & (13.2.2i) \\[6pt]
+ & $-t f(t)$ & $\dfrac{dF}{ds}$ & (13.2.2j) \\[6pt]
+ & $e^{at}f(t)$ & $F(s-a)$ & (13.2.2k) \\[6pt]
+ & $H(t-b)f(t-b)$ & $e^{-bs}F(s)\quad(b>0)$ & (13.2.2l) \\[6pt]
+\midrule
+Convolution (Sec.~13.2.4)
+ & $\displaystyle\int_0^t f(t-\bar{t})\,g(\bar{t})\,d\bar{t}$ & $F(s)G(s)$ & (13.2.2m) \\[6pt]
+\midrule
+Dirac delta function (Sec.~13.2.4)
+ & $\delta(t-b)$ & $e^{-bs}\quad(b\ge 0)$ & (13.2.2n) \\[6pt]
+\midrule
+Inverse transform (Sec.~13.7)
+ & $\dfrac{1}{2\pi i}\displaystyle\int_{\gamma-i\infty}^{\gamma+i\infty} F(s)e^{st}\ds$
+ & $F(s)$ & (13.2.2o) \\[6pt]
+\midrule
+\multirow{2}{*}{Miscellaneous (Exercise~13.2.9)}
+ & $t^{-1/2}e^{-a^2/4t}$ & $\sqrt{\dfrac{\pi}{s}}\,e^{-a\sqrt{s}}\quad(a\ge 0)$ & (13.2.2p) \\[6pt]
+ & $t^{-3/2}e^{-a^2/4t}$ & $\dfrac{2\sqrt{\pi}}{a}\,e^{-a\sqrt{s}}\quad(a > 0)$ & (13.2.2q) \\[6pt]
+\bottomrule
+\end{tabular}
+\end{table}
+
+%% ── 13.2.2 Singularities of the Laplace Transform ───────────────
+\subsection{Singularities of the Laplace Transform}
+\label{sec:13.2.2}
+
+We note that when $f(t)$ is a simple exponential, $f(t) = e^{at}$, the growth rate $a$ is also the point at which its Laplace transform $F(s) = 1/(s-a)$ has a singularity.  As $s \to a$, the Laplace transform approaches $\infty$.  We claim in \emph{general} that as a check in \emph{any} calculation \textbf{the singularities of a Laplace transform $F(s)$} (\emph{the zeros of its denominator}) \textbf{correspond (\emph{in some way}) to the exponential growth rates of $f(t)$}.  We refer to this as the \textbf{singularity property} of Laplace transforms.  Later we will show this using complex variables.  Throughout this chapter we illustrate this correspondence.
+
+\textbf{Examples.}
+For now we briefly discuss some examples.  Both the Laplace transforms $\omega/(s^2+\omega^2)$ and $s/(s^2+\omega^2)$ have singularities at $s^2+\omega^2=0$ or $s = \pm i\omega$.  Thus, their inverse Laplace transforms will involve exponentials $e^{st}$, where $s = \pm i\omega$.  According to Table~13.2.1 their inverse Laplace transforms are, respectively, $\sin\omega t$ and $\cos\omega t$, which we know from Euler's formulas can be represented as linear combinations of $e^{\pm i\omega t}$.
+
+As another example, consider the Laplace transform $F(s) = 3/[s(s^2+4)]$.  One method to determine $f(t)$ is to use partial fractions (with real factors):
+\[
+\frac{3}{s(s^2+4)} = \frac{a}{s} + \frac{bs+c}{s^2+4} = \frac{3/4}{s} + \frac{-(3/4)s}{s^2+4}.
+\]
+Now the inverse transform is easy to obtain using tables:
+\[
+f(t) = \frac{3}{4} - \frac{3}{4}\cos 2t.
+\]
+As a check we note that $3/[s(s^2+4)]$ has singularities at $s=0$ and $s=\pm 2i$.  The singularity property of Laplace transforms then implies that its inverse Laplace transform must be a linear combination of $e^{0t}$ and $e^{\pm 2it}$, as we have already seen.
+
+\textbf{Partial fractions.}
+In doing inverse Laplace transforms, we are frequently faced with the ratio of two polynomials $q(s)/p(s)$.  To be a Laplace transform, it must approach $0$ as $s\to\infty$.  Thus, we can assume that the degree of $p$ is greater than the degree of $q$.  A partial fraction expansion will yield immediately the desired inverse Laplace transform.  We describe this technique only in the case in which the roots of the denominator are simple; there are no repeated or multiple roots.  First we factor the denominator:
+\[
+p(s) = \alpha(s-s_1)(s-s_2)\cdots(s-s_n),
+\]
+where $s_1,\dots,s_n$ are the $n$ \emph{distinct} roots of $p(s)$, also called the \textbf{simple poles} of $q(s)/p(s)$.  The partial fraction expansion of $q(s)/p(s)$ is
+\begin{equation}
+\frac{q(s)}{p(s)} = \frac{c_1}{s-s_1} + \frac{c_2}{s-s_2} + \cdots + \frac{c_n}{s-s_n}.
+\label{eq:13.2.3}
+\end{equation}
+The coefficients $c_i$ of the partial fraction expansion can be obtained by cumbersome algebraic manipulations using a common denominator.  A more elegant and sometimes quicker method utilizes the singularities $s_i$ of $p(s)$.  To determine $c_i$, we multiply \eqref{eq:13.2.3} by $s - s_i$ and then take the limit as $s \to s_i$.  All the terms except $c_i$ vanish on the right:
+\boxed{\begin{equation}
+c_i = \lim_{s \to s_i} \frac{(s-s_i)\,q(s)}{p(s)}.
+\label{eq:13.2.4}
+\end{equation}}
+Often, this limit is easy to evaluate.  Since $s - s_i$ is a factor of $p(s)$, we cancel it in \eqref{eq:13.2.4} and then evaluate the limit.
+
+\textbf{Example.} Using complex roots,
+\[
+\frac{3}{s(s^2+4)} = \frac{c_1}{s} + \frac{c_2}{s+2i} + \frac{c_3}{s-2i},
+\]
+where
+\begin{align*}
+c_1 &= \lim_{s\to 0} s\,\frac{3}{s(s^2+4)} = \frac{3}{4},\\
+c_2 &= \lim_{s\to -2i} (s+2i)\,\frac{3}{s(s^2+4)}
+     = \lim_{s\to -2i} \frac{3}{s(s-2i)} = -\frac{3}{8},\\
+c_3 &= \lim_{s\to 2i} (s-2i)\,\frac{3}{s(s^2+4)}
+     = \lim_{s\to 2i} \frac{3}{s(s+2i)} = -\frac{3}{8}.
+\end{align*}
+
+\textbf{Simple poles.}
+In some problems, we can make the algebra even easier.  The limit in \eqref{eq:13.2.4} is $0/0$ since $p(s_i) = 0$ [$s = s_i$ is a root of $p(s)$].  L'H\^opital's rule for evaluating $0/0$ yields
+\boxed{\begin{equation}
+c_i = \lim_{s\to s_i} \frac{d/ds[(s-s_i)q(s)]}{d/ds\; p(s)} = \frac{q(s_i)}{p'(s_i)}.
+\label{eq:13.2.5}
+\end{equation}}
+Equation~\eqref{eq:13.2.5} is valid only for simple poles.
+
+Once we have a partial fraction expansion of a Laplace transform, its inverse transform may be easily obtained.  In summary, if
+\boxed{\begin{equation}
+F(s) = \frac{q(s)}{p(s)},
+\label{eq:13.2.6}
+\end{equation}}
+then by inverting \eqref{eq:13.2.3},
+\boxed{\begin{equation}
+f(t) = \sum_{i=1}^{n} \frac{q(s_i)}{p'(s_i)}\,e^{s_i t},
+\label{eq:13.2.7}
+\end{equation}}
+where we assumed that $p(s)$ has only simple poles at $s = s_i$.
+
+\textbf{Example.}
+To apply this formula for $q(s)/p(s) = 3/[s(s^2+4)]$, we let $q(s) = 3$ and $p(s) = s(s^2+4) = s^3 + 4s$.  We need $p'(s) = 3s^2+4$.  Thus, if
+\[
+F(s) = \frac{3}{s(s^2+4)} = \frac{c_1}{s} + \frac{c_2}{s+2i} + \frac{c_3}{s-2i},
+\]
+then
+\[
+c_1 = \frac{q(0)}{p'(0)} = \frac{3}{4}, \qquad
+c_2 = \frac{q(-2i)}{p'(-2i)} = -\frac{3}{8}, \qquad\text{and}\qquad
+c_3 = \frac{q(2i)}{p'(2i)} = -\frac{3}{8},
+\]
+as before.  For this example,
+\[
+f(t) = \frac{3}{4} - \frac{3}{8}e^{-2it} - \frac{3}{8}e^{2it}
+     = \frac{3}{4} - \frac{3}{4}\cos 2t.
+\]
+
+\textbf{Quadratic expressions (completing the square).}
+Inverse Laplace transforms for quadratic expressions
+\[
+F(s) = \frac{\alpha s + \beta}{as^2 + bs + c}
+\]
+can be obtained by partial fractions if the roots are real or complex.  However, if the roots are complex, it is often easier to complete the square.  For example, consider
+\[
+F(s) = \frac{1}{s^2+2s+8} = \frac{1}{(s+1)^2+7},
+\]
+whose roots are $s = -1 \pm i\sqrt{7}$.  Since a function of $s+1$ appears, we use the shift theorem (13.2.2k) in Table~13.2.1:
+\[
+F(s) = G(s+1), \qquad \text{where}\quad G(s) = \frac{1}{s^2+7}.
+\]
+According to the shift theorem the inverse transform of $G(s+1)$ is (using $a=-1$)
+$f(t) = e^{-t}g(t)$, where $g(t)$ is the inverse transform of $1/(s^2+7)$.  From Table~13.2.1, $g(t) = (1/\sqrt{7})\sin\sqrt{7}\,t$ and thus
+\[
+f(t) = \frac{1}{\sqrt{7}}\,e^{-t}\sin\sqrt{7}\,t.
+\]
+This result is consistent with the singularity property; the solution is a linear combination of $e^{st}$, where $s = -1 \pm i\sqrt{7}$.
+
+%% ── 13.2.3 Transforms of Derivatives ────────────────────────────
+\subsection{Transforms of Derivatives}
+\label{sec:13.2.3}
+
+One of the most useful properties of the Laplace transform is the way in which it operates on derivatives.  For example, by elementary integration by parts,
+\boxed{\begin{equation}
+\mathcal{L}\!\left[\od{f}{t}\right]
+= \int_0^{\infty} \od{f}{t}\,e^{-st}\dt
+= f\,e^{-st}\Big|_0^{\infty} + s\int_0^{\infty} f\,e^{-st}\dt
+= sF(s) - f(0).
+\label{eq:13.2.8}
+\end{equation}}
+Similarly,
+\boxed{\begin{equation}
+\mathcal{L}\!\left[\odd{f}{t}\right]
+= s\,\mathcal{L}\!\left[\od{f}{t}\right] - \od{f}{t}(0)
+= s\bigl(sF(s)-f(0)\bigr) - \od{f}{t}(0)
+= s^2 F(s) - s\,f(0) - \od{f}{t}(0).
+\label{eq:13.2.9}
+\end{equation}}
+This property shows that the transform of derivatives can be evaluated in terms of the transform of the function.  Certain ``initial'' conditions are needed.  For the transform of the first derivative $df/dt$, $f(0)$ is needed.  For the transform of the second derivative $d^2f/dt^2$, $f(0)$ and $df/dt(0)$ are needed.  These are just the types of information that are known if the variable $t$ is time.  Usually, \emph{if a Laplace transform is used, the independent variable $t$ is time.}  Furthermore, the Laplace transform method will often simplify if the initial conditions are all zero.
+
+\textbf{Application to ordinary differential equations.}
+For ordinary differential equations, the use of the Laplace transform reduces the problem to an algebraic equation.  For example, consider
+\boxed{\begin{align*}
+&\odd{y}{t} + 4y = 3 \\
+&\text{with}\qquad y(0) = 1 \\
+&\phantom{\text{with}}\qquad \od{y}{t}(0) = 5.
+\end{align*}}
+Taking the Laplace transform of the differential equation yields
+\[
+s^2 Y(s) - s - 5 + 4Y(s) = \frac{3}{s},
+\]
+where $Y(s)$ is the Laplace transform of $y(t)$.  Thus,
+\[
+Y(s) = \frac{1}{s^2+4}\left(\frac{3}{s} + s + 5\right)
+     = \frac{3}{s(s^2+4)} + \frac{s}{s^2+4} + \frac{5}{s^2+4}.
+\]
+The inverse transforms of $s/(s^2+4)$ and $5/(s^2+4)$ are easily found in tables.  The function whose transform is $3/[s(s^2+4)]$ has been obtained in different ways.  Thus,
+\[
+y(t) = \frac{3}{4} - \frac{3}{4}\cos 2t + \cos 2t + \frac{5}{2}\sin 2t.
+\]
+
+%% ── 13.2.4 Convolution Theorem ───────────────────────────────────
+\subsection{Convolution Theorem}
+\label{sec:13.2.4}
+
+Another method to obtain the inverse Laplace transform of $3/[s(s^2+4)]$ is to use the convolution theorem.  We begin by stating and deriving the convolution theorem.  Often, as in this example, we need to obtain the function whose Laplace transform is the product of two transforms, $F(s)G(s)$.  The \textbf{convolution theorem} states that
+\begin{equation}
+\mathcal{L}^{-1}[F(s)G(s)] = g * f = \int_0^{t} g(\bar{t})\,f(t-\bar{t})\,d\bar{t},
+\label{eq:13.2.10}
+\end{equation}
+where $g*f$ is called the \textbf{convolution} of $g$ and $f$.  Here $f(t) = \mathcal{L}^{-1}[F(s)]$ and $g(t) = \mathcal{L}^{-1}[G(s)]$.  Equivalently, the convolution theorem states
+\boxed{\begin{equation}
+\mathcal{L}\!\left[\int_0^{t} g(\bar{t})\,f(t-\bar{t})\,d\bar{t}\right] = F(s)G(s).
+\label{eq:13.2.11}
+\end{equation}}
+
+By letting $t - \bar{t} = w$, we also derive that $g*f = f*g$; the order is of no importance.
+The convolution of $g$ and $f$ may be introduced in a slightly different way,
+\[
+g * f \equiv \int_{-\infty}^{\infty} f(t-\bar{t})\,g(\bar{t})\,d\bar{t}.
+\]
+However, in the context of Laplace transforms, both $f(t)$ and $g(t)$ are zero for $t < 0$, and thus \eqref{eq:13.2.10} follows since $f(t-\bar{t})=0$ for $\bar{t} > t$ and $g(\bar{t})=0$ for $\bar{t} < 0$.
+
+\textbf{Laplace transform of Dirac delta functions.}
+One derivation of the convolution theorem uses the Laplace transform of a Dirac delta function:
+\boxed{\begin{equation}
+\mathcal{L}\left[\delta(t-b)\right] = \int_0^{\infty} \delta(t-b)\,e^{-st}\dt = e^{-sb},
+\label{eq:13.2.12}
+\end{equation}}
+if $b > 0$.  Thus, the inverse Laplace transform of an exponential is a Dirac delta function:
+\boxed{\begin{equation}
+\mathcal{L}^{-1}\!\left[e^{-sb}\right] = \delta(t-b).
+\label{eq:13.2.13}
+\end{equation}}
+In the limit as $b \to 0$, we also obtain
+\begin{equation}
+\mathcal{L}\left[\delta(t-0_+)\right] = 1 \qquad\text{and}\qquad
+\mathcal{L}^{-1}[1] = \delta(t-0_+).
+\label{eq:13.2.14}
+\end{equation}
+
+\textbf{Derivation of convolution theorem.}
+To derive the convolution theorem, we introduce two transforms $F(s)$ and $G(s)$ and their product $F(s)G(s)$:
+\begin{align}
+F(s) &= \int_0^{\infty} f(t)\,e^{-st}\dt \label{eq:13.2.15}\\
+G(s) &= \int_0^{\infty} g(t)\,e^{-st}\dt \label{eq:13.2.16}\\
+F(s)G(s) &= \int_0^{\infty}\!\!\int_0^{\infty} f(\bar{t})\,g(T)\,e^{-s(\bar{t}+T)}\,dT\,d\bar{t}. \label{eq:13.2.17}
+\end{align}
+$h(t)$ is the inverse Laplace transform of $F(s)G(s)$:
+\[
+h(t) = \mathcal{L}^{-1}[F(s)G(s)]
+     = \int_0^{\infty}\!\!\int_0^{\infty} f(\bar{t})\,g(T)\,
+       \mathcal{L}^{-1}\!\left[e^{-s(\bar{t}+T)}\right]\,d\bar{t}\,dT,
+\]
+where the linearity of the inverse Laplace transform has been utilized.  However, the inverse Laplace transform of an exponential is a Dirac delta function \eqref{eq:13.2.13}, and thus
+\[
+h(t) = \int_0^{\infty}\!\!\int_0^{\infty} f(\bar{t})\,g(T)\,\delta[t - (\bar{t}+T)]\,d\bar{t}\,dT.
+\]
+Performing the $T$ integration first, we obtain a contribution only at $T = t - \bar{t}$.
+Therefore, the fundamental property of Dirac delta functions implies that
+\[
+h(t) = \int_0^{t} f(\bar{t})\,g(t-\bar{t})\,d\bar{t},
+\]
+the convolution theorem for Laplace transforms.
+
+\textbf{Example.}
+Determine the function whose Laplace transform is $3/[s(s^2+4)]$, using the convolution theorem.  We introduce
+\[
+F(s) = \frac{3}{s}\;\;[\text{so that } f(t) = 3]
+\qquad\text{and}\qquad
+G(s) = \frac{1}{s^2+4}\;\;\left[\text{so that } g(t) = \tfrac{1}{2}\sin 2t\right].
+\]
+It follows from the convolution theorem that the inverse transform of $(3/s)[1/(s^2+4)]$ is $\int_0^t f(t-\bar{t})\,g(\bar{t})\,d\bar{t}$:
+\[
+\int_0^t 3\cdot\tfrac{1}{2}\sin 2\bar{t}\,d\bar{t}
+= -\frac{3}{4}\cos 2\bar{t}\,\bigg|_0^t
+= \frac{3}{4}(1-\cos 2t),
+\]
+as we obtained earlier using the partial fraction expansion.
+
+%% ── Exercises 13.2 ──────────────────────────────────────────────
+\begin{exercises}{13.2}
+
+\item From the definition of the Laplace transform (i.e., using explicit integration), determine the Laplace transform of $f(t) =$:
+\begin{enumerate}
+\item[(a)] $1$ \hfill (b) $e^{at}$
+\item[(c)] $\sin\omega t$ \;[\emph{Hint}: $\sin\omega t = \Imag(e^{i\omega t})$.]
+      \hfill (d) $\cos\omega t$ \;[\emph{Hint}: $\cos\omega t = \Real(e^{i\omega t})$.]
+\item[(e)] $\sinh at$ \hfill (f) $\cosh at$
+\item[(g)] $H(t-t_0),\; t_0 > 0$
+\end{enumerate}
+
+\item The gamma function $\Gamma(x)$ was defined in Exercise~10.3.14.  Derive that
+$\mathcal{L}[t^n] = \Gamma(n+1)/s^{n+1}$ for $n > -1$.  Why is this not valid for $n \le -1$?
+
+\item Derive the following fundamental properties of Laplace transforms:
+\begin{enumerate}
+\item[(a)] $\mathcal{L}[-tf(t)] = dF/ds$
+\item[(b)] $\mathcal{L}[e^{at}f(t)] = F(s-a)$
+\item[(c)] $\mathcal{L}[H(t-b)f(t-b)] = e^{-bs}F(s)\quad (b>0)$
+\end{enumerate}
+
+\item[\starred 13.2.4.] Using Table~13.2.1, determine the Laplace transform of $\displaystyle\int_0^t f(\bar{t})\,d\bar{t}$ in terms of $F(s)$.
+
+\item Using Table~13.2.1, determine the Laplace transform of $f(t) =$:
+\begin{enumerate}
+\item[(a)] $t^3 e^{-2t}$ \hfill \starred(b) $t\sin 4t$
+\item[(c)] $H(t-3)$ \hfill \starred(d) $e^{3t}\sin 4t$
+\item[(e)] $te^{-4t}\cos 6t$
+\item[(f)] $f(t) = \begin{cases} 0 & t < 5 \\ t^2 & 5 < t < 8 \\ 0 & 8 < t \end{cases}$
+\item[(g)] $t^2 H(t-1)$ \hfill \starred(h) $(t-1)^4 H(t-1)$
+\end{enumerate}
+
+\item Using Table~13.2.1, determine the inverse Laplace transform of $F(s) =$:
+\begin{enumerate}
+\item[(a)] $\dfrac{1}{s^2+4}$ \hfill (b) $\dfrac{e^{-3s}}{s^2-4}$
+\item[(c)] $s^{-3}$ \hfill (d) $(s-4)^{-7}$
+\item[\starred(e)] $\dfrac{s}{s^2+8s+7}$ \hfill (f) $\dfrac{2s+1}{s^2-4s+9}$
+\item[(g)] $\dfrac{s}{(s^2+1)(s^2+4)}$ \hfill (h) $\dfrac{s}{s^2-4s-5}$
+\item[(i)] $\dfrac{s}{s^2-4s-5}(1-4e^{-7s})$
+      \hfill \starred(j) $\dfrac{s+2}{s(s^2+9)}(1-5e^{-4s})$
+\item[(k)] $\dfrac{1}{(s+1)^2}$ \hfill (l) $\dfrac{1}{(s^2+1)^2}$
+\end{enumerate}
+
+\item Solve the following ordinary differential equations using Laplace transforms:
+\begin{enumerate}
+\item[(a)] $\dfrac{d^2y}{dt^2} + 3\dfrac{dy}{dt} + y = t^3$ with $y(0) = 7$ and $\dfrac{dy}{dt}(0) = 5$
+\item[\starred(b)] $\dfrac{dy}{dt} + y = 1$ with $y(0) = 2$
+\item[(c)] $\dfrac{dy}{dt} + 3y = \begin{cases} 4e^{-t} & t < 8 \\ 2 & t > 8 \end{cases}$ with $y(0) = 1$
+\item[\starred(d)] $\dfrac{d^2y}{dt^2} + 5\dfrac{dy}{dt} - 6y = \begin{cases} 0 & 0 < t < 3 \\ e^{-t} & t > 3 \end{cases}$ with $y(0) = 3$ and $\dfrac{dy}{dt}(0) = 7$
+\item[(e)] $\dfrac{d^2y}{dt^2} + y = \cos t$ with $y(0) = 0$ and $\dfrac{d^2y}{dt^2}(0) = 0$
+\item[\starred(f)] $\dfrac{d^2y}{dt^2} + 4y = \sin t$ with $y(0) = 0$ and $\dfrac{dy}{dt}(0) = 0$
+\end{enumerate}
+
+\item Derive the convolution theorem for Laplace transforms without using the Dirac delta function.  [\emph{Hint}: Introduce the variable $z = \bar{t} + T$ in order to evaluate the double integral~\eqref{eq:13.2.17}.]
+
+\item In this exercise we will determine
+\[
+I = \mathcal{L}\{t^{-3/2}e^{-a^2/4t}\}
+\qquad\text{and}\qquad
+J = \mathcal{L}\{t^{-1/2}e^{-a^2/4t}\}.
+\]
+\begin{enumerate}
+\item[(a)] Determine a relationship between $I$ and $J$ by substituting the expression $u = s^{1/2}t^{1/2} - (a/2)t^{-1/2}$ into $\int_{-\infty}^{\infty} e^{-u^2}\,du = \sqrt{\pi}$.
+\item[(b)] Determine a relationship between $I$ and $J$ by introducing the change of variables $sw = (a^2/4)t^{-1}$ into the definition of $I$.
+\item[(c)] Derive that $I = (2\sqrt{\pi}/a)\,e^{-a\sqrt{s}}$ and $J = (\sqrt{\pi/s})\,e^{-a\sqrt{s}}$ using parts~(a) and~(b).
+\end{enumerate}
+
+\end{exercises}

@@ -1,0 +1,226 @@
+% sec06_6.tex — Section 6.6: Laplace's Equation
+\section{Laplace's Equation}
+\label{sec:fd-laplace}
+
+\paragraph{Introduction.}
+Laplace's equation
+\begin{equation}
+\boxed{\laplacian u = 0}
+\label{eq:6.6.1}
+\end{equation}
+is usually formulated in some region such that one condition must be satisfied along the entire boundary.  A time variable does not occur, so that a numerical finite difference method must proceed somewhat differently than for the heat or wave equations.
+
+Using the standard centered difference discretization, Laplace's equation in two dimensions becomes the following partial difference equation (assuming that $\Delta x = \Delta y$):
+\begin{equation}
+\frac{u_{j+1,l} + u_{j-1,l} + u_{j,l+1} + u_{j,l-1} - 4u_{j,l}}{(\Delta x)^2} = 0,
+\label{eq:6.6.2}
+\end{equation}
+where, hopefully, $u_{j,l} \approx u(j\,\Delta x,\ l\,\Delta y)$.
+
+The boundary condition may be analyzed in the same way as for the heat and wave equations.  In the simplest case it is specified along the boundary (composed of mesh points).  The temperatures at the interior mesh points are the unknowns.  Equation~\eqref{eq:6.6.2} is valid at each of these interior points.  Some of the terms in \eqref{eq:6.6.2} are determined from the boundary conditions, but most terms remain unknown.  Equation~\eqref{eq:6.6.2} can be written as a linear system.  Gaussian elimination can be used, but in many practical situations the number of equations and unknowns (equaling the number of interior mesh points) is too large for efficient numerical calculations.  This is especially true in three dimensions, where even a coarse $20\times 20\times 20$ grid will generate 8000 linear equations in 8000 unknowns.
+
+By rearranging \eqref{eq:6.6.2}, we derive
+\begin{equation}
+\boxed{u_{j,l} = \frac{u_{j+1,l} + u_{j-1,l} + u_{j,l+1} + u_{j,l-1}}{4}.}
+\label{eq:6.6.3}
+\end{equation}
+The temperature $u_{j,l}$ must be the average of its four neighbors.  Thus, the solution of the discretization of Laplace's equation satisfies a mean value property.  Also, from \eqref{eq:6.6.3} we can prove discrete maximum and minimum principles.  These properties are analogous to similar results for Laplace's equation itself (see Sec.~2.5.4).
+
+\paragraph{Jacobi iteration.}
+Instead of solving \eqref{eq:6.6.3} exactly, it is more usual to use an approximate iterative scheme.  One should not worry very much about the errors in solving \eqref{eq:6.6.3} \emph{if they are small} since \eqref{eq:6.6.3} already is an approximation of Laplace's equation.
+
+We cannot solve \eqref{eq:6.6.3} directly since the four neighboring temperatures are not known.  However, the following procedure will yield the solution.  We can make an initial guess of the solution, and use the averaging principle \eqref{eq:6.6.3} to ``update'' the solution:
+\[
+u_{j,l}^{(\text{new})} = \frac{1}{4}\left(u_{j+1,l} + u_{j-1,l} + u_{j,l-1} + u_{j,l+1}\right)^{(\text{old})}.
+\]
+We can continue to do this, a process called \textbf{Jacobi iteration}.  We introduce the notation $u_{j,l}^{(0)}$ for the initial guess, $u_{j,l}^{(1)}$ for the first iterate [determined from $u_{j,l}^{(0)}$], $u_{j,l}^{(2)}$ for the second iterate (determined from $u_{j,l}^{(1)}$), and so on.  Thus, the $(m+1)$st iterate satisfies
+\begin{equation}
+\boxed{u_{j,l}^{(m+1)} = \frac{1}{4}\left(u_{j+1,l}^{(m)} + u_{j-1,l}^{(m)} + u_{j,l+1}^{(m)} + u_{j,l-1}^{(m)}\right).}
+\label{eq:6.6.4}
+\end{equation}
+If the iterates converge, by which we mean that if
+\[
+\lim_{m\to\infty} u_{j,l}^{(m+1)} = v_{j,l},
+\]
+then \eqref{eq:6.6.4} shows that $v_{j,l}$ satisfies the discretization of Laplace's equation \eqref{eq:6.6.3}.  Equation~\eqref{eq:6.6.4} is well suited for a computer.  We cannot allow $m \to \infty$.  In practice, we stop the iteration process when $u_{j,l}^{(m+1)} - u_{j,l}^{(m)}$ is small (for all $j$ and $l$).  Then $u_{j,l}^{(m+1)}$ will be a reasonably good approximation to the exact solution $v_{j,l}$.  (Recall that $v_{j,l}$ itself is only an approximate solution of Laplace's equation.)
+
+The changes that occur at each updating may be emphasized by writing Jacobi iteration as
+\begin{equation}
+u_{j,l}^{(m+1)} = u_{j,l}^{(m)} + \frac{1}{4}\left(u_{j+1,l}^{(m)} + u_{j-1,l}^{(m)} + u_{j,l+1}^{(m)} + u_{j,l-1}^{(m)} - 4u_{j,l}^{(m)}\right).
+\label{eq:6.6.5}
+\end{equation}
+In this way Jacobi iteration is seen to be the standard discretization (centered spatial and forward time differences) of the two-dimensional diffusion equation, $\partial u/\partial t = k(\partial^2 u/\partial x^2 + \partial^2 u/\partial y^2)$, with $s = k\,\Delta t/(\Delta x)^2 = \frac{1}{4}$ [see \eqref{eq:6.4.4}].  Each iteration corresponds to a time step $\Delta t = (\Delta x)^2/4k$.  The earlier example of computing the heat equation on an $L$-shaped region (see Section~6.4) is exactly Jacobi iteration.  For large $m$ we see the solution approaching values independent of $m$.  The resulting spatial distribution is an accurate approximate solution of the discrete version of Laplace's equation (satisfying the given boundary conditions).
+
+Although Jacobi iteration converges, it will be shown to converge very slowly.  To analyze \emph{roughly} the rate of convergence, we investigate the decay of spatial oscillations for an $L \times L$ square ($\Delta x = \Delta y = L/N$).  In \eqref{eq:6.6.4}, $m$ is analogous to time ($t = m\Delta t$), and \eqref{eq:6.6.4} is analogous to the type of partial difference equation analyzed earlier.  Thus, we know that there are special solutions
+\begin{equation}
+u_{j,l}^{(m)} = Q^m e^{i(\alpha x + \beta y)},
+\label{eq:6.6.6}
+\end{equation}
+where $\alpha = n_1\pi/L$, $\beta = n_2\pi/L$, $n_j = 1, 2, \ldots, N-1$.  We assume that in this calculation there are zero boundary conditions along the edge.  The solution should converge to zero as $m \to \infty$; we will determine the speed of convergence in order to know how many iterations are expected to be necessary.  Substituting \eqref{eq:6.6.6} into \eqref{eq:6.6.4} yields
+\[
+Q = \frac{1}{4}\left(e^{i\alpha\Delta x} + e^{-i\alpha\Delta x} + e^{i\beta\Delta y} + e^{-i\beta\Delta y}\right) = \frac{1}{2}(\cos\alpha\Delta x + \cos\beta\Delta y).
+\]
+Since $-1 < Q < 1$ for all $\alpha$ and $\beta$, it follows from \eqref{eq:6.6.6} that $\lim_{m\to\infty}u_{j,l}^{(m)} = 0$, as desired.  However, the convergence can be very slow.  The slowest rate of convergence occurs for $Q$ nearest to~1.  This happens for the smallest and largest $\alpha$ and $\beta$, $\alpha = \beta = \pi/L$ and $\alpha = \beta = (N-1)\pi/L$, in which case
+\begin{equation}
+|Q| = \cos\frac{\pi\Delta x}{L} = \cos\frac{\pi}{N} \approx 1 - \frac{\pi^2}{2}\,\frac{1}{N^2},
+\label{eq:6.6.7}
+\end{equation}
+since $\Delta x = L/N$ and $N$ is large.  In this case $|Q|^m$ is approximately $\bigl[1 - \frac{1}{2}(\pi/N)^2\bigr]^m$.  If $N$ is large, this error converges slowly to zero.  For example, for the error to be reduced by a factor of $\frac{1}{2}$,
+\[
+\left[1 - \frac{1}{2}\left(\frac{\pi}{N}\right)^2\right]^m = \frac{1}{2}.
+\]
+Solving for $m$ using natural logarithms yields
+\[
+m\log\left[1 - \frac{1}{2}\left(\frac{\pi}{N}\right)^2\right] = -\log 2.
+\]
+A simpler formula is obtained since $\pi/N$ is small.  From the Taylor series for $x$ small, $\log(1 - x) \approx -x$, it follows that the number of iterations $m$ necessary to reduce the error by $\frac{1}{2}$ is approximately
+\[
+m = \frac{\log 2}{\frac{1}{2}(\pi/N)^2} = N^2\,\frac{2\log 2}{\pi^2},
+\]
+using Jacobi iteration.  The number of iterations required may be quite large, proportional to $N^2$, the number of lattice points squared (just to reduce the error in half).
+
+\paragraph{Gauss--Seidel iteration.}
+Jacobi iteration is quite time-consuming to compute with.  More important, there is a scheme which is easier to implement and which converges faster to the solution of the discretized version of Laplace's equation.  It is usual in Jacobi iteration to obtain the updated temperature $u_{j,l}^{(m+1)}$ first in the lower left spatial region.  Then we scan completely across a row of mesh points (from left to right) before updating the temperature on the next row above (again from left to right), as indicated in Fig.~\ref{fig:6.6.1}.  For example,
+\[
+u_{3,8}^{(m+1)} = \frac{1}{4}\left(u_{2,8}^{(m)} + u_{3,7}^{(m)} + u_{3,9}^{(m)} + u_{4,8}^{(m)}\right).
+\]
+In Jacobi iteration we use the old values $u_{2,8}^{(m)}$, $u_{3,7}^{(m)}$, $u_{3,9}^{(m)}$, and $u_{4,8}^{(m)}$ even though new values for two, $u_{3,7}^{(m+1)}$ and $u_{2,8}^{(m+1)}$, already have been calculated.  In doing a computer implementation of Jacobi iteration, we cannot destroy immediately the old values (as we have shown some are needed even after new values have been calculated).
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch06/fig_6_6_1.png}
+\caption{Gauss--Seidel iteration.}
+\label{fig:6.6.1}
+\end{figure}
+
+The calculation will be easier to program if old values are destroyed as soon as a new one is calculated.  We thus propose to use the updated temperatures when they are known.  For example,
+\[
+u_{3,8}^{(m+1)} = \frac{1}{4}\left(u_{2,8}^{(m+1)} + u_{4,8}^{(m)} + u_{3,7}^{(m+1)} + u_{3,9}^{(m)}\right).
+\]
+In general, we obtain
+\begin{equation}
+u_{j,l}^{(m+1)} = \frac{1}{4}\left(u_{j-1,l}^{(m+1)} + u_{j+1,l}^{(m)} + u_{j,l-1}^{(m+1)} + u_{j,l+1}^{(m)}\right),
+\label{eq:6.6.8}
+\end{equation}
+known as \textbf{Gauss--Seidel iteration}.  If this scheme converges, the solution will satisfy the discretized version of Laplace's equation.
+
+There is no strong reason at this point to believe this scheme converges faster than Jacobi iteration.  To investigate the speed at which Gauss--Seidel converges (for a square), we substitute again
+\begin{equation}
+u_{j,l}^{(m)} = Q^m e^{i(\alpha x + \beta y)},
+\label{eq:6.6.9}
+\end{equation}
+where
+\[
+\alpha = \frac{n_1\pi}{L},\quad \beta = \frac{n_2\pi}{L},\quad n_i = 1,\ 2,\ \ldots,\ N-1.
+\]
+The result is that
+\begin{equation}
+Q = \frac{1}{4}\left[e^{i\alpha\Delta x} + e^{i\beta\Delta y} + Q\left(e^{-i\alpha\Delta x} + e^{-i\beta\Delta y}\right)\right].
+\label{eq:6.6.10}
+\end{equation}
+To simplify the algebra, we let
+\begin{equation}
+z = \frac{e^{i\alpha\Delta x} + e^{i\beta\Delta y}}{4} = \xi + i\eta,
+\label{eq:6.6.11}
+\end{equation}
+and thus obtain $Q = z/(1-\bar{z})$.  $Q$ is complex, $Q = |Q|e^{i\theta}$, $u_{j,l}^{(m)} = |Q|^m e^{i\theta m} e^{i(\alpha x + \beta y)}$.  The convergence rate is determined from $|Q|$,
+\begin{equation}
+|Q|^2 = \frac{z\bar{z}}{(1-\bar{z})(1-z)} = \frac{|z|^2}{1 + |z|^2 - 2\operatorname{Re}(z)} = \frac{\xi^2 + \eta^2}{1 + \xi^2 + \eta^2 - 2\xi} = \frac{\xi^2 + \eta^2}{(1-\xi)^2 + \eta^2}.
+\label{eq:6.6.12}
+\end{equation}
+Since $|z| < \frac{1}{2}$ and thus $|\xi| < \frac{1}{2}$, it follows that $|Q| < 1$, yielding the convergence of Gauss--Seidel iteration.  However, the rate of convergence is slow if $|Q|$ is near~1.  Equation~\eqref{eq:6.6.12} shows that $|Q|$ is near~1 only if $\xi$ is near $\frac{1}{2}$, which \eqref{eq:6.6.11} requires $\alpha$ and $\beta$ to be as small as possible.  For a square, $\alpha = \pi/L$ and $\beta = \pi/L$, and thus
+\[
+\xi = \frac{1}{2}\cos\frac{\pi\Delta x}{L} \quad\text{and}\quad \eta = \frac{1}{2}\sin\frac{\pi\Delta x}{L}.
+\]
+Therefore,
+\[
+|Q|^2 = \frac{1}{5 - 4\cos\pi\Delta x/L} = \frac{1}{5 - 4\cos\pi/N} \approx \frac{1}{1 + 2(\pi/N)^2} \approx 1 - 2\left(\frac{\pi}{N}\right)^2,
+\]
+since $\pi/N$ is small.  Thus
+\[
+|Q| \approx 1 - \left(\frac{\pi}{N}\right)^2.
+\]
+This $|Q|$ is twice as far from~1 compared to Jacobi iteration [see \eqref{eq:6.6.7}].  By doing the earlier analysis, half the number of iterations are required to reduce the error by any fixed fraction.  Jacobi iteration should never be used.  Gauss--Seidel iteration is a feasible and better alternative.
+
+\paragraph{S-O-R.}
+Both Jacobi and Gauss--Seidel iterative schemes require the number of iterations to be proportional to $N^2$, where $N$ is the number of intervals (in one dimension).  A remarkably faster scheme is successive overrelaxation, or simply S-O-R.
+
+Gauss--Seidel can be rewritten to emphasize the change that occurs at each iteration,
+\[
+u_{j,l}^{(m+1)} = u_{j,l}^{(m)} + \frac{1}{4}\left[u_{j-1,l}^{(m)} + u_{j+1,l}^{(m+1)} + u_{j,l-1}^{(m)} + u_{j,l+1}^{(m+1)} - 4u_{j,l}^{(m)}\right].
+\]
+The bracketed term represents the change after each iteration as $u_{j,l}^{(m)}$ is updated to $u_{j,l}^{(m+1)}$.  Historically, it was observed that one might converge faster if larger or smaller changes were introduced.  Gauss--Seidel iteration with a \textbf{relaxation parameter} $\omega$ yields an \textbf{S-O-R iteration}:
+\begin{equation}
+\boxed{u_{j,l}^{(m+1)} = u_{j,l}^{(m)} + \omega\left[u_{j-1,l}^{(m)} + u_{j+1,l}^{(m+1)} + u_{j,l-1}^{(m)} + u_{j,l+1}^{(m+1)} - 4u_{j,l}^{(m)}\right].}
+\label{eq:6.6.13}
+\end{equation}
+If $\omega = \frac{1}{4}$, this reduces to Gauss--Seidel.  If S-O-R converges, it clearly converges to the discretized version of Laplace's equation.  We will choose $\omega$ so that \eqref{eq:6.6.13} converges as fast as possible.
+
+We again introduce
+\[
+u_{j,l}^{(m)} = Q^m e^{i(\alpha x + \beta y)}
+\]
+in order to investigate the rate of convergence, where $\alpha = n_1\pi/L$, $\beta = n_2\pi/L$, $n_i = 1, 2, \ldots, N-1$.  We obtain
+\[
+Q = 1 + \omega\left[(e^{i\alpha\Delta x} + e^{i\beta\Delta y}) + Q(e^{-i\alpha\Delta x} + e^{-i\beta\Delta y}) - 4\right].
+\]
+The algebra here is somewhat complicated.  We let $z = \omega\left(e^{i\alpha\Delta x} + e^{i\beta\Delta y}\right) = \xi + i\eta$ and thus obtain $Q = (1 - 4\omega + z)/(1 - \bar{z})$.  $Q$ is complex; $|Q|$ determines the convergence rate:
+\[
+|Q|^2 = \frac{(1 - 4\omega + \xi)^2 + \eta^2}{(1-\xi)^2 + \eta^2}.
+\]
+Again $|z| < 2\omega$ and thus $|\xi| < 2\omega$.  In Exercise~6.1 we show $|Q| < 1$ if $\omega < \frac{1}{2}$, guaranteeing the convergence of S-O-R.  If $\omega < \frac{1}{2}$, $|Q|$ is near~1 only if $\xi$ is near $2\omega$.  This occurs only if $\alpha$ and $\beta$ are as small as possible; (for a square) $\alpha = \pi/L$ and $\beta = \pi/L$ and thus $\xi = 2\omega\cos\pi\Delta x/L$ and $\eta = 2\omega\sin\pi\Delta x/L$.  In this way
+\[
+|Q|^2 = \frac{4\omega^2 + (1-4\omega)^2 + (1-4\omega)4\omega\cos(\pi/N)}{4\omega^2 + 1 - 4\omega\cos(\pi/N)}.
+\]
+
+Exercise~6.6.1 shows that $|Q|^2$ is minimized if $\omega = \frac{1}{2} - (\sqrt{2}/2)\sqrt{1 - \cos\pi/N}$.  Since $\pi/N$ is large, we use (for a square) $\omega = \frac{1}{2}(1 - \pi/N)$, in which case
+\[
+|Q| \approx 1 - \frac{\pi}{2N};
+\]
+see Exercise~6.6.2.  With the proper choice of $\omega$, $|Q|$, although still near~1, is an order of magnitude further away from~1 than for either Jacobi or Gauss--Seidel iteration.  In fact (see Exercise~6.6.2), errors are reduced by $\frac{1}{2}$ in S-O-R with the number of iterations being proportional to $N$ (not $N^2$).
+
+For nonsquare regions, the best $\omega$ for S-O-R is difficult to approximate.  However, there exist computer library routines that approximate $\omega$.  Thus, often S-O-R is a practical, \emph{relatively} quickly convergent iterative scheme for Laplace's equation.
+
+Other improved schemes have been developed, including the alternating direction-implicit (ADI) method, which was devised in the mid-1950s by Peaceman, Douglas, and Rachford.  More recent techniques exist, and it is suspected that better techniques will be developed in the future.
+
+\begin{exercises}{6.6}
+\item
+\begin{enumerate}
+\item[(a)] Show that $|Q| < 1$ if $\omega < \frac{1}{2}$ in S-O-R.
+\item[(b)] Determine the optimal relaxation parameter $\omega$ in S-O-R for a square, by minimizing $|Q|^2$.
+\end{enumerate}
+
+\item
+\begin{enumerate}
+\item[(a)] If $\omega = \frac{1}{2}(1 - \pi/N)$, show that $|Q| \approx 1 - \pi/2N$ (for large $N$) in S-O-R.
+\item[(b)] Show that with this choice the number of iterations necessary to reduce the error by $\frac{1}{2}$ is proportional to $N$ (not $N^2$).
+\end{enumerate}
+
+\item Describe a numerical scheme to solve Poisson's equation
+\[
+\laplacian u = f(x,y),
+\]
+(assuming that $\Delta x = \Delta y$) analogous to
+\begin{enumerate}
+\item[(a)] Jacobi iteration
+\item[(b)] Gauss--Seidel iteration
+\item[(c)] S-O-R
+\end{enumerate}
+
+\item Describe a numerical scheme (based on Jacobi iteration) to solve Laplace's equation in three dimensions.  Estimate the number of iterations necessary to reduce the error in half.
+
+\item Modify Exercise~6.6.4 for Gauss--Seidel iteration.
+
+\item Show that Jacobi iteration corresponds to the two-dimensional diffusion equation, by taking the limit as $\Delta x = \Delta y \to 0$ and $\Delta t \to 0$ in some appropriate way.
+
+\item What partial differential equation does S-O-R correspond to?  (\emph{Hint:} Take the limit as $\Delta x = \Delta y \to 0$ and $\Delta t \to 0$ in various ways.)  Specialize your result to Gauss--Seidel iteration by letting $\omega = \frac{1}{4}$.
+
+\item Consider Laplace's equation on a square $0 \le x \le 1$, $0 \le y \le 1$ with $u = 0$ on three sides and $u = 1$ on the fourth.
+\begin{enumerate}
+\item[(a)] Solve using Jacobi iteration (let $\Delta x = \Delta y = \frac{1}{10}$).
+\item[(b)] Solve using Gauss--Seidel iteration (let $\Delta x = \Delta y = \frac{1}{10}$).
+\item[(c)] Solve using S-O-R iteration [let $\Delta x = \Delta y = \frac{1}{10}$ and $\omega = \frac{1}{2}(1 - \pi/10)$].
+\item[(d)] Solve by separation of variables.  Evaluate numerically the first 10 or 20 terms.
+\item[(e)] Compare as many of the previous parts as you did.
+\end{enumerate}
+\end{exercises}

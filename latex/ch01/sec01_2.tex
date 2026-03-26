@@ -1,0 +1,288 @@
+% sec01_2.tex — Section 1.2: Derivation of the Conduction of Heat in a One-Dimensional Rod
+
+\section{Derivation of the Conduction of Heat in a One-Dimensional Rod}
+\label{sec:1.2}
+
+\paragraph{Thermal energy density.}
+We begin by considering a rod of constant cross-sectional area $A$ oriented in the $x$-direction (from $x = 0$ to $x = L$) as illustrated in Fig.~1.2.1. We temporarily introduce the amount of thermal energy per unit volume as an unknown variable and call it the \textbf{thermal energy density}:
+
+\begin{center}
+\fbox{\parbox{0.8\textwidth}{$e(x,t) \equiv$ thermal energy density.}}
+\end{center}
+
+We assume that all thermal quantities are constant across a section; the rod is one-dimensional. The simplest way this may be accomplished is to insulate perfectly the lateral surface area of the rod. Then no thermal energy can pass through the lateral surface. The dependence on $x$ and $t$ corresponds to a situation in which the rod is not uniformly heated; the thermal energy density varies from one cross section to another.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch01/fig_1_2_1.png}
+\caption{One-dimensional rod with heat energy flowing into and out of a thin slice.}
+\label{fig:1.2.1}
+\end{figure}
+
+\paragraph{Heat energy.}
+We consider a thin slice of the rod contained between $x$ and $x + \Delta x$ as illustrated in Fig.~\ref{fig:1.2.1}. If the thermal energy density is constant throughout the volume, then the total energy in the slice is the product of the thermal energy density and the volume. In general, the energy density is not constant. However, if $\Delta x$ is exceedingly small, then $e(x,t)$ may be approximated as a constant throughout the volume so that
+\begin{center}
+\fbox{\parbox{0.8\textwidth}{heat energy $= e(x,t) A\;\Delta x,$}}
+\end{center}
+since the volume of a slice is $A\;\Delta x$.
+
+\paragraph{Conservation of heat energy.}
+The heat energy between $x$ and $x + \Delta x$ changes in time due only to heat energy flowing across the edges ($x$ and $x + \Delta x$) and heat energy generated inside (due to positive or negative sources of heat energy). No heat energy changes are due to flow across the lateral surface, since we have assumed that the lateral surface is insulated. The fundamental heat flow process is described by the word equation
+
+\begin{center}
+\fbox{\parbox{0.9\textwidth}{
+\begin{tabular}{lcl}
+rate of change & \quad heat energy flowing \quad & heat energy generated \\
+of heat energy & $=$ \quad across boundaries \quad $+$ & inside per unit time. \\
+in time & \quad per unit time &
+\end{tabular}
+}}
+\end{center}
+
+This is called \textbf{conservation of heat energy}. For the small slice, the rate of change of heat energy is
+\[
+\frac{\partial}{\partial t}\left[e(x,t) A\;\Delta x\right],
+\]
+where the partial derivative $\frac{\partial}{\partial t}$ is used because $x$ is being held fixed.
+
+\paragraph{Heat flux.}
+Thermal energy flows to the right or left in a one-dimensional rod. We introduce the \textbf{heat flux}:
+
+\begin{center}
+\fbox{\parbox{0.8\textwidth}{$\phi(x,t)$ = heat flux (the amount of thermal energy \emph{per unit time} flowing to the right \emph{per unit surface area}).}}
+\end{center}
+
+If $\phi(x,t) < 0$, it means that heat energy is flowing to the left. Heat energy flowing per unit time across the boundaries of the slice is $\phi(x,t)A - \phi(x + \Delta x, t)A$, since the heat flux is the flow per unit surface area and it must be multiplied by the surface area. If $\phi(x,t) > 0$ and $\phi(x + \Delta x, t) > 0$, as illustrated in Fig.~\ref{fig:1.2.1}, then the heat energy flowing per unit time at $x$ contributes to an increase of the heat energy in the slice, whereas the heat flow at $x + \Delta x$ decreases the heat energy.
+
+\paragraph{Heat sources.}
+We also allow for internal sources of thermal energy:
+
+\begin{center}
+\fbox{\parbox{0.8\textwidth}{$Q(x,t) =$ heat energy per unit volume generated per unit time,}}
+\end{center}
+
+perhaps due to chemical reactions or electrical heating. $Q(x,t)$ is approximately constant in space for a thin slice, and thus the total thermal energy generated per unit time in the thin slice is approximately $Q(x,t) A\;\Delta x$.
+
+\paragraph{Conservation of heat energy (thin slice).}
+The rate of change of heat energy is due to thermal energy flowing across the boundaries and internal sources:
+\begin{equation}
+\frac{\partial}{\partial t}\left[e(x,t) A\;\Delta x\right] \approx \phi(x,t) A - \phi(x + \Delta x, t) A + Q(x,t) A\;\Delta x.
+\label{eq:1.2.1}
+\end{equation}
+Equation~\eqref{eq:1.2.1} is not precise because various quantities were assumed approximately constant for the small cross-sectional slice. We claim that \eqref{eq:1.2.1} becomes increasingly accurate as $\Delta x \to 0$. Before giving a careful (and mathematically rigorous) derivation, we will just attempt to explain the basic ideas of the limit process, $\Delta x \to 0$. In the limit as $\Delta x \to 0$, \eqref{eq:1.2.1} gives no interesting information, namely, $0 = 0$. However, if we first divide by $\Delta x$ and then take the limit as $\Delta x \to 0$, we obtain
+\begin{equation}
+\pd{e}{t} = \lim_{\Delta x \to 0} \frac{\phi(x,t) - \phi(x + \Delta x, t)}{\Delta x} + Q(x,t),
+\label{eq:1.2.2}
+\end{equation}
+where the constant cross-sectional area has been cancelled. We claim that this result is exact (with no small errors), and hence we replace the $\approx$ in \eqref{eq:1.2.1} by $=$ in \eqref{eq:1.2.2}. In this limiting process, $\Delta x \to 0$, $t$ is being held fixed. Consequently, from the definition of a partial derivative,
+\begin{equation}
+\boxed{\pd{e}{t} = -\pd{\phi}{x} + Q.}
+\label{eq:1.2.3}
+\end{equation}
+
+\paragraph{Conservation of heat energy (exact).}
+An alternative derivation of conservation of heat energy has the advantage of our not being restricted to small slices. The resulting approximate calculation of the limiting process ($\Delta x \to 0$) is avoided. We consider any \emph{finite} segment (from $x = a$ to $x = b$) of the original one-dimensional rod (see Fig.~1.2.2). We will investigate the conservation of heat energy in this region. The total heat energy is $\int_a^b e(x,t) A\dx$, the sum of the contributions of the infinitesimal slices. Again it changes only due to heat energy flowing through the side edges ($x = a$ and $x = b$) and heat energy generated inside the region, and thus (after canceling the constant $A$)
+\begin{equation}
+\frac{d}{d t}\int_a^b e\dx = \phi(a,t) - \phi(b,t) + \int_a^b Q\dx.
+\label{eq:1.2.4}
+\end{equation}
+Technically, an ordinary derivative $d/dt$ appears in \eqref{eq:1.2.4} since $\int_a^b e\dx$ depends only on $t$, not also on $x$. However,
+\[
+\frac{d}{d t}\int_a^b e\dx = \int_a^b \pd{e}{t}\dx,
+\]
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch01/fig_1_2_2.png}
+\caption{Heat energy flowing into and out of a finite segment of a rod.}
+\label{fig:1.2.2}
+\end{figure}
+
+\noindent if $a$ and $b$ are constants (and if $e$ is continuous). This holds since inside the integral the ordinary derivative now is taken keeping $x$ fixed, and hence it must be replaced by a partial derivative. Every term in \eqref{eq:1.2.4} is now an ordinary integral if we notice that
+\[
+\phi(a,t) - \phi(b,t) = -\int_a^b \pd{\phi}{x}\dx
+\]
+(this\footnote{This is one of the fundamental theorems of calculus.} being valid if $\phi$ is continuously differentiable). Consequently,
+\[
+\int_a^b \left(\pd{e}{t} + \pd{\phi}{x} - Q\right)\dx = 0.
+\]
+This integral must be zero \emph{for arbitrary $a$ and $b$}; the area under the curve must be zero for arbitrary limits. This is possible only if the integrand itself is identically zero.\footnote{Most proofs of this result are inelegant. Suppose that $f(x)$ is continuous and $\int_a^b f(x)\dx = 0$ for arbitrary $a$ and $b$. We wish to prove $f(x) = 0$ for all $x$. We can prove this by assuming that there exists a point $x_0$ such that $f(x_0) \neq 0$ and demonstrating a contradiction. If $f(x_0) \neq 0$ and $f(x)$ is continuous, then there exists some region near $x_0$ in which $f(x)$ is of one sign. Pick $a$ and $b$ to be in this region, and hence $\int_a^b f(x)\dx \neq 0$ since $f(x)$ is of one sign throughout. This contradicts the statement that $\int_a^b f(x)\dx = 0$, and hence it is impossible for $f(x_0) \neq 0$. Equation \eqref{eq:1.2.5} follows.} Thus, we rederive \eqref{eq:1.2.3} as
+\begin{equation}
+\boxed{\pd{e}{t} = -\pd{\phi}{x} + Q.}
+\label{eq:1.2.5}
+\end{equation}
+
+Equation~\eqref{eq:1.2.4}, the \textbf{integral conservation law}, is more fundamental than the differential form \eqref{eq:1.2.5}. Equation~\eqref{eq:1.2.5} is valid in the usual case in which physical variables are continuous.
+
+A further explanation of the minus sign preceding $\partial\phi/\partial x$ is in order. For example, if $\partial\phi/\partial x > 0$ for $a \le x \le b$, then the heat flux $\phi$ is an increasing function of $x$. The heat is flowing greater to the right at $x = b$ than at $x = a$ (assuming $b > a$). Thus (neglecting any effects of sources $Q$), the heat energy must decrease between $x = a$ and $x = b$, resulting in the minus sign in \eqref{eq:1.2.5}.
+
+\paragraph{Temperature and specific heat.}
+We usually describe materials by their temperature,
+\begin{center}
+\fbox{\parbox{0.8\textwidth}{
+$u(x,t) = $ temperature,
+}}
+\end{center}
+
+\noindent not their thermal energy density. Distinguishing between the concepts of temperature and thermal energy is not necessarily a trivial task. Only in the mid-1700s did the existence of accurate experimental apparatus enable physicists to recognize that it may take different amounts of thermal energy to raise two different materials from one temperature to another larger temperature. This necessitates the introduction of the \textbf{specific heat} (or heat capacity):
+
+\begin{center}
+\fbox{\parbox{0.8\textwidth}{
+$c$ = specific heat (the heat energy that must be supplied to a unit mass of a substance to raise its temperature one unit).
+}}
+\end{center}
+
+In general, from experiments (and our definition) the specific heat $c$ of a material depends on the temperature $u$. For example, the thermal energy necessary to raise a unit mass from $0^\circ$C to $1^\circ$C could be different from that needed to raise the mass from $85^\circ$C to $86^\circ$C for the same substance. Heat flow problems with the specific heat depending on the temperature are mathematically quite complicated. (Exercise~1.2.6 briefly discusses this situation.) Often for restricted temperature intervals, the specific heat is approximately independent of the temperature. However, experiments suggest that different materials require different amounts of thermal energy to heat up. Since we would like to formulate the correct equation in situations in which the composition of our one-dimensional rod might vary from position to position, the specific heat will depend on $x$, $c = c(x)$. In many problems the rod is made of one material (a uniform rod), in which case we will let the specific heat $c$ be a constant. In fact, most of the solved problems in this text (as well as other books) correspond to this approximation, $c$ constant.
+
+\paragraph{Thermal energy.}
+The thermal energy in a thin slice is $e(x,t) A\;\Delta x$. However, it is also defined as the energy it takes to raise the temperature from a reference temperature $0^\circ$ to its actual temperature $u(x,t)$. Since the specific heat is independent of temperature, the heat energy per unit mass is just $c(x) u(x,t)$. We thus need to introduce the \textbf{mass density} $\rho(x)$:
+
+\begin{center}
+\fbox{\parbox{0.8\textwidth}{
+$\rho(x) =$ mass density (mass per unit volume),
+}}
+\end{center}
+
+\noindent allowing it to vary with $x$, possibly due to the rod being composed of nonuniform material. The total mass of the thin slice is $\rho A\;\Delta x$. The total thermal energy in any thin slice is thus $c(x) u(x,t) \cdot \rho A\;\Delta x$, so that
+\[
+e(x,t) A\;\Delta x = c(x) u(x,t) \rho A\;\Delta x.
+\]
+
+In this way we have explained the basic relationship between thermal energy and temperature:
+\begin{equation}
+\boxed{e(x,t) = c(x)\rho(x) u(x,t).}
+\label{eq:1.2.6}
+\end{equation}
+This states that the thermal energy per unit volume equals the thermal energy per unit mass per unit degree times the temperature times the mass density (mass per unit volume). When the thermal energy density is eliminated using \eqref{eq:1.2.6}, conservation of thermal energy, \eqref{eq:1.2.3} or \eqref{eq:1.2.5}, becomes
+\begin{equation}
+\boxed{c(x)\rho(x)\pd{u}{t} = -\pd{\phi}{x} + Q.}
+\label{eq:1.2.7}
+\end{equation}
+
+\paragraph{Fourier's law.}
+Usually, \eqref{eq:1.2.7} is regarded as one equation in two unknowns, the temperature $u(x,t)$ and the heat flux (flow per unit surface area per unit time) $\phi(x,t)$. How and why does heat energy flow? In other words, we need an expression for the dependence of the flow of heat energy on the temperature field. First we summarize certain qualitative properties of heat flow with which we are all familiar:
+\begin{enumerate}
+\item If the temperature is constant in a region, no heat energy flows.
+\item If there are temperature differences, the heat energy flows from the hotter region to the colder region.
+\item The greater the temperature differences (for the same material), the greater is the flow of heat energy.
+\item The flow of heat energy will vary for different materials, even with the same temperature differences.
+\end{enumerate}
+
+Fourier (1768--1830) recognized properties 1 through 4 and summarized them (as well as numerous experiments) by the formula
+\begin{equation}
+\boxed{\phi = -K_0 \pd{u}{x},}
+\label{eq:1.2.8}
+\end{equation}
+known as \textbf{Fourier's law of heat conduction}. Here $\partial u/\partial x$ is the derivative of the temperature; it is the slope of the temperature (as a function of $x$ for fixed $t$); it represents temperature differences (per unit length). Equation~\eqref{eq:1.2.8} states that the heat flux is proportional to the temperature difference (per unit length). If the temperature $u$ increases as $x$ increases (i.e., the temperature is hotter to the right), $\partial u/\partial x > 0$, then we know (property 2) that heat energy flows to the left. This explains the minus sign in \eqref{eq:1.2.8}.
+
+We designate the coefficient of proportionality $K_0$. It measures the ability of the material to conduct heat and is called the \textbf{thermal conductivity}. Experiments indicate that different materials conduct heat differently; $K_0$ depends on the particular material. The larger $K_0$ is, the greater the flow of heat energy with the same temperature differences. A material with a low value of $K_0$ would be a poor conductor of heat energy (and ideally suited for home insulation). For a rod composed of different materials, $K_0$ will be a function of $x$. Furthermore, experiments show that the ability to conduct heat for most materials is different at different temperatures, $K_0(x, u)$. However, just as with the specific heat $c$, the dependence on the temperature is often not important in particular problems. Thus, throughout this text we will assume that the thermal conductivity $K_0$ only depends on $x$, $K_0(x)$. Usually, in fact, we will discuss uniform rods in which $K_0$ is a constant.
+
+\paragraph{Heat equation.}
+If Fourier's law, \eqref{eq:1.2.8}, is substituted into the conservation of heat energy equation, \eqref{eq:1.2.7}, a partial differential equation results:
+\begin{equation}
+\boxed{c\rho\pd{u}{t} = \frac{\partial}{\partial x}\left(K_0 \pd{u}{x}\right) + Q.}
+\label{eq:1.2.9}
+\end{equation}
+
+We usually think of the sources of heat energy $Q$ as being given, and the only unknown being the temperature $u(x,t)$. The thermal coefficients $c$, $\rho$, $K_0$ all depend on the material and hence may be functions of $x$. In the special case of a uniform rod, in which $c$, $\rho$, $K_0$ are all constants, the partial differential equation \eqref{eq:1.2.9} becomes
+\[
+c\rho\pd{u}{t} = K_0 \pdd{u}{x} + Q.
+\]
+If, in addition, there are no sources, $Q = 0$, then after dividing by the constant $c\rho$, the partial differential equation becomes
+\begin{equation}
+\boxed{\pd{u}{t} = k\pdd{u}{x},}
+\label{eq:1.2.10}
+\end{equation}
+where the constant $k$,
+\[
+k = \frac{K_0}{c\rho}
+\]
+is called the \textbf{thermal diffusivity}, the thermal conductivity divided by the product of the specific heat and mass density. Equation~\eqref{eq:1.2.10} is often called the \textbf{heat equation}; it corresponds to no sources and constant thermal properties. If heat energy is initially concentrated in one place, \eqref{eq:1.2.10} will describe how the heat energy spreads out, a physical process known as \textbf{diffusion}. Other physical quantities besides temperature smooth out in much the same manner, satisfying the same partial differential equation \eqref{eq:1.2.10}. For this reason \eqref{eq:1.2.10} is also known as the \textbf{diffusion equation}. For example, the concentration $u(x,t)$ of chemicals (such as perfumes and pollutants) satisfies the diffusion equation \eqref{eq:1.2.8} in certain one-dimensional situations.
+
+\paragraph{Initial conditions.}
+The partial differential equations describing the flow of heat energy, \eqref{eq:1.2.9} or \eqref{eq:1.2.10}, have one time derivative. When an ordinary differential equation has one derivative, the initial value problem consists of solving the differential equation with one initial condition. Newton's law of motion for the position $x$ of a particle yields a second-order ordinary differential equation, $md^2x/dt^2 = \text{forces}$. It involves second derivatives. The initial value problem consists of solving the differential equation with two initial conditions, the initial position $x$ and the initial velocity $dx/dt$. From these pieces of information (including the knowledge of the forces), by solving the differential equation with the initial conditions, we can predict the future motion of a particle in the $x$-direction. We wish to do the same process for our partial differential equation, that is, predict the future temperature. Since the heat equations have one time derivative, we must be given one \textbf{initial condition} (IC) (usually at $t = 0$), the initial temperature. It is possible that the initial temperature is not constant, but depends on $x$. Thus, we must be given the initial temperature distribution,
+\[
+u(x,0) = f(x).
+\]
+
+Is this enough information to predict the future temperature? We know the initial temperature distribution and that the temperature changes according to the partial differential equation \eqref{eq:1.2.9} or \eqref{eq:1.2.10}. However, we need to know what happens at the two boundaries, $x = 0$ and $x = L$. Without knowing this information, we cannot predict the future. Two conditions are needed corresponding to the second spatial derivatives present in \eqref{eq:1.2.9} or \eqref{eq:1.2.10}, usually one condition at each end. We discuss these boundary conditions in the next section.
+
+\paragraph{Diffusion of a chemical pollutant.}
+Let $u(x,t)$ be the density or \textbf{concentration} of the chemical per unit volume. Consider a one-dimensional region (Fig.~1.2.2) between $x = a$ and $x = b$ with constant cross-sectional area $A$. The total amount of the chemical in the region is $\int_a^b u(x,t) A\dx$. We introduce the \textbf{flux} $\phi(x,t)$ of the chemical, the amount of the chemical per unit surface area flowing to the right per unit time. The rate of change with respect to time of the total amount of chemical in the region equals the amount of chemical flowing in per unit time minus the amount of chemical flowing out per unit time. Thus, after canceling the constant cross-sectional area $A$, we obtain the \textbf{integral conservation law} for chemical concentration:
+\begin{equation}
+\boxed{\frac{d}{d t}\int_a^b u(x,t)\dx = \phi(a,t) - \phi(b,t).}
+\label{eq:1.2.11}
+\end{equation}
+Since $\frac{d}{dt}\int_a^b u(x,t)\dx = \int_a^b \pd{u}{t}\dx$ and $\phi(a,t) - \phi(b,t) = -\int_a^b \pd{\phi}{x}\dx$, it follows that $\int_a^b \left(\pd{u}{t} + \pd{\phi}{x}\right)\dx = 0$. Since the integral is zero for arbitrary regions, the integrand must be zero, and in this way we derive the differential \textbf{conservation law} for chemical concentration:
+\begin{equation}
+\pd{u}{t} + \pd{\phi}{x} = 0.
+\label{eq:1.2.12}
+\end{equation}
+
+In solids, chemicals spread out from regions of high concentration to regions of low concentration. According to \textbf{Fick's law of diffusion}, the flux is proportional to $\frac{\partial u}{\partial x}$ the spatial derivative of the chemical concentration:
+\begin{equation}
+\boxed{\phi = -k\pd{u}{x}.}
+\label{eq:1.2.13}
+\end{equation}
+
+If the concentration $u(x,t)$ is constant in space, there is no flow of the chemical. If the chemical concentration is increasing to the right ($\frac{\partial u}{\partial x} > 0$), then atoms of chemicals migrate to the left, and vice versa. The proportionality constant $k$ is called the chemical \textbf{diffusivity}, and it can be measured experimentally. When Fick's law \eqref{eq:1.2.13} is used in the basic conservation law \eqref{eq:1.2.12}, we see that the chemical concentration satisfies the \textbf{diffusion equation}:
+\begin{equation}
+\pd{u}{t} = k\pdd{u}{x},
+\label{eq:1.2.14}
+\end{equation}
+since we are assuming as an approximation that the diffusivity is constant. Fick's law of diffusion for chemical concentration is analogous to Fourier's law for heat diffusion. Our derivations are quite similar.
+
+\begin{exercises}{1.2}
+
+\item Briefly explain the minus sign:
+\begin{enumerate}
+\item[(a)] in conservation law \eqref{eq:1.2.3} or \eqref{eq:1.2.5} if $Q = 0$
+\item[(b)] in Fourier's law \eqref{eq:1.2.8}
+\item[(c)] in conservation law \eqref{eq:1.2.12}, $\pd{u}{t} = -\pd{\phi}{x}$
+\item[(d)] in Fick's law \eqref{eq:1.2.13}
+\end{enumerate}
+
+\item Derive the heat equation for a rod assuming constant thermal properties and no sources.
+\begin{enumerate}
+\item[(a)] Consider the total thermal energy between $x$ and $x + \Delta x$.
+\item[(b)] Consider the total thermal energy between $x = a$ and $x = b$.
+\end{enumerate}
+
+\item Derive the heat equation for a rod assuming constant thermal properties with variable cross-sectional area $A(x)$ assuming no sources by considering the total thermal energy between $x = a$ and $x = b$.
+
+\item Derive the diffusion equation for a chemical pollutant.
+\begin{enumerate}
+\item[(a)] Consider the total amount of the chemical in a thin region between $x$ and $x + \Delta x$.
+\item[(b)] Consider the total amount of the chemical between $x = a$ and $x = b$.
+\end{enumerate}
+
+\item Derive an equation for the concentration $u(x,t)$ of a chemical pollutant if the chemical is produced due to chemical reaction at the rate of $\alpha u(\beta - u)$ per unit volume.
+
+\item Suppose that the specific heat is a function of position and temperature, $c(x, u)$.
+\begin{enumerate}
+\item[(a)] Show that the heat energy per unit mass necessary to raise the temperature of a thin slice of thickness $\Delta x$ from $0^\circ$ to $u(x,t)$ is not $c(x, u) u(x,t)$, but instead $\int_0^u c(x, \bar{u})\,d\bar{u}$.
+\item[(b)] Rederive the heat equation in this case. Show that \eqref{eq:1.2.3} remains unchanged.
+\end{enumerate}
+
+\item Consider conservation of thermal energy \eqref{eq:1.2.4} for any segment of a one-dimensional rod $a \le x \le b$. By using the fundamental theorem of calculus,
+\[
+\frac{\partial}{\partial b}\int_a^b f(x)\dx = f(b),
+\]
+derive the heat equation \eqref{eq:1.2.9}.
+
+\item[\starred 1.2.8.] If $u(x,t)$ is known, give an expression for the total thermal energy contained in a rod ($0 < x < L$).
+
+\item Consider a thin one-dimensional rod without sources of thermal energy whose lateral surface area is not insulated.
+\begin{enumerate}
+\item[(a)] Assume that the heat energy flowing out of the lateral sides per unit surface area per unit time is $w(x,t)$. Derive the partial differential equation for the temperature $u(x,t)$.
+\item[(b)] Assume that $w(x,t)$ is proportional to the temperature difference between the rod $u(x,t)$ and a known outside temperature $\gamma(x,t)$. Derive that
+\begin{equation}
+c\rho\pd{u}{t} = \frac{\partial}{\partial x}\left(K_0\pd{u}{x}\right) - \frac{P}{A}[u(x,t) - \gamma(x,t)]h(x),
+\label{eq:1.2.15}
+\end{equation}
+where $h(x)$ is a positive $x$-dependent proportionality, $P$ is the lateral perimeter, and $A$ is the cross-sectional area.
+\item[(c)] Compare \eqref{eq:1.2.15} to the equation for a one-dimensional rod whose lateral surfaces are insulated, but with heat sources.
+\item[(d)] Specialize \eqref{eq:1.2.15} to a rod of circular cross section with constant thermal properties and $0^\circ$ outside temperature.
+\end{enumerate}
+
+\end{exercises}

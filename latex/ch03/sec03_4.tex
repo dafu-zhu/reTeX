@@ -1,0 +1,379 @@
+% sec03_4.tex — Section 3.4: Term-by-Term Differentiation of Fourier Series
+\section{Term-by-Term Differentiation of Fourier Series}
+\label{sec:term-diff}
+
+In solving partial differential equations by the method of separation of variables, the homogeneous boundary conditions sometimes suggest that the desired solution is either an infinite series of sines or cosines.  For example, we consider one-dimensional heat conduction with zero boundary conditions.  As before, we want to solve the initial boundary value problem
+\begin{equation}
+\label{eq:heat-eq}
+\pd{u}{t} = k \pdd{u}{x}
+\end{equation}
+\begin{equation}
+\label{eq:heat-bc-ic}
+u(0,t) = 0, \quad u(L,t) = 0, \quad u(x,0) = f(x).
+\end{equation}
+By the method of separation of variables combined with the principle of superposition (taking a \textit{finite} linear combination of solutions), we know that
+\[
+u(x,t) = \sum_{n=1}^{N} B_n \sin \frac{n\pi x}{L} e^{-(n\pi/L)^2 kt}
+\]
+solves the partial differential equation and the two homogeneous boundary conditions.  To satisfy the initial conditions, in general an infinite series is needed.  Does the infinite series
+\begin{equation}
+\label{eq:heat-inf-series}
+u(x,t) = \sum_{n=1}^{\infty} B_n \sin \frac{n\pi x}{L} e^{-(n\pi/L)^2 kt}
+\end{equation}
+satisfy our problem?  The theory of Fourier sine series shows that the Fourier coefficients $B_n$ can be determined to satisfy any (piecewise smooth) initial condition [i.e., $B_n = 2/L \int_0^L f(x) \sin n\pi x/L \dx$].  To see if the infinite series actually satisfies the partial differential equation, we substitute \eqref{eq:heat-inf-series} into \eqref{eq:heat-eq}.  \textit{If} the infinite Fourier series can be differentiated term by term, then
+\[
+\pd{u}{t} = -\sum_{n=1}^{\infty} k\left(\frac{n\pi}{L}\right)^2 B_n \sin \frac{n\pi x}{L} e^{-(n\pi/L)^2 kt}
+\]
+and
+\[
+\pdd{u}{x} = -\sum_{n=1}^{\infty} \left(\frac{n\pi}{L}\right)^2 B_n \sin \frac{n\pi x}{L} e^{-(n\pi/L)^2 kt}.
+\]
+Thus, the heat equation ($\partial u/\partial t = k\,\partial^2 u/\partial x^2$) is satisfied by the infinite Fourier series obtained by the method of separation of variables, if term-by-term differentiation of a Fourier series is valid.
+
+\textbf{Term-by-term differentiation of infinite series.}  Unfortunately, infinite series (even convergent infinite series) cannot always be differentiated term by term.  It is not always true that
+\[
+\frac{d}{d x} \sum_{n=1}^{\infty} c_n u_n = \sum_{n=1}^{\infty} c_n \od{u_n}{x};
+\]
+the interchange of operations of differentiation and infinite summation is not always justified.  However, we will find that in solving partial differential equations, all the procedures we have performed on the infinite Fourier series are valid.  We will state and prove some needed theorems concerning the validity of term-by-term differentiation of just the type of Fourier series that arise in solving partial differential equations.
+
+\textbf{Counterexample.}  Even for Fourier series, term-by-term differentiation is not always valid.  To illustrate the difficulty in term-by-term differentiation, consider the Fourier sine series of $x$ (on the interval $0 \le x \le L$) sketched in Fig.~3.4.1:
+\[
+x = 2\sum_{n=1}^{\infty} \frac{L}{n\pi} (-1)^{n+1} \sin \frac{n\pi x}{L}, \quad \text{on } 0 \le x < L,
+\]
+as obtained earlier [see \eqref{eq:x-sine} and \eqref{eq:Bn-x}].  If we differentiate the function on the left-hand side, then we have the function 1.  However, if we formally differentiate term by term the function on the right, then we arrive at
+\[
+2\sum_{n=1}^{\infty} (-1)^{n+1} \cos \frac{n\pi x}{L}.
+\]
+This is a cosine series, but it is not the cosine series of $f(x) = 1$ (the cosine series of 1 is just 1).  Thus, Fig.~3.4.1 is an example where we cannot differentiate term by term.\footnote{In addition, the resulting infinite series does not even converge anywhere, since the $n$th term does not approach zero.}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch03/fig_3_4_1.png}
+\caption{Fourier sine series of $f(x) = x$.}
+\label{fig:3.4.1}
+\end{figure}
+
+\textbf{Fourier series.}  We claim that this difficulty occurs any time the Fourier series of $f(x)$ has a jump discontinuity.  Term-by-term differentiation is not justified in these situations.  Instead, we claim (and prove in an exercise) that
+
+\begin{center}
+\fbox{\parbox{0.8\textwidth}{
+A Fourier series that is continuous can be differentiated term by term if $f'(x)$ is piecewise smooth.
+}}
+\end{center}
+
+An alternative form of this theorem is written if we remember the condition for the Fourier series to be continuous:
+
+\begin{center}
+\fbox{\parbox{0.8\textwidth}{
+If $f(x)$ is piecewise smooth, then the Fourier series of a continuous function $f(x)$ can be differentiated term by term if $f(-L) = f(L)$.
+}}
+\end{center}
+
+The result of term-by-term differentiation is the Fourier series of $f'(x)$, which may not be continuous.  Similar results for sine and cosine series are of more frequent interest to the solution of our partial differential equations.
+
+\textbf{Fourier cosine series.}  For Fourier cosine series,
+
+\begin{center}
+\fbox{\parbox{0.8\textwidth}{
+If $f'(x)$ is piecewise smooth, then a continuous Fourier cosine series of $f(x)$ can be differentiated term by term.
+}}
+\end{center}
+
+The result of term-by-term differentiation is the Fourier sine series of $f'(x)$, which may not be continuous.  Recall that $f(x)$ only needs to be continuous for its Fourier cosine series to be continuous.  Thus, this theorem can be stated in the following alternative form:
+
+\begin{center}
+\fbox{\parbox{0.8\textwidth}{
+If $f'(x)$ is piecewise smooth, then the Fourier cosine series of a continuous function $f(x)$ can be differentiated term by term.
+}}
+\end{center}
+
+These statements apply to the Fourier cosine series of $f(x)$:
+\begin{equation}
+\label{eq:cosine-series-diff}
+\boxed{f(x) = \sum_{n=0}^{\infty} A_n \cos \frac{n\pi x}{L}, \qquad 0 \le x \le L,}
+\end{equation}
+where the $=$ sign means that the infinite series converges to $f(x)$ for all $x$ ($0 \le x \le L$) since $f(x)$ is continuous.  Mathematically, these theorems state that term-by-term differentiation is valid,
+\begin{equation}
+\label{eq:cosine-diff}
+f'(x) \sim -\sum_{n=1}^{\infty} \left(\frac{n\pi}{L}\right) A_n \sin \frac{n\pi x}{L},
+\end{equation}
+where $\sim$ means equality where the Fourier sine series of $f'(x)$ is continuous and means the series converges to the average where the Fourier sine series of $f'(x)$ is discontinuous.
+
+\textbf{Example.}  Consider the Fourier cosine series of $x$ [see \eqref{eq:x-cosine}, \eqref{eq:A0-x}, and \eqref{eq:An-x}],
+\begin{equation}
+\label{eq:x-cosine-series}
+x = \frac{L}{2} - \frac{4L}{\pi^2} \sum_{\substack{n \text{ odd} \\ \text{only}}} \frac{1}{n^2} \cos \frac{n\pi x}{L}, \qquad 0 \le x \le L,
+\end{equation}
+as sketched in Fig.~3.4.2.  Note the continuous nature of this series for $0 \le x \le L$, which results in the $=$ sign in \eqref{eq:x-cosine-series}.  The derivative of this Fourier cosine series is sketched in Fig.~3.4.3: it is the Fourier sine series of $f(x) = 1$.  The Fourier sine series of $f(x) = 1$ can be obtained by term-by-term differentiation of the Fourier cosine series of $f(x) = x$.  Assuming that term-by-term differentiation of \eqref{eq:x-cosine-series} is valid as claimed, it follows that
+\begin{equation}
+\label{eq:1-sine}
+1 \sim \frac{4}{\pi} \sum_{\substack{n \text{ odd} \\ \text{only}}} \frac{1}{n} \sin \frac{n\pi x}{L},
+\end{equation}
+which is in fact correct [see \eqref{eq:Bn100}].
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch03/fig_3_4_2.png}
+\caption{Fourier cosine series of $f(x) = x$.}
+\label{fig:3.4.2}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch03/fig_3_4_3.png}
+\caption{Fourier sine series of $df/dx$.}
+\label{fig:3.4.3}
+\end{figure}
+
+\textbf{Fourier sine series.}  A similar result is valid for Fourier sine series:
+
+\begin{center}
+\fbox{\parbox{0.8\textwidth}{
+If $f'(x)$ is piecewise smooth, then a continuous Fourier sine series of $f(x)$ can be differentiated term by term.
+}}
+\end{center}
+
+However, if $f(x)$ is continuous, then the Fourier sine series is continuous only if $f(0) = 0$ and $f(L) = 0$.  Thus, we must be careful in differentiating term by term a Fourier sine series.  In particular,
+
+\begin{center}
+\fbox{\parbox{0.8\textwidth}{
+If $f'(x)$ is piecewise smooth, then the Fourier sine series of a continuous function $f(x)$ can only be differentiated term by term if $f(0) = 0$ and $f(L) = 0$.
+}}
+\end{center}
+
+\textbf{Proofs.}  The proofs of these theorems are all quite similar.  We include one since it provides a way to learn more about Fourier series and their differentiability.  We will prove the validity of term-by-term differentiation of the Fourier sine series of a continuous function $f(x)$, in the case when $f'(x)$ is piecewise smooth and $f(0) = 0 = f(L)$:
+\begin{equation}
+\label{eq:f-sine}
+f(x) \sim \sum_{n=1}^{\infty} B_n \sin \frac{n\pi x}{L},
+\end{equation}
+where $B_n$ are expressed below.  An equality holds in \eqref{eq:f-sine} only if $f(0) = 0$ and $f(L) = 0$.  If $f'(x)$ is piecewise smooth, then $f'(x)$ has a Fourier cosine series
+\begin{equation}
+\label{eq:fp-cosine}
+f'(x) \sim A_0 + \sum_{n=1}^{\infty} A_n \cos \frac{n\pi x}{L},
+\end{equation}
+where $A_0$ and $A_n$ are expressed in \eqref{eq:fp-A0} and \eqref{eq:fp-An}.  This series will not converge to $f'(x)$ at points of discontinuity of $f'(x)$.  We will have succeeded in showing that a Fourier sine series may be term-by-term differentiated \textit{if} we can verify that
+\[
+f'(x) \sim \sum_{n=1}^{\infty} \left(\frac{n\pi}{L}\right) B_n \cos \frac{n\pi x}{L}
+\]
+[i.e., if $A_0 = 0$ and $A_n = (n\pi/L)B_n$].  The Fourier cosine series coefficients are derived from \eqref{eq:fp-cosine}.  If we integrate by parts, we obtain
+\begin{equation}
+\label{eq:fp-A0}
+A_0 = \frac{1}{L} \int_0^{L} f'(x) \dx = \frac{1}{L}\left[f(L) - f(0)\right]
+\end{equation}
+\begin{equation}
+\label{eq:fp-An}
+(n \ne 0) \qquad A_n = \frac{2}{L} \int_0^{L} f'(x) \cos \frac{n\pi x}{L} \dx = \frac{2}{L}\left[f(x)\cos\frac{n\pi x}{L}\right]_0^{L} + \frac{n\pi}{L} \int_0^{L} f(x) \sin \frac{n\pi x}{L} \dx.
+\end{equation}
+But from \eqref{eq:f-sine}, $B_n$ is the Fourier sine series coefficient of $f(x)$, and thus for $n \ne 0$
+\begin{equation}
+\label{eq:An-Bn}
+A_n = \frac{n\pi}{L} B_n + \frac{2}{L}\left[(-1)^n f(L) - f(0)\right].
+\end{equation}
+We thus see by comparing Fourier cosine coefficients that the Fourier sine series can be term-by-term differentiated only if both $f(L) - f(0) = 0$ (so that $A_0 = 0$) and $(-1)^n f(L) - f(0) = 0$ [so that $A_n = (n\pi/L)B_n$].  Both of these conditions hold only if
+\[
+f(0) = f(L) = 0,
+\]
+exactly the conditions for a Fourier sine series to be continuous.  Thus, we have completed the proof.  However, this demonstration has given us more information.  Namely, it gives the formula to differentiate the Fourier sine series of $f(x)$ when the series is not continuous.  We have that
+
+\begin{center}
+\fbox{\parbox{0.9\textwidth}{
+If $f'(x)$ is piecewise smooth, then the Fourier sine series of a continuous function $f(x)$,
+\[
+f(x) \sim \sum_{n=1}^{\infty} B_n \sin \frac{n\pi x}{L},
+\]
+cannot, in general, be differentiated term by term.  However,
+\begin{equation}
+\label{eq:sine-diff-general}
+f'(x) \sim \frac{1}{L}\left[f(L) - f(0)\right] + \sum_{n=1}^{\infty}\left[\frac{n\pi}{L}B_n + \frac{2}{L}\left((-1)^n f(L) - f(0)\right)\right] \cos \frac{n\pi x}{L}.
+\end{equation}
+}}
+\end{center}
+
+In this proof, it may appear that we never needed $f(x)$ to be continuous.  However, we applied integration by parts in order to derive \eqref{eq:fp-An}.  In the usual presentation in calculus, integration by parts is stated as being valid if both $u(x)$ and $v(x)$ are continuous.  This is overly restrictive for our work.  As is clarified somewhat in an exercise, we state that integration by parts is valid if only $u(x)$ and $v(x)$ are continuous.  It is not necessary for their derivatives to be continuous.  Thus the result of integration by parts is valid only if $f(x)$ is continuous.
+
+\textbf{Example.}  Let us reconsider the Fourier sine series of $f(x) = x$,
+\begin{equation}
+\label{eq:x-sine-repeat}
+x \sim 2\sum_{n=1}^{\infty} \frac{L}{n\pi}(-1)^{n+1} \sin \frac{n\pi x}{L}.
+\end{equation}
+We already know that $(d/dx)x = 1$ does not have a Fourier cosine series that results from term-by-term differentiation of \eqref{eq:x-sine-repeat} since $f(L) \ne 0$.  However, \eqref{eq:sine-diff-general} may be applied since $f(x)$ is continuous [and $f'(x)$ is piecewise smooth].  Noting that $f(0) = 0$, $f(L) = L$ and $(n\pi/L)B_n = 2(-1)^{n+1}$, it follows that the Fourier cosine series of $df/dx$ is
+\[
+\od{f}{x} \sim 1.
+\]
+The constant function 1 is exactly the Fourier cosine series of $df/dx$ since $f = x$ implies that $df/dx = 1$.  Thus, the r.h.s.\ of \eqref{eq:sine-diff-general} gives the correct expression for the Fourier cosine series of $f'(x)$ when the Fourier sine series of $f(x)$ is known, even if $f(0) \ne 0$ and/or $f(L) \ne 0$.
+
+\textbf{Method of eigenfunction expansion.}  Let us see how our results concerning the conditions under which a Fourier series may be differentiated term by term may be applied to our study of partial differential equations.  We consider the heat equation \eqref{eq:heat-eq} with zero boundary conditions at $x = 0$ and $x = L$.  We will show that \eqref{eq:heat-inf-series} is the correct infinite series representation of the solution of this problem.  We will show this by utilizing an alternative scheme to obtain \eqref{eq:heat-inf-series} known as the \textbf{method of eigenfunction expansion}, whose importance is that it may also be used when there are sources or the boundary conditions are not homogeneous (see Exercises 3.4.9--3.4.12 and Chapter~7).  We begin by assuming that we have a solution $u(x,t)$ that is continuous such that $\partial u/\partial t$, $\partial u/\partial x$ and $\partial^2 u/\partial x^2$ are also continuous.  Now we expand the unknown solution $u(x,t)$ in terms of the eigenfunctions of the problem (with homogeneous boundary conditions).  In this example, the eigenfunctions are $\sin n\pi x/L$, suggesting a Fourier sine series for each time:
+\begin{equation}
+\label{eq:eigenfunction-exp}
+u(x,t) \sim \sum_{n=1}^{\infty} B_n(t) \sin \frac{n\pi x}{L};
+\end{equation}
+the Fourier sine coefficients $B_n$ will depend on time, $B_n(t)$.
+
+The initial condition [$u(x,0) = f(x)$] is satisfied if
+\begin{equation}
+\label{eq:eigenfunction-ic}
+f(x) \sim \sum_{n=1}^{\infty} B_n(0) \sin \frac{n\pi x}{L},
+\end{equation}
+determining the Fourier sine coefficient initially
+\begin{equation}
+\label{eq:Bn-initial}
+B_n(0) = \frac{2}{L} \int_0^{L} f(x) \sin \frac{n\pi x}{L} \dx.
+\end{equation}
+
+All that remains is to investigate whether $u(x,t)$, \eqref{eq:eigenfunction-exp}, can satisfy the heat equation, $\partial u/\partial t = k\,\partial^2 u/\partial x^2$.  To do that we must differentiate the Fourier sine series.  It is here that our results concerning term-by-term differentiation are useful.
+
+First we need to compute two derivatives with respect to $x$.  If $u(x,t)$ is continuous, then the Fourier sine series of $u(x,t)$ can be differentiated term by term if $u(0,t) = 0$ and $u(L,t) = 0$.  Since these are exactly the boundary conditions on $u(x,t)$, it follows from \eqref{eq:eigenfunction-exp} that
+\begin{equation}
+\label{eq:ux}
+\pd{u}{x} \sim \sum_{n=1}^{\infty} \frac{n\pi}{L} B_n(t) \cos \frac{n\pi x}{L}.
+\end{equation}
+Since $\partial u/\partial x$ is also assumed to be continuous, an equality holds in \eqref{eq:ux}.  Furthermore, the Fourier cosine series can now be term-by-term differentiated, yielding
+\begin{equation}
+\label{eq:uxx}
+\pdd{u}{x} \sim -\sum_{n=1}^{\infty} \left(\frac{n\pi}{L}\right)^2 B_n(t) \sin \frac{n\pi x}{L}.
+\end{equation}
+Note the importance of the separation of variables solution.  Sines were differentiated at the stage in which the boundary conditions occurred that allowed sines to be differentiated.  Cosines occurred with no boundary condition, consistent with the fact that a Fourier cosine series does not need any subsidiary conditions in order to be differentiated.  To complete the substitution of the Fourier sine series into the partial differential equation, we need only to compute $\partial u/\partial t$.  If we can also term-by-term differentiate with respect to $t$, then
+\begin{equation}
+\label{eq:ut}
+\pd{u}{t} \sim \sum_{n=1}^{\infty} \od{B_n}{t} \sin \frac{n\pi x}{L}.
+\end{equation}
+
+If this last term-by-term differentiation is justified, we see that the Fourier sine series \eqref{eq:eigenfunction-exp} solves the partial differential equation if
+\begin{equation}
+\label{eq:Bn-ode}
+\od{B_n}{t} = -k\left(\frac{n\pi}{L}\right)^2 B_n(t).
+\end{equation}
+The Fourier sine coefficient $B_n(t)$ satisfies a first-order linear differential equation with constant coefficients.  The solution of \eqref{eq:Bn-ode} is
+\[
+B_n(t) = B_n(0) e^{-(n\pi/L)^2 kt},
+\]
+where $B_n(0)$ is given by \eqref{eq:Bn-initial}.  Thus, we have derived that \eqref{eq:heat-inf-series} is valid, justifying the method of separation of variables.
+
+Can we justify term-by-term differentiation with respect to the parameter $t$?  The following theorem states the conditions under which this operation is valid:
+
+The Fourier series of a continuous function $u(x,t)$ (depending on a parameter $t$)
+\begin{equation}
+\label{eq:fourier-t-dep}
+u(x,t) = a_0(t) + \sum_{n=1}^{\infty}\left[a_n(t)\cos\frac{n\pi x}{L} + b_n(t)\sin\frac{n\pi x}{L}\right]
+\end{equation}
+can be differentiated term by term with respect to the parameter $t$, yielding
+\[
+\frac{\partial}{\partial t}u(x,t) \sim a_0'(t) + \sum_{n=1}^{\infty}\left[a_n'(t)\cos\frac{n\pi x}{L} + b_n'(t)\sin\frac{n\pi x}{L}\right]
+\]
+if $\partial u/\partial t$ is piecewise smooth.
+
+We omit its proof (see Exercise~3.4.7), which depends on the fact that
+\[
+\frac{\partial}{\partial t} \int_{-L}^{L} g(x,t) \dx = \int_{-L}^{L} \pd{g}{t} \dx
+\]
+is valid if $g$ is continuous.
+
+In summary, we have verified that the Fourier sine series is actually a solution of the heat equation satisfying the boundary conditions $u(0,t) = 0$ and $u(L,t) = 0$.  Now we have two reasons for choosing a Fourier sine series for this problem.  First, the method of separation of variables implies that if $u(0,t) = 0$ and $u(L,t) = 0$, then the appropriate eigenfunctions are $\sin n\pi x/L$.  Second, we now see that all the differentiations of the infinite sine series are justified, where we need to assume that $u(0,t) = 0$ and $u(L,t) = 0$, exactly the physical boundary conditions.
+
+\begin{exercises}{3.4}
+\item The integration-by-parts formula
+\[
+\int_a^b u \od{v}{x} \dx = uv \bigg|_a^b - \int_a^b v \od{u}{x} \dx
+\]
+is known to be valid for functions $u(x)$ and $v(x)$, which are continuous and have continuous first derivatives.  However, we will assume that $u$, $v$, $du/dx$, and $dv/dx$ are continuous only for $a \le x \le c$ and $c \le x \le b$; that all quantities may have a jump discontinuity at $x = c$.
+\begin{enumerate}
+\item[\starred\textbf{(a)}] Derive an expression for $\int_a^b u\,dv/dx\,dx$ in terms of $\int_a^b v\,du/dx\,dx$.
+\item[\textbf{(b)}] Show that this reduces to the integration-by-parts formula if $u$ and $v$ are continuous across $x = c$.  It is \textit{not} necessary for $du/dx$ and $dv/dx$ to be continuous at $x = c$.
+\end{enumerate}
+
+\item Suppose that $f(x)$ and $df/dx$ are piecewise smooth.  Prove that the Fourier series of $f(x)$ can be differentiated term by term if the Fourier series of $f(x)$ is continuous.
+
+\item Suppose that $f(x)$ is continuous [except for a jump discontinuity at $x = x_0$, $f(x_0^-) = \alpha$ and $f(x_0^+) = \beta$] and $df/dx$ is piecewise smooth.
+\begin{enumerate}
+\item[\starred\textbf{(a)}] Determine the Fourier sine series of $df/dx$ in terms of the Fourier cosine series coefficients of $f(x)$.
+\item[\textbf{(b)}] Determine the Fourier cosine series of $df/dx$ in terms of the Fourier sine series coefficients of $f(x)$.
+\end{enumerate}
+
+\item Suppose that $f(x)$ and $df/dx$ are piecewise smooth.
+\begin{enumerate}
+\item[\textbf{(a)}] Prove that the Fourier sine series of a continuous function $f(x)$ can only be differentiated term by term if $f(0) = 0$ and $f(L) = 0$.
+\item[\textbf{(b)}] Prove that the Fourier cosine series of a continuous function $f(x)$ can be differentiated term by term.
+\end{enumerate}
+
+\item Using \eqref{eq:sine-diff-general} determine the Fourier cosine series of $\sin \pi x/L$.
+
+\item There are some things wrong in the following demonstration.  Find the mistakes and correct them.
+
+In this exercise we attempt to obtain the Fourier cosine coefficients of $e^x$:
+\begin{equation}
+\label{eq:ex-cosine}
+e^x = A_0 + \sum_{n=1}^{\infty} A_n \cos \frac{n\pi x}{L}.
+\end{equation}
+Differentiating yields
+\[
+e^x = -\sum_{n=1}^{\infty} \frac{n\pi}{L} A_n \sin \frac{n\pi x}{L},
+\]
+the Fourier sine series of $e^x$.  Differentiating again yields
+\begin{equation}
+\label{eq:ex-cosine-2}
+e^x = -\sum_{n=1}^{\infty} \left(\frac{n\pi}{L}\right)^2 A_n \cos \frac{n\pi x}{L}.
+\end{equation}
+Since equations \eqref{eq:ex-cosine} and \eqref{eq:ex-cosine-2} give the Fourier cosine series of $e^x$, they must be identical.  Thus,
+\[
+A_0 = 0 \quad \text{and} \quad A_n = 0 \quad \text{(obviously wrong!).}
+\]
+By correcting the mistakes, you should be able to obtain $A_0$ and $A_n$ \textit{without} using the typical technique, that is, $A_n = 2/L \int_0^L e^x \cos n\pi x/L \dx$.
+
+\item Prove that the Fourier series of a continuous function $u(x,t)$ can be differentiated term by term with respect to the parameter $t$ if $\partial u/\partial t$ is piecewise smooth.
+
+\item Consider
+\[
+\pd{u}{t} = k\pdd{u}{x}
+\]
+subject to
+\[
+\pd{u}{x}(0,t) = 0, \quad \pd{u}{x}(L,t) = 0, \quad \text{and} \quad u(x,0) = f(x).
+\]
+Solve in the following way.  Look for the solution as a Fourier cosine series.  Assume that $u$ and $\partial u/\partial x$ are continuous and $\partial^2 u/\partial x^2$ and $\partial u/\partial t$ are piecewise smooth.  Justify all differentiations of infinite series.
+
+\item[\starred 3.4.9] Consider the heat equation with a known source $q(x,t)$:
+\[
+\pd{u}{t} = k\pdd{u}{x} + q(x,t) \quad \text{with} \quad u(0,t) = 0 \quad \text{and} \quad u(L,t) = 0.
+\]
+Assume that $q(x,t)$ (for each $t > 0$) is a piecewise smooth function of $x$.  Also assume $u$ and $\partial u/\partial x$ are continuous functions of $x$ (for $t > 0$) and $\partial^2 u/\partial x^2$ and $\partial u/\partial t$ are piecewise smooth.  Thus,
+\[
+u(x,t) = \sum_{n=1}^{\infty} b_n(t) \sin \frac{n\pi x}{L}.
+\]
+What ordinary differential equation does $b_n(t)$ satisfy?  Do not solve this differential equation.
+
+\item Modify Exercise 3.4.9 if instead $\partial u/\partial x(0,t) = 0$ and $\partial u/\partial x(L,t) = 0$.
+
+\item Consider the \textit{nonhomogeneous} heat equation (with a steady heat source):
+\[
+\pd{u}{t} = k\pdd{u}{x} + g(x).
+\]
+Solve this equation with the initial condition
+\[
+u(x,0) = f(x)
+\]
+and the boundary conditions
+\[
+u(0,t) = 0 \quad \text{and} \quad u(L,t) = 0.
+\]
+Assume that a continuous solution exists (with continuous derivatives).  [\textit{Hints}: Expand the solution as a Fourier sine series (i.e., use the method of eigenfunction expansion).  Expand $g(x)$ as a Fourier sine series.  Solve for the Fourier sine series of the solution.  Justify all differentiations with respect to $x$.]
+
+\item[\starred 3.4.12.] Solve the following \textit{nonhomogeneous} problem:
+\[
+\pd{u}{t} = k\pdd{u}{x} + e^{-t} + e^{-2t}\cos\frac{3\pi x}{L} \quad [\text{assume } 2 \ne k(3\pi/L)^2]
+\]
+subject to
+\[
+\pd{u}{x}(0,t) = 0, \quad \pd{u}{x}(L,t) = 0, \quad \text{and} \quad u(x,0) = f(x).
+\]
+Use the following method.  Look for the solution as a Fourier cosine series.  Justify all differentiations of infinite series (assume appropriate continuity).
+
+\item Consider
+\[
+\pd{u}{t} = k\pdd{u}{x}
+\]
+subject to
+\[
+u(0,t) = A(t), \quad u(L,t) = 0, \quad \text{and} \quad u(x,0) = g(x).
+\]
+Assume that $u(x,t)$ has a Fourier sine series.  Determine a differential equation for the Fourier coefficients (assume appropriate continuity).
+\end{exercises}
