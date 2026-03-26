@@ -51,25 +51,8 @@ cp your_textbook.pdf pdfs/scanned.pdf
 ├── docs/
 │   ├── plan.md                  # Conversion plan template
 │   └── progress.md              # Section-level progress tracker
-├── book.conf                    # Book name config (snake_case)
+├── book.conf                    # Book name (auto-generated)
 └── .gitignore
-```
-
-## Configuration
-
-### `book.conf`
-```bash
-BOOK_NAME="your_textbook_name_in_snake_case"
-```
-
-### Exercise Numbering (`preamble.tex`)
-```latex
-% Section-prefixed (1.2.1, 1.2.2):
-\renewcommand{\exerciselabel}[1]{\textbf{#1.\arabic*.}}
-% Plain (1., 2.):
-\renewcommand{\exerciselabel}[1]{\textbf{\arabic*.}}
-% Parenthesized ((1), (2)):
-\renewcommand{\exerciselabel}[1]{\textbf{(\arabic*)}}
 ```
 
 ## Build System
@@ -80,7 +63,7 @@ BOOK_NAME="your_textbook_name_in_snake_case"
 | `./scripts/build.sh N` | `latex/<book_name>_chNN.pdf` | `latex/build/` |
 | `./scripts/build.sh clean` | — | Removed |
 
-## Claude Code Skills
+## Skills
 
 | Skill | Description |
 |-------|-------------|
@@ -94,14 +77,36 @@ BOOK_NAME="your_textbook_name_in_snake_case"
 - **Python 3**: PyMuPDF (`pip install pymupdf`) for figure extraction
 - **Claude Code**: AI-powered content conversion
 
-## Design Decisions
+## Development Roadmap
 
-- **Python over sed** — sed corrupts `\frac` via form-feed interpretation
-- **Figures from PDF** — cropped screenshots by caption index, not TikZ recreation
-- **Section-level splitting** — keeps files under ~15 pages each
-- **Parallel agents + compile-per-batch** — early error detection
-- **Never guess** — unclear content gets `% UNCLEAR:` placeholders
+### Current: v0.1 — Claude-only pipeline
+The current implementation uses Claude (Opus/Sonnet) for all phases. It works but is expensive for large textbooks:
+- ~760 pages consumed ~$30–50 in API calls
+- 16 agent spawns across 4 batches
+- Multiple retry/fix cycles
+
+### Next: v0.2 — Cost optimization
+Reduce cost by 5–10x using cheaper models where possible:
+
+| Phase | Current | Target | Why |
+|-------|---------|--------|-----|
+| Phase 0 (Setup) | Claude Opus | Sonnet/Haiku | Preamble generation is templated, doesn't need Opus |
+| Phase 1 (OCR→LaTeX) | Claude Opus subagents | Gemini Flash / GPT-4o-mini | Bulk OCR conversion is the biggest cost; cheaper vision models can read scanned pages |
+| Phase 2 (Figures) | Claude Opus | Python only | Figure extraction is pure PyMuPDF — no LLM needed |
+| Phase 4 (Compile-fix) | Claude Opus | Haiku + Python | Error fixing is pattern-matching; most fixes are scripted |
+
+Key ideas:
+- **Vision models for OCR**: Gemini 2.0 Flash or GPT-4o-mini can read scanned math pages at 1/20th the cost
+- **Claude only for orchestration**: Use Opus/Sonnet as the orchestrator, delegate bulk conversion to cheaper models
+- **Scripted fixes over LLM fixes**: The 5 common LaTeX error patterns are now known — fix them with Python, not AI
+- **Incremental compilation**: Compile after each chapter (not each batch) to catch errors with minimal context
+
+### Future: v1.0 — Production ready
+- CLI tool (`retex convert book.pdf`) without Claude Code dependency
+- Plugin system for different OCR backends (Gemini, GPT-4o, local Tesseract+LLM)
+- Web UI for progress tracking
+- Quality scoring (automated comparison against source)
 
 ## License
 
-Conversion framework is open source. Converted content retains the original textbook's copyright.
+MIT. Converted content retains the original textbook's copyright.
