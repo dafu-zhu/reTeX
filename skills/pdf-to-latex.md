@@ -7,6 +7,18 @@ Convert a scanned PDF textbook to a multi-chapter LaTeX project.
 
 ## Pipeline (fully automated, non-stop)
 
+### Pre-flight: Archive previous output
+Before starting, check if `latex/` has content from a previous conversion (e.g., `latex/ch01/` exists):
+1. Read `BOOK_NAME` from existing `book.conf`
+2. Create branch `output/<BOOK_NAME>` from current HEAD
+3. Force-add all gitignored output: `git add -f latex/ch*/ latex/backmatter/ latex/figures/ latex/frontmatter.tex book.conf docs/progress.md`
+4. Commit: `archive: <BOOK_NAME> conversion output`
+5. Switch back to `main`
+6. Delete the local output files (`latex/ch*/`, `latex/backmatter/`, `latex/figures/`, `latex/frontmatter.tex`, `book.conf`, `docs/progress.md`)
+7. Now `main` is clean — proceed with new conversion
+
+Skip this step if `latex/ch01/` does not exist (fresh repo).
+
 ### Phase 0: Setup (~2 min)
 1. Read first 15 pages of scanned PDF to determine: title, author, edition, page geometry, TOC structure, content characteristics, exercise numbering style
 2. Derive `BOOK_NAME` from title: lowercase, spaces→underscores, drop subtitle (e.g., "Applied Partial Differential Equations" → `applied_partial_differential_equations`). Write to `book.conf`
