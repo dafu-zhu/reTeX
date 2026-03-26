@@ -1,0 +1,33 @@
+# Build artifacts
+latex/build/
+*.aux
+*.log
+*.toc
+*.out
+*.idx
+*.ilg
+*.ind
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+
+# Output PDFs
+latex/*.pdf
+
+# Source PDFs (user provides)
+pdfs/*.pdf
+
+# Extracted figures (from copyrighted source)
+latex/figures/**/*.png
+
+# Generated book content (per-conversion output)
+latex/ch*/
+latex/backmatter/
+latex/frontmatter.tex
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Claude
+.claude/
