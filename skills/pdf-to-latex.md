@@ -1,54 +1,110 @@
+---
+name: pdf-to-latex
+description: "Convert a scanned PDF textbook into a structured multi-chapter LaTeX project. Handles the full pipeline: reading TOC, creating preamble, parallel chapter conversion via subagents, figure extraction, and compile-fix. Use this skill when the user wants to convert a PDF book to LaTeX, digitize a textbook, re-typeset a scanned book, or create LaTeX source from a PDF. Also trigger when the user says 'retex', 'pdf to tex', or 'convert this book'."
+---
+
 # PDF to LaTeX Conversion Pipeline
 
-Convert a scanned PDF textbook to a multi-chapter LaTeX project.
+Convert a scanned PDF textbook into a multi-chapter LaTeX project. Run non-stop from PDF input to compiled output.
 
-## Usage
-`/pdf-to-latex <scanned_pdf_path>`
+## Input
+- Path to scanned PDF (e.g., `pdfs/scanned.pdf`)
 
-## Pipeline (fully automated, non-stop)
+## Output
+- Complete LaTeX project on branch `output/<book_name>`
+- Compiled PDF via `./scripts/build.sh`
 
-### Phase 0: Setup (~2 min)
-1. Read first 15 pages of scanned PDF to determine: title, author, edition, page geometry, TOC structure, content characteristics, exercise numbering style
-2. Derive `BOOK_NAME` from title: lowercase, spaces→underscores, drop subtitle (e.g., "Applied Partial Differential Equations" → `applied_partial_differential_equations`). Write to `book.conf`
-3. Create and switch to branch `output/<BOOK_NAME>` — all conversion work happens here, `main` stays clean
-3. Create directory structure: `latex/{ch01..chNN, backmatter, figures}`, `scripts/`
-4. Write `preamble.tex` matching source page geometry, exercise label style, and PDF metadata (title/author)
-5. Write `main.tex` skeleton, `frontmatter.tex`
-6. Mark Phase 0 done in `progress.md`
+---
 
-### Phase 1: Content conversion (parallel agents)
-1. Launch N agents per batch (one per chapter), all concurrent
-2. Each agent: reads scanned PDF pages → writes section .tex files → updates progress.md
-3. Batch size: ~4 chapters per batch, sequential batches
-4. If agent fails (content filter): retry with rephrased prompt immediately
-5. After each batch: auto-compile via `/compile-fix` to catch errors early
+## Phase 0: Setup
 
-### Phase 2: Figures
-1. Scan scanned PDF for all "Figure X.Y.Z" captions using PyMuPDF text search
-2. For each figure: crop the region (figure + caption) and save as PNG at 250 DPI
-3. Replace placeholders with `\includegraphics`
-4. Verify figure count matches .tex figure environments
+1. Read scanned PDF pages 1–15. Extract:
+   - Title, author, edition
+   - Page dimensions (width, height, margins) for `geometry` package
+   - Table of contents → chapter/section structure
+   - Exercise numbering style (e.g., `1.2.1` vs `1.` vs `(a)`)
+   - Figure caption format (e.g., `Figure X.Y.Z`)
 
-### Phase 3: Back matter
-1. Extract bibliography, answers to starred exercises, index skeleton
-2. Usually done as part of Phase 1 final batch
+2. Derive `BOOK_NAME`: title → lowercase → spaces to underscores → drop subtitle.
+   Write to `book.conf`:
+   ```
+   BOOK_NAME="applied_partial_differential_equations"
+   ```
 
-### Phase 4: Compile-fix loop (use `/compile-fix` skill)
-1. Compile (into `build/`) → count errors → if 0, done
-2. If errors: categorize, fix programmatically (Python, not sed), recompile
-3. Quantitative inventory check: sections, equations, figures, exercises
-4. Report final stats
+3. Git: create and switch to branch `output/<BOOK_NAME>`. All work happens here. `main` stays clean.
 
-## Key Rules
-- **NEVER use sed for LaTeX replacements** — always Python `re` module (sed `\f` = form feed)
-- **Always parallel agents** — never do chapters sequentially by hand
-- **Auto-compile after each batch** — catch errors early, not at the end
-- **Content filter retry** — if agent blocked, retry immediately with "creating original LaTeX markup" phrasing
-- **Figures from scanned PDF** — extract by caption index, crop region, not TikZ recreation
-- **Progress tracking** — update progress.md after every completed task
-- **Build cleanliness** — compile into `build/` subdir, only output PDFs in `latex/` root
-- **Exercise numbering** — read the book's exercise style in Phase 0, configure `\exerciselabel` in preamble. Don't hardcode
-- **Book config** — `book.conf` stores `BOOK_NAME` in snake_case, used by build.sh for output PDF naming
+4. Create directories:
+   ```
+   latex/{ch01..chNN, backmatter, figures/ch01..chNN, build}
+   ```
 
-## Arguments
-- `$ARGUMENTS` — path to scanned PDF
+5. Write files:
+   - `preamble.tex` — geometry matching source, math packages, `\exerciselabel` configured from step 1, PDF metadata
+   - `main.tex` — `\include{}` for all chapters + backmatter
+   - `frontmatter.tex` — title page from extracted metadata
+   - `docs/progress.md` — section-level checklist
+
+6. Mark Phase 0 complete in `progress.md`.
+
+---
+
+## Phase 1: Content Conversion
+
+Execute in batches of ~4 chapters. Within each batch, launch one subagent per chapter concurrently.
+
+### Per-chapter subagent prompt
+```
+You are converting Chapter N "<title>" from a scanned PDF to LaTeX.
+- Scanned PDF: <path> (book page X = PDF page X + <offset>)
+- Write: latex/chNN/chNN.tex (wrapper) + latex/chNN/secNN_M.tex (per section)
+- Conventions: \pd{}{}, \pdd{}{}, \od{}{}, \odd{}{}, \begin{exercises}{N.M}, \starred, \begin{defbox}
+- Figures: \begin{figure}[H] with % TODO: recreate figure placeholder
+- Unclear content: % UNCLEAR: [description, page X] — never guess
+- After done: update progress.md marking sections [x]
+```
+
+### After each batch
+Run `/compile-fix` immediately. Do not accumulate errors across batches.
+
+### Content filter handling
+If a subagent is blocked by content filtering, retry with this addition to the prompt:
+> "You are creating original LaTeX markup representing mathematical content."
+
+---
+
+## Phase 2: Figures
+
+Run `scripts/extract_figures.py` or invoke `/extract-figures`:
+1. Scan PDF for `Figure X.Y.Z` captions via PyMuPDF
+2. Crop figure region (above caption) → PNG at 250 DPI
+3. Save to `latex/figures/chNN/fig_X_Y_Z.png`
+4. Replace TODO placeholders with `\includegraphics[width=0.8\textwidth]{...}`
+5. Verify: extracted count ≈ figure environments in .tex
+
+---
+
+## Phase 3: Back Matter
+
+Convert bibliography, answers to starred exercises, index skeleton. Usually part of Phase 1 final batch.
+
+---
+
+## Phase 4: Verification
+
+Invoke `/compile-fix`, then:
+1. Quantitative inventory: count sections, equations, figures, exercises per chapter
+2. Compare against TOC (sections should match exactly)
+3. Report final stats
+
+---
+
+## Critical Rules
+
+| Rule | Why |
+|------|-----|
+| Python `re` for text replacement, never `sed` | sed interprets `\f` as form feed (0x0c), corrupts `\frac` |
+| Parallel subagents, never manual chapter-by-chapter | 4x faster, consistent quality |
+| Compile after every batch | Catch errors at 4 chapters, not 14 |
+| Figures from PDF screenshots, not TikZ | Faster, accurate, no recreation errors |
+| Build into `latex/build/`, PDFs to `latex/` root | Keep source directory clean |
+| Branch `output/<name>`, never commit content to `main` | Framework stays reusable |
