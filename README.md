@@ -1,4 +1,4 @@
-# PDF-to-LaTeX Textbook Converter
+# reTeX
 
 Convert scanned PDF textbooks into structured, multi-chapter LaTeX projects with proper equations, exercises, figures, and cross-references.
 
