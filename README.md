@@ -77,35 +77,14 @@ cp your_textbook.pdf pdfs/scanned.pdf
 - **Python 3**: PyMuPDF (`pip install pymupdf`) for figure extraction
 - **Claude Code**: AI-powered content conversion
 
-## Development Roadmap
+## Roadmap
 
-### Current: v0.1 — Claude-only pipeline
-The current implementation uses Claude (Opus/Sonnet) for all phases. It works but is expensive for large textbooks:
-- ~760 pages consumed ~$30–50 in API calls
-- 16 agent spawns across 4 batches
-- Multiple retry/fix cycles
-
-### Next: v0.2 — Cost optimization
-Reduce cost by 5–10x using cheaper models where possible:
-
-| Phase | Current | Target | Why |
-|-------|---------|--------|-----|
-| Phase 0 (Setup) | Claude Opus | Sonnet/Haiku | Preamble generation is templated, doesn't need Opus |
-| Phase 1 (OCR→LaTeX) | Claude Opus subagents | Gemini Flash / GPT-4o-mini | Bulk OCR conversion is the biggest cost; cheaper vision models can read scanned pages |
-| Phase 2 (Figures) | Claude Opus | Python only | Figure extraction is pure PyMuPDF — no LLM needed |
-| Phase 4 (Compile-fix) | Claude Opus | Haiku + Python | Error fixing is pattern-matching; most fixes are scripted |
-
-Key ideas:
-- **Vision models for OCR**: Gemini 2.0 Flash or GPT-4o-mini can read scanned math pages at 1/20th the cost
-- **Claude only for orchestration**: Use Opus/Sonnet as the orchestrator, delegate bulk conversion to cheaper models
-- **Scripted fixes over LLM fixes**: The 5 common LaTeX error patterns are now known — fix them with Python, not AI
-- **Incremental compilation**: Compile after each chapter (not each batch) to catch errors with minimal context
-
-### Future: v1.0 — Production ready
-- CLI tool (`retex convert book.pdf`) without Claude Code dependency
-- Plugin system for different OCR backends (Gemini, GPT-4o, local Tesseract+LLM)
-- Web UI for progress tracking
-- Quality scoring (automated comparison against source)
+- [x] v0.1 — Claude-only pipeline (works, but expensive)
+- [ ] Delegate bulk OCR→LaTeX to cheaper vision models (Gemini Flash / GPT-4o-mini)
+- [ ] Replace LLM-based compile fixes with scripted Python pattern matching
+- [ ] Compile after each chapter instead of each batch for faster error detection
+- [ ] Standalone CLI (`retex convert book.pdf`) without Claude Code dependency
+- [ ] Plugin system for swappable OCR backends
 
 ## License
 
