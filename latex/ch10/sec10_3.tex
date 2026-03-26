@@ -1,0 +1,314 @@
+% sec10_3.tex — Section 10.3: Testing the Null of No Cointegration
+
+Having introduced the notion of cointegration, we need to deal with two issues.
+The first is how to determine the cointegration rank, and the second is how to
+estimate and do inference on cointegrating vectors. The first will be discussed in
+this section, and the second will be the topic of the next section. There are several
+procedures for determining the cointegration rank. Among them are Johansen's
+(1988) likelihood ratio test derived from the maximum likelihood estimation of
+the VECM (briefly covered at the end of previous section) and the common trend
+procedure of Stock and Watson (1988). These procedures allow us to test the null
+of $h = h_0$ where $h_0$ is some arbitrary integer between 0 and $n - 1$. We will not
+cover these procedures.\footnote{%
+See Maddala and Kim (1998, Section~7) for a catalogue of available procedures.}
+Here, we cover only the simple test suggested by Engle
+and Granger (1987) and extended by Phillips and Ouliaris (1990). In that test, the
+null hypothesis is that $h = 0$ (no cointegration) and the alternative is that $h \geq 1$.
+
+\subsection*{Spurious Regressions}
+
+The test of Engle and Granger (1987) is based on OLS estimation of the regression
+\begin{equation}
+  y_{1t} = \mu + \boldsymbol{\gamma}' \mathbf{y}_{2t} + z_t^*,
+  \label{eq:10.3.1} \tag{10.3.1}
+\end{equation}
+where $y_{1t}$ is the first element of $\mathbf{y}_t$, $\mathbf{y}_{2t}$ is the vector of the remaining $n - 1$ ele\-ments,
+and $z_t^*$ is an error term. This regression would be a cointegrating regression
+if $h = 1$ and $y_{1t}$ were part of the cointegrating relationship. Under the null of $h = 0$
+(no cointegration), however, this regression does not represent a cointegrating rela\-tionship.
+Let $(\hat{\mu}, \hat{\boldsymbol{\gamma}})$ be the OLS coefficient estimates of $(\mu, \boldsymbol{\gamma})$. It turns out that $\hat{\boldsymbol{\gamma}}$
+does not provide consistent estimates of any population parameters of the system!
+For example, even if $y_{1t}$ is unrelated to $\mathbf{y}_{2t}$ (in that $\Delta y_{1t}$ and $\Delta \mathbf{y}_{2s}$ are independ\-ent
+for all $s, t$), the $t$- and $F$-statistics associated with the OLS estimates become
+arbitrarily large as the sample size increases, giving a false impression that there
+is a close connection between $y_{1t}$ and $\mathbf{y}_{2t}$. This phenomenon, called the \textbf{spurious
+regression}, was first discovered in Monte Carlo experiments by Granger and New\-bold
+(1974). Phillips (1986) theoretically derived the large-sample distributions of
+the statistics for spurious regressions. For example, the $t$-value, if divided by $\sqrt{T}$,
+converges to a nondegenerate distribution.
+
+\subsection*{The Residual-Based Test for Cointegration}
+
+The regression (10.3.1) nevertheless provides a useful device for testing the null
+of no cointegration, because the OLS residuals, $y_{1t} - \hat{\mu} - \hat{\boldsymbol{\gamma}}'\mathbf{y}_{2t}$, should appear to
+have a stochastic trend if $\mathbf{y}_t$ is not cointegrated and be stationary otherwise. Engle
+and Granger (1987) suggested applying the ADF $t$-test to the residuals in order to
+test the null of no cointegration. Because of the use of the residuals, the test is
+called the \textbf{residual-based test for cointegration}. The asymptotic distributions of
+the test statistic for some leading unit-root tests were derived theoretically and the
+(asymptotic) critical values tabulated by Phillips and Ouliaris (1990) and Hansen
+(1992a).
+
+In contrast to the univariate unit-root tests, the asymptotic distributions (and
+hence the asymptotic critical values) depend on the dimension $n$ of the system. This
+is because the residuals depend on $(\hat{\mu}, \hat{\boldsymbol{\gamma}})$, which, being estimates based on data,
+are random variables. Here we indicate the appropriate asymptotic critical values
+when the unit-root test applied to the residuals is the ADF $t$-test of Proposition~9.6
+for autoregressions without a constant or time. That is, the ADF $t$-statistic is the $t$-value
+on the $x_{t-1}$ coefficient in the following augmented autoregression estimated
+on residuals:
+\begin{equation}
+  \Delta x_t = (\rho - 1) x_{t-1}
+    + \zeta_1 \Delta x_{t-1} + \cdots + \zeta_p \Delta x_{t-p}
+    + \text{error},
+  \label{eq:10.3.2} \tag{10.3.2}
+\end{equation}
+where $x_t$ here is the residual from regression (10.3.1). There is no need to include
+a constant in this augmented autoregression because, with the regression already
+including a constant, the sample mean of the residuals is guaranteed to be zero.
+There is no need to include time either, because the variables of the regression
+(10.3.1) implicitly or explicitly include time trends (see below for more on this).
+The number of lagged changes, $p$, needs to be increased to infinity with the sample
+size $T$, but at a rate slower than $T^{1/3}$. More precisely,\footnote{%
+See Phillips and Ouliaris (1990, Theorem~4.2). The lag length $p$ can be a random variable because it can
+be data-dependent. This condition is the same as in the Said-Dickey extension of the ADF tests in the previous
+chapter (see Section~9.4), except that $p$ here can be a random variable.}
+\begin{equation}
+  p \to \infty \quad \text{but} \quad
+  \frac{p}{T^{1/3}} \pto 0
+  \quad \text{as } T \to \infty.
+  \label{eq:10.3.3} \tag{10.3.3}
+\end{equation}
+The critical values are the same if Phillips' $Z_t$-test (see Analytical Exercise~6 of the
+previous chapter) is used instead of the ADF~$t$. There are three cases to consider.
+
+\begin{enumerate}
+\item $\E(\Delta \mathbf{y}_{2t}) = \mathbf{0}$ and $\E(\Delta y_{1t}) = 0$, so no elements of the I(1) system have drift.
+  The appropriate critical values are in Table~10.1(a), which reproduces Table
+  IIb of Phillips and Ouliaris (1990). For a statement of the conditions on the
+  VMA representation under which the asymptotic distribution is derived, see
+  Hamilton (1994, Proposition~19.4).
+
+\item $\E(\Delta \mathbf{y}_{2t}) \neq \mathbf{0}$ but $\E(\Delta y_{1t})$ may or may not be zero. This case was discussed by
+  Hansen (1992a). Let $g$ ($\equiv n - 1$) be the number of regressors besides a con\-stant
+  in the regression (10.3.1). Some of the $g$ regressors have drift. Since lin\-ear
+  trends from different regressors can be combined into one,\footnote{%
+  For example, let $n = 3$ so that there are two regressors, $y_{2t}$ and $y_{3t}$ with coefficients $\gamma_1$ and $\gamma_2$, respectively.
+  If $\delta_2$ and $\delta_3$ are the drifts in $y_{2t}$ and $y_{3t}$, respectively, then the linear trends in regression (10.3.1) are $\gamma_1\delta_2 t$ and
+  $\gamma_2\delta_3 t$, which can be combined into a single time trend $(\gamma_1\delta_2 + \gamma_2\delta_3)t$.}
+  the regression
+  (10.3.1) can be rewritten as a regression of $y_{1t}$ on a constant, $g - 1$ I(1) regres\-sors
+  without drift, and one I(1) regressor with drift. Now, since linear trends
+  dominate stochastic trends (in the sense made precise in the discussion of the
+  BN decomposition in the previous chapter), the I(1) regressor with a trend
+  behaves very much like time in large samples. So the residuals are ``asymp\-totically
+  the same'' as the residuals from a regression with a constant, $g - 1$
+  driftless I(1) variables, and time as regressors, in the sense that the limiting
+  distribution of a statistic based on the residuals from the former regression is
+  the same as that from the latter regression.
+
+  The critical values for the ADF $t$ test based on the latter regression are
+  tabulated in Table~IIc of Phillips and Ouliaris (1990). Therefore, to find the
+  appropriate critical value when the regression (10.3.1) has a constant and $g$
+  regressors but not time, turn to this table for $g - 1$ regressors. If the regression
+  has only one regressor besides the constant (i.e., if $g = 1$), then the regres\-sion
+  is asymptotically equivalent to a regression of $y_{1t}$ on a constant and time.
+  For this case, the limiting distribution of the ADF $t$-statistic calculated from
+  the residuals turns out to be the Dickey-Fuller distribution ($DF_t^\tau$) of Proposi\-tion~9.8.
+  Table~10.1(b) combines these distributions: for the case of one
+  regressor ($g = 1$), it shows the ADF $t^\tau$-distribution, and for the case of $g$ ($> 1$)
+  regressors, it shows the critical values from Table~IIc of Phillips and Ouliaris
+  (1990) for $g - 1$ regressors.
+
+\item This leaves the case where $\E(\Delta \mathbf{y}_{2t}) = \mathbf{0}$ and $\E(\Delta y_{1t}) \neq 0$. Since $y_{1t}$ has drift
+  and $\mathbf{y}_{2t}$ does not, we need to include time in the regression (10.3.1) in order
+  to remove a linear trend from the residuals. The discussion for the previous
+  case makes it clear that the ADF $t$-statistic calculated using the residuals from
+  a regression of $y_{1t}$ on a constant, $g$ driftless I(1) regressors $\mathbf{y}_{2t}$, \emph{and} time has
+  the asymptotic distribution tabulated in Table~10.1(b) for $g + 1$ regressors (or
+  Table~IIc of Phillips and Ouliaris, 1990, for $g$ regressors). For example, if
+  $g = 2$, the regressor (10.3.1) has a constant, two I(1) regressors, and time; the
+  critical values can be found from Table~10.1(b) for \emph{three} regressors.
+\end{enumerate}
+
+\begin{table}[htbp]
+\centering
+\caption{Critical Values for the ADF $t$-Statistic Applied to Residuals}
+\label{tab:10.1}
+\medskip
+Estimated Regression: $y_{1t} = \mu + \boldsymbol{\gamma}'\mathbf{y}_{2t}$
+\medskip
+
+\begin{tabular}{l cccc}
+\toprule
+Number of regressors, & & & & \\
+excluding constant & 1\% & 2.5\% & 5\% & 10\% \\
+\midrule
+\multicolumn{5}{l}{(a) Regressors have no drift} \\
+\midrule
+1 & $-3.96$ & $-3.64$ & $-3.37$ & $-3.07$ \\
+2 & $-4.31$ & $-4.02$ & $-3.77$ & $-3.45$ \\
+3 & $-4.73$ & $-4.37$ & $-4.11$ & $-3.83$ \\
+4 & $-5.07$ & $-4.71$ & $-4.45$ & $-4.16$ \\
+5 & $-5.28$ & $-4.98$ & $-4.71$ & $-4.43$ \\
+\midrule
+\multicolumn{5}{l}{(b) Some regressors have drift} \\
+\midrule
+1 & $-3.96$ & $-3.67$ & $-3.41$ & $-3.13$ \\
+2 & $-4.36$ & $-4.07$ & $-3.80$ & $-3.52$ \\
+3 & $-4.65$ & $-4.39$ & $-4.16$ & $-3.84$ \\
+4 & $-5.04$ & $-4.77$ & $-4.49$ & $-4.20$ \\
+5 & $-5.36$ & $-5.02$ & $-4.74$ & $-4.46$ \\
+\bottomrule
+\end{tabular}
+
+\medskip
+\small
+\textsc{Source:} For panel~(a), Phillips and Ouliaris (1990, Table~IIb). For panel~(b), the
+first row is from Fuller (1996, Table~10.A.2), and the other rows are from Phillips
+and Ouliaris (1990, Table~IIc).
+\end{table}
+
+Several comments are in order about the residual-based test for cointegration.
+
+\begin{itemize}
+\item (Test consistency)\quad The alternative hypothesis is that $\mathbf{y}_t$ is cointegrated (i.e.,
+  $h \geq 1$). The test is consistent against the alternative as long as $y_{1t}$ is cointegrated
+  with $\mathbf{y}_{2t}$.\footnote{%
+  For the case of $h = 1$, this is an implication of Theorem~5.1 of Phillips and Ouliaris (1990). Their remark~(d)
+  to this theorem shows that the test is consistent when $h > 1$ and hence $\mathbf{y}_{2t}$ is cointegrated.}
+  The reason (we will discuss it in more detail below for the case with
+  $h = 1$) is that the OLS residuals from the regression (10.3.1) will converge to a
+  stationary process. However, if $y_{1t}$ is I(1) and not part of the cointegration rela\-tionship,
+  then the test may have no power against the alternative of cointegration
+  because the OLS residuals, $y_{1t} - \boldsymbol{\gamma}'\mathbf{y}_{2t}$, with a nonzero coefficient (of unity) on
+  the I(1) variable $y_{1t}$, will not converge to a stationary process. Thus, the choice
+  of normalization (of which variable should be used as the dependent variable)
+  matters for the consistency of the test.
+
+\item (Should time be included in the regression?)\quad If time is included in the regres\-sion
+  (10.3.1), then the drift in $y_{1t}$, $\E(\Delta y_{1t})$, affects only the time coefficient,
+  making the numerical value of the residuals (and hence the ADF $t$-value) invari\-ant
+  to $\E(\Delta y_{1t})$. This means that the case~3 procedure, which adds time to the
+  regressors, can be used for case~1, where $\E(\Delta y_{1t})$ happens to be zero. That is,
+  if you include time in the regression (10.3.1), then the appropriate critical value
+  for case~1 is given from Table~10.1(b) for $g + 1$ regressors. The procedure is
+  also valid for case~2, because if time is included in addition to a constant and
+  $g$ I(1) regressors with drift, then the regression can be rewritten as a regression
+  with a constant, $g$ driftless I(1) regressors, and time that combines the drifts in
+  the $g$ I(1) regressors. This regression falls under case~3 and the critical values
+  provided by Table~10.1(b) for $g + 1$ regressors apply. Therefore, when time is
+  included in the regression (10.3.1), the same critical values can be used, regard\-less
+  of the location of drifts. A possible disadvantage is reduced power in finite
+  samples. The finite-sample power is indeed lower at least for the DGPs exam\-ined
+  by Hansen (1992a) in his simulations.
+
+\item (Choice of lag length)\quad The requirement (10.3.3) does not provide a practical
+  rule in finite samples for selecting the lag length $p$ in the augmented autoregres\-sion
+  to be estimated on the residuals. There seems to be no work in the context of
+  the residual-based test comparable to that of Ng and Perron (1995) for univari\-ate
+  I(1) processes. The usual practice is to proceed as in the univariate context,
+  which is to use the Akaike information criterion (AIC) or the Bayesian infor\-mation
+  criterion (BIC), also called the Schwartz information criterion (SIC), to
+  determine the number of lagged changes.
+
+\item (Finite-sample considerations)\quad Besides the residual-based ADF $t$-test, a num\-ber
+  of tests are available for testing the null of no cointegration. They include
+  tests proposed by Phillips and Ouliaris (1990), Stock and Watson (1988), and
+  Johansen (1988). Haug (1996) reports a recent Monte Carlo study examining the
+  finite-sample performance of these and other tests. It reveals a tradeoff between
+  power and size distortions (that is, tests with the least size distortion tend to have
+  low power). The residual-based ADF $t$-test with the lag length chosen by AIC,
+  although less powerful than some other tests, has the least size distortion for the
+  DGPs examined.
+\end{itemize}
+
+The following example applies the residual-based test with the ADF $t$-statistic
+to the consumption-income relationship.
+
+\begin{defbox}
+\textbf{Example 10.5\quad (Are consumption and income cointegrated?):}\quad As was
+already mentioned in connection with Figure~10.1(a), log income ($y_t$) and
+log consumption ($c_t$) appear to be cointegrated with a cointegrating vector of
+$(1, -1)$. This figure, however, is rather deceiving. The plot of $y_t - c_t$ (which
+is the log of the saving rate) in Figure~10.1(b) shows an upward drift right
+after the war and a downward drift since the mid 1980s. (The latter is the
+well-publicized fact that the U.S.\ personal saving rate has been declining.)
+As seen below, the test results depend on whether to include these periods
+or not. We initially focus on the sample period of 1950:Q1 to 1986:Q4 (148
+obervations).
+
+\end{defbox}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.9\textwidth,trim=50 350 50 350,clip]{figures/fig_10_1b.png}
+  \caption{Log Income Minus Log Consumption}
+  \label{fig:10.1b}
+\end{figure}
+
+\begin{defbox}
+\noindent
+
+We first test whether the two series are individually I(1), by conduct\-ing
+the ADF $t$-test with a constant and time trend in the augmented auto\-regression.
+In applying the BIC to select the number of lagged changes in
+the augmented autoregression, we follow the same practice of the previous
+chapter: the maximum length ($p_{max}$) is $\bigl[12 \cdot (T/100)^{1/4}\bigr]$ (the integer part of
+$[12 \cdot (T/100)^{1/4}]$), the sample period is fixed at $t = p_{max} + 2, p_{max} + 3, \ldots, T$
+in the process of choosing the lag length $p$, and, given $p$, the maximum sam\-ple
+of $t = p + 2, p + 3, \ldots, T$ is used to estimate the augmented autoregres\-sion
+with $p$ lagged changes. For the present sample size, $p_{max}$ is~13.
+
+For disposable income, the BIC selects the lag length of~0 and the ADF
+$t$-statistic ($t^\tau$) is $-1.80$. The 5 percent critical value from Table~9.2\,(c) is
+$-3.41$, so we accept the hypothesis that $y_t$ is I(1). For consumption, the lag
+length by the BIC is~1 and the ADF $t$ statistic is $-2.07$. So we accept the I(1)
+null at 5 percent. Thus, both series might well be described as I(1) with drift.
+
+Turning to the residual-based test for cointegration, the OLS estimate of
+the static regression is
+\begin{equation}
+  c_t = -0.046 + 0.975\, y_t, \quad
+  R^2 = 0.998, \quad
+  t = \text{1950:Q1 to 1986:Q4}.
+  \label{eq:10.3.4} \tag{10.3.4}
+\end{equation}
+\hfill{\small (0.009) \quad (0.0037)}
+
+\medskip
+
+To conduct the residual-based ADF $t$ test, an augmented autoregression with\-out
+constant or time is estimated on the residuals with the lag length of~0
+selected by the BIC. The ADF $t$ statistic is $-5.49$. Since the series have time
+trends, we turn to Table~10.1(b), rather than Table~10.1(a), to find critical val\-ues.
+For $g = 1$, the 5 percent critical value is $-3.41$, so we can reject the null
+of no cointegration.
+
+If the residual-based test is conducted on the entire sample of 47:Q1
+to 98:Q1, the ADF $t$ statistic is $-2.94$ with the lag length of~1 determined
+by BIC, and thus, we cannot reject the hypothesis that the consumption-on-income
+regression is spurious!
+\end{defbox}
+
+\subsection*{Testing the Null of Cointegration}
+
+In the above test, cointegration is taken as the alternative hypothesis rather than the
+null. But very often in economics the hypothesis of economic interest is whether
+the variables in question are cointegrated, so it would be desirable to develop tests
+where the null hypothesis is that $h = 1$ rather than that $h = 0$. Very recently,
+several tests of the null of cointegration have been proposed. For a catalogue of
+such tests, see Maddala and Kim (1998, Section~4.5). As was true in the testing of
+the null that a univariate process is I(0), there is no single test of cointegration used
+by the majority of researchers yet.\footnote{%
+The procedures of Johansen (1988) and Stock and Watson (1988) cannot be used for testing the null of
+cointegration against the alternative of no cointegration, because in their tests the alternative hypothesis specifies
+\emph{more} cointegration than the null.}
+
+\subsection*{Question for Review}
+
+\begin{enumerate}
+\item For the residual-based test for cointegration with the regression (10.3.1) not
+  including time as a regressor, verify that there is very little difference in the
+  critical value between case~1 and case~2.
+\end{enumerate}

@@ -1,0 +1,707 @@
+% problems5.tex — Problem Set and Answers for Chapter 5
+
+\begin{problemset}
+
+\subsection*{Analytical Exercises}
+
+\exercise[1]
+(Fixed-effects estimator as the LSDV estimator)\quad
+In \eqref{eq:5.1.1pp} on page~329, redefine $\alpha_i$ to be the sum of old $\alpha_i$ and
+$\mathbf{b}_i'\boldsymbol{\gamma}$, so that \eqref{eq:5.1.1pp} becomes
+\begin{equation}
+  \mathbf{y}_i = \mathbf{F}_i\boldsymbol{\beta} + \mathbf{1}_M \cdot \alpha_i + \boldsymbol{\eta}_i
+  \quad (i = 1, 2, \ldots, n). \tag{1}
+\end{equation}
+
+Define the following stacked vectors and matrices:
+\[
+  \underset{(Mn \times 1)}{\mathbf{y}} = \begin{bmatrix} \mathbf{y}_1 \\ \vdots \\ \mathbf{y}_n \end{bmatrix}, \quad
+  \underset{(Mn \times \#\boldsymbol{\beta})}{\mathbf{F}} = \begin{bmatrix} \mathbf{F}_1 \\ \vdots \\ \mathbf{F}_n \end{bmatrix}, \quad
+  \underset{(Mn \times 1)}{\boldsymbol{\eta}} = \begin{bmatrix} \boldsymbol{\eta}_1 \\ \vdots \\ \boldsymbol{\eta}_n \end{bmatrix}, \quad
+  \underset{(n \times 1)}{\boldsymbol{\alpha}} = \begin{bmatrix} \alpha_1 \\ \vdots \\ \alpha_n \end{bmatrix},
+\]
+\[
+  \underset{(Mn \times (n + \#\boldsymbol{\beta}))}{\mathbf{W}} = (\mathbf{D} \vdots \mathbf{F}), \quad
+  \underset{((n + \#\boldsymbol{\beta}) \times 1)}{\boldsymbol{\theta}}
+  = \begin{bmatrix} \boldsymbol{\alpha} \\ \boldsymbol{\beta} \end{bmatrix},
+\]
+\begin{equation}
+  \underset{(Mn \times n)}{\mathbf{D}} = \mathbf{I}_n \otimes \mathbf{1}_M
+  = \begin{bmatrix}
+    \mathbf{1}_M & & \\
+    & \mathbf{1}_M & \\
+    & & \ddots \\
+    & & & \mathbf{1}_M
+  \end{bmatrix}, \tag{2}
+\end{equation}
+so that the $M$-equation system (1) for $i = 1, 2, \ldots, n$ can be written as
+\[
+  \begin{bmatrix} \mathbf{y}_1 \\ \mathbf{y}_2 \\ \vdots \\ \mathbf{y}_n \end{bmatrix}
+  = \begin{bmatrix} \mathbf{1}_M \cdot \alpha_1 \\ \mathbf{1}_M \cdot \alpha_2 \\ \vdots \\ \mathbf{1}_M \cdot \alpha_n \end{bmatrix}
+  + \begin{bmatrix} \mathbf{F}_1 \\ \mathbf{F}_2 \\ \vdots \\ \mathbf{F}_n \end{bmatrix}\boldsymbol{\beta}
+  + \begin{bmatrix} \boldsymbol{\eta}_1 \\ \boldsymbol{\eta}_2 \\ \vdots \\ \boldsymbol{\eta}_n \end{bmatrix}
+\]
+or
+\begin{equation}
+  \mathbf{y} = \mathbf{D}\boldsymbol{\alpha} + \mathbf{F}\boldsymbol{\beta} + \boldsymbol{\eta}
+  = \mathbf{W}\boldsymbol{\theta} + \boldsymbol{\eta}. \tag{3}
+\end{equation}
+
+The OLS estimator of $\boldsymbol{\theta}$ on a pooled sample of size $Mn$, $(\mathbf{y}, \mathbf{W})$, is
+$(\mathbf{W}'\mathbf{W})^{-1}\cdot\mathbf{W}'\mathbf{y}$.
+
+\begin{enumerate}[label=(\alph*)]
+\item Show that the fixed-effects estimator given in \eqref{eq:5.2.4} is the last $\#\boldsymbol{\beta}$ elements
+  of this vector. \textbf{Hint:} Use the Frisch-Waugh Theorem about partitioned
+  regressions (see Analytical Exercise~4(c) of Chapter~1). The first
+  step is to regress $\mathbf{y}$ on $\mathbf{D}$ and regress each column of $\mathbf{F}$ on $\mathbf{D}$. If we define
+  the annihilator associated with $\mathbf{D}$ as
+  \begin{equation}
+    \underset{(Mn \times Mn)}{\mathbf{M}_\mathbf{D}}
+    \equiv \mathbf{I}_{Mn} - \mathbf{D}(\mathbf{D}'\mathbf{D})^{-1}\mathbf{D}', \tag{4}
+  \end{equation}
+  then the residual vectors can be written as $\mathbf{M}_\mathbf{D}\mathbf{y}$ and
+  $\mathbf{M}_\mathbf{D}\mathbf{F}$. The second step
+  is to regress $\mathbf{M}_\mathbf{D}\mathbf{y}$ on $\mathbf{M}_\mathbf{D}\mathbf{F}$.
+  Show that the estimated regression coefficient
+  can be written as
+  \begin{equation}
+    (\mathbf{F}'\mathbf{M}_\mathbf{D}\mathbf{F})^{-1}\mathbf{F}'\mathbf{M}_\mathbf{D}\mathbf{y}. \tag{5}
+  \end{equation}
+  Show that $\mathbf{M}_\mathbf{D} = \mathbf{I}_n \otimes \mathbf{Q}$ (where $\mathbf{Q}$ is the annihilator associated with $\mathbf{1}_M$, as
+  in the text) and use this to show that (1) is indeed the fixed-effects estimator.
+
+  Alternatively, you can go all the way back to the normal equations. If $\mathbf{a}$
+  and $\mathbf{b}$ are the OLS estimators of $\boldsymbol{\alpha}$ and $\boldsymbol{\beta}$,
+  then $(\mathbf{a}, \mathbf{b})$ satisfies the system
+  of $n + \#\boldsymbol{\beta}$ linear simultaneous equations:
+  \begin{equation}
+    \begin{bmatrix} \mathbf{D}'\mathbf{D} & \mathbf{D}'\mathbf{F} \\
+      \mathbf{F}'\mathbf{D} & \mathbf{F}'\mathbf{F} \end{bmatrix}
+    \begin{bmatrix} \mathbf{a} \\ \mathbf{b} \end{bmatrix}
+    = \begin{bmatrix} \mathbf{D}'\mathbf{y} \\ \mathbf{F}'\mathbf{y} \end{bmatrix}. \tag{6}
+  \end{equation}
+  Take the first $n$ equations and solve for $\mathbf{a}$ taking $\mathbf{b}$ as given. This should
+  yield: $\mathbf{a} = (\mathbf{D}'\mathbf{D})^{-1}(\mathbf{D}'\mathbf{y} - \mathbf{D}'\mathbf{F}\mathbf{b})$.
+  Then substitute this into the rest of the
+  equations to solve for $\mathbf{b}$. (You can accomplish the same thing by using the
+  formula for inverting partitioned matrices.)
+
+\item Show:
+  \[
+    a_i = \bar{y}_i - \biggl(\frac{1}{M}\sum_{m=1}^{M}\mathbf{f}_{im}'\biggr)
+    \hat{\boldsymbol{\beta}}_{\text{FE}},
+  \]
+  where $a_i$ is the OLS estimator of $\alpha_i$, $\mathbf{f}_{im}'$ is the $m$-th row of $\mathbf{F}_i$, and
+  $\bar{y}_i = \frac{1}{M}(y_{i1} + \cdots + y_{iM})$.
+  \textbf{Hint:} Use the normal equations for $\boldsymbol{\alpha}$.
+
+\item Assume:
+  \begin{enumerate}[label=(\roman*)]
+  \item $\{\mathbf{y}_i, \mathbf{F}_i\}$ is i.i.d.,
+  \item $\E(\boldsymbol{\eta}_i \mid \mathbf{F}_i) = \mathbf{0}$
+    (which is stronger than the orthogonality conditions \eqref{eq:5.1.8b}),
+  \item $\E(\boldsymbol{\eta}_i\boldsymbol{\eta}_i' \mid \mathbf{F}_i)
+    = \sigma_\eta^2\,\mathbf{I}_M$ (the spherical error assumption), and
+  \item $\mathbf{W}$ is of full column rank.
+  \end{enumerate}
+  Show that the assumptions of the Classical Regression Model are satisfied
+  for the pooled regression (3), that is,
+  \[
+    \E(\boldsymbol{\eta} \mid \mathbf{W}) = \underset{(Mn \times 1)}{\mathbf{0}}.
+  \]
+  Also show that $\E(\boldsymbol{\eta}\boldsymbol{\eta}' \mid \mathbf{W}) = \sigma_\eta^2\,\mathbf{I}_{Mn}$.
+  Develop the \emph{small sample} theory for
+  $\mathbf{a}$ and $\mathbf{b}$. For example, are they unbiased? Let $SSR$ be the sum of squared
+  residuals from the pooled regression (3). Is this $SSR$ the same as the $SSR$
+  from the ``within'' regression \eqref{eq:5.2.15}?
+\end{enumerate}
+
+\exercise[2]
+(GMM interpretation of FE)\quad
+It is fairly well known for the case of two equations
+($M = 2$) that the fixed-effects estimator is the OLS estimator in the
+regression of first differences: $y_{i2} - y_{i1}$ on $\mathbf{z}_{i2} - \mathbf{z}_{i1}$.
+This question generalizes
+this argument to the case of arbitrary $M$.
+
+We wish to write the fixed-effects estimator \eqref{eq:5.2.4} in the GMM format
+\begin{equation}
+  (\mathbf{S}_{\mathbf{xz}}'\hat{\mathbf{W}}\mathbf{S}_{\mathbf{xz}})^{-1}
+  \mathbf{S}_{\mathbf{xz}}'\hat{\mathbf{W}}\mathbf{s}_{\mathbf{xy}} \tag{7}
+\end{equation}
+for properly defined $\mathbf{S}_{\mathbf{xz}}$, $\hat{\mathbf{W}}$, and $\mathbf{s}_{\mathbf{xy}}$.
+Let $\mathbf{C}$ be a matrix such that
+\begin{equation}
+  \text{$\mathbf{C}$ is an $M \times (M-1)$ matrix of full column rank satisfying }
+  \mathbf{C}'\mathbf{1}_M = \mathbf{0}. \tag{8}
+\end{equation}
+
+A prominent example of such a matrix $\mathbf{C}$ is the matrix of first differences:
+\[
+  \underset{(M \times (M-1))}{\mathbf{C}} = \begin{bmatrix}
+    -1 & 0 & 0 & 0 & \cdots & 0 \\
+    1 & -1 & 0 & 0 & \cdots & 0 \\
+    0 & 1 & -1 & 0 & \cdots & 0 \\
+    & & \ddots & \ddots & & \\
+    0 & \cdots & 0 & 1 & -1 & 0 \\
+    0 & \cdots & 0 & 0 & 1 & -1 \\
+    0 & \cdots & 0 & 0 & 0 & 1
+  \end{bmatrix}.
+\]
+
+Another example is an $M \times (M-1)$ matrix created by dropping one column,
+say the last, from $\mathbf{Q}$, the annihilator associated with $\mathbf{1}_M$.
+
+\begin{enumerate}[label=(\alph*)]
+\item Verify that these two matrices satisfy (8).
+
+\item For any given choice of $\mathbf{C}$, verify that you can derive the following system
+  of $M - 1$ transformed equations by multiplying both sides of the system of
+  $M$ equations \eqref{eq:5.1.1pp} on page~329 from left by $\mathbf{C}'$:
+  \begin{equation}
+    \hat{\mathbf{y}}_i = \hat{\mathbf{F}}_i\boldsymbol{\beta} + \hat{\boldsymbol{\eta}}_i \tag{9}
+  \end{equation}
+  where
+  \[
+    \underset{((M-1) \times 1)}{\hat{\mathbf{y}}_i} \equiv \mathbf{C}'\mathbf{y}_i, \quad
+    \underset{((M-1) \times \#\boldsymbol{\beta})}{\hat{\mathbf{F}}_i} \equiv \mathbf{C}'\mathbf{F}_i, \quad
+    \underset{((M-1) \times 1)}{\hat{\boldsymbol{\eta}}_i} \equiv \mathbf{C}'\boldsymbol{\eta}_i.
+  \]
+
+\item (optional)\quad If $\{\mathbf{y}_i, \mathbf{Z}_i\}$ satisfies the assumptions of the error-components model
+  (which are \eqref{eq:5.1.1pp}, \eqref{eq:5.1.2}, \eqref{eq:5.1.8},
+  \eqref{eq:5.1.4}, \eqref{eq:5.1.5}, and \eqref{eq:5.1.6} or
+  \eqref{eq:5.1.6p} on page~324), then
+  $\{\hat{\mathbf{y}}_i, \hat{\mathbf{F}}_i\}$ satisfies the assumptions of the
+  random-effects model, i.e., for the $M-1$ equation system (9),
+
+  (random sample) $\{\hat{\mathbf{y}}_i, \hat{\mathbf{F}}_i\}$ is i.i.d.,
+
+  (orthogonality conditions) $\E(\hat{\boldsymbol{\eta}}_i \otimes \mathbf{x}_i) = \mathbf{0}$ with
+  $\mathbf{x}_i = \text{union of}$
+  $(\mathbf{z}_{i1}, \ldots, \mathbf{z}_{iM}) = \text{unique elements of } (\mathbf{F}_i, \mathbf{b}_i)$,
+
+  (identification) $\E(\hat{\mathbf{F}}_i \otimes \mathbf{x}_i)$ is of full column rank,
+
+  (conditional homoskedasticity) $\E(\hat{\boldsymbol{\eta}}_i\hat{\boldsymbol{\eta}}_i' \mid \mathbf{x}_i)
+  = \E(\hat{\boldsymbol{\eta}}_i\hat{\boldsymbol{\eta}}_i')$ which is nonsingular,
+
+  (nonsingularity of $\E(\hat{\mathbf{g}}_i\hat{\mathbf{g}}_i')$) $\E(\hat{\mathbf{g}}_i\hat{\mathbf{g}}_i')$
+  is nonsingular, $\hat{\mathbf{g}}_i \equiv \hat{\boldsymbol{\eta}}_i \otimes \mathbf{x}_i$.
+
+  \textbf{Hint:} For the orthogonality conditions, note that \eqref{eq:5.1.8b} can be written as
+  $\E(\boldsymbol{\eta}_i \otimes \mathbf{x}_i) = \mathbf{0}$ and that
+  $\hat{\boldsymbol{\eta}}_i \otimes \mathbf{x}_i = (\mathbf{C}' \otimes \mathbf{I}_K)(\boldsymbol{\eta}_i \otimes \mathbf{x}_i)$.
+  The identification
+  condition is equivalent to \eqref{eq:5.1.15} (see the answer sheet for proof). To show
+  that $\E(\hat{\boldsymbol{\eta}}_i\hat{\boldsymbol{\eta}}_i' \mid \mathbf{x}_i)$ does not depend on
+  $\mathbf{x}_i$, use the fact that $\hat{\boldsymbol{\eta}}_i = \mathbf{C}'\boldsymbol{\eta}_i = \mathbf{C}'\boldsymbol{\varepsilon}_i$
+  since $\boldsymbol{\varepsilon}_i = \mathbf{1}_M \cdot \alpha_i + \boldsymbol{\eta}_i$. Given conditional homoskedasticity, we have
+  \[
+    \E(\hat{\mathbf{g}}_i\hat{\mathbf{g}}_i')
+    = \E(\hat{\boldsymbol{\eta}}_i\hat{\boldsymbol{\eta}}_i') \otimes \E(\mathbf{x}_i\mathbf{x}_i').
+  \]
+  So the last condition (nonsingularity of $\E(\hat{\mathbf{g}}_i\hat{\mathbf{g}}_i')$) is simply that
+  $\E(\mathbf{x}_i\mathbf{x}_i')$ be nonsingular.
+
+\item Show that the fixed-effects estimator \eqref{eq:5.2.4} can be written in the GMM
+  format (7) with
+  \begin{equation}
+    \mathbf{S}_{\mathbf{xz}} = \frac{1}{n}\sum_{i=1}^{n}\hat{\mathbf{F}}_i \otimes \mathbf{x}_i,
+    \quad
+    \mathbf{s}_{\mathbf{xy}} = \frac{1}{n}\sum_{i=1}^{n}\hat{\mathbf{y}}_i \otimes \mathbf{x}_i,
+    \quad
+    \hat{\mathbf{W}} = (\mathbf{C}'\mathbf{C})^{-1} \otimes
+    \biggl(\frac{1}{n}\sum_{i=1}^{n}\mathbf{x}_i\mathbf{x}_i'\biggr)^{\!-1}.
+    \tag{10}
+  \end{equation}
+
+  \textbf{Hint:} Use the following result from matrix algebra: If $\mathbf{C}$ satisfies condition
+  (8), then
+  \begin{equation}
+    \mathbf{C}(\mathbf{C}'\mathbf{C})^{-1}\mathbf{C}' = \mathbf{Q} \tag{11}
+  \end{equation}
+  (the annihilator associated with $\mathbf{1}_M$). The elements of $\mathbf{f}_{im}$ are a subset of
+  the elements of $\mathbf{x}_i$. Observe the ``disappearance of $\mathbf{x}$.'' So, for example,
+  \[
+    \frac{1}{n}\sum_{i=1}^{n}\mathbf{f}_{im}\mathbf{x}_i'
+    \biggl(\frac{1}{n}\sum_{i=1}^{n}\mathbf{x}_i\mathbf{x}_i'\biggr)^{\!-1}
+    \frac{1}{n}\sum_{i=1}^{n}\mathbf{x}_i\mathbf{f}_{ih}'
+    = \frac{1}{n}\sum_{i=1}^{n}\mathbf{f}_{im}\mathbf{f}_{ih}'.
+  \]
+
+\item Let $\hat{\boldsymbol{\Psi}}$ ($(M-1) \times (M-1)$) be a consistent estimate of
+  $\boldsymbol{\Psi} \equiv \E(\hat{\boldsymbol{\eta}}_i\hat{\boldsymbol{\eta}}_i')$. Show
+  that the efficient GMM estimator is given by
+  \begin{equation}
+    \hat{\boldsymbol{\beta}} = \biggl(\frac{1}{n}\sum_{i=1}^{n}\hat{\mathbf{F}}_i'
+    \hat{\boldsymbol{\Psi}}^{-1}\hat{\mathbf{F}}_i\biggr)^{\!-1}
+    \frac{1}{n}\sum_{i=1}^{n}\hat{\mathbf{F}}_i'\hat{\boldsymbol{\Psi}}^{-1}\hat{\mathbf{y}}_i. \tag{12}
+  \end{equation}
+  Show that
+  \begin{equation}
+    \avar(\hat{\boldsymbol{\beta}})
+    = \bigl[\E(\hat{\mathbf{F}}_i'\boldsymbol{\Psi}^{-1}\hat{\mathbf{F}}_i)\bigr]^{-1}. \tag{13}
+  \end{equation}
+  \textbf{Hint:} Apply Proposition~4.7 to the present system of $M - 1$ equations.
+
+\item Show that the following is consistent for $\boldsymbol{\Psi}$:
+  \begin{equation}
+    \underset{((M-1) \times (M-1))}{\hat{\boldsymbol{\Psi}}}
+    = \frac{1}{n}\sum_{i=1}^{n}
+    (\hat{\mathbf{y}}_i - \hat{\mathbf{F}}_i\hat{\boldsymbol{\delta}}_{\text{FE}})
+    (\hat{\mathbf{y}}_i - \hat{\mathbf{F}}_i\hat{\boldsymbol{\delta}}_{\text{FE}})'. \tag{14}
+  \end{equation}
+  \textbf{Hint:} Verify that all the assumptions of Proposition~4.1 are satisfied.
+
+\item (Sargan's statistic)\quad Derive Sargan's statistic associated with the efficient
+  GMM estimator. \textbf{Hint:} In Proposition~4.7(c), set
+  \begin{equation}
+    \hat{\mathbf{S}} = \hat{\boldsymbol{\Psi}} \otimes
+    \biggl(\frac{1}{n}\sum \mathbf{x}_i\mathbf{x}_i'\biggr), \quad
+    \mathbf{g}_n(\hat{\boldsymbol{\beta}})
+    = \mathbf{s}_{\mathbf{xy}} - \mathbf{S}_{\mathbf{xz}}\hat{\boldsymbol{\beta}}.
+  \end{equation}
+
+\item Suppose that $\boldsymbol{\eta}_i$ is spherical in that
+  \begin{equation}
+    \E(\boldsymbol{\eta}_i\boldsymbol{\eta}_i') = \sigma_\eta^2\,\mathbf{I}_M. \tag{15}
+  \end{equation}
+  Verify that, if $\hat{\sigma}_\eta^2$ is a consistent estimator of $\sigma_\eta^2$, then
+  \begin{equation}
+    \hat{\boldsymbol{\Psi}} = \hat{\sigma}_\eta^2\,\mathbf{C}'\mathbf{C} \tag{16}
+  \end{equation}
+  is consistent for $\boldsymbol{\Psi}$. Verify that the efficient GMM estimator (12) with this
+  choice of $\hat{\boldsymbol{\Psi}}$ is numerically equal to the fixed-effects estimator.
+
+\item (Invariance to the choice of $\mathbf{C}$)\quad Verify: if an $M \times (M-1)$ matrix $\mathbf{C}$ satisfies
+  (8), so does $\mathbf{B} = \mathbf{C}\mathbf{A}$ where $\mathbf{A}$ is an $(M-1) \times (M-1)$ nonsingular matrix.
+  Replace $\mathbf{C}$ everywhere in this section by $\mathbf{B}$ and verify that the choice of $\mathbf{C}$
+  does not change any of the results of this question.
+\end{enumerate}
+
+\exercise[3]
+Let $SSR$ be the sum of squared residuals defined in \eqref{eq:5.2.15}. For the error-components
+model with the spherical assumption that
+$\E(\boldsymbol{\eta}_i\boldsymbol{\eta}_i') = \sigma_\eta^2\,\mathbf{I}_M$, prove
+\[
+  \plim_{n \to \infty} \frac{SSR}{n} = (M - 1) \cdot \sigma_\eta^2.
+\]
+
+\textbf{Hint:}
+\begin{align*}
+  SSR &= \sum_{i=1}^{n}[\mathbf{Q}(\mathbf{y}_i - \mathbf{F}_i\hat{\boldsymbol{\beta}}_{\text{FE}})]'
+  [\mathbf{Q}(\mathbf{y}_i - \mathbf{F}_i\hat{\boldsymbol{\beta}}_{\text{FE}})] \\
+  &= \sum_{i=1}^{n}(\mathbf{y}_i - \mathbf{F}_i\hat{\boldsymbol{\beta}}_{\text{FE}})'\mathbf{Q}
+  (\mathbf{y}_i - \mathbf{F}_i\hat{\boldsymbol{\beta}}_{\text{FE}}) \\
+  &\quad (\text{since } \mathbf{Q} \text{ is symmetric and idempotent}) \\
+  &= \sum_{i=1}^{n}(\mathbf{y}_i - \mathbf{F}_i\hat{\boldsymbol{\beta}}_{\text{FE}})'
+  \mathbf{C}(\mathbf{C}'\mathbf{C})^{-1}\mathbf{C}'
+  (\mathbf{y}_i - \mathbf{F}_i\hat{\boldsymbol{\beta}}_{\text{FE}})
+  \quad (\text{by (11)}) \\
+  &= \sum_{i=1}^{n}\hat{\mathbf{v}}_i'(\mathbf{C}'\mathbf{C})^{-1}\hat{\mathbf{v}}_i
+  \quad (\hat{\mathbf{v}}_i \equiv \mathbf{C}'\mathbf{y}_i
+  - \mathbf{C}'\mathbf{F}_i\hat{\boldsymbol{\beta}}_{\text{FE}}) \\
+  &= \sum_{i=1}^{n}\operatorname{trace}[\hat{\mathbf{v}}_i'(\mathbf{C}'\mathbf{C})^{-1}\hat{\mathbf{v}}_i] \\
+  &= \sum_{i=1}^{n}\operatorname{trace}[(\mathbf{C}'\mathbf{C})^{-1}\hat{\mathbf{v}}_i\hat{\mathbf{v}}_i'] \\
+  &= n \cdot \operatorname{trace}\biggl[(\mathbf{C}'\mathbf{C})^{-1}
+  \frac{1}{n}\sum_{i=1}^{n}\hat{\mathbf{v}}_i\hat{\mathbf{v}}_i'\biggr].
+\end{align*}
+
+With the usual technical condition (that $\E(\mathbf{f}_{im}\mathbf{f}_{ih}')$ exists and is finite for all $m$, $h$,
+which obtains if $\E(\mathbf{x}_i\mathbf{x}_i')$ exists and is finite), it should now be routine to show
+that
+\[
+  \frac{1}{n}\sum_{i=1}^{n}\hat{\mathbf{v}}_i\hat{\mathbf{v}}_i'
+  \pto \E(\mathbf{v}_i\mathbf{v}_i') \quad \text{as } n \to \infty,
+\]
+where $\mathbf{v}_i \equiv \mathbf{C}'\mathbf{y}_i - \mathbf{C}'\mathbf{F}_i\boldsymbol{\beta}$.
+Show that $\E(\mathbf{v}_i\mathbf{v}_i') = \sigma_\eta^2 \cdot \mathbf{C}'\mathbf{C}$.
+
+\exercise[4]
+(Inconsistency of the fixed-effects estimator for dynamic models)\quad
+Consider a
+``dynamic'' model
+\[
+  y_{im} = \alpha_i + \rho \cdot y_{i,m-1} + \eta_{im}
+  \quad (m = 1, 2, \ldots, M;\; i = 1, 2, \ldots, n).
+\]
+
+Suppose we have a random sample on $(y_{i0}, y_{i1}, \ldots, y_{iM})$. We assume that
+$\E(\alpha_i\,\eta_{im}) = 0$, and $\E(y_{i0}\,\eta_{im}) = 0$ for all $m$. Also assume there is no cross-equation
+correlation: $\E(\eta_{im}\,\eta_{ih}) = 0$ for $m \neq h$, and that the second moment
+across equations is the same: $\E(\eta_{im}^2) = \sigma_\eta^2$.
+
+\begin{enumerate}[label=(\alph*)]
+\item Write this system of $M$ equations as \eqref{eq:5.1.1pp} on page~329 by properly defining
+  $\mathbf{y}_i$, $\mathbf{F}_i$, and $\mathbf{b}_i$.
+
+\item Show: $\E(y_{im} \cdot \eta_{ih}) = 0$ if $m < h$. \textbf{Hint:}
+  \[
+    y_{im} = \eta_{im} + \rho\eta_{i,m-1} + \cdots + \rho^{m-1}\eta_{i1}
+    + \frac{1 - \rho^m}{1 - \rho}\,\alpha_i + \rho^m y_{i0}.
+  \]
+
+\item Verify that $\E(y_{im} \cdot \eta_{ih}) = \rho^{m-h}\sigma_\eta^2$ for $m \geq h$.
+  (optional)\quad Show that
+  \[
+    \E(\mathbf{F}_i'\mathbf{Q}\boldsymbol{\eta}_i)
+    = -\frac{\sigma_\eta^2}{M} \cdot \frac{(M-1) - M\rho + \rho^M}{(1-\rho)^2}.
+  \]
+
+\item Therefore, if $\E(\mathbf{F}_i'\mathbf{Q}\mathbf{F}_i)$ is nonsingular and if
+  $(M-1) - M\rho + \rho^M \neq 0$, then
+  the fixed-effects estimator for this dynamic model is \emph{inconsistent}. Which
+  assumption of Proposition~5.1 guaranteeing the consistency of the fixed-effects
+  estimator is violated?
+\end{enumerate}
+
+\exercise[5]
+(Optional, identification ensures nonsingularity)
+
+\begin{enumerate}[label=(\alph*)]
+\item Show that $\E(\widetilde{\mathbf{F}}_i'\widetilde{\mathbf{F}}_i)$ in \eqref{eq:5.2.7} is invertible under assumption \eqref{eq:5.1.15}, that
+  $\E(\mathbf{Q}\mathbf{F}_i \otimes \mathbf{x}_i)$ is of full column rank. \textbf{Hint:}
+  \[
+    \E(\widetilde{\mathbf{F}}_i'\widetilde{\mathbf{F}}_i)
+    = \E(\mathbf{F}_i'\mathbf{Q}\mathbf{F}_i)
+    = \sum_{m=1}^{M}\sum_{h=1}^{M}q_{mh}\,\E(\mathbf{f}_{im}\mathbf{f}_{ih}')
+  \]
+  where $q_{mh} = (m,h)$ element of $\mathbf{Q}$. Show that
+  \[
+    \E(\mathbf{f}_{im}\mathbf{f}_{ih}')
+    = \E(\mathbf{f}_{im}\mathbf{x}_i')\,[\E(\mathbf{x}_i\mathbf{x}_i')]^{-1}\,
+      \E(\mathbf{x}_i\mathbf{f}_{ih}').
+  \]
+  (Recall that the elements of $\mathbf{f}_{im}$ are included in $\mathbf{x}_i$.) Finally, show that
+  \begin{align*}
+    \mathbf{x}_i\mathbf{f}_{im}' &= \mathbf{f}_{im}' \otimes \mathbf{x}_i,\;
+    (\mathbf{F}_i \otimes \mathbf{x}_i)' = (\mathbf{f}_{i1} \otimes \mathbf{x}_i', \ldots,
+    \mathbf{f}_{iM} \otimes \mathbf{x}_i'), \text{ and} \\
+    \E(\widetilde{\mathbf{F}}_i'\widetilde{\mathbf{F}}_i)
+    &= \E(\mathbf{F}_i \otimes \mathbf{x}_i)'\bigl[\mathbf{Q} \otimes [\E(\mathbf{x}_i\mathbf{x}_i')]^{-1}\bigr]
+    \,\E(\mathbf{F}_i \otimes \mathbf{x}_i).
+  \end{align*}
+
+\item Use a similar argument to show that
+  $\E\!\bigl[\widetilde{\mathbf{F}}_i'\,\E(\tilde{\boldsymbol{\eta}}_i\tilde{\boldsymbol{\eta}}_i')\widetilde{\mathbf{F}}_i\bigr]$
+  in \eqref{eq:5.2.7} is nonsingular.
+  \textbf{Hint:} Since
+  \[
+    \tilde{\boldsymbol{\eta}}_i = \mathbf{Q}\boldsymbol{\eta}_i = \mathbf{Q}\boldsymbol{\varepsilon}_i
+  \]
+  we have
+  \[
+    \widetilde{\mathbf{F}}_i'\,\E(\tilde{\boldsymbol{\eta}}_i\tilde{\boldsymbol{\eta}}_i')\widetilde{\mathbf{F}}_i
+    = \widetilde{\mathbf{F}}_i'\mathbf{Q}\,\E(\boldsymbol{\varepsilon}_i\boldsymbol{\varepsilon}_i')\,
+      \mathbf{Q}\widetilde{\mathbf{F}}_i
+    = \widetilde{\mathbf{F}}_i'\,\E(\boldsymbol{\varepsilon}_i\boldsymbol{\varepsilon}_i')\,\widetilde{\mathbf{F}}_i.
+  \]
+  Also,
+  \[
+    \E\!\bigl[\widetilde{\mathbf{F}}_i'\,\E(\boldsymbol{\varepsilon}_i\boldsymbol{\varepsilon}_i')\widetilde{\mathbf{F}}_i\bigr]
+    = \E(\mathbf{Q}\mathbf{F}_i \otimes \mathbf{x}_i)'\bigl(\E(\boldsymbol{\varepsilon}_i\boldsymbol{\varepsilon}_i')
+    \otimes [\E(\mathbf{x}_i\mathbf{x}_i')]^{-1}\bigr)\,\E(\mathbf{Q}\mathbf{F}_i \otimes \mathbf{x}_i).
+  \]
+
+\item Show that $\E(\hat{\mathbf{F}}_i'\boldsymbol{\Psi}^{-1}\hat{\mathbf{F}}_i)$ in (13) of Analytical Exercise~2 is nonsingular.
+  \textbf{Hint:} As shown in Analytical Exercise~2(c),
+  $\E(\mathbf{Q}\mathbf{F}_i \otimes \mathbf{x}_i)$ is of full column rank
+  if and only if $\E(\mathbf{C}'\mathbf{F}_i \otimes \mathbf{x}_i)$ is of full column rank.
+\end{enumerate}
+
+\exercise[6]
+(Optional, alternative identification condition)\quad
+Consider the error-component
+model \eqref{eq:5.1.1pp} on page~329. Let $p \equiv \#\boldsymbol{\beta}$. If $\mathbf{A}_m$ is the matrix that picks up
+$\mathbf{f}_{im}$ from $\mathbf{x}_i$, it can be written as
+\[
+  \underset{(K \times p)}{\mathbf{A}_m} = \begin{bmatrix} \mathbf{e}_m \otimes \mathbf{I}_p \\ \mathbf{0} \end{bmatrix},
+\]
+where $\mathbf{e}_m$ is the $m$-th row of $\mathbf{I}_M$.
+
+\begin{enumerate}[label=(\alph*)]
+\item Let $\mathbf{A}$ ($KM \times p$) be the matrix obtained from stacking
+  $(\mathbf{A}_1, \ldots, \mathbf{A}_M)$. Show
+  that $\mathbf{F}_i = (\mathbf{I}_M \otimes \mathbf{x}_i')\mathbf{A}$.
+
+\item Show that the rank condition \eqref{eq:5.1.15}, combined with the condition that
+  $\E(\mathbf{x}_i\mathbf{x}_i')$ be nonsingular (which is implied by \eqref{eq:5.1.5} and
+  \eqref{eq:5.1.6}), can be
+  written as
+  \[
+    \operatorname{rank}[(\mathbf{Q} \otimes \mathbf{I}_K)\mathbf{A}] = p
+    \quad (\equiv \#\boldsymbol{\beta}).
+  \]
+
+  \textbf{Hint:}
+  \begin{align*}
+    \mathbf{F}_i \otimes \mathbf{x}_i
+    &= ([\mathbf{I}_M \otimes \mathbf{x}_i')\mathbf{A}] \otimes \mathbf{x}_i \\
+    &= [(\mathbf{I}_M \otimes \mathbf{x}_i') \otimes \mathbf{x}_i](\mathbf{A} \otimes 1) \\
+    &= (\mathbf{I}_M \otimes \mathbf{x}_i' \otimes \mathbf{x}_i)\mathbf{A} \\
+    &= [\mathbf{I}_M \otimes (\mathbf{x}_i\mathbf{x}_i')]\mathbf{A}.
+  \end{align*}
+  So
+  \[
+    \widetilde{\mathbf{F}}_i \otimes \mathbf{x}_i
+    = (\mathbf{Q} \otimes \mathbf{I}_K)(\mathbf{F}_i \otimes \mathbf{x}_i)
+    = [\mathbf{Q} \otimes (\mathbf{x}_i\mathbf{x}_i')]\mathbf{A}.
+  \]
+  So $\E(\widetilde{\mathbf{F}}_i \otimes \mathbf{x}_i)
+  = [\mathbf{I}_M \otimes \E(\mathbf{x}_i\mathbf{x}_i')](\mathbf{Q} \otimes \mathbf{I}_K)\mathbf{A}$.
+  (This result will be used in the next exercise.)
+\end{enumerate}
+
+\exercise[7]
+(Optional, checking nonsingularity)\quad Prove that
+$\E(\widetilde{\mathbf{F}}_i'\tilde{\boldsymbol{\eta}}_i\tilde{\boldsymbol{\eta}}_i'\widetilde{\mathbf{F}}_i)$
+in \eqref{eq:5.2.23} is nonsingular, by taking the following steps.
+
+\begin{enumerate}[label=(\alph*)]
+\item Write $\widetilde{\mathbf{F}}_i'\tilde{\boldsymbol{\eta}}_i$ as a linear function of
+  $\mathbf{g}_i \equiv \boldsymbol{\varepsilon}_i \otimes \mathbf{x}_i$.
+  \textbf{Hint:} Let $\mathbf{A}$ be as in the
+  previous exercise.
+  \begin{align*}
+    \widetilde{\mathbf{F}}_i'\tilde{\boldsymbol{\eta}}_i
+    &= \mathbf{A}'(\mathbf{I}_M \otimes \mathbf{x}_i)\mathbf{Q}\boldsymbol{\eta}_i \\
+    &= \mathbf{A}'(\mathbf{I}_M \otimes \mathbf{x}_i)\mathbf{Q}\boldsymbol{\varepsilon}_i
+    \quad (\text{since } \boldsymbol{\varepsilon}_i = \mathbf{1}_M \cdot \alpha_i + \boldsymbol{\eta}_i) \\
+    &= \mathbf{A}'(\mathbf{I}_M \otimes \mathbf{x}_i)(\mathbf{Q}\boldsymbol{\varepsilon}_i \otimes 1) \\
+    &= \mathbf{A}'(\mathbf{Q}\boldsymbol{\varepsilon}_i \otimes \mathbf{x}_i) \\
+    &= \mathbf{A}'(\mathbf{Q} \otimes \mathbf{I}_K)\mathbf{g}_i.
+  \end{align*}
+
+\item Prove the desired result. \textbf{Hint:} $\E(\mathbf{g}_i\mathbf{g}_i')$ is positive definite by
+  \eqref{eq:5.1.6}.
+\end{enumerate}
+
+\subsection*{Empirical Exercises}
+
+In this exercise, you will estimate the speed of convergence using several different
+estimation techniques. We use the international panel constructed by Summers and
+Heston (1991), which has become the standard data set for studying the growth of
+nations. The Summers-Heston panel (also called the Penn World Table) includes
+major macro variables measured on a consistent basis for virtually all the countries
+of the world.
+
+The file \texttt{SUM\_HES.ASC} is an extract for 1960--1985 from version~5.6 of the
+Penn World Table downloaded from the NBER's home page (\texttt{www.nber.org}). The
+file is organized as follows. For each country, information on the country is contained
+in multiple records (rows). The first record has the country's identification
+code and two dummies, one for a communist regime (referred to as \emph{COM}
+below) and the other for the Organization of Petroleum Exporting Countries (referred to as
+\emph{OPEC} below). The second record has the year, the population (in thousands), real
+GDP per capita (in 1985 U.S.\ dollars), and the saving rate (in percent) for 1960.
+The third record has the same for 1961, and so forth. The twenty-seventh record of
+the country is for 1985.
+
+The file contains all 125 countries for which the data are available. (The mapping
+between the country ID and the country name is in \texttt{country.asc}. Country~1
+is Algeria, 2 is Angola, etc. Note that the mapping in Penn World Table version
+5.6 is different from that in Summers and Heston (1991).) GDP per capita is the
+country's real GDP converted into U.S.\ dollars using the purchasing power parity
+of the country's currency against the dollar for 1985 (the variable ``RGDPCH'' in
+the Penn World Table). The saving rate is measured as the ratio of real investment
+to real GDP (``I'' in the Penn World Table). See Sections~II and III (particularly
+III.D) of Summers and Heston (1991) for how the variables are constructed.
+
+The first issue we examine empirically is conditional convergence. (At this
+juncture it would be useful to skim Mankiw, Romer, and Weil (1992).) Let $s_i$ be
+the saving rate of country $i$ and $n_i$ be the country's population growth rate (which
+we take to be the growth rate of labor). In the Solow-Swan growth model with
+a Cobb-Douglas production function, the steady-state level of output per effective
+labor, denoted $q^*$ in the text, is a linear function of
+$\log(s_i) - \log(n_i + g + \delta)$, where
+$g$ is the rate of labor-augmenting technical progress and $\delta$ is the depreciation rate
+of the capital stock. Then, assuming $A(0)$, the initial level of technology, to be the
+same across countries, equation \eqref{eq:5.4.10} can be written as
+\begin{equation}
+  y_{im} = \phi_m + \rho\, y_{i,m-1} + \gamma_1 \log(s_i)
+  + \gamma_2 \log(n_i + g + \delta) + \eta_{im}. \tag{1}
+\end{equation}
+
+The growth model implies that $\gamma_1 = -\gamma_2$, but we will not impose this restriction.
+As in Mankiw et al., assume $g + \delta$ to be 5 percent for all countries, and take $s_i$
+to be the saving rate averaged over the 1960--1985 period. We measure $n_i$ as the
+average annual population growth over the same period (Mankiw et al.\ uses the
+average growth rate of the working-age population). Because our sample of 125
+countries includes (former) communist countries and OPEC, we add
+$COM$ ($=1$ if communist, 0 otherwise) and $OPEC$ ($=1$ if OPEC, 0 otherwise) to the equation:
+\begin{equation}
+  y_{im} = \phi_m + \rho\, y_{i,m-1} + \gamma_1 \log(s_i)
+  + \gamma_2 \log(n_i + g + \delta)
+  + \gamma_3 COM_i + \gamma_4 OPEC_i + \eta_{im}. \tag{2}
+\end{equation}
+
+\begin{enumerate}[label=(\alph*)]
+\item By subtracting $y_{i,m-1}$ from both sides, we can rewrite (2) as
+  \begin{align}
+    y_{im} - y_{i,m-1} &= \phi_m + (\rho - 1)y_{i,m-1}
+    + \gamma_1 \log(s_i) + \gamma_2 \log(n_i + g + \delta)
+    \notag \\
+    &\quad + \gamma_3 COM_i + \gamma_4 OPEC_i + \eta_{im}. \tag{2$'$}
+  \end{align}
+
+  For this specification, set $M = 1$ (just one equation to estimate) and take $t_0 = 1960$
+  and $t_1 = 1985$, so the dependent variable, $y_{i1} - y_{i0}$, is the cumulative
+  growth between 1960 and 1985.
+  Plot $y_{i1} - y_{i0}$ against $y_{i0}$ for the 125 countries
+  included in the sample. Is there any relation between the initial GDP ($y_{i0}$)
+  and the subsequent growth ($y_{i1} - y_{i0}$)? Assuming outright that the error term is
+  orthogonal to the regressors, estimate equation (2$'$) by OLS. Calculate the value
+  of $\lambda$ (speed of convergence) implied by the OLS estimate of $\rho$. (It should be
+  less than 1 percent per year.) Calculate the asymptotic standard error (i.e., $1/n$
+  times the square root of the asymptotic variance) of your estimate of $\lambda$.
+  \textbf{Hint:}
+  By \eqref{eq:5.4.3}, $\hat{\lambda} = -\log(\hat{\rho})/25$. By the delta method (Lemma~2.5 of Section~2.1),
+  \[
+    \avar(\hat{\lambda}) = \frac{\avar(\hat{\rho})}{(25\hat{\rho})^2}.
+  \]
+  So the standard error of $\hat{\lambda} = (\text{standard error of } \hat{\rho})/(25\hat{\rho})$.
+  Can you confirm the
+  finding that ``if countries did not vary in their investment and population growth
+  rates, there would be a strong tendency for poor countries to grow faster than
+  rich ones'' (Mankiw et al., 1992, p.~428).
+
+\item (Fixed-effects estimation)\quad
+  By setting $M = 25$, $t_0 = 1960$,
+  $t_1 = 1961, \ldots, t_{25} = 1985$, we can form a system of 25 equations, with
+  \eqref{eq:5.4.10} as the
+  $m$-th equation. Estimate the system by the fixed-effect technique, assuming
+  that the error is spherical in the sense of \eqref{eq:5.2.12}. What is the implied value
+  of $\lambda$? (It should be about 6.4 percent per year.) (Optional: Calculate the standard
+  errors without the spherical error assumption. As emphasized in the text,
+  the fixed-effects estimator is \emph{not} consistent. We nevertheless apply blindly the
+  fixed-effect technique just to gain programming experience.)
+
+  \textbf{TSP Tip:} TSP's command for the fixed-effects estimator (with the spherical
+  error assumption) is \texttt{PANEL}. It, however, does not accept the data organization
+  of \texttt{SUM\_HES.ASC}. It requires that the group (country) ID and the year
+  be included in the rows containing information on group-years. The data file
+  that \texttt{PANEL} can accept is \texttt{FIXED.ASC}. Its first few records are:
+
+  \begin{verbatim}
+1 0 0  1961  1599  1723
+1 0 0  1962  1275  1599
+     :
+1 0 0  1984  2962  2903
+1 0 0  1985  2988  2962
+2 0 0  1961   976   931
+2 0 0  1962   984   976
+     :
+  \end{verbatim}
+
+  Here, the first variable is the country ID, followed by \emph{COM}, \emph{OPEC}, year, real
+  per capita GDP for the year, and real per capita GDP for the previous year.
+
+\item (optional)\quad As in the previous question, take $M = 25$ and $t_0 = 1960$,
+  $t_1 = 1961, \ldots, t_{25} = 1985$. Then \eqref{eq:5.4.11} is a system of 24 equations if
+  written as the model of Section~4.6:
+  \begin{equation}
+    y_{im} = \mathbf{z}_{im}'\boldsymbol{\delta} + \boldsymbol{\varepsilon}_{im}
+    \quad (i = 1, 2, \ldots, 125;\; m = 1, 2, \ldots, 24), \tag{3}
+  \end{equation}
+  where the $y_{im}$ in (3) equals $y_{i,m+1} - y_{im}$ in \eqref{eq:5.4.11},
+  \[
+    \mathbf{z}_{im} = (0, \ldots, 0, 1, 0, \ldots, 0, y_{im} - y_{i,m-1})',
+  \]
+  a 25-dimensional vector whose $m$-th element is 1,
+  \[
+    \boldsymbol{\delta} = (\mu_1, \ldots, \mu_{24}, \rho)'.
+  \]
+
+  If $s_{im}$ is country $i$'s saving rate (investment/GDP ratio) in year $m$, use a constant
+  and $s_{i,m-1}$ as the instrument in the $m$-th equation (so for example, in the
+  first equation where the nonconstant regressor is $y_{i,1961} - y_{i,1960}$, the vector of
+  instruments is $(1, s_{i,1960})')$.
+  Apply the multiple-equation GMM technique to (3)
+  assuming conditional homoskedasticity. (It will be very clumsy to use TSP
+  or RATS; use GAUSS.) The estimator is (4.6.6) with $\hat{\mathbf{W}}$ set to the inverse of
+  (4.5.3).) The implied value of $\lambda$ should be about 36 percent per year!
+\end{enumerate}
+
+\end{problemset}
+
+\begin{answers}
+
+\subsection*{Analytical Exercises}
+
+\answer{1c}
+$\E(\boldsymbol{\eta}_i \mid \mathbf{W})$
+
+$= \E(\boldsymbol{\eta}_i \mid \mathbf{F})$ \quad (since $\mathbf{D}$ is a matrix of constants)
+
+$= \E(\boldsymbol{\eta}_i \mid \mathbf{F}_1, \ldots, \mathbf{F}_n)$
+
+$= \E(\boldsymbol{\eta}_i \mid \mathbf{F}_i)$
+
+\quad (since $\boldsymbol{\eta}_i$ is indep.\ of
+$(\mathbf{F}_1, \ldots, \mathbf{F}_{i-1}, \mathbf{F}_{i+1}, \ldots, \mathbf{F}_n)$
+by i.i.d.\ assumption)
+
+$= \mathbf{0}$.
+
+Therefore, the regressors are exogenous. Also,
+\begin{align*}
+  \E(\boldsymbol{\eta}_i\boldsymbol{\eta}_i' \mid \mathbf{W})
+  &= \E(\boldsymbol{\eta}_i\boldsymbol{\eta}_i' \mid \mathbf{F}) \\
+  &= \E(\boldsymbol{\eta}_i\boldsymbol{\eta}_i' \mid \mathbf{F}_i) \\
+  &= \sigma_\eta^2\,\mathbf{I}_M.
+\end{align*}
+
+By the i.i.d.\ assumption,
+$\E(\boldsymbol{\eta}_i\boldsymbol{\eta}_j' \mid \mathbf{W}) = \mathbf{0}$ for $i \neq j$.
+So $\E(\boldsymbol{\eta}\boldsymbol{\eta}' \mid \mathbf{W}) = \sigma_\eta^2\,\mathbf{I}_{Mn}$.
+
+\medskip
+\answer{2c}
+Proof that ``$\E(\mathbf{Q}\mathbf{F}_i \otimes \mathbf{x}_i)$ is of full column rank''
+$\Leftrightarrow$
+``$\E(\mathbf{C}'\mathbf{F}_i \otimes \mathbf{x}_i)$ is of full column rank'':
+
+Let $\mathbf{A} \equiv \E(\mathbf{Q}\mathbf{F}_i \otimes \mathbf{x}_i)$ and
+$\mathbf{B} \equiv \E(\mathbf{C}'\mathbf{F}_i \otimes \mathbf{x}_i)$.
+There exists an $M \times (M-1)$
+matrix $\mathbf{L}$ of full column rank such that $\mathbf{Q} = \mathbf{L}\mathbf{C}'$
+(it is actually $\mathbf{C}(\mathbf{C}'\mathbf{C})^{-1}$ by
+(11)). Let $\mathbf{D} \equiv \mathbf{L} \otimes \mathbf{I}_K$. Then $\mathbf{A} = \mathbf{D}\mathbf{B}$.
+Since the rank of a product of two
+matrices is less than or equal to the rank of either of the two matrices,
+\begin{equation}
+  \operatorname{rank}(\mathbf{A}) \leq \operatorname{rank}(\mathbf{B}). \tag{1}
+\end{equation}
+
+Next consider a product $\mathbf{D}'\mathbf{A} = \mathbf{D}'\mathbf{D}\mathbf{B}$.
+\begin{equation}
+  \operatorname{rank}(\mathbf{D}'\mathbf{D}\mathbf{B})
+  \leq \operatorname{rank}(\mathbf{D}'\mathbf{A})
+  \leq \operatorname{rank}(\mathbf{A}). \tag{2}
+\end{equation}
+
+But since $\mathbf{L}$ is of full column rank, $\mathbf{D}'\mathbf{D}$ is nonsingular. Since multiplication by
+a nonsingular matrix does not alter rank,
+\[
+  \operatorname{rank}(\mathbf{D}'\mathbf{D}\mathbf{B}) = \operatorname{rank}(\mathbf{B}).
+\]
+
+From (1)--(3) it follows that $\operatorname{rank}(\mathbf{A}) = \operatorname{rank}(\mathbf{B})$.
+Since $\mathbf{A}$ and $\mathbf{B}$ have the same
+number of columns, the desired conclusion follows.
+
+\medskip
+\answer{4a}
+\[
+  \mathbf{y}_i = \begin{bmatrix} y_{i1} \\ \vdots \\ y_{iM} \end{bmatrix}, \quad
+  \mathbf{F}_i = \begin{bmatrix} y_{i0} \\ \vdots \\ y_{i,M-1} \end{bmatrix}.
+\]
+
+There is no $\mathbf{b}_i$.
+
+\medskip
+\answer{4d}
+Since $\E(\eta_{ih} \cdot y_{im}) \neq 0$ for $m \geq h$, some of the ``cross'' orthogonalities are not
+satisfied.
+\end{answers}

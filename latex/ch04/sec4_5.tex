@@ -1,0 +1,567 @@
+% sec4_5.tex — Section 4.5: Special Cases of Multiple-Equation GMM: FIVE, 3SLS, and SUR
+
+\section{Special Cases of Multiple-Equation GMM: FIVE, 3SLS, and SUR}
+\label{sec:4.5}
+
+\subsection*{Conditional Homoskedasticity}
+
+Under conditional homoskedasticity, we can easily derive a number of prominent
+estimators as special cases of multiple-equation GMM. The multiple-equation version
+of conditional homoskedasticity is
+
+\begin{assumption}[conditional homoskedasticity]
+\label{ass:4.7}
+\[
+\E(\varepsilon_{im}\, \varepsilon_{ih} \mid \mathbf{x}_{im}, \mathbf{x}_{ih}) = \sigma_{mh}
+\]
+\textit{for all $m, h = 1, 2, \ldots, M$.}
+\end{assumption}
+
+Then the unconditional cross moment $\E(\varepsilon_{im}\, \varepsilon_{ih})$ equals
+$\sigma_{mh}$ by the Law of Total Expectations. You should have no trouble showing that
+\begin{align}
+(m, h) \text{ block of } \E(\mathbf{g}_i \mathbf{g}_i') \text{ given in \eqref{eq:4.1.11}}
+&= \E(\varepsilon_{im}\, \varepsilon_{ih}\, \mathbf{x}_{im} \mathbf{x}_{ih}') \notag \\
+&= \E[\E(\varepsilon_{im}\, \varepsilon_{ih}\, \mathbf{x}_{im} \mathbf{x}_{ih}'
+\mid \mathbf{x}_{im}, \mathbf{x}_{ih})]
+&& \text{(by the Law of Total Expectations)} \notag \\
+&= \E[\E(\varepsilon_{im}\, \varepsilon_{ih} \mid \mathbf{x}_{im}, \mathbf{x}_{ih})
+\mathbf{x}_{im} \mathbf{x}_{ih}']
+&& \text{(by linearity of conditional expectations)} \notag \\
+&= \E[\sigma_{mh}\, \mathbf{x}_{im} \mathbf{x}_{ih}']
+&& \text{(by conditional homoskedasticity)} \notag \\
+&= \sigma_{mh}\, \E(\mathbf{x}_{im} \mathbf{x}_{ih}')
+&& \text{(by linearity of expectations).}
+\label{eq:4.5.1}
+\end{align}
+
+Thus, the $\mathbf{S}$ in~\eqref{eq:4.1.11} can be written as
+\begin{equation}
+\mathbf{S} = \begin{bmatrix}
+\sigma_{11}\, \E(\mathbf{x}_{i1} \mathbf{x}_{i1}') & \cdots &
+\sigma_{1M}\, \E(\mathbf{x}_{i1} \mathbf{x}_{iM}') \\
+\vdots & & \vdots \\
+\sigma_{M1}\, \E(\mathbf{x}_{iM} \mathbf{x}_{i1}') & \cdots &
+\sigma_{MM}\, \E(\mathbf{x}_{iM} \mathbf{x}_{iM}')
+\end{bmatrix}.
+\label{eq:4.5.2}
+\end{equation}
+
+Since by Assumption~4.5 $\mathbf{S}$ is finite, this decomposition implies that
+$\E(\mathbf{x}_{im} \mathbf{x}_{ih}')$ exists and is finite for all
+$m, h$ $(= 1, 2, \ldots, M)$.
+
+\subsection*{Full-Information Instrumental Variables Efficient (FIVE)}
+
+An estimator of $\mathbf{S}$ exploiting the structure of fourth moments shown
+in~\eqref{eq:4.5.2} is
+\begin{equation}
+\widehat{\mathbf{S}} = \begin{bmatrix}
+\hat{\sigma}_{11} \cdot \Bigl(\dfrac{1}{n} \displaystyle\sum_{i=1}^{n}
+\mathbf{x}_{i1} \mathbf{x}_{i1}'\Bigr) & \cdots &
+\hat{\sigma}_{1M} \cdot \Bigl(\dfrac{1}{n} \displaystyle\sum_{i=1}^{n}
+\mathbf{x}_{i1} \mathbf{x}_{iM}'\Bigr) \\[8pt]
+\vdots & & \vdots \\[4pt]
+\hat{\sigma}_{M1} \cdot \Bigl(\dfrac{1}{n} \displaystyle\sum_{i=1}^{n}
+\mathbf{x}_{iM} \mathbf{x}_{i1}'\Bigr) & \cdots &
+\hat{\sigma}_{MM} \cdot \Bigl(\dfrac{1}{n} \displaystyle\sum_{i=1}^{n}
+\mathbf{x}_{iM} \mathbf{x}_{iM}'\Bigr)
+\end{bmatrix},
+\label{eq:4.5.3}
+\end{equation}
+where, for some consistent estimator $\hat{\boldsymbol{\delta}}_m$ of $\boldsymbol{\delta}$,
+\begin{equation}
+\hat{\sigma}_{mh} \equiv \frac{1}{n} \sum_{i=1}^{n} \hat{\varepsilon}_{im}\, \hat{\varepsilon}_{ih},
+\quad
+\hat{\varepsilon}_{im} \equiv y_{im} - \mathbf{z}_{im}' \hat{\boldsymbol{\delta}}_m
+\quad (m, h = 1, 2, \ldots, M).
+\label{eq:4.5.4}
+\end{equation}
+
+By Proposition~4.1, $\hat{\sigma}_{mh} \pto \sigma_{mh}$ provided (in addition to
+Assumptions~4.1 and~4.2) that $\E(\mathbf{z}_{im} \mathbf{z}_{ih}')$ is finite.
+By ergodic stationarity,
+$\frac{1}{n} \sum_i \mathbf{x}_{im} \mathbf{x}_{ih}'$ converges in probability to
+$\E(\mathbf{x}_{im} \mathbf{x}_{ih}')$, which, as just noted, exists and is finite.
+Therefore,~\eqref{eq:4.5.3} is consistent for $\mathbf{S}$, without the fourth-moment
+assumption (Assumption~4.6).
+
+The \textbf{FIVE estimator} of $\boldsymbol{\delta}$, denoted
+$\hat{\boldsymbol{\delta}}_{\mathrm{FIVE}}$, is\footnote{The estimator is due to
+Brundy and Jorgenson (1971).}
+\[
+\hat{\boldsymbol{\delta}}_{\mathrm{FIVE}}
+\equiv \hat{\boldsymbol{\delta}}(\widehat{\mathbf{S}}^{-1})
+\]
+with $\widehat{\mathbf{S}}$ given by~\eqref{eq:4.5.3} to exploit conditional
+homoskedasticity.\footnote{This assumption is needed for $\hat{\sigma}_{mh}$ to be
+consistent. See Proposition~4.1.}
+Being a multiple-equation GMM for some choice of $\hat{\mathbf{W}}$, it is consistent
+and asymptotically normal by (the multiple-equation adaptation of)
+Proposition~3.1. Because $\widehat{\mathbf{S}}$ is consistent for $\mathbf{S}$,
+the estimator is efficient by Proposition~3.5. Thus, we have proved
+
+\begin{proposition}[large-sample properties of FIVE]
+\label{prop:4.4}
+\textit{Suppose Assumptions~4.1--4.5 and~4.7 hold. Suppose, furthermore, that\/
+$\E(\mathbf{z}_{im} \mathbf{z}_{ih}')$ exists and is finite for all
+$m, h$ $(= 1, 2, \ldots, M)$.
+Let\/ $\mathbf{S}$ and\/ $\widehat{\mathbf{S}}$ be as in~\eqref{eq:4.5.2}
+and~\eqref{eq:4.5.3}, respectively. Then}
+\begin{enumerate}[label=(\alph*)]
+\item $\widehat{\mathbf{S}} \pto \mathbf{S}$;
+\item $\hat{\boldsymbol{\delta}}_{\mathrm{FIVE}}$, \textit{defined as\/
+$\hat{\boldsymbol{\delta}}(\widehat{\mathbf{S}}^{-1})$, is consistent,
+asymptotically normal, and efficient, with\/
+$\avar(\hat{\boldsymbol{\delta}}_{\mathrm{FIVE}})$ given by~\eqref{eq:4.3.3};}
+\item \textit{The estimated asymptotic variance given in~\eqref{eq:4.3.4} is
+consistent for\/ $\avar(\hat{\boldsymbol{\delta}}_{\mathrm{FIVE}})$;}
+\item \textit{(Sargan's statistic)}
+\[
+J(\hat{\boldsymbol{\delta}}_{\mathrm{FIVE}},\, \widehat{\mathbf{S}}^{-1})
+\equiv n \cdot \mathbf{g}_n(\hat{\boldsymbol{\delta}}_{\mathrm{FIVE}})'
+\widehat{\mathbf{S}}^{-1}\, \mathbf{g}_n(\hat{\boldsymbol{\delta}}_{\mathrm{FIVE}})
+\dto \chi^2\!\Bigl(\sum_m (K_m - L_m)\Bigr),
+\]
+\textit{where\/ $\mathbf{g}_n(\cdot)$ is given in~\eqref{eq:4.2.1}.}
+\end{enumerate}
+\end{proposition}
+
+Usually, the initial estimator $\hat{\boldsymbol{\delta}}_m$ needed to calculate
+$\widehat{\mathbf{S}}$ is the 2SLS estimator.
+
+\subsection*{Three-Stage Least Squares (3SLS)}
+
+When the set of instruments is the same across equations, the FIVE formula can
+be simplified somewhat. The simplified formula is the \textbf{3SLS estimator},
+denoted $\hat{\boldsymbol{\delta}}_{\mathrm{3SLS}}$.\footnote{The estimator is due to
+Zellner and Theil (1962).}
+To this end, let
+\begin{equation}
+\underset{(M \times 1)}{\boldsymbol{\varepsilon}_i}
+\equiv \begin{bmatrix} \varepsilon_{i1} \\ \vdots \\ \varepsilon_{iM} \end{bmatrix}.
+\label{eq:4.5.5}
+\end{equation}
+Then the $M \times M$ matrix of cross moments of $\boldsymbol{\varepsilon}_i$, denoted
+$\boldsymbol{\Sigma}$, can be written as
+\begin{equation}
+\underset{(M \times M)}{\boldsymbol{\Sigma}}
+\equiv \begin{bmatrix}
+\sigma_{11} & \cdots & \sigma_{1M} \\
+\vdots & & \vdots \\
+\sigma_{M1} & \cdots & \sigma_{MM}
+\end{bmatrix}
+= \E(\boldsymbol{\varepsilon}_i \boldsymbol{\varepsilon}_i').
+\label{eq:4.5.6}
+\end{equation}
+
+To estimate $\boldsymbol{\Sigma}$ consistently, we need an initial consistent estimator of
+$\boldsymbol{\delta}_m$ for the purpose of calculating the residual $\hat{\varepsilon}_{im}$.
+The term 3SLS comes from the fact that the 2SLS estimator of $\boldsymbol{\delta}_m$
+is used as the initial estimator. Given the residuals thus calculated, a natural
+estimator of $\boldsymbol{\Sigma}$ is
+\begin{equation}
+\widehat{\boldsymbol{\Sigma}}
+\equiv \begin{bmatrix}
+\hat{\sigma}_{11} & \cdots & \hat{\sigma}_{1M} \\
+\vdots & & \vdots \\
+\hat{\sigma}_{M1} & \cdots & \hat{\sigma}_{MM}
+\end{bmatrix}
+= \frac{1}{n} \sum_{i=1}^{n} \hat{\boldsymbol{\varepsilon}}_i\,
+\hat{\boldsymbol{\varepsilon}}_i',
+\label{eq:4.5.7}
+\end{equation}
+which is a matrix whose $(m,h)$ element is the estimated cross moment given
+in~\eqref{eq:4.5.4}.
+
+If $\mathbf{x}_i$ $(= \mathbf{x}_{i1} = \mathbf{x}_{i2} = \cdots = \mathbf{x}_{iM})$
+is the common set of instruments with dimension $K$, then $\mathbf{g}_i$
+in~\eqref{eq:4.1.4}, $\mathbf{S}$ in~\eqref{eq:4.5.2}, and $\widehat{\mathbf{S}}$
+in~\eqref{eq:4.5.3} can be written compactly using the Kronecker
+product\footnote{See formulas (A.11) and (A.15) of the Appendix if you are not
+familiar with the Kronecker product notation.} as
+\begin{align}
+\underset{(MK \times 1)}{\mathbf{g}_i} &= \boldsymbol{\varepsilon}_i \otimes \mathbf{x}_i,
+\label{eq:4.5.8} \\
+\underset{(MK \times MK)}{\mathbf{S}} &= \underset{(M \times M)}{\boldsymbol{\Sigma}}
+\otimes \underset{(K \times K)}{\E(\mathbf{x}_i \mathbf{x}_i')},
+\label{eq:4.5.9}
+\end{align}
+so $\mathbf{S}^{-1} = \boldsymbol{\Sigma}^{-1} \otimes
+[\E(\mathbf{x}_i \mathbf{x}_i')]^{-1}$,
+\begin{equation}
+\widehat{\mathbf{S}} = \widehat{\boldsymbol{\Sigma}} \otimes
+\Bigl(\frac{1}{n} \sum_{i=1}^{n} \mathbf{x}_i \mathbf{x}_i'\Bigr),
+\label{eq:4.5.10}
+\end{equation}
+so $\widehat{\mathbf{S}}^{-1} = \widehat{\boldsymbol{\Sigma}}^{-1} \otimes
+\bigl(\frac{1}{n} \sum_{i=1}^{n} \mathbf{x}_i \mathbf{x}_i'\bigr)^{-1}$.
+The Kronecker product decomposition~\eqref{eq:4.5.9} of $\mathbf{S}$ and
+the nonsingularity of $\mathbf{S}$ (by Assumption~4.5) imply that both
+$\boldsymbol{\Sigma}$ and $\E(\mathbf{x}_i \mathbf{x}_i')$ are nonsingular.
+
+To achieve further rewriting of the 3SLS formulas, we need to go back to~\eqref{eq:4.2.6},
+which, with $\hat{\mathbf{W}} = \widehat{\mathbf{S}}^{-1}$, writes out in full the
+efficient multiple-equation GMM estimator. The formula~\eqref{eq:4.5.10} implies
+that the $\hat{\mathbf{W}}$ in~\eqref{eq:4.2.6} is such that
+\begin{equation}
+\hat{\mathbf{W}}_{mh}
+\;(\equiv (m,h) \text{ block of } \hat{\mathbf{W}})
+= \hat{\sigma}^{mh} \cdot \Bigl(\frac{1}{n} \sum_{i=1}^{n}
+\mathbf{x}_i \mathbf{x}_i'\Bigr)^{-1},
+\label{eq:4.5.11}
+\end{equation}
+where $\hat{\sigma}^{mh}$ is the $(m,h)$ element of
+$\widehat{\boldsymbol{\Sigma}}^{-1}$.
+Substitute this into~\eqref{eq:4.2.6} to obtain
+\begin{equation}
+\hat{\boldsymbol{\delta}}_{\mathrm{3SLS}}
+= \begin{bmatrix}
+\hat{\sigma}^{11} \widehat{\mathbf{A}}_{11} & \cdots &
+\hat{\sigma}^{1M} \widehat{\mathbf{A}}_{1M} \\
+\vdots & & \vdots \\
+\hat{\sigma}^{M1} \widehat{\mathbf{A}}_{M1} & \cdots &
+\hat{\sigma}^{MM} \widehat{\mathbf{A}}_{MM}
+\end{bmatrix}^{-1}
+\begin{bmatrix}
+\hat{\sigma}^{11} \hat{\mathbf{c}}_{11} + \cdots + \hat{\sigma}^{1M} \hat{\mathbf{c}}_{1M} \\
+\vdots \\
+\hat{\sigma}^{M1} \hat{\mathbf{c}}_{M1} + \cdots + \hat{\sigma}^{MM} \hat{\mathbf{c}}_{MM}
+\end{bmatrix},
+\label{eq:4.5.12}
+\end{equation}
+where
+\begin{align}
+\widehat{\mathbf{A}}_{mh}
+&\equiv \Bigl(\frac{1}{n} \sum_{i=1}^{n} \mathbf{z}_{im} \mathbf{x}_i'\Bigr)
+\Bigl(\frac{1}{n} \sum_{i=1}^{n} \mathbf{x}_i \mathbf{x}_i'\Bigr)^{-1}
+\Bigl(\frac{1}{n} \sum_{i=1}^{n} \mathbf{x}_i \mathbf{z}_{ih}'\Bigr),
+\label{eq:4.5.13} \\
+\hat{\mathbf{c}}_{mh}
+&\equiv \Bigl(\frac{1}{n} \sum_{i=1}^{n} \mathbf{z}_{im} \mathbf{x}_i'\Bigr)
+\Bigl(\frac{1}{n} \sum_{i=1}^{n} \mathbf{x}_i \mathbf{x}_i'\Bigr)^{-1}
+\Bigl(\frac{1}{n} \sum_{i=1}^{n} \mathbf{x}_i \cdot y_{ih}\Bigr).
+\label{eq:4.5.14}
+\end{align}
+
+Similarly, substituting into~\eqref{eq:4.3.3} the expression for
+$\boldsymbol{\Sigma}_{\mathbf{xz}}$ in~\eqref{eq:4.1.9} and the expression
+for $\mathbf{S}$ in~\eqref{eq:4.5.9} and using formula (A.6) of the Appendix,
+we obtain the expressions for $\avar(\hat{\boldsymbol{\delta}}_{\mathrm{3SLS}})$:
+\begin{equation}
+\avar(\hat{\boldsymbol{\delta}}_{\mathrm{3SLS}})
+= \begin{bmatrix}
+\sigma^{11} \mathbf{A}_{11} & \cdots & \sigma^{1M} \mathbf{A}_{1M} \\
+\vdots & & \vdots \\
+\sigma^{M1} \mathbf{A}_{M1} & \cdots & \sigma^{MM} \mathbf{A}_{MM}
+\end{bmatrix}^{-1}
+\label{eq:4.5.15}
+\end{equation}
+where
+\begin{equation}
+\mathbf{A}_{mh} \equiv \E(\mathbf{z}_{im} \mathbf{x}_i')
+\bigl[\E(\mathbf{x}_i \mathbf{x}_i')\bigr]^{-1}
+\E(\mathbf{x}_i \mathbf{z}_{ih}'),
+\label{eq:4.5.16}
+\end{equation}
+and $\sigma^{mh}$ is the $(m,h)$ element of $\boldsymbol{\Sigma}^{-1}$.
+This is consistently estimated by
+\begin{equation}
+\widehat{\avar}(\hat{\boldsymbol{\delta}}_{\mathrm{3SLS}})
+= \begin{bmatrix}
+\hat{\sigma}^{11} \widehat{\mathbf{A}}_{11} & \cdots &
+\hat{\sigma}^{1M} \widehat{\mathbf{A}}_{1M} \\
+\vdots & & \vdots \\
+\hat{\sigma}^{M1} \widehat{\mathbf{A}}_{M1} & \cdots &
+\hat{\sigma}^{MM} \widehat{\mathbf{A}}_{MM}
+\end{bmatrix}^{-1}.
+\label{eq:4.5.17}
+\end{equation}
+(This sample version can also be obtained directly by substituting~\eqref{eq:4.2.2}
+and~\eqref{eq:4.5.10} into~\eqref{eq:4.3.4}.)
+
+Most textbooks give expressions even prettier than these by using data matrices
+(such as the $n \times K$ matrix $\mathbf{X}$). Deriving such expressions is an analytical
+exercise to this chapter. The preceding discussion can be summarized as
+
+\begin{proposition}[large-sample properties of 3SLS]
+\label{prop:4.5}
+\textit{Suppose Assumptions~4.1--4.5 and~4.7 hold, and suppose
+$\mathbf{x}_{im} = \mathbf{x}_i$ (common set of instruments).
+Suppose, furthermore, that\/ $\E(\mathbf{z}_{im} \mathbf{z}_{ih}')$ exists and is
+finite for all $m, h$ $(= 1, 2, \ldots, M)$. Let\/ $\widehat{\boldsymbol{\Sigma}}$
+be the $M \times M$ matrix of estimated error cross moments calculated
+by~\eqref{eq:4.5.7} using the 2SLS residuals. Then}
+\begin{enumerate}[label=(\alph*)]
+\item $\hat{\boldsymbol{\delta}}_{\mathrm{3SLS}}$ \textit{given by~\eqref{eq:4.5.12}
+is consistent, asymptotically normal, and efficient, with\/
+$\avar(\hat{\boldsymbol{\delta}}_{\mathrm{3SLS}})$ given by~\eqref{eq:4.5.15}.}
+
+\item \textit{The estimated asymptotic variance~\eqref{eq:4.5.17} is consistent for\/
+$\avar(\hat{\boldsymbol{\delta}}_{\mathrm{3SLS}})$.}
+
+\item \textit{(Sargan's statistic)}
+\[
+J(\hat{\boldsymbol{\delta}}_{\mathrm{3SLS}},\, \widehat{\mathbf{S}}^{-1})
+\equiv n \cdot \mathbf{g}_n(\hat{\boldsymbol{\delta}}_{\mathrm{3SLS}})'
+\widehat{\mathbf{S}}^{-1}\, \mathbf{g}_n(\hat{\boldsymbol{\delta}}_{\mathrm{3SLS}})
+\dto \chi^2\!\Bigl(MK - \sum_m L_m\Bigr),
+\]
+\textit{where\/ $\widehat{\mathbf{S}} = \widehat{\boldsymbol{\Sigma}} \otimes
+\bigl(\frac{1}{n} \sum_i \mathbf{x}_i \mathbf{x}_i'\bigr)$,
+$K$ is the number of common instruments, and\/ $\mathbf{g}_n(\cdot)$ is given
+in~\eqref{eq:4.2.1}.}
+\end{enumerate}
+\end{proposition}
+
+\subsection*{Seemingly Unrelated Regressions (SUR)}
+
+The 3SLS formula can further be simplified if
+\begin{equation}
+\mathbf{x}_i = \text{union of } (\mathbf{z}_{i1}, \ldots, \mathbf{z}_{iM}).
+\label{eq:4.5.18}
+\end{equation}
+This is equivalent to the condition that
+\begin{equation}
+\E(\mathbf{z}_{im} \cdot \varepsilon_{ih}) = \mathbf{0}
+\quad (m, h = 1, 2, \ldots, M).
+\tag{4.5.18$'$}
+\label{eq:4.5.18p}
+\end{equation}
+That is, the predetermined regressors satisfy ``cross'' orthogonalities: not only are
+they predetermined in each equation (i.e., $\E(\mathbf{z}_{im} \cdot \varepsilon_{im}) = \mathbf{0}$),
+but also they are predetermined in the other equations (i.e.,
+$\E(\mathbf{z}_{im} \cdot \varepsilon_{ih}) = \mathbf{0}$ for $m \neq h$).
+The simplified formula is called the \textbf{SUR estimator}, to be denoted
+$\hat{\boldsymbol{\delta}}_{\mathrm{SUR}}$.\footnote{The estimator is due to Zellner (1962).}
+
+\begin{quote}
+\textbf{Example 4.3 (Example 4.1 with different specification for instruments):}\quad
+If~\eqref{eq:4.5.18} holds for the two-equation system of Example~4.1,
+$\mathbf{x}_i$ is the union of $\mathbf{z}_{i1}$ and $\mathbf{z}_{i2}$, so
+\begin{equation}
+\mathbf{x}_i = \begin{bmatrix} 1 \\ S_i \\ IQ_i \\ EXPR_i \end{bmatrix}.
+\label{eq:4.5.19}
+\end{equation}
+The orthogonality conditions that $\E(\mathbf{x}_i \cdot \varepsilon_{i1}) = \mathbf{0}$
+and $\E(\mathbf{x}_i \cdot \varepsilon_{i2}) = \mathbf{0}$ become
+\begin{equation}
+\E \begin{bmatrix}
+\varepsilon_{i1} \\ S_i\, \varepsilon_{i1} \\
+IQ_i\, \varepsilon_{i1} \\ EXPR_i\, \varepsilon_{i1}
+\end{bmatrix} = \mathbf{0}
+\quad \text{and} \quad
+\E \begin{bmatrix}
+\varepsilon_{i2} \\ S_i\, \varepsilon_{i2} \\
+IQ_i\, \varepsilon_{i2} \\ EXPR_i\, \varepsilon_{i2}
+\end{bmatrix} = \mathbf{0},
+\label{eq:4.5.20}
+\end{equation}
+which should be contrasted with the statement that the regressors are predetermined
+in each equation:
+\begin{equation}
+\E \begin{bmatrix}
+\varepsilon_{i1} \\ S_i\, \varepsilon_{i1} \\
+IQ_i\, \varepsilon_{i1} \\ EXPR_i\, \varepsilon_{i1}
+\end{bmatrix} = \mathbf{0}
+\quad \text{and} \quad
+\E \begin{bmatrix}
+\varepsilon_{i2} \\ S_i\, \varepsilon_{i2} \\
+IQ_i\, \varepsilon_{i2}
+\end{bmatrix} = \mathbf{0}.
+\label{eq:4.5.21}
+\end{equation}
+The difference between~\eqref{eq:4.5.20} and~\eqref{eq:4.5.21} is that the $KWW$
+equation is overidentified with $EXPR$ as the additional instrument.
+\end{quote}
+
+Because SUR is a special case of 3SLS, formulas~\eqref{eq:4.5.12},
+\eqref{eq:4.5.15}, and~\eqref{eq:4.5.17} for $\hat{\boldsymbol{\delta}}_{\mathrm{3SLS}}$
+apply to $\hat{\boldsymbol{\delta}}_{\mathrm{SUR}}$.
+The implication of the SUR assumption~\eqref{eq:4.5.18} is that, in
+the above expressions for $\widehat{\mathbf{A}}_{mh}$, $\hat{\mathbf{c}}_{mh}$,
+and $\mathbf{A}_{mh}$, $\mathbf{x}_i$ ``disappears'':
+\begin{align}
+\widehat{\mathbf{A}}_{mh} &= \frac{1}{n} \sum_{i=1}^{n}
+\mathbf{z}_{im} \mathbf{z}_{ih}',
+\tag{4.5.13$'$} \label{eq:4.5.13p} \\
+\hat{\mathbf{c}}_{mh} &= \frac{1}{n} \sum_{i=1}^{n}
+\mathbf{z}_{im} \cdot y_{ih},
+\tag{4.5.14$'$} \label{eq:4.5.14p} \\
+\mathbf{A}_{mh} &= \E(\mathbf{z}_{im} \mathbf{z}_{ih}').
+\tag{4.5.16$'$} \label{eq:4.5.16p}
+\end{align}
+
+Here we give a proof of~\eqref{eq:4.5.16p}. Without loss of generality, suppose
+$\mathbf{z}_{im}$ is the first $L_m$ elements of the $K$ elements of $\mathbf{x}_i$.
+Let $\mathbf{D}$ $(K \times L_m)$ be the first $L_m$ columns of $\mathbf{I}_K$.
+Then we have
+\[
+\mathbf{z}_{im} = \mathbf{D}' \mathbf{x}_i, \quad
+\E(\mathbf{z}_{im} \mathbf{x}_i') = \mathbf{D}'\, \E(\mathbf{x}_i \mathbf{x}_i'), \quad
+\mathbf{D}\, \E(\mathbf{x}_i \mathbf{z}_{ih}') = \E(\mathbf{z}_{im} \mathbf{z}_{ih}').
+\]
+Substituting these into~\eqref{eq:4.5.16} yields~\eqref{eq:4.5.16p}.
+The proof of~\eqref{eq:4.5.13p} and~\eqref{eq:4.5.14p}, which are about the sample
+moments, proceeds similarly, with $\mathbf{z}_{im} = \mathbf{D}' \mathbf{x}_i$.
+(You will be asked to provide an alternative proof by the use of the projection matrix
+in the problem set.)
+
+In 3SLS, the initial consistent estimator for calculating
+$\widehat{\boldsymbol{\Sigma}}$ was 2SLS. But, 2SLS when the regressors are a subset
+of the instrument set is OLS (as you showed in Review Question~7 of Section~3.8).
+So, for SUR, the initial estimator is the OLS estimator. The preceding discussion
+can be summarized as
+
+\begin{proposition}[large-sample properties of SUR]
+\label{prop:4.6}
+\textit{Suppose Assumptions~4.1--4.5 and~4.7 hold with
+$\mathbf{x}_i = \text{union of}\; (\mathbf{z}_{i1}, \ldots, \mathbf{z}_{iM})$.
+Let\/ $\widehat{\boldsymbol{\Sigma}}$ be the $M \times M$ matrix of estimated error
+cross moments calculated by~\eqref{eq:4.5.7} using the OLS residuals. Then}
+\begin{enumerate}[label=(\alph*)]
+\item $\hat{\boldsymbol{\delta}}_{\mathrm{SUR}}$ \textit{given by~\eqref{eq:4.5.12}
+with\/ $\widehat{\mathbf{A}}_{mh}$ and\/ $\hat{\mathbf{c}}_{mh}$ given
+by~\eqref{eq:4.5.13p} and~\eqref{eq:4.5.14p} for
+$m, h = 1, \ldots, M$ is consistent, asymptotically normal, and efficient, with\/
+$\avar(\hat{\boldsymbol{\delta}}_{\mathrm{SUR}})$ given by~\eqref{eq:4.5.15}
+where\/ $\mathbf{A}_{mh}$ is given by~\eqref{eq:4.5.16p}.}
+
+\item \textit{The estimated asymptotic variance~\eqref{eq:4.5.17} where\/
+$\widehat{\mathbf{A}}_{mh}$ is given by~\eqref{eq:4.5.13p} is consistent for\/
+$\avar(\hat{\boldsymbol{\delta}}_{\mathrm{SUR}})$.}
+
+\item \textit{(Sargan's statistic)}
+\[
+J(\hat{\boldsymbol{\delta}}_{\mathrm{SUR}},\, \widehat{\mathbf{S}}^{-1})
+\equiv n \cdot \mathbf{g}_n(\hat{\boldsymbol{\delta}}_{\mathrm{SUR}})'
+\widehat{\mathbf{S}}^{-1}\, \mathbf{g}_n(\hat{\boldsymbol{\delta}}_{\mathrm{SUR}})
+\dto \chi^2\!\Bigl(MK - \sum_m L_m\Bigr),
+\]
+\textit{where\/ $\widehat{\mathbf{S}} = \widehat{\boldsymbol{\Sigma}} \otimes
+\bigl(\frac{1}{n} \sum_i \mathbf{x}_i \mathbf{x}_i'\bigr)$,
+$K$ is the number of common instruments, and\/ $\mathbf{g}_n(\cdot)$ is given
+in~\eqref{eq:4.2.1}.}
+\end{enumerate}
+\end{proposition}
+
+(Unlike in Proposition~4.5, the condition that $\E(\mathbf{z}_{im} \mathbf{z}_{ih}')$
+be finite is not needed because, thanks to~\eqref{eq:4.5.18}, it is implied by the
+condition that $\E(\mathbf{x}_i \mathbf{x}_i')$ be nonsingular, which in turn is implied
+by the nonsingularity of $\mathbf{S}$ [from Assumption~4.5] and the fact that
+$\mathbf{S}$ can be written as $\boldsymbol{\Sigma} \otimes \E(\mathbf{x}_i \mathbf{x}_i')$.)
+Sargan's statistic for SUR is rarely reported in practice.
+
+\subsection*{SUR versus OLS}
+
+Since the regressors are predetermined, the system can also be estimated by the
+equation-by-equation OLS. Then why SUR over OLS? As just seen, under conditional
+homoskedasticity, the efficient multiple-equation GMM is FIVE, which in
+turn is numerically equal to SUR under~\eqref{eq:4.5.18}. As shown in Chapter~3,
+under conditional homoskedasticity, the efficient single-equation GMM is 2SLS,
+which in turn is numerically equal to OLS because the regressors are predetermined
+under~\eqref{eq:4.5.18}. This interrelationship is shown in Figure~4.1.
+Therefore, the relation between SUR and equation-by-equation OLS is strictly
+analogous to the relation between the multiple-equation GMM and the
+equation-by-equation GMM. As discussed in Section~4.4, there are two cases to consider.
+
+\begin{enumerate}[label=(\alph*)]
+\item Each equation is just identified. Because the common instrument set is the
+union of all the regressors, this is possible only if the regressors are the same
+for all equations, i.e., if $\mathbf{z}_{im} = \mathbf{x}_i$ for all $m$.
+The SUR for this case is called the \textbf{multivariate regression}.
+We observed in Section~4.4 that both the efficient multiple-equation GMM and
+the efficient single-equation GMM are numerically the same as the IV estimator
+for the just identified system. Because the regressors are predetermined, we
+conclude that the GMM estimator of the multivariate regression model is simply
+equation-by-equation OLS.\footnote{It will be shown in Chapter~8 that the
+estimator is also the maximum likelihood estimator.}
+This can be verified directly by substituting~\eqref{eq:4.5.13p}
+and~\eqref{eq:4.5.14p} on page~280 (with $\mathbf{z}_{im} = \mathbf{x}_i$)
+into the expression for the point estimate~\eqref{eq:4.5.12}.
+Also substituting (again with $\mathbf{z}_{im} = \mathbf{x}_i$)
+into~\eqref{eq:4.5.16p} and~\eqref{eq:4.5.13p}
+into~\eqref{eq:4.5.15} and~\eqref{eq:4.5.17}, we obtain, for multivariate regression,
+\begin{align}
+\avar(\hat{\boldsymbol{\delta}})
+&= \boldsymbol{\Sigma} \otimes \bigl[\E(\mathbf{x}_i \mathbf{x}_i')\bigr]^{-1},
+\label{eq:4.5.22} \\
+\widehat{\avar}(\hat{\boldsymbol{\delta}})
+&= \widehat{\boldsymbol{\Sigma}} \otimes
+\Bigl(\frac{1}{n} \sum_{i=1}^{n} \mathbf{x}_i \mathbf{x}_i'\Bigr)^{-1}.
+\label{eq:4.5.23}
+\end{align}
+
+\item At least one equation is overidentified. Then SUR is more efficient than
+equation-by-equation OLS, unless equations are ``unrelated'' to each other in
+the sense of~\eqref{eq:4.4.3}. In the present case of conditional homoskedasticity
+and the common set of instruments,~\eqref{eq:4.4.3} becomes
+\[
+\sigma_{mh}\, \E(\mathbf{x}_i \mathbf{x}_i') = \mathbf{0}
+\quad \text{for all } m \neq h.
+\]
+Since $\E(\mathbf{x}_i \mathbf{x}_i')$ cannot be a zero matrix (it is assumed to be
+nonsingular), equations are ``unrelated'' to each other if and only if
+$\sigma_{mh} = 0$. Therefore, SUR is more efficient than OLS if $\sigma_{mh} \neq 0$
+for some pair $(m, h)$. If $\sigma_{mh} = 0$ for all $(m, h)$, the two estimators are
+asymptotically equivalent (i.e., $\sqrt{n}$ times the difference vanishes).
+\end{enumerate}
+
+Another way to see the efficiency of SUR is to view the SUR model as
+a multivariate regression model with \textit{a priori} exclusion restrictions. As an
+example, expand the two-equation system of Example~4.3 as
+\begin{align*}
+LW_i &= \phi_1 + \beta_1 S_i + \gamma_1 IQ_i + \pi_1 EXPR_i + \varepsilon_{i1}, \\
+KWW_i &= \phi_2 + \beta_2 S_i + \gamma_2 IQ_i + \pi_2 EXPR_i + \varepsilon_{i2}.
+\end{align*}
+The common instrument set is $(1, S_i, IQ_i, EXPR_i)$. Then this two-equation system
+is a multivariate regression model with the same regressors in both equations.
+But if $\pi_2$ is \textit{a priori} restricted to be $0$ and thus $EXPR_i$ is excluded from
+the second equation, then the model becomes the SUR model. The SUR estimator
+is more efficient than the multivariate regression because it exploits exclusion
+restrictions.
+
+The relationship among the estimators considered in this section is summarized
+in Table~4.2.
+
+% Figure 4.1 placeholder
+\begin{figure}[htbp]
+\centering
+% TODO: Create figure showing relationship between OLS, 2SLS, SUR, 3SLS, FIVE, and GMM
+\includegraphics[width=0.9\textwidth,trim=50 350 50 350,clip]{figures/fig_4_1.png}
+\caption{OLS and GMM}
+\label{fig:4.1}
+\end{figure}
+
+% Table 4.2
+\begin{table}[htbp]
+\centering
+\caption{Relationship between Multiple-Equation Estimators}
+\label{tab:4.2}
+\small
+\medskip
+\begin{tabular}{@{}p{2cm}p{1.6cm}p{1.6cm}p{2cm}p{1.8cm}p{2cm}@{}}
+\toprule
+& Multiple-eq.\ GMM & FIVE & 3SLS & SUR & Multivariate regression \\
+\midrule
+The model
+& Ass.\ 4.1--4.6
+& Ass.\ 4.1--4.5, 4.7, $\E(\mathbf{z}_{im}\mathbf{z}_{ih}')$ finite
+& Ass.\ 4.1--4.5, 4.7, $\E(\mathbf{z}_{im}\mathbf{z}_{ih}')$ finite,
+$\mathbf{x}_{im} = \mathbf{x}_i$ for all $m$
+& Ass.\ 4.1--4.5, 4.7, $\mathbf{x}_{im} = \mathbf{x}_i$ for all $m$,
+$\mathbf{x}_i = \text{union of } (\mathbf{z}_{i1}, \ldots, \mathbf{z}_{iM})$
+& Ass.\ 4.1--4.5, 4.7, $\mathbf{x}_{im} = \mathbf{x}_i$ for all $m$,
+$\mathbf{z}_{im} = \mathbf{x}_i$ for all $m$ \\
+\midrule
+$\mathbf{S}$ & (4.1.11) & (4.5.2) & \multicolumn{3}{l}{$\boldsymbol{\Sigma} \otimes \E(\mathbf{x}_i \mathbf{x}_i')$} \\[3pt]
+$\widehat{\mathbf{S}}$ & (4.3.2) & (4.5.3) & \multicolumn{3}{l}{$\widehat{\boldsymbol{\Sigma}} \otimes (n^{-1} \sum_i \mathbf{x}_i \mathbf{x}_i')$} \\[3pt]
+$\hat{\boldsymbol{\delta}}(\widehat{\mathbf{S}}^{-1})$
+& no simplif.
+& no simplif.
+& (4.5.12) with (4.5.13), (4.5.14)
+& (4.5.12) with (4.5.13$'$), (4.5.14$'$)
+& eq-by-eq OLS \\
+\bottomrule
+\end{tabular}
+\end{table}

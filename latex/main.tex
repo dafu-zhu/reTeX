@@ -1,12 +1,14 @@
-% main.tex — Master document (includes all chapters)
+% main.tex — Master document for Econometrics (Hayashi)
 \input{preamble}
 
 \begin{document}
 
+\frontmatter
 \input{frontmatter}
-
 \tableofcontents
+\listoffigures
 
+\mainmatter
 \include{ch01/ch01}
 \include{ch02/ch02}
 \include{ch03/ch03}
@@ -17,14 +19,11 @@
 \include{ch08/ch08}
 \include{ch09/ch09}
 \include{ch10/ch10}
-\include{ch11/ch11}
-\include{ch12/ch12}
-\include{ch13/ch13}
-\include{ch14/ch14}
 
-\include{backmatter/bibliography}
-\include{backmatter/answers}
+\appendix
+\include{backmatter/appendixA}
 
+\backmatter
 \printindex
 
 \end{document}

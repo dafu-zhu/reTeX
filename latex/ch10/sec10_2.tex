@@ -1,0 +1,574 @@
+% sec10_2.tex — Section 10.2: Alternative Representations of Cointegrated Systems
+
+In addition to the common trend representation (see Review Question~2 of the pre\-vious
+section), there are three other useful representations of cointegrated vector
+I(1) processes: the triangular representation of Phillips (1991), the VAR represen\-tation,
+and the VECM (vector error-correction model) of Davidson et al.\ (1978).
+This section introduces these representations.
+
+\subsection*{Phillips's Triangular Representation}
+
+This representation is convenient for the purpose of estimating cointegrating vec\-tors.
+The representation is valid for any cointegration rank, but we initially assume
+that the cointegrating rank $h$ is~1. Let $\mathbf{a}$ be a cointegrating vector, and suppose,
+without loss of generality, that the first element of $\mathbf{a}$ is not zero (if it is zero, change
+the ordering of the variables of the system so that the first element after reordering
+is not zero). Partition $\mathbf{y}_t$ accordingly:
+\begin{equation}
+  \underset{(n \times 1)}{\mathbf{y}_t}
+  \equiv \begin{bmatrix} y_{1t} \\
+    \underset{((n-1) \times 1)}{\mathbf{y}_{2t}}
+  \end{bmatrix}.
+  \label{eq:10.2.1} \tag{10.2.1}
+\end{equation}
+Thus, $y_{1t}$ is cointegrated with $\mathbf{y}_{2t}$. Since a scalar multiple of a cointegrating vector,
+too, is a cointegrating vector, we can normalize the cointegrating vector $\mathbf{a}$ so that
+its first element is unity:
+\begin{equation}
+  \mathbf{a}
+  = \begin{bmatrix} a_1 \\ a_2 \\ \vdots \\ a_n \end{bmatrix}
+  = \begin{bmatrix} 1 \\
+    \underset{((n-1) \times 1)}{-\boldsymbol{\gamma}}
+  \end{bmatrix}.
+  \label{eq:10.2.2} \tag{10.2.2}
+\end{equation}
+
+We have seen in the previous section that if a cointegrating vector $\mathbf{a}$ eliminates
+not only the stochastic trend (i.e., $\mathbf{a}'\boldsymbol{\Psi}(1) = \mathbf{0}'$) but also the deterministic trend
+(i.e., $\mathbf{a}'\boldsymbol{\delta} = 0$), then $\mathbf{a}'\mathbf{y}_t$ can be written as (10.1.24). Setting the $\mathbf{a}$ in (10.1.24) to
+the cointegrating vector in (10.2.2), we obtain
+\begin{equation}
+  y_{1t} = \boldsymbol{\gamma}' \mathbf{y}_{2t} + z_t^* + \mu,
+  \label{eq:10.2.3} \tag{10.2.3}
+\end{equation}
+where
+\begin{equation}
+  z_t^* \equiv (1, -\boldsymbol{\gamma}') \boldsymbol{\eta}_t, \quad
+  \mu \equiv (1, -\boldsymbol{\gamma}')(\mathbf{y}_0 - \boldsymbol{\eta}_0).
+  \label{eq:10.2.4} \tag{10.2.4}
+\end{equation}
+Since $\boldsymbol{\eta}_t$ is jointly stationary, $z_t^*$ is stationary. This equation, with $z_t^*$ viewed as an
+error term and $\mu$ as an intercept, is called a \textbf{cointegrating regression}. Its regres\-sion
+coefficients $\boldsymbol{\gamma}$, relating the permanent component in $y_{1t}$ to those in $\mathbf{y}_{2t}$, can
+be interpreted as describing the long-run relationship between $y_{1t}$ and $\mathbf{y}_{2t}$. The
+cointegrating regression will have the trend term $\mathbf{a}'\boldsymbol{\delta} \cdot t$ as an additional regressor
+if the cointegrating vector does not eliminate the deterministic trend in $\mathbf{a}'\mathbf{y}_t$. The
+\textbf{triangular representation} is an $n$-equation system consisting of this cointegrating
+regression and the last $n - 1$ rows of (10.1.9):
+\begin{equation}
+  \underset{((n-1) \times 1)}{\Delta \mathbf{y}_{2t}}
+  = \underset{((n-1) \times 1)}{\boldsymbol{\delta}_2}
+    + \underset{((n-1) \times 1)}{\mathbf{u}_{2t}}
+  = \underset{((n-1) \times 1)}{\boldsymbol{\delta}_2}
+    + \underset{((n-1) \times n)}{\boldsymbol{\Psi}_2(L)} \;
+      \underset{(n \times 1)}{\boldsymbol{\varepsilon}_t},
+  \label{eq:10.2.5} \tag{10.2.5}
+\end{equation}
+where $\boldsymbol{\delta}_2$ and $\mathbf{u}_{2t}$ are the last $n - 1$ elements of the $n$-dimensional vectors $\boldsymbol{\delta}$ and
+$\mathbf{u}_t$, respectively, and $\boldsymbol{\Psi}_2(L)$ is the last $n - 1$ rows of $\boldsymbol{\Psi}(L)$ in the VMA repre\-sentation
+(10.1.10). The implication of the $h = 1$ assumption is that, as noted in
+the previous section, $\mathbf{y}_{2t}$ is not cointegrated (it would be cointegrated if $h > 1$). In
+particular, each element of $\mathbf{y}_{2t}$ is individually I(1).
+
+More generally, consider the case where the cointegration rank $h$ is not neces\-sarily~1.
+By changing the order of the elements of $\mathbf{y}_t$ if necessary, it is possible (see,
+e.g., Hamilton, 1994, pp.~576--577) to select $h$ linearly independent cointegrating
+vectors, $\mathbf{a}_1, \mathbf{a}_2, \ldots, \mathbf{a}_h$, such that
+\begin{equation}
+  \underset{(n \times h)}{\mathbf{A}}
+  \equiv \begin{bmatrix} \mathbf{a}_1 & \cdots & \mathbf{a}_h \end{bmatrix}
+  = \begin{bmatrix}
+    \underset{(h \times h)}{\mathbf{I}_h} \\
+    \underset{((n-h) \times h)}{-\boldsymbol{\Gamma}}
+  \end{bmatrix}.
+  \label{eq:10.2.6} \tag{10.2.6}
+\end{equation}
+Partition $\mathbf{y}_t$ conformably as
+\begin{equation}
+  \underset{(n \times 1)}{\mathbf{y}_t}
+  \equiv \begin{bmatrix}
+    \underset{(h \times 1)}{\mathbf{y}_{1t}} \\
+    \underset{((n-h) \times 1)}{\mathbf{y}_{2t}}
+  \end{bmatrix}.
+  \label{eq:10.2.7} \tag{10.2.7}
+\end{equation}
+Multiplying both sides of the BN decomposition (10.1.16) by this $\mathbf{A}'$ and noting
+that $\mathbf{A}'\boldsymbol{\Psi}(1) = \mathbf{0}$ (since the columns of $\mathbf{A}$ are cointegrating vectors),
+$\mathbf{A}'\boldsymbol{\delta} = \mathbf{0}$
+(if those cointegrating vectors also eliminate the deterministic trend), and
+$\mathbf{A}'\mathbf{y}_t = \mathbf{y}_{1t} - \boldsymbol{\Gamma}'\mathbf{y}_{2t}$, we obtain the following $h$ cointegrating regressions:
+\begin{equation}
+  \underset{(h \times 1)}{\mathbf{y}_{1t}}
+  = \underset{(h \times (n-h))}{\boldsymbol{\Gamma}'} \;
+    \underset{((n-h) \times 1)}{\mathbf{y}_{2t}}
+    + \underset{(h \times 1)}{\boldsymbol{\mu}}
+    + \underset{(h \times 1)}{\mathbf{z}_t^*},
+  \label{eq:10.2.8} \tag{10.2.8}
+\end{equation}
+where $\boldsymbol{\mu} \equiv \mathbf{A}'(\mathbf{y}_0 - \boldsymbol{\eta}_0)$ and
+$\mathbf{z}_t^* \equiv \mathbf{A}'\boldsymbol{\eta}_t$. Since $\boldsymbol{\eta}_t$ is jointly stationary, so is $\mathbf{z}_t^*$. The
+triangular representation is these $h$ cointegrating regressions, supplemented by the
+rest of the VMA representation:
+\begin{equation}
+  \underset{((n-h) \times 1)}{\Delta \mathbf{y}_{2t}}
+  = \underset{((n-h) \times 1)}{\boldsymbol{\delta}_2}
+    + \underset{((n-h) \times 1)}{\mathbf{u}_{2t}}
+  = \underset{((n-h) \times 1)}{\boldsymbol{\delta}_2}
+    + \underset{((n-h) \times n)}{\boldsymbol{\Psi}_2(L)} \;
+      \underset{(n \times 1)}{\boldsymbol{\varepsilon}_t}.
+  \label{eq:10.2.9} \tag{10.2.9}
+\end{equation}
+Here, $\boldsymbol{\Psi}_2(L)$ is the last $n - h$ rows of the $\boldsymbol{\Psi}(L)$ in the VMA representation (10.1.10).
+It is easy to show (see Review Question~1) that $\mathbf{y}_{2t}$ is not cointegrated.
+
+To illustrate the triangular representation and how it can be derived from the
+VMA representation, consider
+
+\begin{defbox}
+\textbf{Example 10.3\quad (From VMA to triangular):}\quad In the bivariate system (10.1.12)
+of Example~10.2, the cointegration rank is~1. The cointegrating vector whose
+first element is unity is $(1, -\gamma)'$. So the $z_t^*$ and $\mu$ in (10.2.3) are
+\begin{align}
+  z_t^* &= (1, -\gamma)\boldsymbol{\eta}_t = \varepsilon_{1t} - \gamma \varepsilon_{2t},
+  \notag \\
+  \mu &= (1, -\gamma)(\mathbf{y}_0 - \boldsymbol{\eta}_0)
+    = (y_{1,0} - \gamma y_{2,0}) - (\varepsilon_{1,0} - \gamma \varepsilon_{2,0}),
+  \label{eq:10.2.10} \tag{10.2.10}
+\end{align}
+and the triangular representation is
+\begin{equation}
+  \begin{cases}
+    y_{1t} = \mu + \gamma y_{2t} + (\varepsilon_{1t} - \gamma \varepsilon_{2t}), \\
+    \Delta y_{2t} = \delta_2 + \varepsilon_{2t}.
+  \end{cases}
+  \label{eq:10.2.11} \tag{10.2.11}
+\end{equation}
+\end{defbox}
+
+\subsection*{VAR and Cointegration}
+
+For the stationary case, we found it useful and convenient to model a vector process
+as a finite-order VAR. Although, as seen above, no cointegrated I(1) system can be
+represented as a finite-order VAR in first differences, some cointegrated systems
+may admit a finite-order VAR representation in \emph{levels}. So suppose a cointegrated
+I(1) system $\mathbf{y}_t$ can be written as
+\begin{align}
+  \underset{(n \times 1)}{\mathbf{y}_t}
+  &= \boldsymbol{\alpha} + \boldsymbol{\delta} \cdot t + \boldsymbol{\xi}_t, \quad
+  \boldsymbol{\Phi}(L) \boldsymbol{\xi}_t = \boldsymbol{\varepsilon}_t,
+  \notag \\
+  \underset{(n \times n)}{\boldsymbol{\Phi}(L)}
+  &\equiv \mathbf{I}_n - \boldsymbol{\Phi}_1 L - \boldsymbol{\Phi}_2 L^2
+    - \cdots - \boldsymbol{\Phi}_p L^p.
+  \label{eq:10.2.12} \tag{10.2.12}
+\end{align}
+For later reference, we eliminate $\boldsymbol{\xi}$ from this to obtain
+\begin{equation}
+  \mathbf{y}_t = \boldsymbol{\alpha}^* + \boldsymbol{\delta}^* \cdot t
+    + \boldsymbol{\Phi}_1 \mathbf{y}_{t-1} + \boldsymbol{\Phi}_2 \mathbf{y}_{t-2}
+    + \cdots + \boldsymbol{\Phi}_p \mathbf{y}_{t-p} + \boldsymbol{\varepsilon}_t,
+  \label{eq:10.2.13} \tag{10.2.13}
+\end{equation}
+where
+\begin{equation}
+  \underset{(n \times 1)}{\boldsymbol{\alpha}^*}
+  \equiv (\boldsymbol{\Phi}_1 + 2\boldsymbol{\Phi}_2 + \cdots + p\boldsymbol{\Phi}_p)\boldsymbol{\delta}
+    + \boldsymbol{\Phi}(1)\boldsymbol{\alpha}, \quad
+  \underset{(n \times 1)}{\boldsymbol{\delta}^*}
+  \equiv \boldsymbol{\Phi}(1)\boldsymbol{\delta}.
+  \label{eq:10.2.14} \tag{10.2.14}
+\end{equation}
+
+How do we know that this finite-order VAR in levels is a cointegrated I(1)
+system? An obvious way to find out is to derive the VMA representation,
+$\Delta\boldsymbol{\xi}_t = \boldsymbol{\Psi}(L)\boldsymbol{\varepsilon}_t$,
+from the VAR representation, $\boldsymbol{\Phi}(L)\boldsymbol{\xi}_t = \boldsymbol{\varepsilon}_t$, and see if $\boldsymbol{\Psi}(L)$ satisfies the
+definition of a cointegrated system. The derivation is a bit tricky because the VMA
+representation is in first differences, but it can be done fairly easily as follows.
+Taking the first difference of both sides of $\boldsymbol{\Phi}(L)\boldsymbol{\xi}_t = \boldsymbol{\varepsilon}_t$ and noting that
+$\Delta = 1 - L$ and $(1 - L)\boldsymbol{\Phi}(L) = \boldsymbol{\Phi}(L)(1 - L)$, we obtain
+\begin{equation}
+  \boldsymbol{\Phi}(L) \Delta\boldsymbol{\xi}_t = (1 - L)\boldsymbol{\varepsilon}_t.
+  \label{eq:10.2.15} \tag{10.2.15}
+\end{equation}
+Substitute $\Delta\boldsymbol{\xi}_t = \boldsymbol{\Psi}(L)\boldsymbol{\varepsilon}_t$ into this to obtain
+\begin{equation}
+  \boldsymbol{\Phi}(L) \boldsymbol{\Psi}(L) \boldsymbol{\varepsilon}_t
+  = (1 - L)\boldsymbol{\varepsilon}_t.
+  \label{eq:10.2.16} \tag{10.2.16}
+\end{equation}
+This equation has to hold for any realization of $\boldsymbol{\varepsilon}_t$, so
+\begin{equation}
+  \boldsymbol{\Phi}(L) \boldsymbol{\Psi}(L) = (1 - L)\mathbf{I}_n.
+  \label{eq:10.2.17} \tag{10.2.17}
+\end{equation}
+This can be solved for $\boldsymbol{\Psi}(L)$ by multiplying both sides from the left by
+$\boldsymbol{\Phi}(L)^{-1}$, the
+inverse of $\boldsymbol{\Phi}(L)$.\footnote{%
+The inverse exists because $\boldsymbol{\Phi}_0 = \mathbf{I}_n$ is nonsingular; see Section~6.3. Since we are not assuming the station\-arity
+condition for $\boldsymbol{\Phi}(L)$, the inverse filter may not be absolutely summable.}
+This produces: $\boldsymbol{\Psi}(L) = \boldsymbol{\Phi}(L)^{-1}(1 - L)$. The question is, under
+what conditions on $\boldsymbol{\Phi}(L)$ is this $\boldsymbol{\Psi}(L)$ one-summable and
+$\rank[\boldsymbol{\Psi}(1)] = n - h$?
+
+We can easily derive a necessary condition. Setting $L = 1$ in (10.2.17), we
+obtain
+\begin{equation}
+  \underset{(n \times n)}{\boldsymbol{\Phi}(1)} \;
+  \underset{(n \times n)}{\boldsymbol{\Psi}(1)}
+  = \underset{(n \times n)}{\mathbf{0}}.
+  \label{eq:10.2.18} \tag{10.2.18}
+\end{equation}
+Since the rank of $\boldsymbol{\Psi}(1)$ equals $n - h$ when the cointegration rank of $\boldsymbol{\xi}_t$ is $h$, the rank
+of $\boldsymbol{\Phi}(1)$ is at most $h$. As shown below, the rank is actually $h$. To state a necessary
+and sufficient condition, let $\mathbf{U}(L)$ and $\mathbf{V}(L)$ be $n \times n$ matrix lag polynomials with
+all their roots outside the unit circle and let $\mathbf{M}(L)$ be a matrix lag polynomial satisfying
+\begin{equation}
+  \mathbf{M}(L)
+  = \begin{bmatrix}
+    (1 - L)\mathbf{I}_{n-h} & \underset{((n-h) \times h)}{\mathbf{0}} \\
+    \underset{(h \times (n-h))}{\mathbf{0}} & \mathbf{I}_h
+  \end{bmatrix}.
+  \label{eq:10.2.19} \tag{10.2.19}
+\end{equation}
+That is, the first $n - h$ diagonal elements of the diagonal matrix $\mathbf{M}(L)$ are $1 - L$ and
+the remaining $h$ diagonal elements are unity. A necessary and sufficient condition
+for a finite-order VAR process $\{\boldsymbol{\xi}_t\}$ following $\boldsymbol{\Phi}(L)\boldsymbol{\xi}_t = \boldsymbol{\varepsilon}_t$ to be a cointegrated
+I(1) system with rank $h$ is that $\boldsymbol{\Phi}(L)$ can be factored as
+$\boldsymbol{\Phi}(L) = \mathbf{U}(L)\mathbf{M}(L)\mathbf{V}(L)$.\footnote{%
+This result is an implication of the lemma due to Sam Yoo, cited in Engle and Yoo (1991). See Watson (1994,
+pp.~2870--2873) for an accessible exposition.}
+Therefore, all the roots of $|\boldsymbol{\Phi}(z)| = 0$ are on or outside the unit circle and those
+that are on the unit circle are all unit roots ($z = 1$). It is not sufficient that $\boldsymbol{\Phi}(L)$
+has $n - h$ unit roots with the other $h$ roots outside the unit circle; see an example
+in Review Question~4 where $\boldsymbol{\Phi}(z)$ has two unit roots and one root outside the unit
+circle yet the system is not I(1). The $n - h$ unit roots have to be located in the
+system in the particular way indicated by the factorization
+$\boldsymbol{\Phi}(z) = \mathbf{U}(z)\mathbf{M}(z)\mathbf{V}(z)$.
+
+Setting $z = 1$ in this factorization, we obtain
+$\boldsymbol{\Phi}(1) = \mathbf{U}(1)\mathbf{M}(1)\mathbf{V}(1)$. Since the
+roots of $\mathbf{U}(z)$ and $\mathbf{V}(z)$ are all outside the unit circle, $\mathbf{U}(1)$ and $\mathbf{V}(1)$ are nonsingular
+and the rank of $\boldsymbol{\Phi}(1)$ equals the rank of $\mathbf{M}(1)$, which is $h$. That is,
+\begin{equation}
+  \rank[\boldsymbol{\Phi}(1)] = h.
+  \label{eq:10.2.20} \tag{10.2.20}
+\end{equation}
+Then it follows from basic linear algebra that there exist two $n \times h$ matrices of full
+column rank, $\mathbf{B}$ and $\mathbf{A}$, such that
+\begin{equation}
+  \underset{(n \times n)}{\boldsymbol{\Phi}(1)}
+  = \underset{(n \times h)}{\mathbf{B}} \;
+    \underset{(h \times n)}{\mathbf{A}'}.
+  \label{eq:10.2.21} \tag{10.2.21}
+\end{equation}
+This is sometimes called the \textbf{reduced rank condition}. The choice of $\mathbf{B}$ and $\mathbf{A}$ is
+not unique; if $\mathbf{F}$ is an $h \times h$ nonsingular matrix, then $\mathbf{B}(\mathbf{F}')^{-1}$ and $\mathbf{AF}$ in place
+of $\mathbf{B}$ and $\mathbf{A}$ also satisfy (10.2.21). Substituting (10.2.21) into (10.2.18), we obtain
+$\mathbf{B}\mathbf{A}'\boldsymbol{\Psi}(1) = \mathbf{0}$. Since $\mathbf{B}$ is of full column rank, this equation implies
+$\mathbf{A}'\boldsymbol{\Psi}(1) = \mathbf{0}$.
+So the columns of the $n \times h$ matrix $\mathbf{A}$ are cointegrating vectors.
+
+\subsection*{The Vector Error-Correction Model (VECM)}
+
+For the univariate case, we derived the augmented autoregression (9.4.3) on page
+586 from an AR equation. The same idea can be applied to the VAR here. It is
+a matter of simple algebra to show that the VAR representation $\boldsymbol{\Phi}(L)\boldsymbol{\xi}_t = \boldsymbol{\varepsilon}_t$ in
+(10.2.12) can be written equivalently as
+\begin{equation}
+  \boldsymbol{\xi}_t = \boldsymbol{\rho}\,\boldsymbol{\xi}_{t-1}
+    + \boldsymbol{\zeta}_1 \Delta\boldsymbol{\xi}_{t-1}
+    + \boldsymbol{\zeta}_2 \Delta\boldsymbol{\xi}_{t-2}
+    + \cdots
+    + \boldsymbol{\zeta}_{p-1} \Delta\boldsymbol{\xi}_{t-p+1}
+    + \boldsymbol{\varepsilon}_t,
+  \label{eq:10.2.22} \tag{10.2.22}
+\end{equation}
+where
+\begin{align}
+  \underset{(n \times n)}{\boldsymbol{\rho}}
+  &\equiv \boldsymbol{\Phi}_1 + \boldsymbol{\Phi}_2 + \cdots + \boldsymbol{\Phi}_p,
+  \label{eq:10.2.23} \tag{10.2.23} \\
+  \underset{(n \times n)}{\boldsymbol{\zeta}_s}
+  &\equiv -(\boldsymbol{\Phi}_{s+1} + \boldsymbol{\Phi}_{s+2} + \cdots + \boldsymbol{\Phi}_p)
+  \quad \text{for } s = 1, 2, \ldots, p - 1.
+  \label{eq:10.2.24} \tag{10.2.24}
+\end{align}
+Subtracting $\boldsymbol{\xi}_{t-1}$ from both sides of (10.2.22) and noting that
+$\boldsymbol{\rho} - \mathbf{I}_n = -(\mathbf{I}_n - \boldsymbol{\Phi}_1 - \boldsymbol{\Phi}_2 - \cdots - \boldsymbol{\Phi}_p) = -\boldsymbol{\Phi}(1)$,
+we can rewrite (10.2.22) as
+\begin{align}
+  \Delta\boldsymbol{\xi}_t
+  &= -\boldsymbol{\Phi}(1)\boldsymbol{\xi}_{t-1}
+    + \boldsymbol{\zeta}_1 \Delta\boldsymbol{\xi}_{t-1}
+    + \boldsymbol{\zeta}_2 \Delta\boldsymbol{\xi}_{t-2}
+    + \cdots
+    + \boldsymbol{\zeta}_{p-1} \Delta\boldsymbol{\xi}_{t-p+1}
+    + \boldsymbol{\varepsilon}_t
+  \notag \\
+  &= -\mathbf{B}\mathbf{A}'\boldsymbol{\xi}_{t-1}
+    + \boldsymbol{\zeta}_1 \Delta\boldsymbol{\xi}_{t-1}
+    + \boldsymbol{\zeta}_2 \Delta\boldsymbol{\xi}_{t-2}
+    + \cdots
+    + \boldsymbol{\zeta}_{p-1} \Delta\boldsymbol{\xi}_{t-p+1}
+    + \boldsymbol{\varepsilon}_t.
+  \label{eq:10.2.25} \tag{10.2.25}
+\end{align}
+Using the relation $\mathbf{y}_t = \boldsymbol{\alpha} + \boldsymbol{\delta} \cdot t + \boldsymbol{\xi}_t$, this can be translated into an equation in $\mathbf{y}_t$:
+\begin{align}
+  \Delta \mathbf{y}_t
+  &= \boldsymbol{\alpha}^* + \boldsymbol{\delta}^* \cdot t
+    - \boldsymbol{\Phi}(1)\,\mathbf{y}_{t-1}
+    + \boldsymbol{\zeta}_1 \Delta\mathbf{y}_{t-1}
+    + \cdots
+    + \boldsymbol{\zeta}_{p-1} \Delta\mathbf{y}_{t-p+1}
+    + \boldsymbol{\varepsilon}_t
+  \label{eq:10.2.26} \tag{10.2.26} \\
+  &= \boldsymbol{\alpha}^* + \boldsymbol{\delta}^* \cdot t
+    - \underset{(n \times h)}{\mathbf{B}} \;
+      \underset{(h \times 1)}{\mathbf{z}_{t-1}}
+    + \boldsymbol{\zeta}_1 \Delta\mathbf{y}_{t-1}
+    + \cdots
+    + \boldsymbol{\zeta}_{p-1} \Delta\mathbf{y}_{t-p+1}
+    + \boldsymbol{\varepsilon}_t,
+  \label{eq:10.2.27} \tag{10.2.27}
+\end{align}
+where $\boldsymbol{\alpha}^*$ and $\boldsymbol{\delta}^*$ are as in (10.2.14) and $\mathbf{z}_t$ is given by
+\begin{equation}
+  \underset{(h \times 1)}{\mathbf{z}_t}
+  \equiv \underset{(h \times n)}{\mathbf{A}'} \;
+    \underset{(n \times 1)}{\mathbf{y}_t}.
+  \label{eq:10.2.28} \tag{10.2.28}
+\end{equation}
+Since, as noted above, the $n \times h$ matrix $\mathbf{A}$ collects $h$ cointegrating vectors, $\mathbf{z}_t$ is
+trend stationary (with a suitable choice of the initial value $\mathbf{y}_0$).\footnote{%
+Just in case you are wondering why $\mathbf{y}_0$ is relevant. It is true that you can solve (10.2.27) for $\mathbf{z}_t$ as
+$\mathbf{z}_{t-1} = (\mathbf{B}'\mathbf{B})^{-1}\mathbf{B}'[\boldsymbol{\alpha}^* + \boldsymbol{\delta}^* \cdot t
+  - \Delta \mathbf{y}_t + \boldsymbol{\zeta}_1 \Delta\mathbf{y}_{t-1} + \cdots + \boldsymbol{\zeta}_{p-1}\Delta\mathbf{y}_{t-p+1} + \boldsymbol{\varepsilon}_t]$.
+So you might think that $\mathbf{z}_t$ is trend stationary regardless of the choice of $\mathbf{y}_0$. This is not true, strictly speak\-ing,
+because, unlike the VMA representation, $\Delta\mathbf{y}_t$ in the VAR/VECM representation is not defined for
+$t = -1, -2, \ldots$\,. Only with a judicious choice of $\mathbf{y}_0$ can one make $\Delta\mathbf{y}_t$ ($t = 1, 2, \ldots$) stationary. This point is
+mentioned in Johansen (1995, Theorem~4.2).}
+This representa\-tion
+is called the \textbf{vector error-correction model (VECM)} or the \textbf{error-correction
+representation}. If it were not for the term $\mathbf{B}\mathbf{z}_{t-1}$ in the VECM, the process,
+expressed as a VAR in first differences, could not be cointegrated. The VECM
+accommodates $h$ cointegrating relationships by including $h$ linear combinations of
+levels of the variables in the cointegrating relations. If there are no time trends in the
+cointegrating relations,
+that is, if $\mathbf{A}'\boldsymbol{\delta} = \mathbf{0}$, then $\boldsymbol{\delta}^* = \boldsymbol{\Phi}(1)\boldsymbol{\delta} = \mathbf{B}\mathbf{A}'\boldsymbol{\delta} = \mathbf{0}$. So the VAR and the VECM
+representations do not involve time trends despite the possible existence of time
+trends in the elements of $\mathbf{y}_t$.
+
+That the same I(0) process has the VMA, VAR, and VECM representations is
+known as the \textbf{Granger Representation Theorem}.
+
+\begin{defbox}
+\textbf{Example 10.4\quad (From VMA to VAR/VECM):}\quad In the previous example, we
+derived the triangular representation from the VMA representation (10.1.12).
+In this example, we derive the VAR and VECM representations from the
+same VMA representation. For the $\boldsymbol{\Psi}(L)$ in (10.1.12), it is easy to verify that
+(10.2.17) is satisfied with
+\begin{equation}
+  \boldsymbol{\Phi}(L) = \mathbf{I}_2 - \boldsymbol{\Phi}_1 L, \quad
+  \boldsymbol{\Phi}_1
+  = \begin{bmatrix} 0 & \gamma \\ 0 & 1 \end{bmatrix}.
+  \label{eq:10.2.29} \tag{10.2.29}
+\end{equation}
+So the VMA can be represented by a finite-order VAR. For this VAR, we have
+\begin{equation}
+  \boldsymbol{\Phi}(1) = \mathbf{I}_2 - \boldsymbol{\Phi}_1
+  = \begin{bmatrix} 1 & -\gamma \\ 0 & 0 \end{bmatrix},
+  \label{eq:10.2.30} \tag{10.2.30}
+\end{equation}
+which can be written as (10.2.21) with
+\begin{equation}
+  \mathbf{B} = \begin{bmatrix} 1 \\ 0 \end{bmatrix}
+  \quad \text{and} \quad
+  \mathbf{A} = \begin{bmatrix} 1 \\ -\gamma \end{bmatrix}
+  \quad \text{(for example)}.
+  \label{eq:10.2.31} \tag{10.2.31}
+\end{equation}
+By (10.2.27) and (10.2.28), the VECM for this choice of $\mathbf{B}$ and $\mathbf{A}$ is
+\begin{equation}
+  \begin{bmatrix} \Delta y_{1t} \\ \Delta y_{2t} \end{bmatrix}
+  = \begin{bmatrix} \gamma\delta_2 + \alpha_1 - \gamma\alpha_2 \\
+                     \delta_2 \end{bmatrix}
+  + \begin{bmatrix} \delta_1 - \gamma\delta_2 \\ 0 \end{bmatrix} \cdot t
+  - \begin{bmatrix} 1 \\ 0 \end{bmatrix} z_{t-1}
+  + \boldsymbol{\varepsilon}_t,
+  \quad z_t \equiv \mathbf{A}' \mathbf{y}_t = y_{1t} - \gamma y_{2t}.
+  \label{eq:10.2.32} \tag{10.2.32}
+\end{equation}
+The deterministic trend disappears if $\delta_1 = \gamma\delta_2$, that is, if the cointe\-grating
+vector also eliminates the deterministic trend.
+\end{defbox}
+
+\subsection*{Johansen's ML Procedure}
+
+In closing this section, having introduced the VECM representation, we here
+provide an executive summary of the maximum likelihood (ML) estimation of
+cointegrated systems proposed by Johansen (1988). Go back to the VAR repre\-sentation
+(10.2.13). For simplicity, we assume that there is no trend in the
+cointegrating relations, so that $\boldsymbol{\delta}^* = \mathbf{0}$.\footnote{%
+For a thorough treatment of time trends in the VECM, see Johansen (1995, Sections~5.7 and~6.2).}
+We have considered the conditional ML
+estimation (conditional on the initial values of $\mathbf{y}$) of a VAR in Section~8.7. If the
+error vector $\boldsymbol{\varepsilon}_t$ is jointly normal $N(\mathbf{0}, \boldsymbol{\Omega})$ and if we have a sample of $T + p$ obser\-vations
+$(\mathbf{y}_{-p+1}, \mathbf{y}_{-p+2}, \ldots, \mathbf{y}_T)$, then the (average) log likelihood of
+$(\mathbf{y}_1, \ldots, \mathbf{y}_T)$
+conditional on the initial values $(\mathbf{y}_{-p+1}, \mathbf{y}_{-p+2}, \ldots, \mathbf{y}_0)$ is given by
+\begin{equation}
+  Q_T(\boldsymbol{\theta})
+  = -\frac{n}{2}\log(2\pi)
+    + \frac{1}{2}\log(|\boldsymbol{\Omega}^{-1}|)
+    - \frac{1}{2T} \sum_{t=1}^{T}
+      \bigl\{(\mathbf{y}_t - \boldsymbol{\Pi}'\mathbf{x}_t)'
+        \boldsymbol{\Omega}^{-1}
+        (\mathbf{y}_t - \boldsymbol{\Pi}'\mathbf{x}_t)\bigr\},
+  \label{eq:10.2.33} \tag{10.2.33}
+\end{equation}
+where $n$ is the dimension of the system (not the sample size),
+$\boldsymbol{\theta} = (\boldsymbol{\Pi}, \boldsymbol{\Omega})$, and
+\begin{equation}
+  \boldsymbol{\Pi}' \equiv \begin{bmatrix}
+    \underset{(n \times 1)}{\boldsymbol{\alpha}^*} &
+    \underset{(n \times n)}{\boldsymbol{\Phi}_1} &
+    \underset{(n \times n)}{\boldsymbol{\Phi}_2} &
+    \cdots &
+    \underset{(n \times n)}{\boldsymbol{\Phi}_p}
+  \end{bmatrix}, \quad
+  \mathbf{x}_t \equiv \begin{bmatrix}
+    1 \\ \mathbf{y}_{t-1} \\ \mathbf{y}_{t-2} \\ \vdots \\ \mathbf{y}_{t-p}
+  \end{bmatrix}.
+  \label{eq:10.2.34} \tag{10.2.34}
+\end{equation}
+
+Let
+\begin{equation}
+  \underset{(n \times n)}{\boldsymbol{\zeta}_0}
+  \equiv -\boldsymbol{\Phi}(1)
+  = -\bigl[\mathbf{I}_n - (\boldsymbol{\Phi}_1 + \cdots + \boldsymbol{\Phi}_p)\bigr].
+  \label{eq:10.2.35} \tag{10.2.35}
+\end{equation}
+Then the reduced rank condition is that $\boldsymbol{\zeta}_0 = -\mathbf{B}\mathbf{A}'$ and the VECM (10.2.26) can
+be written as
+\begin{equation}
+  \Delta \mathbf{y}_t = \boldsymbol{\alpha}^*
+    + \boldsymbol{\zeta}_0 \mathbf{y}_{t-1}
+    + \boldsymbol{\zeta}_1 \Delta\mathbf{y}_{t-1}
+    + \cdots
+    + \boldsymbol{\zeta}_{p-1} \Delta\mathbf{y}_{t-p+1}
+    + \boldsymbol{\varepsilon}_t.
+  \label{eq:10.2.36} \tag{10.2.36}
+\end{equation}
+Equations (10.2.35) and (10.2.24) provide a one-to-one mapping between
+$(\boldsymbol{\Phi}_1, \ldots, \boldsymbol{\Phi}_p)$ and
+$(\boldsymbol{\zeta}_0, \ldots, \boldsymbol{\zeta}_{p-1})$. Thus the same average log likelihood $Q_T(\boldsymbol{\theta})$ can be
+rewritten in terms of the VECM parameters as
+\begin{equation}
+  -\frac{n}{2}\log(2\pi)
+  + \frac{1}{2}\log(|\boldsymbol{\Omega}^{-1}|)
+  - \frac{1}{2T} \sum_{t=1}^{T}
+    \bigl\{(\Delta\mathbf{y}_t - \tilde{\boldsymbol{\Pi}}'\tilde{\mathbf{x}}_t)'
+      \boldsymbol{\Omega}^{-1}
+      (\Delta\mathbf{y}_t - \tilde{\boldsymbol{\Pi}}'\tilde{\mathbf{x}}_t)\bigr\},
+  \label{eq:10.2.37} \tag{10.2.37}
+\end{equation}
+where
+\begin{equation}
+  \tilde{\boldsymbol{\Pi}}' \equiv \begin{bmatrix}
+    \underset{(n \times 1)}{\boldsymbol{\alpha}^*} &
+    \underset{(n \times n)}{\boldsymbol{\zeta}_0} &
+    \underset{(n \times n)}{\boldsymbol{\zeta}_1} &
+    \cdots &
+    \underset{(n \times n)}{\boldsymbol{\zeta}_{p-1}}
+  \end{bmatrix}, \quad
+  \tilde{\mathbf{x}}_t \equiv \begin{bmatrix}
+    1 \\ \mathbf{y}_{t-1} \\ \Delta\mathbf{y}_{t-1} \\ \vdots \\ \Delta\mathbf{y}_{t-p+1}
+  \end{bmatrix}.
+  \label{eq:10.2.38} \tag{10.2.38}
+\end{equation}
+The ML estimate of the VECM parameters is the
+$(\boldsymbol{\alpha}^*, \boldsymbol{\zeta}_0, \ldots, \boldsymbol{\zeta}_{p-1}, \boldsymbol{\Omega})$ that max\-imizes
+this objective function, subject to the reduced rank constraint that $\boldsymbol{\zeta}_0 =
+-\mathbf{B}\mathbf{A}'$ for some $n \times h$ full rank matrices $\mathbf{A}$ and $\mathbf{B}$. This constraint accommodates
+$h$ cointegrating relationships on the I(1) system. Obviously, the maximized log
+likelihood is higher the higher the assumed cointegration rank $h$. Thus, we can use
+the likelihood ratio statistic to test the null hypothesis that $h = h_0$ against the alter\-native
+hypothesis of \emph{more} cointegration. Unlike in the stationary VAR case, the
+limiting distribution of the likelihood ratio statistic is nonstandard. Given the coin\-tegration
+rank $h$ thus determined, the ML estimate of $h$ cointegrating vectors can
+be obtained as the estimate of $\mathbf{A}$. For a more detailed exposition of this procedure,
+see Hamilton (1994, Chapter~20) and also Johansen (1995, Chapter~6).
+
+\subsection*{Questions for Review}
+
+\begin{enumerate}
+\item (Error vector in the triangular representation)\quad Consider the error vector
+  $(\mathbf{z}_t^*, \mathbf{u}_{2t})$ in the triangular representation (10.2.8) and (10.2.9). It can be writ\-ten
+  as
+  \begin{equation}
+    \begin{bmatrix}
+      \underset{(h \times 1)}{\mathbf{z}_t^*} \\
+      \underset{((n-h) \times 1)}{\mathbf{u}_{2t}}
+    \end{bmatrix}
+    = \boldsymbol{\Psi}^*(L) \boldsymbol{\varepsilon}_t
+    \equiv \begin{bmatrix}
+      \underset{(h \times n)}{\boldsymbol{\Psi}_1^*(L)} \\
+      \underset{((n-h) \times n)}{\boldsymbol{\Psi}_2(L)}
+    \end{bmatrix} \boldsymbol{\varepsilon}_t.
+    \label{eq:10.2.39} \tag{10.2.39}
+  \end{equation}
+  Here,
+  \begin{equation}
+    \underset{(h \times n)}{\boldsymbol{\Psi}_1^*(L)}
+    = (\mathbf{I}, -\boldsymbol{\Gamma}') \;
+      \underset{(n \times n)}{\boldsymbol{\alpha}(L)},
+    \label{eq:10.2.40} \tag{10.2.40}
+  \end{equation}
+  where $\boldsymbol{\alpha}(L)$ is from the BN decomposition and $\boldsymbol{\Psi}_2(L)$ is the last $n - h$ rows of
+  $\boldsymbol{\Psi}(L)$ in the VMA representation.
+
+  \begin{enumerate}[label=(\alph*)]
+  \item Show that $\boldsymbol{\Psi}_2(1)$ is of full row rank (i.e., the $n - h$ rows of $\boldsymbol{\Psi}_2(1)$ are linearly
+    independent). \textbf{Hint:} Suppose, contrary to the claim, that there exists an
+    $(n-h)$-dimensional vector $\mathbf{b} \neq \mathbf{0}$ such that
+    $\mathbf{b}'\boldsymbol{\Psi}_2(1) = \mathbf{0}'$. Show that $(\mathbf{0}', \mathbf{b}')$
+    would be an ($n$-dimensional) cointegrating vector and the cointegration rank
+    would be at least $h + 1$.
+
+  \item Verify that $\boldsymbol{\Psi}^*(L)$ is absolutely summable.
+
+  \item Write $\boldsymbol{\Psi}^*(L) = \boldsymbol{\Psi}_0^* + \boldsymbol{\Psi}_1^* L + \boldsymbol{\Psi}_2^* L^2 + \cdots$.
+    For the bivariate process of
+    Example~10.3, verify that $\boldsymbol{\Psi}_0^*$ is not diagonal. (Therefore, even if the ele\-ments
+    of $\boldsymbol{\varepsilon}_t$ are uncorrelated, $\mathbf{z}_t^*$ and $\mathbf{u}_{2t}$ can be correlated.)
+  \end{enumerate}
+
+\item (From triangular to VMA representations)\quad For Example~10.3, start from the
+  triangular representation (10.2.11) and recover the VMA representation. \textbf{Hint:}
+  Take the first difference of the cointegrating regression.
+
+\item (An alternative decomposition of $\boldsymbol{\Phi}(1)$)\quad For the bivariate system of Example
+  10.4, verify that
+  \[
+    \mathbf{B} = (\gamma, 0)', \quad \mathbf{A} = (1/\gamma, -1)'
+  \]
+  is an alternative decomposition of $\boldsymbol{\Phi}(1)$. Write down the VECM corresponding
+  to this choice of $\mathbf{B}$ and $\mathbf{A}$.
+
+\item (A trivariate VAR that is I(2))\quad Consider a trivariate VAR given by
+  \[
+    \begin{cases}
+      y_{1t} = 2y_{1,t-1} - y_{1,t-2} + \varepsilon_{1t}
+        \quad (\text{i.e., } \Delta^2 y_{1t} = \varepsilon_{1t}), \\
+      y_{2t} = \rho\, y_{2,t-1} + \varepsilon_{2t}
+        \quad \text{with } |\rho| < 1, \text{ and} \\
+      y_{3t} = \varepsilon_{3t}.
+    \end{cases}
+  \]
+  Verify that this is an I(2) system by writing $\Delta^2 \mathbf{y}_t$ as a vector moving average
+  process. Write down $\boldsymbol{\Phi}(L)$ for this system and show that $\boldsymbol{\Phi}(z)$ has three roots,
+  two unit roots and one that is outside the unit circle.
+\end{enumerate}

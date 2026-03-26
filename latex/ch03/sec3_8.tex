@@ -1,0 +1,587 @@
+% sec3_8.tex — Section 3.8: Implications of Conditional Homoskedasticity
+
+So far, we have not assumed conditional homoskedasticity in developing the asymptotics
+of the GMM estimator.  This section considers the implication of imposing
+
+\begin{assumption}[conditional homoskedasticity]
+\label{ass:3.7}
+\[
+  \E(\varepsilon_i^2 \mid \mathbf{x}_i) = \sigma^2.
+\]
+\end{assumption}
+
+Under conditional homoskedasticity, the matrix of fourth moments $\mathbf{S}$
+$(= \E(\mathbf{g}_i \mathbf{g}_i') = \E(\varepsilon_i^2\, \mathbf{x}_i \mathbf{x}_i'))$ can be written as a
+product of second moments:
+\begin{equation}
+  \mathbf{S} = \sigma^2 \boldsymbol{\Sigma}_{\mathbf{xx}},
+  \label{eq:3.8.1}
+\end{equation}
+where $\boldsymbol{\Sigma}_{\mathbf{xx}} = \E(\mathbf{x}_i \mathbf{x}_i')$.  As in Chapter~2, this
+decomposition of $\mathbf{S}$ has several implications.
+
+\begin{itemize}
+\item Since $\mathbf{S}$ is nonsingular by Assumption~3.5, this decomposition implies that
+  $\sigma^2 > 0$ and $\boldsymbol{\Sigma}_{\mathbf{xx}}$ is nonsingular.
+
+\item The estimator exploiting this structure of $\mathbf{S}$ is
+  \begin{equation}
+    \hat{\mathbf{S}} = \hat{\sigma}^2 \cdot \frac{1}{n} \sum_{i=1}^{n}
+    \mathbf{x}_i \mathbf{x}_i' = \hat{\sigma}^2\, \mathbf{S}_{\mathbf{xx}},
+    \label{eq:3.8.2}
+  \end{equation}
+  where $\hat{\sigma}^2$ is some consistent estimator to be specified below.  By ergodic stationarity,
+  $\mathbf{S}_{\mathbf{xx}} \to_{\text{a.s.}} \boldsymbol{\Sigma}_{\mathbf{xx}}$.  Thus, provided that
+  $\hat{\sigma}^2$ is consistent, we do not need the fourth-moment assumption (Assumption~3.6)
+  for $\hat{\mathbf{S}}$ to be consistent.
+\end{itemize}
+
+Needless to say, all the results presented so far are valid under the extra
+condition of conditional homoskedasticity.  But many of the results and formulas
+can be simplified substantially under this extra condition, by just replacing $\mathbf{S}$
+by $\sigma^2 \boldsymbol{\Sigma}_{\mathbf{xx}}$ and the expression \eqref{eq:3.5.10} for
+$\hat{\mathbf{S}}$ by \eqref{eq:3.8.2}.  This section collects those simplifications.
+
+%% ─── Efficient GMM Becomes 2SLS ────────────────────────────────────────────
+\subsection*{Efficient GMM Becomes 2SLS}
+
+In the efficient GMM estimation, the weighting matrix is $\hat{\mathbf{S}}^{-1}$.  If we set
+$\hat{\mathbf{S}}$ to \eqref{eq:3.8.2}, the GMM estimator becomes
+\begin{align}
+  \hat{\boldsymbol{\delta}}(\hat{\mathbf{S}}^{-1})
+  &= [\mathbf{S}_{\mathbf{xz}}'(\hat{\sigma}^2\, \mathbf{S}_{\mathbf{xx}})^{-1}
+     \mathbf{S}_{\mathbf{xz}}]^{-1}\,
+     \mathbf{S}_{\mathbf{xz}}'(\hat{\sigma}^2\, \mathbf{S}_{\mathbf{xx}})^{-1}\,
+     \mathbf{s}_{\mathbf{xy}} \notag \\
+  &= (\mathbf{S}_{\mathbf{xz}}' \mathbf{S}_{\mathbf{xx}}^{-1}
+     \mathbf{S}_{\mathbf{xz}})^{-1}\,
+     \mathbf{S}_{\mathbf{xz}}' \mathbf{S}_{\mathbf{xx}}^{-1}\,
+     \mathbf{s}_{\mathbf{xy}} \notag \\
+  &= \hat{\boldsymbol{\delta}}(\mathbf{S}_{\mathbf{xx}}^{-1})
+  \equiv \hat{\boldsymbol{\delta}}_{\text{2SLS}},
+  \label{eq:3.8.3}
+\end{align}
+which does not depend on $\hat{\sigma}^2$.  In the general case, the whole point of the first step in
+the efficient two-step GMM was to obtain a consistent estimator of $\mathbf{S}$.  Under conditional
+homoskedasticity, there is no need to do the first step because the second-step
+estimator collapses to the GMM estimator with $\mathbf{S}_{\mathbf{xx}}$ used for $\hat{\mathbf{S}}$,
+$\hat{\boldsymbol{\delta}}(\mathbf{S}_{\mathbf{xx}}^{-1})$.  This
+estimator, $\hat{\boldsymbol{\delta}}_{\text{2SLS}}$, is called the \textbf{Two-Stage Least Squares}
+(2SLS or TSLS).\footnote{This estimator was first proposed by Theil (1953).}
+The same equation can be estimated by maximum likelihood.  Section~8.6 will cover
+the ML counterpart of 2SLS, called the ``limited-information maximum likelihood
+estimator.''
+
+The expression for $\avar(\hat{\boldsymbol{\delta}}_{\text{2SLS}})$ can be obtained by substituting
+\eqref{eq:3.8.1} into \eqref{eq:3.5.13}:
+\begin{equation}
+  \avar(\hat{\boldsymbol{\delta}}_{\text{2SLS}})
+  = \sigma^2 \cdot (\boldsymbol{\Sigma}_{\mathbf{xz}}'
+    \boldsymbol{\Sigma}_{\mathbf{xx}}^{-1}
+    \boldsymbol{\Sigma}_{\mathbf{xz}})^{-1}.
+  \label{eq:3.8.4}
+\end{equation}
+A natural estimator of this is
+\begin{equation}
+  \widehat{\avar(\hat{\boldsymbol{\delta}}_{\text{2SLS}})}
+  = \hat{\sigma}^2 \cdot (\mathbf{S}_{\mathbf{xz}}'
+    \mathbf{S}_{\mathbf{xx}}^{-1}
+    \mathbf{S}_{\mathbf{xz}})^{-1}.
+  \label{eq:3.8.5}
+\end{equation}
+For $\hat{\sigma}^2$, consider the sample variance of the 2SLS residuals:
+\begin{equation}
+  \hat{\sigma}^2 \equiv \frac{1}{n} \sum_{i=1}^{n}
+  (y_i - \mathbf{z}_i' \hat{\boldsymbol{\delta}}_{\text{2SLS}})^2.
+  \label{eq:3.8.6}
+\end{equation}
+(Some authors divide the sum of squares by $n - L$, not by $n$, to calculate $\hat{\sigma}^2$.)
+By Proposition~3.2, \eqref{eq:3.8.6} $\pto \sigma^2$ if
+$\E(\mathbf{z}_i \mathbf{z}_i')$ exists and is finite.\footnote{This additional assumption is needed
+for the consistency of $\hat{\sigma}^2$; see Proposition~3.2.}  Thus $\hat{\mathbf{S}}$ defined in
+\eqref{eq:3.8.2} with this $\hat{\sigma}^2$ is consistent for $\mathbf{S}$.
+
+Substituting \eqref{eq:3.8.2} into \eqref{eq:3.5.15} and \eqref{eq:3.5.16}, the $t$-ratio
+and the Wald statistic become
+\begin{align}
+  t_\ell &= \frac{\hat{\delta}_{\text{2SLS},\ell} - \bar{\delta}_\ell}{SE_\ell}
+  \quad \text{with} \quad
+  SE_\ell = \sqrt{\frac{\hat{\sigma}^2}{n} \cdot
+    \bigl((\mathbf{S}_{\mathbf{xz}}' \mathbf{S}_{\mathbf{xx}}^{-1}
+    \mathbf{S}_{\mathbf{xz}})^{-1}\bigr)_{\!\ell\ell}},
+  \label{eq:3.8.7} \\
+  W &= n \cdot \frac{\mathbf{a}(\hat{\boldsymbol{\delta}}_{\text{2SLS}})'\,
+    \bigl[\mathbf{A}(\hat{\boldsymbol{\delta}}_{\text{2SLS}})
+    (\mathbf{S}_{\mathbf{xz}}' \mathbf{S}_{\mathbf{xx}}^{-1}
+    \mathbf{S}_{\mathbf{xz}})^{-1}
+    \mathbf{A}(\hat{\boldsymbol{\delta}}_{\text{2SLS}})'\bigr]^{-1}\,
+    \mathbf{a}(\hat{\boldsymbol{\delta}}_{\text{2SLS}})}
+    {\hat{\sigma}^2}.
+  \label{eq:3.8.8}
+\end{align}
+
+%% ─── J Becomes Sargan's Statistic ──────────────────────────────────────────
+\subsection*{$J$ Becomes Sargan's Statistic}
+
+When $\hat{\mathbf{W}}$ is set to $(\hat{\sigma}^2 \mathbf{S}_{\mathbf{xx}})^{-1}$, the distance
+defined in \eqref{eq:3.4.6} becomes
+\begin{equation}
+  J(\tilde{\boldsymbol{\delta}},\, (\hat{\sigma}^2 \cdot \mathbf{S}_{\mathbf{xx}})^{-1})
+  = n \cdot \frac{(\mathbf{s}_{\mathbf{xy}}
+    - \mathbf{S}_{\mathbf{xz}} \tilde{\boldsymbol{\delta}})'\,
+    \mathbf{S}_{\mathbf{xx}}^{-1}\,
+    (\mathbf{s}_{\mathbf{xy}}
+    - \mathbf{S}_{\mathbf{xz}} \tilde{\boldsymbol{\delta}})}
+    {\hat{\sigma}^2}.
+  \label{eq:3.8.9}
+\end{equation}
+Proposition~3.6 then implies that the distance evaluated at the efficient GMM estimator
+under conditional homoskedasticity, $\hat{\boldsymbol{\delta}}_{\text{2SLS}}$, is asymptotically chi-squared.
+This distance is called \textbf{Sargan's statistic} (Sargan, 1958):
+\begin{equation}
+  \text{Sargan's statistic}
+  = n \cdot \frac{(\mathbf{s}_{\mathbf{xy}}
+    - \mathbf{S}_{\mathbf{xz}} \hat{\boldsymbol{\delta}}_{\text{2SLS}})'\,
+    \mathbf{S}_{\mathbf{xx}}^{-1}\,
+    (\mathbf{s}_{\mathbf{xy}}
+    - \mathbf{S}_{\mathbf{xz}} \hat{\boldsymbol{\delta}}_{\text{2SLS}})}
+    {\hat{\sigma}^2}.
+  \label{eq:3.8.10}
+\end{equation}
+
+We summarize our results so far as
+
+\begin{proposition}[asymptotic properties of 2SLS]
+\label{prop:3.9}
+\begin{enumerate}[label=(\alph*)]
+\item \emph{Under Assumptions~3.1--3.4, the 2SLS estimator \eqref{eq:3.8.3} is consistent.
+  If Assumption~3.5 is added, the estimator is asymptotically normal with the asymptotic
+  variance given by \eqref{eq:3.5.1} with
+  $\mathbf{W} = (\sigma^2 \boldsymbol{\Sigma}_{\mathbf{xx}})^{-1}$.
+  If Assumption~3.7 (conditional homoskedasticity) is added to Assumptions~3.1--3.5, then
+  the estimator is the efficient GMM estimator.}
+
+\emph{Furthermore, if $\E(\mathbf{z}_i \mathbf{z}_i')$ exists and is finite, then}
+
+\item \emph{the asymptotic variance is consistently estimated by \eqref{eq:3.8.5},}
+
+\item $t_\ell$ \emph{in \eqref{eq:3.8.7}} $\dto N(0,1)$, $W$ \emph{in \eqref{eq:3.8.8}}
+  $\dto \chi^2(\#\mathbf{r})$, \emph{and}
+
+\item \emph{the Sargan statistic in \eqref{eq:3.8.10}} $\dto \chi^2(K - L)$.
+\end{enumerate}
+\end{proposition}
+
+Proposition~3.8 states that the $LR$ statistic, which is the difference in $J$ with and
+without the imposition of the null hypothesis, is asymptotically chi-squared.  Since
+$J$ can be written as \eqref{eq:3.8.9}, we have
+\begin{equation}
+  LR = n \cdot \frac{(\mathbf{s}_{\mathbf{xy}}
+    - \mathbf{S}_{\mathbf{xz}} \tilde{\boldsymbol{\delta}})'\,
+    \mathbf{S}_{\mathbf{xx}}^{-1}\,
+    (\mathbf{s}_{\mathbf{xy}}
+    - \mathbf{S}_{\mathbf{xz}} \tilde{\boldsymbol{\delta}})
+  - (\mathbf{s}_{\mathbf{xy}}
+    - \mathbf{S}_{\mathbf{xz}} \hat{\boldsymbol{\delta}}_{\text{2SLS}})'\,
+    \mathbf{S}_{\mathbf{xx}}^{-1}\,
+    (\mathbf{s}_{\mathbf{xy}}
+    - \mathbf{S}_{\mathbf{xz}} \hat{\boldsymbol{\delta}}_{\text{2SLS}})}
+    {\hat{\sigma}^2},
+  \label{eq:3.8.11}
+\end{equation}
+where $\tilde{\boldsymbol{\delta}}$ is the restricted 2SLS estimator which minimizes \eqref{eq:3.8.9}
+under the null hypothesis.\footnote{This statistic was first derived by Gallant and
+Jorgenson (1979).}  In Proposition~3.8, the use of the same $\hat{\mathbf{S}}$ guaranteed the
+statistic to be nonnegative in finite samples.  Here, deflation by the same $\hat{\sigma}^2$
+ensures the statistic to be nonnegative.  If the hypothesis is linear, then this $LR$ is
+numerically equal to the Wald statistic $W$.
+
+%% ─── Small-Sample Properties of 2SLS ──────────────────────────────────────
+\subsection*{Small-Sample Properties of 2SLS}
+
+There is a fairly large literature on the finite-sample distribution of the 2SLS estimator
+(see, e.g., Judge et al.\ (1985, Section~15.4) and Staiger and Stock (1997,
+Section~1)).  Some studies manage to derive analytically the exact finite-sample
+distribution of the estimator, while others are Monte Carlo studies for various
+DGPs.  The analytical results, however, are not useful for empirical researchers,
+because they are derived under the restrictive assumptions of fixed instruments and
+normal errors and the analytical expressions for distributions are computationally
+intractable.
+
+For the case of a single regressor and a single (stochastic) instrument with
+normal errors, Nelson and Startz (1990) derive the exact finite-sample distribution
+of the 2SLS estimator that is fairly simple and easy to calculate.  They also show
+that, when the instrument is ``weak'' in the sense of low explanatory power in the
+first-stage regression of the regressor on the instrument, a mass of the distribution
+of the sampling error $\hat{\boldsymbol{\delta}}_{\text{2SLS}} - \boldsymbol{\delta}$ remains apart from zero
+until the sample size gets really large.
+
+Their work illustrates the need for reporting the $R^2$ for the first-stage regressions;
+if the $R^2$ is low, we should suspect the large-sample approximation to the
+distribution of the 2SLS estimator to be poor (you will see a dramatic example in
+part~(g) of the empirical exercise).  Recently, Staiger and Stock (1997) proposed an
+alternative asymptotic approximation to the finite-sample distribution of the 2SLS
+and other estimators and associated test statistics, for the case of ``weak'' instruments.
+Their device is to look at a sequence of models along which the coefficients
+of the instruments in the first-stage regressions converge to zero.  (Analytical Exercise~10
+works out this type of asymptotics for the simple case of one regressor and
+one instrument.)
+
+%% ─── Alternative Derivations of 2SLS ──────────────────────────────────────
+\subsection*{Alternative Derivations of 2SLS}
+
+If we define data matrices as
+\[
+  \underset{(n \times K)}{\mathbf{X}}
+  = \begin{bmatrix} \mathbf{x}_1' \\ \mathbf{x}_2' \\ \vdots \\ \mathbf{x}_n' \end{bmatrix},
+  \quad
+  \underset{(n \times L)}{\mathbf{Z}}
+  = \begin{bmatrix} \mathbf{z}_1' \\ \mathbf{z}_2' \\ \vdots \\ \mathbf{z}_n' \end{bmatrix},
+  \quad
+  \underset{(n \times 1)}{\mathbf{y}}
+  = \begin{bmatrix} y_1 \\ y_2 \\ \vdots \\ y_n \end{bmatrix},
+\]
+then it is easy to see that the 2SLS estimator and associated statistics can be written as
+\begin{align}
+  \hat{\boldsymbol{\delta}}_{\text{2SLS}}
+  &= [\mathbf{Z}'\mathbf{X}(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{Z}]^{-1}\,
+     \mathbf{Z}'\mathbf{X}(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{y} \notag \\
+  &= (\mathbf{Z}'\mathbf{P}\mathbf{Z})^{-1}\, \mathbf{Z}'\mathbf{P}\mathbf{y},
+  \label{eq:3.8.3p}
+\end{align}
+where $\mathbf{P} \equiv \mathbf{X}(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'$ is the projection matrix,
+\begin{align}
+  \widehat{\avar(\hat{\boldsymbol{\delta}}_{\text{2SLS}})}
+  &= n \cdot \hat{\sigma}^2 \cdot
+     [\mathbf{Z}'\mathbf{X}(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{Z}]^{-1}
+  = n \cdot \hat{\sigma}^2 \cdot (\mathbf{Z}'\mathbf{P}\mathbf{Z})^{-1},
+  \label{eq:3.8.5p} \\
+  \hat{\sigma}^2 &\equiv \frac{\hat{\boldsymbol{\varepsilon}}'\hat{\boldsymbol{\varepsilon}}}{n}
+  \quad \text{where } \hat{\boldsymbol{\varepsilon}} \equiv \mathbf{y}
+  - \mathbf{Z}\hat{\boldsymbol{\delta}}_{\text{2SLS}},
+  \label{eq:3.8.6p} \\
+  t_\ell &= \frac{\hat{\delta}_{\text{2SLS},\ell} - \bar{\delta}_\ell}
+    {\sqrt{\hat{\sigma}^2 \cdot
+    \bigl([\mathbf{Z}'\mathbf{X}(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{Z}]^{-1}
+    \bigr)_{\!\ell\ell}}},
+  \label{eq:3.8.7p} \\
+  W &= \frac{\mathbf{a}(\hat{\boldsymbol{\delta}}_{\text{2SLS}})'\,
+    \bigl[\mathbf{A}(\hat{\boldsymbol{\delta}}_{\text{2SLS}})
+    (\mathbf{Z}'\mathbf{X}(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{Z})^{-1}
+    \mathbf{A}(\hat{\boldsymbol{\delta}}_{\text{2SLS}})'\bigr]^{-1}\,
+    \mathbf{a}(\hat{\boldsymbol{\delta}}_{\text{2SLS}})}{\hat{\sigma}^2},
+  \label{eq:3.8.8p} \\
+  J(\tilde{\boldsymbol{\delta}},\, (\hat{\sigma}^2 \cdot \mathbf{S}_{\mathbf{xx}})^{-1})
+  &= \frac{(\mathbf{y} - \mathbf{Z}\tilde{\boldsymbol{\delta}})'\,
+     \mathbf{P}\,(\mathbf{y} - \mathbf{Z}\tilde{\boldsymbol{\delta}})}{\hat{\sigma}^2},
+  \label{eq:3.8.9p} \\
+  \text{Sargan's statistic}
+  &= \frac{\hat{\boldsymbol{\varepsilon}}'\mathbf{P}\hat{\boldsymbol{\varepsilon}}}
+     {\hat{\sigma}^2}.
+  \label{eq:3.8.10p}
+\end{align}
+
+Using this formula, we can provide two other derivations of the 2SLS estimator.
+
+\medskip\noindent\textbf{2SLS as an IV Estimator.}\enspace
+Let $\hat{\mathbf{z}}_i$ ($L \times 1$) be the vector of $L$ instruments (which will be generated from
+$\mathbf{x}_i$ as described below) for the $L$ regressors, and let $\hat{\mathbf{Z}}$ be the $n \times L$
+data matrix of those $L$ instruments.  So the $i$-th row of $\hat{\mathbf{Z}}$ is
+$\hat{\mathbf{z}}_i'$.  The IV estimator of $\boldsymbol{\delta}$ with $\hat{\mathbf{z}}_i$ serving as
+instruments is, by \eqref{eq:3.4.4},
+\begin{equation}
+  \hat{\boldsymbol{\delta}}_{\text{IV}}
+  = \Bigl(\frac{1}{n} \sum_{i=1}^{n}
+    \hat{\mathbf{z}}_i \mathbf{z}_i'\Bigr)^{-1}
+    \frac{1}{n} \sum_{i=1}^{n} \hat{\mathbf{z}}_i \cdot y_i
+  = (\hat{\mathbf{Z}}'\mathbf{Z})^{-1}\, \hat{\mathbf{Z}}'\mathbf{y}.
+  \label{eq:3.8.12}
+\end{equation}
+Now we generate those $L$ instruments from $\mathbf{x}_i$ as follows.  The $\ell$-th instrument is
+the fitted value from regressing $z_{i\ell}$ (the $\ell$-th regressor) on $\mathbf{x}_i$.  The $n$-vector
+of fitted values is $\mathbf{X}(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{z}_\ell$, where
+$\mathbf{z}_\ell$ is the $n$-vector of the $\ell$-th regressor (i.e., the $\ell$-th column of $\mathbf{Z}$).
+Therefore, the $n \times L$ data matrix of instruments is
+\begin{equation}
+  \hat{\mathbf{Z}}
+  = (\mathbf{X}(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{z}_1, \ldots,
+     \mathbf{X}(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{z}_L)
+  = \mathbf{X}(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{Z}
+  = \mathbf{P}\mathbf{Z},
+  \label{eq:3.8.13}
+\end{equation}
+where $\mathbf{P}$ is the projection matrix.  Substituting this into the IV format
+\eqref{eq:3.8.12} yields the 2SLS estimator (see \eqref{eq:3.8.3p}).
+
+\medskip\noindent\textbf{2SLS as Two Regressions.}\enspace
+Instead of substituting the generated instruments $\hat{\mathbf{z}}_i$ into the IV format to estimate
+the equation $y_i = \mathbf{z}_i' \boldsymbol{\delta} + \varepsilon_i$, consider regressing $y_i$ on
+$\hat{\mathbf{z}}_i$.  The coefficient estimate is
+\begin{align*}
+  (\hat{\mathbf{Z}}'\hat{\mathbf{Z}})^{-1}\, \hat{\mathbf{Z}}'\mathbf{y}
+  &= (\mathbf{Z}'\mathbf{P}'\mathbf{P}\mathbf{Z})^{-1}\,
+     \mathbf{Z}'\mathbf{P}'\mathbf{P}\mathbf{y} \\
+  &= (\mathbf{Z}'\mathbf{P}\mathbf{Z})^{-1}\, \mathbf{Z}'\mathbf{P}\mathbf{y}
+  \quad \text{(since $\mathbf{P}$ is symmetric and idempotent)}.
+\end{align*}
+This is the 2SLS estimator.  So the 2SLS coefficient estimate can be obtained in two
+stages: the first stage is to regress the $L$ regressors on $\mathbf{x}_i$ and obtain fitted values
+$\hat{\mathbf{z}}_i$, and the second stage is to regress $y_i$ on those fitted values.
+
+For those regressors that are predetermined and hence included in $\mathbf{x}_i$, there is no
+need to carry out the first-stage regression because the regressor is the regressor
+itself.  To see this, if $z_{i\ell}$ is predetermined and included in $\mathbf{x}_i$ as the $k$-th instrument,
+the $n$-vector of fitted values for the $\ell$-th regressor is $\mathbf{P}\mathbf{z}_\ell$, where $\mathbf{z}_\ell$
+is the $n$-vector whose $i$-th element is $z_{i\ell}$.  But since $\mathbf{z}_\ell$ is also the $k$-th column of
+$\mathbf{X}$, since $\mathbf{P}$ is the projection matrix, $\mathbf{P}\mathbf{z}_\ell = \mathbf{x}_k$.
+Since $\mathbf{P}$ is the projection matrix, $\mathbf{P}\mathbf{x}_k = \mathbf{x}_k$.
+
+This derivation of the 2SLS is useful as it justifies the naming of the estimator,
+but there is a pitfall.  In the second-stage regression where $y_i$ is regressed on
+$\hat{\mathbf{z}}_i$, the standard errors routinely calculated by the OLS package are based on the
+residual vector $\mathbf{y} - \hat{\mathbf{Z}}\hat{\boldsymbol{\delta}}_{\text{2SLS}}$.
+This does \emph{not} equal the 2SLS residual
+$\mathbf{y} - \mathbf{Z}\hat{\boldsymbol{\delta}}_{\text{2SLS}}$.  Therefore, the OLS standard errors and
+estimated asymptotic variance from the second stage cannot be used for statistical
+inference.
+
+%% ─── When Regressors Are Predetermined ─────────────────────────────────────
+\subsection*{When Regressors Are Predetermined}
+
+When all the regressors are predetermined and the errors are conditionally homoskedastic,
+there is a close connection between the distance function $J$ for efficient
+GMM and the sum of squared residuals ($SSR$).  From \eqref{eq:3.8.9p} on page~230,
+\begin{align}
+  J(\tilde{\boldsymbol{\delta}},\, (\hat{\sigma}^2 \cdot \mathbf{S}_{\mathbf{xx}})^{-1})
+  &= \frac{(\mathbf{y} - \mathbf{Z}\tilde{\boldsymbol{\delta}})'\,
+     \mathbf{P}\,(\mathbf{y} - \mathbf{Z}\tilde{\boldsymbol{\delta}})}{\hat{\sigma}^2}
+  \notag \\
+  &= \frac{\mathbf{y}'\mathbf{P}\mathbf{y}
+     - 2\mathbf{y}'\mathbf{P}\mathbf{Z}\tilde{\boldsymbol{\delta}}
+     + \tilde{\boldsymbol{\delta}}'\mathbf{Z}'\mathbf{P}\mathbf{Z}\tilde{\boldsymbol{\delta}}}
+     {\hat{\sigma}^2}
+  \notag \\
+  &= \frac{\mathbf{y}'\mathbf{P}\mathbf{y}
+     - 2\mathbf{y}'\mathbf{Z}\tilde{\boldsymbol{\delta}}
+     + \tilde{\boldsymbol{\delta}}'\mathbf{Z}'\mathbf{Z}\tilde{\boldsymbol{\delta}}}
+     {\hat{\sigma}^2}
+  \quad \text{(since $\mathbf{P}\mathbf{Z} = \mathbf{Z}$ when
+    $\mathbf{z}_i \subset \mathbf{x}_i$)}
+  \notag \\
+  &= \frac{(\mathbf{y} - \mathbf{Z}\tilde{\boldsymbol{\delta}})'
+     (\mathbf{y} - \mathbf{Z}\tilde{\boldsymbol{\delta}})}{\hat{\sigma}^2}
+  - \frac{(\mathbf{y} - \hat{\mathbf{y}})'(\mathbf{y} - \hat{\mathbf{y}})}
+     {\hat{\sigma}^2},
+  \label{eq:3.8.14}
+\end{align}
+where $\hat{\mathbf{y}} \equiv \mathbf{P}\mathbf{y}$ is the vector of fitted values from unrestricted OLS.
+Since the last term does not depend on $\tilde{\boldsymbol{\delta}}$, minimizing $J$ amounts to minimizing the
+sum of squared residuals $(\mathbf{y} - \mathbf{Z}\tilde{\boldsymbol{\delta}})'(\mathbf{y} -
+\mathbf{Z}\tilde{\boldsymbol{\delta}})$.  It then follows that (1)~the efficient GMM
+estimator is OLS (which actually is true without conditional homoskedasticity as long as
+$\mathbf{z}_i = \mathbf{x}_i$), (2)~the restricted efficient GMM estimator subject to the constraints
+of the null hypothesis is the restricted OLS (whose objective function is not $J$ but
+$SSR$), and (3)~the Wald statistic, which is numerically equal to the $LR$ statistic, can
+be calculated as the difference in $SSR$ with and without the imposition of the null,
+normalized to $\hat{\sigma}^2$.  This last result confirms the derivation in Section~2.6
+of the Wald statistic by the Likelihood-Ratio principle.
+
+%% ─── Testing a Subset of Orthogonality Conditions ──────────────────────────
+\subsection*{Testing a Subset of Orthogonality Conditions}
+
+In Section~3.6 we introduced the statistic $C$ for testing a subset of orthogonality
+conditions.  It utilizes two efficient GMM estimators of the same equation, one
+using the full set $\mathbf{x}_i$ of instruments and the other using only a subset, $\mathbf{x}_{i1}$,
+of $\mathbf{x}_i$.  To examine what expression it takes under conditional homoskedasticity, let
+$\mathbf{X}_1$ $(n \times K_1)$ be the data matrix whose $i$-th row is $\mathbf{x}_{i1}'$.  Because the
+two-step efficient GMM estimator is the 2SLS estimator under conditional homoskedasticity,
+the two GMM estimators are given by
+\begin{align}
+  \hat{\boldsymbol{\delta}}
+  &= (\mathbf{Z}'\mathbf{P}\mathbf{Z})^{-1}\, \mathbf{Z}'\mathbf{P}\mathbf{y}
+  \quad \text{with } \mathbf{P}
+  = \mathbf{X}(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}',
+  \label{eq:3.8.15} \\
+  \tilde{\boldsymbol{\delta}}
+  &= (\mathbf{Z}'\mathbf{P}_1\mathbf{Z})^{-1}\, \mathbf{Z}'\mathbf{P}_1\mathbf{y}
+  \quad \text{with } \mathbf{P}_1
+  = \mathbf{X}_1(\mathbf{X}_1'\mathbf{X}_1)^{-1}\mathbf{X}_1'.
+  \label{eq:3.8.16}
+\end{align}
+And the $C$ statistic becomes the difference in two Sargan statistics:
+\begin{equation}
+  C = \frac{\hat{\boldsymbol{\varepsilon}}'\mathbf{P}\hat{\boldsymbol{\varepsilon}}
+    - \tilde{\boldsymbol{\varepsilon}}'\mathbf{P}_1\tilde{\boldsymbol{\varepsilon}}}
+    {\hat{\sigma}^2},
+  \label{eq:3.8.17}
+\end{equation}
+where
+\[
+  \hat{\boldsymbol{\varepsilon}} \equiv \mathbf{y}
+  - \mathbf{Z}\hat{\boldsymbol{\delta}}, \quad
+  \tilde{\boldsymbol{\varepsilon}} \equiv \mathbf{y}
+  - \mathbf{Z}\tilde{\boldsymbol{\delta}}, \quad
+  \hat{\sigma}^2 \equiv \frac{\hat{\boldsymbol{\varepsilon}}'\hat{\boldsymbol{\varepsilon}}}{n}.
+\]
+As seen for the case without conditional homoskedasticity, $C$ is guaranteed to be
+nonnegative in finite samples if the same matrix $\hat{\mathbf{S}}$ is used throughout, which under
+conditional homoskedasticity amounts to using the same estimate of the error variance,
+$\hat{\sigma}^2$, to deflate both
+$\hat{\boldsymbol{\varepsilon}}'\mathbf{P}\hat{\boldsymbol{\varepsilon}}$ and
+$\tilde{\boldsymbol{\varepsilon}}'\mathbf{P}_1\tilde{\boldsymbol{\varepsilon}}$, as in
+\eqref{eq:3.8.17}.  By Proposition~3.7, this $C$ is asymptotically $\chi^2(K - K_1)$.
+
+Perhaps more popular is the test statistic proposed by Hausman and Taylor
+(1980) and further examined by Newey (1985).  $\hat{\boldsymbol{\delta}}$ is asymptotically more efficient
+than $\tilde{\boldsymbol{\delta}}$ because $\hat{\boldsymbol{\delta}}$ exploits more orthogonality conditions.
+Therefore, $\avar(\tilde{\boldsymbol{\delta}}) \geq \avar(\hat{\boldsymbol{\delta}})$.
+Furthermore, as you will be asked to show (Analytical Exercise~9), under the same
+hypothesis guaranteeing $C$ to be asymptotically chi-squared,
+\begin{equation}
+  \avar(\tilde{\boldsymbol{\delta}} - \hat{\boldsymbol{\delta}})
+  = \avar(\tilde{\boldsymbol{\delta}}) - \avar(\hat{\boldsymbol{\delta}}).
+  \label{eq:3.8.18}
+\end{equation}
+(If you have been exposed to the Hausman test in the ML context, you can recognize
+this as the GMM version of the Hausman principle.)  By Proposition~3.9,
+$\avar(\hat{\boldsymbol{\delta}})$ is consistently estimated by
+\begin{equation}
+  \widehat{\avar(\hat{\boldsymbol{\delta}})}
+  \equiv n \cdot \hat{\sigma}^2 \cdot (\mathbf{Z}'\mathbf{P}\mathbf{Z})^{-1}.
+  \label{eq:3.8.19}
+\end{equation}
+Similarly, a consistent estimator of $\avar(\tilde{\boldsymbol{\delta}})$ is
+\begin{equation}
+  \widehat{\avar(\tilde{\boldsymbol{\delta}})}
+  \equiv n \cdot \hat{\sigma}^2 \cdot (\mathbf{Z}'\mathbf{P}_1\mathbf{Z})^{-1}.
+  \label{eq:3.8.20}
+\end{equation}
+Here, as in the calculation of the $C$ statistic, the same estimate, $\hat{\sigma}^2$, is used
+throughout, in order to guarantee the test statistic below to be nonnegative.  The
+resulting estimator of $\avar(\tilde{\boldsymbol{\delta}} - \hat{\boldsymbol{\delta}})$ is
+\begin{equation}
+  \widehat{\avar(\tilde{\boldsymbol{\delta}} - \hat{\boldsymbol{\delta}})}
+  = \hat{\sigma}^2 \cdot n \cdot
+    \bigl[(\mathbf{Z}'\mathbf{P}_1\mathbf{Z})^{-1}
+    - (\mathbf{Z}'\mathbf{P}\mathbf{Z})^{-1}\bigr].
+  \label{eq:3.8.21}
+\end{equation}
+Hausman and Taylor (1980) have shown that (1)~this matrix in finite samples is
+positive semidefinite (nonnegative definite) but not necessarily nonsingular, but
+(2)~for any generalized inverse\footnote{A \emph{generalized inverse}, $\mathbf{A}^-$, of a
+matrix $\mathbf{A}$ is any matrix satisfying $\mathbf{A}\mathbf{A}^-\mathbf{A} = \mathbf{A}$.  If
+$\mathbf{A}$ is square and nonsingular, then $\mathbf{A}^-$ is unique and equal to $\mathbf{A}^{-1}$.}
+of this matrix, the \textbf{Hausman statistic}
+\begin{align}
+  H &\equiv \sqrt{n}\,(\tilde{\boldsymbol{\delta}} - \hat{\boldsymbol{\delta}})'\,
+  \bigl\{\hat{\sigma}^2 \cdot n \cdot
+  [(\mathbf{Z}'\mathbf{P}_1\mathbf{Z})^{-1}
+  - (\mathbf{Z}'\mathbf{P}\mathbf{Z})^{-1}]\bigr\}^{-}\,
+  \sqrt{n}\,(\tilde{\boldsymbol{\delta}} - \hat{\boldsymbol{\delta}}) \notag \\
+  &= \frac{(\tilde{\boldsymbol{\delta}} - \hat{\boldsymbol{\delta}})'\,
+  [(\mathbf{Z}'\mathbf{P}_1\mathbf{Z})^{-1}
+  - (\mathbf{Z}'\mathbf{P}\mathbf{Z})^{-1}]^{-}\,
+  (\tilde{\boldsymbol{\delta}} - \hat{\boldsymbol{\delta}})}{\hat{\sigma}^2}
+  \label{eq:3.8.22}
+\end{align}
+is invariant to the choice of the generalized inverse and is asymptotically chi-squared
+with $\min(K - K_1, L - s)$ degrees of freedom, where
+\[
+  s = \#\mathbf{z}_i \cap \mathbf{x}_{i1}
+  = \text{number of regressors which are retained as instruments in } \mathbf{x}_{i1}.
+\]
+
+What is the relationship between $C$ and $H$ under conditional homoskedasticity?
+It can be shown (see Newey, 1985) that:
+
+If $K - K_1 \leq L - s$ so that both $H$ and $C$ have the same degrees of freedom, then
+$H = C$ (numerically equal).  Otherwise, the two statistics are numerically different
+and have different degrees of freedom.
+
+One frequent case where $K - K_1 \leq L - s$ holds is when $\mathbf{x}_{i2}$ is a subset of
+regressors, that is, when the suspect instruments are a subset of regressors.  In this case,
+the formulas \eqref{eq:3.8.17} and \eqref{eq:3.8.22} are two alternative ways of calculating
+numerically the same statistic.  In the case where $K - K_1 > L - s$, the degrees of freedom
+for $H$ are less than those for the $C$ statistic $(K - K_1)$.  For this reason, the Hausman
+test, unlike the $C$ test, is not consistent against some local alternatives.\footnote{The
+Hausman statistic can be generalized to the case of conditional heteroskedasticity, but it
+is not practical because the degrees of freedom depend on the unknown values of the
+matrices $\boldsymbol{\Sigma}_{\mathbf{xz}}$ and $\mathbf{S}$.  See Newey (1985).}
+
+%% ─── Testing Conditional Homoskedasticity ──────────────────────────────────
+\subsection*{Testing Conditional Homoskedasticity}
+
+For the OLS case with predetermined regressors, as shown in Section~2.7, there
+is a convenient $nR^2$ test of conditional homoskedasticity.  In the present case, the
+$nR^2$ statistic obtained by regressing the squared 2SLS residuals on a constant and
+second-order cross products of the instrumental variables turns out \emph{not} to have the
+desired asymptotic distribution.  A test statistic that is asymptotically chi-squared
+is available but is extremely cumbersome.  See White (1982, note~2).
+
+%% ─── Testing for Serial Correlation ────────────────────────────────────────
+\subsection*{Testing for Serial Correlation}
+
+For the OLS case, we developed in Section~2.10 tests for serial correlation in the
+error term.  More specifically, under (2.10.15) (which is stronger than Assumption~2.3
+or~3.3) and (2.10.16) (which is stronger than Assumption~2.7 or~3.7 of conditional
+homoskedasticity), the modified Box--Pierce $Q$ given in (2.10.20) can be used for
+testing the null of no serial correlation in the error term, and this statistic is
+asymptotically equivalent (in the stronger sense of the plim of the difference being
+zero) to the $nR^2$ statistic from regression (2.10.21).  Can this test be extended to the
+case where the regressors $\mathbf{z}_i$ are endogenous?  If the instruments $\mathbf{x}_i$ satisfy
+(2.10.15) and (2.10.16), then the argument in Appendix~2.B of Chapter~2 can be
+generalized to produce a modified $Q$ statistic that is asymptotically chi-squared under
+the null of no serial correlation.  However, the expression for the statistic is more
+complicated than (2.10.20) and so is not presented here.  This modified $Q$ statistic for
+the case of endogenous regressors does not seem to be asymptotically equivalent to
+the $nR^2$ statistic from regression (2.10.21).
+
+%% ─── Questions for Review ──────────────────────────────────────────────────
+\bigskip
+\begin{center}\rule{0.6\textwidth}{0.4pt}\end{center}
+\noindent\textsc{Questions for Review}
+\medskip
+
+\begin{enumerate}
+\item (GMM with conditional homoskedasticity) \; In efficient two-step GMM estimation,
+  $\hat{\mathbf{S}}$ in the second step is calculated from the first step by \eqref{eq:3.5.10} using
+  the first-step residuals.  Under conditional homoskedasticity, derive the asymptotic
+  variance of the two-step estimator.  Is it the same as \eqref{eq:3.8.4}?
+  \textbf{Hint:} Under conditional homoskedasticity,
+  \eqref{eq:3.5.10} $\pto \sigma^2 \boldsymbol{\Sigma}_{\mathbf{xx}}$.
+
+\item (2SLS without conditional homoskedasticity) \; Is the 2SLS consistent when
+  conditional homoskedasticity does not hold?  Derive the plim of \eqref{eq:3.8.2} and
+  $\avar(\hat{\boldsymbol{\delta}}_{\text{2SLS}})$ without assuming conditional homoskedasticity.
+  Is the 2SLS as efficient as the two-step efficient GMM (i.e., is its asymptotic variance
+  as small as \eqref{eq:3.5.13})?  \textbf{Hint:} 2SLS is a GMM estimator with a choice of
+  $\hat{\mathbf{W}}$ that is not necessarily efficient without conditional homoskedasticity.
+
+\item (GLS interpretation of 2SLS) \; Verify that the 2SLS estimator can be written as
+  a GLS estimator if $\mathbf{S}_{\mathbf{xz}}$ and $\mathbf{s}_{\mathbf{xy}}$ are interpreted as
+  the data matrix of regressors and the data vector of the dependent variable and
+  $\mathbf{S}_{\mathbf{xx}}$ as the variance matrix of the error term.
+
+\item Provide two cases in which $\hat{\boldsymbol{\delta}}_{\text{2SLS}}$ and
+  $\hat{\boldsymbol{\delta}}(\hat{\mathbf{S}}^{-1})$ are asymptotically equivalent in the sense that
+  \[
+    \sqrt{n}\,[\hat{\boldsymbol{\delta}}_{\text{2SLS}}
+    - \hat{\boldsymbol{\delta}}(\hat{\mathbf{S}}^{-1})] \pto \mathbf{0}.
+  \]
+  \textbf{Hint:} Keywords are ``conditional homoskedasticity'' and ``exactly identified.''
+
+\item Suppose the equation is just identified.  Show that 2SLS \eqref{eq:3.8.3p} reduces to IV
+  \eqref{eq:3.4.4}.
+
+\item (Sargan as $nR^2$) \; Prove that Sargan's statistic \eqref{eq:3.8.10p} equals $nR_{uc}^2$,
+  where $R_{uc}^2$ is the uncentered $R$-squared from a regression of
+  $\hat{\boldsymbol{\varepsilon}}$ on $\mathbf{X}$.
+  \textbf{Hint:} Review Question~8 of Section~1.2.
+
+\item (When $\mathbf{z}_i$ is a strict subset of $\mathbf{x}_i$) \; Suppose $\mathbf{z}_i$ is
+  a strict subset of $\mathbf{x}_i$.  So $\mathbf{x}_i$ includes, in addition to the regressors (which
+  are all predetermined), some other predetermined variables.  We have shown that the
+  efficient GMM estimator is OLS under conditional homoskedasticity.  Does the result
+  remain true without conditional homoskedasticity?  \textbf{Hint:} Review Question~5 of
+  Section~3.5.
+\end{enumerate}

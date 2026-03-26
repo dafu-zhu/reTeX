@@ -1,14 +1,13 @@
-% preamble.tex — Shared LaTeX preamble for textbook conversion
-% Page geometry configured to match the source textbook
+% preamble.tex — Shared LaTeX preamble for Econometrics (Hayashi)
 
-\documentclass[10pt,openright]{book}
+\documentclass[11pt,openright]{book}
 
 %% ── Page Geometry ──────────────────────────────────────────────
-% Original is approximately 6.5" x 9.5" Prentice Hall format
+% Princeton University Press format, approx 6.125" x 9.25"
 \usepackage[
-  paperwidth=6.5in,
-  paperheight=9.5in,
-  top=1in,
+  paperwidth=6.125in,
+  paperheight=9.25in,
+  top=0.9in,
   bottom=1in,
   left=0.85in,
   right=0.85in,
@@ -20,28 +19,26 @@
 %% ── Encoding & Fonts ──────────────────────────────────────────
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
-\usepackage{lmodern}          % Latin Modern (close to Computer Modern)
-\usepackage{microtype}        % Improved typography
+\usepackage{mathptmx}           % Times-like serif (matches source)
+\usepackage{microtype}
 
 %% ── Math ───────────────────────────────────────────────────────
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{amsthm}
-\usepackage{mathtools}        % Extensions to amsmath
-\usepackage{bm}               % Bold math symbols
+\usepackage{mathtools}
+\usepackage{bm}
 
 % Equation numbering: (chapter.section.number)
 \numberwithin{equation}{section}
 
-% Figure/table numbering: chapter.section.number
+% Figure/table numbering: chapter.number
 \usepackage{chngcntr}
-\counterwithin{figure}{section}
-\counterwithin{table}{section}
+\counterwithin{figure}{chapter}
+\counterwithin{table}{chapter}
 
-%% ── Boxed Equations/Definitions ────────────────────────────────
+%% ── Boxed Equations/Definitions ─────────────────────────────────
 \usepackage[most]{tcolorbox}
-
-% Simple box style matching the book's thin-border boxes
 \newtcolorbox{defbox}{
   colback=white,
   colframe=black,
@@ -51,7 +48,7 @@
   boxsep=2pt
 }
 
-%% ── Theorem Environments ───────────────────────────────────────
+%% ── Theorem Environments ─────────────────────────────────────────
 \theoremstyle{plain}
 \newtheorem{theorem}{Theorem}[section]
 \newtheorem{lemma}[theorem]{Lemma}
@@ -60,48 +57,46 @@
 
 \theoremstyle{definition}
 \newtheorem{definition}{Definition}[section]
+\newtheorem{assumption}{Assumption}[section]
 \newtheorem{example}{Example}[section]
 
 \theoremstyle{remark}
 \newtheorem{remark}{Remark}[section]
 
-%% ── Exercises ──────────────────────────────────────────────────
+%% ── Problem Set / Exercises ──────────────────────────────────────
 \usepackage{enumitem}
 
-% Exercise label style — configure per book, then forget about it.
-%   \exercisestyle{prefix}{counter} is called for each item label.
-%   Default: "1.2.1." "1.2.2." (section-prefixed)
-%   Override examples:
-%     Plain numbers:       \renewcommand{\exerciselabel}[1]{\textbf{\arabic*.}}
-%     Parenthesized:       \renewcommand{\exerciselabel}[1]{\textbf{(\arabic*)}}
-%     Chapter-only prefix: \renewcommand{\exerciselabel}[1]{\textbf{\thechapter.\arabic*.}}
-\newcommand{\exerciselabel}[1]{\textbf{#1.\arabic*.}}
-\newcommand{\exerciseref}[1]{#1.\arabic*}
-
-\newenvironment{exercises}[1]{%
-  \subsection*{Exercises #1}%
-  \begin{enumerate}[label={\exerciselabel{#1}},ref={\exerciseref{#1}},leftmargin=*]%
+% Hayashi uses numbered exercises within "Problem Set" at chapter end
+% Format: plain numbers (1, 2, 3, ...) with parts (a), (b), (c)
+\newenvironment{problemset}{%
+  \section*{Problem Set}%
+  \addcontentsline{toc}{section}{Problem Set}%
 }{%
-  \end{enumerate}%
 }
+
+\newenvironment{answers}{%
+  \section*{Answers to Selected Questions}%
+  \addcontentsline{toc}{section}{Answers to Selected Questions}%
+}{%
+}
+
+\newcommand{\exercise}[1][]{\par\medskip\noindent\textbf{#1.}\enspace}
+\newcommand{\answer}[1]{\par\medskip\noindent\textbf{#1.}\enspace}
 
 % Starred exercise marker
 \newcommand{\starred}{\textsuperscript{*}}
 
-%% ── Figures ────────────────────────────────────────────────────
+%% ── Figures ──────────────────────────────────────────────────────
 \usepackage{graphicx}
+\graphicspath{{figures/}}
 \usepackage{float}
-\usepackage{tikz}
-\usepackage{pgfplots}
-\pgfplotsset{compat=1.18}
-\usetikzlibrary{arrows.meta, patterns, decorations.markings, decorations.pathmorphing, calc}
 
-%% ── Tables ─────────────────────────────────────────────────────
+%% ── Tables ───────────────────────────────────────────────────────
 \usepackage{booktabs}
 \usepackage{array}
 \usepackage{multirow}
 
-%% ── Headers & Footers ──────────────────────────────────────────
+%% ── Headers & Footers ────────────────────────────────────────────
 \usepackage{fancyhdr}
 \pagestyle{fancy}
 \fancyhf{}
@@ -111,33 +106,59 @@
 \fancyhead[LO]{\rightmark}
 \renewcommand{\headrulewidth}{0pt}
 
-% Chapter/section mark formatting
 \renewcommand{\chaptermark}[1]{\markboth{Chapter \thechapter.\ #1}{}}
 \renewcommand{\sectionmark}[1]{\markright{\thesection\ #1}}
 
-% Plain style for chapter opening pages
 \fancypagestyle{plain}{%
   \fancyhf{}%
   \fancyfoot[C]{\thepage}%
   \renewcommand{\headrulewidth}{0pt}%
 }
 
-%% ── Cross-references ──────────────────────────────────────────
+%% ── Cross-references ─────────────────────────────────────────────
 \usepackage{hyperref}
 \hypersetup{
   colorlinks=false,
   pdfborder={0 0 0},
-  % PDF metadata — set per book
-  pdftitle={},
-  pdfauthor={}
+  pdftitle={Econometrics},
+  pdfauthor={Fumio Hayashi}
 }
 \usepackage{cleveref}
 
-%% ── Index ──────────────────────────────────────────────────────
+%% ── Index ────────────────────────────────────────────────────────
 \usepackage{makeidx}
 \makeindex
 
-%% ── Custom Commands ────────────────────────────────────────────
+%% ── TOC depth ────────────────────────────────────────────────────
+\setcounter{tocdepth}{2}
+\setcounter{secnumdepth}{2}
+
+%% ── Custom Commands (Econometrics notation) ──────────────────────
+
+% Expectation, variance, covariance
+\newcommand{\E}{\mathrm{E}}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\Cov}{\mathrm{Cov}}
+\newcommand{\Corr}{\mathrm{Corr}}
+
+% Convergence
+\newcommand{\plim}{\operatorname{plim}}
+\newcommand{\avar}{\mathrm{Avar}}
+\newcommand{\dto}{\overset{d}{\to}}
+\newcommand{\pto}{\overset{p}{\to}}
+\newcommand{\asto}{\overset{a.s.}{\to}}
+\newcommand{\iid}{\overset{\text{i.i.d.}}{\sim}}
+
+% Matrix/linear algebra operators
+\newcommand{\tr}{\operatorname{tr}}
+\newcommand{\rank}{\operatorname{rank}}
+\newcommand{\diag}{\operatorname{diag}}
+\newcommand{\vect}{\operatorname{vec}}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+
+% Bold vectors
+\renewcommand{\vec}[1]{\mathbf{#1}}
 
 % Partial derivatives
 \newcommand{\pd}[2]{\frac{\partial #1}{\partial #2}}
@@ -147,31 +168,3 @@
 % Ordinary derivatives
 \newcommand{\od}[2]{\frac{d #1}{d #2}}
 \newcommand{\odd}[2]{\frac{d^2 #1}{d #2^2}}
-
-% Evaluation bar
-\newcommand{\evalat}[2]{\left. #1 \right|_{#2}}
-
-% Common operators
-\DeclareMathOperator{\erfc}{erfc}
-\DeclareMathOperator{\sinc}{sinc}
-\DeclareMathOperator{\sgn}{sgn}
-\DeclareMathOperator{\Real}{Re}
-\DeclareMathOperator{\Imag}{Im}
-
-% Bold vectors
-\renewcommand{\vec}[1]{\mathbf{#1}}
-
-% Laplacian
-\newcommand{\laplacian}{\nabla^2}
-
-% Double surface integral (not in all packages)
-\providecommand{\oiint}{\mathop{\oint\!\!\!\oint}\nolimits}
-
-% Common notations used in the book
-\newcommand{\dx}{\,dx}
-\newcommand{\dy}{\,dy}
-\newcommand{\dt}{\,dt}
-\newcommand{\ds}{\,ds}
-\newcommand{\dA}{\,dA}
-\newcommand{\dV}{\,dV}
-\newcommand{\dS}{\,dS}

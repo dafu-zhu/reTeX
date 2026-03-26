@@ -1,0 +1,304 @@
+% sec1_6.tex — Section 1.6: Generalized Least Squares (GLS)
+
+Assumption~1.4 states that the $n \times n$ matrix of conditional second moments
+$\E(\bm{\varepsilon}\bm{\varepsilon}' \mid \vec{X})$ $(= \Var(\bm{\varepsilon} \mid \vec{X}))$
+is spherical, that is, proportional to the identity matrix.  Without the assumption,
+each element of the $n \times n$ matrix is in general a nonlinear function of $\vec{X}$.
+If the error is not (conditionally) homoskedastic, the values of the diagonal elements
+of $\E(\bm{\varepsilon}\bm{\varepsilon}' \mid \vec{X})$ are not the same, and if there is
+correlation in the error term between observations (the case of serial correlation for
+time-series models), the values of the off-diagonal elements are not zero.  For any
+given positive scalar $\sigma^2$, define
+$\vec{V}(\vec{X}) \equiv \E(\bm{\varepsilon}\bm{\varepsilon}' \mid \vec{X})/\sigma^2$
+and assume $\vec{V}(\vec{X})$ is nonsingular and known.  That is,
+%
+\begin{equation}
+  \E(\bm{\varepsilon}\bm{\varepsilon}' \mid \vec{X})
+    = \sigma^2 \underset{(n \times n)}{\vec{V}(\vec{X})}, \quad
+  \vec{V}(\vec{X}) \text{ nonsingular and known.}
+  \label{eq:1.6.1}
+\end{equation}
+
+The reason we decompose $\E(\bm{\varepsilon}\bm{\varepsilon}' \mid \vec{X})$ into the
+component $\sigma^2$ that is common to all elements of the matrix
+$\E(\bm{\varepsilon}\bm{\varepsilon}' \mid \vec{X})$ and the remaining component
+$\vec{V}(\vec{X})$ is that we do not need to know the value of $\sigma^2$ for efficient
+estimation.  The model that results when Assumption~1.4 is replaced by~\eqref{eq:1.6.1},
+which merely assumes that the conditional second moment
+$\E(\bm{\varepsilon}\bm{\varepsilon}' \mid \vec{X})$ is nonsingular, is called the
+\textbf{generalized regression model}.
+
+%% ─── Consequence of Relaxing Assumption 1.4 ──────────────────────────────────
+\subsection*{Consequence of Relaxing Assumption 1.4}
+
+Of the results derived in the previous sections, those that assume Assumption~1.4
+are no longer valid for the generalized regression model.  More specifically,
+%
+\begin{itemize}
+  \item The Gauss--Markov Theorem no longer holds for the OLS estimator
+    %
+    \[
+      \vec{b} \equiv (\vec{X}'\vec{X})^{-1}\vec{X}'\vec{y}.
+    \]
+    %
+    The BLUE is some other estimator.
+
+  \item The $t$-ratio is not distributed as the $t$ distribution.  Thus, the $t$-test
+    is no longer valid.  The same comments apply to the $F$-test.
+
+  \item However, the OLS estimator \emph{is} still unbiased, because the unbiasedness
+    result (Proposition~1.1(a)) does not require Assumption~1.4.
+\end{itemize}
+
+%% ─── Efficient Estimation with Known V ───────────────────────────────────────
+\subsection*{Efficient Estimation with Known V}
+
+If the value of the matrix function $\vec{V}(\vec{X})$ is known, does there exist a
+BLUE for the generalized regression model?  The answer is yes, and the estimator is
+called the \textbf{generalized least squares (GLS) estimator}, which we now derive.
+The basic idea of the derivation is to transform the generalized regression model,
+which consists of Assumptions~1.1--1.3 and~\eqref{eq:1.6.1}, into a model that
+satisfies all the assumptions, including Assumption~1.4, of the classical linear
+regression model.
+
+For economy of notation, we use $\vec{V}$ for the value $\vec{V}(\vec{X})$.  Since
+$\vec{V}$ is by construction symmetric and positive definite, there exists a nonsingular
+$n \times n$ matrix $\vec{C}$ such that
+%
+\begin{equation}
+  \vec{V}^{-1} = \vec{C}'\vec{C}.
+  \label{eq:1.6.2}
+\end{equation}
+
+This decomposition is not unique, with more than one choice for $\vec{C}$, but, as is
+clear from the discussion below, the choice of $\vec{C}$ doesn't matter.  Now consider
+creating a new regression model by transforming $(\vec{y}, \vec{X}, \bm{\varepsilon})$
+by $\vec{C}$ as
+%
+\begin{equation}
+  \tilde{\vec{y}} \equiv \vec{C}\vec{y}, \quad
+  \widetilde{\vec{X}} \equiv \vec{C}\vec{X}, \quad
+  \tilde{\bm{\varepsilon}} \equiv \vec{C}\bm{\varepsilon}.
+  \label{eq:1.6.3}
+\end{equation}
+
+Then Assumption~1.1 for $(\vec{y}, \vec{X}, \bm{\varepsilon})$ implies that
+$(\tilde{\vec{y}}, \widetilde{\vec{X}}, \tilde{\bm{\varepsilon}})$ too satisfies
+linearity:
+%
+\begin{equation}
+  \tilde{\vec{y}} = \widetilde{\vec{X}} \bm{\beta} + \tilde{\bm{\varepsilon}}.
+  \label{eq:1.6.4}
+\end{equation}
+
+The transformed model satisfies the other assumptions of the classical linear regression
+model.  Strict exogeneity is satisfied because
+%
+\begin{align*}
+  \E(\tilde{\bm{\varepsilon}} \mid \widetilde{\vec{X}})
+    &= \E(\tilde{\bm{\varepsilon}} \mid \vec{X}) \\
+    &\qquad \text{(since $\vec{C}$ is nonsingular, $\vec{X}$ and
+      $\widetilde{\vec{X}}$ contain the same information)} \\
+    &= \E(\vec{C}\bm{\varepsilon} \mid \vec{X}) \\
+    &= \vec{C}\,\E(\bm{\varepsilon} \mid \vec{X})
+      \quad \text{(by the linearity of conditional expectations)} \\
+    &= \vec{0}
+      \quad \text{(since $\E(\bm{\varepsilon} \mid \vec{X}) = \vec{0}$
+        by Assumption~1.2).}
+\end{align*}
+
+Because $\vec{V}$ is positive definite, the no-multicollinearity assumption is also
+satisfied (see a review question below for a proof).  Assumption~1.4 is satisfied for
+the transformed model because
+%
+\begin{align*}
+  \E(\tilde{\bm{\varepsilon}}\tilde{\bm{\varepsilon}}' \mid \widetilde{\vec{X}})
+    &= \E(\tilde{\bm{\varepsilon}}\tilde{\bm{\varepsilon}}' \mid \vec{X})
+      \quad \text{(since $\widetilde{\vec{X}}$ and $\vec{X}$ contain the same
+        information)} \\
+    &= \vec{C}\,\E(\bm{\varepsilon}\bm{\varepsilon}' \mid \vec{X})\,\vec{C}'
+      \quad \text{(since
+        $\tilde{\bm{\varepsilon}}\tilde{\bm{\varepsilon}}'
+          = \vec{C}\bm{\varepsilon}\bm{\varepsilon}'\vec{C}'$)} \\
+    &= \vec{C} \cdot \sigma^2 \cdot \vec{V}\vec{C}'
+      \quad \text{(by~\eqref{eq:1.6.1})} \\
+    &= \sigma^2 \vec{C}\vec{V}\vec{C}' \\
+    &= \sigma^2 \vec{I}_n
+      \quad \text{(since $(\vec{C}')^{-1}\vec{V}^{-1}\vec{C}^{-1} = \vec{I}_n$
+        or $\vec{C}\vec{V}\vec{C}' = \vec{I}_n$ by~\eqref{eq:1.6.2}).}
+\end{align*}
+
+So indeed the variance of the transformed error vector $\tilde{\bm{\varepsilon}}$ is
+spherical.  Finally, $\tilde{\bm{\varepsilon}} \mid \widetilde{\vec{X}}$ is normal
+because the distribution of $\tilde{\bm{\varepsilon}} \mid \widetilde{\vec{X}}$ is
+the same as $\tilde{\bm{\varepsilon}} \mid \vec{X}$ and $\tilde{\bm{\varepsilon}}$
+is a linear transformation of $\bm{\varepsilon}$.  This completes the verification of
+Assumptions~1.1--1.5 for the transformed model.
+
+The Gauss--Markov Theorem for the transformed model implies that the BLUE of
+$\bm{\beta}$ for the generalized regression model is the OLS estimator applied
+to~\eqref{eq:1.6.4}:
+%
+\begin{align}
+  \widehat{\bm{\beta}}_{\text{GLS}}
+    &= (\widetilde{\vec{X}}'\widetilde{\vec{X}})^{-1}
+       \widetilde{\vec{X}}'\tilde{\vec{y}} \notag \\
+    &= [(\vec{C}\vec{X})'(\vec{C}\vec{X})]^{-1}(\vec{C}\vec{X})'\vec{C}\vec{y}
+       \notag \\
+    &= (\vec{X}'\vec{C}'\vec{C}\vec{X})^{-1}(\vec{X}'\vec{C}'\vec{C}\vec{y})
+       \notag \\
+    &= (\vec{X}'\vec{V}^{-1}\vec{X})^{-1}\vec{X}'\vec{V}^{-1}\vec{y}
+       \quad \text{(by~\eqref{eq:1.6.2}).}
+  \label{eq:1.6.5}
+\end{align}
+
+This is the GLS estimator.  Its conditional variance is
+%
+\begin{align}
+  \Var(\widehat{\bm{\beta}}_{\text{GLS}} \mid \vec{X})
+    &= (\vec{X}'\vec{V}^{-1}\vec{X})^{-1}\vec{X}'\vec{V}^{-1}
+       \Var(\vec{y} \mid \vec{X})\vec{V}^{-1}\vec{X}
+       (\vec{X}'\vec{V}^{-1}\vec{X})^{-1} \notag \\
+    &= (\vec{X}'\vec{V}^{-1}\vec{X})^{-1}\vec{X}'\vec{V}^{-1}
+       (\sigma^2 \vec{V})\vec{V}^{-1}\vec{X}
+       (\vec{X}'\vec{V}^{-1}\vec{X})^{-1} \notag \\
+    &\qquad \text{(since $\Var(\vec{y} \mid \vec{X}) = \Var(\bm{\varepsilon}
+      \mid \vec{X})$)} \notag \\
+    &= \sigma^2 \cdot (\vec{X}'\vec{V}^{-1}\vec{X})^{-1}.
+  \label{eq:1.6.6}
+\end{align}
+
+Since replacing $\vec{V}$ by $\sigma^2 \cdot \vec{V}$ $(= \Var(\bm{\varepsilon}
+\mid \vec{X}))$ in~\eqref{eq:1.6.5} does not change the numerical value, the GLS
+estimator can also be written as
+%
+\[
+  \widehat{\bm{\beta}}_{\text{GLS}}
+    = \bigl[\vec{X}'\,\Var(\bm{\varepsilon} \mid \vec{X})^{-1}\,\vec{X}\bigr]^{-1}
+      \vec{X}'\,\Var(\bm{\varepsilon} \mid \vec{X})^{-1}\,\vec{y}.
+\]
+
+As noted above, the OLS estimator $(\vec{X}'\vec{X})^{-1}\vec{X}'\vec{y}$ too is
+unbiased without Assumption~1.4, but nevertheless the GLS estimator should be preferred
+(provided $\vec{V}$ is known) because the latter is more efficient in that the variance
+is smaller in the matrix sense.  The gain in efficiency is achieved by exploiting the
+heteroskedasticity and correlation between observations in the error term, which,
+operationally, is to insert the inverse of (a matrix proportional to)
+$\Var(\bm{\varepsilon} \mid \vec{X})$ in the OLS formula, as in~\eqref{eq:1.6.5}.
+The discussion so far can be summarized as
+
+\begin{proposition}[finite-sample properties of GLS]
+\label{prop:1.7}
+\mbox{}
+\begin{enumerate}[label=(\alph*)]
+  \item \emph{(unbiasedness)}\enspace
+    Under Assumptions~1.1--1.3,
+    $\E(\widehat{\bm{\beta}}_{\textup{GLS}} \mid \vec{X}) = \bm{\beta}$.
+
+  \item \emph{(expression for the variance)}\enspace
+    Under Assumptions~1.1--1.3 and the assumption~\eqref{eq:1.6.1} that the
+    conditional second moment is proportional to $\vec{V}(\vec{X})$,
+    %
+    \[
+      \Var(\widehat{\bm{\beta}}_{\textup{GLS}} \mid \vec{X})
+        = \sigma^2 \cdot (\vec{X}'\vec{V}(\vec{X})^{-1}\vec{X})^{-1}.
+    \]
+
+  \item \emph{(efficiency of GLS)}\enspace
+    Under the same set of assumptions as in~(b), the GLS estimator is efficient
+    in that the conditional variance of any unbiased estimator that is linear in
+    $\vec{y}$ is greater than or equal to
+    $\Var(\widehat{\bm{\beta}}_{\textup{GLS}} \mid \vec{X})$ in the matrix sense.
+\end{enumerate}
+\end{proposition}
+
+%% ─── A Special Case: Weighted Least Squares (WLS) ────────────────────────────
+\subsection*{A Special Case: Weighted Least Squares (WLS)}
+
+The idea of adjusting for the error variance matrix becomes more transparent when
+there is no correlation in the error term between observations so that the matrix
+$\vec{V}$ is diagonal.  Let $v_i(\vec{X})$ be the $i$-th diagonal element of
+$\vec{V}(\vec{X})$.  So
+%
+\[
+  \E(\varepsilon_i^2 \mid \vec{X})
+    \;(= \Var(\varepsilon_i \mid \vec{X}))
+    = \sigma^2 \cdot v_i(\vec{X}).
+\]
+
+It is easy to see that $\vec{C}$ is also diagonal, with the square root of
+$1/v_i(\vec{X})$ in the $i$-th diagonal.  Thus,
+$(\tilde{\vec{y}}, \widetilde{\vec{X}})$ is given by
+%
+\[
+  \tilde{y}_i = \frac{y_i}{\sqrt{v_i(\vec{X})}}, \quad
+  \tilde{\vec{x}}_i = \frac{\vec{x}_i}{\sqrt{v_i(\vec{X})}}
+  \quad (i = 1, 2, \ldots, n).
+\]
+
+Therefore, efficient estimation under a known form of heteroskedasticity is first to
+weight each observation by the reciprocal of the square root of the variance
+$v_i(\vec{X})$ and then apply OLS\@.  This is called the \textbf{weighted regression}
+(or the \textbf{weighted least squares (WLS)}).
+
+An important further special case is the case of a random sample where
+$\{y_i, \vec{x}_i\}$ is i.i.d.\ across $i$.  As was noted in Section~1.1, the error
+is unconditionally homoskedastic (i.e., $\E(\varepsilon_i^2)$ does not depend on $i$),
+but still GLS can be used to increase efficiency because the error can be conditionally
+heteroskedastic.  The conditional second moment
+$\E(\varepsilon_i^2 \mid \vec{X})$ for the case of random samples depends only on
+$\vec{x}_i$, and the functional form of $\E(\varepsilon_i^2 \mid \vec{x}_i)$ is the
+same across $i$.  Thus
+%
+\begin{equation}
+  v_i(\vec{X}) = v(\vec{x}_i) \quad \text{for random samples.}
+  \label{eq:1.6.7}
+\end{equation}
+
+So the knowledge of $\vec{V}(\cdot)$ comes down to a single function of $K$ variables,
+$v(\cdot)$.
+
+%% ─── Limiting Nature of GLS ─────────────────────────────────────────────────
+\subsection*{Limiting Nature of GLS}
+
+All these sanguine conclusions about the finite-sample properties of GLS rest on the
+assumption that the regressors in the generalized regression model are strictly
+exogenous ($\E(\tilde{\bm{\varepsilon}} \mid \widetilde{\vec{X}}) = \vec{0}$).  This
+fact limits the usefulness of the GLS procedure.  Suppose, as is often the case with
+time-series models, that the regressors are not strictly exogenous and the error is
+serially correlated.  So neither OLS nor GLS has those good finite-sample properties
+such as unbiasedness.  Nevertheless, as will be shown in the next chapter, the OLS
+estimator, which ignores serial correlation in the error, will have some good
+large-sample properties (such as ``consistency'' and ``asymptotic normality''),
+provided that the regressors are ``predetermined'' (which is weaker than strict
+exogeneity).  The GLS estimator, in contrast, does not have that redeeming feature.
+That is, if the error is not strictly exogenous but is merely predetermined, the GLS
+procedure to correct for serial correlation can make the estimator inconsistent (see
+Section~6.7).  A procedure for explicitly taking serial correlation into account while
+maintaining consistency will be presented in Chapter~6.
+
+If it is not appropriate for correcting for serial correlation, the GLS procedure can
+still be used to correct for heteroskedasticity when the error is not serially
+correlated with diagonal $\vec{V}(\vec{X})$, in the form of WLS\@.  But that is
+provided that the matrix function $\vec{V}(\vec{X})$ is known.  Very rarely do we have
+\emph{a priori} information specifying the values of the diagonal elements of
+$\vec{V}(\vec{X})$, which is necessary to weight observations.  In the case of a
+random sample where serial correlation is guaranteed not to arise, the knowledge of
+$\vec{V}(\vec{X})$ boils down to a single function of $K$ variables, $v(\vec{x}_i)$,
+as we have just seen, but even for this case the knowledge of such a function is
+unavailable in most applications.
+
+If we do not know the function $\vec{V}(\vec{X})$, we can estimate its functional form
+from the sample.  This approach is called the \textbf{Feasible Generalized Least Squares
+(FGLS)}.  But if the function $\vec{V}(\vec{X})$ is estimated from the sample, its
+value $\vec{V}$ becomes a random variable, which affects the distribution of the GLS
+estimator.  Very little is known about the finite-sample properties of the FGLS
+estimator.  We will cover the large-sample properties of the FGLS estimator in the
+context of heteroskedasticity correction in the next chapter.
+
+Before closing, one positive side of GLS should be noted: most linear estimation
+techniques---including the 2SLS, 3SLS, and the random effects estimators to be
+introduced later---can be expressed as a GLS estimator, with some liberal definition
+of data matrices.  However, those estimators and OLS can also be interpreted as a GMM
+(generalized method of moments) estimator, and the GMM interpretation is more useful
+for developing large-sample results.

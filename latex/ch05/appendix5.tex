@@ -1,0 +1,209 @@
+% appendix5.tex — Appendix 5.A: Distribution of Hausman Statistic
+
+\section*{Appendix 5.A: Distribution of Hausman Statistic}
+\addcontentsline{toc}{section}{Appendix 5.A: Distribution of Hausman Statistic}
+\label{sec:5.A}
+
+This appendix proves that the $\avar(\hat{\mathbf{q}})$ in \eqref{eq:5.2.21} is positive definite and the Hausman
+statistic \eqref{eq:5.2.22} is guaranteed to be nonnegative in any finite samples.
+
+As shown in Section~4.6,
+\begin{equation}
+  \hat{\boldsymbol{\delta}}_{\text{RE}}
+  = (\mathbf{S}_{\mathbf{xz}}'\hat{\mathbf{S}}^{-1}\mathbf{S}_{\mathbf{xz}})^{-1}
+    \mathbf{S}_{\mathbf{xz}}'\hat{\mathbf{S}}^{-1}\mathbf{s}_{\mathbf{xy}},
+  \label{eq:5.A.1} \tag{5.A.1}
+\end{equation}
+where
+\begin{align*}
+  \underset{(MK \times L)}{\mathbf{S}_{\mathbf{xz}}}
+  &\equiv \frac{1}{n}\sum \mathbf{Z}_i \otimes \mathbf{x}_i, &
+  \underset{(MK \times MK)}{\hat{\mathbf{S}}}
+  &\equiv \hat{\boldsymbol{\Sigma}} \otimes \mathbf{S}_{\mathbf{xx}}, \\
+  \underset{(K \times K)}{\mathbf{S}_{\mathbf{xx}}}
+  &\equiv \frac{1}{n}\sum \mathbf{x}_i\mathbf{x}_i', &
+  \mathbf{s}_{\mathbf{xy}}
+  &\equiv \frac{1}{n}\sum \mathbf{y}_i \otimes \mathbf{x}_i, \\
+  K &\equiv \#\mathbf{x}_i, & L &\equiv \#\mathbf{z}_{im}
+  \;\text{(so $\mathbf{Z}_i$ is $M \times L$)}.
+\end{align*}
+
+Let
+\[
+  \mathbf{Z}_i = (\mathbf{F}_i \vdots \mathbf{1}\mathbf{b}_i'), \quad
+  p \equiv \#\boldsymbol{\beta}, \quad
+  \mathbf{D}_{(L \times p)} = \begin{bmatrix} \mathbf{I}_p \\ \mathbf{0} \end{bmatrix},
+\]
+so that $\mathbf{F}_i = \mathbf{Z}_i\mathbf{D}$. Then it can be shown fairly easily that
+\begin{equation}
+  \hat{\boldsymbol{\beta}}_{\text{FE}}
+  = (\mathbf{D}'\mathbf{S}_{\mathbf{xz}}'\hat{\mathbf{W}}\mathbf{S}_{\mathbf{xz}}\mathbf{D})^{-1}
+    \mathbf{D}'\mathbf{S}_{\mathbf{xz}}'\hat{\mathbf{W}}\mathbf{s}_{\mathbf{xy}},
+  \label{eq:5.A.2} \tag{5.A.2}
+\end{equation}
+where
+\[
+  \hat{\mathbf{W}} = \mathbf{Q} \otimes \mathbf{S}_{\mathbf{xx}}^{-1}, \quad
+  \mathbf{Q} \equiv \text{annihilator associated with } \mathbf{1}_M.
+\]
+
+From \eqref{eq:5.A.1} and \eqref{eq:5.A.2} it follows that
+\begin{equation}
+  \hat{\mathbf{q}} = (\mathbf{D}'\mathbf{S}_{\mathbf{xz}}'\hat{\mathbf{W}}\mathbf{S}_{\mathbf{xz}}\mathbf{D})^{-1}
+  \mathbf{D}'\mathbf{S}_{\mathbf{xz}}'\hat{\mathbf{W}}\mathbf{g}_n(\hat{\boldsymbol{\delta}}_{\text{RE}}), \quad
+  \mathbf{g}_n(\hat{\boldsymbol{\delta}}_{\text{RE}})
+  = \mathbf{s}_{\mathbf{xy}} - \mathbf{S}_{\mathbf{xz}}\hat{\boldsymbol{\delta}}_{\text{RE}}.
+  \label{eq:5.A.3} \tag{5.A.3}
+\end{equation}
+
+(To derive this, recall from Section~4.6 that
+\[
+  \mathbf{S}_{\mathbf{xz}}'\hat{\mathbf{W}}\mathbf{S}_{\mathbf{xz}}
+  = \frac{1}{n}\sum \mathbf{Z}_i'\mathbf{Q}\mathbf{Z}_i.
+\]
+
+But since $\mathbf{Q}\mathbf{Z}_i = (\mathbf{Q}\mathbf{F}_i \vdots \mathbf{0})$, this equals
+\begin{equation}
+  \begin{bmatrix}
+    \frac{1}{n}\sum_{i=1}^{n}\mathbf{F}_i'\mathbf{Q}\mathbf{F}_i & \mathbf{0} \\
+    \mathbf{0} & \mathbf{0}
+  \end{bmatrix}
+  \label{eq:5.A.4} \tag{5.A.4}
+\end{equation}
+so that
+$\mathbf{S}_{\mathbf{xz}}'\hat{\mathbf{W}}\mathbf{S}_{\mathbf{xz}}
+= \mathbf{D}\mathbf{D}'\mathbf{S}_{\mathbf{xz}}'\hat{\mathbf{W}}\mathbf{S}_{\mathbf{xz}}\mathbf{D}\mathbf{D}'
+= \mathbf{S}_{\mathbf{xz}}'\hat{\mathbf{W}}\mathbf{S}_{\mathbf{xz}}\mathbf{D}\mathbf{D}'$.)
+
+As was shown in Analytical Exercise~5 of Chapter~3,
+\begin{equation}
+  \mathbf{g}_n(\hat{\boldsymbol{\delta}}_{\text{RE}}) = \hat{\mathbf{B}}\bar{\mathbf{g}}, \quad
+  \hat{\mathbf{B}} = \mathbf{I}_{MK}
+  - \mathbf{S}_{\mathbf{xz}}(\mathbf{S}_{\mathbf{xz}}'\hat{\mathbf{S}}^{-1}\mathbf{S}_{\mathbf{xz}})^{-1}
+    \mathbf{S}_{\mathbf{xz}}'\hat{\mathbf{S}}^{-1}.
+  \label{eq:5.A.5} \tag{5.A.5}
+\end{equation}
+
+Substituting this into \eqref{eq:5.A.3}, we obtain
+\begin{equation}
+  \sqrt{n}\,\hat{\mathbf{q}}
+  = (\mathbf{D}'\mathbf{S}_{\mathbf{xz}}'\hat{\mathbf{W}}\mathbf{S}_{\mathbf{xz}}\mathbf{D})^{-1}
+    \mathbf{D}'\mathbf{S}_{\mathbf{xz}}'\hat{\mathbf{W}}\hat{\mathbf{B}}\,\sqrt{n}\,\bar{\mathbf{g}}.
+  \label{eq:5.A.6} \tag{5.A.6}
+\end{equation}
+
+The asymptotic variance of this expression is
+\begin{equation}
+  \avar(\hat{\mathbf{q}})
+  = (\mathbf{D}'\boldsymbol{\Sigma}_{\mathbf{xz}}'\mathbf{W}\boldsymbol{\Sigma}_{\mathbf{xz}}\mathbf{D})^{-1}
+    \mathbf{D}'\boldsymbol{\Sigma}_{\mathbf{xz}}'\mathbf{W}\,\mathbf{B}\,\mathbf{S}\,\mathbf{B}\,
+    \mathbf{W}\boldsymbol{\Sigma}_{\mathbf{xz}}\mathbf{D}\,
+    (\mathbf{D}'\boldsymbol{\Sigma}_{\mathbf{xz}}'\mathbf{W}\boldsymbol{\Sigma}_{\mathbf{xz}}\mathbf{D})^{-1},
+  \label{eq:5.A.7} \tag{5.A.7}
+\end{equation}
+where $\mathbf{B} = \plim\hat{\mathbf{B}}$,
+$\mathbf{W} = \plim\hat{\mathbf{W}} = \mathbf{Q} \otimes \boldsymbol{\Sigma}_{\mathbf{xx}}^{-1}$,
+and $\mathbf{S} \equiv \avar(\bar{\mathbf{g}})$.
+Here, $\mathbf{D}'\boldsymbol{\Sigma}_{\mathbf{xz}}'\mathbf{W} \cdot \boldsymbol{\Sigma}_{\mathbf{xz}}\mathbf{D}$
+is invertible because it is easy to show that
+\begin{equation}
+  \mathbf{D}'\boldsymbol{\Sigma}_{\mathbf{xz}}'\mathbf{W}\boldsymbol{\Sigma}_{\mathbf{xz}}\mathbf{D}
+  = \E(\mathbf{F}_i'\mathbf{Q}\mathbf{F}_i'),
+  \label{eq:5.A.8} \tag{5.A.8}
+\end{equation}
+which, as proved in Analytical Exercise~5, is nonsingular. \eqref{eq:5.A.7} is consistently
+estimated by
+\begin{equation}
+  \widehat{\avar}(\hat{\mathbf{q}})
+  = (\mathbf{D}'\mathbf{S}_{\mathbf{xz}}'\hat{\mathbf{W}}\mathbf{S}_{\mathbf{xz}}\mathbf{D})^{-1}
+    \mathbf{D}'\mathbf{S}_{\mathbf{xz}}'\hat{\mathbf{W}}\hat{\mathbf{B}}\hat{\mathbf{S}}
+    \hat{\mathbf{B}}\hat{\mathbf{W}}\mathbf{S}_{\mathbf{xz}}\mathbf{D}\,
+    (\mathbf{D}'\mathbf{S}_{\mathbf{xz}}'\hat{\mathbf{W}}\mathbf{S}_{\mathbf{xz}}\mathbf{D})^{-1}.
+  \label{eq:5.A.9} \tag{5.A.9}
+\end{equation}
+
+A straightforward but lengthy matrix calculation shows that \eqref{eq:5.A.7} equals
+$\avar(\hat{\boldsymbol{\beta}}_{\text{FE}}) - \mathbf{D}'\avar(\hat{\boldsymbol{\delta}}_{\text{RE}})\mathbf{D}$
+and \eqref{eq:5.A.9} equals
+$\widehat{\avar}(\hat{\boldsymbol{\beta}}_{\text{FE}}) - \mathbf{D}'\widehat{\avar}(\hat{\boldsymbol{\delta}}_{\text{RE}})\mathbf{D}$.
+In any finite sample, \eqref{eq:5.A.9} is positive semidefinite. So the Hausman statistic is
+guaranteed to be nonnegative.
+
+We now show that \eqref{eq:5.A.7} is nonsingular. By \eqref{eq:5.1.6}, $\mathbf{S}$ is positive definite.
+Therefore, the rank of $\avar(\hat{\mathbf{q}})$ equals the rank of
+\begin{equation}
+  \mathbf{B}(\mathbf{Q} \otimes \boldsymbol{\Sigma}_{\mathbf{xx}}^{-1})\boldsymbol{\Sigma}_{\mathbf{xz}}\mathbf{D}.
+  \label{eq:5.A.10} \tag{5.A.10}
+\end{equation}
+
+Since the columns of $\mathbf{S}^{-1}\boldsymbol{\Sigma}_{\mathbf{xz}}$ form a basis for the column null space of $\mathbf{B}$ and
+since $(\mathbf{Q} \otimes \boldsymbol{\Sigma}_{\mathbf{xx}}^{-1})\boldsymbol{\Sigma}_{\mathbf{xz}}\mathbf{D}$
+is of full column rank by \eqref{eq:5.1.15}, by Lemma~A.5 of Newey
+(1985),\footnote{The lemma states: Let $\mathbf{A}$ be a $k \times \ell$ matrix,
+$\mathbf{B}$ an $\ell \times m$ matrix, and $\mathbf{C}$ an $\ell \times n$ matrix.
+If the columns of $\mathbf{A}$ form a basis for the column null space of $\mathbf{A}$ and
+$\operatorname{rank}(\mathbf{B}) = m$, then $\operatorname{rank}(\mathbf{AB}) = \operatorname{rank}(\mathbf{C} \vdots \mathbf{B}) - n$.
+Here, $k = \ell = MK$, $m = p$, and $n = L$.}
+the rank of \eqref{eq:5.A.10} equals
+\begin{equation}
+  \operatorname{rank}[(\boldsymbol{\Sigma}^{-1} \otimes \boldsymbol{\Sigma}_{\mathbf{xx}}^{-1})\boldsymbol{\Sigma}_{\mathbf{xz}}
+  \vdots (\mathbf{Q} \otimes \boldsymbol{\Sigma}_{\mathbf{xx}}^{-1})\boldsymbol{\Sigma}_{\mathbf{xz}}\mathbf{D}] - L,
+  \label{eq:5.A.11} \tag{5.A.11}
+\end{equation}
+where use has been made of the fact that
+$\mathbf{S} = \boldsymbol{\Sigma} \otimes \boldsymbol{\Sigma}_{\mathbf{xx}}$.
+
+Now, $\mathbf{x}_i$ collects all the unique variables in $\mathbf{Z}_i$. Rearrange $\mathbf{x}_i$ as
+\begin{equation}
+  \mathbf{x}_i = (\mathbf{z}_{i1}', \ldots, \mathbf{z}_{iM}', \mathbf{b}_i')'.
+  \label{eq:5.A.12} \tag{5.A.12}
+\end{equation}
+Then
+\begin{equation}
+  \mathbf{z}_{im}' = \mathbf{x}_i'\mathbf{H}_m, \quad
+  \mathbf{H}_m \equiv \begin{bmatrix}
+    \mathbf{e}_m \otimes \mathbf{I}_p & \mathbf{0} \\
+    \mathbf{0} & \mathbf{I}_{L-p}
+  \end{bmatrix}, \quad
+  \mathbf{e}_m = m\text{-th column of } \mathbf{I}_M,
+  \label{eq:5.A.13} \tag{5.A.13}
+\end{equation}
+so that $\boldsymbol{\Sigma}_{\mathbf{xz}}$ can be written as
+\begin{equation}
+  \boldsymbol{\Sigma}_{\mathbf{xz}} = (\mathbf{I}_M \otimes \boldsymbol{\Sigma}_{\mathbf{xx}})\mathbf{H},
+  \label{eq:5.A.14} \tag{5.A.14}
+\end{equation}
+where $\mathbf{H}' = (\mathbf{H}_1', \ldots, \mathbf{H}_M')$.
+Substituting \eqref{eq:5.A.14} into \eqref{eq:5.A.11}, the rank of
+$\avar(\hat{\mathbf{q}})$ is
+\[
+  \operatorname{rank}[(\boldsymbol{\Sigma}^{-1} \otimes \mathbf{I}_K)\mathbf{H}
+  \vdots (\mathbf{Q} \otimes \mathbf{I}_K)\mathbf{H}\mathbf{D}] - L.
+\]
+
+The $m$-th $K$ rows of the $(MK \times (L+p))$ matrix
+$[(\boldsymbol{\Sigma}^{-1} \otimes \mathbf{I}_K)\mathbf{H} \vdots (\mathbf{Q} \otimes \mathbf{I}_K)\mathbf{H}\mathbf{D}]$
+are
+\begin{equation}
+  \begin{bmatrix}
+    \begin{pmatrix} \sigma^{m1} \\ \vdots \\ \sigma^{mM} \end{pmatrix} \otimes \mathbf{I}_p
+    & \mathbf{0} \\
+    \mathbf{0}
+    & \bigl(\sum_{h=1}^{M}\sigma^{mh}\bigr)\mathbf{I}_{L-p}
+  \end{bmatrix}
+  \quad
+  \begin{bmatrix}
+    \begin{pmatrix} q_{m1} \\ \vdots \\ q_{mM} \end{pmatrix} \otimes \mathbf{I}_p \\
+    \mathbf{0}
+  \end{bmatrix}.
+  \label{eq:5.A.15} \tag{5.A.15}
+\end{equation}
+
+Therefore,
+$\operatorname{rank}[(\boldsymbol{\Sigma}^{-1} \otimes \mathbf{I}_K)\mathbf{H}
+\vdots (\mathbf{Q} \otimes \mathbf{I}_K)\mathbf{H}\mathbf{D}] = L + p$
+unless $\operatorname{vec}(\boldsymbol{\Sigma}^{-1})$ and
+$\operatorname{vec}(\mathbf{Q})$ are linearly dependent; that is, unless $\boldsymbol{\Sigma}^{-1}$
+is proportional to $\mathbf{Q}$. But since
+$\operatorname{rank}(\boldsymbol{\Sigma}^{-1}) = M \neq \operatorname{rank}(\mathbf{Q}) = M - 1$,
+$\boldsymbol{\Sigma}^{-1}$ cannot be proportional to $\mathbf{Q}$. \qed

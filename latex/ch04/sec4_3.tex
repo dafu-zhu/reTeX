@@ -1,0 +1,192 @@
+% sec4_3.tex — Section 4.3: Large-Sample Theory
+
+\section{Large-Sample Theory}
+\label{sec:4.3}
+
+Large-sample theory for the single-equation GMM was stated in Propositions~3.1--3.8.
+It is just a matter of mechanical substitution to translate it to the multiple-equation
+model. Provided that $\boldsymbol{\delta}$, $\boldsymbol{\Sigma}_{\mathbf{xz}}$,
+$\mathbf{S}$, $\mathbf{g}_i$, $\mathbf{s}_{\mathbf{xy}}$, and
+$\mathbf{S}_{\mathbf{xz}}$ are as defined in the previous sections and that
+``Assumption~3.$x$'' is replaced by ``Assumption~4.$x$,''
+Propositions~3.1, 3.3, and 3.5--3.8 are valid as stated for the multiple-equation
+model. Only a few comments about their interpretation are needed.
+
+\begin{itemize}
+\item \textbf{(Hypothesis testing)}\quad
+In the present case of multiple equations, $\boldsymbol{\delta}$ is a stacked
+vector composed of coefficients from different equations. The import of Propositions~3.3
+and~3.8 about hypothesis testing for multiple equations is that we can
+test cross-equation restrictions.
+
+\begin{quote}
+\textbf{Example 4.2 (continued):}\quad
+For the two-equation system of wage equations for two years, the stacked coefficient
+vector $\boldsymbol{\delta}$ is
+\[
+\boldsymbol{\delta} = (\phi_1, \beta_1, \gamma_1, \pi_1,
+\phi_2, \beta_2, \gamma_2, \pi_2)'.
+\]
+It would be interesting to test $\mathrm{H}_0$: $\beta_1 = \beta_2$ and
+$\pi_1 = \pi_2$, namely, that the schooling and experience premia remained stable
+over time. The hypothesis can be written as $\mathbf{R}\boldsymbol{\delta} = \mathbf{r}$, where
+\[
+\mathbf{R} = \begin{bmatrix}
+0 & 1 & 0 & 0 & 0 & -1 & 0 & 0 \\
+0 & 0 & 0 & 1 & 0 & 0 & 0 & -1
+\end{bmatrix}, \quad
+\mathbf{r} = \begin{bmatrix} 0 \\ 0 \end{bmatrix}.
+\]
+Nonlinear cross-equation restrictions, too, can be tested; just use part~(c)
+of Proposition~3.3 or Proposition~3.8.
+\end{quote}
+
+\item \textbf{(Test of overidentifying restrictions)}\quad
+The number of orthogonality conditions is $\sum_m K_m$ and the number of coefficients
+is $\sum_m L_m$. Accordingly, the degrees of freedom for the $J$ statistic in
+Proposition~3.6 are $\sum_m K_m - \sum_m L_m$, and that for the $C$ statistic in
+Proposition~3.7 is the total number of suspect instruments from different equations.
+\end{itemize}
+
+Proposition~3.2 does not apply to multiple equations as is, but it is obvious how
+it can be adapted.
+
+\begin{proposition}[consistent estimation of contemporaneous error cross-equation moments]
+\label{prop:4.1}
+\textit{Let\/ $\hat{\boldsymbol{\delta}}_m$ be a consistent estimator of\/
+$\boldsymbol{\delta}_m$, and let\/
+$\hat{\varepsilon}_{im} \equiv y_{im} - \mathbf{z}_{im}' \hat{\boldsymbol{\delta}}_m$ be
+the implied residual for $m = 1, 2, \ldots, M$.
+Under Assumptions~4.1 and~4.2, plus the assumption that\/
+$\E(\mathbf{z}_{im} \mathbf{z}_{ih}')$ exists and is finite for all
+$m, h$ $(= 1, 2, \ldots, M)$,}
+\begin{equation}
+\hat{\sigma}_{mh} \pto \sigma_{mh},
+\label{eq:4.3.1}
+\end{equation}
+\textit{where}
+\[
+\hat{\sigma}_{mh} \equiv \frac{1}{n} \sum_{i=1}^{n} \hat{\varepsilon}_{im} \hat{\varepsilon}_{ih}
+\quad \textit{and} \quad
+\sigma_{mh} \equiv \E(\varepsilon_{im}\, \varepsilon_{ih})
+\]
+\textit{provided that\/ $\E(\varepsilon_{im}\, \varepsilon_{ih})$ exists and is finite.}
+\end{proposition}
+
+The proof, very similar to the proof of Proposition~3.2 and tedious, is left as an
+analytical exercise.
+
+This leaves Proposition~3.4 about consistently estimating $\mathbf{S}$. The assumption
+corresponding to Assumption~3.6 (the finite fourth-moment assumption) is
+
+\begin{assumption}[finite fourth moments]
+\label{ass:4.6}
+$\E[(x_{imk} \cdot z_{ihj})^2]$ \textit{exists and is finite for
+all $k$ $(= 1, 2, \ldots, K_m)$, $j$ $(= 1, 2, \ldots, L_h)$,
+$m, h$ $(= 1, 2, \ldots, M)$, where $x_{imk}$ is the $k$-th element of\/
+$\mathbf{x}_{im}$ and $z_{ihj}$ is the $j$-th element of\/ $\mathbf{z}_{ih}$.}
+\end{assumption}
+
+The multiple-equation version of the formula (3.5.10) for consistently estimating
+$\mathbf{S}$ is
+\begin{equation}
+\widehat{\mathbf{S}} = \begin{bmatrix}
+\dfrac{1}{n} \displaystyle\sum_{i=1}^{n}
+\hat{\varepsilon}_{i1}\, \hat{\varepsilon}_{i1}\,
+\mathbf{x}_{i1} \mathbf{x}_{i1}' & \cdots &
+\dfrac{1}{n} \displaystyle\sum_{i=1}^{n}
+\hat{\varepsilon}_{i1}\, \hat{\varepsilon}_{iM}\,
+\mathbf{x}_{i1} \mathbf{x}_{iM}' \\[8pt]
+\vdots & & \vdots \\[4pt]
+\dfrac{1}{n} \displaystyle\sum_{i=1}^{n}
+\hat{\varepsilon}_{iM}\, \hat{\varepsilon}_{i1}\,
+\mathbf{x}_{iM} \mathbf{x}_{i1}' & \cdots &
+\dfrac{1}{n} \displaystyle\sum_{i=1}^{n}
+\hat{\varepsilon}_{iM}\, \hat{\varepsilon}_{iM}\,
+\mathbf{x}_{iM} \mathbf{x}_{iM}'
+\end{bmatrix},
+\label{eq:4.3.2}
+\end{equation}
+for some consistent estimate $\hat{\varepsilon}_{im}$ of $\varepsilon_{im}$.
+
+\begin{proposition}[consistent estimation of $\mathbf{S}$, the asymptotic variance of $\bar{\mathbf{g}}$]
+\label{prop:4.2}
+\textit{Let\/ $\hat{\boldsymbol{\delta}}_m$ be a consistent estimator of\/
+$\boldsymbol{\delta}_m$, and let\/
+$\hat{\varepsilon}_{im} \equiv y_{im} - \mathbf{z}_{im}' \hat{\boldsymbol{\delta}}_m$ be
+the implied residual for $m = 1, 2, \ldots, M$.
+Under Assumptions~4.1, 4.2, and~4.6, $\widehat{\mathbf{S}}$ given in
+\eqref{eq:4.3.2} is consistent for\/ $\mathbf{S}$.}
+\end{proposition}
+
+We will not give a proof; the technique is very similar to the one used in the proof
+of Proposition~2.4.
+
+Since this $\widehat{\mathbf{S}}$ is consistent for $\mathbf{S}$, the multiple-equation
+GMM estimator, using $\widehat{\mathbf{S}}^{-1}$ as the weighting matrix,
+$\hat{\boldsymbol{\delta}}(\widehat{\mathbf{S}}^{-1})$, is an efficient multiple-equation
+GMM estimator with minimum asymptotic variance. The formulas for the asymptotic
+variance and its consistent estimator are (3.5.13) and (3.5.14), which are reproduced
+here for convenience:
+\begin{align}
+\avar(\hat{\boldsymbol{\delta}}(\widehat{\mathbf{S}}^{-1}))
+&= (\boldsymbol{\Sigma}_{\mathbf{xz}}' \mathbf{S}^{-1}
+\boldsymbol{\Sigma}_{\mathbf{xz}})^{-1},
+\label{eq:4.3.3} \\
+\widehat{\avar}(\hat{\boldsymbol{\delta}}(\widehat{\mathbf{S}}^{-1}))
+&= (\mathbf{S}_{\mathbf{xz}}' \widehat{\mathbf{S}}^{-1}
+\mathbf{S}_{\mathbf{xz}})^{-1}.
+\label{eq:4.3.4}
+\end{align}
+
+To recapitulate, the features specific to the multiple-equation GMM are:
+$\boldsymbol{\Sigma}_{\mathbf{xz}}$ is a block diagonal matrix given by~\eqref{eq:4.1.9},
+$\mathbf{S}$ is given by~\eqref{eq:4.1.11},
+$\mathbf{s}_{\mathbf{xy}}$ and $\mathbf{S}_{\mathbf{xz}}$ by~\eqref{eq:4.2.2},
+and $\widehat{\mathbf{S}}$ by~\eqref{eq:4.3.2}.
+For the initial estimator $\hat{\boldsymbol{\delta}}_m$ needed to calculate
+$\hat{\varepsilon}_{im}$ and $\widehat{\mathbf{S}}$, we can use the FIVE estimator
+(to be presented below) or the efficient single-equation GMM applied to each equation
+separately. Of course, as long as it is consistent, the choice of the initial
+estimator does not affect the asymptotic distribution of the efficient GMM estimator.
+
+Table~4.1 summarizes the results of this chapter so far.
+
+\begin{table}[htbp]
+\centering
+\caption{Multiple-Equation GMM in the Single-Equation Format}
+\label{tab:4.1}
+\small
+\medskip
+\begin{tabular}{@{}p{3.8cm}p{3.5cm}p{3.5cm}@{}}
+\toprule
+& Single-Equation GMM applied to the equation in question
+& Multiple-Equation GMM \\
+\midrule
+$\mathbf{g}_i$ & $\mathbf{x}_i \cdot \varepsilon_i$ & (4.1.4) \\[3pt]
+$\boldsymbol{\delta}$ & $\boldsymbol{\delta}$ & (4.1.6) \\[3pt]
+$\mathbf{s}_{\mathbf{xy}}$
+& $\frac{1}{n}\sum \mathbf{x}_i \cdot y_i$ & (4.2.2) \\[3pt]
+$\mathbf{S}_{\mathbf{xz}}$
+& $\frac{1}{n}\sum \mathbf{x}_i \mathbf{z}_i'$ & (4.2.2) \\[3pt]
+Size of $\mathbf{W}$ & $K \times K$
+& $\sum_m K_m \times \sum_m K_m$ \\[3pt]
+$\boldsymbol{\Sigma}_{\mathbf{xz}}$
+& $\E(\mathbf{x}_i \mathbf{z}_i')$ & (4.1.9) \\[3pt]
+$\mathbf{S}$ $(\equiv \avar(\bar{\mathbf{g}}))$
+& $\E(\varepsilon_i^2\, \mathbf{x}_i \mathbf{x}_i')$ & (4.1.11) \\[3pt]
+$\widehat{\mathbf{S}}$
+& $\frac{1}{n}\sum \hat{\varepsilon}_i^2\, \mathbf{x}_i \mathbf{x}_i'$
+& (4.3.2) \\[3pt]
+\midrule
+Estimator consistent under which assumptions?
+& 3.1--3.4 & 4.1--4.4 \\[3pt]
+Estimator asymp.\ normal under which assumptions?
+& 3.1--3.5 & 4.1--4.5 \\[3pt]
+$\widehat{\mathbf{S}} \pto \mathbf{S}$ under which assumptions?
+& 3.1, 3.2, 3.6, $\E(\mathbf{g}_i \mathbf{g}_i')$ finite
+& 4.1, 4.2, 4.6, $\E(\mathbf{g}_i \mathbf{g}_i')$ finite \\[3pt]
+d.f.\ of $J$ & $K - L$ & $\sum_m(K_m - L_m)$ \\
+\bottomrule
+\end{tabular}
+\end{table}

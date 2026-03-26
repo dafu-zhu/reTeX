@@ -1,0 +1,494 @@
+% sec10_1.tex — Section 10.1: Cointegrated Systems
+
+Figure~10.1(a) plots the logs of quarterly real per capita aggregate personal dis\-posable
+income and personal consumption expenditure for the United States from
+1947:Q1 to 1998:Q1. Both series have linear trends and --- as will be verified in an
+example below --- stochastic trends. However, these two I(1) series tend to move
+together, suggesting that the difference is stationary. This is an example of \textbf{coin\-tegration}.
+Cointegration relations abound in economics. In fact, many of the
+variables we have examined in the book are cointegrated: prices of the same com\-modity
+in two different countries (the difference should be stationary under the
+weaker version of Purchasing Power Parity), long- and short-term interest rates
+(even though they have trends, yield differential may be stationary), forward and
+spot exchange rates, and so forth. Cointegration may characterize more than two
+variables. For example, the existence of a stable money demand function implies
+that a linear combination of the log of real money stock, the nominal interest rate,
+and log aggregate income may be stationary even though each of the three variables
+is I(1).
+
+We start out this section by extending the definitions of univariate I(0) and I(1)
+processes of the previous chapter to vector processes. The concept of cointegration
+for multivariate I(1) processes will then be introduced formally.
+
+\begin{figure}[htbp]
+  \centering
+  % Placeholder for Figure 10.1(a): Log Income and Consumption
+  \includegraphics[width=0.9\textwidth,trim=50 350 50 350,clip]{figures/fig_10_1a.png}
+  \caption{Log Income and Consumption}
+  \label{fig:10.1a}
+\end{figure}
+
+\subsection*{Linear Vector I(0) and I(1) Processes}
+
+Our definition of vector I(0) and I(1) processes follows Hamilton (1994) and
+Johansen (1995). To introduce the multivariate extension of a zero-mean linear
+univariate I(0) process, consider a zero-mean $n$-dimensional VMA (vector moving
+average) process:
+\begin{equation}
+  \underset{(n \times 1)}{\mathbf{u}_t}
+  = \underset{(n \times n)}{\boldsymbol{\Psi}(L)} \;
+    \underset{(n \times 1)}{\boldsymbol{\varepsilon}_t}, \quad
+  \boldsymbol{\Psi}(L) \equiv \mathbf{I}_n + \boldsymbol{\Psi}_1 L
+    + \boldsymbol{\Psi}_2 L^2 + \cdots,
+  \label{eq:10.1.1} \tag{10.1.1}
+\end{equation}
+where $\boldsymbol{\varepsilon}_t$ is i.i.d.\ with
+\begin{equation}
+  \E(\boldsymbol{\varepsilon}_t) = \mathbf{0}, \quad
+  \E(\boldsymbol{\varepsilon}_t \boldsymbol{\varepsilon}_t')
+  = \underset{(n \times n)}{\boldsymbol{\Omega}}, \quad
+  \boldsymbol{\Omega} \text{ positive definite}.
+  \label{eq:10.1.2} \tag{10.1.2}
+\end{equation}
+(The error process $\boldsymbol{\varepsilon}_t$ could be a vector Martingale Difference Sequence satisfying
+certain properties, but we will not allow for this degree of generality.) As in the
+univariate case, we impose two restrictions. The first is one-summability:\footnote{%
+A sequence of matrices $\{\boldsymbol{\Psi}_j\}$ is said to be one-summable if
+$\{|\boldsymbol{\Psi}_{j,k\ell}|\}$ is one-summable (i.e.,
+$\sum_{j=0}^{\infty} j\,|\boldsymbol{\Psi}_{j,k\ell}| < \infty$)
+for all $k, \ell = 1, 2, \ldots, n$, where $\boldsymbol{\Psi}_{j,k\ell}$ is the
+$(k, \ell)$ element of the $n \times n$ matrix $\boldsymbol{\Psi}_j$.}
+\begin{equation}
+  \{\boldsymbol{\Psi}_j\} \text{ is one-summable}.
+  \label{eq:10.1.3} \tag{10.1.3}
+\end{equation}
+Since $\{\boldsymbol{\Psi}_j\}$ is absolutely summable when one-summability holds, the multivariate
+version of Proposition~6.1(d) means that $\mathbf{u}_t$ is (strictly) stationary and ergodic. The
+second restriction on the zero-mean VMA process is
+\begin{equation}
+  \boldsymbol{\Psi}(1) \neq \underset{(n \times n)}{\mathbf{0}}
+  \quad (n \times n \text{ matrix of zeros}).
+  \label{eq:10.1.4} \tag{10.1.4}
+\end{equation}
+That is, at least one element of the $n \times n$ matrix $\boldsymbol{\Psi}(1)$ is not zero. This is a natu\-ral
+multivariate extension of condition (9.2.3b) in the definition of univariate I(0)
+processes on page~564.
+
+A (linear) zero-mean $n$-dimensional \textbf{vector I(0) process} or a (linear) \textbf{zero-mean
+I(0) system} is a VMA process satisfying (10.1.1)--(10.1.4). Given a zero-mean
+I(0) system $\mathbf{u}_t$, a (linear) \textbf{vector I(0) process} or a (linear) \textbf{I(0) system} can
+be written as
+\[
+  \boldsymbol{\delta} + \mathbf{u}_t,
+\]
+where $\boldsymbol{\delta}$ is an $n$-dimensional vector representing the mean of the stationary process.
+Using the formula (6.5.6) with (6.3.15), the long-run covariance matrix of the I(0)
+system is
+\begin{equation}
+  \boldsymbol{\Psi}(1) \boldsymbol{\Omega} \boldsymbol{\Psi}(1)'.
+  \label{eq:10.1.5} \tag{10.1.5}
+\end{equation}
+Since $\boldsymbol{\Omega}$ is positive definite and $\boldsymbol{\Psi}(1)$ satisfies (10.1.4), at least one of the diagonal
+elements of this long-run variance matrix is positive, implying that at least one of
+the elements of an I(0) system is individually I(0) (i.e., I(0) as a univariate process).
+We do not necessarily require $\boldsymbol{\Psi}(1)$ to be nonsingular. In fact, accommodating its
+singularity is the whole point of the theory of cointegration. Consequently, the
+long-run variance matrix, too, can be singular.
+
+\begin{defbox}
+\textbf{Example 10.1\quad (A bivariate I(0) system):}\quad Consider the following bivariate
+first-order VMA process:
+\begin{equation}
+  \begin{cases}
+    u_{1t} = \varepsilon_{1t} - \varepsilon_{1,t-1} + \gamma \varepsilon_{2,t-1}, \\
+    u_{2t} = \varepsilon_{2t},
+  \end{cases}
+  \quad \text{or} \quad
+  \mathbf{u}_t = \boldsymbol{\varepsilon}_t + \boldsymbol{\Psi}_1 \boldsymbol{\varepsilon}_{t-1},
+  \label{eq:10.1.6} \tag{10.1.6}
+\end{equation}
+where
+\begin{equation}
+  \boldsymbol{\varepsilon}_t
+  = \begin{bmatrix} \varepsilon_{1t} \\ \varepsilon_{2t} \end{bmatrix}, \quad
+  \boldsymbol{\Psi}_1
+  = \begin{bmatrix} -1 & \gamma \\ 0 & 0 \end{bmatrix}.
+  \label{eq:10.1.7} \tag{10.1.7}
+\end{equation}
+Since this is a finite-order VMA, the one-summability condition is trivially
+satisfied. Requirement (10.1.4) is satisfied because
+\begin{equation}
+  \boldsymbol{\Psi}(1) = \mathbf{I}_2 + \boldsymbol{\Psi}_1
+  = \begin{bmatrix} 0 & \gamma \\ 0 & 1 \end{bmatrix}
+  \neq \underset{(2 \times 2)}{\mathbf{0}}.
+  \label{eq:10.1.8} \tag{10.1.8}
+\end{equation}
+So this example fits our definition of I(0) systems. If $\gamma = 0$, then the first
+element, $u_{1t}$, is actually I($-1$) as a univariate process.
+\end{defbox}
+
+\medskip
+
+The $n$-\textbf{dimensional I(1) system} $\mathbf{y}_t$ associated with a zero-mean I(0) system $\mathbf{u}_t$
+can be defined by the relation
+\begin{equation}
+  \Delta \mathbf{y}_t = \boldsymbol{\delta} + \mathbf{u}_t.
+  \label{eq:10.1.9} \tag{10.1.9}
+\end{equation}
+So the mean of $\Delta \mathbf{y}_t$ is $\boldsymbol{\delta}$. Since not every element of the associated zero-mean
+I(0) process $\mathbf{u}_t$ is required to be individually I(0), some of the elements of the I(1)
+system $\mathbf{y}_t$ may not be individually I(1).\footnote{%
+In many textbooks and also in Engle and Granger (1987), all elements of an I(1) system are assumed to be
+individually I(1), but that assumption is not needed for the development of cointegration theory. This point is
+emphasized in, e.g., L\"{u}tkepohl (1993, pp.~352--353) and Johansen (1995, Chapter~3).}
+Substituting (10.1.1) into this, we obtain
+\begin{equation}
+  \Delta \mathbf{y}_t = \boldsymbol{\delta} + \boldsymbol{\Psi}(L) \boldsymbol{\varepsilon}_t.
+  \label{eq:10.1.10} \tag{10.1.10}
+\end{equation}
+This is called the \textbf{vector moving average (VMA) representation} of an I(1)
+system. In levels, $\mathbf{y}_t$ can be written as
+\begin{equation}
+  \mathbf{y}_t = \mathbf{y}_0 + \boldsymbol{\delta} \cdot t
+    + \mathbf{u}_1 + \mathbf{u}_2 + \cdots + \mathbf{u}_t,
+  \label{eq:10.1.11} \tag{10.1.11}
+\end{equation}
+or, written out in full,
+\[
+  \begin{bmatrix} y_{1t} \\ y_{2t} \\ \vdots \\ y_{nt} \end{bmatrix}
+  = \begin{bmatrix} y_{1,0} \\ y_{2,0} \\ \vdots \\ y_{n,0} \end{bmatrix}
+  + \begin{bmatrix} \delta_1 \cdot t \\ \delta_2 \cdot t \\ \vdots \\ \delta_n \cdot t \end{bmatrix}
+  + \begin{bmatrix} u_{1,1} \\ u_{2,1} \\ \vdots \\ u_{n,1} \end{bmatrix}
+  + \begin{bmatrix} u_{1,2} \\ u_{2,2} \\ \vdots \\ u_{n,2} \end{bmatrix}
+  + \cdots
+  + \begin{bmatrix} u_{1t} \\ u_{2t} \\ \vdots \\ u_{nt} \end{bmatrix}.
+\]
+Regarding the initial value $\mathbf{y}_0$, we assume either that it is a vector of fixed constants
+or that it is random but independent of $\boldsymbol{\varepsilon}_t$ for all~$t$.
+
+\begin{defbox}
+\textbf{Example 10.2\quad (A bivariate I(1) system):}\quad An I(1) system whose associated
+zero-mean I(0) process is the bivariate process in Example~10.1 is
+\begin{equation}
+  \begin{cases}
+    \Delta y_{1t} = \delta_1 + \varepsilon_{1t} - \varepsilon_{1,t-1}
+      + \gamma \varepsilon_{2,t-1}, \\
+    \Delta y_{2t} = \delta_2 + \varepsilon_{2t},
+  \end{cases}
+  \quad \text{or} \quad
+  \Delta \mathbf{y}_t = \boldsymbol{\delta} + \boldsymbol{\varepsilon}_t
+    + \boldsymbol{\Psi}_1 \boldsymbol{\varepsilon}_{t-1},
+  \label{eq:10.1.12} \tag{10.1.12}
+\end{equation}
+where $\boldsymbol{\Psi}_1$ is given in (10.1.7). In levels,
+\begin{equation}
+  \begin{cases}
+    y_{1t} = y_{1,0} + \delta_1 \cdot t + (\varepsilon_{1t} - \varepsilon_{1,0})
+      + \gamma \,(\varepsilon_{2,0} + \varepsilon_{2,1} + \cdots + \varepsilon_{2,t-1}), \\
+    y_{2t} = y_{2,0} + \delta_2 \cdot t + (\varepsilon_{2,1} + \varepsilon_{2,2}
+      + \cdots + \varepsilon_{2t}).
+  \end{cases}
+  \label{eq:10.1.13} \tag{10.1.13}
+\end{equation}
+The second element of $\mathbf{y}_t$ is I(1) as a univariate process. If $\gamma = 0$, then
+the first element $y_{1t}$ is trend stationary because the deviation from the trend
+function $(y_{1,0} - \varepsilon_{1,0}) + \delta_1 \cdot t$ is stationary (actually i.i.d.). Otherwise $y_{1t}$ is I(1).
+\end{defbox}
+
+\subsection*{The Beveridge-Nelson Decomposition}
+
+For an I(1) system whose associated zero-mean I(0) process is $\mathbf{u}_t$ satisfying
+(10.1.1)--(10.1.4), it is easy to obtain the Beveridge-Nelson (BN) decomposition.
+Recall from Section~9.2 that the univariate BN decomposition is based on the
+rewriting of the MA filter as (9.2.5) on page~564. The obvious multivariate version
+of it is
+\begin{align}
+  \underset{(n \times n)}{\boldsymbol{\Psi}(L)}
+  &= \underset{(n \times n)}{\boldsymbol{\Psi}(1)}
+    + (1 - L)\underset{(n \times n)}{\boldsymbol{\alpha}(L)}, \quad
+  \boldsymbol{\alpha}(L) = \sum_{j=0}^{\infty} \boldsymbol{\alpha}_j L^j,
+  \notag \\
+  \underset{(n \times n)}{\boldsymbol{\alpha}_j}
+  &= -(\boldsymbol{\Psi}_{j+1} + \boldsymbol{\Psi}_{j+2} + \cdots).
+  \label{eq:10.1.14} \tag{10.1.14}
+\end{align}
+So the multivariate analogue of (9.2.6) on page~565 is
+\begin{equation}
+  \mathbf{u}_t = \boldsymbol{\Psi}(1) \boldsymbol{\varepsilon}_t
+    + \boldsymbol{\eta}_t - \boldsymbol{\eta}_{t-1}, \quad
+  \underset{(n \times 1)}{\boldsymbol{\eta}_t}
+    \equiv \boldsymbol{\alpha}(L) \boldsymbol{\varepsilon}_t.
+  \label{eq:10.1.15} \tag{10.1.15}
+\end{equation}
+Since $\boldsymbol{\Psi}(L)$ is one-summable, $\boldsymbol{\alpha}(L)$ is absolutely summable and $\boldsymbol{\eta}_t$ is a well-defined
+covariance-stationary process. Substituting this into (10.1.11), we obtain
+the multivariate version of the BN decomposition:
+\begin{equation}
+  \mathbf{y}_t = \boldsymbol{\delta} \cdot t
+    + \boldsymbol{\Psi}(1)(\boldsymbol{\varepsilon}_1 + \boldsymbol{\varepsilon}_2
+      + \cdots + \boldsymbol{\varepsilon}_t)
+    + \boldsymbol{\eta}_t
+    + (\mathbf{y}_0 - \boldsymbol{\eta}_0).
+  \label{eq:10.1.16} \tag{10.1.16}
+\end{equation}
+As in the univariate case, the I(1) system $\mathbf{y}_t$ is decomposed into a linear trend
+$\boldsymbol{\delta} \cdot t$,
+a stochastic trend $\boldsymbol{\Psi}(1)(\boldsymbol{\varepsilon}_1 + \boldsymbol{\varepsilon}_2 + \cdots + \boldsymbol{\varepsilon}_t)$,
+a stationary component $\boldsymbol{\eta}_t$, and the
+initial condition $\mathbf{y}_0 - \boldsymbol{\eta}_0$. By construction, $\boldsymbol{\eta}_0$ is a random variable. So unless
+$\mathbf{y}_0$ is perfectly correlated with $\boldsymbol{\eta}_0$, the initial condition is random.
+
+\begin{defbox}
+\textbf{Example 10.2 (continued):}\quad For the bivariate I(1) system in Example~10.2,
+the matrix version of $\boldsymbol{\alpha}(L)$ equals $-\boldsymbol{\Psi}_1$ so that the stationary component $\boldsymbol{\eta}_t$
+in the BN decomposition is
+\begin{equation}
+  \boldsymbol{\eta}_t
+  = \begin{bmatrix} \varepsilon_{1t} - \gamma \varepsilon_{2t} \\ 0 \end{bmatrix}.
+  \label{eq:10.1.17} \tag{10.1.17}
+\end{equation}
+(It should be easy for you to verify this from the matrix version of (9.2.5).)
+The two-dimensional stochastic trend is written as
+\begin{equation}
+  \boldsymbol{\Psi}(1)(\boldsymbol{\varepsilon}_1 + \boldsymbol{\varepsilon}_2
+    + \cdots + \boldsymbol{\varepsilon}_t)
+  = \begin{bmatrix} 0 & \gamma \\ 0 & 1 \end{bmatrix}
+    \begin{bmatrix} \sum_{s=1}^{t} \varepsilon_{1s} \\
+                     \sum_{s=1}^{t} \varepsilon_{2s} \end{bmatrix}
+  = \begin{bmatrix} \gamma \cdot \sum_{s=1}^{t} \varepsilon_{2s} \\
+                     \sum_{s=1}^{t} \varepsilon_{2s} \end{bmatrix}.
+  \label{eq:10.1.18} \tag{10.1.18}
+\end{equation}
+Thus, the two-dimensional stochastic trend is driven by one common stochas\-tic
+trend, $\sum_{s=1}^{t} \varepsilon_{2s}$. This is an example of the ``common trend'' representation
+of Stock and Watson (1993) (see Review Question~2 below).
+\end{defbox}
+
+\subsection*{Cointegration Defined}
+
+The I(1) system $\mathbf{y}_t$ is not stationary because it contains a stochastic trend
+$\boldsymbol{\Psi}(1) \cdot (\boldsymbol{\varepsilon}_1 + \cdots + \boldsymbol{\varepsilon}_t)$,
+and, if $\boldsymbol{\delta} \neq \mathbf{0}$, a deterministic trend $\boldsymbol{\delta} \cdot t$.
+The deterministic and stochastic trends, however, may disappear if we take a suitable linear combina\-tion
+of the elements of $\mathbf{y}_t$. To pursue this idea,\footnote{%
+The idea was originally suggested by Granger (1981). See also Aoki (1968) and Box and Tiao (1977).}
+premultiply both sides of the BN
+decomposition (10.1.16) by some conformable vector $\mathbf{a}$ to obtain
+\begin{equation}
+  \mathbf{a}' \mathbf{y}_t = \mathbf{a}' \boldsymbol{\delta} \cdot t
+    + \mathbf{a}' \boldsymbol{\Psi}(1)
+      (\boldsymbol{\varepsilon}_1 + \boldsymbol{\varepsilon}_2 + \cdots + \boldsymbol{\varepsilon}_t)
+    + \mathbf{a}' \boldsymbol{\eta}_t
+    + \mathbf{a}'(\mathbf{y}_0 - \boldsymbol{\eta}_0).
+  \label{eq:10.1.19} \tag{10.1.19}
+\end{equation}
+If $\mathbf{a}$ satisfies
+\begin{equation}
+  \mathbf{a}' \boldsymbol{\Psi}(1) = \underset{(1 \times n)}{\mathbf{0}'},
+  \label{eq:10.1.20} \tag{10.1.20}
+\end{equation}
+then the stochastic trend is eliminated and $\mathbf{a}' \mathbf{y}_t$ becomes
+\begin{equation}
+  \mathbf{a}' \mathbf{y}_t
+  = \mathbf{a}' \boldsymbol{\delta} \cdot t
+    + \mathbf{a}' \boldsymbol{\eta}_t
+    + \mathbf{a}'(\mathbf{y}_0 - \boldsymbol{\eta}_0).
+  \label{eq:10.1.21} \tag{10.1.21}
+\end{equation}
+Strictly speaking, this process is not trend stationary because the initial condition
+$\mathbf{a}'(\mathbf{y}_0 - \boldsymbol{\eta}_0)$ can be correlated with subsequent values of
+$\mathbf{a}' \boldsymbol{\eta}_t$ (see Review Ques\-tion~3 below for an illustration). The process would be trend stationary if, for
+example, the initial value $\mathbf{y}_0$ were such that
+$\mathbf{a}'(\mathbf{y}_0 - \boldsymbol{\eta}_0) = 0$.
+
+We are now ready to define cointegration.\footnote{%
+Our definition is the same as Definition 3.4 in Johansen (1995).}
+
+\begin{definition}[Cointegration]
+\label{def:10.1}
+Let $\mathbf{y}_t$ be an $n$-dimensional I(1) system whose
+associated zero-mean I(0) system $\mathbf{u}_t$ satisfies (10.1.1)--(10.1.4). We say that $\mathbf{y}_t$ is
+\textbf{cointegrated} with an $n$-dimensional \textbf{cointegrating vector} $\mathbf{a}$ if $\mathbf{a} \neq \mathbf{0}$ and
+$\mathbf{a}' \mathbf{y}_t$ can
+be made trend stationary by a suitable choice of its initial value $\mathbf{y}_0$.
+\end{definition}
+
+Defining cointegration in this way, although dictated by logical consistency, does
+\emph{not} necessarily mean that the theory of cointegration requires that the initial con\-dition
+$\mathbf{y}_0$ be chosen as indicated in the definition. The process in (10.1.21) is not
+stationary because $\boldsymbol{\eta}_t$ and $\boldsymbol{\eta}_0$ are correlated. However, since
+$\boldsymbol{\eta}_t = \boldsymbol{\alpha}(L) \boldsymbol{\varepsilon}_t$ and $\boldsymbol{\alpha}(L)$
+is absolutely summable, $\boldsymbol{\eta}_t$ and $\boldsymbol{\eta}_0$ will become asymptotically independent as $t$
+increases. In this sense, the process in (10.1.21) is ``asymptotically stationary,''
+and asymptotic stationarity is all that is needed for estimation and inference for
+cointegrated I(1) systems.\footnote{%
+The distinction between stationarity and asymptotic stationarity is discussed in L\"{u}tkepohl (1993, pp.~348--349).}
+
+\medskip
+
+With cointegration thus defined, we can define the following related concepts.
+
+\begin{itemize}
+\item (Cointegration rank)\quad The \textbf{cointegrating rank} is the number of linearly
+  independent cointegrating vectors, and the \textbf{cointegrating space} is the space
+  spanned by the cointegrating vectors. As the preceding discussion shows, an
+  $n$-dimensional vector $\mathbf{a}$ is a cointegrating vector if and only if (10.1.20) holds.
+  Since there are $h$ linearly independent such vectors if the cointegration rank is
+  $h$, it follows that
+  \begin{equation}
+    \rank\bigl[\underset{(n \times n)}{\boldsymbol{\Psi}(1)}\bigr] = n - h.
+    \label{eq:10.1.22} \tag{10.1.22}
+  \end{equation}
+  Put differently, the cointegration rank $h$ equals $n - \rank[\boldsymbol{\Psi}(1)]$.
+
+\item (Cointegration among subsets of $\mathbf{y}_t$)\quad At least one of the elements of a coin\-tegrating
+  vector is not zero. Suppose, without loss of generality, that the first
+  element of the cointegrating vector is not zero. Then we say that $y_{1t}$ (the first
+  element of $\mathbf{y}_t$) is \textbf{cointegrated with} $\mathbf{y}_{2t}$ (the remaining $n - 1$ elements of $\mathbf{y}_t$) or
+  that $y_{1t}$ is \textbf{part of a cointegrating relationship}. We can also define cointegra\-tion
+  for a subset of $\mathbf{y}_t$. For example, the $n - 1$ variables in $\mathbf{y}_{2t}$ are not cointegrated
+  if there does not exist an $(n - 1)$-dimensional vector $\mathbf{b} \neq \mathbf{0}$ such that (10.1.20)
+  holds with $\mathbf{a}' = (0, \mathbf{b}')$. Therefore, $\mathbf{y}_{2t}$ is not cointegrated if and only if the last
+  $n - 1$ rows of $\boldsymbol{\Psi}(1)$ are linearly independent.
+
+\item (Stochastic cointegration)\quad Note that the deterministic trend $\mathbf{a}' \boldsymbol{\delta} \cdot t$ is not elimi\-nated
+  from $\mathbf{a}' \mathbf{y}_t$ unless the cointegrating vector also satisfies
+  \begin{equation}
+    \mathbf{a}' \boldsymbol{\delta} = 0.
+    \label{eq:10.1.23} \tag{10.1.23}
+  \end{equation}
+\end{itemize}
+
+In most applications, a cointegrating vector eliminates both the stochastic and
+deterministic trends in (10.1.19). That is, a vector $\mathbf{a}$ that satisfies (10.1.20) neces\-sarily
+satisfies (10.1.23), so that $\mathbf{a}' \mathbf{y}_t$, which can now be written as
+\begin{equation}
+  \mathbf{a}' \mathbf{y}_t
+  = \mathbf{a}' \boldsymbol{\eta}_t
+    + \mathbf{a}'(\mathbf{y}_0 - \boldsymbol{\eta}_0),
+  \label{eq:10.1.24} \tag{10.1.24}
+\end{equation}
+is stationary (not just trend stationary) for a suitable choice of $\mathbf{y}_0$. This implies
+that $\boldsymbol{\delta}$ is a linear combination of the columns of $\boldsymbol{\Psi}(1)$, so
+\begin{equation}
+  \rank \begin{bmatrix}
+    \boldsymbol{\delta} & \vdots & \boldsymbol{\Psi}(1) \\
+    \multicolumn{3}{c}{\underset{(n \times (n+1))}{}}
+  \end{bmatrix} = n - h.
+  \label{eq:10.1.25} \tag{10.1.25}
+\end{equation}
+Unless otherwise noted, we will assume that (10.1.25) as well as (10.1.22) are
+satisfied when the cointegration rank is~$h$. If we wish to describe the case where
+a cointegrating vector eliminates the stochastic trend but not necessarily the de\-terministic
+trend, we will use the term \textbf{stochastic cointegration}. Of course, if $\mathbf{y}_t$
+does not contain a deterministic trend (i.e., if $\boldsymbol{\delta} = \mathbf{0}$), then there is no difference
+between cointegration and stochastic cointegration.
+
+\begin{defbox}
+\textbf{Example 10.2 (continued):}\quad In the bivariate I(1) system (10.1.12) in Exam\-ple~10.2,
+the matrix $\boldsymbol{\Psi}(1)$ is given in (10.1.8), so
+\[
+  \begin{bmatrix}
+    \boldsymbol{\delta} & \vdots & \boldsymbol{\Psi}(1)
+  \end{bmatrix}
+  = \begin{bmatrix}
+    \delta_1 & 0 & \gamma \\
+    \delta_2 & 0 & 1
+  \end{bmatrix}.
+\]
+The rank of $\boldsymbol{\Psi}(1)$ is 1, so the cointegration rank is $1$ ($= 2 - 1$). All cointe\-grating
+vectors can be written as $(c, -c\gamma)'$, $c \neq 0$. The assumption that the
+cointegrating vector also eliminates the deterministic trend can be written as
+$c\delta_1 - c\gamma\delta_2 = 0$ or $\delta_1 = \gamma\delta_2$, which implies that the rank of
+$[\boldsymbol{\delta} \vdots \boldsymbol{\Psi}(1)]$ shown
+above is one.
+\end{defbox}
+
+\medskip
+
+Quite a few implications for I(1) systems follow from the definition of cointe\-gration.
+For example,
+
+\begin{itemize}
+\item ($h < n$)\quad For an $n$-dimensional I(1) system, the cointegration rank cannot be
+  as large as~$n$. If it were $n$, then $\rank[\boldsymbol{\Psi}(1)] = 0$ and $\boldsymbol{\Psi}(1)$ would have to be a
+  matrix of zeros, which is ruled out by requirement (10.1.4).
+
+\item (Implications of the positive definiteness of the long-run variance of $\Delta \mathbf{y}_t$)\quad The
+  long-run variance matrix of $\Delta \mathbf{y}_t$ is given by $\boldsymbol{\Psi}(1)\boldsymbol{\Omega}\boldsymbol{\Psi}(1)'$
+  (see (10.1.5)), which
+  is positive definite if and only if $\boldsymbol{\Psi}(1)$ is nonsingular. Therefore, $\mathbf{y}_t$ is not coin\-tegrated
+  if and only if the long-run variance matrix of $\Delta \mathbf{y}_t$ is positive definite.\footnote{%
+  This equivalence is specific to linear processes. In general, the positive definiteness of the long-run variance
+  matrix of $\Delta \mathbf{y}_t$ is sufficient, but not always necessary, for $\mathbf{y}_t$ to be not cointegrated. See Phillips (1986, p.~321).}
+  Since the long-run variance of each element of $\Delta \mathbf{y}_t$ is positive if the long-run
+  variance matrix of $\Delta \mathbf{y}_t$ is positive definite, it follows that each element of $\mathbf{y}_t$ is
+  individually I(1) (i.e., I(1) as a univariate process) if $\mathbf{y}_t$ is not cointegrated. The
+  same is true for a subset of $\mathbf{y}_t$. For example, consider $\mathbf{y}_{2t}$, the last $n - 1$ elements
+  of $\mathbf{y}_t$. The long-run variance matrix of $\Delta \mathbf{y}_{2t}$ is given by
+  $\boldsymbol{\Psi}_2(1)\boldsymbol{\Omega}\boldsymbol{\Psi}_2(1)'$ where
+  $\boldsymbol{\Psi}_2(1)$ is the last $n - 1$ rows of $\boldsymbol{\Psi}(1)$. It is positive definite if and only if the rows
+  of $\boldsymbol{\Psi}_2(1)$ are linearly independent or $\mathbf{y}_{2t}$ is not cointegrated. In particular, each
+  element of $\mathbf{y}_{2t}$ is individually I(1) if $\mathbf{y}_{2t}$ is not cointegrated.
+
+\item Suppose that $y_{1t}$ is cointegrated with $\mathbf{y}_{2t}$. Then $\mathbf{y}_{2t}$ is not cointegrated if $h = 1$
+  and cointegrated if $h > 1$. The reason is as follows. Cointegration of $y_{1t}$ with
+  $\mathbf{y}_{2t}$ implies that there exists a cointegrating vector, call it $\mathbf{a}_1$, whose first element
+  is not zero. If $h = 1$, then there should not exist an $(n - 1)$-dimensional vector
+  $\mathbf{b} \neq \mathbf{0}$ such that $\mathbf{a}_2' = (0, \mathbf{b}')$ is a cointegrating vector, because $\mathbf{a}_1$ and $\mathbf{a}_2$ are
+  linearly independent. A vector such as $\mathbf{a}_2$ can be found if $h > 1$.
+
+\item (VAR in first differences)\quad If $\mathbf{y}_t$ is difference stationary (without drift), it is
+  tempting to model it as a stationary finite-order VAR
+  $\boldsymbol{\Phi}(L) \Delta \mathbf{y}_t = \boldsymbol{\varepsilon}_t$ where
+  $\boldsymbol{\Phi}(L)$ is a matrix polynomial of degree $p$ such that all the roots of
+  $|\boldsymbol{\Phi}(z)| = 0$
+  are outside the unit circle. But then $\mathbf{y}_t$ cannot be cointegrated. The reason is
+  as follows. If $\boldsymbol{\Phi}(L)$ satisfies the stationarity condition, the coefficient matrix
+  sequence $\{\boldsymbol{\Psi}_j\}$ of its inverse
+  $\boldsymbol{\Psi}(L) = \boldsymbol{\Phi}(L)^{-1}$ is bounded by a geometrically
+  declining sequence (see Section~6.3). So $\boldsymbol{\Psi}(L)$ is one-summable and
+  $\Delta \mathbf{y}_t = \boldsymbol{\Psi}(L) \boldsymbol{\varepsilon}_t$ is a VMA process satisfying (10.1.2) and (10.1.3). Furthermore,
+  \[
+    |\boldsymbol{\Psi}(1)| = |\boldsymbol{\Phi}(1)|^{-1} = |\boldsymbol{\Phi}(1)|^{-1} \neq 0.
+  \]
+  So $\boldsymbol{\Psi}(1)$ is nonsingular and the long-run variance matrix of $\Delta \mathbf{y}_t$ is positive
+  definite.
+\end{itemize}
+
+\subsection*{Questions for Review}
+
+\begin{enumerate}
+\item Let $(y_{1t}, y_{2t})$ be as in Example~10.2 with $\gamma = 0$. Show that $\{y_{1t} + y_{2t}\}$ is I(1).
+  \textbf{Hint:} You need to show that the long-run variance of $\{\Delta y_{1t} + \Delta y_{2t}\}$ is positive.
+
+\item (Stock and Watson (1988) common-trend representation)\quad
+  Let $\mathbf{w}_t \equiv \boldsymbol{\varepsilon}_1 + \cdots + \boldsymbol{\varepsilon}_t$ so that the BN decomposition is
+  \[
+    \mathbf{y}_t = \boldsymbol{\delta} \cdot t + \boldsymbol{\Psi}(1) \mathbf{w}_t
+      + \boldsymbol{\eta}_t + (\mathbf{y}_0 - \boldsymbol{\eta}_0).
+  \]
+  A result from linear algebra states that
+
+  if $\mathbf{C}$ is an $n \times n$ matrix of rank $n - h$, then there exists an $n \times n$ non\-singular
+  matrix $\mathbf{G}$ and an $n \times (n - h)$ matrix $\mathbf{F}$ of full column rank
+  such that
+  \[
+    \underset{(n \times n)}{\mathbf{C}} \, \underset{(n \times n)}{\mathbf{G}}
+    = \begin{bmatrix}
+        \underset{(n \times (n-h))}{\mathbf{F}} & \vdots
+          & \underset{(n \times h)}{\mathbf{0}}
+      \end{bmatrix}.
+  \]
+
+  Show that the permanent component $\boldsymbol{\Psi}(1) \mathbf{w}_t$ can be written as
+  $\mathbf{F} \boldsymbol{\tau}_t$, where $\mathbf{F}$ is
+  an $n \times (n - h)$ matrix of full column rank and $\boldsymbol{\tau}_t$ is an $(n - h)$-dimensional
+  I(1) process (without drift). This is called the \textbf{common-trend representation},
+  and $\boldsymbol{\tau}_t$ is the ($n - h$)-dimensional \textbf{common stochastic trend}.
+
+\item Show that the I(1) system in Example~10.2 can be cointegrated but not trend
+  stationary. \textbf{Hint:} Show that $\mathbf{a}'(\mathbf{y}_0 - \boldsymbol{\eta}_0) \neq 0$ for
+  $\mathbf{a} = (1, -\gamma)'$ if
+  $y_{1,0} - \varepsilon_{1,0} + \gamma \varepsilon_{2,0} \neq -\gamma y_{2,0}$.
+\end{enumerate}

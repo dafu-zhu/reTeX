@@ -1,0 +1,627 @@
+% problems9.tex — Problem Set for Chapter 9
+
+\begin{problemset}
+
+\subsection*{Analytical Exercises}
+
+\exercise[1]
+Prove Proposition~9.2(b). \textbf{Hint:} By the definition of $\Delta\xi_t$, we have $\xi_t = \xi_{t-1} +
+\Delta\xi_t$. So
+\[
+(\xi_t)^2 = (\xi_{t-1} + \Delta\xi_t)^2.
+\]
+From this, derive
+\[
+\Delta\xi_t \cdot \xi_{t-1} = \bigl(\tfrac{1}{2}\bigr)\bigl[(\xi_t)^2 - (\xi_{t-1})^2 - (\Delta\xi_t)^2\bigr].
+\]
+Sum this over $t = 1, 2, \ldots, T$ to obtain
+\[
+\sum_{t=1}^{T}\Delta\xi_t \cdot \xi_{t-1}
+= \bigl(\tfrac{1}{2}\bigr)\bigl[(\xi_T)^2 - (\xi_0)^2\bigr]
+- \bigl(\tfrac{1}{2}\bigr)\sum_{t=1}^{T}(\Delta\xi_t)^2.
+\]
+Divide both sides by $T$ to obtain
+\[
+\frac{1}{T}\sum_{t=1}^{T}\Delta\xi_t \cdot \xi_{t-1}
+= \frac{1}{2}\left(\frac{\xi_T}{\sqrt{T}}\right)^2
+- \frac{1}{2}\left(\frac{\xi_0}{\sqrt{T}}\right)^2
+- \frac{1}{2T}\sum_{t=1}^{T}(\Delta\xi_t)^2. \quad (*)
+\]
+Apply Proposition~6.9 and the Ergodic Theorem to the terms on the right-hand
+side of $(*)$.
+
+\exercise[2]
+(Proof of Proposition~9.4) \enspace Let $\hat{\rho}^\mu$ be the OLS estimate of $\rho$ in the AR(1)
+equation with intercept,~(9.3.11), and define the demeaned series $\{y_{t-1}^\mu\}$ $(t =
+1, 2, \ldots, T)$ by
+\[
+y_{t-1}^\mu \equiv y_{t-1} - \bar{y}, \quad
+\bar{y} \equiv \frac{y_0 + y_1 + \cdots + y_{T-1}}{T}
+\quad (t = 1, 2, \ldots, T). \qquad (1)
+\]
+This $y_{t-1}^\mu$ equals the OLS residual from the regression of $y_{t-1}$ on a constant for
+$t = 1, 2, \ldots, T$.
+
+\begin{enumerate}[label=(\alph*)]
+\item Derive
+\begin{equation*}
+\hat{\rho}^\mu - 1 = \frac{\sum_{t=1}^{T}\Delta y_t\, y_{t-1}^\mu}{\sum_{t=1}^{T}(y_{t-1}^\mu)^2}.
+\tag{2}
+\end{equation*}
+\textbf{Hint:} By the Frisch-Waugh Theorem, $\hat{\rho}^\mu$ is numerically equal to the OLS
+coefficient estimate in the regression of $y_t$ on $y_{t-1}^\mu$ (\emph{without} intercept). Thus,
+\[
+\hat{\rho}^\mu = \frac{\sum_{t=1}^{T} y_t\, y_{t-1}^\mu}{\sum_{t=1}^{T}(y_{t-1}^\mu)^2}
+\quad \text{or} \quad
+\hat{\rho}^\mu - 1 = \frac{\sum_{t=1}^{T}(y_t - y_{t-1}) \cdot y_{t-1}^\mu}{\sum_{t=1}^{T}(y_{t-1}^\mu)^2}.
+\tag{3}
+\]
+Use the fact that $\sum_{t=1}^{T} y_{t-1}^\mu = 0$ to show that $\sum_{t=1}^{T}(y_t - y_{t-1}) \cdot y_{t-1}^\mu =
+\sum_{t=1}^{T}(y_t - y_{t-1}) \cdot y_{t-1}^\mu$.
+
+\item (Easy) \enspace Show that, under the null hypothesis that $\{y_t\}$ is driftless I(1) (not
+necessarily driftless random walk),
+\[
+T \cdot (\hat{\rho}^\mu - 1)
+\;\dto\;
+\frac{\frac{\lambda^2}{2}\big([W^\mu(1)]^2 - [W^\mu(0)]^2\big) - \frac{\gamma_0}{2}}{\lambda^2 \cdot \int_0^1 [W^\mu(r)]^2\,\mathrm{d}r},
+\tag{4}
+\]
+where $\gamma_0$ is the variance of $\Delta y_t$, $\lambda^2$ is the long-run variance of $\Delta y_t$, and
+$W^\mu(\cdot)$ is a demeaned standard Brownian motion introduced in Section~9.2.
+\textbf{Hint:} Use Proposition~9.2(c) and~(d) with $\xi_t = y_t$.
+
+\item (Trivial) \enspace Verify that $T \cdot (\hat{\rho}^\mu - 1)$ converges to $DF_\rho^\mu$ (defined in~(9.3.13)) if
+$\{y_t\}$ is a driftless random walk. \textbf{Hint:} If $y_t$ is a random walk, then $\lambda^2 = \gamma_0$.
+
+\item (Optional) \enspace Let $s$ be the standard error of regression for the AR(1) equation
+with intercept,~(9.3.11). Show that $s^2$ is consistent for $\gamma_0$ ($\equiv \Var(\Delta y_t)$)
+under the null that $\{y_t\}$ is driftless I(1) (so $\Delta y_t$ is zero-mean I(0) satisfying
+(9.2.1)--(9.2.3)). \textbf{Hint:} Let $(\hat{\alpha}^*, \hat{\rho}^\mu)$ be the OLS estimates of $(\alpha^*, \rho)$. Show
+that $\hat{\alpha}^*$ converges to zero in probability. Write $s^2$ as
+\begin{align*}
+s^2 &= \frac{1}{T-1}\sum_{t=1}^{T}
+\bigl[(\Delta y_t - \hat{\alpha}^*) - (\hat{\rho}^\mu - 1)y_{t-1}\bigr]^2 \\
+&= \frac{1}{T-1}\sum_{t=1}^{T}(\Delta y_t - \hat{\alpha}^*)^2 \\
+&\quad - \frac{2}{T-1}\cdot [T \cdot (\hat{\rho}^\mu - 1)] \cdot
+\frac{1}{T}\sum_{t=1}^{T}(\Delta y_t - \hat{\alpha}^*) \cdot y_{t-1} \\
+&\quad + \frac{1}{T-1}\cdot [T \cdot (\hat{\rho}^\mu - 1)]^2 \cdot
+\frac{1}{T^2}\sum_{t=1}^{T}(y_{t-1})^2.
+\tag{5}
+\end{align*}
+Since $\plim\,\hat{\alpha}^* = 0$, it should be easy to show that the first term on the right-hand side of~(5) converges in probability to $\gamma_0 = \E[(\Delta y_t)^2]$. To prove that
+the second term converges to zero in probability, take for granted that
+\[
+\frac{1}{\sqrt{T}}\frac{1}{T}\sum_{t=1}^{T}y_{t-1}
+\;\dto\; \lambda \int_0^1 W(r)\,\mathrm{d}r.
+\tag{6}
+\]
+
+\item Show that $t^\mu \dto DF_t^\mu$ if $\{y_t\}$ is a driftless random walk. \textbf{Hint:} Since
+$\{y_t\}$ is a driftless random walk, $\lambda^2 = \gamma_0 = \sigma^2$ ($\equiv$ variance of $\varepsilon_t$). So $s$ is
+consistent for $\sigma$.
+\[
+t^\mu = \frac{\hat{\rho}^\mu - 1}{s \times \sqrt{(2,2) \text{ element of } (\mathbf{X}'\mathbf{X})^{-1}}}.
+\tag{7}
+\]
+Show that the square root of the $(2, 2)$ element of $\bigl(\sum_{t=1}^{T}\mathbf{x}_t\mathbf{x}_t'\bigr)^{-1}$ is
+\[
+\frac{1}{\sqrt{\sum_{t=1}^{T}(y_{t-1}^\mu)^2}},
+\]
+where $\mathbf{x}_t \equiv [1, y_{t-1}]'$.
+\end{enumerate}
+
+\exercise[3]
+(Proof of Proposition~9.5) \enspace Let $\hat{\rho}^\tau$ be the OLS estimate of $\rho$ in the AR(1)
+equation with time trend, (9.3.17), and define the detrended series $\{y_{t-1}^\tau\}$ $(t =
+1, 2, \ldots, T)$ by
+\[
+y_{t-1}^\tau \equiv y_{t-1} - \hat{\alpha} - \hat{\delta} \cdot t,
+\tag{8}
+\]
+where $(\hat{\alpha}, \hat{\delta})$ are the OLS coefficient estimates for the regression of $y_{t-1}$ on
+$(1, t)$ for $t = 1, 2, \ldots, T$.
+
+\begin{enumerate}[label=(\alph*)]
+\item Derive
+\[
+\hat{\rho}^\tau - 1 = \frac{\sum_{t=1}^{T}\Delta y_t\, y_{t-1}^\tau}{\sum_{t=1}^{T}(y_{t-1}^\tau)^2}.
+\tag{9}
+\]
+\textbf{Hint:} By the Frisch-Waugh Theorem, $\hat{\rho}^\tau$ is numerically equal to the OLS
+estimate of the $y_{t-1}^\tau$ coefficient in the regression of $y_t$ on $y_{t-1}^\tau$ (\emph{without} intercept or time). Thus,
+\[
+\hat{\rho}^\tau = \frac{\sum_{t=1}^{T} y_t\, y_{t-1}^\tau}{\sum_{t=1}^{T}(y_{t-1}^\tau)^2}
+\quad \text{or} \quad
+\hat{\rho}^\tau - 1 = \frac{\sum_{t=1}^{T}(y_t - y_{t-1}) \cdot y_{t-1}^\tau}{\sum_{t=1}^{T}(y_{t-1}^\tau)^2}.
+\tag{10}
+\]
+Show that $\sum_{t=1}^{T}(y_t - y_{t-1}) \cdot y_{t-1}^\tau = \sum_{t=1}^{T}(y_t - y_{t-1}) \cdot y_{t-1}^\tau$. (By construction,
+$\sum_{t=1}^{T} y_{t-1}^\tau = 0$ and $\sum_{t=1}^{T} t \cdot y_{t-1}^\tau = 0$ (these are the normal equations).)
+
+\item (Easy) \enspace Show that, under the assumption that $y_t = \alpha + \delta \cdot t + \xi_t$ where $\{\xi_t\}$
+is driftless I(1),
+\[
+T \cdot (\hat{\rho}^\tau - 1) \;\dto\;
+\frac{\frac{\lambda^2}{2}\big([W^\tau(1)]^2 - [W^\tau(0)]^2\big) - \frac{\gamma_0}{2}}{\lambda^2 \int_0^1 [W^\tau(r)]^2\,\mathrm{d}r},
+\tag{11}
+\]
+where $\gamma_0$ is the variance of $\Delta y_t$, $\lambda^2$ is the long-run variance of $\Delta y_t$, and
+$W^\tau(\cdot)$ is a detrended standard Brownian motion introduced in Section~9.2.
+\textbf{Hint:} Let $\xi_{t-1}^\tau$ be the residual from the hypothetical regression of $\xi_{t-1}$ on
+$(1, t)$ for $t = 1, 2, \ldots, T$ where $\xi_t \equiv y_t - \alpha - \delta \cdot t$ (this regression is
+hypothetical because we do not observe $\{\xi_t\}$). Then $\xi_{t-1}^\tau = y_{t-1}^\tau$ for $t = 1,
+2, \ldots, T$, because $\xi_t$ differs from $y_t$ only by a linear trend $\alpha + \delta \cdot t$. Use
+Proposition~9.2(e) and~(f). Since $\Delta y_t = \delta + \Delta\xi_t$ under the null, the variance
+of $\Delta\xi_t$ equals that of $\Delta y_t$ and the long-run variance of $\Delta\xi_t$ equals that of
+$\Delta y_t$.
+
+\item (Trivial) \enspace Verify that $T \cdot (\hat{\rho}^\tau - 1)$ converges to $DF_\rho^\tau$ (defined in~(9.3.19))
+if $\{y_t\}$ is a random walk with or without drift.
+\end{enumerate}
+
+\exercise[4]
+(Proof of~(9.4.16)) \enspace In the text,
+\[
+\frac{1}{T}\sum_{t=1}^{T} y_{t-1}\,\varepsilon_t
+\;\dto\; c_1 \equiv \tfrac{1}{2}\sigma^2 \cdot \psi(1) \cdot [W(1)^2 - 1]
+\tag{9.4.16}
+\]
+was left unproven. Prove this under the condition that $\{y_t\}$ is driftless I(1)
+so that $\{\Delta y_t\}$ is zero-mean I(0) satisfying (9.2.1)--(9.2.3). \textbf{Hint:} The $\varepsilon_t$ in
+(9.4.16) is the innovation process in the MA representation of $\{\Delta y_t\}$. Using
+the Beveridge-Nelson decomposition, we have
+\[
+y_t = \psi(1)w_t + \eta_t + (y_0 - \eta_0), \quad w_t \equiv \varepsilon_1 + \varepsilon_2 + \cdots + \varepsilon_t.
+\]
+So
+\[
+\frac{1}{T}\sum_{t=1}^{T} y_{t-1}\,\varepsilon_t
+= \psi(1)\frac{1}{T}\sum_{t=1}^{T} w_{t-1}\,\varepsilon_t
++ \frac{1}{T}\sum_{t=1}^{T}\eta_{t-1}\,\varepsilon_t
++ (y_0 - \eta_0)\frac{1}{T}\sum_{t=1}^{T}\varepsilon_t.
+\tag{$*$}
+\]
+Show that the second and the third term on the right-hand side of this equation converge in probability to zero. Once you have done Analytical Exercise~1
+above, it should be easy to show that
+\[
+\frac{1}{T}\sum_{t=1}^{T} w_{t-1}\,\varepsilon_t
+\;\dto\; \left(\frac{\sigma^2}{2}\right)[W(1)^2 - 1].
+\]
+
+\exercise[5]
+(Optional, proof of Proposition~9.7) \enspace To simplify the calculation, set $p = 1$, so
+the augmented autoregression is
+\[
+y_t = \alpha^* + \rho\, y_{t-1} + \zeta_1\,\Delta y_{t-1} + \varepsilon_t.
+\]
+Let $(\hat{\alpha}^*, \hat{\rho}^\mu, \hat{\zeta}_1)$ be the OLS coefficient estimates. Show that
+\[
+\frac{T \cdot (\hat{\rho}^\mu - 1)}{1 - \hat{\zeta}_1}
+\;\dto\; DF_\rho^\mu.
+\]
+\textbf{Hint:} By the Frisch-Waugh Theorem, $(\hat{\rho}^\mu, \hat{\zeta}_1)$ are numerically the same as the
+OLS coefficient estimates from the regression of $y_t$ on $(y_{t-1}^\mu, (\Delta y_{t-1})^{(\mu)})$, where
+$y_{t-1}^\mu$ is the residual from the regression of $y_{t-1}$ on a constant and $(\Delta y_{t-1})^{(\mu)}$ is
+the residual from the regression of $\Delta y_{t-1}$ on a constant for $t = 1, 2, \ldots, T$.
+Therefore, if $\mathbf{b} = (\hat{\rho}^\mu, \hat{\zeta}_1)'$, $\bm{\beta} = (\rho, \zeta_1)'$, and $\mathbf{x}_t = (y_{t-1}^\mu, (\Delta y_{t-1})^{(\mu)})'$, then
+they satisfy~(9.4.8). So
+
+\begin{align*}
+&(1, 1) \text{ element of } \mathbf{A}_T = \frac{1}{T^2}\sum_{t=1}^{T}(y_{t-1}^\mu)^2, \\
+&\text{1st element of } \mathbf{c}_T = \frac{1}{T}\sum_{t=1}^{T}y_{t-1}^\mu \cdot \varepsilon_t.
+\end{align*}
+
+Apply Proposition~9.2(c) and~(d) with $\xi_t = y_t$ to these expressions.
+
+\exercise[6]
+(Phillips tests) \enspace Suppose that $\{y_t\}$ is driftless I(1), so $\Delta y_t$ can be serially correlated. Nevertheless, estimate the AR(1) equation without intercept, rather than
+the augmented autoregression without intercept, on $\{y_t\}$. Let $\hat{\rho}$ be the OLS
+estimate of the $y_{t-1}$ coefficient. Define
+\begin{align*}
+Z_\rho &\equiv T \cdot (\hat{\rho} - 1)
+- \frac{1}{2} \cdot \left(\frac{T^2 \cdot \hat{\sigma}_{\hat{\rho}}^2}{s^2}\right) \cdot (\hat{\lambda}^2 - \hat{\gamma}_0), \\
+Z_t &\equiv \frac{s}{\hat{\lambda}} \cdot t
+- \frac{1}{2} \cdot \left(\frac{T \cdot \hat{\sigma}_{\hat{\rho}}}{s \cdot \hat{\lambda}}\right) \cdot (\hat{\lambda}^2 - \hat{\gamma}_0),
+\end{align*}
+where $\hat{\sigma}_{\hat{\rho}}$ is the standard error of $\hat{\rho}$, $s$ is the OLS standard error of regression,
+$\hat{\lambda}^2$ is a consistent estimate of $\lambda^2$, $\hat{\gamma}_0$ is a consistent estimate of $\gamma_0$, and $t$ is the
+$t$-value for the hypothesis that $\rho = 1$.
+
+\begin{enumerate}[label=(\alph*)]
+\item Show that $Z_\rho$ and $Z_t$ can be written as
+\begin{align*}
+Z_\rho &= \frac{\frac{1}{T}\sum_{t=1}^{T}\Delta y_t\, y_{t-1}
+- \frac{1}{2}(\hat{\lambda}^2 - \hat{\gamma}_0)}{\frac{1}{T^2}\sum_{t=1}^{T}(y_{t-1})^2}, \\
+Z_t &= \frac{s}{\hat{\lambda}} \cdot t
+- \frac{\frac{1}{2}(\hat{\lambda}^2 - \hat{\gamma}_0)}{\hat{\lambda} \times \sqrt{\frac{1}{T^2}\sum_{t=1}^{T} y_{t-1}^2}}.
+\end{align*}
+\textbf{Hint:} By the algebra of least squares,
+\[
+\frac{\hat{\sigma}_{\hat{\rho}}}{s} = \frac{1}{\sqrt{\sum_{t=1}^{T}(y_{t-1})^2}}.
+\]
+
+\item Show that
+\[
+Z_\rho \;\dto\; DF_\rho \quad \text{and} \quad Z_t \;\dto\; DF_t.
+\]
+\textbf{Hint:} Use Proposition~9.2(a) and~(b) with $\xi_t = y_t$.
+\end{enumerate}
+
+\exercise[7]
+(Optional) \enspace Show that $\alpha(L)$ in~(9.2.5) is absolutely summable. \textbf{Hint:} A one-line
+proof is
+\[
+\sum_{j=0}^{\infty}|\alpha_j|
+= \sum_{j=0}^{\infty}\left|\;-\sum_{i=j+1}^{\infty}\psi_i\;\right|
+\leq \sum_{j=0}^{\infty}\sum_{i=j+1}^{\infty}|\psi_i|
+= \sum_{i=0}^{\infty} i\,|\psi_i| < \infty.
+\]
+Justify each of the equalities and inequalities.
+
+\subsection*{Monte Carlo Exercises}
+
+\exercise[1]
+(You have less power with time) \enspace In this simulation, we wish to verify that the
+finite-sample power against stationary alternatives is greater with the DF $t^\mu$-test
+than with the DF $t^\tau$-test, that is, inclusion of time in the AR(1) equation reduces
+power. The DGP we examine as the stationary alternative is a stationary AR(1)
+process:
+\[
+y_t = \rho y_{t-1} + \varepsilon_t, \quad \rho = 0.95, \quad
+\varepsilon_t \sim \text{i.i.d.\ } N(0, 1), \quad y_0 = 0.
+\]
+Choose the sample size $T$ to be 100 and the nominal size to be 5 percent.
+Your computer program for calculating the finite-sample power should have the
+following steps.
+\begin{enumerate}
+\item Set counters to zero. There should be two counters, one for the DF $t^\mu$ and
+the other for $t^\tau$. They will record the number of times the (false) null gets
+rejected.
+
+\item Start a do loop of a large number of replications (1 million, say). In each
+replication, do the following.
+
+\begin{enumerate}[label=(\roman*)]
+\item Generate the data vector $(y_0, y_1, \ldots, y_T)$.
+
+\textit{Gauss Tip:} As was mentioned in the Monte Carlo exercise for Chapter~1, to generate $(y_1, y_2, \ldots, y_T)$, avoid creating a do loop within the
+current do loop; use the matrix operators. The matrix formula is
+\[
+\underset{(T \times 1)}{\mathbf{y}}
+= \underset{(T \times 1)}{\mathbf{r}} \cdot y_0
++ \underset{(T \times T)(T \times 1)}{\mathbf{A}\;\bm{\varepsilon}}
+\]
+where
+\[
+\mathbf{y} = \begin{bmatrix} y_1 \\ y_2 \\ \vdots \\ y_T \end{bmatrix}, \quad
+\mathbf{r} = \begin{bmatrix} \rho \\ \rho^2 \\ \vdots \\ \rho^T \end{bmatrix}, \quad
+\mathbf{A} = \begin{bmatrix}
+1 & 0 & \cdots & 0 \\
+\rho & 1 & \cdots & 0 \\
+\rho^2 & \rho & \ddots & \vdots \\
+\vdots & \vdots & \ddots & 1 \\
+\rho^{T-1} & \rho^{T-2} & \cdots & \rho
+\end{bmatrix}, \quad
+\bm{\varepsilon} = \begin{bmatrix} \varepsilon_1 \\ \varepsilon_2 \\ \vdots \\ \varepsilon_T \end{bmatrix}.
+\]
+
+\item Calculate $t^\mu$ and $t^\tau$ from $(y_0, y_1, \ldots, y_T)$. (So the sample size is actually $T + 1$.)
+
+\item Increase the counter for $t^\mu$ by~1 if $t^\mu < -2.86$ (the 5 percent critical
+value for $DF_t^\mu$). Increase the counter for $t^\tau$ by~1 if $t^\tau < -3.41$ (the 5
+percent critical value for $DF_t^\tau$).
+\end{enumerate}
+
+\item After the do loop, for each statistic, divide the counter by the number of
+replications to calculate the frequency of rejecting the null. This frequency
+converges to the finite-sample power as the number of Monte Carlo replications goes to infinity.
+\end{enumerate}
+
+Power should be about 0.124 for the DF $t^\mu$-test (so only about 12 percent of
+the time can we reject the false null!) and 0.092 for the DF $t^\tau$-test. So indeed,
+power is less when time is included in the regression, at least against this particular DGP.
+
+\exercise[2]
+(Size distortions) \enspace In this Monte Carlo simulation, we calculate the size distortions for the ADF $\rho^\mu$- and $t^\mu$-tests. Our null DGP is the one examined by
+Schwert (1989):
+\[
+y_t = \rho y_{t-1} + \varepsilon_t + \theta\varepsilon_{t-1}, \quad
+\rho = 1, \quad \theta = -0.8,
+\]
+\[
+\varepsilon_t \sim \text{i.i.d.\ } N(0, 1), \quad y_0 = 0, \quad \varepsilon_0 = 0.
+\]
+For $T = 100$ and the nominal size of 5 percent, calculate the finite-sample or
+exact size for $\hat{\rho}^\mu$ and $t^\mu$. It would be useful to select the number of lagged
+changes in the augmented autoregression by one of the data-dependent methods (the sequential $t$, the AIC, or the BIC), but to keep the computer program
+simple and also to save CPU time, set it equal to~4. Thus, the regression equation, as opposed to the DGP, is
+\[
+y_t = \text{const.} + \rho y_{t-1} + \zeta_1 \cdot (y_{t-1} - y_{t-2})
++ \zeta_2 \cdot (y_{t-2} - y_{t-3})
+\]
+\[
+\quad + \zeta_3 \cdot (y_{t-3} - y_{t-4}) + \zeta_4 \cdot (y_{t-4} - y_{t-5}) + \text{error}.
+\]
+Since the sample includes $y_0$, the sample period that can accommodate four
+lagged changes is from $t = 5$ (not $p + 2 = 6$) to $t = T$ and the actual sample
+size is $T - 4$. Verify that the size distortion is less for the ADF $t^\mu$- than for the
+ADF $\rho^\mu$-test. (The size should be about 0.496 for the ADF $\rho^\mu$ and 0.290 for
+the ADF $t^\mu$.)
+
+\subsection*{Empirical Exercises}
+
+Read Lothian and Taylor (1996, pp.~488--509) (but skip over their discussion of the
+Phillips-Perron tests) before answering. The file LT.ASC has annual data on the
+following:
+
+\medskip\noindent
+Column 1: year\\
+Column 2: dollar/sterling exchange rate (call it $S_t$)\\
+Column 3: U.S.\ WPI (wholesale price index), normalized to 100 for 1914 ($P_t$)\\
+Column 4: U.K.\ WPI, normalized to 100 for 1914 ($P_t^*$).
+
+\medskip\noindent
+The sample period is 1791 to 1990 (200 observations). These are the same data
+used by Lothian and Taylor (1996) and were made available to us. For data sources
+and how the authors combined them to construct consistent time series, see the
+Appendix of Lothian and Taylor (1996). (According to the Appendix, the exchange
+rate (and probably WPIs) are annual averages. This is rather unfortunate and point-in-time data should have been used, because of the time aggregation problem: if a
+variable follows a random walk on a daily basis, the annual averages of the variable
+do not follow a random walk. See part~(f) below for more on this.)
+
+Calculate the dollar/sterling real exchange rate as
+\[
+z_t \equiv \ln(S_t) - \ln(P_t) + \ln(P_t^*).
+\tag{1}
+\]
+Since $S_t$ is in dollars per pound, an increase means sterling appreciation. The plot
+of the real exchange rate in Figure~9.4 shows no clear time trend, so we apply the
+ADF $t^\mu$-test. Therefore, the augmented autoregression to be estimated is
+\[
+z_t = \text{const.} + \rho z_{t-1} + \zeta_1 \cdot (z_{t-1} - z_{t-2}) + \cdots
++ \zeta_p \cdot (z_{t-p} - z_{t-p-1}) + \text{error},
+\tag{2}
+\]
+where $p$ is the number of lagged changes included in the augmented autoregression
+(which was denoted $\hat{p}$ in the text).
+
+\begin{enumerate}[label=(\alph*)]
+\item (ADF with automatic lag selection) \enspace For the entire sample period of 1791--1990, apply the sequential $t$-rule, the AIC, and the BIC to select $p$ (the number of lagged changes to be included). Set $p_{\max}$ (the maximum number of
+lagged changes in the augmented autoregression, denoted $p_{\max}(T)$ in the text) by~(9.4.31) (so $p_{\max} = 14$). For the sequential $t$ test, use the significance level
+of 10 percent. (You should find $p = 14$ by the sequential $t$, 14 by AIC, and 0
+by BIC.) Verify that the value of the $t^\mu$-statistic for $p = 0$ (if estimated on the
+maximum sample) matches the value reported in Table~1 of Lothian and Taylor
+(1996) as $\tau_\mu$.
+
+\item (DF test on the floating period) \enspace Apply the DF $t^\mu$-test to the floating exchange
+rate period of 1974--1990. Because of the lagged dependent variable $z_{t-1}$, the
+first equation is for $t = 1975$:
+\[
+z_{1975} = \text{const.} + \rho z_{1974} + \text{error}.
+\]
+So the sample size is~16. Can you reject the random walk null at 5 percent?
+
+\item (DF test on the gold standard period) \enspace Apply the DF $t^\mu$-test to the gold standard
+period of 1870--1913. Take $t = 1$ for 1871, so the sample size is~43. Can you
+reject the random walk null at 5 percent? Is the estimate of $\rho$ (the $z_{t-1}$ coefficient in the regression of $z_t$ on a constant and $z_{t-1}$) closer to zero than in~(b)?
+
+\item (Chow test) \enspace Having rejected the I(1) null, we proceed under the maintained
+assumption that the log real exchange rate $z_t$ follows a stationary AR(1) process. To test the null hypothesis that there is no structural change in the AR(1)
+equation, split the sample into two subsamples, 1791--1973 and 1974--1990,
+and apply the Chow test. You may recall that the Chow test was originally
+developed for models with strictly exogenous regressors. However, as you verified in Analytical Exercise~12 of Chapter~2, if the variables (the regressors and the dependent variable)
+are ergodic stationary (which is the case here because $\{z_t\}$ is ergodic stationary when $|\rho| < 1$), then in large samples, with the sizes of both subsamples
+increasing, $K \cdot F$ is asymptotically $\chi^2(K)$. This result does not require the
+regressors to be strictly exogenous. Calculate $K \cdot F$ and verify the claim (see
+pp.~498--502 of Lothian and Taylor, 1996) that ``there is no sign of a structural
+shift in the parameters during the floating period.'' In the present case of a
+lagged dependent variable, there is an issue of whether the equation for 1974,
+\[
+z_{1974} = \text{const.} + \rho z_{1973} + \text{error},
+\]
+should be included in the first subsample or in the second. It does not matter in
+large samples; include the equation in the first subsample (so the sample size
+of the first subsample is~183). (Note: $K \cdot F$ should be about 1.26.)
+
+\item (The ADF-GLS) \enspace As was mentioned in Section~9.5, the ADF-GLS test achieves
+substantially higher power at a cost of only slightly higher size distortions. The
+ADF-GLS $t^\mu$- and $t^\tau$-statistics are calculated as follows. As in the ADF $t^\mu$- and
+$t^\tau$-tests, the null process is
+\[
+y_t = d_t + z_t, \quad z_t = \rho z_{t-1} + u_t, \quad
+\rho = 1, \quad \{u_t\} \text{ zero-mean I(0) process.}
+\tag{3}
+\]
+Write $d_t = \mathbf{x}_t'\bm{\beta}$. For the case where $d_t$ is a constant, $\mathbf{x}_t = 1$ and $\bm{\beta} = \alpha$, while
+for the case where $d_t$ is a linear time trend, $\mathbf{x}_t = (1, t)'$ and $\bm{\beta} = (\alpha, \delta)'$. We
+assume the sample is of size $T$ with $(y_1, y_2, \ldots, y_T)$.
+
+\begin{enumerate}[label=(\roman*)]
+\item (GLS estimation of $\bm{\beta}$) \enspace In estimating the regression equation
+\[
+y_t = \mathbf{x}_t'\bm{\beta} + \text{error}, \quad (t = 1, 2, \ldots, T),
+\tag{4}
+\]
+do GLS assuming that the error process is AR(1) with the autoregressive
+coefficient of $\bar{\rho} = 1 + \bar{c}/T$. (The value of $\bar{c}$ will be specified in a moment.)
+That is, estimate $\bm{\beta}$ by OLS by regressing
+\[
+y_1,\; y_2 - \bar{\rho} y_1,\; y_3 - \bar{\rho} y_2,\; \ldots,\; y_T - \bar{\rho} y_{T-1}
+\]
+on
+\[
+\mathbf{x}_1,\; \mathbf{x}_2 - \bar{\rho}\mathbf{x}_1,\; \mathbf{x}_3 - \bar{\rho}\mathbf{x}_2,\; \ldots,\; \mathbf{x}_T - \bar{\rho}\mathbf{x}_{T-1}.
+\]
+(Unlike in the genuine GLS, the first observations, $y_1$ and $\mathbf{x}_1$, are not
+weighted by $\sqrt{1 - \bar{\rho}^2}$, but this should not matter in large samples.) Set
+$\bar{c}$ according to
+\[
+\bar{c} = -7
+\]
+in the demeaned case (with $\mathbf{x}_t = 1$),
+\[
+\bar{c} = -13.5
+\]
+in the detrended case. (Roughly speaking, this choice of $\bar{c}$ ensures that the
+asymptotic power at $c = \bar{c}$ where $\rho = 1 + c/T$ is nearly 50 percent which
+is the asymptotic power achieved by an ideal test specifically tailored to
+this alternative of $c = \bar{c}$.) Call the resulting estimator $\hat{\bm{\beta}}_{\text{GLS}}$ and define
+$\tilde{y}_t \equiv y_t - \mathbf{x}_t'\hat{\bm{\beta}}_{\text{GLS}}$. (This should \emph{not} be confused with the GLS residual,
+which is $(y_t - \bar{\rho}y_{t-1}) - (\mathbf{x}_t - \bar{\rho}\mathbf{x}_{t-1})'\hat{\bm{\beta}}_{\text{GLS}}$.)
+
+\item (ADF without intercept on the residuals) \enspace Estimate the augmented autoregression \emph{without intercept} using $\tilde{y}_t$ instead of $y_t$:
+\[
+\tilde{y}_t = \rho\,\tilde{y}_{t-1} + \zeta_1 \cdot (\tilde{y}_{t-1} - \tilde{y}_{t-2})
++ \cdots + \zeta_p \cdot (\tilde{y}_{t-p} - \tilde{y}_{t-p-1}) + \text{error}.
+\]
+The $t$-value for $\rho = 1$ is the ADF-GLS $t$-statistic; call it the ADF-GLS $t^\mu$
+if $\mathbf{x}_t = 1$ and the ADF-GLS $t^\tau$ if $\mathbf{x}_t = (1, t)'$. The limiting distribution
+of the ADF-GLS $t^\mu$ is that of $DF_t$ (which is tabulated in Table~9.2, Panel~(a)), while that of the ADF-GLS $t^\tau$ is tabulated in Table~I.C.\ of Elliott et al.\
+(1996). Reproducing their lower tail critical values
+\[
+-3.48 \text{ for } 1\%, \quad -3.15 \text{ for } 2.5\%, \quad
+-2.89 \text{ for } 5\%, \quad -2.57 \text{ for } 10\%.
+\]
+Elliott et al.\ (1996) show for the ADF-GLS test that the asymptotic power
+is higher than those of the ADF $\rho$- and $t$-tests, and that compared with
+the ADF tests, the finite-sample power is substantially higher with only a
+minor deterioration in size distortions.
+\end{enumerate}
+
+Apply the ADF-GLS $t^\mu$-test to the gold standard subsample 1870--1913.
+Choose the lag length by BIC with $p_{\max}$ (the maximum number of lagged
+changes in the augmented autoregression, denoted $p_{\max}(T)$ in the text) by~(9.4.31) (so $p_{\max} = 9$). Can you reject the null that the real exchange rate
+is driftless I(1)? (Note: The BIC will pick 0 for $p$. The statistic should be
+$-2.24$. You should be able to reject the I(1) null at 5 percent.)
+
+\item (Optional analytical exercise on time aggregation) \enspace Suppose $y_t$ is a random
+walk without drift. Create from this time-averaged series by the formula
+\[
+\bar{y}_1 = \frac{y_1 + y_2 + \cdots + y_n}{n}, \quad
+\bar{y}_2 = \frac{y_{n+1} + y_{n+2} + \cdots + y_{2n}}{n}, \quad \ldots\;.
+\]
+(Think of $y_t$ as the exchange rate on day $t$ and $\bar{y}_j$ as an annual average of daily
+exchange rates for year $j$.) Show that $\{\bar{y}_j\}$ is not a random walk. More specifically, show that
+\[
+\Corr(\bar{y}_{j+1} - \bar{y}_j,\; \bar{y}_{j+2} - \bar{y}_{j+1}) \;\dto\; 0.25 \quad \text{as } n \to \infty.
+\]
+\end{enumerate}
+
+\end{problemset}
+
+\begin{answers}
+
+\subsection*{Analytical Exercises}
+
+\answer{1}
+Since $\E(\xi_0^2) < \infty$, $\xi_0/\sqrt{T}$ converges in mean square (and hence in probability)
+to 0 as $T \to \infty$. Thus, the second term on the right-hand side of $(*)$ in the hint
+can be ignored. Regarding the first term, we have
+\[
+\frac{\xi_T}{\sqrt{T}} = \frac{\xi_0}{\sqrt{T}}
++ \frac{\Delta\xi_1 + \Delta\xi_2 + \cdots + \Delta\xi_T}{\sqrt{T}}.
+\]
+The first term on the right-hand side of this equation can be ignored. By
+Proposition~6.9, the second term converges to $N(0, \lambda^2)$ because $\Delta\xi_t$ is a linear
+process with absolutely summable MA coefficients. So the first term on the
+right-hand side of $(*)$ converges in distribution to $(\lambda^2/2)X$ where $X \sim \chi^2(1)$.
+Since $\{\Delta\xi_t\}$ is ergodic stationary, the last term on the right-hand side of $(*)$
+converges in probability to $\tfrac{1}{2}\,\E[(\Delta\xi_t)^2]$ by the Ergodic Theorem.
+
+\answer{5}
+The (1, 1) element of $\mathbf{A}_T$ converges to the random variable indicated in Proposition~9.2(c). Regarding the first element of $\mathbf{c}_T$, by Beveridge-Nelson,
+\[
+y_t = \psi(1)w_t + \eta_t + (y_0 - \eta_0), \quad w_t \equiv \varepsilon_1 + \varepsilon_2 + \cdots + \varepsilon_t.
+\tag{1}
+\]
+Therefore,
+\[
+y_{t-1}^\mu = \psi(1) w_{t-1}^\mu + \eta_{t-1}^\mu,
+\tag{2}
+\]
+where
+\[
+x_{t-1} = x_{t-1} - \bar{x}, \quad
+\bar{x} = \frac{x_0 + \cdots + x_{T-1}}{T}
+\quad \text{for } x = w, \eta.
+\]
+and
+\[
+\frac{1}{T}\sum_{t=1}^{T} y_{t-1}^\mu \cdot \varepsilon_t
+= \psi(1)\frac{1}{T}\sum_{t=1}^{T} w_{t-1}^\mu \cdot \varepsilon_t
++ \frac{1}{T}\sum_{t=1}^{T}\eta_{t-1}^\mu \cdot \varepsilon_t.
+\tag{3}
+\]
+From this we have
+\[
+\frac{1}{T}\sum_{t=1}^{T} y_{t-1}^\mu \cdot \varepsilon_t
+\;\dto\; \tfrac{1}{2}\cdot\sigma^2 \cdot \psi(1) \cdot
+\big\{[W^\mu(1)]^2 - [W^\mu(0)]^2 - 1\big\}.
+\tag{4}
+\]
+The $\mathbf{A}_T$ matrix is asymptotically diagonal for the demeaned case too. The off-diagonal elements of $\mathbf{A}_T$ are equal to $1/\sqrt{T}$ times
+\[
+\frac{1}{T}\sum_{t=1}^{T}(\Delta y_{t-1})^{(\mu)}\, y_{t-1}^\mu.
+\tag{5}
+\]
+Since $\sum_{t=1}^{T} y_{t-1}^\mu = 0$, this equals
+\[
+\frac{1}{T}\sum_{t=1}^{T}\Delta y_{t-1}\, y_{t-1}^\mu.
+\tag{6}
+\]
+It is easy to show, by a little bit of algebra analogous to that in Review Question~3 of Section~9.4 and Proposition~9.2(d), that~(6) has a limiting distribution. So
+$1/\sqrt{T}$ times~(6), which is the off-diagonal elements of $\mathbf{A}_T$, converges to zero
+in probability. Then, using the same argument we used in the text for the case
+without intercept, it is easy to show that $\hat{\zeta}_1$ is consistent for $\zeta_1$. So $\psi(1)$ is
+consistently estimated by $1/(1 - \hat{\zeta}_1)$. Taken together,
+\[
+\frac{T \cdot (\hat{\rho}^\mu - 1)}{1 - \hat{\zeta}_1}
+\;\dto\; DF_\rho^\mu.
+\]
+
+\subsection*{Empirical Exercises}
+
+\answer{a}
+With $p = 0$, the estimated AR(1) equation is
+\[
+z_t = \text{const.} + \underset{(0.0326)}{0.8869}\; z_{t-1}, \quad
+SSR = 0.995135, \quad R^2 = 0.790, \quad T = 199.
+\]
+The value of $t^\mu$ is $-3.47$, which matches the value in Table~1 of Lothian and
+Taylor (1996). The 5 percent critical value is $-2.86$ from Table~9.2, Panel~(b).
+
+\answer{b}
+The estimated AR(1) equation for 1974--1990 is
+\[
+z_t = \text{const.} + \underset{(0.1904)}{0.7704}\; z_{t-1}, \quad
+SSR = 0.150964, \quad R^2 = 0.539, \quad T = 16.
+\]
+$t^\mu = -1.21 > -2.86$. We fail to reject the null at 5 percent.
+
+\answer{c}
+The estimated AR(1) equation for 1870--1913 is
+\[
+z_t = \text{const.} + \underset{(0.1045)}{0.7222}\; z_{t-1}, \quad
+SSR = 0.069429, \quad R^2 = 0.538, \quad T = 43.
+\]
+$t^\mu = -2.66 > -2.86$. We fail to reject the null at 5 percent.
+
+\answer{d}
+The estimated AR(1) equation for 1791--1974 is
+\[
+z_t = \text{const.} + \underset{(0.0329)}{0.8993}\; z_{t-1}, \quad
+SSR = 0.837772, \quad R^2 = 0.805, \quad T = 183.
+\]
+From this and the results in~(a) and~(b),
+\[
+K \cdot F = \frac{0.995135 - (0.837772 + 0.150964)}{\frac{0.837772 + 0.150964}{199 - 4}}
+= 1.26.
+\]
+The 5 percent critical value for $\chi^2(2)$ is 5.99. So we accept the null hypothesis
+of parameter stability.
+
+\answer{e}
+The ADF-GLS $t^\mu = -2.24$. The 5 percent critical value is $-1.95$ from Table~9.2, Panel~(a). So we \emph{can} reject the I(1) null.
+
+\end{answers}

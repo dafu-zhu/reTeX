@@ -1,0 +1,569 @@
+% problems3.tex — Problem Set and Answers for Chapter 3
+
+\begin{problemset}
+
+\noindent\textsc{Analytical Exercises}
+\bigskip
+
+\exercise[1]
+Prove: A symmetric and idempotent matrix is positive semidefinite.
+
+\exercise[2]
+We wish to prove Proposition~3.4.  To avoid inessential complications, consider
+the case where $K = 1$ and $L = 1$ so that $x_i$ and $z_i$ are scalars.  So (3.5.5)
+becomes
+\[
+  \hat{\varepsilon}_i^2 = \varepsilon_i^2
+  - 2(\hat{\delta} - \delta)\, z_i\, \varepsilon_i
+  + (\hat{\delta} - \delta)^2 z_i^2,
+\]
+and the $\hat{\mathbf{S}}$ in (3.5.10) becomes
+\[
+  \frac{1}{n} \sum_{i=1}^{n} x_i^2\, \varepsilon_i^2
+  - 2(\hat{\delta} - \delta) \frac{1}{n} \sum_{i=1}^{n} z_i\, x_i^2\, \varepsilon_i
+  + (\hat{\delta} - \delta)^2 \frac{1}{n} \sum_{i=1}^{n} z_i^2\, x_i^2.
+  \tag{$*$}
+\]
+
+\begin{enumerate}[label=(\alph*)]
+\item Show: The first term on the RHS of $(*)$ converges in probability to $S$
+  $(\equiv \E(x_i^2\, \varepsilon_i^2))$.
+
+\item Use the Cauchy--Schwarz inequality
+  \[
+    \E(|X \cdot Y|) \leq \sqrt{\E(X^2) \cdot \E(Y^2)}
+  \]
+  to show that $\E(z_i x_i^2 \varepsilon_i)$ exists and is finite.
+  \textbf{Hint:} $z_i x_i^2 \varepsilon_i$ is the product of $x_i \varepsilon_i$ and $x_i z_i$.
+  Fact: $\E(x)$ exists and is finite if and only if $\E(|x|) < \infty$.
+  Where do we use Assumption~3.6?
+
+\item Show that the second term on the RHS of $(*)$ converges to zero in probability.
+
+\item In a similar fashion, show that the third term on the RHS of $(*)$ converges
+  to zero in probability.
+\end{enumerate}
+
+\exercise[3]
+We wish to prove the algebraic result (3.5.11).  What needs to be proved is that
+$\mathbf{A} - \mathbf{B}$ is positive semidefinite where
+\[
+  \mathbf{A} \equiv
+  (\boldsymbol{\Sigma}_{\mathbf{xz}}' \mathbf{W} \boldsymbol{\Sigma}_{\mathbf{xz}})^{-1}\,
+  \boldsymbol{\Sigma}_{\mathbf{xz}}' \mathbf{W} \mathbf{S} \mathbf{W}
+  \boldsymbol{\Sigma}_{\mathbf{xz}}\,
+  (\boldsymbol{\Sigma}_{\mathbf{xz}}' \mathbf{W} \boldsymbol{\Sigma}_{\mathbf{xz}})^{-1}
+\]
+and
+\[
+  \mathbf{B} \equiv
+  (\boldsymbol{\Sigma}_{\mathbf{xz}}' \mathbf{S}^{-1}
+  \boldsymbol{\Sigma}_{\mathbf{xz}})^{-1}.
+\]
+
+A result from matrix algebra states:
+
+Let $\mathbf{A}$ and $\mathbf{B}$ be two positive definite and symmetric matrices.
+$\mathbf{A} - \mathbf{B}$ is positive semidefinite if and only if
+$\mathbf{B}^{-1} - \mathbf{A}^{-1}$ is positive semidefinite.
+
+Therefore, what needs to be proved is that
+\[
+  \mathbf{Q} \equiv
+  \boldsymbol{\Sigma}_{\mathbf{xz}}' \mathbf{S}^{-1} \boldsymbol{\Sigma}_{\mathbf{xz}}
+  - \boldsymbol{\Sigma}_{\mathbf{xz}}' \mathbf{W} \boldsymbol{\Sigma}_{\mathbf{xz}}\,
+  (\boldsymbol{\Sigma}_{\mathbf{xz}}' \mathbf{W} \mathbf{S} \mathbf{W}
+  \boldsymbol{\Sigma}_{\mathbf{xz}})^{-1}\,
+  \boldsymbol{\Sigma}_{\mathbf{xz}}' \mathbf{W} \boldsymbol{\Sigma}_{\mathbf{xz}}
+\]
+is positive semidefinite.
+
+\begin{enumerate}[label=(\alph*)]
+\item Since $\mathbf{S}$ ($K \times K$) is positive definite, there exists a nonsingular $K \times K$
+  matrix $\mathbf{C}$ such that $\mathbf{C}'\mathbf{C} = \mathbf{S}^{-1}$.  Define
+  $\mathbf{A} \equiv \mathbf{C}\boldsymbol{\Sigma}_{\mathbf{xz}}$.  Show that
+  $\hat{\mathbf{B}} \hat{\mathbf{S}}^{-1} \hat{\mathbf{B}} = \mathbf{C}'\mathbf{M}_G\mathbf{C}$,
+  where
+  \[
+    \mathbf{H} = \mathbf{C}\boldsymbol{\Sigma}_{\mathbf{xz}}, \quad
+    \mathbf{M}_G = \mathbf{I}_K - \mathbf{G}(\mathbf{G}'\mathbf{G})^{-1}\mathbf{G}',
+    \quad \mathbf{G} = \mathbf{C}'^{-1}\mathbf{W}\boldsymbol{\Sigma}_{\mathbf{xz}}.
+  \]
+  \textbf{Hint:} $\mathbf{C}^{-1}\mathbf{C}'^{-1} = \mathbf{S}$.
+
+\item Show that $\mathbf{Q}$ is positive semidefinite.
+  \textbf{Hint:} First show that $\mathbf{M}_G$ is symmetric and idempotent.  As you showed in
+  Exercise~1, a symmetric and idempotent matrix is positive semidefinite.
+\end{enumerate}
+
+\exercise[4]
+Suppose $\mathbf{z}_i$ is a strict subset of $\mathbf{x}_i$.  Which one is smaller in the matrix sense,
+the asymptotic variance of the OLS estimator or the asymptotic variance of
+the efficient two-step GMM estimator?  \textbf{Hint:} Without loss of generality, we can
+assume that the first $L$ elements of the $K$-dimensional vector $\mathbf{x}_i$ are $\mathbf{z}_i$.
+If the $K \times K$ matrix $\mathbf{W}$ is given by
+\[
+  \mathbf{W} = \begin{bmatrix} \mathbf{A}^{-1} & \mathbf{0} \\
+  \mathbf{0} & \mathbf{0} \end{bmatrix},
+\]
+where
+\[
+  \underset{(L \times L)}{\mathbf{A}} \equiv \E(\varepsilon_i^2\, \mathbf{z}_i \mathbf{z}_i')
+  = \text{leading } L \times L \text{ submatrix of } \mathbf{S},
+\]
+then the asymptotic variance of the OLS estimator can be written as (3.5.1).
+If you did Exercise~3, you can verify that the algebraic relation (3.5.11) does not
+require $\mathbf{W}$ to be positive definite, as long as
+$\boldsymbol{\Sigma}_{\mathbf{xz}}' \mathbf{W} \mathbf{S} \mathbf{W} \boldsymbol{\Sigma}_{\mathbf{xz}}$
+is nonsingular.
+
+\exercise[5]
+(optional) Prove Proposition~3.6 by following the steps below.
+
+\begin{enumerate}[label=(\alph*)]
+\item Show: $\mathbf{g}_n(\hat{\boldsymbol{\delta}}(\hat{\mathbf{S}}^{-1}))
+  = \hat{\mathbf{B}}\, \bar{\mathbf{g}}$ where
+  $\hat{\mathbf{B}} \equiv \mathbf{I}_K
+  - \mathbf{S}_{\mathbf{xz}}(\mathbf{S}_{\mathbf{xz}}'
+  \hat{\mathbf{S}}^{-1} \mathbf{S}_{\mathbf{xz}})^{-1}
+  \mathbf{S}_{\mathbf{xz}}' \hat{\mathbf{S}}^{-1}$.
+
+\item Since $\hat{\mathbf{S}}$ is positive definite, there exists a nonsingular $K \times K$ matrix
+  $\mathbf{C}$ such that $\mathbf{C}'\mathbf{C} = \hat{\mathbf{S}}^{-1}$.  Define
+  $\mathbf{A} \equiv \mathbf{C}\mathbf{S}_{\mathbf{xz}}$.  Show that
+  $\hat{\mathbf{B}}\hat{\mathbf{S}}^{-1}\hat{\mathbf{B}} = \mathbf{C}'\mathbf{M}\mathbf{C}$,
+  where $\mathbf{M} \equiv \mathbf{I}_K - \mathbf{A}(\mathbf{A}'\mathbf{A})^{-1}\mathbf{A}'$.
+  What is the rank of $\mathbf{M}$?  \textbf{Hint:} The rank of an idempotent matrix equals its trace.
+
+\item Let $\mathbf{v} \equiv \sqrt{n}\, \mathbf{C}\, \bar{\mathbf{g}}$.
+  Show that $\mathbf{v} \dto N(\mathbf{0}, \mathbf{I}_K)$.
+
+\item Show that $J(\hat{\boldsymbol{\delta}}(\hat{\mathbf{S}}^{-1}), \hat{\mathbf{S}}^{-1})
+  = \mathbf{v}'\mathbf{M}\mathbf{v}$.  What is its asymptotic distribution?
+\end{enumerate}
+
+\exercise[6]
+Show that the $J$ statistic in Proposition~3.6 is numerically equal to
+\[
+  n \cdot \mathbf{s}_{\mathbf{xy}}' \hat{\mathbf{B}} \hat{\mathbf{S}}^{-1}
+  \hat{\mathbf{B}} \mathbf{s}_{\mathbf{xy}},
+\]
+where $\hat{\mathbf{B}}$ is defined in Exercise~5(a).  \textbf{Hint:} From Exercise~5,
+$J = n \cdot \bar{\mathbf{g}}' \hat{\mathbf{B}} \hat{\mathbf{S}}^{-1} \hat{\mathbf{B}} \bar{\mathbf{g}}$.
+Show that $\hat{\mathbf{B}} \bar{\mathbf{g}} = \hat{\mathbf{B}} \mathbf{s}_{\mathbf{xy}}$.
+
+\exercise[7]
+(optional) Prove Proposition~3.7 by taking the following steps.  The notation
+not introduced in this exercise is the same as in Exercise~5.
+
+\begin{enumerate}[label=(\alph*)]
+\item Prove:
+  \[
+    \mathbf{g}_{1n}(\tilde{\boldsymbol{\delta}})
+    = \hat{\mathbf{B}}_1 \bar{\mathbf{g}}_1
+    \quad \text{and} \quad
+    \hat{\mathbf{B}}_1'(\hat{\mathbf{S}}_{11})^{-1} \hat{\mathbf{B}}_1
+    = \mathbf{C}_1' \mathbf{M}_1 \mathbf{C}_1,
+  \]
+  where
+  \begin{align*}
+    \bar{\mathbf{g}}_1 &\equiv \frac{1}{n} \sum \mathbf{x}_{i1} \cdot \varepsilon_i, \\
+    \hat{\mathbf{B}}_1 &\equiv \mathbf{I}_{K_1}
+    - \mathbf{S}_{\mathbf{x}_1 \mathbf{z}}
+    [\mathbf{S}_{\mathbf{x}_1 \mathbf{z}}'(\hat{\mathbf{S}}_{11})^{-1}
+    \mathbf{S}_{\mathbf{x}_1 \mathbf{z}}]^{-1}
+    \mathbf{S}_{\mathbf{x}_1 \mathbf{z}}'(\hat{\mathbf{S}}_{11})^{-1}, \\
+    \mathbf{M}_1 &\equiv \mathbf{I}_{K_1}
+    - \mathbf{A}_1(\mathbf{A}_1'\mathbf{A}_1)^{-1}\mathbf{A}_1', \\
+    \mathbf{A}_1 &\equiv \mathbf{C}_1 \mathbf{S}_{\mathbf{x}_1 \mathbf{z}}.
+  \end{align*}
+
+\item Prove: $\rank(\mathbf{M}) = K - L$, $\rank(\mathbf{M}_1) = K_1 - L$.
+
+\item Prove: You have proved in the previous exercise that
+  $J = \mathbf{v}'\mathbf{M}\mathbf{v}$, where $\mathbf{v} \equiv \sqrt{n}\, \mathbf{C}\, \bar{\mathbf{g}}$.
+  Here, prove: $J_1 = \mathbf{v}_1' \mathbf{M}_1 \mathbf{v}_1$, where
+  $\mathbf{v}_1 \equiv \sqrt{n}\, \mathbf{C}_1 \bar{\mathbf{g}}_1$.
+
+  To proceed further, define the $K \times K_1$ matrix $\mathbf{F}$ as
+  \[
+    \underset{(K \times K_1)}{\mathbf{F}}
+    = \begin{bmatrix} \mathbf{I}_{K_1} \\ \mathbf{0} \end{bmatrix}
+    \quad K_1 \text{ rows,} \quad K - K_1 \text{ rows.}
+  \]
+  Then: $\mathbf{x}_{i1} = \mathbf{F}'\mathbf{x}_i$,
+  $\mathbf{S}_{\mathbf{x}_1 \mathbf{z}} = \mathbf{F}'\mathbf{S}_{\mathbf{xz}}$,
+  $\bar{\mathbf{g}}_1 = \mathbf{F}'\bar{\mathbf{g}}$.
+
+\item Prove $J - J_1 = \mathbf{v}'(\mathbf{M} - \mathbf{D})\mathbf{v}$ where
+  $\mathbf{D} = \mathbf{C}'^{-1}\mathbf{F}\mathbf{C}_1'\mathbf{M}_1\mathbf{C}_1
+  \mathbf{F}'\mathbf{C}^{-1}$.
+
+\item Prove that $\mathbf{D}$ is symmetric and idempotent, with rank $K_1 - L$.
+  \textbf{Hint:}
+  $\mathbf{F}'\mathbf{C}^{-1}\mathbf{C}'^{-1}\mathbf{F}
+  = \mathbf{F}'\hat{\mathbf{S}}\mathbf{F} = \hat{\mathbf{S}}_{11}$,
+  $\mathbf{C}_1 \hat{\mathbf{S}}_{11} \mathbf{C}_1'
+  = \mathbf{C}_1(\mathbf{C}_1'\mathbf{C}_1)^{-1}\mathbf{C}_1' = \mathbf{I}_{K_1}$.
+
+\item Prove: $\mathbf{A}'\mathbf{D} = \mathbf{0}$.  \textbf{Hint:}
+  \[
+    \mathbf{A}'\mathbf{D}
+    = (\mathbf{S}_{\mathbf{xz}}'\mathbf{C}')
+    (\mathbf{C}'^{-1}\mathbf{F}\mathbf{C}_1'\mathbf{M}_1
+    \mathbf{C}_1\mathbf{F}'\mathbf{C}^{-1})
+    = (\mathbf{S}_{\mathbf{xz}}'\mathbf{F}\mathbf{C}_1'\mathbf{M}_1)
+    (\mathbf{C}_1\mathbf{F}'\mathbf{C}^{-1}),
+  \]
+  so $\mathbf{S}_{\mathbf{xz}}'\mathbf{F}\mathbf{C}_1'\mathbf{M}_1
+  = \mathbf{A}_1'\mathbf{M}_1$.
+
+\item Prove: $\mathbf{M} - \mathbf{D}$ is symmetric and idempotent, with rank $K - K_1$.
+
+\item Prove the desired result: $J - J_1 \dto \chi^2(K - K_1)$.
+
+\item Step~(d) has established that $C = n \cdot \bar{\mathbf{g}}'
+  \mathbf{C}'(\mathbf{M} - \mathbf{D})\mathbf{C}\, \bar{\mathbf{g}}$.  Show that $C$ can be
+  written as
+  \[
+    n \cdot \mathbf{s}_{\mathbf{xy}}' \mathbf{C}'(\mathbf{M} - \mathbf{D})
+    \mathbf{C}\, \mathbf{s}_{\mathbf{xy}}.
+  \]
+  \textbf{Hint:} $\mathbf{g}_n(\hat{\boldsymbol{\delta}})
+  = \hat{\mathbf{B}}\mathbf{s}_{\mathbf{xy}}$.  So the numerical value of $C$ would have been
+  the same if we replaced $\bar{\mathbf{g}}$ by $\mathbf{s}_{\mathbf{xy}}$ from the beginning in~(a).
+
+\item Show that $\mathbf{M} - \mathbf{D}$ is positive semidefinite.  Thus, the quadratic form $C$ is
+  nonnegative for any sample.
+\end{enumerate}
+
+\exercise[8]
+(Optional, proof of numerical equivalence of Proposition~3.8)  In the restricted
+efficient GMM, the $J$ function is minimized subject to the restriction
+$\mathbf{R}\tilde{\boldsymbol{\delta}} = \mathbf{r}$.  For the time being, do not restrict $\hat{\mathbf{W}}$
+to be equal to $\hat{\mathbf{S}}^{-1}$ and form the Lagrangian
+\[
+  \mathcal{L} = n \cdot (\mathbf{s}_{\mathbf{xy}}
+  - \mathbf{S}_{\mathbf{xz}} \tilde{\boldsymbol{\delta}})'\,
+  \hat{\mathbf{W}}\,
+  (\mathbf{s}_{\mathbf{xy}} - \mathbf{S}_{\mathbf{xz}} \tilde{\boldsymbol{\delta}})
+  + \boldsymbol{\lambda}'(\mathbf{R}\tilde{\boldsymbol{\delta}} - \mathbf{r}),
+\]
+where $\boldsymbol{\lambda}$ is the $\#\mathbf{r}$-dimensional Lagrange multipliers (recall: $\mathbf{r}$
+is $\#\mathbf{r} \times 1$, $\mathbf{R}$ is $\#\mathbf{r} \times L$, and $\tilde{\boldsymbol{\delta}}$
+is $L \times 1$).  Let $\tilde{\boldsymbol{\delta}}$ be the solution to the constrained minimization
+problem.  (If $\hat{\mathbf{W}} = \hat{\mathbf{S}}^{-1}$, it is the restricted efficient GMM estimator
+of $\boldsymbol{\delta}$.)
+
+\begin{enumerate}[label=(\alph*)]
+\item Let $\hat{\boldsymbol{\delta}}(\hat{\mathbf{W}})$ be the unrestricted GMM estimator that minimizes
+  $J(\tilde{\boldsymbol{\delta}}, \hat{\mathbf{W}})$.  Show:
+  \begin{align*}
+    \tilde{\boldsymbol{\delta}}
+    &= \hat{\boldsymbol{\delta}}(\hat{\mathbf{W}})
+    - (\mathbf{S}_{\mathbf{xz}}' \hat{\mathbf{W}} \mathbf{S}_{\mathbf{xz}})^{-1}
+    \mathbf{R}'\,
+    [\mathbf{R}(\mathbf{S}_{\mathbf{xz}}' \hat{\mathbf{W}} \mathbf{S}_{\mathbf{xz}})^{-1}
+    \mathbf{R}']^{-1}\,
+    [\mathbf{R}\hat{\boldsymbol{\delta}}(\hat{\mathbf{W}}) - \mathbf{r}], \\
+    \boldsymbol{\lambda}
+    &= 2n \cdot
+    [\mathbf{R}(\mathbf{S}_{\mathbf{xz}}' \hat{\mathbf{W}} \mathbf{S}_{\mathbf{xz}})^{-1}
+    \mathbf{R}']^{-1}\,
+    [\mathbf{R}\hat{\boldsymbol{\delta}}(\hat{\mathbf{W}}) - \mathbf{r}].
+  \end{align*}
+  \textbf{Hint:} The first-order conditions are
+  \[
+    -2n\, \mathbf{S}_{\mathbf{xz}}' \hat{\mathbf{W}} \mathbf{s}_{\mathbf{xy}}
+    + 2n\, (\mathbf{S}_{\mathbf{xz}}' \hat{\mathbf{W}} \mathbf{S}_{\mathbf{xz}})
+    \tilde{\boldsymbol{\delta}} + \mathbf{R}'\boldsymbol{\lambda} = \mathbf{0}.
+  \]
+  Combine this with the constraint $\mathbf{R}\tilde{\boldsymbol{\delta}} = \mathbf{r}$ to solve for
+  $\boldsymbol{\lambda}$ and $\tilde{\boldsymbol{\delta}}$.
+
+\item Show:
+  \[
+    J(\tilde{\boldsymbol{\delta}}, \hat{\mathbf{W}})
+    = J(\hat{\boldsymbol{\delta}}(\hat{\mathbf{W}}), \hat{\mathbf{W}})
+    + n \cdot (\hat{\boldsymbol{\delta}}(\hat{\mathbf{W}}) - \tilde{\boldsymbol{\delta}})'\,
+    (\mathbf{S}_{\mathbf{xz}}' \hat{\mathbf{W}} \mathbf{S}_{\mathbf{xz}})\,
+    (\hat{\boldsymbol{\delta}}(\hat{\mathbf{W}}) - \tilde{\boldsymbol{\delta}}).
+  \]
+
+\item Now set $\hat{\mathbf{W}} = \hat{\mathbf{S}}^{-1}$ and show that the Wald statistic $W$
+  defined in (3.5.8) is numerically equal to $LR$ in (3.7.2).
+\end{enumerate}
+
+\exercise[9]
+(GMM Hausman principle) Let
+$\hat{\boldsymbol{\delta}}_1 \equiv \hat{\boldsymbol{\delta}}(\hat{\mathbf{W}}_1)$ and
+$\hat{\boldsymbol{\delta}}_2 \equiv \hat{\boldsymbol{\delta}}(\hat{\mathbf{W}}_2)$ be two GMM
+estimators with two different choices of the weighting matrix, $\hat{\mathbf{W}}_1$ and
+$\hat{\mathbf{W}}_2$.
+
+\begin{enumerate}[label=(\alph*)]
+\item Show:
+  \[
+    \begin{bmatrix} \sqrt{n}(\hat{\boldsymbol{\delta}}_1 - \boldsymbol{\delta}) \\
+    \sqrt{n}(\hat{\boldsymbol{\delta}}_2 - \boldsymbol{\delta}) \end{bmatrix}
+    \dto N\!\left(\mathbf{0},\,
+    \begin{bmatrix} \mathbf{A}_{11} & \mathbf{A}_{12} \\
+    \mathbf{A}_{21} & \mathbf{A}_{22} \end{bmatrix}\right),
+  \]
+  where
+  \begin{gather*}
+    \mathbf{A}_{11} = \mathbf{Q}_1^{-1} \boldsymbol{\Sigma}_{\mathbf{xz}}'
+    \mathbf{W}_1 \mathbf{S} \mathbf{W}_1 \boldsymbol{\Sigma}_{\mathbf{xz}}
+    \mathbf{Q}_1^{-1}, \quad
+    \mathbf{A}_{12} = \mathbf{Q}_1^{-1} \boldsymbol{\Sigma}_{\mathbf{xz}}'
+    \mathbf{W}_1 \mathbf{S} \mathbf{W}_2 \boldsymbol{\Sigma}_{\mathbf{xz}}
+    \mathbf{Q}_2^{-1}, \\
+    \mathbf{A}_{21} = \mathbf{Q}_2^{-1} \boldsymbol{\Sigma}_{\mathbf{xz}}'
+    \mathbf{W}_2 \mathbf{S} \mathbf{W}_1 \boldsymbol{\Sigma}_{\mathbf{xz}}
+    \mathbf{Q}_1^{-1}, \quad
+    \mathbf{A}_{22} = \mathbf{Q}_2^{-1} \boldsymbol{\Sigma}_{\mathbf{xz}}'
+    \mathbf{W}_2 \mathbf{S} \mathbf{W}_2 \boldsymbol{\Sigma}_{\mathbf{xz}}
+    \mathbf{Q}_2^{-1}, \\
+    \mathbf{Q}_1 = \boldsymbol{\Sigma}_{\mathbf{xz}}' \mathbf{W}_1
+    \boldsymbol{\Sigma}_{\mathbf{xz}}, \quad
+    \mathbf{Q}_2 = \boldsymbol{\Sigma}_{\mathbf{xz}}' \mathbf{W}_2
+    \boldsymbol{\Sigma}_{\mathbf{xz}}, \quad
+    \plim_{n\to\infty} \hat{\mathbf{W}}_j = \mathbf{W}_j \; (j = 1, 2).
+  \end{gather*}
+
+\item Let $\mathbf{q} \equiv \hat{\boldsymbol{\delta}}_1 - \hat{\boldsymbol{\delta}}_2$.
+  Show that $\sqrt{n}\, \mathbf{q} \dto N(\mathbf{0}, \avar(\mathbf{q}))$, where
+  \[
+    \avar(\mathbf{q})
+    = \mathbf{A}_{11} + \mathbf{A}_{22} - \mathbf{A}_{12} - \mathbf{A}_{21}.
+  \]
+
+\item Set $\hat{\mathbf{W}}_2 = \hat{\mathbf{S}}^{-1}$ so that $\hat{\boldsymbol{\delta}}_2$ is efficient GMM.
+  Show that
+  \[
+    \avar(\mathbf{q})
+    = \mathbf{A}_{11}
+    - (\boldsymbol{\Sigma}_{\mathbf{xz}}' \mathbf{S}^{-1}
+    \boldsymbol{\Sigma}_{\mathbf{xz}})^{-1}
+    = \avar(\hat{\boldsymbol{\delta}}(\hat{\mathbf{W}}_1))
+    - \avar(\hat{\boldsymbol{\delta}}(\hat{\mathbf{S}}^{-1})).
+  \]
+\end{enumerate}
+
+\exercise[10]
+(Weak instruments.  This question is due to M.\ Watson.)  Consider the following
+model:
+\[
+  y_i = z_i \delta + \varepsilon_i \quad (i = 1, 2, \ldots, n),
+\]
+where $y_i$, $z_i$, and $\varepsilon_i$ are scalar random variables.  Let $x_i$ denote a scalar
+instrumental variable that is related to $z_i$ via the equation:
+\[
+  z_i = x_i \beta + v_i.
+\]
+Let
+\[
+  \boldsymbol{\eta}_i \equiv \begin{bmatrix} \varepsilon_i \\ v_i \end{bmatrix}, \quad
+  \mathbf{g}_i \equiv \boldsymbol{\eta}_i \cdot x_i
+  = \begin{bmatrix} g_{1i} \\ g_{2i} \end{bmatrix}
+  = \begin{bmatrix} x_i \varepsilon_i \\ x_i v_i \end{bmatrix}.
+\]
+Assume that (1)~$\{x_i, \boldsymbol{\eta}_i\}$ follows a stationary and ergodic process;
+(2)~$\mathbf{g}_i$ is a martingale difference sequence with
+$\E(\mathbf{g}_i \mathbf{g}_i') = \mathbf{S}$, which is a positive definite matrix;
+(3)~$\E(x_i^2) = \sigma_x^2 > 0$;
+(4)~$\beta \neq 0$.
+
+Let $\hat{\delta} \equiv s_{xz}^{-1} s_{xy}$ where
+\[
+  s_{xz} \equiv \frac{1}{n} \sum_{i=1}^{n} x_i z_i, \quad
+  s_{xy} \equiv \frac{1}{n} \sum_{i=1}^{n} x_i y_i.
+\]
+
+\begin{enumerate}[label=(\alph*)]
+\item Prove that $\sigma_{xz} \equiv \E(x_i z_i) \neq 0$ (so that the rank condition for
+  identification is satisfied).
+
+\item Prove that $\hat{\delta} \pto \delta$.
+\end{enumerate}
+
+We now want to consider a case in which the rank condition is just barely
+satisfied, that is, $\sigma_{xz}$ is very close to zero.  One way to do this is to replace
+Assumption~(4) with
+
+\noindent (4$'$) $\beta = 1/\sqrt{n}$.
+
+For the remainder of the problem, assume that (1)--(3) and (4$'$) hold.  (This
+assumption and the following questions are based on Staiger and Stock (1997).)
+Note that $\hat{\delta} - \delta = s_{xz}^{-1} \bar{g}_1$, where $\bar{g}_1$ is the sample mean
+of $g_{1i}$ $(\equiv x_i \varepsilon_i)$.
+
+\begin{enumerate}[label=(\alph*),resume]
+\item Show that $s_{xz} \pto 0$.
+
+\item Show that $\sqrt{n}\, s_{xz} \dto \sigma_x^2 + a$, where $a$ is distributed
+  $N(0, s_{22})$ and $s_{22}$ is the $(2,2)$ element of $\mathbf{S}$.
+
+\item Show that $\hat{\delta} - \delta \dto (\sigma_x^2 + a)^{-1} b$, where $(a, b)$ are
+  jointly normally distributed with mean zero and covariance matrix $\mathbf{S}$.
+
+\item Is $\hat{\delta}$ consistent?
+\end{enumerate}
+
+\bigskip
+\noindent\textsc{Empirical Exercises}
+\bigskip
+
+Read Griliches (1976) before answering.  We will estimate the type of the wage
+equation estimated by Griliches using an extract from the NLS-Y used by Blackburn
+and Neumark (1992).\footnote{See Blackburn and Neumark (1992, Section~III) for a more
+detailed description of the sample.}  The NLS-Y is \textbf{panel data}, with the same set of
+young men surveyed at several points in time (we will not exploit the panel feature of the
+data set in this exercise, though).  The extract contains information about those
+individuals at two points in time: first, the earliest year in which wages and other
+variables are available, and second, in 1980.  In a data file GRILIC.ASC, data are
+provided on $RNS$, $RNS80$, $MRT$, $MRT80$, $SMSA$, $SMSA80$, $MED$, $IQ$, $KWW$,
+$YEAR$, $S$, $S80$, $EXPR$, $EXPR80$, $TENURE$, $TENURE80$, $LW$, and $LW80$ (in
+this order, with the columns corresponding to the variables, as usual).  The variable
+definitions are:
+\begin{align*}
+  RNS &= \text{dummy for residency in the southern states} \\
+  MRT &= \text{dummy for marital status (1 if married)} \\
+  SMSA &= \text{dummy for residency in metropolitan areas} \\
+  MED &= \text{mother's education in years} \\
+  KWW &= \text{score on the ``Knowledge of the World of Work'' test} \\
+  IQ &= \text{IQ score} \\
+  AGE &= \text{age of the individual} \\
+  S &= \text{completed years of schooling} \\
+  EXPR &= \text{experience in years} \\
+  TENURE &= \text{tenure in years} \\
+  LW &= \text{log wage.}
+\end{align*}
+$YEAR$ is the year of the first point in time.  Variables without ``80'' are for the first
+point, and those with ``80'' are for 1980.
+
+The Blackburn--Neumark sample has 815 observations after deleting black individuals.
+Also deleted are cases with missing information on mother's education,
+reducing the sample size to 758.
+
+\begin{enumerate}[label=(\alph*)]
+\item Calculate means and standard deviations of all the provided variables (including
+  those for 1980) and prepare a table similar to Griliches's Table~1.  Also,
+  calculate the correlation between $IQ$ and $S$.
+
+\item Consider the wage equation (dropping the individual subscript $i$)
+  \[
+    LW = \beta S + \gamma\, IQ + \boldsymbol{\delta}'\mathbf{h} + \varepsilon,
+  \]
+  where $LW$ is log wages, $S$ is schooling, and
+  \[
+    \mathbf{h} \equiv (EXPR, TENURE, RNS, SMSA, \text{year dummies})'.
+  \]
+  (There is no need to include a constant because it is a linear combination of
+  the year dummies.)  Prepare a table similar to Table~3.2.  In your 2SLS estimation
+  of the wage equation, the set of instruments should consist of predetermined
+  regressors ($S$ and $\mathbf{h}$) and excluded predetermined variables ($MED$,
+  $KWW$, $MRT$, $AGE$).  Is the relative magnitude of the three different estimates
+  of the schooling coefficient consistent with the prediction based on the omitted
+  variable and errors-in-variables biases?
+
+\item For your 2SLS estimation of the wage equation in part~(b), calculate Sargan's
+  statistic (it should be 87.655).  What should the degrees of freedom be?  Calculate
+  the $p$-value.
+
+\item Obtain the 2SLS estimate by actually running two regressions.  Verify that the
+  standard errors given by the second stage regression are \emph{different} from those
+  you obtained in~(b).
+
+\item Griliches mentions that schooling, too, may be endogenous.  What is his argument?
+  Estimate by 2SLS the wage equation, treating both $IQ$ and $S$ as endogenous.
+  What happens to the schooling coefficient?  How would you explain the
+  difference between your 2SLS estimate of the schooling coefficient here and
+  your 2SLS estimate in~(b)?  Calculate Sargan's statistic (it should be 13.268)
+  and its $p$-value.
+
+\item Estimate the wage equation by GMM, treating schooling as predetermined as in
+  the 2SLS estimation in part~(b).  Are 2SLS standard errors smaller than GMM
+  standard errors?  Test whether schooling is predetermined by the $C$ statistic.
+  To calculate $C$, you need to do two GMMs with and without schooling as an
+  instrument.  Use the same $\hat{\mathbf{S}}$ throughout.  To calculate $\hat{\mathbf{S}}$, use the 2SLS
+  residual from part~(b).  The $C$ statistic should be 58.168.
+
+\item Go back to the wage equation you estimated in~(e) by 2SLS endogenous schooling.
+  The large Sargan's statistic (and the large $J$ statistic in part~(f)) is a concern.
+  So consider dropping both $MED$ and $KWW$ from the list of instruments.
+  Is the order condition for identification still satisfied?  What happens to the
+  2SLS estimates?  (The schooling coefficient will be $-529.3$\%!)  What do you
+  think is the problem?  \textbf{Hint:} There are two endogenous regressors, $S$ and $IQ$.
+  $MRT$ and $AGE$ are the only excluded predetermined variables.  If $MRT$ and $AGE$
+  do not have explanatory power in the first-stage regression of $S$ and $IQ$
+  on the instruments, then the fitted values of $S$ and $IQ$ will be very close to linear
+  combinations of the included predetermined variables.  This will lead to a near-multicollinearity
+  problem in the second-stage regression.  Make sure you examine
+  the first-stage regressions to check the explanatory power of $MRT$ and $AGE$.
+\end{enumerate}
+
+\end{problemset}
+
+\begin{answers}
+
+\noindent\textsc{Analytical Exercises}
+\bigskip
+
+\answer{4}
+The asymptotic variance of the OLS estimator is (by setting $\mathbf{x} = \mathbf{z}$ in (3.5.1))
+\[
+  \boldsymbol{\Sigma}_{\mathbf{xz}}^{-1}\, \mathbf{A}\,
+  \boldsymbol{\Sigma}_{\mathbf{xz}}^{-1}
+  = (\boldsymbol{\Sigma}_{\mathbf{zz}}\, \mathbf{A}^{-1}\,
+  \boldsymbol{\Sigma}_{\mathbf{zz}})^{-1},
+\]
+where $\mathbf{A} \equiv \E(\varepsilon_i^2\, \mathbf{z}_i \mathbf{z}_i')$.  The asymptotic variance
+of the two-step efficient GMM estimator is, by (3.5.13),
+\[
+  (\boldsymbol{\Sigma}_{\mathbf{xz}}' \mathbf{S}^{-1}
+  \boldsymbol{\Sigma}_{\mathbf{xz}})^{-1},
+\]
+where $\mathbf{S} \equiv \E(\varepsilon_i^2\, \mathbf{x}_i \mathbf{x}_i')$.  If $\mathbf{W}$ is as
+defined in the hint, then
+\[
+  \mathbf{W}\mathbf{S}\mathbf{W} = \mathbf{W} \quad \text{and} \quad
+  \boldsymbol{\Sigma}_{\mathbf{xz}}' \mathbf{W} \boldsymbol{\Sigma}_{\mathbf{xz}}
+  = \boldsymbol{\Sigma}_{\mathbf{zz}} \mathbf{A}^{-1} \boldsymbol{\Sigma}_{\mathbf{zz}}.
+\]
+So (3.5.1) reduces to the asymptotic variance of the OLS estimator.  By (3.5.11),
+it is no smaller than
+$(\boldsymbol{\Sigma}_{\mathbf{xz}}' \mathbf{S}^{-1} \boldsymbol{\Sigma}_{\mathbf{xz}})^{-1}$,
+which is the asymptotic variance of the two-step efficient GMM estimator.
+
+\bigskip
+\noindent\textsc{Empirical Exercises}
+\bigskip
+
+\answer{(b)}
+See Table~3.3, lines~1--5.
+
+\answer{(e)}
+He gives three reasons for the endogeneity of schooling.  First, the measurement
+error $\eta$ may be related to success in schooling.  The second reason is the
+argument we made in the text: the choice of $S$ is influenced by unobservable
+characteristics.  Third, schooling may be measured with error.  The general
+formula for the asymptotic bias for the 2SLS estimator is given by
+\[
+  \plim\, \hat{\boldsymbol{\delta}}_{\text{2SLS}} - \boldsymbol{\delta}
+  = (\boldsymbol{\Sigma}_{\mathbf{xz}}' \boldsymbol{\Sigma}_{\mathbf{xx}}^{-1}
+  \boldsymbol{\Sigma}_{\mathbf{xz}})^{-1}\,
+  \boldsymbol{\Sigma}_{\mathbf{xz}}' \boldsymbol{\Sigma}_{\mathbf{xx}}^{-1}\,
+  \E(\mathbf{x}_i \cdot \varepsilon_i).
+\]
+If $S$ is endogenous, the instrument set $\mathbf{x}_i$ for the 2SLS estimation in~(b)
+erroneously includes a variable (which is $S$) that is not predetermined.  So one of the
+elements of $\E(\mathbf{x}_i \cdot \varepsilon_i)$ is not zero.  Then it is clear from the formula that
+the asymptotic bias can exist at least for some coefficients.
+
+\answer{(g)}
+Without $MED$ and $KWW$ as instruments, the 2SLS estimator becomes imprecise.
+The order condition is satisfied with equality.  The culprit is the low
+explanatory power of $MRT$ (look at its $t$-value in its first-stage regressions for
+$S$ and $IQ$).
+\end{answers}

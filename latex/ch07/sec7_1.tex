@@ -1,0 +1,291 @@
+% sec7_1.tex — Section 7.1: Extremum Estimators
+
+An estimator $\hat{\bm{\theta}}$ is called an \textbf{extremum estimator} if there is a scalar objective function $Q_n(\bm{\theta})$ such that
+\begin{equation}
+\label{eq:7.1.1}
+\hat{\bm{\theta}} \text{ maximizes } Q_n(\bm{\theta}) \quad \text{subject to } \bm{\theta} \in \Theta \subset \mathbb{R}^p,
+\end{equation}
+where $\Theta$, called the \textbf{parameter space}, is the set of possible parameter values. In this book, we restrict our attention to the case where $\Theta$ is a subset of the finite dimensional Euclidean space $\mathbb{R}^p$. The objective function $Q_n(\bm{\theta})$ depends not only on $\bm{\theta}$ but also on the sample or the data, $(\mathbf{w}_1, \mathbf{w}_2, \ldots, \mathbf{w}_n)$, where $\mathbf{w}_t$ is the $t$-th observation and $n$ is the sample size. In our notation the dependence of the objective function on the sample of size $n$ is signalled by the subscript $n$. The maximum likelihood (ML) and the linear and nonlinear generalized method of moments (GMM) estimators are particular extremum estimators. This section presents these and other extremum estimators and indicates how they are related to each other.
+
+\subsection*{``Measurability'' of $\hat{\bm{\theta}}$}
+
+To be sure, the maximization problem (\ref{eq:7.1.1}) may not necessarily have a solution. But recall from calculus the following fact:
+
+\begin{quote}
+Let $h : \mathbb{R}^p \to \mathbb{R}$ be continuous and $A \subset \mathbb{R}^p$ be a compact (closed and bounded) set. Then $h$ has a maximum on the set $A$. That is, there exists an $\mathbf{x}^* \in A$ such that $h(\mathbf{x}^*) \geq h(\mathbf{x})$ for all $\mathbf{x}$ in $A$.
+\end{quote}
+
+Therefore, if $Q_n(\bm{\theta})$ is continuous in $\bm{\theta}$ for any data $(\mathbf{w}_1, \mathbf{w}_2, \ldots, \mathbf{w}_n)$ and $\Theta$ is compact, then there exists a $\bm{\theta}$ that solves the maximization problem in (\ref{eq:7.1.1}) for any given data $(\mathbf{w}_1, \ldots, \mathbf{w}_n)$. In the event of multiple solutions, we would choose one from them. So $\hat{\bm{\theta}}$, thus uniquely determined for any data $(\mathbf{w}_1, \ldots, \mathbf{w}_n)$, is a function of the data. Strictly speaking, however, being a function of the vector of random variables $(\mathbf{w}_1, \ldots, \mathbf{w}_n)$ is not enough to make $\hat{\bm{\theta}}$ a well-defined random variable; $\hat{\bm{\theta}}$ needs to be a ``measurable'' function of $(\mathbf{w}_1, \ldots, \mathbf{w}_n)$. (If a function is continuous, it is measurable.) The following lemma shows that $\hat{\bm{\theta}}$ is measurable if $Q_n(\bm{\theta})$ is
+
+\begin{lemma}[Existence of extremum estimators]
+\label{lem:7.1}
+Suppose that \emph{(i)} the parameter space $\Theta$ is a compact subset of $\mathbb{R}^p$, \emph{(ii)} $Q_n(\bm{\theta})$ is continuous in $\bm{\theta}$ for any data $(\mathbf{w}_1, \ldots, \mathbf{w}_n)$, and \emph{(iii)} $Q_n(\bm{\theta})$ is a measurable function of the data for all $\bm{\theta}$ in $\Theta$. Then there exists a measurable function $\hat{\bm{\theta}}$ of the data that solves \emph{(\ref{eq:7.1.1})}.
+\end{lemma}
+
+See, e.g., Gourieroux and Monfort (1995, Property 24.1) for a proof. In all the examples of this chapter, $Q_n(\bm{\theta})$ is measurable.
+
+In most applications, we do not know the upper or lower bound for the true parameter vector. Even if we do, those bounds are not included in the parameter space, so the parameter space is not closed (see the CES example below for an example). So the compactness assumption for $\Theta$ is something we wish to avoid. In some of the asymptotic results of this chapter, we will replace the compactness assumption by some other conditions that are satisfied in many applications.
+
+\subsection*{Two Classes of Extremum Estimators}
+
+In the next two sections, we will develop asymptotic results for extremum estimators and then specialize those results to the following two classes of extremum estimators.
+
+\begin{enumerate}
+\item \textbf{M-Estimators.} An extremum estimator is an \textbf{M-estimator} if the objective function is a sample average:
+\begin{equation}
+\label{eq:7.1.2}
+Q_n(\bm{\theta}) = \frac{1}{n} \sum_{t=1}^{n} m(\mathbf{w}_t; \bm{\theta}),
+\end{equation}
+where $m$ is a real-valued function of $(\mathbf{w}_t, \bm{\theta})$. Two examples of an M-estimator we study are the \textbf{maximum likelihood} (\textbf{ML}) and the \textbf{nonlinear least squares} (\textbf{NLS}).
+
+\item \textbf{GMM.} An extremum estimator is a \textbf{GMM estimator} if the objective function can be written as
+\begin{equation}
+\label{eq:7.1.3}
+Q_n(\bm{\theta}) = -\frac{1}{2} \mathbf{g}_n(\bm{\theta})' \widehat{\mathbf{W}} \mathbf{g}_n(\bm{\theta}) \quad \text{with} \quad \underset{(K \times 1)}{\mathbf{g}_n(\bm{\theta})} \equiv \frac{1}{n} \sum_{t=1}^{n} \mathbf{g}(\mathbf{w}_t; \bm{\theta}),
+\end{equation}
+where $\widehat{\mathbf{W}}$ is a $K \times K$ symmetric and positive definite matrix that defines the distance of $\mathbf{g}_n(\bm{\theta})$ from zero. It can depend on the data. Maximizing this objective function is equivalent to minimizing the distance $\mathbf{g}_n(\bm{\theta})' \widehat{\mathbf{W}} \mathbf{g}_n(\bm{\theta})$, which is how we defined GMM in Chapter~3. As will become clear, the deflation of the distance by 2 simplifies the expression for the derivative of the objective function. We have introduced GMM estimation for linear models where $\mathbf{g}(\mathbf{w}_t; \bm{\theta})$ is linear in $\bm{\theta}$. Below we will show that GMM estimation can be extended easily to nonlinear models.
+\end{enumerate}
+
+There are extremum estimators that do not fall into either class. A prominent example is \textbf{classical minimum distance estimators}. Their objective function can be written as $-\mathbf{g}_n(\bm{\theta})' \widehat{\mathbf{W}} \mathbf{g}_n(\bm{\theta})$ but $\mathbf{g}_n(\bm{\theta})$ is not necessarily a sample mean. The consistency theorem of the next section is general enough to cover this class as well.
+
+In the rest of this section, we present examples of M-estimators and GMM estimators. Each example is a combination of the \emph{model} (a set of data generating processes [DGPs]) and the \emph{estimation method}.
+
+\subsection*{Maximum Likelihood (ML)}
+
+A prime example of an M-estimator is the maximum likelihood for the case where $\{\mathbf{w}_t\}$ is i.i.d. The model here is a set of i.i.d.\ sequences $\{\mathbf{w}_t\}$ where the density of $\mathbf{w}_t$ is a member of the family of densities indexed by a finite-dimensional vector $\bm{\theta}$: $f(\mathbf{w}_t; \bm{\theta})$, $\bm{\theta} \in \Theta$. (Since $\{\mathbf{w}_t\}$ is identically distributed, the functional form of $f(\cdot\,; \cdot)$ does not depend on $t$.) The functional form of $f(\cdot\,; \cdot)$ is known. The model is \textbf{parametric} because the parameter vector $\bm{\theta}$ is finite dimensional. At the true parameter value $\bm{\theta}_0$, the density of the true DGP (the DGP that actually generated the data) is $f(\mathbf{w}_t; \bm{\theta}_0)$.%
+\footnote{Had we adhered to the notational convention of the previous sections, the true parameter would be denoted by $\bar{\bm{\theta}}$ and a hypothetical value by $\bm{\theta}$. In this chapter, we use $\bm{\theta}_0$ for the true value and $\bm{\theta}$ for a hypothetical value of the parameter vector.}
+We say that the model is \textbf{correctly specified} if $\bm{\theta}_0 \in \Theta$.
+
+Since $\{\mathbf{w}_t\}$ is independently distributed, the joint density of the data $(\mathbf{w}_1, \mathbf{w}_2, \ldots, \mathbf{w}_n)$ is
+\begin{equation}
+\label{eq:7.1.4}
+f(\mathbf{w}_1, \mathbf{w}_2, \ldots, \mathbf{w}_n; \bm{\theta}_0) = \prod_{t=1}^{n} f(\mathbf{w}_t; \bm{\theta}_0).
+\end{equation}
+
+With the distribution of the data thus completely specified, the natural estimation method is maximum likelihood, which proceeds as follows. With the true parameter vector $\bm{\theta}_0$ replaced by its hypothetical value $\bm{\theta}$, this density, viewed as a function of $\bm{\theta}$, is called the \textbf{likelihood function}. The maximum likelihood (ML) estimator of $\bm{\theta}_0$ is the $\bm{\theta}$ that maximizes the likelihood function. Since the log transformation is a monotone transformation, maximizing the likelihood function is equivalent to maximizing the \textbf{log likelihood function}:%
+\footnote{For $\bm{\theta}$ such that $f(\mathbf{w}_t; \bm{\theta}) = 0$, the log cannot be taken. This does not present a problem because such $\bm{\theta}$ never maximizes the (level) likelihood function $f(\mathbf{w}_1, \ldots, \mathbf{w}_n; \bm{\theta})$. For such $\bm{\theta}$ we can assign an arbitrarily small number to $\log f(\mathbf{w}_t; \bm{\theta})$ so that the maximizer of the level likelihood is also the maximization of the log likelihood. See White (1994, p.~15) for a more formal treatment of this issue.}
+\begin{equation}
+\label{eq:7.1.5}
+\log f(\mathbf{w}_1, \mathbf{w}_2, \ldots, \mathbf{w}_n; \bm{\theta}) = \log \left[ \prod_{t=1}^{n} f(\mathbf{w}_t; \bm{\theta}) \right] = \sum_{t=1}^{n} \log f(\mathbf{w}_t; \bm{\theta}).
+\end{equation}
+
+The ML estimator of $\bm{\theta}_0$, therefore, is an M-estimator with
+\begin{equation}
+\label{eq:7.1.6}
+m(\mathbf{w}_t; \bm{\theta}) = \log f(\mathbf{w}_t; \bm{\theta}), \quad \text{that is,} \quad Q_n(\bm{\theta}) = \frac{1}{n} \sum_{t=1}^{n} \log f(\mathbf{w}_t; \bm{\theta}).
+\end{equation}
+
+Before illustrating ML by an example, it is useful to make three remarks.
+
+\begin{itemize}
+\item (Serially correlated observations) \enspace The average log likelihood would not take a form as simple as this if $\{\mathbf{w}_t\}$ were serially correlated. Examples of ML for serially correlated observations will be studied in the next chapter.
+
+\item (Alternative estimators) \enspace Maximum likelihood is not the only way to estimate the parameter vector. For example, let $\bm{\mu}(\bm{\theta})$ be the expectation of $\mathbf{w}_t$ implied by the density function $f(\mathbf{w}_t; \bm{\theta})$. It is a known function of $\bm{\theta}$. By construction, the following zero-mean condition holds:
+\begin{equation}
+\label{eq:7.1.7}
+\E[\mathbf{w}_t - \bm{\mu}(\bm{\theta}_0)] = \mathbf{0}.
+\end{equation}
+The parameter vector $\bm{\theta}_0$ could be estimated by GMM with $\mathbf{g}(\mathbf{w}_t; \bm{\theta}) = \mathbf{w}_t - \bm{\mu}(\bm{\theta})$ in the GMM objective function (\ref{eq:7.1.3}).
+
+\item (Efficiency of ML) \enspace As will be shown in the next two sections, ML is consistent and asymptotically normal under suitable conditions. It was widely believed that ML is efficient (i.e., achieves minimum asymptotic variance) in the class of all consistent and asymptotically normal estimators. This belief was shown to be wrong by a counterexample (described, for example, in Amemiya, 1985, Example 4.2.4). Nevertheless, ML is efficient in quite general classes of asymptotically normal estimators. One such general class is GMM estimators. In Section~7.3, we will note that the asymptotic variance of any GMM estimator of $\bm{\theta}_0$ is no smaller than that of the ML estimator.
+\end{itemize}
+
+\begin{example}[Estimating the mean of a normal distribution]
+\label{ex:7.1}
+Let the data $(w_1, \ldots, w_n)$ be a scalar i.i.d.\ sequence with the distribution of $w_t$ given by $N(\mu, \sigma^2)$. So $\bm{\theta} = (\mu, \sigma^2)'$ and
+\[
+f(w_t; \mu, \sigma^2) = \frac{1}{\sqrt{2\pi\sigma^2}} \exp\left[ -\frac{(w_t - \mu)^2}{2\sigma^2} \right].
+\]
+
+The average log likelihood of the data $(w_1, \ldots, w_n)$ is
+\begin{equation}
+\label{eq:7.1.8}
+\frac{1}{n} \sum_{t=1}^{n} \log f(w_t; \mu, \sigma^2) = -\frac{1}{2}\log(2\pi) - \frac{1}{2}\log(\sigma^2) - \frac{1}{n} \sum_{t=1}^{n} \left[ \frac{(w_t - \mu)^2}{2\sigma^2} \right].
+\end{equation}
+
+The ML estimator of $(\mu_0, \sigma_0^2)$ is an extremum estimator with $Q_n(\bm{\theta})$ taken to be this average log likelihood. Suppose that the variance is assumed to be positive but that there is no \emph{a priori} restriction on $\mu_0$, so the parameter space $\Theta$ is $\mathbb{R} \times \mathbb{R}_{++}$, where $\mathbb{R}_{++}$ is the set of positive real numbers. It is easy to check that the ML estimator of $\mu_0$ is the sample mean of $w_t$. The GMM estimator of $\mu_0$ based on the zero-mean condition $\E(w_t - \mu_0) = 0$, too, is the sample mean of $w_t$.
+\end{example}
+
+\subsection*{Conditional Maximum Likelihood}
+
+In most applications, the vector $\mathbf{w}_t$ is partitioned into two groups, $y_t$ and $\mathbf{x}_t$, and the researcher's interest is to examine how $\mathbf{x}_t$ influences the conditional distribution of $y_t$ given $\mathbf{x}_t$. We have been calling the variable $y_t$ the \textbf{dependent variable} and $\mathbf{x}_t$ \textbf{regressors}. None of the results of this chapter depends on $y_t$ being a scalar; $y_t$ can be a vector and still all the results will remain valid with the scalar ``$y_t$'' replaced by a vector ``$\mathbf{y}_t$.'' We nevertheless use the scalar notation, simply because in all the examples we consider in this chapter, there is only one dependent variable.
+
+Let $f(y_t \mid \mathbf{x}_t; \bm{\theta}_0)$ be the conditional density of $y_t$ given $\mathbf{x}_t$, and let $f(\mathbf{x}_t; \bm{\psi}_0)$ be the marginal density of $\mathbf{x}_t$. Then
+\begin{equation}
+\label{eq:7.1.9}
+f(y_t, \mathbf{x}_t; \bm{\theta}_0, \bm{\psi}_0) = f(y_t \mid \mathbf{x}_t; \bm{\theta}_0) f(\mathbf{x}_t; \bm{\psi}_0)
+\end{equation}
+is the joint density of $\mathbf{w}_t = (y_t, \mathbf{x}_t')'$. Suppose, for now, that $\bm{\theta}_0$ and $\bm{\psi}_0$ are not functionally related (see the next paragraph for an example of a functional relationship). The average log likelihood of the data $(\mathbf{w}_1, \ldots, \mathbf{w}_n)$ is
+\begin{equation}
+\label{eq:7.1.10}
+\frac{1}{n} \sum_{t=1}^{n} \log f(\mathbf{w}_t; \bm{\theta}, \bm{\psi}) = \frac{1}{n} \sum_{t=1}^{n} \log f(y_t \mid \mathbf{x}_t; \bm{\theta}) + \frac{1}{n} \sum_{t=1}^{n} \log f(\mathbf{x}_t; \bm{\psi}).
+\end{equation}
+
+The first term on the right-hand side is the average \textbf{log conditional likelihood}. The \textbf{conditional ML estimator} of $\bm{\theta}_0$ maximizes this first term, thus ignoring the second term. It is an M-estimator with
+\begin{equation}
+\label{eq:7.1.11}
+m(\mathbf{w}_t; \bm{\theta}) = \log f(y_t \mid \mathbf{x}_t; \bm{\theta}), \quad \text{that is,} \quad Q_n(\bm{\theta}) = \frac{1}{n} \sum_{t=1}^{n} \log f(y_t \mid \mathbf{x}_t; \bm{\theta}).
+\end{equation}
+
+The second term on the right-hand side of (\ref{eq:7.1.10}) is the average log marginal likelihood. It does not depend on $\bm{\theta}$, so the conditional ML estimator of $\bm{\theta}_0$ is numerically the same as the (joint or full) ML estimator that maximizes the average joint likelihood (\ref{eq:7.1.10}).
+
+Now suppose that $\bm{\theta}_0$ and $\bm{\psi}_0$ are functionally related. For example, $\bm{\theta}_0$ and $\bm{\psi}_0$ might be partitioned as $\bm{\theta}_0 = (\bm{\alpha}_0', \bm{\beta}_0')'$, $\bm{\psi}_0 = (\bm{\beta}_0', \bm{\gamma}_0')'$. Then the full (i.e., unconditional) ML and conditional ML estimators are no longer numerically equal. It is intuitively clear that the conditional ML misses information that could have been obtained from the marginal likelihood. Indeed it can be shown that the conditional ML estimator of $\bm{\theta}_0$ is less efficient than the full ML estimator obtained from maximizing the joint log likelihood (\ref{eq:7.1.10}) (see, e.g., Gourieroux and Monfort, 1995, Section~7.5.3). In most applications, this loss of efficiency is unavoidable because we do not know, or do not wish to specify, the parametric form, $f(\mathbf{x}_t; \bm{\psi})$, of the marginal distribution.
+
+Here are two examples of conditional ML (other examples will be in the next chapter).
+
+\begin{example}[Linear regression model with normal errors]
+\label{ex:7.2}
+In Chapter~2, we considered the linear regression model with conditional homoskedasticity. Assume further that the error term is normally distributed, so
+\begin{equation}
+\label{eq:7.1.12}
+\{y_t, \mathbf{x}_t\} \text{ is i.i.d.,} \quad y_t = \mathbf{x}_t' \bm{\beta}_0 + \varepsilon_t, \quad \varepsilon_t \mid \mathbf{x}_t \sim N(0, \sigma_0^2).
+\end{equation}
+
+The conditional likelihood of $y_t$ given $\mathbf{x}_t$, $f(y_t \mid \mathbf{x}_t; \bm{\theta})$, is the density function of $N(\mathbf{x}_t' \bm{\beta}, \sigma^2)$. So, with $\bm{\theta} = (\bm{\beta}', \sigma^2)'$ and $\mathbf{w}_t = (y_t, \mathbf{x}_t')'$, the $m$ function is
+\begin{equation}
+\label{eq:7.1.13}
+\begin{split}
+m(\mathbf{w}_t; \bm{\theta}) &= \log f(y_t \mid \mathbf{x}_t; \bm{\beta}, \sigma^2) \\
+&= \log \left( \frac{1}{\sqrt{2\pi\sigma^2}} \exp\left[ -\frac{(y_t - \mathbf{x}_t' \bm{\beta})^2}{2\sigma^2} \right] \right) \\
+&= -\frac{1}{2}\log(2\pi) - \log(\sigma) - \frac{1}{2}\left( \frac{y_t - \mathbf{x}_t' \bm{\beta}}{\sigma} \right)^2.
+\end{split}
+\end{equation}
+
+The parameter space $\Theta$ is $\mathbb{R}^K \times \mathbb{R}_{++}$, where $K$ is the dimension of $\bm{\beta}$ and $\mathbb{R}_{++}$ is the set of positive real numbers reflecting the \emph{a priori} restriction that $\sigma_0^2 > 0$. As was verified in Chapter~1, the ML estimator of $\bm{\beta}_0$ is the OLS estimator and the ML estimator of $\sigma_0^2$ is the sum of squared residuals divided by the sample size $n$.
+\end{example}
+
+\begin{example}[Probit]
+\label{ex:7.3}
+In the \textbf{probit model}, a scalar dependent variable $y_t$ is a binary variable, $y_t \in \{0, 1\}$. For example, $y_t = 1$ if the wife chooses to enter the labor force and $y_t = 0$ otherwise, and $\mathbf{x}_t$ might include the husband's income. The conditional probability of $y_t$ given a vector of regressors $\mathbf{x}_t$ is given by
+\begin{equation}
+\label{eq:7.1.14}
+\begin{cases}
+f(y_t = 1 \mid \mathbf{x}_t; \bm{\theta}_0) = \Phi(\mathbf{x}_t' \bm{\theta}_0), \\
+f(y_t = 0 \mid \mathbf{x}_t; \bm{\theta}_0) = 1 - \Phi(\mathbf{x}_t' \bm{\theta}_0),
+\end{cases}
+\end{equation}
+where $\Phi(\cdot)$ is the cumulative density function of the standard normal distribution. This can be written compactly as
+\[
+f(y_t \mid \mathbf{x}_t; \bm{\theta}_0) = \Phi(\mathbf{x}_t' \bm{\theta}_0)^{y_t} [1 - \Phi(\mathbf{x}_t' \bm{\theta}_0)]^{1 - y_t}.
+\]
+
+If there is no \emph{a priori} restriction on $\bm{\theta}_0$, the parameter space $\Theta$ is $\mathbb{R}^p$. The ML estimator of $\bm{\theta}_0$ is an M-estimator with the $m$ function given by
+\begin{equation}
+\label{eq:7.1.15}
+m(\mathbf{w}_t; \bm{\theta}) = \log f(y_t \mid \mathbf{x}_t; \bm{\theta}) = y_t \log \Phi(\mathbf{x}_t' \bm{\theta}) + (1 - y_t) \log[1 - \Phi(\mathbf{x}_t' \bm{\theta})].
+\end{equation}
+\end{example}
+
+\subsection*{Invariance of ML}
+
+The joint ML and conditional ML estimators have a number of desirable properties. One of them, which holds true in finite samples, is \textbf{invariance}. To describe invariance for an extremum estimator in general, consider \textbf{reparameterizing} the model by a mapping or function $\bm{\lambda} = \bm{\tau}(\bm{\theta})$ defined on $\Theta$. Let $\Lambda$ be the range of the mapping:
+\begin{equation}
+\label{eq:7.1.16}
+\Lambda \equiv \bm{\tau}(\Theta) \equiv \{ \bm{\lambda} \mid \bm{\lambda} = \bm{\tau}(\bm{\theta}) \text{ for some } \bm{\theta} \in \Theta \}.
+\end{equation}
+
+By definition, for every $\bm{\lambda}$ in $\Lambda$, there exists at least one $\bm{\theta}$ such that $\bm{\lambda} = \bm{\tau}(\bm{\theta})$. The mapping $\bm{\tau} : \Theta \to \Lambda$ is called a reparameterization if it is one-to-one; namely, for every $\bm{\lambda}$ in $\Lambda$, there is only one $\bm{\theta}$ in $\Theta$ such that $\bm{\lambda} = \bm{\tau}(\bm{\theta})$. This unique $\bm{\theta}$ is therefore a function of $\bm{\lambda}$. This mapping from $\Lambda$ to $\Theta$ is called the \textbf{inverse} of $\bm{\tau}$ and denoted $\bm{\tau}^{-1}$. We say that an extremum estimator $\hat{\bm{\theta}}$ is \textbf{invariant} to reparameterization $\bm{\tau}$ if the extremum estimator for the reparameterized model is $\bm{\tau}(\hat{\bm{\theta}})$. Let $\widetilde{Q}_n(\bm{\lambda})$ be the objective function associated with the reparameterized model. An extremum estimator is invariant if and only if
+\begin{equation}
+\label{eq:7.1.17}
+\widetilde{Q}_n(\bm{\lambda}) = Q_n(\bm{\tau}^{-1}(\bm{\lambda})) \quad \text{for all} \quad \bm{\lambda} \in \Lambda.
+\end{equation}
+
+To see this, let $\hat{\bm{\lambda}} \equiv \bm{\tau}(\hat{\bm{\theta}})$. For any $\bm{\lambda} \in \Lambda$, we have $\widetilde{Q}_n(\bm{\lambda}) = Q_n(\bm{\tau}^{-1}(\bm{\lambda})) \leq Q_n(\hat{\bm{\theta}})$ because $\hat{\bm{\theta}}$ maximizes $Q_n(\bm{\theta})$ on $\Theta$ and $\bm{\tau}^{-1}(\bm{\lambda})$ is in $\Theta$. But $Q_n(\hat{\bm{\theta}}) = Q_n(\bm{\tau}^{-1}(\hat{\bm{\lambda}})) = \widetilde{Q}_n(\hat{\bm{\lambda}})$. So $\widetilde{Q}_n(\bm{\lambda}) \leq \widetilde{Q}_n(\hat{\bm{\lambda}})$ for all $\bm{\lambda} \in \Lambda$.
+
+ML (be it conditional or joint) is invariant to reparameterization because the likelihood after reparameterization is $\tilde{f}(\cdot\,; \bm{\lambda}) = f(\cdot\,; \bm{\tau}^{-1}(\bm{\lambda}))$, which produces objective functions that satisfy (\ref{eq:7.1.17}). Can there be an estimator that is \emph{not} invariant? The answer is yes; Review Question~5 will ask you to verify that GMM is not invariant.
+
+\subsection*{Nonlinear Least Squares (NLS)}
+
+In NLS, as in conditional ML, the observation vector $\mathbf{w}_t$ is partitioned into two groups, $y_t$ and $\mathbf{x}_t$: $\mathbf{w}_t = (y_t, \mathbf{x}_t')'$. The model in NLS is a set of stochastic processes $\{y_t, \mathbf{x}_t\}$ such that the conditional mean $\E(y_t \mid \mathbf{x}_t)$, which is a function of $\mathbf{x}_t$, is a member of the parametric family of functions $\varphi(\mathbf{x}_t; \bm{\theta})$, $\bm{\theta} \in \Theta$. The functional form of $\varphi(\cdot\,; \cdot)$ is known. If $\bm{\theta}_0$ is the true parameter value, then $\E(y_t \mid \mathbf{x}_t) = \varphi(\mathbf{x}_t; \bm{\theta}_0)$ for the true DGP $\{y_t, \mathbf{x}_t\}$. If we define $\varepsilon_t \equiv y_t - \E(y_t \mid \mathbf{x}_t)$, then the correctly specified model can be written as
+\begin{equation}
+\label{eq:7.1.18}
+y_t = \varphi(\mathbf{x}_t; \bm{\theta}_0) + \varepsilon_t, \quad \E(\varepsilon_t \mid \mathbf{x}_t) = 0, \quad \bm{\theta}_0 \in \Theta.
+\end{equation}
+
+The most widely used estimation method to estimate $\bm{\theta}_0$ here is \textbf{least squares}, which is to minimize the sum of squared residuals. Therefore, an NLS estimator, which is least squares applied to the model just described, is an M-estimator with
+\begin{equation}
+\label{eq:7.1.19}
+m(\mathbf{w}_t; \bm{\theta}) = -[y_t - \varphi(\mathbf{x}_t; \bm{\theta})]^2, \quad \text{that is,} \quad Q_n(\bm{\theta}) = -\frac{1}{n} \sum_{t=1}^{n} [y_t - \varphi(\mathbf{x}_t; \bm{\theta})]^2.
+\end{equation}
+
+Here maximization of $Q_n(\bm{\theta})$ is the same as \emph{minimization} of the sum of squared residuals.
+
+\begin{example}[CES production function with additive errors]
+\label{ex:7.4}
+As an illustration, consider the CES production function
+\begin{equation}
+\label{eq:7.1.20}
+Q_t = A_0 \cdot \left[ \delta_0 K_t^{-\rho_0} + (1 - \delta_0) L_t^{-\rho_0} \right]^{-1/\rho_0} + \varepsilon_t,
+\end{equation}
+where $Q_t$ is output in period $t$, $K_t$ is the capital stock, $L_t$ is labor input, and $\varepsilon_t$ is an additive shock to the production function with $\E(\varepsilon_t \mid K_t, L_t) = 0$. This is a conditional mean model (\ref{eq:7.1.18}) with $y_t = Q_t$, $\mathbf{x}_t = (K_t, L_t)'$, $\bm{\theta}_0 = (A_0, \delta_0, \rho_0)'$, $\varphi(\mathbf{x}_t; \bm{\theta}) = A \cdot [\delta K_t^{-\rho} + (1 - \delta) L_t^{-\rho}]^{-1/\rho}$. The usual properties for production functions (of monotonicity and concavity) are satisfied if $A > 0$, $0 < \delta < 1$, $-1 < \rho$, which determines the parameter space $\Theta$.
+\end{example}
+
+\subsection*{Linear and Nonlinear GMM}
+
+In Chapter~3, we applied GMM to linear equations. The linear equation to be estimated was
+\begin{equation}
+\label{eq:7.1.21}
+y_t = \mathbf{z}_t' \bm{\theta}_0 + \varepsilon_t.
+\end{equation}
+
+With $\mathbf{x}_t$ as the vector of instruments, the orthogonality (zero-mean) conditions were
+\begin{equation}
+\label{eq:7.1.22}
+\E[\mathbf{x}_t \cdot (y_t - \mathbf{z}_t' \bm{\theta}_0)] = \mathbf{0}.
+\end{equation}
+
+The correctly specified model here is a set of ergodic stationary processes $\mathbf{w}_t = (y_t, \mathbf{z}_t', \mathbf{x}_t')'$ such that these zero-mean conditions hold for $\bm{\theta}_0$ in $\Theta$. The linear GMM estimator of $\bm{\theta}_0$ is a GMM estimator with the $\mathbf{g}$ function in the GMM objective function (\ref{eq:7.1.3}) given by
+\begin{equation}
+\label{eq:7.1.23}
+\mathbf{g}(\mathbf{w}_t; \bm{\theta}) \equiv \mathbf{x}_t \cdot (y_t - \mathbf{z}_t' \bm{\theta}) = \mathbf{x}_t \cdot y_t - \mathbf{x}_t \mathbf{z}_t' \bm{\theta}.
+\end{equation}
+
+GMM can be readily applied to nonlinear equations. Suppose the estimation equation is nonlinear and also implicit in $y_t$:
+\begin{equation}
+\label{eq:7.1.24}
+a(y_t, \mathbf{z}_t; \bm{\theta}_0) = \varepsilon_t.
+\end{equation}
+
+Just set $\mathbf{g}(\mathbf{w}_t; \bm{\theta}) = \mathbf{x}_t \cdot a(y_t, \mathbf{z}_t; \bm{\theta})$. This estimator is called a \textbf{generalized nonlinear instrumental variables estimator}.%
+\footnote{It is more general than the usual nonlinear instrumental variables estimator because conditional homoskedasticity is not assumed.}
+It is still a special case of GMM because the $\mathbf{g}$ function here can be written as a product of the vector of instruments and the error term. The properties of GMM estimators to be developed in this chapter do not rely on this special structure.
+
+As an example of nonlinear GMM, consider the nonlinear Euler equation of Hansen and Singleton (1982).
+
+\begin{example}[Nonlinear consumption Euler equation]
+\label{ex:7.5}
+The Euler equation for the household optimization problem, standard in macroeconomics, is
+\begin{equation}
+\label{eq:7.1.25}
+\E\left[ R_{t+1} \frac{\beta_0 u'(c_{t+1})}{u'(c_t)} \;\middle|\; I_t \right] = 1,
+\end{equation}
+where $R_{t+1}$ is the gross ex-post rate of return (1 plus the rate of return) from the asset in question, $c_t$ is consumption, $\beta_0$ is the discounting factor, $u'(c)$ is the marginal utility, and $I_t$ is the information available at date $t$. Assume the utility function that $u(c) = c^{1-\alpha_0}/(1 - \alpha_0)$. Then $u'(c) = c^{-\alpha_0}$ and the Euler equation becomes
+\begin{equation}
+\label{eq:7.1.26}
+\E\left[ a\!\left(\frac{c_{t+1}}{c_t}, R_{t+1}; \alpha_0, \beta_0\right) \;\middle|\; I_t \right] = 0 \quad \text{with } a\!\left(\frac{c_{t+1}}{c_t}, R_{t+1}; \alpha_0, \beta_0\right) \equiv R_{t+1} \cdot \beta_0 \cdot \left(\frac{c_{t+1}}{c_t}\right)^{-\alpha_0} - 1.
+\end{equation}
+
+If $\mathbf{x}_t$ is a vector of variables whose values are known at date $t$, then $\mathbf{x}_t \in I_t$ and it follows from (\ref{eq:7.1.26}) that
+\begin{equation}
+\label{eq:7.1.27}
+\E\left[ \mathbf{x}_t \cdot a\!\left(\frac{c_{t+1}}{c_t}, R_{t+1}; \alpha_0, \beta_0\right) \;\middle|\; I_t \right] = \mathbf{0}.
+\end{equation}
+
+Taking the unconditional expectation of both sides and using the Law of Total Expectations (that $\E[\E(x \mid I_t)] = \E(x)$), we obtain the orthogonality (zero-mean) conditions $\E[\mathbf{g}(\mathbf{w}_t; \bm{\theta}_0)] = \mathbf{0}$ where
+\begin{equation}
+\label{eq:7.1.28}
+\mathbf{g}(\mathbf{w}_t; \bm{\theta}_0) = \mathbf{x}_t \cdot a\!\left(\frac{c_{t+1}}{c_t}, R_{t+1}; \alpha_0, \beta_0\right) \quad \text{with } \mathbf{w}_t = \begin{bmatrix} \mathbf{x}_t \\ c_{t+1}/c_t \\ R_{t+1} \end{bmatrix}, \quad \bm{\theta}_0 = \begin{bmatrix} \beta_0 \\ \alpha_0 \end{bmatrix}.
+\end{equation}
+\end{example}
+
+\subsection*{Questions for Review}
+
+\begin{enumerate}
+\item (Estimating probit model by NLS) \enspace For the probit model, verify that $\E(y_t \mid \mathbf{x}_t) = \Phi(\mathbf{x}_t' \bm{\theta}_0)$. Consider applying least squares to this model. Specify the $m$ function in the M-estimator objective function (\ref{eq:7.1.2}).
+
+\item (Estimating probit model by GMM) \enspace For the probit model, verify that the orthogonality conditions $\E[\mathbf{x}_t \cdot (y_t - \Phi(\mathbf{x}_t' \bm{\theta}_0))] = \mathbf{0}$ hold. Specify the $\mathbf{g}$ function in the GMM objective function (\ref{eq:7.1.3}).
+
+\item (Estimation by ML of a GMM model?) \enspace Suppose that $\{y_t, \mathbf{z}_t, \mathbf{x}_t\}$ is i.i.d.\ in the correctly specified linear model described in the last subsection. Can you estimate $\bm{\theta}_0$ by ML? [Answer: No, because the model does not specify the parametric form for the density of $\mathbf{w}_t$.]
+
+\item ($\E(\varepsilon_t \mid \mathbf{x}_t) = 0$ vs.\ $\E(\varepsilon_t \cdot \mathbf{x}_t) = \mathbf{0}$ in NLS) \enspace Consider the quadratic NLS model where $\varphi(\mathbf{x}_t; \bm{\theta}) = \theta_0 + \theta_1 x_t + \theta_2 x_t^2$. Suppose that $\E(\varepsilon_t x_t) = 0$ but $\E(\varepsilon_t x_t^2) \neq 0$. Does $\E(\varepsilon_t \mid x_t) = 0$ hold? [Answer: No. If $\E(\varepsilon_t \mid x_t) = 0$, then $\E(\varepsilon_t h(x_t)) = 0$ for any function $h$.]
+\end{enumerate}

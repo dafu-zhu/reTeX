@@ -1,0 +1,349 @@
+% sec8_2.tex — Section 8.2: Truncated Regression Models
+
+A \textbf{limited dependent variable (LDV) model} is a regression model in which either
+the dependent variable $y_t$ is constrained in some way or the observations for which
+$y_t$ does not meet some prespecified criterion are excluded from the sample. The
+LDV model of the former sort is called a \textbf{censored regression model}, while the
+latter is called a \textbf{truncated regression model}. This section presents truncated
+regression models; censored regression models are presented in the next section.
+
+\subsection*{The Model}
+
+Suppose that $\{y_t, \mathbf{x}_t\}$ is i.i.d.\ satisfying
+\begin{equation}
+  y_t = \mathbf{x}_t'\boldsymbol{\beta}_0 + \varepsilon_t, \quad
+  \varepsilon_t \mid \mathbf{x}_t \sim N(0, \sigma_0^2).
+  \label{eq:8.2.1} \tag{8.2.1}
+\end{equation}
+The model would be just the standard linear regression model with normal errors,
+were it not for the following feature: only those observations that meet some prespecified rule for $y_t$ are included in the sample. We will consider only the simplest
+truncation rule: $y_t > c$ where $c$ is a known constant. This rule is sometimes called
+a ``truncation from below.'' Once this case is worked out, it should not be hard to
+consider more general truncation rules.
+
+\subsection*{Truncated Distributions}
+
+To proceed, we need two results from probability theory.
+
+\medskip
+\noindent\textit{Density of a Truncated Random Variable:}\quad
+If a continuous random variable $y$ has a density function $f(y)$ and $c$ is a constant, then its distribution after
+the truncation $y > c$ is defined over the interval $(c, \infty)$ and is given by
+\begin{equation}
+  f(y \mid y > c) = \frac{f(y)}{\text{Prob}(y > c)}.
+  \label{eq:8.2.2} \tag{8.2.2}
+\end{equation}
+
+\begin{figure}[ht]
+  \centering
+  % Placeholder for Figure 8.1: Effect of Truncation
+  % Shows density of N(0,1) (solid) and density after truncation (dotted)
+  % with truncation point c marked on horizontal axis
+  \includegraphics[width=0.9\textwidth,trim=50 350 50 350,clip]{figures/fig_8_1.png}
+  \caption{Effect of Truncation}
+  \label{fig:8.1}
+\end{figure}
+
+Figure~\ref{fig:8.1} illustrates how truncation alters the distribution for $N(0,1)$. The solid
+curve is the density of $N(0,1)$. Because it is a density, the area under the curve is
+unity. The dotted curve is the distribution after truncation, which is defined over
+the interval $(c, \infty)$. It lies above the solid curve over this interval so that the area
+under the dotted curve is unity.
+
+The second result follows.
+
+\medskip
+\noindent\textit{Moments of the Truncated Normal Distribution:}\quad
+If $y \sim N(\mu_0, \sigma_0^2)$ and $c$ is a constant, then the mean and the variance of the truncated distribution are
+\begin{align}
+  \E(y \mid y > c) &= \mu_0 + \sigma_0 \lambda(v),
+  \label{eq:8.2.3} \tag{8.2.3} \\
+  \Var(y \mid y > c) &= \sigma_0^2 \{1 - \lambda(v)[\lambda(v) - v]\},
+  \label{eq:8.2.4} \tag{8.2.4}
+\end{align}
+where $v = (c - \mu_0)/\sigma_0$ and
+$\lambda(v) \equiv \frac{\phi(v)}{1 - \Phi(v)}$.
+
+This formula for the mean clearly shows that the sample mean of draws from the
+truncated distribution is not consistent for $\mu_0$. This is an example of the \textbf{sample
+selection bias}. The bias equals $\sigma_0 \lambda(v)$. The function $\lambda(v)$ is called the
+\textbf{inverse Mill's ratio} or the \textbf{hazard function}. The function $\lambda(v)$ is convex and asymptotes
+to $v$ as $v \to \infty$ and to zero as $v \to -\infty$. So its derivative $\lambda'(v)$ is between 0 and
+1. It is easy to show that
+\begin{equation}
+  \lambda'(v) = \lambda(v)(\lambda(v) - v).
+  \label{eq:8.2.5} \tag{8.2.5}
+\end{equation}
+
+Using \eqref{eq:8.2.3} and \eqref{eq:8.2.4}, we can show how truncation alters the form of
+regression of $y_t$ on $\mathbf{x}_t$. By \eqref{eq:8.2.1}, the distribution of $y_t$ conditional on $\mathbf{x}_t$ \emph{before}
+truncation is $N(\mathbf{x}_t'\boldsymbol{\beta}_0, \sigma_0^2)$. Observation~$t$ is in the sample if and only if $y_t > c$. So
+\begin{align}
+  \E(y_t \mid \mathbf{x}_t,\, t \text{ in the sample})
+  &= \mathbf{x}_t'\boldsymbol{\beta}_0
+     + \sigma_0 \lambda\!\Bigl(\frac{c - \mathbf{x}_t'\boldsymbol{\beta}_0}{\sigma_0}\Bigr),
+  \label{eq:8.2.6} \tag{8.2.6} \\
+  \Var(y_t \mid \mathbf{x}_t,\, t \text{ in the sample})
+  &= \sigma_0^2 \biggl\{1 - \lambda\!\Bigl(\frac{c - \mathbf{x}_t'\boldsymbol{\beta}_0}{\sigma_0}\Bigr)
+     \biggl[\lambda\!\Bigl(\frac{c - \mathbf{x}_t'\boldsymbol{\beta}_0}{\sigma_0}\Bigr)
+     - \frac{c - \mathbf{x}_t'\boldsymbol{\beta}_0}{\sigma_0}\biggr]\biggr\}.
+  \label{eq:8.2.7} \tag{8.2.7}
+\end{align}
+This formula shows that the OLS estimate of the $\mathbf{x}_t$ coefficient from the linear
+regression of $y_t$ on $\mathbf{x}_t$ is not consistent because the correction term
+$\sigma_0 \lambda\bigl(\frac{c - \mathbf{x}_t'\boldsymbol{\beta}_0}{\sigma_0}\bigr)$,
+which is correlated with $\mathbf{x}_t$, would be included in the error term in the linear regression. Since the functional form of the hazard function $\lambda(v)$ is known (under the
+normality assumption for $\varepsilon_t$), we could avoid the sample selection bias by applying nonlinear least squares to estimate $(\boldsymbol{\beta}_0, \sigma_0^2)$, but maximum likelihood should
+be the preferred estimation method because it is asymptotically more efficient.
+
+In passing, we note that the sample selection bias does not arise if selection is
+based on the regressors, not on the dependent variable. Suppose that observation~$t$
+is in the sample if $\phi(\mathbf{x}_t) \geq 0$. Then
+\begin{align}
+  \E(y_t \mid \mathbf{x}_t,\, t \text{ in the sample})
+  &= \E[\mathbf{x}_t'\boldsymbol{\beta}_0 + \varepsilon_t
+     \mid \mathbf{x}_t,\, \phi(\mathbf{x}_t) \geq 0] \notag \\
+  &= \mathbf{x}_t'\boldsymbol{\beta}_0
+     + \E[\varepsilon_t \mid \mathbf{x}_t,\, \phi(\mathbf{x}_t) \geq 0] \notag \\
+  &= \mathbf{x}_t'\boldsymbol{\beta}_0.
+  \label{eq:8.2.8} \tag{8.2.8}
+\end{align}
+The last equality holds since
+$\E[\varepsilon_t \mid \mathbf{x}_t,\, \phi(\mathbf{x}_t) \geq 0]
+= \E(\varepsilon_t \mid \mathbf{x}_t) = 0$ if $\phi(\mathbf{x}_t) \geq 0$.
+
+\subsection*{The Likelihood Function}
+
+Derivation of the likelihood function utilizes \eqref{eq:8.2.2}. As just noted, the pretruncation distribution of $y_t \mid \mathbf{x}_t$ is
+$N(\mathbf{x}_t'\boldsymbol{\beta}_0, \sigma_0^2)$, whose density is
+\begin{equation}
+  \frac{1}{\sqrt{2\pi\sigma_0^2}}
+  \exp\biggl[-\frac{1}{2}\Bigl(\frac{y_t - \mathbf{x}_t'\boldsymbol{\beta}_0}{\sigma_0}\Bigr)^2\biggr]
+  = \frac{1}{\sigma_0}\,\phi\!\Bigl(\frac{y_t - \mathbf{x}_t'\boldsymbol{\beta}_0}{\sigma_0}\Bigr),
+  \label{eq:8.2.9} \tag{8.2.9}
+\end{equation}
+where $\phi(\cdot)$ is the density of $N(0,1)$. The probability that observation~$t$ is in the
+sample is given by
+\begin{align}
+  \text{Prob}(y_t > c \mid \mathbf{x}_t)
+  &= 1 - \text{Prob}(y_t \leq c \mid \mathbf{x}_t) \notag \\
+  &= 1 - \text{Prob}\!\biggl(\frac{y_t - \mathbf{x}_t'\boldsymbol{\beta}_0}{\sigma_0}
+     \leq \frac{c - \mathbf{x}_t'\boldsymbol{\beta}_0}{\sigma_0}
+     \;\bigg|\; \mathbf{x}_t\biggr) \notag \\
+  &= 1 - \Phi\!\Bigl(\frac{c - \mathbf{x}_t'\boldsymbol{\beta}_0}{\sigma_0}\Bigr)
+     \quad\bigl(\text{since } \tfrac{y_t - \mathbf{x}_t'\boldsymbol{\beta}_0}{\sigma_0}
+     \mid \mathbf{x}_t \sim N(0,1)\bigr).
+  \label{eq:8.2.10} \tag{8.2.10}
+\end{align}
+Therefore, by \eqref{eq:8.2.2}, the post-truncation density, defined over $(c, \infty)$, is
+\begin{equation}
+  f(y_t \mid \mathbf{x}_t,\, t \text{ in the sample};\,
+    \boldsymbol{\beta}_0, \sigma_0^2)
+  = \frac{\frac{1}{\sigma_0}\,\phi\!\bigl(\frac{y_t - \mathbf{x}_t'\boldsymbol{\beta}_0}{\sigma_0}\bigr)}
+    {1 - \Phi\!\bigl(\frac{c - \mathbf{x}_t'\boldsymbol{\beta}_0}{\sigma_0}\bigr)}.
+  \label{eq:8.2.11} \tag{8.2.11}
+\end{equation}
+This is the density (conditional on $\mathbf{x}_t$) of observation~$t$ \emph{in the sample}. Taking logs
+and replacing $(\boldsymbol{\beta}_0, \sigma_0^2)$ by their hypothetical values $(\boldsymbol{\beta}, \sigma^2)$, we obtain the log conditional likelihood for observation~$t$:
+\begin{multline}
+  \log f(y_t \mid \mathbf{x}_t; \boldsymbol{\beta}, \sigma^2) \\
+  = \biggl\{-\frac{1}{2}\log(2\pi) - \frac{1}{2}\log(\sigma^2)
+    - \frac{1}{2}\Bigl(\frac{y_t - \mathbf{x}_t'\boldsymbol{\beta}}{\sigma}\Bigr)^2\biggr\}
+    - \log\biggl[1 - \Phi\!\Bigl(\frac{c - \mathbf{x}_t'\boldsymbol{\beta}}{\sigma}\Bigr)\biggr].
+  \label{eq:8.2.12} \tag{8.2.12}
+\end{multline}
+Were it not for the last term, this would be the log likelihood (conditional on $\mathbf{x}_t$) for
+the usual linear regression model. The last term is needed because the value of the
+dependent variable for observation~$t$, having passed the test $y_t > c$ and thus being
+in the sample, is never less than or equal to~$c$.
+
+\subsection*{Reparameterizing the Likelihood Function}
+
+This log likelihood function can be made easier to analyze if we introduce the
+following reparameterization:
+\begin{equation}
+  \boldsymbol{\delta} = \boldsymbol{\beta}/\sigma, \quad \gamma = 1/\sigma.
+  \label{eq:8.2.13} \tag{8.2.13}
+\end{equation}
+(We have considered this reparameterization in Example~7.7 for the linear regression model.) This is a one-to-one mapping between $(\boldsymbol{\beta}, \sigma^2)$ and
+$(\boldsymbol{\delta}, \gamma)$, with the inverse mapping given by
+$\boldsymbol{\beta} = \boldsymbol{\delta}/\gamma$, $\sigma^2 = 1/\gamma^2$.
+The reparameterized log conditional likelihood is
+\begin{multline}
+  \log \tilde{f}(y_t \mid \mathbf{x}_t; \boldsymbol{\lambda}) \\
+  = \bigl[-\tfrac{1}{2}\log(2\pi) + \log(\gamma)
+    - \tfrac{1}{2}(\gamma y_t - \mathbf{x}_t'\boldsymbol{\delta})^2\bigr]
+    - \log[1 - \Phi(\gamma c - \mathbf{x}_t'\boldsymbol{\delta})].
+  \label{eq:8.2.14} \tag{8.2.14}
+\end{multline}
+
+The objective function in ML estimation is $1/n$ times the log likelihood of the
+sample. For a random sample, the log likelihood of the sample is the sum over~$t$
+of the log likelihood for observation~$t$. Thus, the objective function in the ML
+estimation of the reparameterized truncated regression model, denoted
+$\tilde{Q}_n(\boldsymbol{\delta}, \gamma)$, is the average over~$t$ of \eqref{eq:8.2.14}. The ML estimator
+$(\hat{\boldsymbol{\delta}}, \hat{\gamma})$ of $(\boldsymbol{\delta}_0, \gamma_0)$ is the $(\boldsymbol{\delta}, \gamma)$
+that maximizes this objective function.
+
+\subsection*{Verifying Consistency and Asymptotic Normality}
+
+The next task is to derive the score and the Hessian and check the conditions
+for consistency and asymptotic normality for the reparameterized log likelihood
+\eqref{eq:8.2.14}. (On the first reading, you may wish to skip the discussion on consistency
+and asymptotic normality.)
+
+\subsubsection*{Score and Hessian for Observation \texorpdfstring{$t$}{t}}
+
+A tedious calculation yields
+\begin{equation}
+  \underset{((K+1) \times 1)}{\mathbf{s}(\mathbf{w}_t;\, \boldsymbol{\delta}, \gamma)}
+  = \begin{bmatrix}
+      (\gamma y_t - \mathbf{x}_t'\boldsymbol{\delta})\mathbf{x}_t \\[4pt]
+      \frac{1}{\gamma} - (\gamma y_t - \mathbf{x}_t'\boldsymbol{\delta})y_t
+    \end{bmatrix}
+  + \lambda(v_t)
+    \begin{bmatrix} -\mathbf{x}_t \\[4pt] c \end{bmatrix},
+  \label{eq:8.2.15} \tag{8.2.15}
+\end{equation}
+\begin{multline}
+  \underset{((K+1) \times (K+1))}{\mathbf{H}(\mathbf{w}_t;\, \boldsymbol{\delta}, \gamma)}
+  = -\begin{bmatrix}
+      \mathbf{x}_t\mathbf{x}_t' & -y_t\mathbf{x}_t \\[4pt]
+      -y_t\mathbf{x}_t' & \frac{1}{\gamma^2} + y_t^2
+    \end{bmatrix} \\
+  + \lambda(v_t)[\lambda(v_t) - v_t]
+    \begin{bmatrix}
+      \mathbf{x}_t\mathbf{x}_t' & -c\,\mathbf{x}_t \\[4pt]
+      -c\,\mathbf{x}_t' & c^2
+    \end{bmatrix},
+  \label{eq:8.2.16} \tag{8.2.16}
+\end{multline}
+where $K$ is the number of regressors,
+$\mathbf{w}_t = (y_t, \mathbf{x}_t')'$, and
+$v_t \equiv \gamma c - \mathbf{x}_t'\boldsymbol{\delta}$ $\bigl(= \frac{c - \mathbf{x}_t'\boldsymbol{\beta}}{\sigma}\bigr)$.
+The Hessian is \emph{not} everywhere negative semidefinite even after the reparameterization. So the objective function $\tilde{Q}_n(\boldsymbol{\delta}, \gamma)$ is not concave.\footnote{However, it can be shown that the Hessian of the objective function $Q_n(\boldsymbol{\theta})$ is negative semidefinite at any
+solution to the likelihood equations (see Orme, 1989). Since this rules out any saddle points or local minima,
+having more than two local maxima is impossible. Therefore, provided that the maximum of
+$\tilde{Q}_n(\boldsymbol{\delta}, \gamma)$ occurs at
+a point interior to the parameter space, the first-order condition is necessary and sufficient for a \emph{global} maximum.
+If an algorithm such as Newton--Raphson produces convergence, the point of convergence is the global maximum.}
+The relevant consistency theorem, therefore, is Proposition~7.5, not Proposition~7.6, while the relevant
+asymptotic normality theorem remains Proposition~7.9.
+
+\subsubsection*{Consistency}
+
+Condition~(a) of Proposition~7.5 is the (conditional) density identification
+\begin{align*}
+  &\tilde{f}(y_t \mid \mathbf{x}_t;\, \boldsymbol{\delta}, \gamma)
+   \neq \tilde{f}(y_t \mid \mathbf{x}_t;\, \boldsymbol{\delta}_0, \gamma_0) \\
+  &\qquad\text{with positive probability for }
+   (\boldsymbol{\delta}, \gamma) \neq (\boldsymbol{\delta}_0, \gamma_0),
+\end{align*}
+where $(\boldsymbol{\delta}_0, \gamma_0)$ is the true parameter value and the parameterized log density
+$\tilde{f}(y_t \mid \mathbf{x}_t;\, \boldsymbol{\delta}, \gamma)$ is given in \eqref{eq:8.2.14}. Clearly, given
+$(y_t, \mathbf{x}_t)$, the value of
+$\tilde{f}(y_t \mid \mathbf{x}_t;\, \boldsymbol{\delta}, \gamma)$
+is different for different values of $\gamma$. So identification boils down to the condition
+that $\mathbf{x}_t'\boldsymbol{\delta} \neq \mathbf{x}_t'\boldsymbol{\delta}_0$ with positive probability for
+$\boldsymbol{\delta} \neq \boldsymbol{\delta}_0$. But \eqref{eq:8.1.10} indicates that
+this condition is satisfied if $\E(\mathbf{x}_t\mathbf{x}_t')$ is nonsingular. Turning to condition~(b) of the
+proposition (the dominance condition for
+$\tilde{f}(y_t \mid \mathbf{x}_t;\, \boldsymbol{\delta}, \gamma)$), it is easy to show that
+the condition is satisfied under the nonsingularity of
+$\E(\mathbf{x}_t\mathbf{x}_t')$.\footnote{Only interested readers: what needs to be shown is
+$\E[\sup_{\boldsymbol{\theta} \in \Theta} |\log \tilde{f}(y_t \mid \mathbf{x}_t; \boldsymbol{\theta})|] < \infty$,
+where $\boldsymbol{\theta} = (\boldsymbol{\delta}', \gamma)'$ and $\Theta$ is a compact set.
+An extension of the argument in Example~7.8 shows that there is a dominating
+function for the bracketed term in \eqref{eq:8.2.14}. The inequality (7.2.14) can be used to show that there is a dominating
+function for $\log[1 - \Phi(cy - \mathbf{x}_t'\boldsymbol{\delta})]$.}
+Therefore, the ML
+estimator $(\hat{\boldsymbol{\delta}}, \hat{\gamma})$ of $(\boldsymbol{\delta}_0, \gamma_0)$ is consistent under the nonsingularity of $\E(\mathbf{x}_t\mathbf{x}_t')$.
+
+\subsubsection*{Asymptotic Normality}
+
+A rather tedious calculation using \eqref{eq:8.2.6}, \eqref{eq:8.2.7}, and \eqref{eq:8.2.13} shows that
+$\E[\mathbf{s} \mid \mathbf{x}_t] = 0$. An extremely tedious calculation yields the conditional information
+matrix equality: $\E[\mathbf{s}\mathbf{s}' \mid \mathbf{x}_t] = -\E[\mathbf{H} \mid \mathbf{x}_t]$.
+Therefore, condition~(3) of Proposition~7.9 is satisfied. We will not discuss verification of conditions~(4) and~(5) of
+the proposition.\footnote{There seems to be no published work that verifies conditions~(4) and~(5). For the case where $\{\mathbf{x}_t\}$ is a
+sequence of fixed constants, Sapra (1992) proved asymptotic normality under the assumption that $\mathbf{x}_t$ is bounded
+and $\lim_{n\to\infty} \frac{1}{n}\sum_{t=1}^{n} \mathbf{x}_t\mathbf{x}_t'$ is nonsingular. (His proof is for the more general setting of serially correlated observations.) It would seem reasonable to conjecture that for the case where $\mathbf{x}_t$ is random (as here), a sufficient
+condition for consistency and asymptotic normality is the nonsingularity of $\E(\mathbf{x}_t\mathbf{x}_t')$.}
+
+Thus, we conclude: if $\{y_t, \mathbf{x}_t\}$ is i.i.d.\ and $\E(\mathbf{x}_t\mathbf{x}_t')$ is nonsingular, then the ML
+estimator $(\hat{\boldsymbol{\delta}}, \hat{\gamma})$ of the truncated regression model is consistent and asymptotically
+normal with the asymptotic variance consistently estimated by
+\begin{equation}
+  \widehat{\avar}(\hat{\boldsymbol{\delta}}, \hat{\gamma})
+  = -\biggl[\frac{1}{n}\sum_{t=1}^{n}
+    \mathbf{H}(\mathbf{w}_t;\, \hat{\boldsymbol{\delta}}, \hat{\gamma})\biggr]^{-1},
+  \label{eq:8.2.17} \tag{8.2.17}
+\end{equation}
+where $\mathbf{w}_t = (y_t, \mathbf{x}_t')'$ and $\mathbf{H}(\mathbf{w}_t; \boldsymbol{\theta})$ is given in \eqref{eq:8.2.16}.
+
+\subsection*{Recovering Original Parameters}
+
+By the invariance property of ML (see Section~7.1), the ML estimate of
+$(\boldsymbol{\beta}_0, \sigma_0^2)$
+is $\hat{\boldsymbol{\beta}} = \hat{\boldsymbol{\delta}}/\hat{\gamma}$ and
+$\hat{\sigma}^2 = 1/\hat{\gamma}^2$, the value of the inverse mapping. Clearly, if the ML
+estimate of the reparameterized model, $(\hat{\boldsymbol{\delta}}, \hat{\gamma})$, is consistent, then so is the ML estimate $(\hat{\boldsymbol{\beta}}, \hat{\sigma}^2)$ thus recovered. The asymptotic variance of
+$(\hat{\boldsymbol{\beta}}, \hat{\sigma}^2)$ can be obtained
+by the delta method (see Lemma~2.5) as
+$\hat{\mathbf{J}}\,\widehat{\avar}(\hat{\boldsymbol{\delta}}, \hat{\gamma})\,\hat{\mathbf{J}}'$,
+where $\hat{\mathbf{J}}$ is the estimate of the Jacobian matrix for the inverse mapping
+($\boldsymbol{\beta} = \boldsymbol{\delta}/\gamma$, $\sigma^2 = 1/\gamma^2$) evaluated at
+$(\hat{\boldsymbol{\delta}}, \hat{\gamma})$:
+\begin{equation}
+  \hat{\mathbf{J}} = \begin{bmatrix}
+    \frac{1}{\hat{\gamma}}\mathbf{I} & -\frac{\hat{\boldsymbol{\delta}}}{\hat{\gamma}^2} \\[6pt]
+    \mathbf{0}' & -\frac{2}{\hat{\gamma}^3}
+  \end{bmatrix}.
+  \label{eq:8.2.18} \tag{8.2.18}
+\end{equation}
+
+\bigskip
+\noindent\rule{\textwidth}{0.4pt}
+\textbf{QUESTIONS FOR REVIEW}
+\medskip
+
+\begin{enumerate}
+\item (Second moment of $y_t$)\quad
+  From \eqref{eq:8.2.6} and \eqref{eq:8.2.7}, derive:
+  \[
+    \E(y_t^2 \mid \mathbf{x}_t,\, t \text{ in sample})
+    = \frac{1}{\gamma^2}\bigl[1 + \lambda(v_t)\gamma c
+      + (\mathbf{x}_t'\boldsymbol{\delta})^2
+      + \lambda(v_t)\mathbf{x}_t'\boldsymbol{\delta}\bigr],
+  \]
+  where $v_t \equiv \gamma c - \mathbf{x}_t'\boldsymbol{\delta}$.
+
+\item (Estimation of truncated regression model by GMM)\quad
+  The truncated regression model can also be estimated by GMM. Consider the following $K + 1$
+  orthogonality conditions. The first $K$ of them are
+  \begin{equation}
+    \underset{(K \times 1)}{\mathbf{g}_1(\mathbf{w}_t;\, \boldsymbol{\delta}, \gamma)}
+    = \biggl(y_t - \frac{1}{\gamma}\mathbf{x}_t'\boldsymbol{\delta}
+      - \frac{\lambda(v_t)}{\gamma}\biggr) \cdot \mathbf{x}_t,
+    \label{eq:8.2.19} \tag{8.2.19}
+  \end{equation}
+  where $\mathbf{w}_t = (y_t, \mathbf{x}_t')'$ and
+  $v_t \equiv \gamma c - \mathbf{x}_t'\boldsymbol{\delta}$. The $(K+1)$-th orthogonality condition is
+  \begin{equation}
+    g_2(\mathbf{w}_t;\, \boldsymbol{\delta}, \gamma)
+    = y_t^2 - \frac{1}{\gamma^2}\bigl[1 + \lambda(v_t)\gamma c
+      + (\mathbf{x}_t'\boldsymbol{\delta})^2
+      + \lambda(v_t)\mathbf{x}_t'\boldsymbol{\delta}\bigr].
+    \label{eq:8.2.20} \tag{8.2.20}
+  \end{equation}
+
+  \begin{enumerate}[label=(\alph*)]
+  \item Verify that
+    $\E[\mathbf{g}_1(\mathbf{w}_t; \boldsymbol{\delta}_0, \gamma_0)] = \mathbf{0}$ and
+    $\E[g_2(\mathbf{w}_t; \boldsymbol{\delta}_0, \gamma_0)] = 0$.
+    \textbf{Hint:} Use the Law of Total Expectations. $v_t$ is a function of $\mathbf{x}_t$.
+
+  \item Show that $(\boldsymbol{\delta}^*, \gamma^*)$ satisfies the likelihood equations if and only if it satisfies
+    the $K+1$ orthogonality conditions. \textbf{Hint:} Let $s_2(\mathbf{w}_t; \boldsymbol{\delta}, \gamma)$ be the $(K+1)$-th
+  \end{enumerate}
+\end{enumerate}

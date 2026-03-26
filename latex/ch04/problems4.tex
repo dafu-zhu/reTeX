@@ -1,0 +1,691 @@
+% problems4.tex — Problem Set and Answers for Chapter 4
+
+\begin{problemset}
+
+\subsection*{Analytical Exercises}
+
+\exercise[1]
+(Data matrix representation of 3SLS)\quad
+In the 3SLS model, the set of instruments is the same across equations.
+Let $K$ be the number of common instruments. Define:
+\[
+\underset{(n \times K)}{\mathbf{X}}
+= \begin{bmatrix} \mathbf{x}_1' \\ \vdots \\ \mathbf{x}_n' \end{bmatrix}
+= \begin{bmatrix}
+x_{11} & \cdots & x_{1K} \\
+\vdots & & \vdots \\
+x_{n1} & \cdots & x_{nK}
+\end{bmatrix},
+\]
+\[
+\underset{(n \times L_m)}{\mathbf{Z}_m}
+= \begin{bmatrix} \mathbf{z}_{1m}' \\ \vdots \\ \mathbf{z}_{nm}' \end{bmatrix}, \quad
+\underset{(Mn \times \sum_{m=1}^{M} L_m)}{\mathbf{Z}}
+= \begin{bmatrix}
+\mathbf{Z}_1 & & \\
+& \ddots & \\
+& & \mathbf{Z}_M
+\end{bmatrix},
+\]
+\[
+\underset{(\sum_{m=1}^{M} L_m \times 1)}{\boldsymbol{\delta}}
+= \begin{bmatrix} \boldsymbol{\delta}_1 \\ \vdots \\ \boldsymbol{\delta}_M \end{bmatrix}, \quad
+\underset{(Mn \times 1)}{\mathbf{y}}
+= \begin{bmatrix} \mathbf{y}_1 \\ \vdots \\ \mathbf{y}_M \end{bmatrix}, \quad
+\underset{(n \times 1)}{\mathbf{y}_m}
+= \begin{bmatrix} y_{1m} \\ \vdots \\ y_{nm} \end{bmatrix},
+\]
+\[
+\underset{(Mn \times 1)}{\boldsymbol{\varepsilon}}
+= \begin{bmatrix} \boldsymbol{\varepsilon}_1 \\ \vdots \\ \boldsymbol{\varepsilon}_M \end{bmatrix}, \quad
+\underset{(n \times 1)}{\boldsymbol{\varepsilon}_m}
+= \begin{bmatrix} \varepsilon_{1m} \\ \vdots \\ \varepsilon_{nm} \end{bmatrix}.
+\]
+
+Show the following:
+\begin{itemize}
+\item Assumption~4.1 becomes $\mathbf{y} = \mathbf{Z}\boldsymbol{\delta} + \boldsymbol{\varepsilon}$,
+\item $\widehat{\mathbf{S}}$ in (4.5.10) becomes
+$\widehat{\mathbf{S}} = \widehat{\boldsymbol{\Sigma}} \otimes \frac{1}{n} \mathbf{X}'\mathbf{X}$,
+\item $\hat{\boldsymbol{\delta}}_{\mathrm{3SLS}}
+= [\mathbf{Z}'(\widehat{\boldsymbol{\Sigma}}^{-1} \otimes \mathbf{P})\mathbf{Z}]^{-1}
+\mathbf{Z}'(\widehat{\boldsymbol{\Sigma}}^{-1} \otimes \mathbf{P})\mathbf{y}$,
+where $\mathbf{P} \equiv \mathbf{X}(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'$,
+\item $\widehat{\avar}(\hat{\boldsymbol{\delta}}_{\mathrm{3SLS}})
+= n \cdot [\mathbf{Z}'(\widehat{\boldsymbol{\Sigma}}^{-1} \otimes \mathbf{P})\mathbf{Z}]^{-1}$,
+\item $\widehat{\mathbf{A}}_{mh}$ in (4.5.13) becomes
+$\widehat{\mathbf{A}}_{mh} = \frac{1}{n} \mathbf{Z}_m' \mathbf{P} \mathbf{Z}_h$,
+\item $\hat{\mathbf{c}}_{mh}$ in (4.5.14) becomes
+$\hat{\mathbf{c}}_{mh} = \frac{1}{n} \mathbf{Z}_m' \mathbf{P} \mathbf{y}_h$,
+\item $J(\hat{\boldsymbol{\delta}}_{\mathrm{3SLS}},\, \widehat{\mathbf{S}}^{-1})
+= (\mathbf{y} - \mathbf{Z}\hat{\boldsymbol{\delta}}_{\mathrm{3SLS}})'
+(\widehat{\boldsymbol{\Sigma}}^{-1} \otimes \mathbf{P})
+(\mathbf{y} - \mathbf{Z}\hat{\boldsymbol{\delta}}_{\mathrm{3SLS}})$.
+\end{itemize}
+
+\textbf{Hint:}
+$\frac{1}{n} \sum_{i=1}^{n} \mathbf{x}_i \mathbf{x}_i' = \frac{1}{n} \mathbf{X}'\mathbf{X}$,
+\quad $\mathbf{s}_{\mathbf{xy}} = \frac{1}{n}(\mathbf{I}_M \otimes \mathbf{X})'\mathbf{y}$,
+\quad $\mathbf{S}_{\mathbf{xz}} = \frac{1}{n}(\mathbf{I}_M \otimes \mathbf{X})'\mathbf{Z}$.
+Use formulas (A.11) and (A.13)--(A.15) of Appendix~A.
+
+\exercise[2]
+(Data matrix representation of SUR, RE, and Pooled OLS)
+\begin{enumerate}[label=(\alph*)]
+\item Prove that (4.5.13) reduces to (4.5.13$'$) on page~280 and (4.5.14) to
+(4.5.14$'$), under the SUR assumption (4.5.18).
+\textbf{Hint:} If $\mathbf{P} \equiv \mathbf{X}(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'$,
+then $\widehat{\mathbf{A}}_{mh} = \frac{1}{n} \mathbf{Z}_m' \mathbf{P} \mathbf{Z}_h$,
+$\hat{\mathbf{c}}_{mh} = \frac{1}{n} \mathbf{Z}_m' \mathbf{P} \mathbf{y}_h$.
+$\mathbf{P}\mathbf{Z}_m = \mathbf{Z}_m$ if the columns of $\mathbf{Z}_m$
+are taken from the columns of $\mathbf{X}$.
+
+\item Show that, for SUR,
+\begin{align*}
+\text{the estimator} &= [\mathbf{Z}'(\widehat{\boldsymbol{\Sigma}}^{-1} \otimes
+\mathbf{I}_n)\mathbf{Z}]^{-1}
+\mathbf{Z}'(\widehat{\boldsymbol{\Sigma}}^{-1} \otimes \mathbf{I}_n)\mathbf{y}, \\
+\text{its } \widehat{\avar} &= n \cdot
+[\mathbf{Z}'(\widehat{\boldsymbol{\Sigma}}^{-1} \otimes \mathbf{I}_n)\mathbf{Z}]^{-1}.
+\end{align*}
+
+\item Suppose, just for this part of the question, that $\mathbf{z}_{im} = \mathbf{x}_i$
+for all $m$. So $\mathbf{Z} = \mathbf{I}_M \otimes \mathbf{X}$.
+Show that SUR reduces to the multivariate regression estimator
+\[
+[\mathbf{I}_M \otimes (\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}']\mathbf{y}.
+\]
+Verify that the $m$-th $K$-dimensional block of this $MK$-dimensional vector is
+$(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{y}_m$.
+
+Now redefine $\mathbf{Z}$ as
+\[
+\underset{(Mn \times L)}{\mathbf{Z}}
+\equiv \begin{bmatrix} \mathbf{Z}_1 \\ \vdots \\ \mathbf{Z}_M \end{bmatrix}. \qquad (*)
+\]
+So Assumption~4.1$'$ (linear equations with common coefficients) can be written
+as $\mathbf{y} = \mathbf{Z}\boldsymbol{\delta} + \boldsymbol{\varepsilon}$,
+where $\mathbf{y}$ and $\boldsymbol{\varepsilon}$ are as in Analytical Exercise~1
+and $\boldsymbol{\delta}$ is the $L$-dimensional vector of common coefficients.
+
+\item Show that, for the random-effects estimator, the same formulas you derived
+in~(b) for SUR hold with $\mathbf{Z}$ as just redefined as in $(*)$.
+\textbf{Hint:} The estimator is given in (4.6.8) and its $\widehat{\avar}$ is in
+(4.6.10). Use formula (A.8) of the Appendix.
+
+\item Show that
+\begin{align*}
+\hat{\boldsymbol{\delta}}_{\text{pooled OLS}} \text{ in (4.6.11)}
+&= (\mathbf{Z}'\mathbf{Z})^{-1}\mathbf{Z}'\mathbf{y}, \\
+\widehat{\avar}(\hat{\boldsymbol{\delta}}_{\text{pooled OLS}}) \text{ in (4.6.14)}
+&= n \cdot (\mathbf{Z}'\mathbf{Z})^{-1}
+[\mathbf{Z}'(\widehat{\boldsymbol{\Sigma}} \otimes \mathbf{I}_n)\mathbf{Z}]
+(\mathbf{Z}'\mathbf{Z})^{-1}.
+\end{align*}
+
+\item In the $Mn \times L$ matrix $\mathbf{Z}$ defined in $(*)$, its rows are ordered
+first by the equation $(m)$ and then by observation $(i)$. Now order the rows
+first by observation $(i)$, which amounts to redefining $\mathbf{Z}$ as
+\[
+\underset{(Mn \times L)}{\mathbf{Z}}
+= \begin{bmatrix} \mathbf{Z}_1 \\ \vdots \\ \mathbf{Z}_n \end{bmatrix},
+\]
+where $\mathbf{Z}_i$ $(i = 1, 2, \ldots, n)$ is the $M \times L$ matrix defined
+in~(4.6.15). Reorder rows of $\mathbf{y}$ and $\boldsymbol{\varepsilon}$ similarly:
+\[
+\underset{(Mn \times 1)}{\mathbf{y}}
+= \begin{bmatrix} \mathbf{y}_1 \\ \vdots \\ \mathbf{y}_n \end{bmatrix}, \quad
+\underset{(Mn \times 1)}{\boldsymbol{\varepsilon}}
+= \begin{bmatrix} \boldsymbol{\varepsilon}_1 \\ \vdots \\ \boldsymbol{\varepsilon}_n \end{bmatrix}.
+\]
+
+How would the formulas for RE and pooled OLS you derived in (d) and (e) change?
+\textbf{Hint:} Just replace ``$\widehat{\boldsymbol{\Sigma}} \otimes \mathbf{I}_n$''
+by ``$\mathbf{I}_n \otimes \widehat{\boldsymbol{\Sigma}}$''.
+Set $M = 2$ if you find the translation too hard.
+\end{enumerate}
+
+\exercise[3]
+(GLS interpretation of SUR and RE)\quad
+The SUR model consists of Assumptions~4.1--4.5, 4.7, and (4.5.18)
+(that $\mathbf{x}_i = \text{union of}\; (\mathbf{z}_{i1}, \ldots, \mathbf{z}_{iM})$).
+Specialize the model by strengthening Assumption~4.3 (orthogonality conditions) as
+\[
+\E(\varepsilon_{im} \mid \mathbf{z}_{i1}, \ldots, \mathbf{z}_{iM}) = 0
+\quad (m = 1, \ldots, M),
+\]
+and Assumption~4.2 (ergodic stationarity) as stating that
+\[
+\{y_{i1}, \ldots, y_{iM}, \mathbf{z}_{i1}, \ldots, \mathbf{z}_{iM}\}
+\]
+is i.i.d.
+
+\begin{enumerate}[label=(\alph*)]
+\item (Easy)\quad Explain why these are stronger assumptions.
+
+\item Let $\boldsymbol{\varepsilon}$ $(Mn \times 1)$ and $\mathbf{Z}$
+$(Mn \times \sum_m L_m)$ be as in Analytical Exercise~1 above.
+Show that the specialized model implies
+\[
+\E(\boldsymbol{\varepsilon} \mid \mathbf{Z}) = \mathbf{0}
+\quad \text{and} \quad
+\E(\boldsymbol{\varepsilon}\boldsymbol{\varepsilon}' \mid \mathbf{Z})
+= \boldsymbol{\Sigma} \otimes \mathbf{I}_n.
+\]
+\textbf{Hint:} For the first, what needs to be shown is
+$\E(\varepsilon_{im} \mid \mathbf{Z}) = 0$. For the latter, the $(m, h)$ block of
+$\E(\boldsymbol{\varepsilon}\boldsymbol{\varepsilon}' \mid \mathbf{Z})$ is
+$\E(\boldsymbol{\varepsilon}_m \boldsymbol{\varepsilon}_h' \mid \mathbf{Z})$,
+an $n \times n$ matrix. What needs to be shown is that this matrix is
+$\sigma_{mh} \mathbf{I}_n$.
+
+\item (Finite-sample properties of SUR)\quad
+Suppose $\boldsymbol{\Sigma}$ is known so that the consistent estimates
+$\hat{\sigma}_{mh}$ in the SUR formulas in Proposition~4.6 can be equated with
+the true value $\sigma_{mh}$.
+\begin{enumerate}[label=(\roman*)]
+\item Verify that the model satisfies the GLS assumptions of Section~1.6
+(which are Assumptions~1.1--1.3 and (1.6.1)) with a sample size of $Mn$.
+\item Verify that the SUR estimator is the GLS estimator.
+\textbf{Hint:} The $\mathbf{X}$ in Section~1.6 is $\mathbf{Z}$ here.
+Show that $\sigma^2 \mathbf{V}$ there is $\boldsymbol{\Sigma} \otimes \mathbf{I}_n$.
+Use your answer to 2(b).
+\item Verify SUR is unbiased in finite samples in that
+$\E(\hat{\boldsymbol{\delta}}_{\mathrm{SUR}} - \boldsymbol{\delta} \mid \mathbf{Z})
+= \mathbf{0}$.
+\item The expression for $\Var(\hat{\boldsymbol{\delta}}_{\mathrm{SUR}} \mid \mathbf{Z})$
+is given in Proposition~1.7 of Section~1.6. Show that
+\[
+\avar(\hat{\boldsymbol{\delta}}_{\mathrm{SUR}})
+= \plim_{n \to \infty} n \cdot
+\Var(\hat{\boldsymbol{\delta}}_{\mathrm{SUR}} \mid \mathbf{Z}).
+\]
+\textbf{Hint:} With $\E(\boldsymbol{\varepsilon}\boldsymbol{\varepsilon}' \mid \mathbf{Z})
+= \boldsymbol{\Sigma} \otimes \mathbf{I}_n$, the matrix
+$\Var(\hat{\boldsymbol{\delta}}_{\mathrm{SUR}} \mid \mathbf{Z})$ is the inverse of a
+matrix whose $(m,h)$ block is
+$\sigma^{mh} \mathbf{Z}_m' \mathbf{Z}_h
+= \sum_i \mathbf{z}_{im} \mathbf{z}_{ih}'$.
+\end{enumerate}
+
+\item (Finite-sample properties of RE)\quad
+Now impose on the model the condition that the coefficient vector is the same
+across equations so that $\mathbf{Z}$ is as in $(*)$ of Analytical Exercise~2.
+As in (c), suppose $\boldsymbol{\Sigma}$ is known so that the consistent estimates
+$\hat{\sigma}_{mh}$ in the RE formulas in Proposition~4.7 can be equated with
+the true value $\sigma_{mh}$.
+\begin{enumerate}[label=(\roman*)]
+\item Verify that this model with common coefficients satisfies the GLS
+assumptions of Section~1.6. In particular, Assumption~1.1 can be written as
+$\mathbf{y} = \mathbf{Z}\boldsymbol{\delta} + \boldsymbol{\varepsilon}$,
+where $\mathbf{y}$ and $\boldsymbol{\varepsilon}$ are as in Analytical Exercise~2.
+\item Verify that the random-effects estimator is the GLS estimator.
+\item Verify that the random-effects estimator is unbiased in finite samples.
+\item Show that
+\[
+\avar(\hat{\boldsymbol{\delta}}_{\mathrm{RE}})
+= \plim_{n \to \infty} n \cdot
+\Var(\hat{\boldsymbol{\delta}}_{\mathrm{RE}} \mid \mathbf{Z}).
+\]
+\textbf{Hint:}
+$\Var(\hat{\boldsymbol{\delta}}_{\mathrm{RE}} \mid \mathbf{Z})$ is the inverse of
+$\sum_m \sum_h \sigma^{mh} \mathbf{Z}_m' \mathbf{Z}_h$.
+\end{enumerate}
+\end{enumerate}
+
+\exercise[4]
+(Standard errors from equation-by-equation vs.\ multiple-equation GMM)\quad
+We have shown in Section~4.4 that the Avar of the efficient equation-by-equation
+GMM estimator is no less (in matrix sense) than the Avar of the efficient
+multiple-equation GMM estimator. In this exercise we show that the same
+holds for $\widehat{\avar}$. Let $\widehat{\mathbf{S}}$ and
+$\mathbf{S}_{\mathbf{xz}}$ be as in (4.3.2) and (4.2.2), respectively.
+
+\begin{enumerate}[label=(\alph*)]
+\item (Trivial)\quad Verify that, under appropriate assumptions,
+$(\mathbf{S}_{\mathbf{xz}}' \widehat{\mathbf{S}}^{-1} \mathbf{S}_{\mathbf{xz}})^{-1}$
+is consistent for the asymptotic variance of the efficient multiple-equation GMM
+estimator. What are those appropriate assumptions?
+
+\item Let $\tilde{\boldsymbol{\delta}}_m$ be the efficient single-equation GMM estimator
+of $\boldsymbol{\delta}_m$ and $\tilde{\boldsymbol{\delta}}$ be the stacked vector
+formed from $(\tilde{\boldsymbol{\delta}}_1, \ldots, \tilde{\boldsymbol{\delta}}_M)$.
+$\tilde{\boldsymbol{\delta}}$ is the efficient equation-by-equation GMM estimator of
+$\boldsymbol{\delta}$. Show that $\avar(\tilde{\boldsymbol{\delta}}_m)$ is consistently
+estimated by
+\[
+\Bigl(\frac{1}{n} \sum_{i=1}^{n} \mathbf{z}_{im} \mathbf{x}_{im}'
+\hat{\mathbf{W}}_{mm}
+\frac{1}{n} \sum_{i=1}^{n} \mathbf{x}_{im} \mathbf{z}_{im}'\Bigr)^{-1},
+\qquad (*)
+\]
+where
+\[
+\hat{\mathbf{W}}_{mm} = \Bigl(\frac{1}{n} \sum_{i=1}^{n}
+\hat{\varepsilon}_{im}^2\, \mathbf{x}_{im} \mathbf{x}_{im}'\Bigr)^{-1}.
+\]
+
+\item Verify that $(*)$ is the $(m, m)$ block of
+\[
+(\mathbf{S}_{\mathbf{xz}}' \hat{\mathbf{W}} \widehat{\mathbf{S}}
+\hat{\mathbf{W}} \mathbf{S}_{\mathbf{xz}})
+(\mathbf{S}_{\mathbf{xz}}' \hat{\mathbf{W}} \mathbf{S}_{\mathbf{xz}})^{-1},
+\qquad (**)
+\]
+where $\hat{\mathbf{W}}$ is the block diagonal matrix whose $m$-th diagonal block
+is $\hat{\mathbf{W}}_{mm}$.
+
+\item Proposition~3.5 is an algebraic result applicable not just to population
+moments, so it implies that
+\[
+(**) \geq (\mathbf{S}_{\mathbf{xz}}' \widehat{\mathbf{S}}^{-1}
+\mathbf{S}_{\mathbf{xz}})^{-1}.
+\]
+Taking this for granted, show the following: If the same residuals are used
+to calculate $\hat{\mathbf{W}}$ for the equation-by-equation GMM and
+$\widehat{\mathbf{S}}$ for the multiple-equation GMM, then, for each coefficient,
+the standard error from the efficient multiple-equation GMM is no larger than
+that from the efficient equation-by-equation GMM.
+\textbf{Hint:} The standard errors are the square roots of the diagonal elements of
+the estimated asymptotic variance divided by the sample size.
+
+\item Does the result you proved in (d) hold true if the model is misspecified in
+any way? \textbf{Hint:} What you have proved is an algebraic result.
+
+\item Go through steps (a)--(d) for the FIVE and equation-by-equation 2SLS.
+\textbf{Hint:} It's just a matter of redefining $\widehat{\mathbf{S}}$ and the $m$-th
+diagonal block, $\hat{\mathbf{W}}_{mm}$, of $\hat{\mathbf{W}}$.
+The $\hat{\mathbf{W}}_{mm}$ for 2SLS is the inverse of
+\[
+\frac{1}{n} \sum_{i=1}^{n} \hat{\varepsilon}_{im}^2 \cdot
+\frac{1}{n} \sum_{i=1}^{n} \mathbf{x}_{im} \mathbf{x}_{im}'
+\]
+and the $\widehat{\mathbf{S}}$ for FIVE is (4.5.3).
+\end{enumerate}
+
+\exercise[5]
+(Identification and cross-equation restrictions)\quad
+Consider the wage equation for 1969 and 1980:
+\begin{align*}
+LW69_i &= \beta_0 + \beta_1 \cdot S69_i + \beta_2 \cdot IQ_i + \varepsilon_{i1}, \\
+LW80_i &= \beta_0 + \beta_1 \cdot S80_i + \beta_2 \cdot IQ_i + \varepsilon_{i2}.
+\end{align*}
+The orthogonality conditions are $\E(\varepsilon_{i1}) = 0$,
+$\E(\varepsilon_{i2}) = 0$,
+$\E(MED_i\, \varepsilon_{i1}) = 0$.
+Assume we have a random sample on $(LW69, LW80, S69, S80, IQ, MED)$.
+
+\begin{enumerate}[label=(\alph*)]
+\item Is the $LW69$ equation identified in isolation?
+\textbf{Hint:} Check the order condition for identification for the $LW69$ equation.
+
+\item Write the four orthogonality conditions in terms of
+$(\beta_0, \beta_1, \beta_2)$ as a system of equations linear in $\beta$'s.
+How many equations are there? State the rank condition for identification in terms
+of relevant cross moments. (This example shows that even if each equation of the
+system is not identified in isolation, the system can be identified thanks to the
+cross-equation restriction that $\beta$'s are the same across equations.)
+
+\item Show that the system cannot be identified if $IQ$ and $MED$ are uncorrelated.
+\end{enumerate}
+
+\exercise[6]
+(Optional)\quad Prove Proposition~4.1. \textbf{Hint:} Generalize the proof of
+Proposition~3.2.
+
+\exercise[7]
+(Numerical equivalence of 2SLS and 3SLS)\quad
+In the system of equations
+$y_{im} = \mathbf{z}_{im}' \boldsymbol{\delta}_m + \varepsilon_{im}$
+$(i = 1, \ldots, n;\; m = 1, \ldots, M)$, suppose all equations share the
+same set of instruments (so $\mathbf{x}_{im} = \mathbf{x}_i$). (In what follows,
+assume all the conditions for the 3SLS estimator are satisfied.)
+
+\begin{enumerate}[label=(\alph*)]
+\item When each equation has the same RHS variables (so $\mathbf{z}_{im} = \mathbf{z}_i$),
+the 2SLS and 3SLS estimators are numerically the same. Prove this.
+\textbf{Hint:} Let $\mathbf{B} \equiv \frac{1}{n} \sum_i \mathbf{x}_i \mathbf{z}_i'$.
+The 3SLS estimator is (4.2.3) with $\mathbf{S}_{\mathbf{xz}} = \mathbf{I}_M \otimes \mathbf{B}$,
+$\hat{\mathbf{W}} = \widehat{\boldsymbol{\Sigma}}^{-1} \otimes \mathbf{S}_{\mathbf{xx}}^{-1}$
+where $\mathbf{S}_{\mathbf{xx}} \equiv \frac{1}{n} \sum_i \mathbf{x}_i \mathbf{x}_i'$.
+
+\item If the errors are not conditionally homoskedastic, does (a) remain true for
+the single-equation and multiple-equation GMM estimators?
+\textbf{Hint:} The answer is no. Why? Can you write $\widehat{\mathbf{S}}^{-1}$ as a
+Kronecker product without conditional homoskedasticity?
+\end{enumerate}
+
+\exercise[8]
+(SUR is more than assuming predetermined regressors in each equation)\quad
+Consider estimating a system of $M$ equations:
+$y_{im} = \mathbf{z}_{im}' \boldsymbol{\delta}_m + \varepsilon_{im}$
+$(i = 1, \ldots, n;\; m = 1, \ldots, M)$.
+The orthogonality conditions are
+$\E(\mathbf{z}_{im} \cdot \varepsilon_{im}) = \mathbf{0}$
+$(m = 1, 2, \ldots, M)$.
+
+\begin{enumerate}[label=(\alph*)]
+\item Does the efficient multiple-equation GMM estimator
+$\hat{\boldsymbol{\delta}}(\widehat{\mathbf{S}}^{-1})$ reduce to the
+equation-by-equation OLS? Does your conclusion change if the errors are
+conditionally homoskedastic?
+\textbf{Hint:} What's the size of $\mathbf{S}_{\mathbf{xz}}$? $\widehat{\mathbf{S}}$?
+
+\item Explain why the efficient GMM you derived in (a) under conditional
+homoskedasticity differs from SUR.
+\textbf{Hint:} The difference is in the orthogonality conditions.
+\end{enumerate}
+
+\exercise[9]
+(Optional, peril of joint estimation)\quad
+Taken from Greene (1997, p.~706). Consider the two-equation SUR model:
+\begin{align*}
+y_{i1} &= \beta_1 x_{i1} + \varepsilon_{i1}, \\
+y_{i2} &= \beta_2 x_{i2} + \beta_3 x_{i3} + \varepsilon_{i2}.
+\end{align*}
+For simplicity, assume that $\E(\varepsilon_{i1}^2)$,
+$\E(\varepsilon_{i1}\, \varepsilon_{i2})$, and $\E(\varepsilon_{i2}^2)$ are known.
+Now suppose you apply SUR but erroneously omit $x_{i3}$ from the second equation.
+What effect does this have on the consistency of the estimator of $\beta_1$?
+\textbf{Hint:} Let $\mathbf{x}_1$, $\mathbf{x}_2$, $\mathbf{x}_3$,
+$\mathbf{y}_1$, $\mathbf{y}_2$, $\boldsymbol{\varepsilon}_1$, and
+$\boldsymbol{\varepsilon}_2$ be $n$-dimensional vectors of respective variables and
+\[
+\mathbf{d} = \begin{bmatrix} \mathbf{0} \\ \mathbf{x}_3 \end{bmatrix}, \quad
+\boldsymbol{\beta} = \begin{bmatrix} \beta_1 \\ \beta_2 \end{bmatrix}, \quad
+\boldsymbol{\Sigma} = \begin{bmatrix}
+\E(\varepsilon_{i1}^2) & \E(\varepsilon_{i1}\, \varepsilon_{i2}) \\
+\E(\varepsilon_{i2}\, \varepsilon_{i1}) & \E(\varepsilon_{i2}^2)
+\end{bmatrix}.
+\]
+(So, for example, $\bar{\mathbf{X}}$ is $2n \times 2$ and $\boldsymbol{\beta}$ is
+$2 \times 1$.) Show that:
+\begin{enumerate}[label=(\alph*)]
+\item The two-equation system can be written as
+$\mathbf{y} = \bar{\mathbf{X}}\boldsymbol{\beta} + \beta_3 \cdot \mathbf{d}
++ \boldsymbol{\varepsilon}$.
+
+\item The SUR estimator of $\boldsymbol{\beta}$ when $x_{i3}$ is inadvertently left
+out is
+\[
+\hat{\boldsymbol{\beta}}_{\mathrm{SUR}}
+= [\bar{\mathbf{X}}'(\boldsymbol{\Sigma}^{-1} \otimes \mathbf{I}_n)
+\bar{\mathbf{X}}]^{-1}
+\bar{\mathbf{X}}'(\boldsymbol{\Sigma}^{-1} \otimes \mathbf{I}_n)\mathbf{y}.
+\]
+
+\item Use formulas (A.6) and (A.7) of the Appendix to show
+$\hat{\boldsymbol{\beta}}_{\mathrm{SUR}} = \boldsymbol{\beta} + \beta_3 \cdot \mathbf{a}
++ \mathbf{b}$,
+where $\mathbf{a}$ and $\mathbf{b}$ are given explicitly.
+
+\item Argue that $\plim \mathbf{b} = \mathbf{0}$. Is $\plim \mathbf{a} = \mathbf{0}$?
+\end{enumerate}
+
+\exercise[10]
+(Optional, adding just-identified equations does not increase efficiency)\quad
+Consider the 3SLS two-equation model where the second equation is just identified
+(so $L_2 = K$). Let $\hat{\boldsymbol{\delta}}_{1,\mathrm{3SLS}}$ be the 3SLS
+estimator of the coefficients of the first equation and
+$\hat{\boldsymbol{\delta}}_{1,\mathrm{2SLS}}$ be the 2SLS estimator of the same
+coefficients.
+
+\begin{enumerate}[label=(\alph*)]
+\item Write down $\avar(\hat{\boldsymbol{\delta}}_{1,\mathrm{2SLS}})$ in terms of
+$\sigma_{11}$ and $\mathbf{A}_{11}$, which is defined in (4.5.16).
+
+\item Show that
+$\avar(\hat{\boldsymbol{\delta}}_{1,\mathrm{3SLS}})
+= \avar(\hat{\boldsymbol{\delta}}_{1,\mathrm{2SLS}})$.
+\textbf{Hint:} Use the partitioned inverse formula (see formula (A.10) of the
+Appendix) to write the upper-left ($L_1 \times L_1$) block of
+$\avar(\hat{\boldsymbol{\delta}}_{1,\mathrm{3SLS}})$ as $\mathbf{G}^{-1}$ where
+\[
+\mathbf{G} = \sigma^{11} \mathbf{A}_{11}
+- \Bigl(\frac{\sigma^{12} \cdot \sigma^{21}}{\sigma^{22}}\Bigr)
+\mathbf{A}_{12} \mathbf{A}_{22}^{-1} \mathbf{A}_{21}.
+\]
+But, by (4.5.16),
+\begin{align*}
+\mathbf{A}_{12} \mathbf{A}_{22}^{-1} \mathbf{A}_{21}
+&= \E(\mathbf{z}_{i1} \mathbf{x}_i')
+[\E(\mathbf{x}_i \mathbf{x}_i')]^{-1}
+\E(\mathbf{x}_i \mathbf{z}_{i2}') \\
+&\quad \times [\E(\mathbf{z}_{i2} \mathbf{x}_i')
+[\E(\mathbf{x}_i \mathbf{x}_i')]^{-1}
+\E(\mathbf{x}_i \mathbf{z}_{i2}')]^{-1} \\
+&\quad \times \E(\mathbf{z}_{i2} \mathbf{x}_i')
+[\E(\mathbf{x}_i \mathbf{x}_i')]^{-1}
+\E(\mathbf{x}_i \mathbf{z}_{i1}') \\
+&= \E(\mathbf{z}_{i1} \mathbf{x}_i')
+[\E(\mathbf{x}_i \mathbf{x}_i')]^{-1}
+\E(\mathbf{x}_i \mathbf{z}_{i1}')
+\quad (\text{since } \#\mathbf{z}_{i2} (= L_2) = K (= \#\mathbf{x}_i)) \\
+&= \mathbf{A}_{11}.
+\end{align*}
+So
+\[
+\mathbf{G} = \left[\sigma^{11}
+- \Bigl(\frac{\sigma^{12} \cdot \sigma^{21}}{\sigma^{22}}\Bigr)\right]
+\mathbf{A}_{11}
+= \frac{\mathbf{A}_{11}}{\sigma_{11}}
+\quad \bigl(\text{since } \sigma^{11}
+- \sigma^{12}\sigma^{21}/\sigma^{22} = 1/\sigma_{11}\bigr).
+\]
+\end{enumerate}
+
+\exercise[11]
+(Linear combinations of orthogonality conditions)\quad
+For the multiple-equation model of Proposition~4.7, derive the efficient GMM
+estimator that exploits the following orthogonality conditions:
+\begin{equation}
+\E(\mathbf{z}_{i1} \cdot \varepsilon_{i1} + \cdots
++ \mathbf{z}_{iM} \cdot \varepsilon_{iM}) = \mathbf{0}.
+\tag{1}
+\end{equation}
+\textbf{Hint:} The sample analogue of the left-hand side of the orthogonality conditions is
+\[
+\mathbf{g}_n(\tilde{\boldsymbol{\delta}})
+\equiv \frac{1}{n} \sum_{i=1}^{n} \mathbf{z}_{i1} \cdot y_{i1}
++ \cdots + \frac{1}{n} \sum_{i=1}^{n} \mathbf{z}_{iM} \cdot y_{iM}
+- \Bigl(\frac{1}{n} \sum \mathbf{z}_{i1} \mathbf{z}_{i1}'
++ \cdots + \frac{1}{n} \sum \mathbf{z}_{iM} \mathbf{z}_{iM}'\Bigr)
+\tilde{\boldsymbol{\delta}}.
+\]
+There are as many orthogonality conditions as there are coefficients.
+The efficient GMM estimator is the IV estimator that solves
+$\mathbf{g}_n(\tilde{\boldsymbol{\delta}}) = \mathbf{0}$.
+
+\bigskip
+\subsection*{Empirical Exercises}
+
+In data file \texttt{GREENE.ASC}, data are provided on the following variables.
+
+\medskip
+\begin{tabular}{@{}ll@{}}
+Column 1: & firm ID in Nerlove's 1955 sample \\
+Column 2: & costs in 1970 in millions of dollars \\
+Column 3: & output in millions of kilowatt hours \\
+Column 4: & price of labor \\
+Column 5: & price of capital \\
+Column 6: & price of fuel \\
+Column 7: & labor's cost share \\
+Column 8: & capital's cost share
+\end{tabular}
+\medskip
+
+The sample has 99 observations. Fuel's cost share can be calculated as one minus
+the sum of labor and capital cost shares. These data were used in Christensen and
+Greene (1976).
+
+In the text, the third equation (for fuel share) of the system was dropped in
+the random-effects estimation. To verify the numerical invariance, drop the second
+equation (for capital share) and eliminate $(\gamma_{12}, \gamma_{22}, \gamma_{32})$
+when imposing homogeneity. This produces the two-equation system:
+\[
+\begin{cases}
+s_1 = \alpha_1 + \gamma_{11} \log(p_1/p_2) + \gamma_{13} \log(p_3/p_2)
++ \gamma_{1Q} \log(Q) + \varepsilon_1
+\quad \text{(labor share),} \\
+s_3 = \alpha_3 + \gamma_{31} \log(p_1/p_2) + \gamma_{33} \log(p_3/p_2)
++ \gamma_{3Q} \log(Q) + \varepsilon_3
+\quad \text{(fuel share).}
+\end{cases}
+\]
+Call this the \textit{unconstrained system}. The \textit{constrained system} imposes
+symmetry $\gamma_{13} = \gamma_{31}$ on the unconstrained system.
+
+\begin{enumerate}[label=(\alph*)]
+\item Verify that the simple statistics of the sample shown in the text can be
+duplicated.
+
+\item (Numerical invariance)\quad
+Apply the random-effects estimation (i.e., the multivariate regression subject to
+the cross-equation restriction) to the constrained system. Can you duplicate the
+coefficient estimates in the text? You should first apply equation-by-equation OLS
+to the unconstrained system to calculate
+$\widehat{\boldsymbol{\Sigma}}^*$. (Note on computation: Programming joint
+estimation is much easier with canned programs such as TSP and RATS.
+However, those canned programs will not print out Sargan's statistic for the SUR.)
+
+\textit{Gauss Tip:} The random-effects estimator could be calculated by operating
+on data matrices, but we recommend the use of do loops.
+Use (4.6.8$'$) on page~293.
+
+\textit{RATS Tip:} Use the \texttt{NLSYS} proc, which is designed for handling nonlinear
+equations but which can be used for linear equations. It can also be used for
+calculating $\widehat{\boldsymbol{\Sigma}}^*$.
+
+\textit{TSP Tip:} See codes in the text for accomplishing the same.
+
+This gives the random-effects estimate of the seven free parameters,
+\[
+\alpha_1, \alpha_3, \gamma_{11}, \gamma_{13}, \gamma_{33},
+\gamma_{1Q}, \gamma_{3Q}.
+\]
+As explained in the text, use the adding-up, homogeneity, and symmetry
+restrictions to calculate the point estimates and their standard errors of the
+remaining eight parameters.
+
+\item (Optional, for Gauss users)\quad Calculate Sargan's statistic.
+\textbf{Hint:} Use the formula in Proposition~4.7.
+The $\mathbf{x}_i$ vector should be: a constant, $\log(p_1/p_2)$,
+$\log(p_3/p_2)$, $\log(Q)$.
+For $\widehat{\boldsymbol{\Sigma}}^*$, use the one obtained from the unconstrained
+system.
+$\mathbf{s}_{\mathbf{xy}} = \frac{1}{n} \sum_{i=1}^{n} \mathbf{y}_i \otimes \mathbf{x}_i$
+and $\mathbf{S}_{\mathbf{xz}} = \frac{1}{n} \sum_{i=1}^{n} \mathbf{Z}_i \otimes \mathbf{x}_i$.
+The statistic should be 0.63313 with a $p$-value of 0.42621.
+
+\item (Testing symmetry)\quad
+Given that Sargan's statistic is 0.63313, perform the following hypothesis testing.
+Take the maintained hypothesis to be the unconstrained system.
+The null hypothesis is the symmetry restriction that $\gamma_{13} = \gamma_{31}$.
+\textbf{Hint:} By Proposition~3.8, the difference in the Sargan statistics with and
+without symmetry is asymptotically chi-squared. What is Sargan's statistic for
+the unconstrained system?
+
+\item (Wald test of symmetry)\quad
+Test the same null hypothesis by the Wald principle.
+So you test the symmetry restriction in the unconstrained system. Verify that
+the test statistic is numerically equal to Sargan's statistic for the constrained
+system you estimated in (b).
+
+\item Using the parameter estimates you obtained in (b), calculate the elasticity of
+substitution between labor and capital averaged over the 99 firms. Can you
+duplicate the result in the text?
+\end{enumerate}
+
+\end{problemset}
+
+\begin{answers}
+
+\subsection*{Analytical Exercises}
+
+\answer{3b}
+$\E(\varepsilon_{im} \mid \mathbf{Z})$
+\begin{align*}
+&= \E(\varepsilon_{im} \mid \mathbf{z}_{11}, \ldots, \mathbf{z}_{1M},
+\mathbf{z}_{21}, \ldots, \mathbf{z}_{2M}, \ldots, \mathbf{z}_{n1}, \ldots, \mathbf{z}_{nM})
+\quad \text{(by definition of $\mathbf{Z}$)} \\
+&= \E(\varepsilon_{im} \mid \mathbf{z}_{i1}, \ldots, \mathbf{z}_{iM})
+\quad \text{(by the i.i.d.\ assumption)} \\
+&= 0 \quad \text{(by the strengthened orthogonality conditions).}
+\end{align*}
+
+The $(i, j)$ element of the $n \times n$ matrix
+$\E(\boldsymbol{\varepsilon}_m \boldsymbol{\varepsilon}_h' \mid \mathbf{Z})$
+is $\E(\varepsilon_{im}\, \varepsilon_{jh} \mid \mathbf{Z})$.
+By the i.i.d.\ assumption, this is zero for $j \neq i$. For $j = i$,
+\begin{align*}
+\E(\varepsilon_{im}\, \varepsilon_{ih} \mid \mathbf{Z})
+&= \E(\varepsilon_{im}\, \varepsilon_{ih} \mid
+\mathbf{z}_{i1}, \ldots, \mathbf{z}_{1M}, \mathbf{z}_{21}, \ldots, \mathbf{z}_{nM}) \\
+&= \E(\varepsilon_{im}\, \varepsilon_{ih} \mid \mathbf{z}_{i1}, \ldots, \mathbf{z}_{iM})
+\quad \text{(by the i.i.d.\ assumption).}
+\end{align*}
+Since $\mathbf{x}_{im} = \mathbf{x}_i$ and $\mathbf{x}_i$ is the union of
+$(\mathbf{z}_{i1}, \ldots, \mathbf{z}_{iM})$ in the SUR model, the conditional
+homoskedasticity assumption, Assumption~4.7, states that
+$\E(\varepsilon_{im}\, \varepsilon_{ih} \mid \mathbf{z}_{i1}, \ldots, \mathbf{z}_{iM})
+= \sigma_{mh}$.
+
+\answer{5b}
+\[
+\begin{bmatrix}
+1 & \E(S69) & \E(IQ) \\
+1 & \E(S80) & \E(IQ) \\
+\E(MED) & \E(S69 \cdot MED) & \E(IQ \cdot MED) \\
+\E(MED) & \E(S80 \cdot MED) & \E(IQ \cdot MED)
+\end{bmatrix}
+\begin{bmatrix} \beta_0 \\ \beta_1 \\ \beta_2 \end{bmatrix}
+= \begin{bmatrix}
+\E(LW69) \\ \E(LW80) \\ \E(LW69 \cdot MED) \\ \E(LW80 \cdot MED)
+\end{bmatrix}.
+\]
+The condition for the system to be identified is that the $4 \times 3$ coefficient matrix
+is of full column rank.
+
+\answer{5c}
+If $IQ$ and $MED$ are uncorrelated, then
+$\E(IQ \cdot MED) = \E(IQ) \cdot \E(MED)$ and the third column of the coefficient
+matrix is $\E(IQ)$ times the first column. So the matrix cannot be of full column rank.
+
+\answer{6}
+$\hat{\varepsilon}_{im} = y_{im} - \mathbf{z}_{im}' \hat{\boldsymbol{\delta}}_m
+= \varepsilon_{im} - \mathbf{z}_{im}'(\hat{\boldsymbol{\delta}}_m - \boldsymbol{\delta}_m)$.
+So
+\[
+\frac{1}{n} \sum_{i=1}^{n}
+[\varepsilon_{im} - \mathbf{z}_{im}'(\hat{\boldsymbol{\delta}}_m - \boldsymbol{\delta}_m)]
+[\varepsilon_{ih} - \mathbf{z}_{ih}'(\hat{\boldsymbol{\delta}}_h - \boldsymbol{\delta}_h)]
+= (1) + (2) + (3) + (4),
+\]
+where
+\begin{align*}
+(1) &= \frac{1}{n} \sum \varepsilon_{im}\, \varepsilon_{ih}, \\
+(2) &= -(\hat{\boldsymbol{\delta}}_m - \boldsymbol{\delta}_m)'
+\frac{1}{n} \sum \mathbf{z}_{im} \cdot \varepsilon_{ih}, \\
+(3) &= -(\hat{\boldsymbol{\delta}}_h - \boldsymbol{\delta}_h)'
+\frac{1}{n} \sum \mathbf{z}_{ih} \cdot \varepsilon_{im}, \\
+(4) &= (\hat{\boldsymbol{\delta}}_m - \boldsymbol{\delta}_m)'
+\Bigl(\frac{1}{n} \sum \mathbf{z}_{im} \mathbf{z}_{ih}'\Bigr)
+(\hat{\boldsymbol{\delta}}_h - \boldsymbol{\delta}_h).
+\end{align*}
+
+As usual, under Assumptions~4.1 and~4.2,
+$(1) \pto \sigma_{mh}$ $(\equiv \E(\varepsilon_{im}\, \varepsilon_{ih}))$.
+For $(4)$, by Assumption~4.2 and the assumption that
+$\E(\mathbf{z}_{im} \mathbf{z}_{ih}')$ is finite,
+$\frac{1}{n} \sum_i \mathbf{z}_{im} \mathbf{z}_{ih}'$ converges in probability to
+a (finite) matrix. So $(4) \pto 0$.
+
+Regarding $(2)$, by Cauchy-Schwartz,
+\[
+\E(|z_{imj} \cdot \varepsilon_{ih}|) \leq \sqrt{\E(z_{imj}^2) \cdot \E(\varepsilon_{ih}^2)},
+\]
+where $z_{imj}$ is the $j$-th element of $\mathbf{z}_{im}$.
+So $\E(\mathbf{z}_{im} \cdot \varepsilon_{ih})$ is finite and
+$(2) \pto 0$ because $\hat{\boldsymbol{\delta}}_m - \boldsymbol{\delta}_m \pto \mathbf{0}$.
+Similarly, $(3) \pto 0$.
+\end{answers}

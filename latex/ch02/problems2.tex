@@ -1,0 +1,731 @@
+% problems2.tex — Problem Set and Answers for Chapter 2
+
+\begin{problemset}
+
+\subsection*{Analytical Exercises}
+
+\exercise[1] (Taken from Example 3.4.2 of Amemiya (1985))\quad
+Let $z_n$ be defined by
+\[
+z_n = \begin{cases}
+0 & \text{with probability } (n-1)/n, \\
+n^2 & \text{with probability } 1/n.
+\end{cases}
+\]
+Show that $\plim_{n\to\infty} z_n = 0$ but $\lim_{n\to\infty} \E(z_n) = \infty$.
+
+\exercise[2] Prove Chebychev's weak LLN, by showing that
+$\bar{z}_n \to_{\text{m.s.}} \mu$. \textbf{Hint:}
+\[
+\bar{z}_n - \mu = (\bar{z}_n - \E(\bar{z}_n)) + (\E(\bar{z}_n) - \mu).
+\]
+So
+\[
+(\bar{z}_n - \mu)^2 = (\bar{z}_n - \E(\bar{z}_n))^2
++ 2(\bar{z}_n - \E(\bar{z}_n))(\E(\bar{z}_n) - \mu)
++ (\E(\bar{z}_n) - \mu)^2.
+\]
+Show that $\E\!\big[(\bar{z}_n - \E(\bar{z}_n))(\E(\bar{z}_n) - \mu)\big] = 0$.
+
+\exercise[3] (Consistency and Asymptotic Normality of OLS for Random Samples)\quad
+Consider replacing Assumption~2.2 by
+
+\medskip
+\noindent\textbf{Assumption 2.2$'$:}\quad $\{y_i, \mathbf{x}_i\}$ \emph{is a random sample.}
+
+\medskip
+\noindent and Assumption~2.5 by
+
+\medskip
+\noindent\textbf{Assumption 2.5$'$:}\quad
+$\mathbf{S} \equiv \E(\mathbf{g}_i\mathbf{g}_i')$ \emph{exists and is finite.}
+
+\medskip
+\noindent
+Prove the following simplified version of Proposition~2.1:
+
+\medskip
+\noindent\textbf{Proposition~2.1 for Random Samples:}\quad
+\emph{Under Assumptions~2.1, 2.3, 2.4, and 2.2$'$, the OLS estimator $\mathbf{b}$ is consistent.
+Under the additional assumption of Assumption~2.5$'$, the OLS estimator $\mathbf{b}$ is
+asymptotically normal with $\avar(\mathbf{b})$ given by (2.3.4).}
+
+\begin{enumerate}[label=(\alph*)]
+\item Show that this is a special case of Proposition~2.1 of the text.
+\item Give a direct proof of this proposition.
+\textbf{Hint:} Use Kolmogorov and Linderberg--Levy.
+\end{enumerate}
+
+\exercise[4] (Proof of Proposition~2.4)\quad
+We wish to prove Proposition~2.4. To avoid inessential complications, we assume as in the text that $K = 1$ (only one regressor).
+What remains to be shown is that the sample mean of the first term on the RHS
+of (2.5.3) converges in probability to some finite number. Prove it.
+\textbf{Hint:} Let $f \equiv x_i\varepsilon_i$ and $h \equiv x_i^2$. The \textbf{Cauchy--Schwartz inequality} states:
+\[
+\E(|f \cdot h|) \leq \sqrt{\E(f^2)\,\E(h^2)}.
+\]
+So
+\[
+\E(|x_i^3\varepsilon_i|) \leq \sqrt{\E(x_i^2\varepsilon_i^2)\,\E(x_i^4)}.
+\]
+By assumption, $\E(x_i^2\varepsilon_i^2)$ ($= \E(g_i^2)$) is finite, and by Assumption~2.6
+$\E(x_i^4)$ is also finite.
+So $\E(\varepsilon_i x_i^3)$ is finite and
+$\frac{1}{n}\sum_i \varepsilon_i x_i^3 \pto$ some finite number by ergodic stationarity.
+
+\exercise[5] (Direct proof that the change in $SSR$ divided by $\sigma^2$ is asymptotically
+$\chi^2$)\quad
+In Section~2.6, we proved that
+\[
+(SSR_R - SSR_U)/s^2 \dto \chi^2(\#\mathbf{r})
+\]
+as a corollary to Proposition~2.3. Give a direct proof, first by showing that
+\[
+SSR_R - SSR_U = (\sqrt{n}\,\bar{\mathbf{g}})'
+\mathbf{S}_{\mathbf{xx}}^{-1}\,\mathbf{R}'
+(\mathbf{R}\,\mathbf{S}_{\mathbf{xx}}^{-1}\,\mathbf{R}')^{-1}\,
+\mathbf{R}\,\mathbf{S}_{\mathbf{xx}}^{-1}\,(\sqrt{n}\,\bar{\mathbf{g}}),
+\]
+\[
+\bar{\mathbf{g}} \equiv \frac{1}{n}\sum_{i=1}^{n}\mathbf{x}_i \cdot \varepsilon_i.
+\]
+
+\exercise[6] (Optional, consistency of $\hat{\bm{\alpha}}$)\quad
+In this question we prove the claim made in Section~2.8 that $\hat{\bm{\alpha}}$, the OLS estimate for the regression of $e_i^2$ on $\mathbf{z}_i$, is consistent.
+
+Let $\tilde{\bm{\alpha}}$ be the OLS estimate from
+%
+\begin{equation}
+\varepsilon_i^2 = \mathbf{z}_i'\bm{\alpha} + \eta_i,
+\quad \eta_i \equiv \varepsilon_i^2 - \E(\varepsilon_i^2 \mid \mathbf{x}_i).
+\tag{2.8.8}
+\end{equation}
+
+\begin{enumerate}[label=(\alph*)]
+\item Make appropriate assumptions in addition to Assumptions~2.1 and 2.2 to
+show that $\tilde{\bm{\alpha}}$ is consistent.
+\textbf{Hint:} You need a rank condition for $\mathbf{z}_i$.
+
+\item Derive:
+\[
+\hat{\bm{\alpha}} - \tilde{\bm{\alpha}}
+= \Bigl(\frac{1}{n}\sum_{i=1}^{n}\mathbf{z}_i\mathbf{z}_i'\Bigr)^{-1}
+\frac{1}{n}\sum_{i=1}^{n}\mathbf{z}_i \cdot v_i
+\tag{$*$}
+\]
+with $v_i \equiv -2(\mathbf{b} - \bm{\beta})'\mathbf{x}_i\cdot\varepsilon_i
++ (\mathbf{b} - \bm{\beta})'\mathbf{x}_i\mathbf{x}_i'(\mathbf{b} - \bm{\beta})$.
+\textbf{Hint:} The discrepancy between $\varepsilon_i^2$ and the squared OLS residual $e_i^2$ from the
+original equation $y_i = \mathbf{x}_i'\bm{\beta} + \varepsilon_i$ is given by (2.3.10). Substituting it into
+(2.8.8) gives: $e_i^2 = \mathbf{z}_i'\bm{\alpha} + (\eta_i + v_i)$.
+
+\item To avoid inessential complications, suppose that $x_i$ is a scalar $x_i$. Then
+$\frac{1}{n}\sum_i \mathbf{z}_i \cdot v_i$ in ($*$) becomes
+\[
+-2(b - \beta)\,\frac{1}{n}\sum_{i=1}^{n}x_i\varepsilon_i\mathbf{z}_i
++ (b - \beta)^2\,\frac{1}{n}\sum_{i=1}^{n}x_i^2\mathbf{z}_i.
+\tag{$**$}
+\]
+Show that the plim of the first term is zero. \textbf{Hint:}
+\[
+\E(x_i\varepsilon_i\mathbf{z}_i) = \E[\mathbf{z}_i \cdot x_i \cdot \E(\varepsilon_i \mid x_i)].
+\]
+Show that the plim of the second term is zero if $\E(x_i^2\mathbf{z}_i)$ exists and is finite.
+
+\item Thus we have proved that $\hat{\bm{\alpha}} - \tilde{\bm{\alpha}}$ vanishes. Prove the stronger result that
+$\sqrt{n}(\hat{\bm{\alpha}} - \tilde{\bm{\alpha}})$ vanishes. \textbf{Hint:} Use Lemma~2.4(b).
+\end{enumerate}
+
+\exercise[7] (Optional, proof that WLS is asymptotically more efficient than OLS)\quad
+In Section~2.8, the WLS estimator is denoted $\hat{\bm{\beta}}(\widetilde{\mathbf{V}})$.
+We wish to prove that it is asymptotically more efficient than OLS, namely,
+\[
+\avar(\hat{\bm{\beta}}(\widetilde{\mathbf{V}})) \leq \avar(\mathbf{b}).
+\]
+But since $\avar(\hat{\bm{\beta}}(\widetilde{\mathbf{V}})) = \avar(\hat{\bm{\beta}}(\mathbf{V}))$,
+it is sufficient to prove that
+\[
+\avar(\hat{\bm{\beta}}(\mathbf{V})) \leq \avar(\mathbf{b}).
+\]
+Prove this last matrix inequality. \textbf{Hint:} In Chapter~1, we proved the algebraic
+result that
+\[
+(\mathbf{X}'\mathbf{X})^{-1}(\mathbf{X}'\mathbf{V}\mathbf{X})(\mathbf{X}'\mathbf{X})^{-1}
+\geq (\mathbf{X}'\mathbf{V}^{-1}\mathbf{X})^{-1}
+\tag{$*$}
+\]
+for any positive definite matrix $\mathbf{V}$. (This follows from the fact that GLS is more
+efficient than OLS; the LHS is ($\sigma^2$ times) the variance of the OLS estimator for
+the generalized regression model while the RHS is ($\sigma^2$ times) the variance of
+the GLS estimator.) Dividing both sides of ($*$) by $n$ and taking probability limits
+yields:
+\[
+(\plim \tfrac{1}{n}\mathbf{X}'\mathbf{X})^{-1}
+(\plim \tfrac{1}{n}\mathbf{X}'\mathbf{V}\mathbf{X})
+(\plim \tfrac{1}{n}\mathbf{X}'\mathbf{X})^{-1}
+\geq \plim(\tfrac{1}{n}\mathbf{X}'\mathbf{V}^{-1}\mathbf{X})^{-1}.
+\tag{$**$}
+\]
+The RHS is $\avar(\hat{\bm{\beta}}(\mathbf{V}))$ (see (2.8.7)). Show that the LHS equals
+$\avar(\mathbf{b}) = \bm{\Sigma}_{\mathbf{xx}}^{-1}\,\mathbf{S}\,\bm{\Sigma}_{\mathbf{xx}}^{-1}$.
+
+\exercise[8] Prove \eqref{eq:2.9.7}. \textbf{Hint:} If $(\mu, \bm{\gamma})$ is the least squares projection
+coefficients, it satisfies
+\[
+\E(\mathbf{x}\mathbf{x}')
+\begin{bmatrix} \mu \\ \bm{\gamma} \end{bmatrix}
+= \E(\mathbf{x} \cdot y),
+\tag{$*$}
+\]
+or
+\[
+\begin{bmatrix} \mu \\ \bm{\gamma} \end{bmatrix}
+= [\E(\mathbf{x}\mathbf{x}')]^{-1}\,\E(\mathbf{x} \cdot y),
+\tag{$**$}
+\]
+where
+\[
+\E(\mathbf{x}\mathbf{x}') = \begin{bmatrix}
+1 & \E(\widetilde{\mathbf{x}})' \\
+\E(\widetilde{\mathbf{x}}) & \E(\widetilde{\mathbf{x}}\widetilde{\mathbf{x}}')
+\end{bmatrix}, \quad
+\E(\mathbf{x} \cdot y) = \begin{bmatrix}
+\E(y) \\ \E(\widetilde{\mathbf{x}} \cdot y)
+\end{bmatrix}.
+\]
+The first equation of ($*$) is
+$\mu + \E(\widetilde{\mathbf{x}})'\bm{\gamma} = \E(y)$. Use this to eliminate $\mu$ from the
+rest of the equations of ($*$) and then solve for $\bm{\gamma}$. In the process, use
+$\Var(\widetilde{\mathbf{x}}) = \E(\widetilde{\mathbf{x}}\widetilde{\mathbf{x}}') - \E(\widetilde{\mathbf{x}})\,\E(\widetilde{\mathbf{x}})'$,
+$\Cov(\widetilde{\mathbf{x}}, y) = \E(\widetilde{\mathbf{x}} \cdot y) - \E(\widetilde{\mathbf{x}})\,\E(y)$.
+Alternatively, use the formula for the partitioned inverse (see (A.10) of Appendix~A) to obtain
+\[
+\E(\mathbf{x}\mathbf{x}')^{-1} = \begin{bmatrix}
+1 + \E(\widetilde{\mathbf{x}})'\,\Var(\widetilde{\mathbf{x}})^{-1}\,\E(\widetilde{\mathbf{x}})
+& -\E(\widetilde{\mathbf{x}})'\,\Var(\widetilde{\mathbf{x}})^{-1} \\
+-\Var(\widetilde{\mathbf{x}})^{-1}\,\E(\widetilde{\mathbf{x}})
+& \Var(\widetilde{\mathbf{x}})^{-1}
+\end{bmatrix}.
+\]
+Then substitute this into ($**$).
+
+\exercise[9] (Proof of Proposition~2.9 for $p = 1$)\quad
+Assume that $\{\varepsilon_t\}$ is an ergodic stationary
+martingale difference sequence and that
+$\E(\varepsilon_t^2 \mid \varepsilon_{t-1}, \varepsilon_{t-2}, \ldots, \varepsilon_1) = \sigma^2 < \infty$.
+Let $g_t = \varepsilon_t \cdot \varepsilon_{t-1}$ and
+\[
+\hat{\gamma}_j = \frac{1}{n}\sum_{t=j+1}^{n}\varepsilon_t \cdot \varepsilon_{t-j}
+\quad (j = 0, 1), \quad
+\hat{\rho}_1 = \frac{\hat{\gamma}_1}{\hat{\gamma}_0}.
+\]
+
+\begin{enumerate}[label=(\alph*)]
+\item Show that $\{g_t\}$ ($t = 2, 3, \ldots$) is a martingale difference sequence.
+\item Show that $\E(g_t^2) = \sigma^4$.
+\item Show that $\sqrt{n}\,\hat{\gamma}_1 \dto N(0, \sigma^4)$ as $n \to \infty$.
+\item Show that $\sqrt{n}\,\hat{\rho}_1 \dto N(0, 1)$.
+\textbf{Hint:} First show that
+$\sqrt{n}\,\hat{\gamma}_1/\sigma^2 \dto N(0, 1)$. Then use Lemma~2.4(c).
+\end{enumerate}
+
+\exercise[10] (Asymptotics of sample mean of MA(2))\quad
+Let $(\varepsilon_{-1}, \varepsilon_0, \varepsilon_1, \varepsilon_2, \ldots)$ be i.i.d.\
+with mean zero and variance $\sigma_\varepsilon^2$. Consider a process
+$(y_{-1}, y_0, y_1, y_2, \ldots)$ generated by
+\[
+y_{-1} = \varepsilon_{-1}, \quad
+y_0 = \varepsilon_0 + \theta_1\varepsilon_{-1}, \quad
+y_t = \varepsilon_t + \theta_1\varepsilon_{t-1} + \theta_2\varepsilon_{t-2}
+\quad (t = 1, 2, \ldots\,).
+\]
+(This process is called a second-order moving average process (MA(2)); see
+Chapter~6.)
+\begin{enumerate}[label=(\alph*)]
+\item Show that $(y_1, y_2, \ldots)$ is covariance stationary. Derive the expressions for
+the autocovariances $\gamma_j$ ($j = 0, 1, 2, \ldots$).
+
+\item Let
+\begin{align*}
+r_{tj} &\equiv \E(y_t \mid y_{t-j}, y_{t-j-1}, \ldots, y_0, y_{-1}) \\
+&\quad - \E(y_t \mid y_{t-j-1}, y_{t-j-2}, \ldots, y_0, y_{-1}) \\
+&\quad (t = j, j+1, \ldots;\; j = 0, 1, 2, \ldots\,).
+\end{align*}
+Show that
+\[
+r_{t0} = \varepsilon_t, \quad
+r_{t1} = \theta_1\varepsilon_{t-1}, \quad
+r_{t2} = \theta_2\varepsilon_{t-2}, \quad
+r_{t3} = 0, \quad
+r_{t4} = 0, \quad \ldots
+\]
+\textbf{Hint:} There is a one-to-one mapping between
+$(\varepsilon_{-1}, \varepsilon_0, \varepsilon_1, \ldots, \varepsilon_t)$ and
+$(y_{-1}, y_0, y_1, \ldots, y_t)$ so
+$\E(y_t \mid y_{t-j}, \ldots, y_{-1}) = \E(y_t \mid \varepsilon_{t-j}, \ldots, \varepsilon_{-1})$.
+
+\item Let
+\[
+\bar{y}_n \equiv \frac{1}{n}(y_1 + y_2 + \cdots + y_n).
+\]
+Show that
+\[
+\Var(\sqrt{n}\,\bar{y}_n) = \gamma_0
++ 2\!\left[\Bigl(1 - \frac{1}{n}\Bigr)\gamma_1
++ \Bigl(1 - \frac{2}{n}\Bigr)\gamma_2\right].
+\]
+
+\item Because $\{y_t\}$ is not i.i.d., the Lindeberg--Levy CLT is not applicable.
+However, it will be shown in Chapter~6 that $\sqrt{n}\,\bar{y}_n$ converges in distribution
+to a normal random variable. What is the mean of the limiting distribution
+(i.e., $\avar(\bar{y}_n)$)?
+\textbf{Hint:} In Lemma~2.1, set $z_n = \sqrt{n}\,\bar{y}_n$, and
+$\lim_{n\to\infty}(1 - q/n) = 1$ for any fixed $q$.
+\end{enumerate}
+
+\exercise[11] (Optional, Breusch--Godfrey test for serial correlation)\quad
+In this question, we
+prove that the modified Box--Pierce $Q$ is asymptotically equivalent to $pF$ from
+auxiliary regression \eqref{eq:2.10.21}, where $p$ is the number of lags and $F$ is the $F$-ratio for the hypothesis that the coefficients of $e_{t-1}, e_{t-2}, \ldots, e_{t-p}$ are all zero.
+
+First we establish the notation. Let
+\[
+\underset{(n\times K)}{\mathbf{X}}
+= \begin{bmatrix} \mathbf{x}_1' \\ \vdots \\ \mathbf{x}_n' \end{bmatrix}, \quad
+\underset{(n\times p)}{\mathbf{E}}
+= \begin{bmatrix}
+0 & 0 & \cdots & 0 \\
+e_1 & 0 & \cdots & \vdots \\
+e_2 & e_1 & & 0 \\
+e_3 & e_2 & & e_1 \\
+\vdots & \vdots & & \vdots \\
+e_{n-1} & e_{n-2} & \cdots & e_{n-p}
+\end{bmatrix}, \quad
+\underset{(n\times 1)}{\mathbf{e}}
+= \begin{bmatrix} e_1 \\ \vdots \\ e_n \end{bmatrix},
+\]
+\[
+\underset{((K+p)\times(K+p))}{\widehat{\mathbf{B}}}
+= \begin{bmatrix}
+\frac{1}{n}\mathbf{X}'\mathbf{X} & \frac{1}{n}\mathbf{X}'\mathbf{E} \\[4pt]
+\frac{1}{n}\mathbf{E}'\mathbf{X} & \frac{1}{n}\mathbf{E}'\mathbf{E}
+\end{bmatrix}, \quad
+\widehat{\mathbf{B}}^{-1} = \begin{bmatrix}
+\widehat{\mathbf{B}}^{11} & \widehat{\mathbf{B}}^{12} \\
+\widehat{\mathbf{B}}^{21} & \widehat{\mathbf{B}}^{22}
+\end{bmatrix}, \quad
+\underset{(p\times 1)}{\hat{\bm{\gamma}}}
+= \begin{bmatrix} \hat{\gamma}_1 \\ \vdots \\ \hat{\gamma}_p \end{bmatrix},
+\]
+where $e_t$ is the residual from the original regression
+$y_t = \mathbf{x}_t'\bm{\beta} + \varepsilon_t$ and $\hat{\gamma}_j$ is the sample $j$-th order
+autocovariance, defined in \eqref{eq:2.10.8}, calculated from the residuals.
+\begin{enumerate}[label=(\alph*)]
+\item The auxiliary regression \eqref{eq:2.10.21} has $K + p$ regressors. Let
+$\hat{\bm{\alpha}}$ be the vector of the $K + p$ coefficients. Show that
+\[
+\hat{\bm{\alpha}} = \widehat{\mathbf{B}}^{-1}
+\begin{bmatrix} \mathbf{0} \\ {}_{(K\times 1)} \\[2pt] \hat{\bm{\gamma}} \\ {}_{(p\times 1)} \end{bmatrix}.
+\]
+\textbf{Hint:} Since $\mathbf{e}$ is the vector of residuals from the original regression with
+$\mathbf{X}$ as regressors, $\mathbf{X}'\mathbf{e} = \mathbf{0}$.
+
+\item Show:
+\[
+\widehat{\mathbf{B}} \pto \mathbf{B}
+\equiv \begin{bmatrix}
+\bm{\Sigma}_{\mathbf{xx}} & \mathbf{H} \\
+\mathbf{H}' & \sigma^2\mathbf{I}_p
+\end{bmatrix},
+\]
+where
+\[
+\underset{(K\times p)}{\mathbf{H}}
+\equiv \begin{bmatrix}
+\E(\mathbf{x}_t\cdot\varepsilon_{t-1}) & \cdots &
+\E(\mathbf{x}_t\cdot\varepsilon_{t-p})
+\end{bmatrix}.
+\]
+\textbf{Hint:} The $j$-th column of $\frac{1}{n}\mathbf{X}'\mathbf{E}$ is
+$\frac{1}{n}\sum_{t=j+1}^{n}\mathbf{x}_t\cdot e_{t-j}$. Use (2.3.9) to show
+that it converges in probability to $\E(\mathbf{x}_t\cdot\varepsilon_{t-j})$.
+
+\item (very easy)\quad Show: $\hat{\bm{\alpha}} \pto \mathbf{0}$.
+
+\item Let $SSR$ here be the sum of squared residuals from the auxiliary, \emph{not} the
+original, regression. Show:
+\[
+\frac{SSR}{n - K - p} \pto \sigma^2,
+\]
+where $\sigma^2$ is the variance of $\varepsilon_t$, the error term from the original regression.
+\textbf{Hint:}
+$[\mathbf{X} \;\vdots\; \mathbf{E}]\,\hat{\bm{\alpha}} = \mathbf{E}\hat{\bm{\gamma}}$.
+So $SSR = (\mathbf{e} - \mathbf{E}\hat{\bm{\gamma}})'(\mathbf{e} - \mathbf{E}\hat{\bm{\gamma}})$.
+$\frac{1}{n}\mathbf{E}'\mathbf{e} = \hat{\bm{\gamma}}$,
+$\frac{1}{n}\mathbf{E}'\mathbf{E} \pto \sigma^2\mathbf{I}_p$.
+
+\item Show:
+\[
+pF = \frac{n\hat{\bm{\gamma}}'\widehat{\mathbf{B}}^{22}\hat{\bm{\gamma}}}
+{SSR/(n - K - p)}.
+\]
+\textbf{Hint:} Apply the formula for the $F$-ratio in (1.4.9) to the auxiliary regression.
+
+\item Use the formula for the partitioned inverse (see (A.10) of Appendix~A) to
+show
+\[
+\widehat{\mathbf{B}}^{22} = \Bigl[\frac{1}{n}\mathbf{E}'\mathbf{E}
+- \Bigl(\frac{1}{n}\mathbf{E}'\mathbf{X}\Bigr)\mathbf{S}_{\mathbf{xx}}^{-1}
+\Bigl(\frac{1}{n}\mathbf{X}'\mathbf{E}\Bigr)\Bigr]^{-1}.
+\]
+
+\item Let $\hat{\bm{\rho}}$ and $\widehat{\mathbf{\Phi}}$ be as in \eqref{eq:2.10.8}
+and \eqref{eq:2.10.19}. Show that the modified Box--Pierce $Q$ defined in \eqref{eq:2.10.20}
+is asymptotically equivalent to $pF$ (i.e., the
+difference between the two converges to zero in probability).
+\textbf{Hint:} Show that both $pF$ and the modified $Q$ are asymptotically equivalent to
+\[
+n\hat{\bm{\gamma}}'(\mathbf{I}_p - \mathbf{\Phi})^{-1}\hat{\bm{\gamma}}/\sigma^2,
+\]
+where $\mathbf{\Phi}$ is defined in \eqref{eq:2.10.18}.
+\end{enumerate}
+
+\exercise[12] (Optional, Chow test for structural change in large samples)\quad
+Consider applying the Chow test for structural change to the regression model with conditional
+homoskedasticity described in Proposition~2.5. Since the issue of structural
+change arises mostly in time-series models, we use ``$t$'' for the subscript. We
+generalize Assumption~2.1 by allowing the coefficient vector to change at the
+break date $r$:
+\[
+y_t = \begin{cases}
+\mathbf{x}_t'\bm{\beta}_1 + \varepsilon_t & \text{for } t = 1, 2, \ldots, r, \\
+\mathbf{x}_t'\bm{\beta}_2 + \varepsilon_t & \text{for } t = r+1, r+2, \ldots, n.
+\end{cases}
+\]
+We assume that the break date $r$ is known. (When the break date is unknown,
+the situation is more complicated and has been an object of recent research.
+See Stock (1994, Section~5) for a survey.) The null hypothesis to test is that
+$\bm{\beta}_1 = \bm{\beta}_2$. This is a set of $K$ restrictions. Let $SSR_1$ be the sum of squared
+residuals from the first period ($t = 1, 2, \ldots, r$), $SSR_2$ be the SSR from the
+second period ($t = r+1, r+2, \ldots, n$), and $SSR_R$ be the SSR from the entire
+sample under the constraint $\bm{\beta}_1 = \bm{\beta}_2$. From Chapter~1, the Chow statistic is
+defined as
+\[
+F = \frac{[SSR_R - (SSR_1 + SSR_2)]/K}
+{(SSR_1 + SSR_2)/(n - 2K)}.
+\]
+Let $\mathbf{b}_1$ be the OLS estimate of $\bm{\beta}_1$ obtained from the first period and
+$\mathbf{b}_2$ be the OLS estimate from the second period.
+\begin{enumerate}[label=(\alph*)]
+\item Show that $KF$ is numerically equal to
+\[
+\sqrt{n}(\mathbf{b}_1 - \mathbf{b}_2)'\!
+\left[\Bigl(\frac{\frac{1}{n}\sum_{t=1}^{r}\mathbf{x}_t\mathbf{x}_t'}{s^2}\Bigr)^{-1}
++ \Bigl(\frac{\frac{1}{n}\sum_{t=r+1}^{n}\mathbf{x}_t\mathbf{x}_t'}{s^2}\Bigr)^{-1}
+\right]^{-1}\!\sqrt{n}(\mathbf{b}_1 - \mathbf{b}_2),
+\]
+where $s^2 = (SSR_1 + SSR_2)/(n - 2K)$. \textbf{Hint:} The $n$ equations can be written
+in matrix form as $\mathbf{y} = \mathbf{X}\bm{\beta} + \bm{\varepsilon}$, where
+\[
+\underset{(n\times 2K)}{\mathbf{X}}
+= \begin{bmatrix} \mathbf{X}_1 & \mathbf{0} \\ \mathbf{0} & \mathbf{X}_2 \end{bmatrix}, \quad
+\underset{(r\times K)}{\mathbf{X}_1}
+= \begin{bmatrix} \mathbf{x}_1' \\ \vdots \\ \mathbf{x}_r' \end{bmatrix}, \quad
+\underset{((n-r)\times K)}{\mathbf{X}_2}
+= \begin{bmatrix} \mathbf{x}_{r+1}' \\ \vdots \\ \mathbf{x}_n' \end{bmatrix}, \quad
+\underset{(2K\times 1)}{\bm{\beta}}
+= \begin{bmatrix} \bm{\beta}_1 \\ \bm{\beta}_2 \end{bmatrix}.
+\]
+The null that $\bm{\beta}_1 = \bm{\beta}_2$ can be written as
+$\mathbf{R}\bm{\beta} = \mathbf{r}$ where
+$\mathbf{R} = [\mathbf{I}_K \;\vdots\; {-\mathbf{I}_K}]$ and $\mathbf{r} = \mathbf{0}$.
+Use Proposition~1.4.
+
+\item Let $\lambda \equiv r/n$. Show that, as $n \to \infty$ with $\lambda$ fixed,
+\[
+\frac{1}{n}\sum_{t=1}^{r}\mathbf{x}_t\mathbf{x}_t' \pto
+\lambda\,\bm{\Sigma}_{\mathbf{xx}}, \quad
+\frac{1}{n}\sum_{t=r+1}^{n}\mathbf{x}_t\mathbf{x}_t' \pto
+(1-\lambda)\,\bm{\Sigma}_{\mathbf{xx}},
+\]
+where $\bm{\Sigma}_{\mathbf{xx}} = \E(\mathbf{x}_t\mathbf{x}_t')$.
+
+\item Show that, as $n \to \infty$ with $\lambda$ fixed,
+\[
+\frac{1}{\sqrt{n}}\sum_{t=1}^{r}\mathbf{x}_t\cdot\varepsilon_t
+\dto N(\mathbf{0},\;\lambda\sigma^2\bm{\Sigma}_{\mathbf{xx}}), \quad
+\frac{1}{\sqrt{n}}\sum_{t=r+1}^{n}\mathbf{x}_t\cdot\varepsilon_t
+\dto N(\mathbf{0},\;(1-\lambda)\sigma^2\bm{\Sigma}_{\mathbf{xx}}).
+\]
+It can be shown (see, e.g., Stock, 1994, Section~5) that
+$\frac{1}{\sqrt{n}}\sum_{t=1}^{r}\mathbf{x}_t\varepsilon_t$ and
+$\frac{1}{\sqrt{n}}\sum_{t=r+1}^{n}\mathbf{x}_t\varepsilon_t$
+are asymptotically uncorrelated. So
+\[
+\begin{bmatrix}
+\frac{1}{\sqrt{n}}\sum_{t=1}^{r}\mathbf{x}_t\cdot\varepsilon_t \\[6pt]
+\frac{1}{\sqrt{n}}\sum_{t=r+1}^{n}\mathbf{x}_t\cdot\varepsilon_t
+\end{bmatrix}
+\dto N\!\left(\mathbf{0},\;
+\begin{bmatrix}
+\lambda\sigma^2\bm{\Sigma}_{\mathbf{xx}} & \mathbf{0} \\
+\mathbf{0} & (1-\lambda)\sigma^2\bm{\Sigma}_{\mathbf{xx}}
+\end{bmatrix}\right).
+\]
+
+\item Show that
+$\avar(\mathbf{b}_1 - \mathbf{b}_2)
+= \lambda^{-1}\sigma^2\bm{\Sigma}_{\mathbf{xx}}^{-1}
++ (1-\lambda)^{-1}\sigma^2\bm{\Sigma}_{\mathbf{xx}}^{-1}$.
+\textbf{Hint:} Let
+\[
+\mathbf{b} \equiv \begin{bmatrix} \mathbf{b}_1 \\ \mathbf{b}_2 \end{bmatrix}.
+\]
+Show that
+\[
+\avar(\mathbf{b}) = \begin{bmatrix}
+\lambda^{-1}\sigma^2\bm{\Sigma}_{\mathbf{xx}}^{-1} & \mathbf{0} \\
+\mathbf{0} & (1-\lambda)^{-1}\sigma^2\bm{\Sigma}_{\mathbf{xx}}^{-1}
+\end{bmatrix}.
+\]
+$\mathbf{b}_1 - \mathbf{b}_2 = [\mathbf{I}_K \;\vdots\; {-\mathbf{I}_K}]\mathbf{b}$.
+Use Lemma~2.4(c).
+
+\item Finally, show that $KF \dto \chi^2(K)$ as $n \to \infty$ with $\lambda = r/n$ fixed.
+\end{enumerate}
+
+\subsection*{Empirical Exercises}
+
+\exercise[1]
+Read the introduction and Sections I--IV of Fama (1975), before doing this
+exercise. In the data file \texttt{MISHKIN.ASC}, monthly data are provided on:
+
+\begin{quote}
+Column~1: year \\
+Column~2: month \\
+Column~3: one-month inflation rate (in percent, annual rate; call this \emph{PAI1}) \\
+Column~4: three-month inflation rate (in percent, annual rate; call this \emph{PAI3}) \\
+Column~5: one-month T-bill rate (in percent, annual rate; call this \emph{TB1}) \\
+Column~6: three-month T-bill rate (in percent, annual rate; call this \emph{TB3}) \\
+Column~7: CPI for urban consumers, all items (the 1982--1984 average is set to 100; call this \emph{CPI})
+\end{quote}
+
+The sample period is February 1950 to December 1990 (491 observations).
+The data on \emph{PAI1}, \emph{PAI3}, \emph{TB1}, and \emph{TB3} are the same data used in Mishkin
+(1992) and were made available to us by him. The T-bill data were obtained
+from the Center for Research in Security Prices (CRSP) at the University of
+Chicago. The T-bill rates for the month are as of the last business day of the
+previous month (and so can be taken for the interest rates at the beginning of the
+month). The construction of \emph{PAI1} and \emph{PAI3} will be described toward the end
+of this exercise; for the time being, we will use the inflation derived from \emph{CPI}.
+
+\begin{enumerate}[label=(\alph*)]
+\item (Library/internet work)\quad
+To check the accuracy of the data in \texttt{MISHKIN.ASC}, find relevant tables from back issues of \emph{Treasury Bulletin} or
+\emph{Federal Reserve Bulletin} for hard-copy data on T-bill rates. Or visit the
+web sites of the Board of Governors (\texttt{www.bog.frb.fed.us}) or the Treasury Department (\texttt{www.ustreas.gov}) to accomplish the same. Can you
+find one-month T-bill rates? [Answer: Probably not.] Are the rates in
+\texttt{MISHKIN.ASC} close to those in the relevant tables? Do they appear to be
+at the beginning of the month?
+
+\item (Library/internet work)\quad
+Find relevant tables from back issues of \emph{Monthly
+Labor Review} (or visit the web site of the Bureau of Labor Statistics,
+\texttt{www.bls.gov}) to verify that the CPI figures in \texttt{MISHKIN.ASC} are correct.
+Verify that the timing of the variable is such that a January CPI observation
+is the CPI for the month. Regarding the definition of the CPI, verify the
+following. (1)~The CPI is for urban consumers, for all items including food
+and housing, and is not seasonally adjusted. (2)~Prices of the component
+items of the index are sampled throughout the month. When is the CPI for
+the month announced?
+
+\item Is the CPI a fixed-weight index or a variable-weight index? \textbf{Hint:} Dig up
+your old intermediate macro textbook; graduate macro textbooks won't do.
+\end{enumerate}
+
+The one-month T-bill rate for month $t$ in the data set is for the period from
+the beginning of month $t$ to the end of the month (as you just verified). Ideally,
+if we had data on the price level at the beginning of each period, we would
+calculate the inflation rate for the same period as $(P_{t+1} - P_t)/P_t$, where $P_t$
+is the beginning-of-the-period price level. We use CPI for month $t - 1$ for
+$P_t$ (i.e., set $P_t = CPI_{t-1}$). Since the CPI component items are collected at
+different times during the month, there arises the inevitable misalignment of
+the inflation measure and the interest-rate data. Another problem is the timing
+of the release of the CPI figure. The efficient market theory assumes that $P_t$ is
+known to the market at the beginning of month $t$ when the T-bill rates for the
+month are set. However, the CPI for month $t - 1$, which we take to be $P_t$, is
+not announced until sometime in the following month (month $t$). Thus we are
+assuming that people know the CPI for month $t - 1$ at the beginning of month $t$.
+
+\begin{enumerate}[label=(\alph*),start=4]
+\item Reproduce the results in Table~\ref{tab:2.1}. Because the T-bill rate is in percent and
+at an annual rate, the inflation rate must be measured in the same unit. Calculate $\pi_{t+1}$, which is to be matched with $\mathit{TB1}_t$ (the one-month T-bill rate
+for month $t$), as the continuously compounded rate in percent:
+\[
+\left[\Bigl(\frac{P_{t+1}}{P_t}\Bigr)^{12} - 1\right] \times 100.
+\]
+
+\item Can you reproduce \eqref{eq:2.11.9}, with robust standard errors? What is the
+interpretation of the intercept?
+
+\item (Davidson--MacKinnon correction of White)\quad
+The finite-sample properties
+of the robust $t$-ratio might be improved by the Davidson--MacKinnon adjustment discussed in the text. Calculate robust standard errors using the three
+formulas discussed in the text. The first is the degrees of freedom correction of multiplying $\widehat{\mathbf{S}}$ by $n/(n-K)$. The second is to calculate $\widehat{\mathbf{S}}$
+by formula (2.5.5) with $d = 1$. The third is (2.5.5) with $d = 2$. These correspond to
+TSP's OLSQ options \texttt{HCTYPE = 1, 2, 3}.
+
+\item (Estimation under conditional homoskedasticity)\quad
+Test market efficiency
+by regressing $\pi_{t+1}$ on a constant and $\mathit{TB1}_t$ \emph{under conditional homoskedasticity} (2.6.1). Compare your results with those in (e) and (f). Which part is
+different?
+
+\item (Breusch--Godfrey test)\quad
+For the specification in (g), conduct the Breusch--Godfrey test for serial correlation with $p = 12$. (The $nR^2$ statistic should
+be about 27.0.) Let $e_t$ ($t = 1, 2, \ldots, n$) be the OLS residual from the
+regression in (g). To perform the Breusch--Godfrey test as described in
+the text, we need to set $e_t$ ($t = 0, 1, \ldots, -11$) to zero in running the auxiliary
+regression for $t = 1, 2, \ldots, n$.
+
+\item (Reconstructing Fama)\quad
+What are Fama's own point estimate and standard
+error of the nominal interest rate coefficient? Are they identical to your
+results? (Fama uses different notation, so you need to translate his results
+in our notation.) Why is his estimate of the intercept different from yours?
+(One obvious reason is that our data are different, but there is another reason.) Optional: What are the differences between his data and our data?
+
+\item (Seasonal dummies)\quad
+The CPI used to calculate the inflation rate is not seasonally adjusted. To take account of seasonal factors while still using seasonally unadjusted data in the regression, define twelve monthly dummies,
+$M1, M2, \ldots, M12$, and use them in place of a constant in the regression
+in (g). Does this make any difference to your results? What happens if you
+include a constant along with the twelve monthly dummies in the regression? Optional: Is there any reason for preferring seasonally unadjusted
+data to seasonally adjusted?
+
+\item Estimate the Fama regression for 1/53--7/71 using this better measure of
+the one-month inflation rate and compare the results to those you obtained
+in (e).
+
+\item Estimate the Fama regression for the post-October 1979 period. Is the nominal interest rate coefficient much lower? (The coefficient should drop to
+0.564.)
+\end{enumerate}
+
+\exercise[2] (Continuation of the Nerlove exercise of Chapter~1, p.~76)
+
+\begin{enumerate}[label=(\alph*),start=9]
+\item For Model~4, carry out White's $nR^2$ test for conditional heteroskedasticity.
+($nR^2$ should be 66.546.)
+
+\item (optional)\quad
+Estimate Model~4 by OLS. This is \emph{Step~1} of the procedure of
+Section~2.8. Carry out \emph{Step~2} by estimating the following auxiliary regression: regress $e_i^2$ on a constant and $1/Q_i$. Verify that \emph{Step~3} is what you did
+in part~(h).
+
+\item Calculate White standard errors for Model~4.
+\end{enumerate}
+
+\subsection*{Monte Carlo Exercises}
+
+\exercise[1] (Degrees of freedom correction)\quad
+In the model of the Monte Carlo exercise of
+Chapter~1, we assumed that the error term was normal. Assume instead that $\varepsilon_i$
+is uniformly distributed between $-0.5$ and $0.5$.
+
+\begin{enumerate}[label=(\alph*)]
+\item Verify that the DGP of the second simulation (where $\mathbf{X}$ differs across simulated samples) satisfies Assumptions~2.1--2.5 and 2.7. (It can be shown that
+Assumption~2.2 [ergodic stationarity] is also satisfied. This is an implication of Proposition~6.1(d).)
+
+\item Run the second simulation of the Chapter~1 Monte Carlo exercise with the
+uniformly distributed error term. In each replication, calculate the usual
+$t$-ratio, as before, and compare it with two critical values. The first is the
+same critical value (2.042) implied by the $t(30)$ distribution, and the second
+is the critical value (1.96) from $N(0, 1)$. Compute the rejection frequency
+for each critical value. Which one is closer to the nominal size of 5\%?
+\end{enumerate}
+
+\exercise[2] (Box--Pierce vs.\ Ljung--Box)\quad
+We wish to verify the claim that the small sample
+properties of the Ljung--Box $Q$ statistic are superior to those of the Box--Pierce
+$Q$. Generate a string of 50 i.i.d.\ random numbers with mean 0. (Choose your
+favorite distribution.) Taking this string as data, do the following.
+
+\begin{enumerate}
+\item Calculate the Box--Pierce $Q$ and the Ljung--Box $Q$ statistics (see \eqref{eq:2.10.4}
+and \eqref{eq:2.10.5}) with $p = 4$. (The ensemble mean is 0 by construction. Nevertheless take the sample mean from the series when you compute the autocorrelations.)
+
+\item For each statistic, accept or reject the null of no serial correlation at a significance level of 5\%, assuming that the statistic is distributed as $\chi^2(4)$.
+\end{enumerate}
+
+\noindent
+Do this a large number of times, each time using a different string of 50 i.i.d.\
+random numbers generated afresh. For each $Q$ statistic, calculate the frequency
+of rejecting the null. If the finite-sample distribution of the statistic is well
+approximated by $\chi^2(4)$, the frequency should be close to 5\%. Which statistic
+gives you the frequency closer to the nominal size of 5\%? Do we fail to reject
+the null too often if we use the Box--Pierce $Q$?
+
+\end{problemset}
+
+\begin{answers}
+
+\subsection*{Analytical Exercises}
+
+\answer{3}
+From (2.3.7) of the text, $\mathbf{b} - \bm{\beta} = \mathbf{S}_{\mathbf{xx}}^{-1}\bar{\mathbf{g}}$.
+By Kolmogorov, $\mathbf{S}_{\mathbf{xx}} \pto \E(\mathbf{x}_i\mathbf{x}_i')$ and
+$\bar{\mathbf{g}} \pto \mathbf{0}$. So $\mathbf{b}$ is consistent. By the Lindeberg--Levy CLT,
+$\sqrt{n}\,\bar{\mathbf{g}} \dto N(\mathbf{0}, \mathbf{S})$.
+The rest of the proof should now be routine.
+
+\answer{7}
+What remains to be shown is that the LHS of ($**$) equals
+$\avar(\mathbf{b}) = \bm{\Sigma}_{\mathbf{xx}}^{-1}\,\mathbf{S}\,\bm{\Sigma}_{\mathbf{xx}}^{-1}$.
+\[
+\bm{\Sigma}_{\mathbf{xx}} = \plim \frac{1}{n}\mathbf{X}'\mathbf{X}
+\]
+and
+\begin{align*}
+\mathbf{S} &= \E(\varepsilon_i^2\,\mathbf{x}_i\mathbf{x}_i') \\
+&= \E[\E(\varepsilon_i^2 \mid \mathbf{x}_i)\,\mathbf{x}_i\mathbf{x}_i'] \\
+&= \E[(\mathbf{z}_i'\bm{\alpha})\,\mathbf{x}_i\mathbf{x}_i']
+\quad \text{(by (2.8.1))} \\
+&= \plim \frac{1}{n}\sum_{i=1}^{n}(\mathbf{z}_i'\bm{\alpha})\,\mathbf{x}_i\mathbf{x}_i'
+\quad \text{(by ergodic stationarity)} \\
+&= \plim \frac{1}{n}\mathbf{X}'\mathbf{V}\mathbf{X}
+\quad \text{(by definition (2.8.4) of } \mathbf{V}\text{)}.
+\end{align*}
+
+\subsection*{Empirical Exercises}
+
+\answer{1c}
+The CPI is probably the most widely used fixed-weight price index.
+
+\answer{1e}
+The negative of the intercept $= r$ (the constant ex-ante real interest rate).
+
+\answer{1g}
+Point estimates are the same. Only standard errors are different.
+
+\answer{1i}
+Looking at Fama's Table~3, his $R_t$ coefficient when the sample period is 1/53 to
+7/71 is 0.98 with a s.e.\ of 0.10. Very close, but not exactly the same. There are
+two possible explanations for the difference between our estimates and Fama's.
+First, in calculating the inflation rate for month $t$,
+$\pi_{t+1} = (P_{t+1} - P_t)/P_t$, it is
+not clear from Fama that $CPI_{t-1}$ rather than $CPI_t$ was used for $P_t$. Second, the
+weight for the CPI at the time of his writing may be for 1958. The weight for
+the CPI in our data is for 1982--1984. Our estimate of the intercept ($-0.868$)
+differs from Fama's (0.0070) because, first, his dependent variable is the negative of the inflation rate and, second, the inflation rate and the T-bill rate are
+monthly rates in Fama.
+
+\answer{1j}
+The seasonally adjusted series manufactured by the BLS is a sort of two-sided
+moving average. Thus, for example, seasonally adjusted $CPI_t$ depends on seasonally unadjusted values of \emph{future} CPI, which is not in $I_t$. Thus if there is no
+reason to take account of seasonal factors in the relationship between the inflation rate and the nominal interest rate, one should use seasonally unadjusted
+data. If there is a need to take account of seasonal factors, it is better to include
+seasonal dummies in the regression rather than use seasonally adjusted data.
+Inclusion of seasonal dummies does not change results in any important way.
+
+\answer{1k}
+The $R_t$ coefficient drops to 0.807 from 1.014.
+
+\end{answers}

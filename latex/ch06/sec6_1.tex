@@ -1,0 +1,417 @@
+% sec6_1.tex — Section 6.1: Modeling Serial Correlation: Linear Processes
+
+Section~2.2 introduced covariance-stationary processes and their autocovariances.
+In particular, a (scalar or univariate) \textbf{white noise process} $\{\varepsilon_t\}$ is a zero-mean
+covariance-stationary process with no serial correlation:
+\[
+  \E(\varepsilon_t) = 0, \quad \E(\varepsilon_t^2) = \sigma^2 > 0, \quad
+  \E(\varepsilon_t \varepsilon_{t-j}) = 0 \quad \text{for } j \neq 0.
+\]
+A very important class of covariance-stationary processes, called \textbf{linear processes},
+can be created by taking a moving average of a white noise process. This section
+studies general properties of linear processes using an apparatus called the \textbf{filter}.
+
+Because the current value of a linear process can depend on possibly infinite
+past values of a white noise process, it is convenient to have the white noise process
+and the linear process it generates defined for $t = 0, -1, -2, \ldots$ as well
+as for $t = 1, 2, \ldots$. Intuitively, a covariance-stationary process defined for all
+integers ($t = 0, \pm 1, \pm 2, \ldots$) is a process that started so long ago that its mean and
+autocovariances have stabilized to time-invariant constants.
+
+\subsection*{MA(\textit{q})}
+
+The simplest example of linear processes that exhibit serial correlation is a finite-order
+moving average process. A process $\{y_t\}$ is called the \textbf{\textit{q}-th order moving
+average process} ($\text{MA}(q)$) if it can be written as a weighted average of the current
+and most recent $q$ values of a white noise process:
+\begin{equation}
+  y_t = \mu + \theta_0 \varepsilon_t + \theta_1 \varepsilon_{t-1} + \cdots + \theta_q \varepsilon_{t-q}
+  \quad \text{with } \theta_0 = 1.
+  \label{eq:6.1.1}
+\end{equation}
+Evidently, a moving average process is covariance-stationary with mean $\mu$. It is
+easy to verify that the $j$-th order autocovariance, $\gamma_j$ ($\equiv \E[(y_t - \mu)(y_{t-j} - \mu)]$), is
+\begin{align}
+  \gamma_j &= (\theta_j \theta_0 + \theta_{j+1} \theta_1 + \cdots + \theta_q \theta_{q-j}) \sigma^2
+         = \sigma^2 \sum_{k=0}^{q-j} \theta_{j+k} \theta_k
+         \quad \text{for } j = 0, 1, \ldots, q,
+  \label{eq:6.1.2a} \\
+  \gamma_j &= 0 \quad \text{for } j > q,
+  \label{eq:6.1.2b}
+\end{align}
+where $\sigma^2 \equiv \E(\varepsilon_t^2)$. (This formula also covers $\gamma_{-j}$ because $\gamma_j = \gamma_{-j}$.)
+For example, for $q = 1$, we have
+\begin{align*}
+  \gamma_0 &= (\theta_0^2 + \theta_1^2) \sigma^2 = (1 + \theta_1^2) \sigma^2 \\
+  &\quad \text{(by setting $j = 0$ and $q = 1$ in \eqref{eq:6.1.2a} and noting $\theta_0 = 1$),} \\
+  \gamma_1 &= \gamma_{-1} = (\theta_1 \theta_0) \sigma^2 = \theta_1 \sigma^2 \\
+  &\quad \text{(by setting $j = 1$ and $q = 1$ in \eqref{eq:6.1.2a} and noting $\theta_0 = 1$),} \\
+  \gamma_j &= 0 \quad \text{for } j = \pm 2, \pm 3, \ldots\,.
+\end{align*}
+The whole profile of autocovariances, $\{\gamma_j\}$, is described by just $q + 1$ parameters
+$(\theta_1, \theta_2, \ldots, \theta_q, \text{ and } \sigma^2)$, and the correlogram $\{\rho_j\}$
+(where $\rho_j \equiv \gamma_j / \gamma_0$) by $q$ parameters $(\theta_1, \theta_2, \ldots, \theta_q)$.
+
+\subsection*{MA($\infty$) as a Mean Square Limit}
+
+As illustrated in the above example, serial correlation in $\text{MA}(q)$ processes dies out
+completely after $q$ lags. Although some time series have this property (we will see
+an example in the application below), it is certainly desirable to be able to model
+serial correlation that does not have this property. An obvious idea is to have $y_t$
+depend on the infinite past by replacing the sum of finitely many terms in \eqref{eq:6.1.1},
+\[
+  \theta_0 \varepsilon_t + \theta_1 \varepsilon_{t-1} + \cdots + \theta_q \varepsilon_{t-q},
+\]
+by an infinite sum
+\begin{equation}
+  \psi_0 \varepsilon_t + \psi_1 \varepsilon_{t-1} + \cdots
+  = \sum_{j=0}^{\infty} \psi_j \varepsilon_{t-j}
+  \label{eq:6.1.3}
+\end{equation}
+where $\{\psi_j\}$ is a sequence of real numbers.
+
+For this idea to work, we must make sure that this sum of infinitely many
+random variables is well defined, namely, that the partial sum
+\begin{equation}
+  \sum_{j=0}^{n} \psi_j \varepsilon_{t-j}
+  \label{eq:6.1.4}
+\end{equation}
+converges (in some appropriate sense) to a random variable as $n \to \infty$. One
+popular condition under which this happens is that the sequence of real numbers
+$\{\psi_j\}$ be \textbf{absolutely summable}:
+\begin{equation}
+  \sum_{j=0}^{\infty} |\psi_j| < \infty.
+  \label{eq:6.1.5}
+\end{equation}
+(This is a standard short-hand expression in calculus. Equation~\eqref{eq:6.1.5} reads: the
+partial sum $\sum_{j=0}^{n} |\psi_j|$ converges to a real number [i.e., a finite limit] as $n \to \infty$
+and the infinite sum in \eqref{eq:6.1.5} is \emph{defined} to be this real number.) For the sequence
+$\{\psi_j\}$ to be absolutely summable, it is necessary (but certainly not sufficient) that
+$\psi_j \to 0$ as $j \to \infty$. Thus, absolute summability requires that the effect of the past
+shocks represented by $\psi_j$ eventually die away.
+
+As claimed in the next proposition, the partial sum \eqref{eq:6.1.4} converges in mean
+square to some random variable for any given $t$. The mean square limit is unique
+in the following sense. If there exists another random variable to which the partial
+sum converges in mean square, then (as you will show in Analytical Exercise~1)
+the two mean square limits are equal with probability one. We \emph{define} the infinite
+sum \eqref{eq:6.1.3} to be the unique mean square limit of the partial sum \eqref{eq:6.1.4} and say
+``the infinite sum converges in mean square.''
+
+\begin{proposition}[MA($\infty$) with absolutely summable coefficients]
+\label{prop:6.1}
+Let $\{\varepsilon_t\}$ be white noise and $\{\psi_j\}$ be a sequence of real numbers that is
+absolutely summable. Then
+\begin{enumerate}[label=(\alph*)]
+\item For each $t$,
+\begin{equation}
+  y_t = \mu + \sum_{j=0}^{\infty} \psi_j \varepsilon_{t-j}
+  \label{eq:6.1.6}
+\end{equation}
+converges in mean square. $\{y_t\}$ is covariance-stationary. (The process $\{y_t\}$ is
+called the \textbf{infinite-order moving-average process} ($\mathrm{MA}(\infty)$).)
+
+\item The mean of $y_t$ is $\mu$. The autocovariances $\{\gamma_j\}$ are given by
+\begin{equation}
+  \gamma_j = (\psi_j \psi_0 + \psi_{j+1} \psi_1 + \psi_{j+2} \psi_2 + \cdots) \sigma^2
+         = \sigma^2 \sum_{k=0}^{\infty} \psi_{j+k} \psi_k
+         \quad (j = 0, 1, 2, \ldots).
+  \label{eq:6.1.7}
+\end{equation}
+
+\item The autocovariances are absolutely summable:
+\begin{equation}
+  \sum_{j=0}^{\infty} |\gamma_j| < \infty.
+  \label{eq:6.1.8}
+\end{equation}
+
+\item If, in addition, $\{\varepsilon_t\}$ is i.i.d, then the process $\{y_t\}$ is (strictly) stationary and
+ergodic.
+\end{enumerate}
+\end{proposition}
+
+This result includes $\text{MA}(q)$ processes as a special case with $\psi_j = \theta_j$ for
+$j = 0, 1, \ldots, q$ and $\psi_j = 0$ for $j > q$. Evidently, this sequence $\{\psi_j\}$ is absolutely
+summable. Proving parts (a)--(c) is Analytical Exercise~2. Proving (a) would use
+the fact from calculus that Cauchy sequences converge (see Review Question~1
+about Cauchy sequences). Part~(b) is an obvious extrapolation to infinity of the
+corresponding results on the mean and autocovariances of finite-order MA processes,
+but the extrapolation involves interchanging the order of expectations and
+summations. For example, to prove that the mean of the $\text{MA}(\infty)$ process is $\mu$, you
+would have to show that the expected value of the mean square limit of \eqref{eq:6.1.3} is
+the limit of the expected value of \eqref{eq:6.1.4}. The fact that this operation is legitimate
+under mean square convergence would be used in the proof of part~(b). Part~(c)
+says, intuitively, that if the effect of past shocks represented by $\psi_j$ dies out fast
+enough to make $\{\psi_j\}$ absolutely summable, then serial correlation dies out just as
+fast. Absolute summability of autocovariances will play a key role in the theory of
+covariance-stationary processes to be developed in this chapter. For a proof of~(d),
+see, e.g., Hannan (1970, p.~204, Theorem~3).\footnote{Absolute summability of $\{\psi_j\}$ is more than enough for part~(a) to hold. As shown in Analytical Exercise~2, square summability, which is weaker than absolute summability, is enough to ensure that the infinite sum is well defined as a mean square limit. However, for the other parts of this proposition to hold, absolute summability is needed.}
+
+The $\text{MA}(\infty)$ process in \eqref{eq:6.1.6} is said to be \textbf{one-sided} because the moving
+average does not include future values of $\varepsilon_t$. It is a special case of a \textbf{linear process},
+which is defined to be two-sided moving averages of the form:
+\[
+  y_t = \mu + \sum_{j=-\infty}^{\infty} \psi_j \varepsilon_{t-j}
+  \quad \text{with} \quad \sum_{j=-\infty}^{\infty} |\psi_j| < \infty.
+\]
+The proposition (and all the results in this section) can easily be extended to general
+linear processes. We nevertheless focus on one-sided moving averages, only
+because two-sided moving averages are very rarely encountered in economics.
+
+Proposition~6.1 can be generalized to the case where the process $\{y_t\}$ is a moving
+average of a general covariance-stationary process rather than of a white noise
+process. In particular, absolute summability of autocovariances survives the operation
+of taking an absolutely summable weighted average.
+
+\begin{proposition}[Filtering covariance-stationary processes]
+\label{prop:6.2}
+Let $\{x_t\}$ be a covariance-stationary process and $\{h_j\}$ be a sequence of real numbers
+that is absolutely summable. Then
+\begin{enumerate}[label=(\alph*)]
+\item For each $t$, the infinite sum
+\begin{equation}
+  y_t = \sum_{j=0}^{\infty} h_j x_{t-j}
+  \label{eq:6.1.9}
+\end{equation}
+converges in mean square. The process $\{y_t\}$ is covariance-stationary.
+
+\item If, furthermore, the autocovariances of $\{x_t\}$ are absolutely summable, then so
+are the autocovariances of $\{y_t\}$.
+\end{enumerate}
+\end{proposition}
+
+We defer to, e.g., Fuller (1996, Theorem~4.3.1) for a proof, but the basic technique
+is the same as in the proof of Proposition~6.1. Deriving the autocovariances of $\{y_t\}$,
+which would generalize \eqref{eq:6.1.7}, is Analytical Exercise~3.
+
+\subsection*{Filters}
+
+The operation of taking a weighted average of (possibly infinitely many) successive
+values of a process, as in \eqref{eq:6.1.6} and \eqref{eq:6.1.9}, is called \textbf{filtering}. It can be expressed
+compactly if we use the device called the \textbf{lag operator} $L$, defined by the relation
+$L^j x_t = x_{t-j}$. We now introduce some concepts associated with the lag operator
+that will be useful in time-series analysis.\footnote{For a fuller treatment of filters, see, e.g., Gourieroux and Monfort (1997, Sections~5.2 and~7.4).}
+
+\subsection*{Filters Defined}
+
+For a given arbitrary sequence of real numbers, $(\alpha_0, \alpha_1, \alpha_2, \ldots)$, define a
+\textbf{filter} by
+\begin{equation}
+  \alpha(L) \equiv \alpha_0 + \alpha_1 L + \alpha_2 L^2 + \cdots\,.
+  \label{eq:6.1.10}
+\end{equation}
+If we just mechanically and mindlessly apply the definition of the lag operator to
+an input process $\{x_t\}$, we get
+\begin{equation}
+  \alpha(L) x_t = \alpha_0 x_t + \alpha_1 L x_t + \alpha_2 L^2 x_t + \cdots
+               = \alpha_0 x_t + \alpha_1 x_{t-1} + \alpha_2 x_{t-2} + \cdots
+               = \sum_{j=0}^{\infty} \alpha_j x_{t-j}.
+  \label{eq:6.1.11}
+\end{equation}
+This is indeed the definition of $\alpha(L) x_t$. If $x_t = c$ (a constant), $\alpha(L) c = \alpha(1) c =
+c \sum_{j=0}^{\infty} \alpha_j$. If $\alpha_j \neq 0$ for $j = p$ and $\alpha_j = 0$ for $j > p$, the filter reduces to a \textbf{\textit{p}-th
+degree lag polynomial}:
+\[
+  \alpha(L) = \alpha_0 + \alpha_1 L + \cdots + \alpha_p L^p.
+\]
+When applied to an input process, it creates a weighted average of the current
+and $p$ most recent values of the process. Proposition~6.2 assures us that the object
+$\alpha(L) x_t$ defined by \eqref{eq:6.1.11} is a well-defined random variable forming a covariance-stationary process if the sequence $\{\alpha_j\}$ is absolutely summable and if the input process
+$\{x_t\}$ is covariance-stationary. A filter with absolutely summable coefficients
+will be referred to (in this book) as an \textbf{absolutely summable filter}. To use some
+fancy set theory language, an absolutely summable filter is a mapping from the set
+of covariance-stationary processes to itself.
+
+\subsection*{Products of Filters}
+
+Let $\{\alpha_j\}$ and $\{\beta_j\}$ be two arbitrary sequences of real numbers and define the sequence
+$\{\delta_j\}$ by the relation
+\begin{equation}
+\begin{aligned}
+  \alpha_0 \beta_0 &= \delta_0, \\
+  \alpha_0 \beta_1 + \alpha_1 \beta_0 &= \delta_1, \\
+  \alpha_0 \beta_2 + \alpha_1 \beta_1 + \alpha_2 \beta_0 &= \delta_2, \\
+  &\;\;\vdots \\
+  \alpha_0 \beta_j + \alpha_1 \beta_{j-1} + \alpha_2 \beta_{j-2} + \cdots + \alpha_{j-1} \beta_1 + \alpha_j \beta_0 &= \delta_j, \\
+  &\;\;\vdots\,.
+\end{aligned}
+\label{eq:6.1.12}
+\end{equation}
+The sequence $\{\delta_j\}$ created from this convoluted formula is called the \textbf{convolution}
+of $\{\alpha_j\}$ and $\{\beta_j\}$. Let $\alpha(L) \equiv \alpha_0 + \alpha_1 L + \alpha_2 L^2 + \cdots$,
+$\beta(L) \equiv \beta_0 + \beta_1 L + \beta_2 L^2 + \cdots$,
+and $\delta(L) = \delta_0 + \delta_1 L + \delta_2 L^2 + \cdots$ be the associated filters. We define the
+\textbf{product} of two filters $\alpha(L)$ and $\delta(L)$ and write it as
+\[
+  \delta(L) = \alpha(L)\,\beta(L).
+\]
+For example, for $\alpha(L) = 1 + \alpha_1 L$ and $\beta(L) = 1 + \beta_1 L$, the convolution formula
+yields
+\[
+  (1 + \alpha_1 L)(1 + \beta_1 L) = 1 + (\alpha_1 + \beta_1) L + \alpha_1 \beta_1 L^2.
+\]
+(If you are familiar with the product of two polynomials of the usual sort from calculus,
+you can immediately see that this definition for filters is strictly analogous.)
+As is clear from the definition, filters are \textbf{commutative}:
+\[
+  \alpha(L)\,\beta(L) = \beta(L)\,\alpha(L).
+\]
+Commutativity, however, will not carry over to matrix filters (see Section~6.3
+below).
+
+If the two sequences $\{\alpha_j\}$ and $\{\beta_j\}$ are absolutely summable and if $\{x_t\}$ is
+covariance-stationary, then Proposition~6.2 assures us that $\{\beta(L) x_t\}$ is covariance-stationary and so $\alpha(L)\,\beta(L) x_t$ is a well-defined random variable, equal to $\delta(L) x_t$.
+Thus, if $\alpha(L)$ and $\beta(L)$ are absolutely summable and $\{x_t\}$ is covariance-stationary,
+then
+\begin{equation}
+  \text{``}\alpha(L)\,\beta(L) = \delta(L)\text{''} \;\Rightarrow\;
+  \text{``}\alpha(L)\,\beta(L) x_t = \delta(L) x_t.\text{''}
+  \label{eq:6.1.13}
+\end{equation}
+(Incidentally, $\{\delta_j\}$ is absolutely summable [see, e.g., Fuller, 1996, p.~30].)
+
+\subsection*{Inverses}
+
+Of particular interest is the case when $\delta(L) = 1$ (a very special filter) so that the
+two filters $\alpha(L)$ and $\beta(L)$ satisfy $\alpha(L)\,\beta(L) = 1$. We say that $\beta(L)$ is the \textbf{inverse}
+of $\alpha(L)$ and denote it as $\alpha(L)^{-1}$ or $1/\alpha(L)$. That is,
+\begin{equation}
+  \alpha(L)^{-1} \text{ is a filter satisfying } \alpha(L)\,\alpha(L)^{-1} = 1.
+  \label{eq:6.1.14}
+\end{equation}
+As long as $\alpha_0 \neq 0$ in $\alpha(L) = \alpha_0 + \alpha_1 L + \cdots$, the inverse of $\alpha(L)$ can be defined
+for any arbitrary sequence $\{\alpha_j\}$ because the set of equations \eqref{eq:6.1.12} with $\delta_0 = 1$,
+$\delta_j = 0$ ($j = 1, 2, \ldots$) can be solved successively for $\{\beta_j\}$:
+\[
+  \beta_0 = \frac{1}{\alpha_0}, \quad
+  \beta_1 = -\frac{\alpha_1 \beta_0}{\alpha_0} = -\frac{\alpha_1}{\alpha_0^2}, \quad \text{etc.}
+\]
+For example, consider the filter $1 - L$. Its inverse is given by
+\[
+  (1 - L)^{-1} = 1 + L + L^2 + L^3 + \cdots\,.
+\]
+The coefficient sequence is obviously not absolutely summable. This example
+illustrates the point that an inverse filter may not be absolutely summable.
+
+It is left as Review Question~3 to show that
+\begin{align}
+  \alpha(L)\,\alpha(L)^{-1} &= \alpha(L)^{-1}\,\alpha(L)
+  \quad \text{(so inverses are commutative),}
+  \label{eq:6.1.15a} \\[4pt]
+  \text{``}\alpha(L)\,\beta(L) = \delta(L)\text{''} &\;\Leftrightarrow\;
+  \text{``}\beta(L) = \alpha(L)^{-1}\,\delta(L)\text{''} \;\Leftrightarrow\;
+  \text{``}\alpha(L) = \delta(L)\,\beta(L)^{-1},\text{''}
+  \label{eq:6.1.15b}
+\end{align}
+provided $\alpha_0 \neq 0$ and $\beta_0 \neq 0$. Therefore, for example, to solve $\alpha(L)\,\beta(L) = \delta(L)$
+for $\beta(L)$, you ``multiply by the left'' by the inverse of $\alpha(L)$. We have noted above
+that commutativity does not necessarily hold for matrix filters. As will be shown
+in Section~6.3, for inverses, commutativity does generalize to matrix filters.
+
+\subsection*{Inverting Lag Polynomials}
+
+In the next section on ARMA processes, it will become necessary to calculate the
+inverse of a $p$-th degree lag polynomial $\phi(L)$
+\[
+  \phi(L) = 1 - \phi_1 L - \phi_2 L^2 - \cdots - \phi_p L^p.
+\]
+Since $\phi_0 = 1 \neq 0$, the inverse can be defined. Let $\psi(L) \equiv \phi(L)^{-1}$. By definition,
+it satisfies
+\[
+  \phi(L)\,\psi(L) = 1.
+\]
+The convolution formula \eqref{eq:6.1.12} provides an algorithm for solving this for $\psi(L)$.
+Setting $\alpha(L) = \phi(L)$, $\beta(L) = \psi(L)$, and $\delta(L) = 1$ in the formula yields
+\begin{equation}
+\begin{alignedat}{5}
+  \text{constant:}&\quad & \psi_0 && && &= 1, \\
+  L\text{:}&\quad & \psi_1 &\;-\; \phi_1 \psi_0 && &= 0, \\
+  L^2\text{:}&\quad & \psi_2 &\;-\; \phi_1 \psi_1 &\;-\; \phi_2 \psi_0 &= 0, \\
+  &\quad & &\;\;\vdots && \\
+  L^{p-1}\text{:}&\quad & \psi_{p-1} &\;-\; \phi_1 \psi_{p-2} - \phi_2 \psi_{p-3} - \cdots - \phi_{p-1} \psi_0 &\quad &= 0, \\
+  L^p\text{:}&\quad & \psi_p &\;-\; \phi_1 \psi_{p-1} - \phi_2 \psi_{p-2} - \cdots - \phi_{p-1} \psi_1 - \phi_p \psi_0 &\quad &= 0, \\
+  L^{p+1}\text{:}&\quad & \psi_{p+1} &\;-\; \phi_1 \psi_p \;-\; \phi_2 \psi_{p-1} - \cdots - \phi_{p-1} \psi_2 - \phi_p \psi_1 &\quad &= 0, \\
+  L^{p+2}\text{:}&\quad & \psi_{p+2} &\;-\; \phi_1 \psi_{p+1} - \phi_2 \psi_p \;- \cdots - \phi_{p-1} \psi_3 - \phi_p \psi_2 &\quad &= 0, \\
+  &\quad & &\;\;\vdots && &\;\;.
+\end{alignedat}
+\label{eq:6.1.16}
+\end{equation}
+These equations can easily be solved successively for $(\psi_0, \psi_1, \psi_2, \ldots)$ as
+\[
+  \psi_0 = 1, \quad \psi_1 = \phi_1, \quad \psi_2 = \phi_2 + \phi_1^2, \quad \text{etc.}
+\]
+Also, notice that for sufficiently large $j$ (actually for $j \geq p$), $\{\psi_j\}$ follows the $p$-th
+order homogeneous difference equation
+\begin{equation}
+  \psi_j - \phi_1 \psi_{j-1} - \phi_2 \psi_{j-2} - \cdots - \phi_{p-1} \psi_{j-p+1} - \phi_p \psi_{j-p} = 0.
+  \label{eq:6.1.17}
+\end{equation}
+So, once the first $p$ coefficients $(\psi_0, \psi_1, \ldots, \psi_{p-1})$ are calculated, we can use this
+homogeneous $p$-th order difference equation to generate the rest of the coefficients
+$(\psi_j, j \geq p)$ with those first $p$ coefficients as the initial condition.
+
+As we know from the theory of homogeneous difference equations (summarized
+in Analytical Exercise~4), the solution sequence $\{\psi_j\}$ to \eqref{eq:6.1.17} eventually
+starts declining at a geometric rate if what is known as the \textbf{stability condition}
+holds. The condition states:
+
+All the roots of the $p$-th degree polynomial equation in $z$
+\begin{equation}
+  \phi(z) = 0 \quad \text{where } \phi(z) \equiv 1 - \phi_1 z - \phi_2 z^2 - \cdots - \phi_p z^p
+  \label{eq:6.1.18}
+\end{equation}
+are greater than 1 in absolute value.
+
+The roots of the polynomial equation $\phi(z) = 0$ can be complex numbers. If your
+command of complex numbers is rusty, a complex number can be written as
+\[
+  z = a + bi,
+\]
+where $a$ and $b$ are two real numbers and $i = \sqrt{-1}$. So a complex number can
+be represented as a point in a two-dimensional diagram with the horizontal axis
+measuring $a$ (the real part) and the vertical axis measuring $b$ (the imaginary part).
+Its absolute value is $|z| = \sqrt{a^2 + b^2}$, which is the distance between the origin and
+the point representing $z$. We say that $z$ lies outside the unit circle when $|z| > 1$.
+So the stability condition above can be restated as requiring that the roots lie
+outside the unit circle. Because $z = \lambda$ solves $\phi(z) = 0$ whenever $z = 1/\lambda$ solves
+$z^p - \phi_1 z^{p-1} - \phi_2 z^{p-2} - \cdots - \phi_{p-1} z - \phi_p = 0$, the stability condition can be
+equivalently stated as
+
+All the roots of the $p$-th order polynomial equation
+\begin{equation}
+  z^p - \phi_1 z^{p-1} - \phi_2 z^{p-2} - \cdots - \phi_{p-1} z - \phi_p = 0
+  \label{eq:6.1.18prime}
+  \tag{6.1.18$'$}
+\end{equation}
+are less than 1 in absolute value (i.e., lie inside the unit circle).
+
+Under this condition, as you will be asked to prove (Analytical Exercise~4),
+there exist two real numbers, $A > 0$ and $0 < b < 1$, such that
+\begin{equation}
+  |\psi_j| < A b^j \quad \text{for all } j.
+  \label{eq:6.1.19}
+\end{equation}
+Given \eqref{eq:6.1.19}, the absolute summability of $\{\psi_j\}$ follows because
+\[
+  \sum_{j=0}^{\infty} |\psi_j| < \sum_{j=0}^{\infty} A b^j = \frac{A}{1 - b} < \infty.
+\]
+Thus, we have proved
+
+\begin{proposition}[Absolutely summable inverses of lag polynomials]
+\label{prop:6.3}
+Consider a $p$-th degree lag polynomial $\phi(L) = 1 - \phi_1 L - \phi_2 L^2 - \cdots - \phi_p L^p$,
+and let $\psi(L) \equiv \phi(L)^{-1}$. If the associated $p$-th degree polynomial equation
+$\phi(z) = 0$ satisfies the stability condition \eqref{eq:6.1.18} or \eqref{eq:6.1.18prime}, then the coefficient
+sequence $\{\psi_j\}$ of $\psi(L)$ is bounded in absolute value by a geometrically declining
+sequence (as in \eqref{eq:6.1.19}) and hence is absolutely summable.
+\end{proposition}
+
+To illustrate, consider a lag polynomial of degree one, $1 - \phi L$. The root of the
+associated polynomial equation $1 - \phi z = 0$ is $1/\phi$. The stability condition is that
+$|1/\phi| > 1$ or $|\phi| < 1$. The filter
+\begin{equation}
+  1 + \phi L + \phi^2 L^2 + \cdots
+  \label{eq:6.1.20}
+\end{equation}
+is evidently its inverse. The coefficient sequence $\{\phi^j\}$ is indeed bounded in absolute
+value by a geometrically declining sequence (for example, set $A = 1.1$ and $b = \phi$).

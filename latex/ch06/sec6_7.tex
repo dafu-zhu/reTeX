@@ -1,0 +1,246 @@
+% sec6_7.tex — Section 6.7: Estimation under Conditional Homoskedasticity (Optional)
+
+We saw in Section~3.8 that the GMM estimator reduced to the 2SLS estimator
+under conditional homoskedasticity. This section shows how the 2SLS can be
+generalized to incorporate serial correlation. It will then become clear that the
+GLS estimator is not a GMM estimator with serial correlation. The latter half of
+this section examines the relationship between the GLS and GMM.
+
+\subsection*{Kernel-Based Estimation of S under Conditional Homoskedasticity}
+
+The relationship between serial correlation in $\mathbf{g}_t \equiv \mathbf{x}_t \cdot \varepsilon_t$ and serial correlation in
+the error term $\varepsilon_t$ becomes clearer under conditional homoskedasticity. Let
+\begin{equation}
+  \omega_j \equiv \E(\varepsilon_t \varepsilon_{t-j}) \quad \text{for all } j.
+  \label{eq:6.7.1}
+\end{equation}
+Since $\{\varepsilon_t\}$ is stationary by Assumptions~3.1 and~3.2, $\omega_j$ does not depend on $t$.
+If $\E(\varepsilon_t) = 0$ (which is the case if $\mathbf{x}_t$ includes the constant), then $\omega_j$ equals the
+$j$-th order autocovariance of $\{\varepsilon_t\}$. Suppose the error term is conditionally
+homoskedastic:
+
+\medskip
+\noindent\textbf{conditional homoskedasticity:}
+\begin{equation}
+  \E(\varepsilon_t \varepsilon_{t-j} \mid \mathbf{x}_t, \mathbf{x}_{t-j}) = \omega_j
+  \quad (j = 0, \pm 1, \pm 2, \ldots).
+  \label{eq:6.7.2}
+\end{equation}
+
+Under this additional condition, the usual argument utilizing the Law of Total
+Expectations can be applied to $\bm{\Gamma}_j$:
+\begin{align}
+  \bm{\Gamma}_j &= \E(\mathbf{g}_t \mathbf{g}_{t-j}') \quad (\text{since } \E(\mathbf{g}_t) = \mathbf{0}) \notag \\
+  &= \E(\varepsilon_t \varepsilon_{t-j} \mathbf{x}_t \mathbf{x}_{t-j}') \notag \\
+  &= \E[\E(\varepsilon_t \varepsilon_{t-j} \mid \mathbf{x}_t, \mathbf{x}_{t-j}) \mathbf{x}_t \mathbf{x}_{t-j}']
+  \quad \text{(by the Law of Total Expectations)} \notag \\
+  &= \omega_j\,\E(\mathbf{x}_t \mathbf{x}_{t-j}').
+  \label{eq:6.7.3}
+\end{align}
+Thus, unless $\E(\mathbf{x}_t \mathbf{x}_{t-j}')$ is zero, $\{\mathbf{g}_t\}$ is serially correlated if and only if $\{\varepsilon_t\}$ is.
+
+To estimate $\bm{\Gamma}_j$, we exploit the fact that $\bm{\Gamma}_j$ is a product of two second moments,
+$\E(\mathbf{x}_t \mathbf{x}_{t-j}')$ and $\E(\varepsilon_t \varepsilon_{t-j})$. A natural estimator of $\E(\mathbf{x}_t \mathbf{x}_{t-j}')$ is $\frac{1}{n} \sum_{t=j+1}^{n} \mathbf{x}_t \mathbf{x}_{t-j}'$. It
+is easy to show that $\omega_j$ is consistently estimated by $\frac{1}{n} \sum_{t=j+1}^{n} \hat{\varepsilon}_t \hat{\varepsilon}_{t-j}$ where $\hat{\varepsilon}_t$ is
+the residual from some consistent estimator (the proof is almost the same as in the
+case with no serial correlation, see Proposition~3.2). Thus, a natural estimate of $\bm{\Gamma}_j$
+under conditional homoskedasticity is
+\begin{equation}
+  \hat{\bm{\Gamma}}_j = \left(\frac{1}{n} \sum_{t=j+1}^{n} \hat{\varepsilon}_t \hat{\varepsilon}_{t-j}\right)
+  \left(\frac{1}{n} \sum_{t=j+1}^{n} \mathbf{x}_t \mathbf{x}_{t-j}'\right).
+  \label{eq:6.7.4}
+\end{equation}
+
+Given these estimated autocovariances, the kernel-based estimation of $\hat{\mathbf{S}}$ is exactly
+the same as in the case without conditional homoskedasticity described in the previous
+section.
+
+\subsection*{Data Matrix Representation of Estimated Long-Run Variance}
+
+For the purpose of relating the GMM estimator with serial correlation but with
+conditional homoskedasticity to conventional estimators, the data matrix representation
+of $\hat{\mathbf{S}}$ is useful. By defining an $n \times n$ matrix $\hat{\bm{\Omega}}$ suitably, we can write $\hat{\mathbf{S}}$ as
+\begin{equation}
+  \hat{\mathbf{S}} = \frac{1}{n}\,\mathbf{X}' \hat{\bm{\Omega}} \mathbf{X},
+  \label{eq:6.7.5}
+\end{equation}
+where $\mathbf{X}$ is the $n \times K$ data matrix whose $t$-th row is $\mathbf{x}_t'$. The matrix $\hat{\bm{\Omega}}$ looks much
+like the autocovariance matrix of $\{\varepsilon_t\}$:
+\begin{equation}
+  \underset{(n \times n)}{\hat{\bm{\Omega}}} =
+  \begin{bmatrix}
+    \hat{\omega}_0 & \hat{\omega}_1 & \hat{\omega}_2 & \cdots & \hat{\omega}_{n-1} \\
+    \hat{\omega}_1 & \hat{\omega}_0 & \hat{\omega}_1 & \cdots & \hat{\omega}_{n-2} \\
+    \vdots & \ddots & \ddots & \ddots & \vdots \\
+    \hat{\omega}_{n-2} & \cdots & \hat{\omega}_1 & \hat{\omega}_0 & \hat{\omega}_1 \\
+    \hat{\omega}_{n-1} & \cdots & \hat{\omega}_2 & \hat{\omega}_1 & \hat{\omega}_0
+  \end{bmatrix}.
+  \label{eq:6.7.6}
+\end{equation}
+If we know \emph{a priori} that $\Cov(\varepsilon_t, \varepsilon_{t-j}) = 0$ (so that $\bm{\Gamma}_j = \mathbf{0}$) for $j > q$, specify the
+elements of this $\hat{\bm{\Omega}}$ as
+\begin{equation}
+  \hat{\omega}_j = \begin{cases}
+    \dfrac{1}{n} \displaystyle\sum_{t=j+1}^{n} \hat{\varepsilon}_t \hat{\varepsilon}_{t-j} & \text{if } 0 \leq j \leq q, \\[8pt]
+    0 & \text{if } j > q.
+  \end{cases}
+  \label{eq:6.7.7}
+\end{equation}
+Then the $\hat{\mathbf{S}}$ in \eqref{eq:6.6.4} can be written as \eqref{eq:6.7.5}. If we do not know that there is such
+a $q$, then use the kernel-based estimator of $\mathbf{S}$. For the Bartlett kernel, let
+\begin{equation}
+  \hat{\omega}_j = \begin{cases}
+    \displaystyle\left[1 - \frac{j}{q(n)}\right] \frac{1}{n} \sum_{t=j+1}^{n} \hat{\varepsilon}_t \hat{\varepsilon}_{t-j}
+    & \text{if } 0 \leq j \leq q(n) - 1, \\[8pt]
+    0 & \text{if } j > q(n) - 1.
+  \end{cases}
+  \label{eq:6.7.8}
+\end{equation}
+Then the consistent estimator \eqref{eq:6.6.3} with \eqref{eq:6.6.4} equals \eqref{eq:6.7.5}.
+
+It is now easy to show the following extension of the 2SLS estimator to encompass
+serial correlation:
+\begin{itemize}
+\item The efficient GMM estimator under conditional homoskedasticity can be written
+as
+\begin{equation}
+  \hat{\bm{\delta}}(\hat{\mathbf{S}}^{-1})
+  = [\mathbf{Z}'\mathbf{X}(\mathbf{X}'\hat{\bm{\Omega}}\mathbf{X})^{-1}\mathbf{X}'\mathbf{Z}]^{-1}
+  \mathbf{Z}'\mathbf{X}(\mathbf{X}'\hat{\bm{\Omega}}\mathbf{X})^{-1}\mathbf{X}'\mathbf{y},
+  \label{eq:6.7.9}
+\end{equation}
+where $\mathbf{Z}$ and $\mathbf{y}$ are the data matrices of the regressors and the dependent variable.
+This generalizes $(3.8.3')$ on page~230.
+
+\item The consistent estimator of $\avar(\hat{\bm{\delta}}(\hat{\mathbf{S}}^{-1}))$ reduces to
+\begin{align}
+  \widehat{\avar(\hat{\bm{\delta}}(\hat{\mathbf{S}}^{-1}))}
+  &= \left[\frac{1}{n}\,\mathbf{Z}'\mathbf{X}
+  \Bigl(\frac{1}{n}\,\mathbf{X}'\hat{\bm{\Omega}}\mathbf{X}\Bigr)^{-1}
+  \frac{1}{n}\,\mathbf{X}'\mathbf{Z}\right]^{-1} \notag \\
+  &= n \cdot [\mathbf{Z}'\mathbf{X}(\mathbf{X}'\hat{\bm{\Omega}}\mathbf{X})^{-1}\mathbf{X}'\mathbf{Z}]^{-1}.
+  \label{eq:6.7.10}
+\end{align}
+So the square roots of the diagonal elements of $[\mathbf{Z}'\mathbf{X}(\mathbf{X}'\hat{\bm{\Omega}}\mathbf{X})^{-1}\mathbf{X}'\mathbf{Z}]^{-1}$ are the standard
+errors. This generalizes $(3.8.5')$ on page~230.
+\end{itemize}
+
+\subsection*{Relation to GLS}
+
+The procedure for incorporating serial correlation into the GMM estimation we
+have described is different from the GLS procedure. To see the difference most
+clearly, consider the case where $\mathbf{x}_t = \mathbf{z}_t$. If there are $L$ regressors, $\mathbf{X}'\mathbf{Z}$ and $\mathbf{X}'\hat{\bm{\Omega}}\mathbf{X}$
+in \eqref{eq:6.7.9} are all $L \times L$ matrices, so the efficient GMM estimator that exploits the
+orthogonality conditions $\E(\mathbf{z}_t \cdot \varepsilon_t) = \mathbf{0}$ is the OLS estimator $\hat{\bm{\delta}}_{\text{OLS}} = (\mathbf{Z}'\mathbf{Z})^{-1}\mathbf{Z}'\mathbf{y}$.
+The consistent estimate of its asymptotic variance is obtained by setting $\mathbf{X} = \mathbf{Z}$ in
+\eqref{eq:6.7.10}:
+\begin{equation}
+  \widehat{\avar(\hat{\bm{\delta}}_{\text{OLS}})}
+  = n \cdot (\mathbf{Z}'\mathbf{Z})^{-1}(\mathbf{Z}'\hat{\bm{\Omega}}\mathbf{Z})(\mathbf{Z}'\mathbf{Z})^{-1}.
+  \label{eq:6.7.11}
+\end{equation}
+
+This may seem strange because we know from Section~1.6 that the GLS estimator
+is more efficient than OLS when the error is serially correlated. This is a finite
+sample result, but, given that we have a consistent estimator $\hat{\bm{\Omega}}$ of $\bm{\Omega}$, we could take
+the GLS formula and estimate $\bm{\delta}$ as
+\[
+  \hat{\bm{\delta}}_{\text{GLS}} = (\mathbf{Z}'\hat{\bm{\Omega}}^{-1}\mathbf{Z})^{-1}\mathbf{Z}'\hat{\bm{\Omega}}^{-1}\mathbf{y}.
+\]
+Is not this estimator asymptotically more efficient than OLS in that its asymptotic
+variance is smaller? The problem with GLS is that consistency is \emph{not} guaranteed,
+if the regressors are merely predetermined, as shown below. As we emphasized
+in Chapter~2, the regressors are not strictly exogenous in most time series models.
+It follows that \emph{GLS should not be used to correct for serial correlation in the
+error term for models lacking strict exogeneity}. In particular, for the $\mathbf{x}_t = \mathbf{z}_t$ case,
+the correct procedure to adjust for serial correlation is to leave the point estimate
+unchanged while incorporating serial correlation in the estimate of the asymptotic
+variance.
+
+That the GLS estimator is generally inconsistent can be seen as follows. To
+focus on the problem at hand, assume that the true autocovariance matrix is proportional
+to some known $n \times n$ matrix $\mathbf{V}$:
+\[
+  \Var(\varepsilon_1, \varepsilon_2, \ldots, \varepsilon_n) = \sigma^2 \cdot \mathbf{V}.
+\]
+As shown in Section~1.6, the GLS estimator of the coefficient $\bm{\delta}$ in the regression
+model $\mathbf{y} = \mathbf{Z}\bm{\delta} + \bm{\varepsilon}$ can be calculated as the OLS estimator on the transformed model
+$\mathbf{C}\mathbf{y} = \mathbf{C}\mathbf{Z}\bm{\delta} + \mathbf{C}\bm{\varepsilon}$, where $\mathbf{C}$ is the ``square root'' of $\mathbf{V}^{-1}$ such that $\mathbf{C}'\mathbf{C} = \mathbf{V}^{-1}$. But
+look at the $t$-th observation of the transformed model, which can be written as
+\begin{equation}
+  \tilde{y}_t = \tilde{\mathbf{z}}_t' \bm{\delta} + \tilde{\varepsilon}_t,
+  \label{eq:6.7.12}
+\end{equation}
+where
+\begin{align*}
+  \tilde{y}_t &= c_{t1} y_1 + \cdots + c_{tn} y_n, \\
+  \tilde{\mathbf{z}}_t &= c_{t1} \mathbf{z}_1 + \cdots + c_{tn} \mathbf{z}_n, \\
+  \tilde{\varepsilon}_t &= c_{t1} \varepsilon_1 + \cdots + c_{tn} \varepsilon_n,
+\end{align*}
+$(c_{t1}, \ldots, c_{tn})$ is the $t$-th row of $\mathbf{C}$.
+For the GLS estimator to be consistent, it is necessary that $\E(\tilde{\mathbf{z}}_t \cdot \tilde{\varepsilon}_t) = \mathbf{0}$. The
+left-hand side of this condition can be written as
+\[
+  \E(\tilde{\mathbf{z}}_t \cdot \tilde{\varepsilon}_t) = \text{(a)} + \text{(b)},
+  \quad \text{(a)} = \sum_{s=1}^{n} c_{ts}^2\,\E(\mathbf{z}_s \cdot \varepsilon_s),
+  \quad \text{(b)} = \sum_{s \neq v} c_{ts} \cdot c_{tv}\,\E(\mathbf{z}_s \cdot \varepsilon_v).
+\]
+By the orthogonality condition $\E(\mathbf{z}_t \cdot \varepsilon_t) = \mathbf{0}$, (a) is zero. For~(b), because
+regressors are merely predetermined and not assumed to be strictly exogenous,
+$\E(\mathbf{z}_s \cdot \varepsilon_v)$ is not guaranteed to be zero for $s \neq v$. So~(b) is not zero, unless the $c$'s
+take particular values to offset the nonzero terms.
+
+There is one important special case where GLS is consistent, and that is when
+the error is a finite-order autoregressive process. To take the simplest case, suppose
+that $\{\varepsilon_t\}$ is AR(1): $\varepsilon_t = \phi \varepsilon_{t-1} + \eta_t$. Its autocovariance matrix is
+\[
+  \Var(\varepsilon_1, \varepsilon_2, \ldots, \varepsilon_n) = \sigma^2 \cdot \mathbf{V}, \quad
+  \mathbf{V} = \frac{1}{1 - \phi^2}
+  \begin{bmatrix}
+    1 & \phi & \phi^2 & \cdots & \phi^{n-1} \\
+    \phi & 1 & \phi & \cdots & \phi^{n-2} \\
+    & & \ddots & & \\
+    \phi^{n-2} & \cdots & \phi & 1 & \phi \\
+    \phi^{n-1} & \cdots & \phi^2 & \phi & 1
+  \end{bmatrix}.
+\]
+It is easy to verify that the square root, $\mathbf{C}$, of $\mathbf{V}^{-1}$ (satisfying $\mathbf{C}'\mathbf{C} = \mathbf{V}$) is given by
+\begin{equation}
+  \mathbf{C} =
+  \begin{bmatrix}
+    \sqrt{1 - \phi^2} & 0 & 0 & \cdots & 0 & 0 \\
+    -\phi & 1 & 0 & \cdots & 0 & 0 \\
+    0 & -\phi & 1 & \cdots & 0 & 0 \\
+    \vdots & \vdots & \vdots & & \vdots & \vdots \\
+    0 & 0 & 0 & \cdots & -\phi & 1
+  \end{bmatrix}.
+  \label{eq:6.7.13}
+\end{equation}
+So the $t$-th transformed equation is
+\begin{equation}
+  y_t - \phi y_{t-1} = (\mathbf{z}_t - \phi \mathbf{z}_{t-1})' \bm{\delta} + \eta_t.
+  \label{eq:6.7.14}
+\end{equation}
+The GLS estimate of $\bm{\delta}$, which is the OLS estimate in the regression of $y_t - \phi y_{t-1}$
+on $\mathbf{z}_t - \phi \mathbf{z}_{t-1}$, is consistent if $\eta_t$ is orthogonal to \emph{both} $\mathbf{z}_t$ and $\mathbf{z}_{t-1}$. However, those
+orthogonality conditions are different from the orthogonality conditions for the
+untransformed model, which are that $\E(\mathbf{z}_t \cdot \varepsilon_t) = \mathbf{0}$.
+
+\subsection*{Questions for Review}
+
+\begin{enumerate}
+\item Verify \eqref{eq:6.7.5} for $n = 3$, $q = 1$.
+
+\item (Sargan's statistic) \; Derive the generalization of Sargan's statistic $(3.8.10')$ on
+page~230 to the case of serially correlated errors.
+
+\item Suppose that $\mathbf{z}_t$ is a strict subset of $\mathbf{x}_t$. We have seen in Section~3.8 that the
+2SLS estimator reduces to the OLS estimator. Is this true here as well? That
+is, does \eqref{eq:6.7.9} reduce to $(\mathbf{Z}'\mathbf{Z})^{-1}\mathbf{Z}'\mathbf{y}$? [Answer: No.]
+
+\item (Data matrix representation of $\hat{\mathbf{S}}$ without conditional homoskedasticity) \; Define
+$\hat{\bm{\Omega}}$ suitably so that \eqref{eq:6.7.5} equals the Bartlett kernel-based estimator of $\hat{\mathbf{S}}$
+without conditional homoskedasticity, namely, \eqref{eq:6.6.5} with \eqref{eq:6.6.7}. \textbf{Hint:} Write
+$\hat{\bm{\Omega}}$ as \eqref{eq:6.7.6}. If the lag length $q$ is known, $\hat{\omega}_j = \hat{\varepsilon}_j \hat{\varepsilon}_{t-j}$ for $0 \leq j \leq q$ and 0 for
+$j > q$. How would you define $\hat{\omega}_j$ for the Bartlett kernel-based estimator?
+\end{enumerate}

@@ -1,0 +1,520 @@
+% sec7_3.tex — Section 7.3: Asymptotic Normality
+
+The basic tool in deriving the asymptotic distribution of an extremum estimator is the Mean Value Theorem from calculus. How it is used depends on whether the estimator is an M-estimator or a GMM estimator. Therefore, the proof of asymptotic normality will be done separately for M-estimators (including ML as a special case) and GMM estimators. This is followed by a brief remark on the relative efficiency of GMM and ML. By way of summing up, we will point out at the end of the section that the Taylor expansion for the sampling error has a structure shared by both M-estimators and GMM.
+
+\subsection*{Asymptotic Normality of M-Estimators}
+
+Reproducing (\ref{eq:7.1.2}), the objective function for M-estimators is
+\begin{equation}
+\label{eq:7.3.1}
+Q_n(\bm{\theta}) = \frac{1}{n} \sum_{t=1}^{n} m(\mathbf{w}_t; \bm{\theta}).
+\end{equation}
+
+It will be convenient to give symbols to the gradient (vector of first derivatives) and the Hessian (matrix of second derivatives) of the $m$ function as
+\begin{equation}
+\label{eq:7.3.2}
+\underset{(p \times 1)}{\mathbf{s}(\mathbf{w}_t; \bm{\theta})} = \frac{\partial m(\mathbf{w}_t; \bm{\theta})}{\partial \bm{\theta}},
+\end{equation}
+\begin{equation}
+\label{eq:7.3.3}
+\underset{(p \times p)}{\mathbf{H}(\mathbf{w}_t; \bm{\theta})} = \frac{\partial \mathbf{s}(\mathbf{w}_t; \bm{\theta})}{\partial \bm{\theta}'} = \frac{\partial^2 m(\mathbf{w}_t; \bm{\theta})}{\partial \bm{\theta} \, \partial \bm{\theta}'}.
+\end{equation}
+
+In analogy to ML, $\mathbf{s}(\mathbf{w}_t; \bm{\theta})$ will be referred to as the \textbf{score vector for observation} $t$. This $\mathbf{s}(\mathbf{w}_t; \bm{\theta})$ should not be confused with the score in the usual sense, which is the gradient of the objective function $Q_n(\bm{\theta})$. The score in the latter sense will be denoted $\mathbf{s}_n(\bm{\theta})$ later in this chapter. The same applies to the Hessian: $\mathbf{H}(\mathbf{w}_t; \bm{\theta})$ will be referred to as the \textbf{Hessian for observation} $t$, and the Hessian of $Q_n(\bm{\theta})$ will be denoted $\mathbf{H}_n(\bm{\theta})$.
+
+The goal of this subsection is the asymptotic normality of $\hat{\bm{\theta}}$ described in (\ref{eq:7.3.10}) below. In the process of deriving it, we will make a number of assumptions, which will be collected in Proposition~\ref{prop:7.8} below. Assume that $m(\mathbf{w}_t; \bm{\theta})$ is differentiable in $\bm{\theta}$ and that $\hat{\bm{\theta}}$ is in the interior of $\Theta$. So $\hat{\bm{\theta}}$, being the interior solution to the problem of maximizing $Q_n(\bm{\theta})$, satisfies the first-order conditions
+\begin{equation}
+\label{eq:7.3.4}
+\underset{(p \times 1)}{\mathbf{0}} = \frac{\partial Q_n(\hat{\bm{\theta}})}{\partial \bm{\theta}} = \frac{1}{n} \sum_{t=1}^{n} \mathbf{s}(\mathbf{w}_t; \hat{\bm{\theta}}) \quad (\text{by } (\ref{eq:7.3.1}) \text{ and } (\ref{eq:7.3.2})).
+\end{equation}
+
+We now use the following result from calculus:
+
+\medskip
+\noindent\textbf{Mean Value Theorem:} \emph{Let $\mathbf{h} : \mathbb{R}^p \to \mathbb{R}^q$ be continuously differentiable. Then $\mathbf{h}(\mathbf{x})$ admits the \textbf{mean value expansion}}
+\[
+\underset{(q \times 1)}{\mathbf{h}(\mathbf{x})} = \underset{(q \times 1)}{\mathbf{h}(\mathbf{x}_0)} + \underset{(q \times p)}{\frac{\partial \mathbf{h}(\bar{\mathbf{x}})}{\partial \mathbf{x}'}} \underset{(p \times 1)}{(\mathbf{x} - \mathbf{x}_0)},
+\]
+\emph{where $\bar{\mathbf{x}}$ is a mean value lying between $\mathbf{x}$ and $\mathbf{x}_0$.}%
+\footnote{The Mean Value Theorem only applies to individual elements of $\mathbf{h}$, so that $\bar{\mathbf{x}}$ actually differs from element to element of the vector equation. This complication does not affect the discussion in the text.}
+
+\medskip
+Setting $q = p$, $\mathbf{x} = \hat{\bm{\theta}}$, $\mathbf{x}_0 = \bm{\theta}_0$, and $\mathbf{h}(\cdot) = \frac{\partial Q_n(\cdot)}{\partial \bm{\theta}}$ in the Mean Value Theorem, we obtain the following mean value expansion:
+\begin{equation}
+\label{eq:7.3.5}
+\begin{split}
+\underset{(p \times 1)}{\frac{\partial Q_n(\hat{\bm{\theta}})}{\partial \bm{\theta}}} &= \underset{(p \times 1)}{\frac{\partial Q_n(\bm{\theta}_0)}{\partial \bm{\theta}}} + \underset{(p \times p)}{\frac{\partial^2 Q_n(\bar{\bm{\theta}})}{\partial \bm{\theta} \, \partial \bm{\theta}'}} \underset{(p \times 1)}{(\hat{\bm{\theta}} - \bm{\theta}_0)} \\
+&= \frac{1}{n} \sum_{t=1}^{n} \underset{(p \times 1)}{\mathbf{s}(\mathbf{w}_t; \bm{\theta}_0)} + \left[ \frac{1}{n} \sum_{t=1}^{n} \underset{(p \times p)}{\mathbf{H}(\mathbf{w}_t; \bar{\bm{\theta}})} \right] \underset{(p \times 1)}{(\hat{\bm{\theta}} - \bm{\theta}_0)} \quad (\text{by } (\ref{eq:7.3.1})\text{--}(\ref{eq:7.3.3})),
+\end{split}
+\end{equation}
+where $\bar{\bm{\theta}}$ is a mean value that lies between $\hat{\bm{\theta}}$ and $\bm{\theta}_0$. The continuous differentiability requirement of the Mean Value Theorem is satisfied if $m(\mathbf{w}_t; \bm{\theta})$ is \emph{twice} continuously differentiable with respect to $\bm{\theta}$. Combining this equation with the first-order condition above, we obtain
+\begin{equation}
+\label{eq:7.3.6}
+\underset{(p \times 1)}{\mathbf{0}} = \frac{1}{n} \sum_{t=1}^{n} \mathbf{s}(\mathbf{w}_t; \bm{\theta}_0) + \left[ \frac{1}{n} \sum_{t=1}^{n} \mathbf{H}(\mathbf{w}_t; \bar{\bm{\theta}}) \right] (\hat{\bm{\theta}} - \bm{\theta}_0).
+\end{equation}
+
+Assuming that $\frac{1}{n}\sum_{t=1}^{n}\mathbf{H}(\mathbf{w}_t; \bar{\bm{\theta}})$ is nonsingular, this equation can be solved for $\hat{\bm{\theta}} - \bm{\theta}_0$ to yield
+\begin{equation}
+\label{eq:7.3.7}
+\sqrt{n}(\hat{\bm{\theta}} - \bm{\theta}_0) = -\left[ \frac{1}{n} \sum_{t=1}^{n} \mathbf{H}(\mathbf{w}_t; \bar{\bm{\theta}}) \right]^{-1} \frac{1}{\sqrt{n}} \sum_{t=1}^{n} \mathbf{s}(\mathbf{w}_t; \bm{\theta}_0).
+\end{equation}
+
+This expression for ($\sqrt{n}$ times) the sampling error will be referred to as the \textbf{mean value expansion for the sampling error}. Note that the score vector $\mathbf{s}(\mathbf{w}_t; \bm{\theta})$ is evaluated at the true parameter value $\bm{\theta}_0$.
+
+Now, since $\bar{\bm{\theta}}$ lies between $\bm{\theta}_0$ and $\hat{\bm{\theta}}$, $\bar{\bm{\theta}}$ is consistent for $\bm{\theta}_0$ if $\hat{\bm{\theta}}$ is. If $\{\mathbf{w}_t\}$ is ergodic stationary, it is natural to conjecture that
+\begin{equation}
+\label{eq:7.3.8}
+\frac{1}{n} \sum_{t=1}^{n} \mathbf{H}(\mathbf{w}_t; \bar{\bm{\theta}}) \pto \E\bigl[\mathbf{H}(\mathbf{w}_t; \bm{\theta}_0)\bigr].
+\end{equation}
+
+The ergodic stationarity of $\mathbf{w}_t$ and consistency of $\bar{\bm{\theta}}$ alone, however, are not enough to ensure this; some technical condition needs to be assumed. One such technical condition is the uniform convergence of $\frac{1}{n}\sum_{t=1}^{n}\mathbf{H}(\mathbf{w}_t; \,\cdot\,)$ to $\E[\mathbf{H}(\mathbf{w}_t; \,\cdot\,)]$ in a neighborhood of $\bm{\theta}_0$.%
+\footnote{This is a consequence of the following result (see, e.g., Theorem~4.1.5 of Amemiya, 1985):
+
+Suppose a sequence of random functions $h_n(\bm{\theta})$ converges to a nonstochastic function $h_0(\bm{\theta})$ uniformly in $\bm{\theta}$ over an open neighborhood of $\bm{\theta}_0$. Then $\plim_{n\to\infty} h_n(\tilde{\bm{\theta}}) = h_0(\bm{\theta}_0)$ if $\plim \tilde{\bm{\theta}} = \bm{\theta}_0$ and $h_0(\bm{\theta})$ is continuous at $\bm{\theta}_0$.
+
+Set $h_n(\bm{\theta})$ to $\frac{1}{n}\sum_{t=1}^{n}\mathbf{H}(\mathbf{w}_t; \,\cdot\,)$ and $h_0(\bm{\theta})$ to $\E[\mathbf{H}(\mathbf{w}_t; \bm{\theta})]$. Continuity of $\E[\mathbf{H}(\mathbf{w}_t; \bm{\theta})]$ will be assured by the Uniform Convergence Theorem. The uniform convergence needs to be only over a neighborhood of $\bm{\theta}_0$, not over the entire parameter space, because $\bar{\bm{\theta}}$ is close to $\bm{\theta}_0$ for $n$ sufficiently large.}%
+\footnote{A matrix can be viewed as a vector whose elements have been rearranged. So the Euclidean norm of a matrix, such as $\|\mathbf{H}(\mathbf{w}_t; \bm{\theta})\|$, is the square root of the sum of squares of all its elements.}
+But by the Uniform Convergence Theorem, the uniform convergence of $\frac{1}{n}\sum_{t=1}^{n}\mathbf{H}(\mathbf{w}_t; \,\cdot\,)$ is satisfied if the following dominance condition is satisfied for the Hessian: for some neighborhood $\mathcal{N}$ of $\bm{\theta}_0$, $\E[\sup_{\bm{\theta} \in \mathcal{N}} \|\mathbf{H}(\mathbf{w}_t; \bm{\theta})\|] < \infty$ (this is condition (4) below). This is a sufficient condition for (\ref{eq:7.3.8}); if you can directly verify (\ref{eq:7.3.8}), then there is no need to verify the dominance condition for asymptotic normality.
+
+Finally, if (\ref{eq:7.3.8}) holds and if
+\begin{equation}
+\label{eq:7.3.9}
+\frac{1}{\sqrt{n}} \sum_{t=1}^{n} \mathbf{s}(\mathbf{w}_t; \bm{\theta}_0) \dto N(\mathbf{0}, \bm{\Sigma}),
+\end{equation}
+then by the Slutzky theorem (see Lemma~2.4(c)) we have
+\begin{equation}
+\label{eq:7.3.10}
+\sqrt{n}(\hat{\bm{\theta}} - \bm{\theta}_0) \dto N\!\left(\mathbf{0}, \bigl(\E[\mathbf{H}(\mathbf{w}_t; \bm{\theta}_0)]\bigr)^{-1} \bm{\Sigma} \bigl(\E[\mathbf{H}(\mathbf{w}_t; \bm{\theta}_0)]\bigr)^{-1}\right).
+\end{equation}
+
+Collecting the assumptions we have made so far, we have
+
+\begin{proposition}[Asymptotic normality of M-estimators]
+\label{prop:7.8}
+Suppose that the conditions of either Proposition~\ref{prop:7.3} or Proposition~\ref{prop:7.4} are satisfied, so that $\{\mathbf{w}_t\}$ is ergodic stationary and the M-estimator $\hat{\bm{\theta}}$ defined by \emph{(\ref{eq:7.1.1})} and \emph{(\ref{eq:7.1.2})} is consistent. Suppose, further, that
+\begin{enumerate}
+\item[(1)] $\bm{\theta}_0$ is in the interior of $\Theta$,
+\item[(2)] $m(\mathbf{w}_t; \bm{\theta})$ is twice continuously differentiable in $\bm{\theta}$ for any $\mathbf{w}_t$,
+\item[(3)] $\frac{1}{\sqrt{n}} \sum_{t=1}^{n} \mathbf{s}(\mathbf{w}_t; \bm{\theta}_0) \dto N(\mathbf{0}, \bm{\Sigma})$, $\bm{\Sigma}$ positive definite, where $\mathbf{s}(\mathbf{w}_t; \bm{\theta})$ is defined in \emph{(\ref{eq:7.3.2})},
+\item[(4)] \emph{(local dominance condition on the Hessian)} \enspace for some neighborhood $\mathcal{N}$ of $\bm{\theta}_0$,
+\[
+\E\!\left[\sup_{\bm{\theta} \in \mathcal{N}} \| \mathbf{H}(\mathbf{w}_t; \bm{\theta}) \|\right] < \infty,
+\]
+so that for any consistent estimator $\tilde{\bm{\theta}}$, $\frac{1}{n}\sum_{t=1}^{n}\mathbf{H}(\mathbf{w}_t; \tilde{\bm{\theta}}) \pto \E[\mathbf{H}(\mathbf{w}_t; \bm{\theta}_0)]$, where $\mathbf{H}(\mathbf{w}_t; \bm{\theta})$ is defined in \emph{(\ref{eq:7.3.3})},
+\item[(5)] $\E[\mathbf{H}(\mathbf{w}_t; \bm{\theta}_0)]$ is nonsingular.
+\end{enumerate}
+Then $\hat{\bm{\theta}}$ is asymptotically normal with
+\[
+\avar(\hat{\bm{\theta}}) = \bigl(\E[\mathbf{H}(\mathbf{w}_t; \bm{\theta}_0)]\bigr)^{-1} \bm{\Sigma} \bigl(\E[\mathbf{H}(\mathbf{w}_t; \bm{\theta}_0)]\bigr)^{-1}.
+\]
+\end{proposition}
+
+(This is Theorem~4.1.3 of Amemiya (1985) adapted to M-estimators.) Two remarks are in order.
+
+\begin{itemize}
+\item Of the assumptions we have made in the derivation of asymptotic normality, the following are not listed in the proposition: (i) $\hat{\bm{\theta}}$ is an interior point, and (ii) $\frac{1}{n}\sum_{t=1}^{n}\mathbf{H}(\mathbf{w}_t; \bar{\bm{\theta}})$ is nonsingular. It is intuitively clear that these conditions hold because $\hat{\bm{\theta}}$ converges in probability to an interior point $\bm{\theta}_0$, and $\frac{1}{n}\sum_{t=1}^{n}\mathbf{H}(\mathbf{w}_t; \bar{\bm{\theta}})$ converges in probability to a nonsingular matrix $\E[\mathbf{H}(\mathbf{w}_t; \bm{\theta}_0)]$. See Newey and McFadden (1994, p.~2152) for a rigorous proof. This sort of technicality will be ignored in the rest of this chapter.
+
+\item If $\mathbf{w}_t$ is ergodic stationary, then so is $\mathbf{s}(\mathbf{w}_t; \bm{\theta}_0)$ and the matrix $\bm{\Sigma}$ is the long-run variance matrix of $\{\mathbf{s}(\mathbf{w}_t; \bm{\theta}_0)\}$.%
+\footnote{The long-run variance was introduced in Section~6.5.}
+A sufficient condition for (3) is Gordin's condition introduced in Section~6.5. So condition (3) in the proposition can be replaced by Gordin's condition on $\{\mathbf{s}(\mathbf{w}_t; \bm{\theta}_0)\}$. It is satisfied, for example, if $\mathbf{w}_t$ is i.i.d.\ and $\E[\mathbf{s}(\mathbf{w}_t; \bm{\theta}_0)] = \mathbf{0}$. The assumption that $\bm{\Sigma}$ is positive definite is not really needed for the conclusion of the proposition, but we might as well assume it here because in virtually all applications it is satisfied (or assumed) and also because it will be required in the discussion of hypothesis testing later in this chapter.
+\end{itemize}
+
+\subsection*{Consistent Asymptotic Variance Estimation}
+
+To use this asymptotic result for hypothesis testing, we need a consistent estimate of
+\[
+\avar(\hat{\bm{\theta}}) = \bigl(\E[\mathbf{H}(\mathbf{w}_t; \bm{\theta}_0)]\bigr)^{-1} \bm{\Sigma} \bigl(\E[\mathbf{H}(\mathbf{w}_t; \bm{\theta}_0)]\bigr)^{-1}.
+\]
+
+Since $\hat{\bm{\theta}} \pto \bm{\theta}_0$, condition (4) of Proposition~\ref{prop:7.8} implies that
+\[
+\frac{1}{n}\sum_{t=1}^{n}\mathbf{H}(\mathbf{w}_t; \hat{\bm{\theta}}) \pto \E[\mathbf{H}(\mathbf{w}_t; \bm{\theta}_0)].
+\]
+
+Therefore, provided that there is available a consistent estimator $\hat{\bm{\Sigma}}$ of $\bm{\Sigma}$,
+\begin{equation}
+\label{eq:7.3.11}
+\widehat{\avar}(\hat{\bm{\theta}}) = \left\{ \frac{1}{n}\sum_{t=1}^{n}\mathbf{H}(\mathbf{w}_t; \hat{\bm{\theta}}) \right\}^{-1} \hat{\bm{\Sigma}} \left\{ \frac{1}{n}\sum_{t=1}^{n}\mathbf{H}(\mathbf{w}_t; \hat{\bm{\theta}}) \right\}^{-1}
+\end{equation}
+is a consistent estimator of the asymptotic variance matrix. To obtain $\hat{\bm{\Sigma}}$, the methods introduced in Section~6.6, such as the VARHAC, can be applied to the estimated series $\{\mathbf{s}(\mathbf{w}_t; \hat{\bm{\theta}})\}$ under some suitable technical conditions.
+
+\subsection*{Asymptotic Normality of Conditional ML}
+
+We now specialize this asymptotic normality result to ML for the case of i.i.d.\ data. In ML, where the $m$ function is a log (conditional) likelihood, the first-order conditions (\ref{eq:7.3.4}) are called the \textbf{likelihood equations}. The fact that the $m$ function is a log (conditional) likelihood leads to a simplification of the asymptotic variance matrix of $\hat{\bm{\theta}}$. We show this for conditional ML; doing the same for unconditional or joint ML is easier.
+
+Consider the two equalities in condition (3) of Proposition~\ref{prop:7.9} below. The second equality is called the \textbf{information matrix equality} (not to be confused with the Kullback-Leibler information \emph{in}equality). It is so called because $\E[\mathbf{s}(\mathbf{w}_t; \bm{\theta}_0)\,\mathbf{s}(\mathbf{w}_t; \bm{\theta}_0)']$ is the \textbf{information matrix for observation} $t$. It is left as Analytical Exercise~2 to derive these two equalities under some technical conditions permitting the interchange of differentiation and integration. Here, we just note the implication of these two equalities for Proposition~\ref{prop:7.8}. If $\mathbf{w}_t$ is i.i.d., the Lindeberg-Levy CLT and the first equality (that $\E[\mathbf{s}(\mathbf{w}_t; \bm{\theta}_0)] = \mathbf{0}$) imply
+\begin{equation}
+\label{eq:7.3.12}
+\frac{1}{\sqrt{n}} \sum_{t=1}^{n} \mathbf{s}(\mathbf{w}_t; \bm{\theta}_0) \dto N(\mathbf{0}, \bm{\Sigma}) \quad \text{where} \quad \bm{\Sigma} = \E\bigl[\mathbf{s}(\mathbf{w}_t; \bm{\theta}_0)\,\mathbf{s}(\mathbf{w}_t; \bm{\theta}_0)'\bigr].
+\end{equation}
+
+This and the information matrix equality imply that $\avar(\hat{\bm{\theta}})$ in Proposition~\ref{prop:7.8} is simplified in two ways as
+\begin{equation}
+\label{eq:7.3.13}
+\avar(\hat{\bm{\theta}}) = -\bigl\{\E[\mathbf{H}(\mathbf{w}_t; \bm{\theta}_0)]\bigr\}^{-1} = \bigl\{\E[\mathbf{s}(\mathbf{w}_t; \bm{\theta}_0)\,\mathbf{s}(\mathbf{w}_t; \bm{\theta}_0)']\bigr\}^{-1}.
+\end{equation}
+
+Thus, we have proved
+
+\begin{proposition}[Asymptotic normality of conditional ML]
+\label{prop:7.9}
+Let $\mathbf{w}_t$ $(\equiv (y_t, \mathbf{x}_t')')$ be i.i.d. Suppose the conditions of either Proposition~\ref{prop:7.5} or Proposition~\ref{prop:7.6} are satisfied, so that $\hat{\bm{\theta}} \pto \bm{\theta}_0$. Suppose, in addition, that
+\begin{enumerate}
+\item[(1)] $\bm{\theta}_0$ is in the interior of $\Theta$,
+\item[(2)] $f(y_t \mid \mathbf{x}_t; \bm{\theta})$ is twice continuously differentiable in $\bm{\theta}$ for all $(y_t, \mathbf{x}_t)$,
+\item[(3)] $\E[\mathbf{s}(\mathbf{w}_t; \bm{\theta}_0)] = \mathbf{0}$ and $-\E[\mathbf{H}(\mathbf{w}_t; \bm{\theta}_0)] = \E[\mathbf{s}(\mathbf{w}_t; \bm{\theta}_0)\,\mathbf{s}(\mathbf{w}_t; \bm{\theta}_0)']$, where $\mathbf{s}$ and $\mathbf{H}$ functions are defined in \emph{(\ref{eq:7.3.2})} and \emph{(\ref{eq:7.3.3})},
+\item[(4)] \emph{(local dominance condition on the Hessian)} \enspace for some neighborhood $\mathcal{N}$ of $\bm{\theta}_0$,
+\[
+\E\!\left[\sup_{\bm{\theta} \in \mathcal{N}} \|\mathbf{H}(\mathbf{w}_t; \bm{\theta})\|\right] < \infty,
+\]
+so that for any consistent estimator $\tilde{\bm{\theta}}$, $\frac{1}{n}\sum_{t=1}^{n}\mathbf{H}(\mathbf{w}_t; \tilde{\bm{\theta}}) \pto \E[\mathbf{H}(\mathbf{w}_t; \bm{\theta}_0)]$,
+\item[(5)] $\E[\mathbf{H}(\mathbf{w}_t; \bm{\theta}_0)]$ is nonsingular.
+\end{enumerate}
+Then $\hat{\bm{\theta}}$ is asymptotically normal with $\avar(\hat{\bm{\theta}})$ given by \emph{(\ref{eq:7.3.13})}.
+\end{proposition}
+
+Two remarks about the proposition:
+
+\begin{itemize}
+\item Condition (3) is stated as an assumption here because its derivation requires interchange of integration and differentiation (see Analytical Exercise~2). A technical condition under which the interchange is legal is readily available from calculus (see, e.g., Lemma~3.6 of Newey and McFadden, 1994). So condition (3) could be replaced by such a technical condition on $f(y_t \mid \mathbf{x}_t; \bm{\theta})$. We do not do it here because in most applications condition (3) can be verified directly.
+
+\item It should be clear from the above discussion how this proposition can be adapted to unconditional ML: simply replace $f(y_t \mid \mathbf{x}_t; \bm{\theta})$ by $f(\mathbf{w}_t; \bm{\theta})$.
+\end{itemize}
+
+To use this asymptotic result for hypothesis testing, we need a consistent estimate of $\avar(\hat{\bm{\theta}})$. Noting that it can be written as $-\{\E[\mathbf{H}(\mathbf{w}_t; \bm{\theta}_0)]\}^{-1}$, a natural estimator is
+\begin{equation}
+\label{eq:7.3.14}
+\text{first estimator of } \avar(\hat{\bm{\theta}}) = -\left\{ \frac{1}{n}\sum_{t=1}^{n}\mathbf{H}(\mathbf{w}_t; \hat{\bm{\theta}}) \right\}^{-1}.
+\end{equation}
+
+Since $\hat{\bm{\theta}} \pto \bm{\theta}_0$, this estimator is consistent by condition (4) of Proposition~\ref{prop:7.9}.
+
+Another estimator, based on the relation $\avar(\hat{\bm{\theta}}) = \{\E[\mathbf{s}(\mathbf{w}_t; \bm{\theta}_0)\,\mathbf{s}(\mathbf{w}_t; \bm{\theta}_0)']\}^{-1}$, is
+\begin{equation}
+\label{eq:7.3.15}
+\text{second estimator of } \avar(\hat{\bm{\theta}}) = \left\{ \frac{1}{n}\sum_{t=1}^{n}\mathbf{s}(\mathbf{w}_t; \hat{\bm{\theta}})\,\mathbf{s}(\mathbf{w}_t; \hat{\bm{\theta}})' \right\}^{-1}.
+\end{equation}
+
+To insure consistency for this estimator, we need to make an assumption in addition to the hypothesis of Proposition~\ref{prop:7.9} (see, e.g., Theorem~4.4 of Newey and McFadden, 1994). We will not show it here because in many applications the consistency of this second estimator can be verified directly.
+
+There is no compelling reason for preferring one estimator of $\avar(\hat{\bm{\theta}})$ over the other. The second estimator, which requires only the first derivative of the log likelihood, is easier to compute than the first. This can be an important consideration when it is impossible to calculate the derivatives of the density function analytically and some numerical method must be used. On the other hand, in at least some cases the first provides a better finite-sample approximation of the asymptotic distribution (see, e.g., Davidson and MacKinnon, 1993).
+
+\subsection*{Two Examples}
+
+To get a better grasp of the asymptotic normality results about conditional ML, it is useful to see how the results can be applied to familiar examples. We consider two such examples.
+
+\begin{example}[Asymptotic normality in linear regression model]
+\label{ex:7.10}
+To reproduce the log conditional density for observation $t$ for the linear regression model with normal errors,
+\begin{equation}
+\label{eq:7.3.16}
+\log f(y_t \mid \mathbf{x}_t; \bm{\beta}, \sigma^2) = -\frac{1}{2}\log(2\pi) - \frac{1}{2}\log(\sigma^2) - \frac{(y_t - \mathbf{x}_t' \bm{\beta})^2}{2\sigma^2}.
+\end{equation}
+
+With $\Theta = \mathbb{R}^K \times \mathbb{R}_{++}$ (where $K$ is the dimension of $\bm{\beta}$), condition (1) of Proposition~\ref{prop:7.9} is satisfied. Condition (2) is obviously satisfied. To verify (3), a routine calculation yields:%
+\footnote{For the parameter $\sigma^2$ the differentiation is with respect to $\sigma^2$ rather than $\sigma$.}
+\begin{equation}
+\label{eq:7.3.17}
+\mathbf{s}(\mathbf{w}_t; \bm{\theta}) = \begin{bmatrix} \frac{1}{\sigma^2} \mathbf{x}_t \cdot \hat{\varepsilon}_t \\[4pt] -\frac{1}{2\sigma^2} + \frac{1}{2\sigma^4} \hat{\varepsilon}_t^2 \end{bmatrix}, \quad \mathbf{H}(\mathbf{w}_t; \bm{\theta}) = \begin{bmatrix} -\frac{1}{\sigma^2}\mathbf{x}_t \mathbf{x}_t' & -\frac{1}{\sigma^4}\mathbf{x}_t \cdot \hat{\varepsilon}_t \\[4pt] -\frac{1}{\sigma^4}\mathbf{x}_t' \cdot \hat{\varepsilon}_t & \frac{1}{2\sigma^4} - \frac{1}{\sigma^6}\hat{\varepsilon}_t^2 \end{bmatrix}
+\end{equation}
+where $\mathbf{w}_t = (y_t, \mathbf{x}_t')'$, $\bm{\theta} = (\bm{\beta}', \sigma^2)'$ and $\hat{\varepsilon}_t \equiv y_t - \mathbf{x}_t'\bm{\beta}$ (which should be distinguished from $\varepsilon_t \equiv y_t - \mathbf{x}_t'\bm{\beta}_0$). So for $\bm{\theta} = \bm{\theta}_0$ the $\hat{\varepsilon}_t$ in these expressions can be replaced by $\varepsilon_t$. In the linear regression model, $\E(\varepsilon_t \mid \mathbf{x}_t) = 0$. Also, since $\varepsilon_t$ is $N(0, \sigma_0^2)$, we have $\E(\varepsilon_t^3) = 0$ and $\E(\varepsilon_t^4) = 3\sigma_0^4$. Using these relations, it is easy to verify (3). In particular,
+\begin{equation}
+\label{eq:7.3.18}
+-\E[\mathbf{H}(\mathbf{w}_t; \bm{\theta}_0)] = \E\bigl[\mathbf{s}(\mathbf{w}_t; \bm{\theta}_0)\,\mathbf{s}(\mathbf{w}_t; \bm{\theta}_0)'\bigr] = \begin{bmatrix} \frac{1}{\sigma_0^2}\E(\mathbf{x}_t \mathbf{x}_t') & \mathbf{0} \\[4pt] \mathbf{0}' & \frac{1}{2\sigma_0^4} \end{bmatrix}.
+\end{equation}
+
+If $\E(\mathbf{x}_t \mathbf{x}_t')$ is nonsingular, then $\E[\mathbf{H}(\mathbf{w}_t; \bm{\theta}_0)]$ is nonsingular and (5) is satisfied. Regarding condition (4), let $\tilde{\varepsilon}_t \equiv y_t - \mathbf{x}_t'\tilde{\bm{\beta}}$ for some consistent estimator $\tilde{\bm{\beta}}$ and $\tilde{\sigma}^2$. Condition (\ref{eq:7.3.8}) in this example is
+\begin{equation}
+\label{eq:7.3.19}
+\begin{bmatrix} -\frac{1}{\tilde{\sigma}^2}\frac{1}{n}\sum_{t=1}^{n}\mathbf{x}_t \mathbf{x}_t' & -\frac{1}{(\tilde{\sigma}^2)^2}\frac{1}{n}\sum_{t=1}^{n}\mathbf{x}_t \cdot \tilde{\varepsilon}_t \\[4pt] -\frac{1}{(\tilde{\sigma}^2)^2}\frac{1}{n}\sum_{t=1}^{n}\mathbf{x}_t' \cdot \tilde{\varepsilon}_t & \frac{1}{2(\tilde{\sigma}^2)^2} - \frac{1}{(\tilde{\sigma}^2)^3}\frac{1}{n}\sum_{t=1}^{n}\tilde{\varepsilon}_t^2 \end{bmatrix} \pto \begin{bmatrix} -\frac{1}{\sigma_0^2}\E(\mathbf{x}_t \mathbf{x}_t') & \mathbf{0} \\[4pt] \mathbf{0}' & -\frac{1}{2\sigma_0^4} \end{bmatrix}.
+\end{equation}
+
+It is straightforward to show this, given that $\tilde{\varepsilon}_t = \varepsilon_t - \mathbf{x}_t'(\tilde{\bm{\beta}} - \bm{\beta}_0)$. We conclude that all the conditions of Proposition~\ref{prop:7.9} are satisfied if $\E(\mathbf{x}_t \mathbf{x}_t')$ is nonsingular.
+\end{example}
+
+\begin{example}[Asymptotic normality of probit ML]
+\label{ex:7.11}
+To reproduce the log conditional likelihood of the probit model,
+\begin{equation}
+\label{eq:7.3.20}
+\log f(y_t \mid \mathbf{x}_t; \bm{\theta}) = y_t \log \Phi(\mathbf{x}_t'\bm{\theta}) + (1 - y_t)\log[1 - \Phi(\mathbf{x}_t'\bm{\theta})].
+\end{equation}
+
+With $\Theta = \mathbb{R}^p$, condition (1) of Proposition~\ref{prop:7.9} is satisfied. Condition (2) is obviously satisfied. To verify (3), a tedious calculation yields
+\begin{equation}
+\label{eq:7.3.21}
+\mathbf{s}(\mathbf{w}_t; \bm{\theta}) = \frac{(y_t - \Phi(\mathbf{x}_t'\bm{\theta}))\,\phi(\mathbf{x}_t'\bm{\theta})}{(1 - \Phi(\mathbf{x}_t'\bm{\theta}))\,\Phi(\mathbf{x}_t'\bm{\theta})} \, \mathbf{x}_t,
+\end{equation}
+\begin{equation}
+\label{eq:7.3.22}
+\mathbf{H}(\mathbf{w}_t; \bm{\theta}) = \left\{ -\left[\frac{y_t - \Phi(\mathbf{x}_t'\bm{\theta})}{\Phi(\mathbf{x}_t'\bm{\theta})(1-\Phi(\mathbf{x}_t'\bm{\theta}))}\right]^2 [\phi(\mathbf{x}_t'\bm{\theta})]^2 + \left[\frac{y_t - \Phi(\mathbf{x}_t'\bm{\theta})}{\Phi(\mathbf{x}_t'\bm{\theta})(1-\Phi(\mathbf{x}_t'\bm{\theta}))}\right]\phi'(\mathbf{x}_t'\bm{\theta}) \right\} \mathbf{x}_t \mathbf{x}_t'.
+\end{equation}
+
+(To derive (\ref{eq:7.3.22}), use the fact that $y_t^2 = y_t$.) Here, $\Phi(\cdot)$ is the cumulative density function of $N(0,1)$ and $\phi(\cdot) \equiv \Phi'(\cdot)$ is its density function. It is then easy to prove the conditional version of (3):
+\begin{equation}
+\label{eq:7.3.23}
+\E[\mathbf{s}(\mathbf{w}_t; \bm{\theta}_0) \mid \mathbf{x}_t] = \mathbf{0} \quad \text{and} \quad -\E[\mathbf{H}(\mathbf{w}_t; \bm{\theta}_0) \mid \mathbf{x}_t] = \E\bigl[\mathbf{s}(\mathbf{w}_t; \bm{\theta}_0)\,\mathbf{s}(\mathbf{w}_t; \bm{\theta}_0)' \mid \mathbf{x}_t\bigr].
+\end{equation}
+
+So (3) is satisfied by the Law of Total Expectations. In particular, for probit, it is easy to show that
+\begin{equation}
+\label{eq:7.3.24}
+-\E[\mathbf{H}(\mathbf{w}_t; \bm{\theta}_0)] = \E\bigl[\mathbf{s}(\mathbf{w}_t; \bm{\theta}_0)\,\mathbf{s}(\mathbf{w}_t; \bm{\theta}_0)'\bigr] = \E\bigl[\lambda(\mathbf{x}_t'\bm{\theta}_0)\,\lambda(-\mathbf{x}_t'\bm{\theta}_0)\,\mathbf{x}_t \mathbf{x}_t'\bigr],
+\end{equation}
+where
+\begin{equation}
+\label{eq:7.3.25}
+\lambda(v) \equiv \frac{\phi(v)}{1 - \Phi(v)}
+\end{equation}
+is called the \textbf{inverse Mill's ratio} or the \textbf{hazard} for $N(0,1)$. It can be shown that the term in braces in (\ref{eq:7.3.22}) is between 0 and 2 (see Newey and McFadden, 1994, p.~2147). So
+\begin{equation}
+\label{eq:7.3.26}
+\|\mathbf{H}(\mathbf{w}_t; \bm{\theta})\| \leq 2 \|\mathbf{x}_t \mathbf{x}_t'\|.
+\end{equation}
+
+The Euclidean norm $\|\mathbf{x}_t \mathbf{x}_t'\|$ is the square root of the sum of squares of the elements of $\mathbf{x}_t \mathbf{x}_t'$. Therefore, the expectation of $\|\mathbf{x}_t \mathbf{x}_t'\|^2$ and hence that of $\|\mathbf{x}_t \mathbf{x}_t'\|$ are finite if $\E(\mathbf{x}_t \mathbf{x}_t')$ (exists and) is finite. So the local dominance condition on the Hessian (condition (4)) is satisfied if $\E(\mathbf{x}_t \mathbf{x}_t')$ is nonsingular. It can be shown that condition (5) is satisfied if $\E(\mathbf{x}_t \mathbf{x}_t')$ is nonsingular (see footnote~29 on p.~2147 of Newey and McFadden, 1994). We conclude, again, that all the conditions of Proposition~\ref{prop:7.9} are satisfied if $\E(\mathbf{x}_t \mathbf{x}_t')$ is nonsingular.
+\end{example}
+
+\subsection*{Asymptotic Normality of GMM}
+
+Now turn to GMM. The GMM objective function is
+\begin{equation}
+\label{eq:7.3.27}
+Q_n(\bm{\theta}) = -\frac{1}{2}\mathbf{g}_n(\bm{\theta})'\,\widehat{\mathbf{W}}\,\mathbf{g}_n(\bm{\theta}) \quad \text{with} \quad \underset{(K \times 1)}{\mathbf{g}_n(\bm{\theta})} \equiv \frac{1}{n}\sum_{t=1}^{n}\mathbf{g}(\mathbf{w}_t; \bm{\theta}).
+\end{equation}
+
+As in the case of M-estimators, we apply the Mean Value Theorem to the first-order condition for maximization, but the theorem will be applied to $\mathbf{g}_n(\bm{\theta})$, not its first derivative. Thus, unlike in the case of M-estimators, the objective function needs to be continuously differentiable only once, not twice. This reflects the fact that the sample average enters the objective function differently for the case of GMM.
+
+Assuming that $\hat{\bm{\theta}}$ is an interior point, the first-order condition for maximization of the objective function is
+\begin{equation}
+\label{eq:7.3.28}
+\underset{(p \times 1)}{\mathbf{0}} = \frac{\partial Q_n(\hat{\bm{\theta}})}{\partial \bm{\theta}} = -\underset{(p \times K)}{\mathbf{G}_n(\hat{\bm{\theta}})'} \underset{(K \times K)}{\widehat{\mathbf{W}}} \underset{(K \times 1)}{\mathbf{g}_n(\hat{\bm{\theta}})},
+\end{equation}
+where $\mathbf{G}_n(\bm{\theta})$ is the Jacobian of $\mathbf{g}_n(\bm{\theta})$:
+\begin{equation}
+\label{eq:7.3.29}
+\underset{(K \times p)}{\mathbf{G}_n(\bm{\theta})} \equiv \frac{\partial \mathbf{g}_n(\bm{\theta})}{\partial \bm{\theta}'}.
+\end{equation}
+
+Now apply the Mean Value Theorem to $\mathbf{g}_n(\bm{\theta})$, not to $\partial Q_n(\bm{\theta})/\partial\bm{\theta}$ as in M-estimation, to obtain the mean value expansion
+\begin{equation}
+\label{eq:7.3.30}
+\underset{(K \times 1)}{\mathbf{g}_n(\hat{\bm{\theta}})} = \underset{(K \times 1)}{\mathbf{g}_n(\bm{\theta}_0)} + \underset{(K \times p)}{\mathbf{G}_n(\bar{\bm{\theta}})} \underset{(p \times 1)}{(\hat{\bm{\theta}} - \bm{\theta}_0)}.
+\end{equation}
+
+Substituting this into the first-order condition above, we obtain
+\begin{equation}
+\label{eq:7.3.31}
+\underset{(p \times 1)}{\mathbf{0}} = -\underset{(p \times K)}{\mathbf{G}_n(\hat{\bm{\theta}})'} \underset{(K \times K)}{\widehat{\mathbf{W}}} \underset{(K \times 1)}{\mathbf{g}_n(\bm{\theta}_0)} - \underset{(p \times K)}{\mathbf{G}_n(\hat{\bm{\theta}})'} \underset{(K \times K)}{\widehat{\mathbf{W}}} \underset{(K \times p)}{\mathbf{G}_n(\bar{\bm{\theta}})} \underset{(p \times 1)}{(\hat{\bm{\theta}} - \bm{\theta}_0)}.
+\end{equation}
+
+Solving this for $(\hat{\bm{\theta}} - \bm{\theta}_0)$ and noting that $\mathbf{g}_n(\bm{\theta}) = \frac{1}{n}\sum_{t=1}^{n}\mathbf{g}(\mathbf{w}_t; \bm{\theta})$, we obtain
+\begin{equation}
+\label{eq:7.3.32}
+\underset{(p \times 1)}{\sqrt{n}(\hat{\bm{\theta}} - \bm{\theta}_0)} = -\bigl[\underset{(p \times K)}{\mathbf{G}_n(\hat{\bm{\theta}})'} \underset{(K \times K)}{\widehat{\mathbf{W}}} \underset{(K \times p)}{\mathbf{G}_n(\bar{\bm{\theta}})}\bigr]^{-1} \underset{(p \times K)}{\mathbf{G}_n(\hat{\bm{\theta}})'} \underset{(K \times K)}{\widehat{\mathbf{W}}} \frac{1}{\sqrt{n}}\sum_{t=1}^{n}\underset{(K \times 1)}{\mathbf{g}(\mathbf{w}_t; \bm{\theta}_0)}.
+\end{equation}
+
+In this expression, the Jacobian $\mathbf{G}_n(\bm{\theta})$ of $\mathbf{g}_n(\bm{\theta})$ is evaluated at two different points, $\hat{\bm{\theta}}$ and $\bar{\bm{\theta}}$. Since $\mathbf{g}_n(\bm{\theta}) = \frac{1}{n}\sum_{t=1}^{n}\mathbf{g}(\mathbf{w}_t; \bm{\theta})$, the Jacobian at any given estimator $\tilde{\bm{\theta}}$ can be written as
+\begin{equation}
+\label{eq:7.3.33}
+\mathbf{G}_n(\tilde{\bm{\theta}}) = \frac{1}{n}\sum_{t=1}^{n}\frac{\partial\mathbf{g}(\mathbf{w}_t; \tilde{\bm{\theta}})}{\partial\bm{\theta}'}.
+\end{equation}
+
+If $\mathbf{w}_t$ is ergodic stationary and $\tilde{\bm{\theta}}$ is consistent, it is natural to conjecture that this expression converges to $\E[\partial\mathbf{g}(\mathbf{w}_t; \bm{\theta}_0)/\partial\bm{\theta}']$. As was true for M-estimators, this conjecture is true if $\partial\mathbf{g}(\mathbf{w}_t; \bm{\theta})/\partial\bm{\theta}'$ satisfies the suitable dominance condition specified in condition (4) below. It should now be clear that the GMM equivalent of Proposition~\ref{prop:7.8} is
+
+\begin{proposition}[Asymptotic normality of GMM]
+\label{prop:7.10}
+Suppose the conditions of Proposition~\ref{prop:7.7} are satisfied, so that $\{\mathbf{w}_t\}$ is ergodic stationary, $\widehat{\mathbf{W}}$ $(K \times K)$ converges in probability to a symmetric positive definite matrix $\mathbf{W}$, and the $p$-dimensional GMM estimator $\hat{\bm{\theta}}$ is consistent. Suppose, further, that
+\begin{enumerate}
+\item[(1)] $\bm{\theta}_0$ is in the interior of $\Theta$,
+\item[(2)] $\underset{(K \times 1)}{\mathbf{g}(\mathbf{w}_t; \bm{\theta})}$ is continuously differentiable in $\bm{\theta}$ for any $\mathbf{w}_t$,
+\item[(3)] $\frac{1}{\sqrt{n}}\sum_{t=1}^{n}\mathbf{g}(\mathbf{w}_t; \bm{\theta}_0) \dto N(\mathbf{0}, \underset{(K \times K)}{\mathbf{S}})$, $\mathbf{S}$ positive definite,
+\item[(4)] \emph{(local dominance condition on $\frac{\partial\mathbf{g}(\mathbf{w}_t; \bm{\theta})}{\partial\bm{\theta}'}$)} \enspace for some neighborhood $\mathcal{N}$ of $\bm{\theta}_0$,
+\[
+\E\!\left[\sup_{\bm{\theta} \in \mathcal{N}} \left\|\frac{\partial\mathbf{g}(\mathbf{w}_t; \bm{\theta})}{\partial\bm{\theta}'}\right\|\right] < \infty,
+\]
+so that for any consistent estimator $\tilde{\bm{\theta}}$, $\frac{1}{n}\sum_{t=1}^{n}\frac{\partial\mathbf{g}(\mathbf{w}_t; \tilde{\bm{\theta}})}{\partial\bm{\theta}'} \pto \underset{(K \times p)}{\E\!\left[\frac{\partial\mathbf{g}(\mathbf{w}_t; \bm{\theta}_0)}{\partial\bm{\theta}'}\right]}$,
+\item[(5)] $\underset{(K \times p)}{\E\!\left[\frac{\partial\mathbf{g}(\mathbf{w}_t; \bm{\theta}_0)}{\partial\bm{\theta}'}\right]}$ is of full column rank.
+\end{enumerate}
+Then the following results hold:
+\begin{enumerate}[label=(\alph*)]
+\item \emph{(asymptotic normality)} \enspace $\hat{\bm{\theta}}$ is asymptotically normal with
+\[
+\underset{(p \times p)}{\avar(\hat{\bm{\theta}})} = (\mathbf{G}'\mathbf{W}\mathbf{G})^{-1}\mathbf{G}'\mathbf{W}\mathbf{S}\,\mathbf{W}\mathbf{G}(\mathbf{G}'\mathbf{W}\mathbf{G})^{-1},
+\]
+where $\underset{(K \times p)}{\mathbf{G}} \equiv \E\!\left[\frac{\partial\mathbf{g}(\mathbf{w}_t; \bm{\theta}_0)}{\partial\bm{\theta}'}\right]$.
+
+\item \emph{(consistent asymptotic variance estimation)} \enspace Suppose there is available a consistent estimate $\hat{\mathbf{S}}$ of $\mathbf{S}$. The asymptotic variance is consistently estimated by
+\begin{equation}
+\label{eq:7.3.34}
+\widehat{\avar}(\hat{\bm{\theta}}) = (\hat{\mathbf{G}}'\widehat{\mathbf{W}}\hat{\mathbf{G}})^{-1}\hat{\mathbf{G}}'\widehat{\mathbf{W}}\hat{\mathbf{S}}\,\widehat{\mathbf{W}}\hat{\mathbf{G}}(\hat{\mathbf{G}}'\widehat{\mathbf{W}}\hat{\mathbf{G}})^{-1},
+\end{equation}
+where $\underset{(K \times p)}{\hat{\mathbf{G}}} \equiv \mathbf{G}_n(\hat{\bm{\theta}}) = \frac{1}{n}\sum_{t=1}^{n}\frac{\partial\mathbf{g}(\mathbf{w}_t; \hat{\bm{\theta}})}{\partial\bm{\theta}'}$.
+\end{enumerate}
+\end{proposition}
+
+The assumption that $\mathbf{S}$ is positive definite is not really needed for the conclusion of the proposition, but we might as well assume it here because in virtually all applications it is satisfied (or assumed) and also because it will be required in the discussion of hypothesis testing later in this chapter.
+
+It is useful to note the analogy between linear and nonlinear GMM by comparing this proposition to Proposition~3.1. In linear GMM, $\mathbf{g}_n(\bm{\theta})$ is given by
+\begin{equation}
+\label{eq:7.3.35}
+\mathbf{g}_n(\bm{\theta}) = \left(\frac{1}{n}\sum_{t=1}^{n}\mathbf{x}_t \cdot y_t\right) - \left(\frac{1}{n}\sum_{t=1}^{n}\mathbf{x}_t \mathbf{z}_t'\right)\bm{\theta}.
+\end{equation}
+
+So $\hat{\mathbf{G}} \equiv \mathbf{G}_n(\hat{\bm{\theta}})$ in Proposition~\ref{prop:7.10} reduces to $-(\frac{1}{n}\sum \mathbf{x}_t \mathbf{z}_t')$, and $\mathbf{G}$ reduces to $-\E(\mathbf{x}_t \mathbf{z}_t')$. The thrust of Proposition~\ref{prop:7.10} is that the asymptotic distribution of the nonlinear GMM estimator can be obtained by taking the linear approximation of $\mathbf{g}_n(\bm{\theta})$ around the true parameter value.
+
+The analogy to linear GMM extends further:
+
+\begin{itemize}
+\item (Efficient nonlinear GMM) \enspace Using the current notation, the matrix inequality (3.5.11) in Section~3.5 is
+\begin{equation}
+\label{eq:7.3.36}
+(\mathbf{G}'\mathbf{W}\mathbf{G})^{-1}\mathbf{G}'\mathbf{W}\mathbf{S}\,\mathbf{W}\mathbf{G}(\mathbf{G}'\mathbf{W}\mathbf{G})^{-1} \geq (\mathbf{G}'\mathbf{S}^{-1}\mathbf{G})^{-1},
+\end{equation}
+which says that the lower bound for $\avar(\hat{\bm{\theta}})$ is $(\mathbf{G}'\mathbf{S}^{-1}\mathbf{G})^{-1}$. The lower bound is achieved if $\widehat{\mathbf{W}}$ satisfies the efficiency condition that $\plim_{n\to\infty}\widehat{\mathbf{W}} = \mathbf{S}^{-1}$, namely, that $\widehat{\mathbf{W}} = \hat{\mathbf{S}}^{-1}$ for some consistent estimator of $\mathbf{S}$.
+
+\item ($J$ statistic for testing overidentifying restrictions) \enspace Suppose that the conditions of Proposition~\ref{prop:7.10} are satisfied and that $\widehat{\mathbf{W}} = \hat{\mathbf{S}}^{-1}$ so that $\widehat{\mathbf{W}}$ satisfies the efficiency condition: $\plim \widehat{\mathbf{W}} = \mathbf{S}^{-1}$. Then the minimized distance $J \equiv n\mathbf{g}_n(\hat{\bm{\theta}})'\hat{\mathbf{S}}^{-1}\mathbf{g}_n(\hat{\bm{\theta}})$ $(= -2nQ_n(\hat{\bm{\theta}}))$ is asymptotically chi-squared with $K - p$ degrees of freedom. The proof of this result is essentially the same as in the linear case; see Newey and McFadden (1994, Section~9.5) for a proof.
+
+\item (Estimation of $\mathbf{S}$) \enspace $\mathbf{S}$ is the long-run variance of $\{\mathbf{g}(\mathbf{w}_t; \bm{\theta}_0)\}$. Under some suitable technical conditions, the methods introduced in Section~6.6---such as the VARHAC---can be applied to the estimated series $\{\mathbf{g}(\mathbf{w}_t; \hat{\bm{\theta}})\}$ to obtain $\hat{\mathbf{S}}$. In particular, if $\mathbf{w}_t$ is i.i.d., then $\mathbf{S} = \E[\mathbf{g}(\mathbf{w}_t; \bm{\theta}_0)\,\mathbf{g}(\mathbf{w}_t; \bm{\theta}_0)']$ and the sample second moment of $\mathbf{g}(\mathbf{w}_t; \hat{\bm{\theta}})$ can serve as $\hat{\mathbf{S}}$.
+\end{itemize}
+
+\subsection*{GMM versus ML}
+
+The question we have just answered is: taking the orthogonality conditions as given, what is the optimal choice of the weighting matrix $\mathbf{W}$? A related, but distinct, question is: what is the optimal choice of orthogonality conditions?%
+\footnote{Yet another efficiency question concerns the optimal choice of instruments in generalized nonlinear instrumental estimation (a special case of GMM where the $\mathbf{g}$ function is a product of the vector of instruments and the error term for an estimation equation). See Newey and McFadden (1994, Section~5.4) for a discussion of optimal instruments.}
+This question, too, has a clear answer, provided that the parametric form of the density of the data $(\mathbf{w}_1, \ldots, \mathbf{w}_n)$ is known. Here, we focus on the i.i.d.\ case with the density of $\mathbf{w}_t$ given by $f(\mathbf{w}_t; \bm{\theta})$. Let $\hat{\bm{\theta}}$ be the GMM estimator associated with the orthogonality conditions $\E[\mathbf{g}(\mathbf{w}_t; \bm{\theta}_0)] = \mathbf{0}$. Its asymptotic variance $\avar(\hat{\bm{\theta}})$ is given in Proposition~\ref{prop:7.10}. It is not hard to show that
+\begin{equation}
+\label{eq:7.3.37}
+\avar(\hat{\bm{\theta}}) \geq \E\bigl[\mathbf{s}(\mathbf{w}_t; \bm{\theta}_0)\,\mathbf{s}(\mathbf{w}_t; \bm{\theta}_0)'\bigr]^{-1} \quad \text{where} \quad \underset{(p \times 1)}{\mathbf{s}(\mathbf{w}_t; \bm{\theta}_0)} \equiv \frac{\partial\log f(\mathbf{w}_t; \bm{\theta}_0)}{\partial\bm{\theta}}.
+\end{equation}
+
+That is, the inverse of the information matrix $\E(\mathbf{s}\mathbf{s}')$ is the lower bound for the asymptotic variance of GMM estimators. This matrix inequality holds under the conditions of Proposition~\ref{prop:7.10} plus some technical condition on $f(\mathbf{w}_t; \bm{\theta})$ which allows the interchange of differentiation and integration. See Newey and McFadden (1994, Theorem~5.1) for a statement of those conditions and a proof. Asymptotic efficiency of ML over GMM estimators then follows from this result because the lower bound $[\E(\mathbf{s}\mathbf{s}')]^{-1}$ is the asymptotic variance of the ML estimator. The superiority of ML, however, is not very surprising, given that ML exploits the knowledge of the parametric form $f(\mathbf{w}_t; \bm{\theta})$ of the density function while GMM does not.
+
+As you will show in Review Question~4 below, GMM achieves this lower bound when the $\mathbf{g}$ function in the orthogonality conditions is the score for observation $t$:
+\begin{equation}
+\label{eq:7.3.38}
+\underset{(K \times 1)}{\mathbf{g}(\mathbf{w}_t; \bm{\theta})} = \underset{(p \times 1)}{\mathbf{s}(\mathbf{w}_t; \bm{\theta})} \equiv \frac{\partial\log f(\mathbf{w}_t; \bm{\theta})}{\partial\bm{\theta}}.
+\end{equation}
+
+Therefore, the GMM estimator with optimal orthogonality conditions is asymptotically equivalent to ML. Actually, they are numerically equivalent, which can be shown as follows. Since $K$ (the number of orthogonality conditions) equals $p$ (the number of parameters) when $\mathbf{g}$ is chosen optimally as in (\ref{eq:7.3.38}), the GMM estimator $\hat{\bm{\theta}}$ should satisfy $\mathbf{g}_n(\hat{\bm{\theta}}) = \mathbf{0}$, which under (\ref{eq:7.3.38}) can be written as
+\begin{equation}
+\label{eq:7.3.39}
+\frac{1}{n}\sum_{t=1}^{n}\mathbf{s}(\mathbf{w}_t; \hat{\bm{\theta}}) = \mathbf{0}.
+\end{equation}
+
+This is none other than the likelihood equations (i.e., the first-order condition for ML). They have at least one solution because the ML estimator satisfies them. If they have only one solution, then $\hat{\bm{\theta}}$ is the ML estimator as well as the GMM estimator. If they have more than one solution, we need to choose one from them as the GMM estimator. Since one of the solutions is the ML estimator, we can simply choose it as the GMM estimator.
+
+\subsection*{Expressing the Sampling Error in a Common Format}
+
+To prepare for the next section's discussion, it is useful to develop a slightly different proof of asymptotic normality. We have used the Mean Value Theorem to derive the mean value expansion for the sampling error, which is (\ref{eq:7.3.7}) for M-estimators and (\ref{eq:7.3.32}) for GMM. We show in this subsection that they can be written in a common format, (\ref{eq:7.3.43}) below.
+
+Consider M-estimators first. Noting that $\frac{\partial Q_n(\bm{\theta}_0)}{\partial\bm{\theta}} = \frac{1}{n}\sum_{t=1}^{n}\mathbf{s}(\mathbf{w}_t; \bm{\theta}_0)$, the mean value expansion (\ref{eq:7.3.7}) can be written as
+\begin{equation}
+\label{eq:7.3.40}
+\sqrt{n}\,(\hat{\bm{\theta}} - \bm{\theta}_0) = -\left[\frac{1}{n}\sum_{t=1}^{n}\mathbf{H}(\mathbf{w}_t; \bar{\bm{\theta}})\right]^{-1}\sqrt{n}\,\frac{\partial Q_n(\bm{\theta}_0)}{\partial\bm{\theta}}.
+\end{equation}
+
+By condition (4) of Proposition~\ref{prop:7.8}, $\frac{1}{n}\sum_{t=1}^{n}\mathbf{H}(\mathbf{w}_t; \bar{\bm{\theta}})$ converges in probability to some $p \times p$ symmetric matrix $\bm{\Psi}$ given by
+\begin{equation}
+\label{eq:7.3.41}
+\underset{(p \times p)}{\bm{\Psi}} = \E[\mathbf{H}(\mathbf{w}_t; \bm{\theta}_0)].
+\end{equation}
+
+So rewrite (\ref{eq:7.3.40}) as
+\begin{equation}
+\label{eq:7.3.42}
+\sqrt{n}\,(\hat{\bm{\theta}} - \bm{\theta}_0) = -\bm{\Psi}^{-1}\sqrt{n}\,\frac{\partial Q_n(\bm{\theta}_0)}{\partial\bm{\theta}} - \left\{\left[\frac{1}{n}\sum_{t=1}^{n}\mathbf{H}(\mathbf{w}_t; \bar{\bm{\theta}})\right]^{-1} - \bm{\Psi}^{-1}\right\}\sqrt{n}\,\frac{\partial Q_n(\bm{\theta}_0)}{\partial\bm{\theta}}.
+\end{equation}
+
+By construction, the term in braces converges in probability to zero. By condition (3) of Proposition~\ref{prop:7.8}, $\sqrt{n}\,\frac{\partial Q_n(\bm{\theta}_0)}{\partial\bm{\theta}}$ $(= \frac{1}{\sqrt{n}}\sum_{t=1}^{n}\mathbf{s}(\mathbf{w}_t; \bm{\theta}_0))$ converges to a random variable. So the last term, which is the product of the term in braces and $\sqrt{n}\,\frac{\partial Q_n(\bm{\theta}_0)}{\partial\bm{\theta}}$, converges to zero in probability by Lemma~2.4(b). This fact can be written compactly as a \textbf{Taylor expansion}:%
+\footnote{It is apt to call this equation a Taylor expansion rather than a mean value expansion because the matrix that multiplies $\sqrt{n}\,\frac{\partial Q_n(\bm{\theta}_0)}{\partial\bm{\theta}}$ is evaluated at $\bm{\theta}_0$ rather than at $\bar{\bm{\theta}}$ as in the mean value expansion.}%
+\footnote{The ``$o_p$'' notation was introduced in Section~2.1.}
+\begin{equation}
+\label{eq:7.3.43}
+\underset{(p \times 1)}{\sqrt{n}\,(\hat{\bm{\theta}} - \bm{\theta}_0)} = -\underset{(p \times p)}{\bm{\Psi}^{-1}} \underset{(p \times 1)}{\sqrt{n}\,\frac{\partial Q_n(\bm{\theta}_0)}{\partial\bm{\theta}}} + \underset{(p \times 1)}{o_p},
+\end{equation}
+where the term ``$o_p$'' means ``some random variable that converges to zero in probability.'' The exact expression for the $o_p$ term will depend on the context. Here, it equals the last term in (\ref{eq:7.3.42}). As you will see, all that matters for our argument is that the $o_p$ term vanishes (converges to zero in probability), not its expression. Since the difference between $\sqrt{n}\,(\hat{\bm{\theta}} - \bm{\theta}_0)$ and $-\bm{\Psi}^{-1}\sqrt{n}\,\frac{\partial Q_n(\bm{\theta}_0)}{\partial\bm{\theta}}$ vanishes, the asymptotic distribution of $\sqrt{n}\,(\hat{\bm{\theta}} - \bm{\theta}_0)$ is the same as that of $-\bm{\Psi}^{-1}\sqrt{n}\,\frac{\partial Q_n(\bm{\theta}_0)}{\partial\bm{\theta}}$ by Lemma~2.4(a). It then follows that $\sqrt{n}\,(\hat{\bm{\theta}} - \bm{\theta}_0)$ converges to a normal distribution with mean zero and asymptotic variance given by
+\begin{equation}
+\label{eq:7.3.44}
+\avar(\hat{\bm{\theta}}) = \bm{\Psi}^{-1}\bm{\Sigma}\bm{\Psi}^{-1} \quad \text{where} \quad \underset{(p \times p)}{\bm{\Sigma}} \equiv \avar\!\left(\frac{\partial Q_n(\bm{\theta}_0)}{\partial\bm{\theta}}\right).
+\end{equation}
+
+For M-estimators, $\sqrt{n}\,\frac{\partial Q_n(\bm{\theta}_0)}{\partial\bm{\theta}} = \frac{1}{\sqrt{n}}\sum_{t=1}^{n}\mathbf{s}(\mathbf{w}_t; \bm{\theta}_0)$ and $\bm{\Sigma}$ is the long-run variance of $\mathbf{s}(\mathbf{w}_t; \bm{\theta}_0)$. Setting $\bm{\Psi} = \E[\mathbf{H}(\mathbf{w}_t; \bm{\theta}_0)]$ gives the expression for $\avar(\hat{\bm{\theta}})$ in Proposition~\ref{prop:7.8}.
+
+Next turn to GMM. The expression for $\sqrt{n}\,\frac{\partial Q_n(\bm{\theta}_0)}{\partial\bm{\theta}}$ is
+\begin{equation}
+\label{eq:7.3.45}
+\sqrt{n}\,\frac{\partial Q_n(\bm{\theta}_0)}{\partial\bm{\theta}} = -[\mathbf{G}_n(\bm{\theta}_0)]'\widehat{\mathbf{W}}\frac{1}{\sqrt{n}}\sum_{t=1}^{n}\mathbf{g}(\mathbf{w}_t; \bm{\theta}_0).
+\end{equation}
+
+(Recall that $\mathbf{G}_n(\bm{\theta}) \equiv \frac{\partial\mathbf{g}_n(\bm{\theta})}{\partial\bm{\theta}'}$.) Since $\mathbf{G}_n(\bm{\theta}) = \frac{1}{n}\sum \frac{\partial\mathbf{g}(\mathbf{w}_t; \bm{\theta}_0)}{\partial\bm{\theta}'} \pto \mathbf{G}$ $(\equiv \E[\frac{\partial\mathbf{g}(\mathbf{w}_t; \bm{\theta}_0)}{\partial\bm{\theta}'}])$, $\widehat{\mathbf{W}} \pto \mathbf{W}$, and $\frac{1}{\sqrt{n}}\sum_{t=1}^{n}\mathbf{g}(\mathbf{w}_t; \bm{\theta}_0) \dto N(\mathbf{0}, \mathbf{S})$ under the conditions of Proposition~\ref{prop:7.10}, we have $\sqrt{n}\,\frac{\partial Q_n(\bm{\theta}_0)}{\partial\bm{\theta}}$ converging to a normal distribution with mean zero and
+\begin{equation}
+\label{eq:7.3.46}
+\underset{(p \times p)}{\bm{\Sigma}} \equiv \avar\!\left(\frac{\partial Q_n(\bm{\theta}_0)}{\partial\bm{\theta}}\right) = \underset{(p \times K)}{\mathbf{G}'}\underset{(K \times K)}{\mathbf{W}}\underset{(K \times K)}{\mathbf{S}}\underset{(K \times K)}{\mathbf{W}}\underset{(K \times p)}{\mathbf{G}}.
+\end{equation}
+
+Now rewrite the mean value expansion for the sampling error for GMM (\ref{eq:7.3.32}) as
+\begin{align}
+\label{eq:7.3.47}
+\sqrt{n}\,(\hat{\bm{\theta}} - \bm{\theta}_0) &= -\mathbf{B}^{-1}\mathbf{c}, \quad \mathbf{B} \equiv -\mathbf{G}_n(\hat{\bm{\theta}})'\widehat{\mathbf{W}}\mathbf{G}_n(\bar{\bm{\theta}}), \notag\\
+\mathbf{c} &\equiv -\mathbf{G}_n(\hat{\bm{\theta}})'\widehat{\mathbf{W}}\frac{1}{\sqrt{n}}\sum_{t=1}^{n}\mathbf{g}(\mathbf{w}_t; \bm{\theta}_0).
+\end{align}
+
+It is left as Review Question~5 below to show that this can be written as the Taylor expansion (\ref{eq:7.3.43}), with the symmetric matrix $\bm{\Psi}$ given by
+\begin{equation}
+\label{eq:7.3.48}
+\underset{(p \times p)}{\bm{\Psi}} = -\underset{(p \times K)}{\mathbf{G}'}\underset{(K \times K)}{\mathbf{W}}\underset{(K \times p)}{\mathbf{G}}.
+\end{equation}
+
+Substituting (\ref{eq:7.3.48}) and (\ref{eq:7.3.46}) into (\ref{eq:7.3.44}), we obtain the GMM asymptotic variance indicated in Proposition~\ref{prop:7.10}.
+
+\begin{table}[t]
+\centering
+\caption{Taylor Expansion for the Sampling Error}
+\label{tab:7.1}
+\[
+\sqrt{n}\,(\hat{\bm{\theta}} - \bm{\theta}_0) = -\bm{\Psi}^{-1}\sqrt{n}\,\frac{\partial Q_n(\bm{\theta}_0)}{\partial\bm{\theta}} + o_p, \quad \sqrt{n}\,\frac{\partial Q_n(\bm{\theta}_0)}{\partial\bm{\theta}} \dto N(\mathbf{0}, \bm{\Sigma}), \quad \avar(\hat{\bm{\theta}}) = \bm{\Psi}^{-1}\bm{\Sigma}\bm{\Psi}^{-1}
+\]
+\medskip
+\begin{tabular}{@{}lcc@{}}
+\toprule
+Terms for substitution & M-estimators & GMM \\
+\midrule
+$Q_n(\bm{\theta})$ & $\frac{1}{n}\sum_{t=1}^{n}m(\mathbf{w}_t;\bm{\theta})$ & $-\frac{1}{2}\mathbf{g}_n(\bm{\theta})'\widehat{\mathbf{W}}\mathbf{g}_n(\bm{\theta})$ \\[8pt]
+$\sqrt{n}\,\frac{\partial Q_n(\bm{\theta}_0)}{\partial\bm{\theta}}$ & $\frac{1}{\sqrt{n}}\sum_{t=1}^{n}\mathbf{s}(\mathbf{w}_t;\bm{\theta}_0)$ & $-[\mathbf{G}_n(\bm{\theta}_0)]'\widehat{\mathbf{W}}\frac{1}{\sqrt{n}}\sum_{t=1}^{n}\mathbf{g}(\mathbf{w}_t;\bm{\theta}_0)$ \\[8pt]
+$\bm{\Psi}$ & $\E[\mathbf{H}(\mathbf{w}_t;\bm{\theta}_0)]$ & $-\mathbf{G}'\mathbf{W}\mathbf{G}$ \\[4pt]
+$\bm{\Sigma}$ & long-run variance of $\mathbf{s}(\mathbf{w}_t;\bm{\theta}_0)$ & $\mathbf{G}'\mathbf{W}\mathbf{S}\,\mathbf{W}\mathbf{G}$ \\
+\bottomrule
+\end{tabular}
+
+\medskip
+\footnotesize
+NOTE: See (\ref{eq:7.3.2}) and (\ref{eq:7.3.3}) for definition of $\mathbf{s}(\mathbf{w}_t;\bm{\theta})$ and $\mathbf{H}(\mathbf{w}_t;\bm{\theta})$. Also,
+$\mathbf{g}_n(\bm{\theta}) \equiv \frac{1}{n}\sum_{t=1}^{n}\mathbf{g}(\mathbf{w}_t;\bm{\theta})$ and $\mathbf{G} \equiv \E\!\left[\frac{\partial\mathbf{g}(\mathbf{w}_t;\bm{\theta}_0)}{\partial\bm{\theta}'}\right]$.
+\end{table}
+
+In passing, it is useful for the next section's discussion to note that $\bm{\Sigma} = -\bm{\Psi}$ for ML with i.i.d.\ observations and efficient GMM (the GMM with $\mathbf{W} = \mathbf{S}^{-1}$). For ML, $\bm{\Sigma} = \E[\mathbf{s}(\mathbf{w}_t; \bm{\theta}_0)\,\mathbf{s}(\mathbf{w}_t; \bm{\theta}_0)']$, which equals the negative of the $\bm{\Psi}$ given in (\ref{eq:7.3.41}) thanks to the information matrix equality. For efficient GMM, setting $\mathbf{W} = \mathbf{S}^{-1}$ in (\ref{eq:7.3.46}) gives
+\begin{equation}
+\label{eq:7.3.49}
+\bm{\Sigma} = \mathbf{G}'\mathbf{S}^{-1}\mathbf{G},
+\end{equation}
+which is the negative of the $\bm{\Psi}$ in (\ref{eq:7.3.48}).
+
+\subsection*{Questions for Review}
+
+\begin{enumerate}
+\item (Score and Hessian of objective function) \enspace For M-estimators and ML in particular, we defined the score for observation $t$, $\mathbf{s}(\mathbf{w}_t; \bm{\theta})$, to be the gradient (vector of first derivatives) of $m(\mathbf{w}_t; \bm{\theta})$ and the Hessian for observation $t$, $\mathbf{H}(\mathbf{w}_t; \bm{\theta})$, to be the Hessian of $m(\mathbf{w}_t; \bm{\theta})$. Let the score (without the qualifier ``for observation $t$'') be the gradient of the objective function $Q_n(\bm{\theta})$ and denote it as $\mathbf{s}_n(\bm{\theta})$. Let the Hessian (without the qualifier ``for observation $t$'') be the Hessian of $Q_n(\bm{\theta})$ and denote it as $\mathbf{H}_n(\bm{\theta})$. Under the conditions of Proposition~\ref{prop:7.9}, show that
+\[
+\E[\mathbf{s}_n(\bm{\theta}_0)] = \mathbf{0}, \quad -\frac{1}{n}\E[\mathbf{H}_n(\bm{\theta}_0)] = \E[\mathbf{s}_n(\bm{\theta}_0)\,\mathbf{s}_n(\bm{\theta}_0)'].
+\]
+\textbf{Hint:} $\{\mathbf{s}(\mathbf{w}_t; \bm{\theta}_0)\}$ is i.i.d.
+
+\item (Conditional information matrix equality for the linear regression model) \enspace For the linear regression model of Example~\ref{ex:7.10}, verify that
+\[
+\E[\mathbf{s}(\mathbf{w}_t; \bm{\theta}_0) \mid \mathbf{x}_t] = \mathbf{0} \quad \text{and} \quad -\E[\mathbf{H}(\mathbf{w}_t; \bm{\theta}_0) \mid \mathbf{x}_t] = \E[\mathbf{s}(\mathbf{w}_t; \bm{\theta}_0)\,\mathbf{s}(\mathbf{w}_t; \bm{\theta}_0)' \mid \mathbf{x}_t].
+\]
+
+\item (Avar for the linear regression model) \enspace For the linear regression model of Example~\ref{ex:7.10}, let $(\tilde{\bm{\beta}}, \tilde{\sigma}^2)$ be the ML estimate of $(\bm{\beta}, \sigma^2)$. Write down the first estimator of $\avar(\hat{\bm{\theta}})$ defined in (\ref{eq:7.3.14}). Does $\widehat{\avar}(\tilde{\bm{\beta}})$ equal $\tilde{\sigma}^2(\frac{1}{n}\sum \mathbf{x}_t \mathbf{x}_t')^{-1}$? [Answer: No.]
+
+\item (GMM with optimal orthogonality conditions) \enspace Assume that the relevant technical conditions are satisfied for the hypothetical density $f(\mathbf{w}_t; \bm{\theta})$ so that the information matrix equality holds. Using Proposition~\ref{prop:7.10}, show that when the $\mathbf{g}$ function in the orthogonality conditions is given as in (\ref{eq:7.3.38}), the asymptotic variance matrix of the GMM estimator equals the inverse of the information matrix for observation $t$ (which is the lower bound in (\ref{eq:7.3.37})). \textbf{Hint:} Since $K$ equals $p$, $\mathbf{G}$ is a square matrix and the expression for $\avar(\hat{\bm{\theta}})$ in Proposition~\ref{prop:7.10} simplifies.
+\end{enumerate}

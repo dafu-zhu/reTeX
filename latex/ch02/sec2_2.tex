@@ -1,0 +1,515 @@
+% sec2_2.tex — Section 2.2: Fundamental Concepts in Time-Series Analysis
+
+In this section, we define the very basic concepts in time-series analysis that will
+form an integral part of our language.  The key concept is a \textbf{stochastic process},
+which is just a fancy name for a sequence of random variables.  If the index for
+the random variables is interpreted as representing time, the stochastic process is
+called a \textbf{time series}.  If $\{z_i\}$ $(i = 1, 2, \ldots)$ is a stochastic process,
+its \textbf{realization} or a \textbf{sample path} is an assignment to each $i$ of a
+possible value of $z_i$.  So a realization of $\{z_i\}$ is a sequence of real numbers.
+We will frequently use the term time series to mean both the realization and the
+process of which it is a realization.
+
+%% ─── Need for Ergodic Stationarity ────────────────────────────────────────
+\subsection*{Need for Ergodic Stationarity}
+
+The fundamental problem in time-series analysis is that we can observe the
+realization of the process only once.  For example, the sample on the U.S.\ annual
+inflation rate for the period from 1946 to 1995 is a string of 50 particular numbers,
+which is just one possible outcome of the underlying stochastic process for the
+inflation rate; if history took a different course, we could have obtained a different
+sample.
+
+If we could observe the history many times over, we could assemble many samples,
+each containing a possibly different string of 50 numbers.  The mean inflation rate
+for, say, 1995 can then be estimated by taking the average of the 1995 inflation
+rate (the 50th element of the string) across those samples.  The population mean
+thus estimated is sometimes called the \textbf{ensemble mean}.  In the language of
+general equilibrium theory in economics, the ensemble mean is the average across
+all the possible different states of nature at any given calendar time.
+
+Of course, it is not feasible to observe many different alternative histories.  But
+if the distribution of the inflation rate remains unchanged (this property will be
+referred to as \textbf{stationarity}), the particular string of 50 numbers we do observe
+can be viewed as 50 different values from the \emph{same} distribution.  Furthermore,
+if the process is not too persistent (what's called \textbf{ergodicity} has this property),
+each element of the string will contain some information not available from the
+other elements, and, as shown below, the time average over the elements of the
+single string will be consistent for the ensemble mean.
+
+%% ─── Various Classes of Stochastic Processes ──────────────────────────────
+\subsection*{Various Classes of Stochastic Processes\protect\footnote{Many of the
+concepts collected in this subsection can also be found in Section~4.7 of Davidson
+and MacKinnon (1993).}}
+
+\paragraph{Stationary Processes.}
+A stochastic process $\{\mathbf{z}_i\}$ $(i = 1, 2, \ldots)$ is (strictly)
+\textbf{stationary} if, for any given finite integer $r$ and for any set of subscripts,
+$i_1, i_2, \ldots, i_r$, the joint distribution of
+$(\mathbf{z}_{i_1}, \mathbf{z}_{i_2}, \ldots, \mathbf{z}_{i_r})$ depends only on
+$i_1 - i$, $i_2 - i$, $i_3 - i, \ldots, i_r - i$ but not on $i$.  For example, the
+joint distribution of $(\mathbf{z}_1, \mathbf{z}_5)$ is the same as that of
+$(\mathbf{z}_{12}, \mathbf{z}_{16})$.  What matters for the distribution is the
+relative position in the sequence.  In particular, the distribution of $\mathbf{z}_i$
+does not depend on the absolute position, $i$, of $\mathbf{z}_i$, so the mean,
+variance, and other higher moments, if they exist, remain the same across $i$.
+The definition also implies that any transformation (function) of a stationary
+process is itself stationary, that is, if $\{\mathbf{z}_i\}$ is stationary, then
+$\{f(\mathbf{z}_i)\}$ is.\footnote{The function $f(\cdot)$ needs to be ``measurable''
+so that $f(\mathbf{z}_i)$ is a well-defined random variable.  Any continuous function
+is measurable.  In what follows, we won't bother to add the qualifier ``measurable''
+when a function $f$ of a random variable is understood to be a random variable.}
+For example, $\{\mathbf{z}_i \mathbf{z}_i'\}$ is stationary if $\{\mathbf{z}_i\}$ is.
+
+\begin{example}[i.i.d.\ sequences]
+\label{ex:2.1}
+A sequence of independent and identically distributed random variables is a
+stationary process that exhibits no serial dependence.
+\end{example}
+
+\begin{example}[constant series]
+\label{ex:2.2}
+Draw $z_1$ from some distribution and then set $z_i = z_1$
+$(i = 2, 3, \ldots)$.  So the value of the process is frozen at the initial date.
+The process $\{z_i\}$ thus created is a stationary process that exhibits maximum
+serial dependence.
+\end{example}
+
+Evidently, if a vector process $\{\mathbf{z}_i\}$ is stationary, then each element of
+the vector forms a univariate stationary process.  The converse, however, is not true.
+
+\begin{example}[element-wise vs.\ joint stationarity]
+\label{ex:2.3}
+Let $\{\varepsilon_i\}$ $(i = 1, 2, \ldots)$ be a scalar i.i.d.\ process.  Create a
+two-dimensional process $\{\mathbf{z}_i\}$ from it by defining $z_{i1} = \varepsilon_i$
+and $z_{i2} = \varepsilon_1$.  The scalar process $\{z_{i1}\}$ is stationary (this is
+the process of Example~\ref{ex:2.1}).  The scalar process $\{z_{i2}\}$, too, is
+stationary (the Example~\ref{ex:2.2} process).  The vector process
+$\{\mathbf{z}_i\}$, however, is not (jointly) stationary, because the (joint)
+distribution of $\mathbf{z}_1$ $(= (\varepsilon_1, \varepsilon_1)')$ differs from that
+of $\mathbf{z}_2$ $(= (\varepsilon_2, \varepsilon_1)')$.
+\end{example}
+
+Most aggregate time series such as GDP are not stationary because they exhibit
+time trends.  A less obvious example of nonstationarity is international exchange
+rates, which are alleged to have increasing variance.  But many time series with
+trend can be reduced to stationary processes.  A process is called
+\textbf{trend stationary} if it is stationary after subtracting from it a (usually
+linear) function of time (which is the index $i$).  If a process is not stationary
+but its first difference, $z_i - z_{i-1}$, is stationary, $\{z_i\}$ is called
+\textbf{difference stationary}.  Trend-stationary and difference-stationary processes
+will be studied in Chapter~9.
+
+\paragraph{Covariance Stationary Processes.}
+A stochastic process $\{\mathbf{z}_i\}$ is \textbf{weakly} (or \textbf{covariance})
+\textbf{stationary} if:
+\begin{enumerate}[label=(\roman*)]
+  \item $\E(\mathbf{z}_i)$ does not depend on $i$, and
+  \item $\Cov(\mathbf{z}_i, \mathbf{z}_{i-j})$ exists, is finite, and depends only on
+        $j$ but not on $i$ (for example, $\Cov(\mathbf{z}_1, \mathbf{z}_5)$ equals
+        $\Cov(\mathbf{z}_{12}, \mathbf{z}_{16})$).
+\end{enumerate}
+The relative, not absolute, position in the sequence matters for the mean and
+covariance of a covariance-stationary process.  Evidently, if a sequence is
+(strictly) stationary \emph{and} if the variance and covariances are finite, then
+the sequence is weakly stationary (hence the term ``strict'').  An example of a
+covariance-stationary but not strictly stationary process will be given in
+Example~\ref{ex:2.4} below.
+
+The \textbf{$j$-th order autocovariance}, denoted $\bm{\Gamma}_j$, is defined as
+\[
+  \bm{\Gamma}_j \equiv \Cov(\mathbf{z}_i, \mathbf{z}_{i-j})
+  \quad (j = 0, 1, 2, \ldots).
+\]
+The term ``auto'' comes about because the two random variables are taken from the
+same process.  $\bm{\Gamma}_j$ does not depend on $i$ because of covariance
+stationarity.  Also by covariance stationarity, $\bm{\Gamma}_j$ satisfies
+\begin{equation}
+  \bm{\Gamma}_j = \bm{\Gamma}'_{-j}.
+  \label{eq:2.2.1}
+\end{equation}
+(Showing this is a review question below.)  The 0-th order autocovariance is the
+variance $\bm{\Gamma}_0 = \Var(\mathbf{z}_i)$.  The processes in
+Examples~\ref{ex:2.1} and \ref{ex:2.2} are covariance stationary if the variance of
+the distribution is finite.  For the process of Example~\ref{ex:2.1},
+$\bm{\Gamma}_0$ is the variance of the distribution and $\bm{\Gamma}_j = \mathbf{0}$
+for $j \geq 1$.  For the process of Example~\ref{ex:2.2},
+$\bm{\Gamma}_j = \bm{\Gamma}_0$.
+
+For a scalar covariance stationary process $\{z_i\}$, the $j$-th order autocovariance
+is now a scalar.  If $\gamma_j$ is this autocovariance, it satisfies
+\begin{equation}
+  \gamma_j = \gamma_{-j}.
+  \label{eq:2.2.2}
+\end{equation}
+
+Take a string of $n$ successive values, $(z_i, z_{i+1}, \ldots, z_{i+n-1})$, from a
+scalar covariance process.  By covariance stationarity, its $n \times n$
+variance-covariance matrix is the same as that of $(z_1, z_2, \ldots, z_n)$ and is a
+band spectrum matrix:
+\[
+  \Var(z_i, z_{i+1}, \ldots, z_{i+n-1})
+  = \begin{bmatrix}
+      \gamma_0    & \gamma_1    & \gamma_2 & \cdots & \gamma_{n-1} \\
+      \gamma_1    & \gamma_0    & \gamma_1 & \cdots & \gamma_{n-2} \\
+      \vdots      & \ddots      & \ddots   & \ddots & \vdots       \\
+      \gamma_{n-2}& \cdots      & \gamma_1 & \gamma_0 & \gamma_1   \\
+      \gamma_{n-1}& \cdots      & \gamma_2 & \gamma_1 & \gamma_0
+    \end{bmatrix}.
+\]
+This is called the \textbf{autocovariance matrix} of the process.  The
+\textbf{$j$-th order autocorrelation coefficient}, $\rho_j$, is defined as
+\begin{equation}
+  j\text{-th order autocorrelation coefficient}
+  \equiv \rho_j
+  \equiv \frac{\gamma_j}{\gamma_0}
+  = \frac{\Cov(z_i, z_{i-j})}{\Var(z_i)}
+  \quad (j = 1, 2, \ldots).
+  \label{eq:2.2.3}
+\end{equation}
+For $j = 0$, $\rho_j = 1$.  The plot of $\{\rho_j\}$ against
+$j = 0, 1, 2, \ldots$ is called the \textbf{correlogram}.
+
+%% ─── White Noise Processes ─────────────────────────────────────────────────
+\paragraph{White Noise Processes.}
+A very important class of weakly stationary processes is a \textbf{white noise process},
+a process with zero mean and no serial correlation:
+\begin{gather*}
+  \text{a covariance-stationary process $\{\mathbf{z}_i\}$ is \textbf{white noise} if}
+  \\
+  \E(\mathbf{z}_i) = \mathbf{0} \quad \text{and} \quad
+  \Cov(\mathbf{z}_i, \mathbf{z}_{i-j}) = \mathbf{0} \;\text{for}\; j \neq 0.
+\end{gather*}
+Clearly, an independently and identically distributed (i.i.d.)\ sequence with mean
+zero and finite variance is a special case of a white noise process.  For this reason,
+it is called an \textbf{independent white noise process}.
+
+\begin{example}[a white noise process that is not strictly
+stationary\protect\footnote{Drawn from Example~7.8 of Anderson (1971, p.~379).}]
+\label{ex:2.4}
+Let $w$ be a random variable uniformly distributed in the interval $(0, 2\pi)$,
+and define
+\[
+  z_i = \cos(iw) \quad (i = 1, 2, \ldots).
+\]
+It can be shown that $\E(z_i) = 0$, $\Var(z_i) = 1/2$, and
+$\Cov(z_i, z_j) = 0$ for $i \neq j$.  So $\{z_i\}$ is white noise.  However,
+clearly, it is not an independent white noise process.  It is not even strictly
+stationary.
+\end{example}
+
+%% ─── Ergodicity ───────────────────────────────────────────────────────────
+\paragraph{Ergodicity.}
+A stationary process $\{z_i\}$ is said to be \textbf{ergodic} if, for any two bounded
+functions $f\colon \mathbb{R}^k \to \mathbb{R}$ and
+$g\colon \mathbb{R}^\ell \to \mathbb{R}$,
+\[
+  \lim_{n \to \infty}
+  \big|\E[f(z_i, \ldots, z_{i+k})\,g(z_{i+n}, \ldots, z_{i+n+\ell})]\big|
+  = \big|\E[f(z_i, \ldots, z_{i+k})]\big|\,
+    \big|\E[g(z_{i+n}, \ldots, z_{i+n+\ell})]\big|.
+\]
+Heuristically, a stationary process is ergodic if it is asymptotically independent,
+that is, if any two random variables positioned far apart in the sequence are almost
+independently distributed.  A stationary process that is ergodic will be called
+\textbf{ergodic stationary}.  Ergodic stationarity will be an integral ingredient in
+developing large-sample theory because of the following property.
+
+\medskip
+\noindent\textbf{Ergodic Theorem:}\quad
+\emph{(See, e.g., Theorem~9.5.5 of Karlin and Taylor (1975).) Let
+$\{\mathbf{z}_i\}$ be a stationary and ergodic process with
+$\E(\mathbf{z}_i) = \bm{\mu}$.\footnote{So the mean is assumed to exist and is
+finite.}  Then}
+\[
+  \bar{\mathbf{z}}_n \equiv \frac{1}{n} \sum_{i=1}^{n} \mathbf{z}_i
+  \asto \bm{\mu}.
+\]
+
+The Ergodic Theorem, therefore, is a substantial generalization of Kolmogorov's
+LLN.  Serial dependence, which is ruled out by the i.i.d.\ assumption in
+Kolmogorov's LLN, is allowed in the Ergodic Theorem, provided that it disappears
+in the long run.  Since, for any (measurable) function $f(\cdot)$,
+$\{f(\mathbf{z}_i)\}$ is ergodic stationary whenever $\{\mathbf{z}_i\}$ is, this
+theorem implies that any moment of a stationary and ergodic process (if it exists
+and is finite) is consistently estimated by the sample moment.  For example,
+suppose $\{\mathbf{z}_i\}$ is stationary and ergodic and
+$\E(\mathbf{z}_i\mathbf{z}_i')$ exists and is finite.  Then
+$\frac{1}{n}\sum_i \mathbf{z}_i\mathbf{z}_i'$ is consistent for
+$\E(\mathbf{z}_i\mathbf{z}_i')$.
+
+The simplest example of ergodic stationary processes is independent white noise
+processes.  (White noise processes where independence is weakened to no serial
+correlation are not necessarily ergodic; Example~\ref{ex:2.4} above is an example.)
+Another important example is the AR(1) process satisfying
+\[
+  z_i = c + \rho z_{i-1} + \varepsilon_i, \quad |\rho| < 1,
+\]
+where $\{\varepsilon_i\}$ is independent white noise.
+
+%% ─── Martingales ──────────────────────────────────────────────────────────
+\subsection*{Martingales}
+
+Let $x_i$ be an element of $\mathbf{z}_i$.  The scalar process $\{x_i\}$ is called a
+\textbf{martingale with respect to} $\{\mathbf{z}_i\}$ if
+\begin{equation}
+  \E(x_i \mid \mathbf{z}_{i-1}, \mathbf{z}_{i-2}, \ldots, \mathbf{z}_1)
+  = x_{i-1} \quad \text{for } i \geq 2.\footnote{If the process started in the
+  infinite past so that $i$ runs from $-\infty$ to $+\infty$, the definition is
+  $\E(x_i \mid \mathbf{z}_{i-1}, \mathbf{z}_{i-2}, \ldots) = x_{i-1}$, and the
+  qualifier ``$i \geq 2$'' is not needed.  Whether the process started in the infinite
+  past or in date $i = 1$ is not important for large-sample theory to be developed
+  below.  What will matter is that the process starts before the sample period.}
+  \label{eq:2.2.4}
+\end{equation}
+The conditioning set $(\mathbf{z}_{i-1}, \mathbf{z}_{i-2}, \ldots, \mathbf{z}_1)$ is
+often called the \textbf{information set} at point (date) $i - 1$.  $\{x_i\}$ is called
+simply a \textbf{martingale} if the information set is its own past values
+$(x_{i-1}, x_{i-2}, \ldots, x_1)$.  If $\mathbf{z}_i$ includes $x_i$, then $\{x_i\}$
+is a martingale, because
+\begin{align*}
+  \E(x_i \mid x_{i-1}, x_{i-2}, \ldots, x_1)
+  &= \E[\E(x_i \mid \mathbf{z}_{i-1}, \mathbf{z}_{i-2}, \ldots, \mathbf{z}_1)
+     \mid x_{i-1}, x_{i-2}, \ldots, x_1] \\
+  &\quad \text{(Law of Iterated Expectations)} \\
+  &= \E(x_{i-1} \mid x_{i-1}, x_{i-2}, \ldots, x_1) = x_{i-1}.
+\end{align*}
+
+A vector process $\{\mathbf{z}_i\}$ is called a \textbf{martingale} if
+\begin{equation}
+  \E(\mathbf{z}_i \mid \mathbf{z}_{i-1}, \ldots, \mathbf{z}_1)
+  = \mathbf{z}_{i-1} \quad \text{for } i \geq 2.
+  \label{eq:2.2.5}
+\end{equation}
+
+\begin{example}[Hall's Martingale Hypothesis]
+\label{ex:2.5}
+Let $\mathbf{z}_i$ be a vector containing a set of macroeconomic variables (such as
+the money supply or GDP) including aggregate consumption $c_i$ for period $i$.
+Hall's (1978) martingale hypothesis is that consumption is a martingale with respect
+to $\{\mathbf{z}_i\}$:
+\[
+  \E(c_i \mid \mathbf{z}_{i-1}, \mathbf{z}_{i-2}, \ldots, \mathbf{z}_1) = c_{i-1}.
+\]
+This formalizes the notion in consumption theory called ``consumption smoothing'':
+the consumer, wishing to avoid fluctuations in the standard of living, adjusts
+consumption in date $i-1$ to the level such that no change in subsequent consumption
+is anticipated.
+\end{example}
+
+%% ─── Random Walks ─────────────────────────────────────────────────────────
+\paragraph{Random Walks.}
+An important example of martingales is a \textbf{random walk}.  Let $\{\mathbf{g}_i\}$
+be a vector independent white noise process (so it is i.i.d.\ with mean $\mathbf{0}$
+and finite variance matrix).  A random walk, $\{\mathbf{z}_i\}$, is a sequence of
+cumulative sums:
+\begin{equation}
+  \mathbf{z}_1 = \mathbf{g}_1,\;
+  \mathbf{z}_2 = \mathbf{g}_1 + \mathbf{g}_2,\; \ldots,\;
+  \mathbf{z}_i = \mathbf{g}_1 + \mathbf{g}_2 + \cdots + \mathbf{g}_i, \;\ldots\;.
+  \label{eq:2.2.6}
+\end{equation}
+Given the sequence $\{\mathbf{z}_i\}$, the underlying independent white noise
+sequence, $\{\mathbf{g}_i\}$, can be backed out by taking first differences:
+\begin{equation}
+  \mathbf{g}_1 = \mathbf{z}_1,\;
+  \mathbf{g}_2 = \mathbf{z}_2 - \mathbf{z}_1,\; \ldots,\;
+  \mathbf{g}_i = \mathbf{z}_i - \mathbf{z}_{i-1},\; \ldots\;.
+  \label{eq:2.2.7}
+\end{equation}
+So the first difference of a random walk is independent white noise.  A random walk
+is a martingale because
+\begin{align}
+  \E(\mathbf{z}_i \mid \mathbf{z}_{i-1}, \ldots, \mathbf{z}_1)
+  &= \E(\mathbf{z}_i \mid \mathbf{g}_{i-1}, \ldots, \mathbf{g}_1)
+     \quad (\text{since } (\mathbf{z}_{i-1}, \ldots, \mathbf{z}_1) \text{ and}
+     \notag \\
+  &\qquad (\mathbf{g}_{i-1}, \ldots, \mathbf{g}_1) \text{ have the same information,
+     as just seen}) \notag \\
+  &= \E(\mathbf{g}_1 + \mathbf{g}_2 + \cdots + \mathbf{g}_i \mid
+     \mathbf{g}_{i-1}, \ldots, \mathbf{g}_1) \notag \\
+  &= \E(\mathbf{g}_i \mid \mathbf{g}_{i-1}, \ldots, \mathbf{g}_1)
+     + (\mathbf{g}_1 + \cdots + \mathbf{g}_{i-1}) \notag \\
+  &= \mathbf{g}_1 + \cdots + \mathbf{g}_{i-1} \quad
+     (\E(\mathbf{g}_i \mid \mathbf{g}_{i-1}, \ldots, \mathbf{g}_1) = \mathbf{0}
+     \text{ as } \{\mathbf{g}_i\} \text{ is independent white noise}) \notag \\
+  &= \mathbf{z}_{i-1} \quad (\text{by the definition of } \mathbf{z}_{i-1}).
+  \label{eq:2.2.8}
+\end{align}
+
+%% ─── Martingale Difference Sequences ──────────────────────────────────────
+\subsection*{Martingale Difference Sequences}
+
+A vector process $\{\mathbf{g}_i\}$ with $\E(\mathbf{g}_i) = \mathbf{0}$ is called a
+\textbf{martingale difference sequence} (\textbf{m.d.s.}) or \textbf{martingale
+differences} if the expectation conditional on its past values, too, is zero:
+\begin{equation}
+  \E(\mathbf{g}_i \mid \mathbf{g}_{i-1}, \mathbf{g}_{i-2}, \ldots, \mathbf{g}_1)
+  = \mathbf{0} \quad \text{for} \quad i \geq 2.
+  \label{eq:2.2.9}
+\end{equation}
+The process is so called because the cumulative sum $\{\mathbf{z}_i\}$ created from
+a martingale difference sequence $\{\mathbf{g}_i\}$ is a martingale; the proof is the
+same as in \eqref{eq:2.2.8}.  Conversely, if $\{\mathbf{z}_i\}$ is martingale, the
+first differences created as in \eqref{eq:2.2.7} are a martingale difference sequence.
+
+A martingale difference sequence has no serial correlation (i.e.,
+$\Cov(\mathbf{g}_i, \mathbf{g}_{i-j}) = \mathbf{0}$ for all $i$ and $j \neq 0$).
+A proof of this claim is as follows.
+
+\begin{proof}
+First note that we can assume, without loss of generality, that $j \geq 1$.  Since
+the mean is zero, it suffices to show that
+$\E(\mathbf{g}_i\mathbf{g}_{i-j}') = \mathbf{0}$.  So consider rewriting it as
+follows.
+\begin{align*}
+  \E(\mathbf{g}_i\mathbf{g}_{i-j}')
+  &= \E[\E(\mathbf{g}_i\mathbf{g}_{i-j}' \mid \mathbf{g}_{i-j})]
+     \quad \text{(by the Law of Total Expectations)} \\
+  &= \E[\E(\mathbf{g}_i \mid \mathbf{g}_{i-j})\,\mathbf{g}_{i-j}']
+     \quad \text{(by the linearity of conditional expectations)}.
+\end{align*}
+Now, since $j \geq 1$, $(\mathbf{g}_{i-1}, \ldots, \mathbf{g}_{i-j}, \ldots,
+\mathbf{g}_1)$ includes $\mathbf{g}_{i-j}$.  Therefore,
+\begin{align*}
+  \E(\mathbf{g}_i \mid \mathbf{g}_{i-j})
+  &= \E[\E(\mathbf{g}_i \mid \mathbf{g}_{i-1}, \ldots, \mathbf{g}_{i-j}, \ldots,
+     \mathbf{g}_1) \mid \mathbf{g}_{i-j}]
+     \quad \text{(by the Law of Iterated Expectations)} \\
+  &= \mathbf{0}.
+\end{align*}
+The last equality holds because
+$\E(\mathbf{g}_i \mid \mathbf{g}_{i-1}, \ldots, \mathbf{g}_{i-j}, \ldots,
+\mathbf{g}_1) = \mathbf{0}$.
+\end{proof}
+
+%% ─── ARCH Processes ───────────────────────────────────────────────────────
+\subsection*{ARCH Processes}
+
+An example of martingale differences, frequently used in analyzing asset returns,
+is an autoregressive conditional heteroskedastic (\textbf{ARCH}) process introduced
+by Engle (1982).  A process $\{g_i\}$ is said to be an \textbf{ARCH process of
+order 1} (\textbf{ARCH(1)}) if it can be written as
+\begin{equation}
+  g_i = \sqrt{\zeta + \alpha g_{i-1}^2} \cdot \varepsilon_i,
+  \label{eq:2.2.10}
+\end{equation}
+where $\{\varepsilon_i\}$ is i.i.d.\ with mean zero and unit variance.  If $g_1$ is
+the initial value of the process, we can use \eqref{eq:2.2.10} to calculate
+subsequent values of $g_i$.  For example,
+\[
+  g_2 = \sqrt{\zeta + \alpha g_1^2} \cdot \varepsilon_2.
+\]
+More generally, $g_i$ $(i \geq 2)$ is a function of $g_1$ and
+$(\varepsilon_2, \varepsilon_3, \ldots, \varepsilon_i)$.  Therefore, $\varepsilon_i$
+is independent of $(g_1, g_2, \ldots, g_{i-1})$.  It is then easy to show that
+$\{g_i\}$ is an m.d.s.\ because
+\begin{align}
+  \E(g_i \mid g_{i-1}, g_{i-2}, \ldots, g_1)
+  \label{eq:2.2.11} \\
+  &= \E\!\left(\sqrt{\zeta + \alpha g_{i-1}^2} \cdot \varepsilon_i
+     \mid g_{i-1}, g_{i-2}, \ldots, g_1\right) \notag \\
+  &= \sqrt{\zeta + \alpha g_{i-1}^2}\;
+     \E(\varepsilon_i \mid g_{i-1}, g_{i-2}, \ldots, g_1) \notag \\
+  &= \sqrt{\zeta + \alpha g_{i-1}^2}\; \E(\varepsilon_i)
+     \quad (\text{since } \varepsilon_i \text{ is independent of }
+     (g_1, g_2, \ldots, g_{i-1})) \notag \\
+  &= 0 \quad (\text{since } \E(\varepsilon_i) = 0).
+  \label{eq:2.2.12}
+\end{align}
+
+By a similar argument, it follows that
+\begin{equation}
+  \E(g_i^2 \mid g_{i-1}, g_{i-2}, \ldots, g_1)
+  = \zeta + \alpha g_{i-1}^2.
+  \label{eq:2.2.13}
+\end{equation}
+So the conditional second moment (which equals the conditional variance since
+$\E(g_i \mid g_1, g_2, \ldots, g_{i-1}) = 0$) is a function of its own history of
+the process.  In this sense the process exhibits \textbf{own conditional
+heteroskedasticity}.  It can be shown (see, e.g., Engle, 1982) that the process is
+strictly stationary and ergodic if $|\alpha| < 1$, provided that $g_1$ is a draw
+from an appropriate distribution or provided that the process started in the infinite
+past.  If $g_i$ is stationary, the \emph{unconditional} second moment is easy to
+obtain.  Taking the unconditional expectation of both sides of \eqref{eq:2.2.13} and
+noting that
+\[
+  \E[\E(g_i^2 \mid g_{i-1}, g_{i-2}, \ldots, g_1)] = \E(g_i^2)
+  \quad \text{and} \quad
+  \E(g_i^2) = \E(g_{i-1}^2) \text{ if } g_i \text{ is stationary},
+\]
+we obtain
+\begin{equation}
+  \E(g_i^2) = \zeta + \alpha\,\E(g_i^2) \quad \text{or} \quad
+  \E(g_i^2) = \frac{\zeta}{1 - \alpha}.
+  \label{eq:2.2.14}
+\end{equation}
+If $\alpha > 0$, this model captures the characteristic found for asset returns that
+large values tend to be followed by large values.  (For more details of ARCH
+processes, see, e.g., Hamilton, 1994, Section~21.1.)
+
+%% ─── Different Formulation of Lack of Serial Dependence ───────────────────
+\subsection*{Different Formulation of Lack of Serial Dependence}
+
+Evidently, an independent white noise process is a stationary martingale difference
+sequence with finite variance.  And, as just seen, a martingale difference sequence
+has no serial correlation.  Thus, we have three formulations of a lack of serial
+dependence for zero-mean covariance stationary processes.  They are, in the order
+of strength,
+\begin{align}
+  &(1)\;\text{``$\{\mathbf{g}_i\}$ is independent white noise.''} \notag \\
+  \Rightarrow\; &(2)\;\text{``$\{\mathbf{g}_i\}$ is stationary m.d.s.\ with finite
+  variance.''} \notag \\
+  \Rightarrow\; &(3)\;\text{``$\{\mathbf{g}_i\}$ is white noise.''}
+  \label{eq:2.2.15}
+\end{align}
+
+Condition (1) is stronger than (2) because there are processes satisfying (2) but not
+(1).  An ARCH(1) process \eqref{eq:2.2.10} with $|\alpha| < 1$ is an example.
+Figure~2.1 shows how a realization of a process satisfying (1) typically differs from
+that satisfying (2).  Figure~2.1, Panel~(a), plots a realization of a sequence of
+independent and normally distributed random variables with mean 0 and unit variance.
+Panel~(b) plots an ARCH(1) process \eqref{eq:2.2.10} with $\zeta = 0.2$ and
+$\alpha = 0.8$ (so that the unconditional variance, $\zeta/(1-\alpha)$, is unity as
+in panel~(a)), where the value of the i.i.d.\ sequence $\varepsilon_i$ in
+\eqref{eq:2.2.10} is taken from Figure~2.1, Panel~(a), so that the sign in both
+panels is the same at all points.  The series in Panel~(b) is generally less volatile
+than in Panel~(a), but at some points it is much more volatile.  Nevertheless, the
+series is stationary.
+
+Condition (2) is stronger than (3); the process in Example~\ref{ex:2.4} is white
+noise, but (as you will show in a review question) it does not satisfy (2).
+
+%% ── Figure 2.1 placeholder ────────────────────────────────────────────────
+% Figure 2.1: Plots of Serially Uncorrelated Time Series:
+%   (a) An i.i.d. N(0,1) sequence.  (b) ARCH(1) with shocks taken from panel (a).
+
+%% ─── The CLT for Ergodic Stationary Martingale Differences Sequences ──────
+\subsection*{The CLT for Ergodic Stationary Martingale Differences Sequences}
+
+The following CLT extends the Lindeberg--Levy CLT to stationary and ergodic m.d.s.
+
+\medskip
+\noindent\textbf{Ergodic Stationary Martingale Differences CLT (Billingsley, 1961):}
+\quad\emph{Let $\{\mathbf{g}_i\}$ be a vector martingale difference sequence that is
+stationary and ergodic with
+$\E(\mathbf{g}_i\mathbf{g}_i') = \bm{\Sigma}$,\footnote{Since $\{\mathbf{g}_i\}$ is
+stationary, this matrix of cross moments does not depend on $i$.  Also, since a cross
+moment matrix is indicated, it is implicitly assumed that all the cross moments exist
+and are finite.} and let
+$\bar{\mathbf{g}} \equiv \frac{1}{n}\sum_{i=1}^{n} \mathbf{g}_i$.  Then}
+\[
+  \sqrt{n}\,\bar{\mathbf{g}}
+  = \frac{1}{\sqrt{n}} \sum_{i=1}^{n} \mathbf{g}_i
+  \dto N(\mathbf{0},\, \bm{\Sigma}).
+\]
+
+Unlike in the Lindeberg--Levy CLT, there is no need to subtract the mean from
+$\mathbf{g}_i$ because the unconditional mean of an m.d.s.\ is by definition zero.
+For the same reason, $\bm{\Sigma}$ also equals $\Var(\mathbf{g}_i)$.  This CLT,
+being applicable not just to i.i.d.\ sequences but also to stationary martingale
+differences such as ARCH(1) processes, is more general than Lindeberg--Levy.
+
+We have presented an LLN for serially correlated processes in the form of the
+Ergodic Theorem.  A central limit theorem for serially correlated processes will be
+presented in Chapter~6.

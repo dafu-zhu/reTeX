@@ -1,0 +1,232 @@
+% sec6_5.tex — Section 6.5: Asymptotics for Sample Means of Serially Correlated Processes
+
+This section studies the asymptotic properties of the sample mean
+\[
+  \bar{y} \equiv \frac{1}{n} \sum_{t=1}^{n} y_t
+\]
+for serially correlated processes. (It should be kept in mind that $\bar{y}$ depends on
+$n$, although the notation does not make it explicit.) For the consistency of the
+sample mean, we already have a sufficient condition in the Ergodic Theorem of
+Chapter~2. The first proposition of this section provides another sufficient condition
+in the form of restrictions on covariance-stationary processes. We also provide
+two CLTs for serially correlated processes, one for linear processes and the other
+for ergodic stationary processes. Chapter~2 includes a CLT for ergodic stationary
+processes, but it rules out serial correlation because the process is assumed to be a
+martingale difference sequence. The CLT for ergodic stationary processes of this
+section generalizes it by allowing for serial correlation.
+
+\subsection*{LLN for Covariance-Stationary Processes}
+
+\begin{proposition}[LLN for covariance-stationary processes with vanishing autocovariances]
+\label{prop:6.8}
+Let $\{y_t\}$ be covariance-stationary with mean $\mu$ and $\{\gamma_j\}$ be the autocovariances
+of $\{y_t\}$. Then
+\begin{enumerate}[label=(\alph*)]
+\item $\bar{y} \to_{\mathrm{m.s.}} \mu$ as $n \to \infty$ if $\lim_{j \to \infty} \gamma_j = 0$.
+
+\item $\displaystyle \lim_{n \to \infty} \Var(\sqrt{n}\,\bar{y})
+  = \sum_{j=-\infty}^{\infty} \gamma_j < \infty$ \quad
+  if $\{\gamma_j\}$ is summable.\footnote{Anderson (1971, Lemma~8.3.1, p.~460). Absolute summability of $\{\gamma_j\}$ is not needed.}
+\end{enumerate}
+\end{proposition}
+
+Since a mean square convergence implies a convergence in probability, part~(a)
+shows that a very mild condition on covariance-stationary processes suffices for
+the sample mean to be consistent for $\mu$. To prove part~(a), by Chebychev's LLN
+(see Section~2.1), it suffices to show that $\lim_{n \to \infty} \Var(\bar{y}) = 0$, which is fairly easy
+(Analytical Exercise~9) once the expression for $\Var(\bar{y})$ is derived. Unlike in the case
+without serial correlation in $\{y_t\}$, calculating the variance of $\bar{y}$ is more cumbersome
+because covariances between two different terms have to be taken into account:
+\begin{align}
+  n \cdot \Var(\bar{y}) &= \Var(\sqrt{n}\,\bar{y}) \notag \\
+  &= \frac{1}{n} [\Cov(y_1, y_1 + \cdots + y_n) + \cdots + \Cov(y_n, y_1 + \cdots + y_n)] \notag \\
+  &= \frac{1}{n} [(\gamma_0 + \gamma_1 + \cdots + \gamma_{n-1}) + (\gamma_1 + \gamma_0 + \gamma_1 + \cdots + \gamma_{n-2}) \notag \\
+  &\qquad + \cdots + (\gamma_{n-1} + \gamma_{n-2} + \cdots + \gamma_1 + \gamma_0)] \notag \\
+  &= \frac{1}{n} [n\gamma_0 + 2(n-1)\gamma_1 + \cdots + 2(n-j)\gamma_j + \cdots + 2\gamma_{n-1}] \notag \\
+  &= \gamma_0 + 2 \sum_{j=1}^{n-1} \Bigl(1 - \frac{j}{n}\Bigr) \gamma_j.
+  \label{eq:6.5.2}
+\end{align}
+(If you have difficulty deriving this, set $n$ to, say, 3 to verify.) For each fixed $j \geq 1$,
+the coefficient of $\gamma_j$ in \eqref{eq:6.5.2} goes to 1 as $n \to \infty$, so that all the autocovariances
+eventually enter the sum with a coefficient of one. This is not enough to show the
+desired result \eqref{eq:6.5.1}. Filling in the rest of the proof of (b) is Analytical Exercise~10.
+
+For a covariance-stationary process $\{y_t\}$, we define the \textbf{long-run variance} to
+be the limit as $n \to \infty$ of $\Var(\sqrt{n}\,\bar{y})$ (if it exists). So part~(b) of the proposition
+says that the long-run variance equals $\sum_{j=-\infty}^{\infty} \gamma_j$, which in turn equals the value of
+the autocovariance-generating function $g_Y(z)$ at $z = 1$ (see \eqref{eq:6.2.15}) or $2\pi$ times
+the spectrum at frequency zero (see \eqref{eq:6.2.17}).
+
+\subsection*{Two Central Limit Theorems}
+
+We present two CLTs to cover serial correlation. The first is a generalization of
+Lindeberg--Levy.
+
+\begin{proposition}[CLT for MA($\infty$)]
+\label{prop:6.9}
+Let $y_t = \mu + \sum_{j=0}^{\infty} \psi_j \varepsilon_{t-j}$ where $\{\varepsilon_t\}$ is
+independent white noise and $\sum_{j=0}^{n} |\psi_j| < \infty$. Then
+\begin{equation}
+  \sqrt{n}\,(\bar{y} - \mu) \dto N\Bigl(0,\; \sum_{j=-\infty}^{\infty} \gamma_j\Bigr).
+  \label{eq:6.5.3}
+\end{equation}
+\end{proposition}
+
+We will not prove this result (see Anderson, 1971, Theorem~7.7.8 or Brockwell
+and Davis, 1991, Theorem~7.1.2 for a proof), but we should not be surprised to
+see that $\avar(\bar{y})$ (the variance of the limiting distribution of $\sqrt{n}\,(\bar{y} - \mu)$) equals
+the long-run variance $\sum_{j=-\infty}^{\infty} \gamma_j$. We know from Lemma~2.1 that ``$x_n \dto x$,''
+``$\Var(x_n) \to c < \infty$'' $\Rightarrow$ ``$\Var(x) = c$.'' Here, set $x_n = \sqrt{n}\,(\bar{y} - \mu)$. By \eqref{eq:6.5.1},
+$\Var(x_n)$ converges to a finite limit $\sum \gamma_j$. So the variance of the limiting distribution
+of $\sqrt{n}\,(\bar{y} - \mu)$ is $\sum \gamma_j$.
+
+By Proposition~6.1(d), the process in Proposition~6.9 is (stationary and) ergodic.
+Remember that ergodicity limits serial correlation by requiring that two random
+variables sufficiently far apart in the sequence be almost independent. But ergodic
+stationarity alone is not sufficient to ensure the asymptotic normality of $\bar{y}$. A natural
+question arises: is there a further restriction on ergodicity, short of requiring the
+process to be linear as in Proposition~6.9, that delivers asymptotic normality? The
+restriction that has become increasingly popular is what this book calls \textbf{Gordin's
+condition} for ergodic stationary processes. It has three parts. The first two parts
+follow:
+\begin{enumerate}[label=(\alph*)]
+\item $\E(y_t^2) < \infty$. (This is a restriction on [strictly] stationary processes because,
+strictly speaking, a stationary process might not have finite second moments.)
+
+\item $\E(y_t \mid y_{t-j}, y_{t-j-1}, \ldots) \to_{\mathrm{m.s.}} 0$ as $j \to \infty$. (Since $\{y_t\}$ is stationary, this
+condition is equivalent to $\E(y_0 \mid y_{-j}, y_{-j-1}, \ldots) \to_{\mathrm{m.s.}} 0$ as $j \to \infty$. Because
+$\E(y_t \mid y_{t-j}, y_{t-j-1}, \ldots)$ is a random variable, the convergence cannot be the
+usual convergence for real numbers.)
+\end{enumerate}
+
+This condition implies that the unconditional mean is zero, $\E(y_t) = 0$.\footnote{See Lemma~5.14 of White (1984) for a proof.}
+As the forecast (the conditional expectation) is based on less and less information, it should
+approach the forecast based on no information, i.e., the unconditional expectation.
+To prepare for the third part, let $I_t \equiv (y_t, y_{t-1}, y_{t-2}, \ldots)$ and write $y_t$ as
+\begin{align*}
+  y_t &= y_t - [\E(y_t \mid I_{t-1}) - \E(y_t \mid I_{t-1})] - [\E(y_t \mid I_{t-2}) - \E(y_t \mid I_{t-2})] - \cdots \\
+  &\quad - [\E(y_t \mid I_{t-j}) - \E(y_t \mid I_{t-j})] \\
+  &= [y_t - \E(y_t \mid I_{t-1})] + [\E(y_t \mid I_{t-1}) - \E(y_t \mid I_{t-2})] + \cdots \\
+  &\quad + [\E(y_t \mid I_{t-j+1}) - \E(y_t \mid I_{t-j})] + \E(y_t \mid I_{t-j}) \\
+  &= (r_{t0} + r_{t1} + \cdots + r_{t,j-1}) + \E(y_t \mid y_{t-j}, y_{t-j-1}, \ldots)
+\end{align*}
+where
+\[
+  r_{tk} \equiv \E(y_t \mid I_{t-k}) - \E(y_t \mid I_{t-k-1}).
+\]
+This $r_{tk}$ is the revision of expectations about $y_t$ as the information set increases
+from $I_{t-k-1}$ to $I_{t-k}$. By~(b), $y_t - (r_{t0} + r_{t1} + \cdots + r_{t,j-1})$ converges in mean square
+to zero as $j \to \infty$ for each $t$. So $y_t$ can be written as
+\[
+  y_t = \sum_{j=0}^{\infty} r_{tj}.
+\]
+This sum is called the \textbf{telescoping sum}. The third part of Gordin's condition is
+\begin{enumerate}[label=(\alph*)]
+\setcounter{enumi}{2}
+\item $\displaystyle \sum_{j=0}^{\infty} [\E(r_{tj}^2)]^{1/2} < \infty$.
+\end{enumerate}
+The telescoping sum indicates how the ``shocks'' represented by $(r_{t0}, r_{t1}, \ldots)$ influence
+the current value of $y$. Condition~(c) says, roughly speaking, that shocks that
+occurred a long time ago do not have a disproportionately large influence. As such,
+the condition restricts the extent of serial correlation in $\{y_t\}$.
+
+To understand the condition, take for example a zero-mean AR(1) with independent
+errors:
+\[
+  y_t = \phi y_{t-1} + \varepsilon_t, \quad |\phi| < 1, \quad
+  \{\varepsilon_t\} \text{ independent white noise with } \sigma^2 = \Var(\varepsilon_t).
+\]
+Evidently, Gordin's condition~(a) is satisfied. Condition~(b) too is satisfied because
+\begin{equation}
+  \E(y_t \mid y_{t-j}, y_{t-j-1}, \ldots) = \phi^j y_{t-j}
+  \label{eq:6.5.4}
+\end{equation}
+and $\E[(\phi^j y_{t-j})^2] \to 0$ as $j \to \infty$. The expectation revision $r_{tj}$ can be written as
+\begin{equation}
+  r_{tj} = \phi^j y_{t-j} - \phi^{j+1} y_{t-j-1}
+  = \phi^j (y_{t-j} - \phi y_{t-j-1}) = \phi^j \varepsilon_{t-j}.
+  \label{eq:6.5.5}
+\end{equation}
+So the telescoping sum for AR(1) is the $\text{MA}(\infty)$ representation. Condition~(c) is
+satisfied because $[\E(r_{tj}^2)]^{1/2} = |\phi|^j \sigma$ and
+\[
+  \sum_{j=0}^{\infty} |\phi|^j \sigma = \frac{\sigma}{1 - |\phi|} < \infty.
+\]
+
+The CLT we have been seeking is
+
+\begin{proposition}[Gordin's CLT for zero-mean ergodic stationary processes]
+\label{prop:6.10}
+Suppose $\{y_t\}$ is stationary and ergodic and suppose Gordin's condition is satisfied.
+Then $\E(y_t) = 0$, the autocovariances $\{\gamma_j\}$ are absolutely summable, and\footnote{This result is due to Gordin (1969), restated as Theorem~5.15 of White (1984). The claim about the absolute summability of autocovariances is noted in footnote~19 of Hansen (1982).}
+\begin{equation*}
+  \sqrt{n}\,\bar{y} \dto N\Bigl(0,\; \sum_{j=-\infty}^{\infty} \gamma_j\Bigr).
+\end{equation*}
+\end{proposition}
+
+Since Gordin's condition is satisfied if $\{y_t\}$ is a martingale difference sequence,
+which exhibits no serial correlation, Proposition~6.10 is a generalization of the
+ergodic stationary Martingale Difference Sequence CLT of Chapter~2.
+
+\subsection*{Multivariate Extension}
+
+Extension of the above results to the multivariate case is straightforward. Let
+\[
+  \bar{\mathbf{y}} \equiv \frac{1}{n} \sum_{t=1}^{n} \mathbf{y}_t
+\]
+be the sample mean of a vector process $\{\mathbf{y}_t\}$.
+\begin{itemize}
+\item The multivariate version of Proposition~6.8 is that
+\begin{enumerate}[label=(\alph*)]
+\item $\bar{\mathbf{y}} \to_{\mathrm{m.s.}} \bm{\mu}$ if each diagonal element of $\bm{\Gamma}_j$ goes to zero as $j \to \infty$, and
+\item $\lim_{n \to \infty} \Var(\sqrt{n}\,\bar{\mathbf{y}})$ (which is the \textbf{long-run covariance matrix} of $\{\mathbf{y}_t\}$) equals
+$\sum_{j=-\infty}^{\infty} \bm{\Gamma}_j$ if $\{\bm{\Gamma}_j\}$ is summable (i.e., if each component of $\bm{\Gamma}_j$ is summable).
+\end{enumerate}
+
+\item Therefore, the long-run covariance matrix of $\{\mathbf{y}_t\}$ can be written as
+\begin{equation}
+  \mathbf{G}_Y(1) = 2\pi\,\mathbf{s}_Y(0) = \sum_{j=-\infty}^{\infty} \bm{\Gamma}_j
+  = \bm{\Gamma}_0 + \sum_{j=1}^{\infty} (\bm{\Gamma}_j + \bm{\Gamma}_j'),
+  \label{eq:6.5.6}
+\end{equation}
+where $\mathbf{G}_Y(z)$ (the autocovariance-generating function) and $\mathbf{s}_Y(\omega)$ (the spectrum)
+for the vector process $\{\mathbf{y}_t\}$ are defined in Section~6.3.
+
+\item The multivariate version of Proposition~6.9 is that
+\begin{equation}
+  \sqrt{n}\,(\bar{\mathbf{y}} - \bm{\mu}) \dto N\Bigl(\mathbf{0},\; \sum_{j=-\infty}^{\infty} \bm{\Gamma}_j\Bigr)
+  \label{eq:6.5.7}
+\end{equation}
+if $\{\mathbf{y}_t\}$ is vector $\text{MA}(\infty)$ with absolutely summable coefficients and $\{\bm{\varepsilon}_t\}$ is vector
+independent white noise.
+
+\item The multivariate extension of Gordin's condition on ergodic stationary processes
+is obvious:\footnote{Stated as Assumption~3.5 in Hansen (1982).}
+
+\textbf{Gordin's condition on ergodic stationary processes}
+\begin{enumerate}[label=(\alph*)]
+\item $\E(\mathbf{y}_t \mathbf{y}_t')$ exists and is finite.
+\item $\E(\mathbf{y}_t \mid y_{t-j}, y_{t-j-1}, \ldots) \to_{\mathrm{m.s.}} \mathbf{0}$ as $j \to \infty$.
+\item $\displaystyle \sum_{j=0}^{\infty} [\E(\mathbf{r}_{tj} \mathbf{r}_{tj}')]^{1/2} < \infty$, where
+\[
+  \mathbf{r}_{tj} \equiv \E(\mathbf{y}_t \mid y_{t-j}, y_{t-j-1}, \ldots)
+  - \E(\mathbf{y}_t \mid y_{t-j-1}, y_{t-j-2}, \ldots).
+\]
+\end{enumerate}
+
+\item The multivariate version of Proposition~6.10 is obvious: Suppose Gordin's condition
+holds for vector ergodic stationary process $\{\mathbf{y}_t\}$. Then $\E(\mathbf{y}_t) = \mathbf{0}$, $\{\bm{\Gamma}_j\}$ is
+absolutely summable, and
+\begin{equation}
+  \sqrt{n}\,\bar{\mathbf{y}} \dto N\Bigl(\mathbf{0},\; \sum_{j=-\infty}^{\infty} \bm{\Gamma}_j\Bigr).
+  \label{eq:6.5.8}
+\end{equation}
+\end{itemize}
+
+\subsection*{Questions for Review}
+
+\begin{enumerate}
+\item Show that $\Var(\sqrt{n}\,\bar{y}) = \mathbf{1}'\,\Var(y_t, y_{t-1}, \ldots, y_{t-n+1})\,\mathbf{1}/n$, where $\Var(y_t,
+y_{t-1}, \ldots, y_{t-n+1})$ is the $n \times n$ autocovariance matrix of a covariance-stationary
+process $\{y_t\}$.
+\end{enumerate}

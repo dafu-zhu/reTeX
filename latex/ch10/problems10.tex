@@ -1,0 +1,67 @@
+% problems10.tex — Problem Set for Chapter 10
+
+\begin{problemset}
+
+\textbf{EMPIRICAL EXERCISES}
+
+\medskip
+
+(Skim Stock and Watson, 1993, Section~7 and Appendix~B, before answering.) The
+file MPYR.ASC has annual data on the following:
+
+\medskip
+\noindent
+Column 1: natural log of M1 (to be referred to as $m$)\\
+Column 2: natural log of the NNP price deflator ($p$)\\
+Column 3: natural log of NNP ($y$)\\
+Column 4: the commercial paper rate in percent at an annual rate ($R$).
+
+\medskip
+
+The sample period is 1900 to 1989. This is the same data used by Stock and Watson
+(1993) in their study of the U.S.\ money demand. See their Appendix~B for data
+sources.
+
+Questions~(a) and~(b) are for verifying the presumption that $m - p$ is cointe\-grated
+with $(y, R)$. The rest of the questions are about estimating the cointegrating
+vector.
+
+\medskip
+
+\begin{enumerate}[label=(\alph*)]
+\item (Univariate unit-root tests)\quad Stock and Watson (1993, Appendix~B) report that
+  the ADF $t^\mu$ and $t^\tau$ statistics, computed with 2 and 4 lagged first differences,
+  fail to reject a unit root in each of $m - p$ and $R$ at the 10 percent level and that
+  the unit root hypothesis is not rejected for $y$ with 4 lags, but is rejected at the
+  10 percent (but not 5 percent) level with 2 lags. Verify these findings. In your
+  tests, use the $t^\mu$ test for $R$, and $t^\tau$ for $m - p$ and $y$, and use asymptotic critical
+  values (those critical values for $T = \infty$).
+
+\item (Residual-based tests)\quad Conduct the Engle-Granger test of the null that $m - p$
+  is not cointegrated with $y$ and $R$. Set $p = 1$ (which is what is selected by BIC).
+  (If you do not include time in the regression, the ADF $t$-statistic derived from
+  the residuals should be about $-4.7$. Case~2 discussed in Section~10.3 should
+  apply. So the 5 percent critical value should be $-3.80$.)
+
+\item (DOLS)\quad Reproduce the SOLS and DOLS estimates of the cointegrating vector
+  reported in Table~10.2.
+
+\item (Chow test)\quad Reproduce the DOLS estimates reported in Table~10.4. They are
+  based on the following augmented cointegrating regression:
+  \begin{align*}
+    m_t - p_t
+    &= \mu + \gamma_y y_t + \gamma_R R_t
+      + \delta_0 D_t + \delta_y y_t D_t + \delta_R R_t D_t \\
+    &\quad + \beta_{y0} \Delta y_t
+      + \beta_{y,-1} \Delta y_{t+1} + \beta_{y,-2} \Delta y_{t+2}
+      + \beta_{y1} \Delta y_{t-1} + \beta_{y2} \Delta y_{t-2} \\
+    &\quad + \beta_{R0} \Delta R_t
+      + \beta_{R,-1} \Delta R_{t+1} + \beta_{R,-2} \Delta R_{t+2}
+      + \beta_{R1} \Delta R_{t-1} + \beta_{R2} \Delta R_{t-2}
+      + v_t.
+  \end{align*}
+  The null hypothesis is that $\delta_0 = \delta_y = \delta_R = 0$. Set the $p$ in (10.4.16) to~2.
+  Calculate the Wald statistic for the null hypothesis of no structural change.
+\end{enumerate}
+
+\end{problemset}

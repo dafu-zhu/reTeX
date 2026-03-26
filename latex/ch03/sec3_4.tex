@@ -1,0 +1,210 @@
+% sec3_4.tex — Section 3.4: Generalized Method of Moments Defined
+
+The orthogonality conditions state that a set of population moments are all equal
+to zero.  The basic principle of the \textbf{method of moments} is to choose the parameter
+estimate so that the corresponding sample moments are also equal to zero.
+The population moments in the orthogonality conditions are
+$\E[\mathbf{g}(\mathbf{w}_i;\, \boldsymbol{\delta})]$.  Its sample analogue is the sample mean of
+$\mathbf{g}(\mathbf{w}_i;\, \boldsymbol{\delta})$ (where $\mathbf{g}(\mathbf{w}_i;\, \boldsymbol{\delta})$ is
+defined in \eqref{eq:3.3.1}) evaluated at some hypothetical value $\tilde{\boldsymbol{\delta}}$ of
+$\boldsymbol{\delta}$:
+\begin{equation}
+  \underset{(K \times 1)}{\mathbf{g}_n(\tilde{\boldsymbol{\delta}})}
+  \equiv \frac{1}{n} \sum_{i=1}^{n} \mathbf{g}(\mathbf{w}_i;\, \tilde{\boldsymbol{\delta}}).
+  \label{eq:3.4.1}
+\end{equation}
+
+Applying the method of moments principle to our model amounts to choosing
+a $\tilde{\boldsymbol{\delta}}$ that solves the system of $K$ simultaneous equations in $L$ unknowns:
+$\mathbf{g}_n(\tilde{\boldsymbol{\delta}}) = \mathbf{0}$, which is the sample analog of \eqref{eq:3.3.3}.
+Because the estimation equation is linear, $\mathbf{g}_n(\tilde{\boldsymbol{\delta}})$ can be written as
+\begin{align}
+  \mathbf{g}_n(\tilde{\boldsymbol{\delta}})
+  &= \frac{1}{n} \sum_{i=1}^{n} \mathbf{x}_i \cdot
+     (y_i - \mathbf{z}_i' \tilde{\boldsymbol{\delta}})
+  \quad \text{(by definition \eqref{eq:3.3.1} of
+    $\mathbf{g}(\mathbf{w}_i;\, \boldsymbol{\delta})$)} \notag \\
+  &= \frac{1}{n} \sum \mathbf{x}_i \cdot y_i
+     - \Bigl(\frac{1}{n} \sum \mathbf{x}_i \mathbf{z}_i'\Bigr)
+       \tilde{\boldsymbol{\delta}}
+  \equiv \mathbf{s}_{\mathbf{xy}} - \mathbf{S}_{\mathbf{xz}}\,
+         \tilde{\boldsymbol{\delta}},
+  \label{eq:3.4.2}
+\end{align}
+where $\mathbf{s}_{\mathbf{xy}}$ and $\mathbf{S}_{\mathbf{xz}}$ are the corresponding sample moments
+of $\boldsymbol{\sigma}_{\mathbf{xy}}$ and $\boldsymbol{\Sigma}_{\mathbf{xz}}$:
+\[
+  \underset{(K \times 1)}{\mathbf{s}_{\mathbf{xy}}}
+  \equiv \frac{1}{n} \sum_{i=1}^{n} \mathbf{x}_i \cdot y_i
+  \quad \text{and} \quad
+  \underset{(K \times L)}{\mathbf{S}_{\mathbf{xz}}}
+  \equiv \frac{1}{n} \sum_{i=1}^{n} \mathbf{x}_i \mathbf{z}_i'.
+\]
+So the sample analog $\mathbf{g}_n(\tilde{\boldsymbol{\delta}}) = \mathbf{0}$ is a system of $K$
+linear equations in $L$ unknowns:
+\begin{equation}
+  \mathbf{S}_{\mathbf{xz}}\, \tilde{\boldsymbol{\delta}}
+  = \mathbf{s}_{\mathbf{xy}}.
+  \label{eq:3.4.3}
+\end{equation}
+This is the sample analogue of \eqref{eq:3.3.4}.  If there are more orthogonality conditions
+than parameters, that is, if $K > L$, then the system may not have a solution.  The
+extension of the method of moments to cover this case as well is the \textbf{generalized
+method of moments (GMM)}.
+
+%% ─── Method of Moments ─────────────────────────────────────────────────────
+\subsection*{Method of Moments}
+
+If the equation is exactly identified, then $K = L$ and $\boldsymbol{\Sigma}_{\mathbf{xz}}$ is square and
+invertible.  Since under Assumption~3.2 $\mathbf{S}_{\mathbf{xz}}$ converges to
+$\boldsymbol{\Sigma}_{\mathbf{xz}}$ almost surely, $\mathbf{S}_{\mathbf{xz}}$ is invertible for sufficiently
+large sample size $n$ with probability one.  Thus, when the sample size is large, the
+system of simultaneous equations \eqref{eq:3.4.3} has a unique solution given by
+\begin{equation}
+  \hat{\boldsymbol{\delta}}_{\text{IV}}
+  = \mathbf{S}_{\mathbf{xz}}^{-1}\, \mathbf{s}_{\mathbf{xy}}
+  = \Bigl(\frac{1}{n} \sum_{i=1}^{n} \mathbf{x}_i \mathbf{z}_i'\Bigr)^{-1}
+    \frac{1}{n} \sum_{i=1}^{n} \mathbf{x}_i \cdot y_i.
+  \label{eq:3.4.4}
+\end{equation}
+This estimator is also called the \textbf{instrumental variables estimator} with $\mathbf{x}_i$
+serving as instruments.  Because it is defined for the exactly identified case, the formula
+assumes that there are as many instruments as regressors.  If, moreover,
+$\mathbf{z}_i = \mathbf{x}_i$ (all the regressors are predetermined or orthogonal to the error term),
+then $\hat{\boldsymbol{\delta}}_{\text{IV}}$ reduces to the OLS estimator.  Thus, the OLS estimator is a method of
+moments estimator.
+
+%% ─── Generalized Method of Moments ─────────────────────────────────────────
+\subsection*{Generalized Method of Moments}
+
+If the equation is overidentified so that $K > L$, we cannot in general choose an
+$L$-dimensional $\tilde{\boldsymbol{\delta}}$ to satisfy the $K$ equations in \eqref{eq:3.4.3}.
+If we cannot set $\mathbf{g}_n(\tilde{\boldsymbol{\delta}})$ exactly equal to $\mathbf{0}$, we can at
+least choose $\tilde{\boldsymbol{\delta}}$ so that
+$\mathbf{g}_n(\tilde{\boldsymbol{\delta}})$ is as close to $\mathbf{0}$ as possible.  To
+make precise what we mean by ``close,'' we define the distance between any two
+$K$-dimensional vectors $\boldsymbol{\xi}$ and $\boldsymbol{\eta}$ by the quadratic form
+$(\boldsymbol{\xi} - \boldsymbol{\eta})' \hat{\mathbf{W}}
+(\boldsymbol{\xi} - \boldsymbol{\eta})$, where $\hat{\mathbf{W}}$, sometimes called the
+\textbf{weighting matrix}, is a symmetric and positive definite
+matrix defining the distance.\footnote{Do not let the word ``weight'' confuse you between
+GMM and weighted least squares (WLS).  In GMM, the weighting is applied to the sample
+mean $\bar{\mathbf{g}}$, while in WLS it applies to each observation.}
+
+\begin{definition}[GMM estimator]
+\label{def:3.1}
+\emph{Let $\hat{\mathbf{W}}$ be a $K \times K$ symmetric positive definite
+matrix, possibly dependent on the sample, such that
+$\hat{\mathbf{W}} \pto \mathbf{W}$ as the sample size $n$ goes to infinity with $\mathbf{W}$
+symmetric and positive definite.  The \textbf{GMM estimator} of $\boldsymbol{\delta}$, denoted
+$\hat{\boldsymbol{\delta}}(\hat{\mathbf{W}})$, is}
+\begin{equation}
+  \hat{\boldsymbol{\delta}}(\hat{\mathbf{W}})
+  \equiv \argmin_{\tilde{\boldsymbol{\delta}}}\;
+  J(\tilde{\boldsymbol{\delta}},\, \hat{\mathbf{W}}),
+  \label{eq:3.4.5}
+\end{equation}
+\emph{where}
+\[
+  J(\tilde{\boldsymbol{\delta}},\, \hat{\mathbf{W}})
+  \equiv n \cdot
+  \mathbf{g}_n(\tilde{\boldsymbol{\delta}})'\,
+  \hat{\mathbf{W}}\,
+  \mathbf{g}_n(\tilde{\boldsymbol{\delta}}).
+\]
+\end{definition}
+
+(The reason the distance
+$\mathbf{g}_n(\tilde{\boldsymbol{\delta}})'\hat{\mathbf{W}}\,\mathbf{g}_n(\tilde{\boldsymbol{\delta}})$
+is multiplied by the sample size ($n$) becomes clear in Section~3.6.)
+The weighting matrix is allowed to be random and depend on the sample size, to cover
+the possibility that the matrix is estimated from the sample.  The definition makes clear
+that the GMM is a special case of \textbf{minimum distance estimation}.  In minimum distance
+estimation, $\plim\, \mathbf{g}_n(\boldsymbol{\delta}) = \mathbf{0}$, as here, but the
+$\mathbf{g}_n(\cdot)$ function is not necessarily a sample mean.
+
+Since $\mathbf{g}_n(\tilde{\boldsymbol{\delta}})$ is linear in $\tilde{\boldsymbol{\delta}}$ (see
+\eqref{eq:3.4.2}), the objective function is quadratic in $\tilde{\boldsymbol{\delta}}$ when the
+equation is linear:
+\begin{equation}
+  J(\tilde{\boldsymbol{\delta}},\, \hat{\mathbf{W}})
+  = n \cdot (\mathbf{s}_{\mathbf{xy}} - \mathbf{S}_{\mathbf{xz}}\,
+    \tilde{\boldsymbol{\delta}})'\,
+    \hat{\mathbf{W}}\,
+    (\mathbf{s}_{\mathbf{xy}} - \mathbf{S}_{\mathbf{xz}}\,
+    \tilde{\boldsymbol{\delta}}).
+  \label{eq:3.4.6}
+\end{equation}
+It is left to you to show that the first-order condition for the minimization of this
+with respect to $\tilde{\boldsymbol{\delta}}$ is
+\begin{equation}
+  \underset{(L \times K)}{\mathbf{S}_{\mathbf{xz}}'} \;
+  \underset{(K \times K)}{\hat{\mathbf{W}}} \;
+  \underset{(K \times 1)}{\mathbf{s}_{\mathbf{xy}}}
+  = \underset{(L \times K)}{\mathbf{S}_{\mathbf{xz}}'} \;
+    \underset{(K \times K)}{\hat{\mathbf{W}}} \;
+    \underset{(K \times L)}{\mathbf{S}_{\mathbf{xz}}} \;
+    \underset{(L \times 1)}{\tilde{\boldsymbol{\delta}}}\,.
+  \label{eq:3.4.7}
+\end{equation}
+If Assumptions~3.2 and 3.4 hold, then $\mathbf{S}_{\mathbf{xz}}$ is of full column rank for sufficiently
+large $n$ with probability one.  Then, since $\hat{\mathbf{W}}$ is positive definite, the
+$L \times L$ matrix $\mathbf{S}_{\mathbf{xz}}' \hat{\mathbf{W}} \mathbf{S}_{\mathbf{xz}}$ is nonsingular.
+So the unique solution can be obtained by multiplying both sides by the inverse of
+$\mathbf{S}_{\mathbf{xz}}' \hat{\mathbf{W}} \mathbf{S}_{\mathbf{xz}}$.  That unique solution is the
+GMM estimator:
+\begin{equation}
+\boxed{%
+  \text{GMM estimator:} \quad
+  \hat{\boldsymbol{\delta}}(\hat{\mathbf{W}})
+  = (\mathbf{S}_{\mathbf{xz}}' \hat{\mathbf{W}} \mathbf{S}_{\mathbf{xz}})^{-1}\,
+    \mathbf{S}_{\mathbf{xz}}' \hat{\mathbf{W}}\, \mathbf{s}_{\mathbf{xy}}.
+}
+  \label{eq:3.4.8}
+\end{equation}
+If $K = L$, then $\mathbf{S}_{\mathbf{xz}}$ is a square matrix and \eqref{eq:3.4.8} reduces to the IV
+estimator \eqref{eq:3.4.4}.  The GMM is indeed a generalization of the method of moments.
+
+%% ─── Sampling Error ────────────────────────────────────────────────────────
+\subsection*{Sampling Error}
+
+For later use, we derive the expression for the sampling error.  Multiplying both
+sides of the estimation equation $y_i = \mathbf{z}_i' \boldsymbol{\delta} + \varepsilon_i$ from left
+by $\mathbf{x}_i$ and taking the averages yields
+\begin{equation}
+  \mathbf{s}_{\mathbf{xy}} = \mathbf{S}_{\mathbf{xz}}\, \boldsymbol{\delta}
+  + \bar{\mathbf{g}},
+  \label{eq:3.4.9}
+\end{equation}
+where
+\begin{equation}
+  \bar{\mathbf{g}} \equiv \frac{1}{n} \sum_{i=1}^{n} \mathbf{x}_i \cdot \varepsilon_i
+  = \frac{1}{n} \sum_{i=1}^{n} \mathbf{g}(\mathbf{w}_i;\, \boldsymbol{\delta})
+  = \mathbf{g}_n(\boldsymbol{\delta}).
+  \label{eq:3.4.10}
+\end{equation}
+Substituting \eqref{eq:3.4.9} into \eqref{eq:3.4.8}, we obtain
+\begin{equation}
+  \hat{\boldsymbol{\delta}}(\hat{\mathbf{W}}) - \boldsymbol{\delta}
+  = (\mathbf{S}_{\mathbf{xz}}' \hat{\mathbf{W}} \mathbf{S}_{\mathbf{xz}})^{-1}\,
+    \mathbf{S}_{\mathbf{xz}}' \hat{\mathbf{W}}\, \bar{\mathbf{g}}.
+  \label{eq:3.4.11}
+\end{equation}
+
+%% ─── Questions for Review ──────────────────────────────────────────────────
+\bigskip
+\begin{center}\rule{0.6\textwidth}{0.4pt}\end{center}
+\noindent\textsc{Questions for Review}
+\medskip
+
+\begin{enumerate}
+\item Verify that \eqref{eq:3.1.12} is the IV estimator of $\alpha_1$ when the method of moments is
+  applied to the demand equation \eqref{eq:3.1.2a} with $(1, x_i)$ as instruments.
+
+\item If the equation is just identified, what is the minimized value of
+  $J(\tilde{\boldsymbol{\delta}},\, \hat{\mathbf{W}})$?
+
+\item Even if the equation is overidentified, the population version, \eqref{eq:3.3.4}, of the
+  system of $K$ equations \eqref{eq:3.4.3} has a solution.  Then, why does not the sample
+  version, \eqref{eq:3.4.3}, have a solution?  \textbf{Hint:} The population version has a solution
+\end{enumerate}

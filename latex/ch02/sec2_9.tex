@@ -1,0 +1,213 @@
+% sec2_9.tex — Section 2.9: Least Squares Projection
+
+\section{Least Squares Projection}
+\label{sec:2.9}
+
+What if the assumptions justifying the large-sample properties of the OLS estimator
+(except for ergodic stationarity) are not satisfied but we nevertheless go ahead and
+apply OLS to the sample? What is it that we estimate? The answer is in this section.
+OLS provides an estimate of the best way to linearly combine the explanatory
+variables to predict the dependent variable. The linear combination is called
+the \textbf{least squares projection}.
+
+\subsection*{Optimally Predicting the Value of the Dependent Variable}
+
+We have been concerned about estimating unknown parameters from a sample.
+Let us temporarily suspend the role of econometrician and put ourselves in the
+following situation. There is a random scalar $y$ and a random vector $\mathbf{x}$. We know
+the joint distribution of $(y, \mathbf{x})$ and the value of $\mathbf{x}$. On the basis of this knowledge
+we wish to predict $y$. So a predictor is a function $f(\mathbf{x})$ of $\mathbf{x}$ with the functional
+form $f(\cdot)$ determined by the joint distribution of $(y, \mathbf{x})$. Naturally, we choose the
+function $f(\cdot)$ so as to minimize some index that is a function of the \textbf{forecast error}
+$y - f(\mathbf{x})$. We take the loss function to be the \textbf{mean squared error} $\E[(y - f(\mathbf{x}))^2]$
+because it seems as reasonable a loss function as any other and, more importantly,
+because it produces the following convenient result:
+
+\begin{proposition}[2.7]
+\label{prop:2.7}
+$\E(y \mid \mathbf{x})$ is the best predictor of $y$ in that it minimizes the mean
+squared error.
+\end{proposition}
+
+We have seen in Chapter 1 that the add-and-subtract strategy is effective in showing
+that the candidate solution minimizes a quadratic function. Let us apply the
+strategy to the squared error here. Let $f(\mathbf{x})$ be any forecast. Add $\E(y \mid \mathbf{x})$ to the
+forecast error $y - f(\mathbf{x})$ and then subtract it to obtain the decomposition
+%
+\begin{equation}
+y - f(\mathbf{x}) = (y - \E(y \mid \mathbf{x})) + (\E(y \mid \mathbf{x}) - f(\mathbf{x})).
+\label{eq:2.9.1}
+\end{equation}
+%
+So the squared forecast error is
+%
+\begin{align}
+(y - f(\mathbf{x}))^2 &= (y - \E(y \mid \mathbf{x}))^2
+  + 2(y - \E(y \mid \mathbf{x}))(\E(y \mid \mathbf{x}) - f(\mathbf{x})) \notag \\
+  &\quad + (\E(y \mid \mathbf{x}) - f(\mathbf{x}))^2.
+\label{eq:2.9.2}
+\end{align}
+%
+Take the expectation of both sides to obtain
+%
+\begin{align}
+\text{mean squared error} &\equiv \E\!\big[(y - f(\mathbf{x}))^2\big] \notag \\
+&= \E\!\big[(y - \E(y \mid \mathbf{x}))^2\big]
+  + 2\,\E\!\big[(y - \E(y \mid \mathbf{x}))(\E(y \mid \mathbf{x}) - f(\mathbf{x}))\big] \notag \\
+&\quad + \E\!\big[(\E(y \mid \mathbf{x}) - f(\mathbf{x}))^2\big].
+\label{eq:2.9.3}
+\end{align}
+%
+It is a straightforward application of the Law of Total Expectations to show that
+the middle term, which is the covariance between the optimal forecast error and the
+difference in forecasts, is zero (a review question). Therefore,
+%
+\begin{align}
+\text{mean squared error} &= \E\!\big[(y - \E(y \mid \mathbf{x}))^2\big]
+  + \E\!\big[(\E(y \mid \mathbf{x}) - f(\mathbf{x}))^2\big] \notag \\
+&\geq \E\!\big[(y - \E(y \mid \mathbf{x}))^2\big],
+\label{eq:2.9.4}
+\end{align}
+%
+which shows that the mean squared error is bounded from below by
+$\E[(y - \E(y \mid \mathbf{x}))^2]$, and this lower bound is achieved by the conditional expectation.
+
+\subsection*{Best Linear Predictor}
+
+It requires the knowledge of the joint distribution of $(y, \mathbf{x})$ to calculate
+$\E(y \mid \mathbf{x})$, which may be highly nonlinear. We now restrict the predictor to being
+a linear function of $\mathbf{x}$ and ask: what is the best (in the sense of minimizing the mean
+squared error) linear predictor of $y$ based on $\mathbf{x}$? For this purpose, consider
+$\bm{\beta}^*$ that satisfies the orthogonality condition
+%
+\begin{equation}
+\E[\mathbf{x} \cdot (y - \mathbf{x}'\bm{\beta}^*)] = \mathbf{0}
+\quad \text{or} \quad
+\E(\mathbf{x}\mathbf{x}')\bm{\beta}^* = \E(\mathbf{x} \cdot y).
+\label{eq:2.9.5}
+\end{equation}
+%
+The idea is to choose $\bm{\beta}^*$ so that the forecast error $y - \mathbf{x}'\bm{\beta}^*$ is orthogonal to
+$\mathbf{x}$. If $\E(\mathbf{x}\mathbf{x}')$ is nonsingular, the orthogonality condition can be solved for
+$\bm{\beta}^*$:
+%
+\begin{equation}
+\bm{\beta}^* = [\E(\mathbf{x}\mathbf{x}')]^{-1}\,\E(\mathbf{x} \cdot y).
+\label{eq:2.9.6}
+\end{equation}
+%
+The \textbf{least squares} (or \textbf{linear}) \textbf{projection} of $y$ on $\mathbf{x}$, denoted
+$\widehat{\E}^*(y \mid \mathbf{x})$, is defined as $\mathbf{x}'\bm{\beta}^*$, where $\bm{\beta}^*$ satisfies
+\eqref{eq:2.9.5} and is called the \textbf{least squares projection coefficients}.
+
+\begin{proposition}[2.8]
+\label{prop:2.8}
+The least squares projection $\widehat{\E}^*(y \mid \mathbf{x})$ is the best linear predictor
+of $y$ in that it minimizes the mean squared error.
+\end{proposition}
+
+The add-and-subtract strategy also works here.
+
+\begin{proof}
+For any linear predictor $\mathbf{x}'\widetilde{\bm{\beta}}$,
+%
+\begin{align*}
+\text{mean squared error} &\equiv \E\!\big[(y - \mathbf{x}'\widetilde{\bm{\beta}})^2\big] \\
+&= \E\!\big\{\big[(y - \mathbf{x}'\bm{\beta}^*)
+  + \mathbf{x}'(\bm{\beta}^* - \widetilde{\bm{\beta}})\big]^2\big\}
+  \quad \text{(by the add-and-subtract strategy)} \\
+&= \E\!\big[(y - \mathbf{x}'\bm{\beta}^*)^2\big]
+  + 2(\bm{\beta}^* - \widetilde{\bm{\beta}})'\,
+  \E\!\big[\mathbf{x} \cdot (y - \mathbf{x}'\bm{\beta}^*)\big]
+  + \E\!\big[(\mathbf{x}'(\bm{\beta}^* - \widetilde{\bm{\beta}}))^2\big] \\
+&= \E\!\big[(y - \mathbf{x}'\bm{\beta}^*)^2\big]
+  + \E\!\big[(\mathbf{x}'(\widetilde{\bm{\beta}} - \bm{\beta}^*))^2\big] \\
+&\qquad \text{(by the orthogonality condition \eqref{eq:2.9.5})} \\
+&\geq \E\!\big[(y - \mathbf{x}'\bm{\beta}^*)^2\big]. \qedhere
+\end{align*}
+\end{proof}
+
+In contrast to the best predictor, which is the conditional expectation, the best linear
+predictor requires only the knowledge of the second moments of the joint distribution of $(y, \mathbf{x})$ to calculate (see \eqref{eq:2.9.6}).
+
+If one of the regressors $\mathbf{x}$ is a constant, the least squares projection coefficients
+can be written in terms of variances and covariances. Let $\widetilde{\mathbf{x}}$ be the vector of non-constant regressors so that
+%
+\[
+\mathbf{x} = \begin{bmatrix} 1 \\ \widetilde{\mathbf{x}} \end{bmatrix}.
+\]
+%
+An analytical exercise to this chapter asks you to prove that
+%
+\begin{equation}
+\widehat{\E}^*(y \mid \mathbf{x})
+\equiv \widehat{\E}^*(y \mid 1, \widetilde{\mathbf{x}})
+= \mu + \bm{\gamma}'\widetilde{\mathbf{x}},
+\label{eq:2.9.7}
+\end{equation}
+%
+where
+\[
+\bm{\gamma} = \Var(\widetilde{\mathbf{x}})^{-1}\,\Cov(\widetilde{\mathbf{x}}, y),
+\quad
+\mu = \E(y) - \bm{\gamma}'\,\E(\widetilde{\mathbf{x}}).
+\]
+%
+This formula is the population analogue of the ``deviations-from-the-mean regression'' formula of Chapter~1 (Analytical Exercise~3).
+
+\subsection*{OLS Consistently Estimates the Projection Coefficients}
+
+Now let us put the econometrician's hat back on and consider estimating $\bm{\beta}^*$.
+Suppose we have a sample of size $n$ drawn from an ergodic stationary stochastic
+process $\{y_i, \mathbf{x}_i\}$ with the joint distribution $(y_i, \mathbf{x}_i)$ (which does not depend on $i$
+because of stationarity) identical to that of $(y, \mathbf{x})$ above. So, for example,
+$\E(\mathbf{x}_i\mathbf{x}_i') = \E(\mathbf{x}\mathbf{x}')$.
+By the Ergodic Theorem the second moments in \eqref{eq:2.9.6} can be consistently estimated by the corresponding sample second moments. Thus a consistent estimator
+of the projection coefficients $\bm{\beta}^*$ is
+%
+\[
+\Bigl(\frac{1}{n}\sum_{i=1}^{n}\mathbf{x}_i\mathbf{x}_i'\Bigr)^{-1}
+\Bigl(\frac{1}{n}\sum_{i=1}^{n}\mathbf{x}_i \cdot y_i\Bigr)
+= (\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{y},
+\]
+%
+which is none other than the OLS estimator $\mathbf{b}$. That is, under Assumption~2.2
+(ergodic stationarity) and Assumption~2.4 guaranteeing the nonsingularity of
+$\E(\mathbf{x}\mathbf{x}')$, the OLS estimator is always consistent for the projection coefficient vector,
+the $\bm{\beta}^*$ that satisfies the orthogonality condition \eqref{eq:2.9.5}.
+
+\bigskip
+\noindent\textsc{Questions for Review}
+\begin{enumerate}
+\item (Unforecastability of forecast error)\quad
+For the minimum mean square error forecast $\E(y \mid \mathbf{x})$, the forecast error is orthogonal to any function $\phi(\mathbf{x})$ of $\mathbf{x}$. That is, $\E[\eta\phi(\mathbf{x})] = 0$ where
+$\eta \equiv y - \E(y \mid \mathbf{x})$. Prove this.
+\textbf{Hint:} The Law of Total Expectations. Show that the middle term on the RHS of \eqref{eq:2.9.3} is zero by setting $\phi(\mathbf{x}) = \E(y \mid \mathbf{x}) - f(\mathbf{x})$.
+
+\item (Forecasting white noise)\quad
+Suppose $\{\varepsilon_i\}$ is white noise. What is
+$\widehat{\E}^*(\varepsilon_i \mid \varepsilon_{i-1}, \varepsilon_{i-2}, \ldots, \varepsilon_{i-m})$?
+What is
+$\widehat{\E}^*(\varepsilon_i \mid 1, \varepsilon_{i-1}, \varepsilon_{i-2}, \ldots, \varepsilon_{i-m})$?
+Is it true that $\E(\varepsilon_i \mid \varepsilon_{i-1}, \varepsilon_{i-2}, \ldots, \varepsilon_{i-m}) = 0$?
+\textbf{Hint:} Is it zero for the process of Example~2.4?
+
+\item (Conditional expectations that are linear)\quad
+Suppose $\E(y \mid \widetilde{\mathbf{x}}) = \mu + \bm{\gamma}'\widetilde{\mathbf{x}}$. Show:
+$\widehat{\E}^*(y \mid 1, \widetilde{\mathbf{x}}) = \E(y \mid \widetilde{\mathbf{x}})$.
+
+\item (Partitioned projection)\quad
+Consider the model $y_i = \mathbf{x}_i'\bm{\beta} + \mathbf{z}_i'\bm{\delta} + \varepsilon_i$
+with $\E(\mathbf{x}_i \cdot \varepsilon_i) = \mathbf{0}$, $\E(\mathbf{z}_i \cdot \varepsilon_i) \neq \mathbf{0}$, and
+$\E(\mathbf{z}_i\mathbf{x}_i') = \mathbf{0}$. Thus, $\mathbf{z}_i$ is not predetermined (i.e., not orthogonal to the error term), but it is unrelated to the predetermined regressor $\mathbf{x}_i$ in that the cross moments are zero.
+\begin{enumerate}[label=(\alph*)]
+\item Show that the least squares projection coefficient of $\mathbf{x}_i$ in the projection of
+$y_i$ on $\mathbf{x}_i$ and $\mathbf{z}_i$ is $\bm{\beta}$.
+\textbf{Hint:} Calculate $\widehat{\E}^*(\varepsilon_i \mid \mathbf{x}_i, \mathbf{z}_i)$.
+\item What is the least squares projection coefficient of $\mathbf{x}_i$ in the least squares
+projection of $y_i$ on $\mathbf{x}_i$?
+\textbf{Hint:} Treat $\mathbf{z}_i'\bm{\delta} + \varepsilon_i$ as the error term.
+\item Which projection would you use for estimating $\bm{\beta}$?
+\textbf{Hint:} You want the error variance to be smaller.
+\end{enumerate}
+\end{enumerate}

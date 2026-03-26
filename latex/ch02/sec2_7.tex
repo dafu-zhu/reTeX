@@ -1,0 +1,111 @@
+% sec2_7.tex — Section 2.7: Testing Conditional Homoskedasticity
+
+With the advent of robust standard errors allowing us to do inference without specifying
+the conditional second moment $\E(\varepsilon_i^2 \mid \mathbf{x}_i)$, testing conditional
+homoskedasticity is not as important as it used to be.  This section presents only the
+most popular test due to White (1980) for the case of random samples.\footnote{See,
+e.g., Judge et al.\ (1985, Section~11.3) or Greene (1997, Section~12.3) for other tests.}
+
+Recall that $\widehat{\mathbf{S}}$ given in \eqref{eq:2.5.1} (with
+$\hat{\varepsilon}_i = e_i$) is consistent for $\mathbf{S}$ (Proposition~2.4), and
+$s^2 \mathbf{S}_{\mathbf{xx}}$ is consistent for $\sigma^2 \bm{\Sigma}_{\mathbf{xx}}$
+(an implication of Proposition~2.2).  But under conditional homoskedasticity,
+$\mathbf{S} = \sigma^2 \bm{\Sigma}_{\mathbf{xx}}$ (see \eqref{eq:2.6.4}), so the
+difference between the two consistent estimators should vanish:
+\begin{equation}
+  \widehat{\mathbf{S}} - s^2 \mathbf{S}_{\mathbf{xx}}
+    = \frac{1}{n} \sum_{i=1}^{n} e_i^2\, \mathbf{x}_i \mathbf{x}_i'
+    - s^2 \frac{1}{n} \sum_{i=1}^{n} \mathbf{x}_i \mathbf{x}_i'
+    = \frac{1}{n} \sum_{i=1}^{n} (e_i^2 - s^2)\, \mathbf{x}_i \mathbf{x}_i'
+    \pto \mathbf{0}.
+  \label{eq:2.7.1}
+\end{equation}
+Let $\bm{\psi}_i$ be a vector collecting unique and nonconstant elements of the
+$K \times K$ symmetric matrix $\mathbf{x}_i \mathbf{x}_i'$.  (Construction of
+$\bm{\psi}_i$ from $\mathbf{x}_i \mathbf{x}_i'$ will be illustrated in Example~2.7
+below.)  Then \eqref{eq:2.7.1} implies
+\begin{equation}
+  \mathbf{c}_n \equiv \frac{1}{n} \sum_{i=1}^{n}
+    (e_i^2 - s^2)\, \bm{\psi}_i \pto \mathbf{0}.
+  \label{eq:2.7.2}
+\end{equation}
+This $\mathbf{c}_n$ is a sample mean converging to zero.  Under some conditions
+appropriate for a Central Limit Theorem to be applicable, we would expect
+$\sqrt{n}\,\mathbf{c}_n$ to converge in probability to a normal distribution with mean
+zero and some asymptotic variance $\mathbf{B}$, so for any consistent estimator
+$\widehat{\mathbf{B}}$ of $\mathbf{B}$,
+\begin{equation}
+  n \cdot \mathbf{c}_n' \widehat{\mathbf{B}}^{-1} \mathbf{c}_n
+    \dto \chi^2(m),
+  \label{eq:2.7.3}
+\end{equation}
+where $m$ is the dimension of $\mathbf{c}_n$.  For a certain choice of
+$\widehat{\mathbf{B}}$, this statistic can be computed as $nR^2$ from the following
+auxiliary regression:
+\begin{equation}
+  \text{regress } e_i^2 \text{ on a constant and } \bm{\psi}_i.
+  \label{eq:2.7.4}
+\end{equation}
+
+White (1980) rigorously developed this argument\footnote{The original statement of
+White's theorem is more general as it covers the case where $\{y_i, \mathbf{x}_i\}$ is
+independent but not identically distributed (i.n.i.d.).} to prove
+
+\begin{proposition}[White's Test for Conditional Heteroskedasticity]
+\label{prop:2.6}
+\emph{In addition to Assumptions~2.1 and 2.4, suppose that
+\textup{(a)} $\{y_i, \mathbf{x}_i\}$ is i.i.d.\ with finite
+$\E(\varepsilon_i^2 \mathbf{x}_i \mathbf{x}_i')$
+\textup{(}thus strengthening Assumptions~2.2 and 2.5\textup{)},
+\textup{(b)} $\varepsilon_i$ is independent of $\mathbf{x}_i$
+\textup{(}thus strengthening Assumption~2.3 and conditional homoskedasticity\textup{)},
+and \textup{(c)} a certain condition holds on the moments of $\varepsilon_i$ and
+$\mathbf{x}_i$.  Then,}
+\[
+  nR^2 \dto \chi^2(m),
+\]
+\emph{where $R^2$ is the $R^2$ from the auxiliary regression \eqref{eq:2.7.4}, and $m$
+is the dimension of $\bm{\psi}_i$.}
+\end{proposition}
+
+\begin{example}[regressors in White's $nR^2$ test]
+\label{ex:2.7}
+Consider the Cobb--Douglas cost function of Section~1.7:
+\[
+  \log\!\Bigl(\frac{TC_i}{p_{i3}}\Bigr)
+    = \beta_1 + \beta_2 \log(Q_i) + \beta_3 \log\!\Bigl(\frac{p_{i1}}{p_{i3}}\Bigr)
+    + \beta_4 \log\!\Bigl(\frac{p_{i2}}{p_{i3}}\Bigr) + \varepsilon_i.
+\]
+Here, $\mathbf{x}_i' = (1, \log(Q_i), \log(p_{i1}/p_{i3}), \log(p_{i2}/p_{i3}))$, a
+four-dimensional vector.  There are $10$ $(= 4 \cdot 5/2)$ unique elements in
+$\mathbf{x}_i \mathbf{x}_i'$:
+\begin{gather*}
+  1,\; \log(Q_i),\; \log\!\Bigl(\frac{p_{i1}}{p_{i3}}\Bigr),\;
+    \log\!\Bigl(\frac{p_{i2}}{p_{i3}}\Bigr), \\[4pt]
+  [\log(Q_i)]^2,\;
+    \log(Q_i) \cdot \log\!\Bigl(\frac{p_{i1}}{p_{i3}}\Bigr),\;
+    \log(Q_i) \cdot \log\!\Bigl(\frac{p_{i2}}{p_{i3}}\Bigr), \\[4pt]
+  \biggl[\log\!\Bigl(\frac{p_{i1}}{p_{i3}}\Bigr)\biggr]^{\!2},\;
+    \log\!\Bigl(\frac{p_{i1}}{p_{i3}}\Bigr)
+      \cdot \log\!\Bigl(\frac{p_{i2}}{p_{i3}}\Bigr),\;
+  \biggl[\log\!\Bigl(\frac{p_{i2}}{p_{i3}}\Bigr)\biggr]^{\!2}.
+\end{gather*}
+$\bm{\psi}_i$ is a nine-dimensional vector excluding a constant from this list.
+So the $m$ in Proposition~2.6 is~9.
+\end{example}
+
+If White's test accepts the null of conditional homoskedasticity, then the results of
+Section~2.6 apply, and statistical inference can be based on the $t$- and $F$-ratios from
+Chapter~1.  Otherwise inference should be based on the robust $t$ and Wald statistics of
+Proposition~2.3.
+
+Because the regressors $\bm{\psi}_i$ in the auxiliary regression have many elements
+consisting of squares and cross-products of the elements of $\mathbf{x}_i$, the test
+should be consistent (i.e., the power approaches unity as $n \to \infty$) against most
+heteroskedastic alternatives but may require a fairly large sample to have power close to
+unity.  If the researcher knows that some of the elements of $\bm{\psi}_i$ do not affect
+the conditional second moment, then they can be dropped from the auxiliary regression and
+the power might be increased in finite samples.  The downside of it, of course, is that
+if such knowledge is false, the test will have no power against heteroskedastic
+alternatives that relate the conditional second moment to those elements that are excluded
+from the auxiliary regression.

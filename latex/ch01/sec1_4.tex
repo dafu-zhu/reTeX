@@ -1,0 +1,732 @@
+% sec1_4.tex — Section 1.4: Hypothesis Testing under Normality
+
+Very often, the economic theory that motivated the regression equation also specifies
+the values that the regression coefficients should take.  Suppose that the underlying
+theory implies the restriction that $\beta_2$ equals~1.  Although Proposition~1.1 guarantees
+that, on average, $b_2$ (the OLS estimate of~$\beta_2$) equals~1 if the restriction is true,
+$b_2$ may not be exactly equal to~1 for a particular sample at hand.  Obviously, we cannot
+conclude that the restriction is false just because the estimate~$b_2$ differs from~1.
+In order for us to decide whether the sampling error $b_2 - 1$ is ``too large'' for the
+restriction to be true, we need to construct from the sampling error some test statistic
+whose probability distribution is known given the truth of the hypothesis.  It might
+appear that doing so requires one to specify the joint distribution of
+$(\vec{X}, \bm{\varepsilon})$ because, as is clear from~(1.2.14), the sampling error is a
+function of $(\vec{X}, \bm{\varepsilon})$.  A surprising fact about the theory of hypothesis
+testing to be presented in this section is that the distribution can be derived without
+specifying the joint distribution when the conditional distribution of
+$\bm{\varepsilon}$ conditional on~$\vec{X}$ is normal; there is no need to specify the
+distribution of~$\vec{X}$.
+
+In the language of hypothesis testing, the restriction to be tested (such as
+``$\beta_2 = 1$'') is called the \textbf{null hypothesis} (or simply the \textbf{null}).
+It is a restriction on the \textbf{maintained hypothesis}, a set of assumptions which,
+combined with the null, produces some test statistic with a known distribution.  For the
+present case of testing hypothesis about regression coefficients, only the normality
+assumption about the conditional distribution of~$\bm{\varepsilon}$ needs to be added to the
+classical regression model (Assumptions~1.1--1.4) to form the maintained hypothesis (as
+just noted, there is no need to specify the joint distribution of
+$(\vec{X}, \bm{\varepsilon})$).  Sometimes the maintained hypothesis is somewhat loosely
+referred to as ``the model.''  We say that the model is \textbf{correctly specified} if
+the maintained hypothesis is true.  Although too large a value of the test statistic is
+interpreted as a failure of the null, the interpretation is valid only as long as the model
+is correctly specified.  It is possible that the test statistic does not have the supposed
+distribution when the null is true but the model is false.
+
+
+%% ─── Normally Distributed Error Terms ─────────────────────────────────────────
+\subsection*{Normally Distributed Error Terms}
+
+In many applications, the error term consists of many miscellaneous factors not
+captured by the regressors.  The Central Limit Theorem suggests that the error term has
+a normal distribution.  In other applications, the error term is due to errors in
+measuring the dependent variable.  It is known that very often measurement errors are
+normally distributed (in fact, the normal distribution was originally developed for
+measurement errors).  It is therefore worth entertaining the normality assumption:
+
+\begin{assumption}[normality of the error term]
+\label{ass:normality}
+\emph{The distribution of $\bm{\varepsilon}$ conditional on $\vec{X}$ is jointly normal.}
+\end{assumption}
+
+Recall from probability theory that the normal distribution has several convenient
+features:
+\begin{itemize}
+\item The distribution depends only on the mean and the variance.  Thus, once the mean
+  and the variance are known, you can write down the density function.  If the
+  distribution conditional on~$\vec{X}$ is normal, the mean and the variance can depend
+  on~$\vec{X}$.  It follows that, if the distribution conditional on~$\vec{X}$ is normal
+  and if neither the conditional mean nor the conditional variance depends on~$\vec{X}$,
+  then the marginal (i.e., unconditional) distribution is the same normal distribution.
+
+\item In general, if two random variables are independent, then they are uncorrelated, but
+  the converse is not true.  However, if two random variables are joint normal, the
+  converse is also true, so that independence and a lack of correlation are equivalent.
+  This carries over to conditional distributions: if two random variables are joint
+  normal and uncorrelated conditional on~$\vec{X}$, then they are independent conditional
+  on~$\vec{X}$.
+
+\item A linear function of random variables that are jointly normally distributed is
+  itself normally distributed.  This also carries over to conditional distributions.  If
+  the distribution of~$\bm{\varepsilon}$ conditional on~$\vec{X}$ is normal, then
+  $\vec{A}\bm{\varepsilon}$, where the elements of matrix~$\vec{A}$ are functions
+  of~$\vec{X}$, is normal conditional on~$\vec{X}$.
+\end{itemize}
+
+It is thanks to these features of normality that Assumption~1.5 delivers the following
+properties to be exploited in the derivation of test statistics:
+\begin{itemize}
+\item The mean and the variance of the distribution of~$\bm{\varepsilon}$ conditional
+  on~$\vec{X}$ are already specified in Assumptions~1.2 and~1.4.  Therefore,
+  Assumption~1.5 together with Assumptions~1.2 and~1.4 implies that the distribution
+  of~$\bm{\varepsilon}$ conditional on~$\vec{X}$ is
+  $N(\vec{0}, \sigma^2 \vec{I}_n)$:
+  %
+  \begin{equation}
+    \bm{\varepsilon} \mid \vec{X} \sim N(\vec{0}, \sigma^2 \vec{I}_n).
+    \label{eq:1.4.1}
+  \end{equation}
+  %
+  Thus, the distribution of~$\bm{\varepsilon}$ conditional on~$\vec{X}$ does not depend
+  on~$\vec{X}$.  It then follows that $\bm{\varepsilon}$ and~$\vec{X}$ are
+  \emph{independent}.  Therefore, in particular, the marginal or unconditional
+  distribution of~$\bm{\varepsilon}$ is $N(\vec{0}, \sigma^2 \vec{I}_n)$.
+
+\item We know from~(1.2.14) that the sampling error
+  $\vec{b} - \bm{\beta}$ is linear in~$\bm{\varepsilon}$ given~$\vec{X}$.  Since
+  $\bm{\varepsilon}$ is normal given~$\vec{X}$, so is the sampling error.  Its mean and
+  variance are given by parts~(a) and~(b) of Proposition~1.1.  Thus, under
+  Assumptions~1.1--1.5,
+  %
+  \begin{equation}
+    (\vec{b} - \bm{\beta}) \mid \vec{X}
+      \sim N(\vec{0},\, \sigma^2 \cdot (\vec{X}'\vec{X})^{-1}).
+    \label{eq:1.4.2}
+  \end{equation}
+\end{itemize}
+
+
+%% ─── Testing Hypotheses about Individual Regression Coefficients ──────────────
+\subsection*{Testing Hypotheses about Individual Regression Coefficients}
+
+The type of hypothesis we first consider is about the $k$-th coefficient
+%
+\[
+  \mathrm{H}_0 \colon \beta_k = \overline{\beta}_k.
+\]
+%
+Here, $\overline{\beta}_k$ is some known value specified by the null hypothesis.  We wish
+to test this null against the alternative hypothesis
+$\mathrm{H}_1 \colon \beta_k \neq \overline{\beta}_k$, at a significance level of~$\alpha$.
+Looking at the $k$-th component of~\eqref{eq:1.4.2} and imposing the restriction of the
+null, we obtain
+%
+\[
+  (b_k - \overline{\beta}_k) \mid \vec{X}
+    \sim N\!\Bigl(0,\; \sigma^2 \cdot
+    \bigl((\vec{X}'\vec{X})^{-1}\bigr)_{kk}\Bigr),
+\]
+%
+where $\bigl((\vec{X}'\vec{X})^{-1}\bigr)_{kk}$ is the $(k,k)$ element
+of~$(\vec{X}'\vec{X})^{-1}$.  So if we define the ratio~$z_k$ by dividing
+$b_k - \overline{\beta}_k$ by its standard deviation
+%
+\begin{equation}
+  z_k \equiv \frac{b_k - \overline{\beta}_k}
+    {\sqrt{\sigma^2 \cdot \bigl((\vec{X}'\vec{X})^{-1}\bigr)_{kk}}},
+  \label{eq:1.4.3}
+\end{equation}
+%
+then the distribution of~$z_k$ is $N(0,1)$ (the standard normal distribution).
+
+Suppose for a second that $\sigma^2$ is known.  Then the statistic~$z_k$ has some
+desirable properties as a test statistic.  First, its value can be calculated from the
+sample.  Second, its distribution conditional on~$\vec{X}$ does not depend on~$\vec{X}$
+(which should not be confused with the fact that the \emph{value} of~$z_k$ depends
+on~$\vec{X}$).  So $z_k$ and~$\vec{X}$ are independently distributed, and, regardless of
+the value of~$\vec{X}$, the distribution of~$z_k$ is the same as its unconditional
+distribution.  This is convenient because different samples differ not only in~$\vec{y}$
+but also in~$\vec{X}$.  Third, the distribution is known.  In particular, it does not
+depend on unknown parameters (such as~$\bm{\beta}$).  (If the distribution of a statistic
+depends on unknown parameters, those parameters are called \textbf{nuisance parameters}.)
+Using this statistic, we can determine whether or not the sampling error
+$b_k - \overline{\beta}_k$ is too large: it is too large if the test statistic takes on a
+value that is surprising for a realization from the distribution.
+
+If we do not know the true value of~$\sigma^2$, a natural idea is to replace the
+nuisance parameter~$\sigma^2$ by its OLS estimate~$s^2$.  The statistic after the
+substitution of~$s^2$ for~$\sigma^2$ is called the \textbf{\textit{t}-ratio} or the
+\textbf{\textit{t}-value}.  The denominator of this statistic is called the
+\textbf{standard error} of the OLS estimate of~$\beta_k$ and is sometimes written
+as~$SE(b_k)$:
+%
+\begin{equation}
+  SE(b_k) \equiv \sqrt{s^2 \cdot \bigl((\vec{X}'\vec{X})^{-1}\bigr)_{kk}}
+    = \sqrt{(k,k) \text{ element of } \widehat{\Var(\vec{b} \mid \vec{X})}
+    \text{ in (1.3.4)}}.
+  \label{eq:1.4.4}
+\end{equation}
+%
+Since $s^2$, being a function of the sample, is a random variable, this substitution
+changes the distribution of the statistic, but fortunately the changed distribution, too,
+is known and depends on neither nuisance parameters nor~$\vec{X}$.
+
+\begin{proposition}[distribution of the \textit{t}-ratio]
+\label{prop:t-ratio}
+\emph{Suppose Assumptions~1.1--1.5 hold.  Under the null hypothesis
+$\mathrm{H}_0 \colon \beta_k = \overline{\beta}_k$, the $t$-ratio defined as}
+%
+\begin{equation}
+  t_k \equiv \frac{b_k - \overline{\beta}_k}{SE(b_k)}
+    \equiv \frac{b_k - \overline{\beta}_k}
+      {\sqrt{s^2 \cdot \bigl((\vec{X}'\vec{X})^{-1}\bigr)_{kk}}}
+  \label{eq:1.4.5}
+\end{equation}
+%
+\emph{is distributed as $t(n-K)$ (the $t$ distribution with $n - K$ degrees of freedom).}
+\end{proposition}
+
+\begin{proof}
+We can write
+%
+\begin{align*}
+  t_k &= \frac{b_k - \overline{\beta}_k}
+    {\sqrt{\sigma^2 \cdot \bigl((\vec{X}'\vec{X})^{-1}\bigr)_{kk}}}
+    \cdot \sqrt{\frac{\sigma^2}{s^2}}
+    = \frac{z_k}{\sqrt{s^2/\sigma^2}} \\
+  &= \frac{z_k}{\sqrt{\dfrac{\vec{e}'\vec{e}/\sigma^2}{n-K}}}
+    = \frac{z_k}{\sqrt{\dfrac{q}{n-K}}},
+\end{align*}
+%
+where $q \equiv \vec{e}'\vec{e}/\sigma^2$ to reflect the substitution of~$s^2$
+for~$\sigma^2$.  We have already shown that $z_k$ is $N(0,1)$.  We will show:
+
+\begin{enumerate}
+\item[(1)] $q \mid \vec{X} \sim \chi^2(n - K)$,
+
+\item[(2)] two random variables $z_k$ and~$q$ are independent conditional on~$\vec{X}$.
+\end{enumerate}
+
+\noindent
+Then, by the definition of the $t$ distribution, the ratio of~$z_k$ to
+$\sqrt{q/(n-K)}$ is distributed as~$t$ with $n - K$ degrees of freedom,%
+\footnote{Fact: If $x \sim N(0,1)$, $y \sim \chi^2(m)$ and if $x$ and~$y$ are
+independent, then the ratio $x/\sqrt{y/m}$ has the $t$ distribution with $m$ degrees of
+freedom.}
+and we are done.
+
+\medskip
+\noindent
+(1) Since $\vec{e}'\vec{e} = \bm{\varepsilon}'\vec{M}\bm{\varepsilon}$ from~(1.2.12), we
+have
+%
+\[
+  q = \frac{\vec{e}'\vec{e}}{\sigma^2}
+    = \frac{\bm{\varepsilon}'}{\sigma} \vec{M} \frac{\bm{\varepsilon}}{\sigma}.
+\]
+%
+The middle matrix~$\vec{M}$, being the annihilator, is idempotent.  Also,
+$\bm{\varepsilon}/\sigma \mid \vec{X} \sim N(\vec{0}, \vec{I}_n)$
+by~\eqref{eq:1.4.1}.  Therefore, this quadratic form is distributed as~$\chi^2$ with
+degrees of freedom equal to $\rank(\vec{M})$.%
+\footnote{Fact: If $\vec{x} \sim N(\vec{0}, \vec{I}_n)$ and $\vec{A}$ is idempotent, then
+$\vec{x}'\vec{A}\vec{x}$ has a chi-squared distribution with degrees of freedom equal to
+the rank of~$\vec{A}$.}
+But $\rank(\vec{M}) = \tr(\vec{M})$, because $\vec{M}$ is idempotent.%
+\footnote{Fact: If $\vec{A}$ is idempotent, then $\rank(\vec{A}) = \tr(\vec{A})$.}
+We have already shown in the proof of Proposition~1.2 that
+$\tr(\vec{M}) = n - K$.  So $q \mid \vec{X} \sim \chi^2(n - K)$.
+
+\medskip
+\noindent
+(2) Both $\vec{b}$ and~$\vec{e}$ are linear functions of~$\bm{\varepsilon}$
+(by~(1.2.14) and the fact that $\vec{e} = \vec{M}\bm{\varepsilon}$), so they are jointly
+normal conditional on~$\vec{X}$.  Also, they are uncorrelated conditional on~$\vec{X}$
+(see part~(d) of Proposition~1.1).  So $\vec{b}$ and~$\vec{e}$ are independently
+distributed conditional on~$\vec{X}$.  But $z_k$ is a function of~$\vec{b}$ and $q$ is a
+function of~$\vec{e}$.  So $z_k$ and~$q$ are independently distributed conditional
+on~$\vec{X}$.%
+\footnote{Fact: If $\vec{x}$ and~$\vec{y}$ are independently distributed, then so are
+$f(\vec{x})$ and $g(\vec{y})$.}
+\end{proof}
+
+
+%% ─── Decision Rule for the t-Test ─────────────────────────────────────────────
+\subsection*{Decision Rule for the \textit{t}-Test}
+
+The test of the null hypothesis based on the $t$-ratio is called the $t$-test and proceeds
+as follows:
+
+\begin{description}[style=unboxed, leftmargin=0pt]
+\item[\textit{Step~1:}] Given the hypothesized value, $\overline{\beta}_k$, of~$\beta_k$,
+  form the $t$-ratio as in~\eqref{eq:1.4.5}.  Too large a deviation of~$t_k$ from~0 is a
+  sign of the failure of the null hypothesis.  The next step specifies how large is too
+  large.
+
+\item[\textit{Step~2:}] Go to the $t$-table (most statistics and econometrics textbooks
+  include the $t$-table) and look up the entry for $n - K$ degrees of freedom.  Find the
+  \textbf{critical value}, $t_{\alpha/2}(n - K)$, such that the area in the $t$
+  distribution to the right of $t_{\alpha/2}(n - K)$ is~$\alpha/2$, as illustrated in
+  Figure~\ref{fig:1.3}.  (If $n - K = 30$ and $\alpha = 5\%$, for example,
+  $t_{\alpha/2}(n - K) = 2.042$.)  Then, since the $t$ distribution is symmetric around~0,
+  %
+  \[
+    \mathrm{Prob}\bigl(-t_{\alpha/2}(n-K) < t < t_{\alpha/2}(n-K)\bigr) = 1 - \alpha.
+  \]
+
+\item[\textit{Step~3:}] Accept $\mathrm{H}_0$ if
+  $-t_{\alpha/2}(n-K) < t_k < t_{\alpha/2}(n-K)$ (that is, if
+  $|t_k| < t_{\alpha/2}(n-K)$), where $t_k$ is the $t$-ratio from \emph{Step~1}.  Reject
+  $\mathrm{H}_0$ otherwise.  Since $t_k \sim t(n-K)$ under~$\mathrm{H}_0$, the
+  probability of rejecting~$\mathrm{H}_0$ when $\mathrm{H}_0$ is true is~$\alpha$.  So
+  the size (significance level) of the test is indeed~$\alpha$.
+\end{description}
+
+A convenient feature of the $t$-test is that the critical value does not depend
+on~$\vec{X}$; there is no need to calculate critical values for each sample.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.9\textwidth,trim=50 400 50 400,clip]{figures/fig_1_3.png}
+\caption{$t$ Distribution}
+\label{fig:1.3}
+\end{figure}
+
+
+%% ─── Confidence Interval ──────────────────────────────────────────────────────
+\subsection*{Confidence Interval}
+
+\emph{Step~3} can also be stated in terms of $b_k$ and~$SE(b_k)$.  Since $t_k$ is as
+in~\eqref{eq:1.4.5}, you accept~$\mathrm{H}_0$ whenever
+%
+\[
+  -t_{\alpha/2}(n-K) < \frac{b_k - \overline{\beta}_k}{SE(b_k)} < t_{\alpha/2}(n-K)
+\]
+%
+or
+%
+\[
+  b_k - SE(b_k) \cdot t_{\alpha/2}(n-K)
+    < \overline{\beta}_k
+    < b_k + SE(b_k) \cdot t_{\alpha/2}(n-K).
+\]
+%
+Therefore, we accept if and only if the hypothesized value~$\overline{\beta}_k$ falls in
+the interval:
+%
+\begin{equation}
+  \bigl[\, b_k - SE(b_k) \cdot t_{\alpha/2}(n-K),\;
+    b_k + SE(b_k) \cdot t_{\alpha/2}(n-K) \,\bigr].
+  \label{eq:1.4.6}
+\end{equation}
+%
+This interval is called the \textbf{level $\boldsymbol{1 - \alpha}$ confidence interval}.
+It is narrower the smaller the standard error.  Thus, the smallness of the standard error
+is a measure of the estimator's precision.
+
+
+%% ─── p-Value ──────────────────────────────────────────────────────────────────
+\subsection*{\textit{p}-Value}
+
+The decision rule of the $t$-test can also be stated using the \textbf{\textit{p}-value}.
+
+\begin{description}[style=unboxed, leftmargin=0pt]
+\item[\textit{Step~1:}] Same as above.
+
+\item[\textit{Step~2:}] Rather than finding the critical value $t_{\alpha/2}(n - K)$,
+  calculate
+  %
+  \[
+    p = \mathrm{Prob}(t > |t_k|) \times 2.
+  \]
+  %
+  Since the $t$ distribution is symmetric around~0,
+  $\mathrm{Prob}(t > |t_k|) = \mathrm{Prob}(t < -|t_k|)$, so
+  %
+  \begin{equation}
+    \mathrm{Prob}(-|t_k| < t < |t_k|) = 1 - p.
+    \label{eq:1.4.7}
+  \end{equation}
+
+\item[\textit{Step~3:}] Accept $\mathrm{H}_0$ if $p > \alpha$.  Reject otherwise.
+\end{description}
+
+To see the equivalence of the two decision rules, one based on the critical values such
+as~$t_{\alpha/2}(n - K)$ and the other based on the $p$-value, refer to
+Figure~\ref{fig:1.3}.  If $\mathrm{Prob}(t > |t_k|)$ is greater than~$\alpha/2$ (as in the
+figure), that is, if the $p$-value is more than~$\alpha$, then $|t_k|$ must be to the left
+of~$t_{\alpha/2}(n - K)$.  This means from \emph{Step~3} that the null hypothesis is not
+rejected.  Thus, when $p$ is small, the $t$-ratio is surprisingly large for a random
+variable from the $t$ distribution.  The smaller the~$p$, the stronger the rejection.
+
+Examples of the $t$-test can be found in Section~1.7.
+
+
+%% ─── Linear Hypotheses ────────────────────────────────────────────────────────
+\subsection*{Linear Hypotheses}
+
+The null hypothesis we wish to test may not be a restriction about individual regression
+coefficients of the maintained hypothesis; it is often about linear combinations of them
+written as a system of linear equations:
+%
+\begin{equation}
+  \mathrm{H}_0 \colon \vec{R}\bm{\beta} = \vec{r},
+  \label{eq:1.4.8}
+\end{equation}
+%
+where values of~$\vec{R}$ and~$\vec{r}$ are known and specified by the hypothesis.  We
+denote the number of equations, which is the dimension of~$\vec{r}$, by~$\#\vec{r}$.  So
+$\vec{R}$ is $\#\vec{r} \times K$.  These $\#\vec{r}$ equations are restrictions on the
+coefficients in the maintained hypothesis.  It is called a linear hypothesis because each
+equation is linear.  To make sure that there are no redundant equations and that the
+equations are consistent with each other, we require that
+$\rank(\vec{R}) = \#\vec{r}$ (i.e., $\vec{R}$ is of full \emph{row} rank with its rank
+equaling the number of rows).  But do not be too conscious about the rank condition; in
+specific applications, it is very easy to spot a failure of the rank condition if there is
+one.
+
+\begin{example}[continuation of Example~1.2]
+\label{ex:linear-hyp}
+Consider the wage equation of Example~1.2 where $K = 4$.  We might wish to test the
+hypothesis that education and tenure have equal impact on the wage rate and that there is
+no experience effect.  The hypothesis is two equations (so $\#\vec{r} = 2$):
+%
+\[
+  \beta_2 = \beta_3 \quad \text{and} \quad \beta_4 = 0.
+\]
+%
+This can be cast in the format $\vec{R}\bm{\beta} = \vec{r}$ if $\vec{R}$ and~$\vec{r}$
+are defined as
+%
+\[
+  \vec{R} = \begin{bmatrix} 0 & 1 & -1 & 0 \\ 0 & 0 & 0 & 1 \end{bmatrix}, \quad
+  \vec{r} = \begin{bmatrix} 0 \\ 0 \end{bmatrix}.
+\]
+%
+Because the two rows of this~$\vec{R}$ are linearly independent, the rank condition is
+satisfied.
+
+But suppose we require additionally that
+%
+\[
+  \beta_2 - \beta_3 = \beta_4.
+\]
+%
+This is redundant because it holds whenever the first two equations do.  With these three
+equations, $\#\vec{r} = 3$ and
+%
+\[
+  \vec{R} = \begin{bmatrix} 0 & 1 & -1 & 0 \\ 0 & 0 & 0 & 1 \\ 0 & 1 & -1 & -1
+  \end{bmatrix}, \quad
+  \vec{r} = \begin{bmatrix} 0 \\ 0 \\ 0 \end{bmatrix}.
+\]
+%
+Since the third row of~$\vec{R}$ is the difference between the first two, $\vec{R}$ is
+not of full row rank.  The consequence of adding redundant equations is that $\vec{R}$ no
+longer meets the full row rank condition.
+
+As an example of inconsistent equations, consider adding to the first two equations the
+third equation $\beta_4 = 0.5$.  Evidently, $\beta_4$ cannot be~0 and~0.5 at the same
+time.  The hypothesis is inconsistent because there is no~$\bm{\beta}$ that satisfies the
+three equations simultaneously.  If we nevertheless included this equation, then $\vec{R}$
+and~$\vec{r}$ would become
+%
+\[
+  \vec{R} = \begin{bmatrix} 0 & 1 & -1 & 0 \\ 0 & 0 & 0 & 1 \\ 0 & 0 & 0 & 1
+  \end{bmatrix}, \quad
+  \vec{r} = \begin{bmatrix} 0 \\ 0 \\ 0.5 \end{bmatrix}.
+\]
+%
+Again, the full row rank condition is not satisfied because the rank of~$\vec{R}$ is~2
+while $\#\vec{r} = 3$.
+\end{example}
+
+
+%% ─── The F-Test ───────────────────────────────────────────────────────────────
+\subsection*{The \textit{F}-Test}
+
+To test linear hypotheses, we look for a test statistic that has a known distribution
+under the null hypothesis.
+
+\begin{proposition}[distribution of the \textit{F}-ratio]
+\label{prop:F-ratio}
+\emph{Suppose Assumptions~1.1--1.5 hold.  Under the null hypothesis
+$\mathrm{H}_0 \colon \vec{R}\bm{\beta} = \vec{r}$, where $\vec{R}$ is
+$\#\vec{r} \times K$ with $\rank(\vec{R}) = \#\vec{r}$, the \textbf{\textit{F}-ratio}
+defined as}
+%
+\begin{align}
+  F &\equiv \frac{(\vec{R}\vec{b} - \vec{r})'
+    \bigl[\vec{R}(\vec{X}'\vec{X})^{-1}\vec{R}'\bigr]^{-1}
+    (\vec{R}\vec{b} - \vec{r}) / \#\vec{r}}{s^2} \notag \\
+    &= (\vec{R}\vec{b} - \vec{r})'
+    [\vec{R}\widehat{\Var(\vec{b} \mid \vec{X})}\vec{R}']^{-1}
+    (\vec{R}\vec{b} - \vec{r}) / \#\vec{r}
+    \quad \text{(by (1.3.4))}
+  \label{eq:1.4.9}
+\end{align}
+%
+\emph{is distributed as $F(\#\vec{r}, n - K)$ (the $F$ distribution with $\#\vec{r}$
+and $n - K$ degrees of freedom).}
+\end{proposition}
+
+As in Proposition~1.3, it suffices to show that the distribution conditional on~$\vec{X}$
+is $F(\#\vec{r}, n - K)$; because the $F$ distribution does not depend on~$\vec{X}$, it
+is also the unconditional distribution of the statistic.
+
+\begin{proof}
+Since $s^2 = \vec{e}'\vec{e}/(n - K)$, we can write
+%
+\[
+  F = \frac{w / \#\vec{r}}{q / (n - K)}
+\]
+%
+where
+%
+\[
+  w \equiv (\vec{R}\vec{b} - \vec{r})'
+    [\sigma^2 \cdot \vec{R}(\vec{X}'\vec{X})^{-1}\vec{R}']^{-1}
+    (\vec{R}\vec{b} - \vec{r})
+  \quad \text{and} \quad
+  q \equiv \frac{\vec{e}'\vec{e}}{\sigma^2}.
+\]
+%
+We need to show
+%
+\begin{enumerate}
+\item[(1)] $w \mid \vec{X} \sim \chi^2(\#\vec{r})$,
+
+\item[(2)] $q \mid \vec{X} \sim \chi^2(n - K)$ (this is part~(1) in the proof of
+  Proposition~1.3),
+
+\item[(3)] $w$ and~$q$ are independently distributed conditional on~$\vec{X}$.
+\end{enumerate}
+
+\noindent
+Then, by the definition of the $F$ distribution, the $F$-ratio
+$\sim F(\#\vec{r}, n - K)$.%
+\footnote{Fact: Let $\vec{x}$ be an $m$ dimensional random vector.  If
+$\vec{x} \sim N(\bm{\mu}, \bm{\Sigma})$ with $\bm{\Sigma}$ nonsingular, then
+$(\vec{x} - \bm{\mu})'\bm{\Sigma}^{-1}(\vec{x} - \bm{\mu}) \sim \chi^2(m)$.}
+
+\medskip
+\noindent
+(1) Let $\vec{v} \equiv \vec{R}\vec{b} - \vec{r}$.  Under~$\mathrm{H}_0$,
+$\vec{R}\vec{b} - \vec{r} = \vec{R}(\vec{b} - \bm{\beta})$.  So by~\eqref{eq:1.4.2},
+conditional on~$\vec{X}$, $\vec{v}$ is normal with mean~$\vec{0}$, and its variance is
+given by
+%
+\[
+  \Var(\vec{v} \mid \vec{X})
+    = \Var(\vec{R}(\vec{b} - \bm{\beta}) \mid \vec{X})
+    = \vec{R}\,\Var(\vec{b} - \bm{\beta} \mid \vec{X})\,\vec{R}'
+    = \sigma^2 \cdot \vec{R}(\vec{X}'\vec{X})^{-1}\vec{R}',
+\]
+%
+which is none other than the inverse of the middle matrix in the quadratic form for~$w$.
+Hence, $w$ can be written as
+$\vec{v}'\,\Var(\vec{v} \mid \vec{X})^{-1}\,\vec{v}$.  Since $\vec{R}$ is of full row
+rank and $\vec{X}'\vec{X}$ is nonsingular,
+$\sigma^2 \cdot \vec{R}(\vec{X}'\vec{X})^{-1}\vec{R}'$ is nonsingular (why?  Showing
+this is a review question).  Therefore, by the definition of the $\chi^2$ distribution,
+$w \mid \vec{X} \sim \chi^2(\#\vec{r})$.
+
+\medskip
+\noindent
+(3) $w$ is a function of~$\vec{b}$ and $q$ is a function of~$\vec{e}$.  But $\vec{b}$
+and~$\vec{e}$ are independently distributed conditional on~$\vec{X}$, as shown in
+part~(2) of the proof of Proposition~1.3.  So $w$ and~$q$ are independently distributed
+conditional on~$\vec{X}$.
+\end{proof}
+
+If the null hypothesis $\vec{R}\bm{\beta} = \vec{r}$ is true, we expect
+$\vec{R}\vec{b} - \vec{r}$ to be small, so large values of~$F$ should be taken as
+evidence for a failure of the null.  This means that we look at only the upper tail of the
+distribution in the $F$-statistic.  The decision rule of the $F$-test at the significance
+level of~$\alpha$ is as follows.
+
+\begin{description}[style=unboxed, leftmargin=0pt]
+\item[\textit{Step~1:}] Calculate the $F$-ratio by the formula~\eqref{eq:1.4.9}.
+
+\item[\textit{Step~2:}] Go to the table of $F$ distribution and look up the entry for
+  $\#\vec{r}$ (the numerator degrees of freedom) and $n - K$ (the denominator degrees of
+  freedom).  Find the critical value $F_\alpha(\#\vec{r}, n - K)$ that leaves~$\alpha$ for
+  the upper tail of the $F$ distribution, as illustrated in Figure~\ref{fig:1.4}.  For
+  example, when $\#\vec{r} = 3$, $n - K = 30$, and $\alpha = 5\%$, the critical value
+  $F_{.05}(3, 30)$ is~2.92.
+
+\item[\textit{Step~3:}] Accept the null if the $F$-ratio from \emph{Step~1} is less than
+  $F_\alpha(\#\vec{r}, n - K)$.  Reject otherwise.
+\end{description}
+
+This decision rule can also be described in terms of the $p$-value:
+
+\begin{description}[style=unboxed, leftmargin=0pt]
+\item[\textit{Step~1:}] Same as above.
+
+\item[\textit{Step~2:}] Calculate
+  %
+  \[
+    p = \text{area of the upper tail of the $F$ distribution to the right of the
+    $F$-ratio.}
+  \]
+
+\item[\textit{Step~3:}] Accept the null if $p > \alpha$; reject otherwise.
+\end{description}
+
+Thus, a \emph{small} $p$-value is a signal of the failure of the null.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.9\textwidth,trim=50 400 50 400,clip]{figures/fig_1_4.png}
+\caption{$F$ Distribution}
+\label{fig:1.4}
+\end{figure}
+
+
+%% ─── A More Convenient Expression for F ───────────────────────────────────────
+\subsection*{A More Convenient Expression for \textit{F}}
+
+The above derivation of the $F$-ratio is by the \textbf{Wald principle}, because it is
+based on the unrestricted estimator, which is not constrained to satisfy the restrictions
+of the null hypothesis.  Calculating the $F$-ratio by the formula~\eqref{eq:1.4.9}
+requires matrix inversion and multiplication.  Fortunately, there is a convenient
+alternative formula involving two different sum of squared residuals: one is \emph{SSR},
+the minimized sum of squared residuals from~(1.2.1) now denoted as~$SSR_U$, and the other
+is the restricted sum of squared residuals, denoted~$SSR_R$, obtained from
+%
+\begin{equation}
+  \min_{\widetilde{\bm{\beta}}} SSR(\widetilde{\bm{\beta}})
+    \quad \text{s.t.} \quad \vec{R}\widetilde{\bm{\beta}} = \vec{r}.
+  \label{eq:1.4.10}
+\end{equation}
+%
+Finding the $\widetilde{\bm{\beta}}$ that achieves this constrained minimization is called
+the \textbf{restricted regression} or \textbf{restricted least squares}.  It is left as an
+analytical exercise to show that the $F$-ratio equals
+%
+\begin{equation}
+  F = \frac{(SSR_R - SSR_U) / \#\vec{r}}{SSR_U / (n - K)},
+  \label{eq:1.4.11}
+\end{equation}
+%
+which is the difference in the objective function deflated by the estimate of the error
+variance.  This derivation of the $F$-ratio is analogous to how the likelihood-ratio
+statistic is derived in maximum likelihood estimation as the difference in log likelihood
+with and without the imposition of the null hypothesis.  For this reason, this second
+derivation of the $F$-ratio is said to be by the \textbf{Likelihood-Ratio principle}.
+There is a closed-form expression for the restricted least squares estimator
+of~$\bm{\beta}$.  Deriving the expression is left as an analytical exercise.  The
+computation of restricted least squares will be explained in the context of the empirical
+example in Section~1.7.
+
+
+%% ─── t versus F ───────────────────────────────────────────────────────────────
+\subsection*{\textit{t} versus \textit{F}}
+
+Because hypotheses about individual coefficients are linear hypotheses, the $t$-test of
+$\mathrm{H}_0 \colon \beta_k = \overline{\beta}_k$ is a special case of the $F$-test.  To
+see this, note that the hypothesis can be written as $\vec{R}\bm{\beta} = \vec{r}$ with
+%
+\[
+  \underset{(1 \times K)}{\vec{R}}
+    = \bigl[\, 0 \;\; \cdots \;\; 0 \;\; \underset{(k)}{1} \;\; 0 \;\;
+    \cdots \;\; 0 \,\bigr], \quad
+  \vec{r} = \overline{\beta}_k.
+\]
+%
+So by~\eqref{eq:1.4.9} the $F$-ratio is
+%
+\[
+  F = (b_k - \overline{\beta}_k)
+    \bigl[s^2 \cdot (k,k) \text{ element of } (\vec{X}'\vec{X})^{-1}\bigr]^{-1}
+    (b_k - \overline{\beta}_k),
+\]
+%
+which is the square of the $t$-ratio in~\eqref{eq:1.4.5}.  Since a random variable
+distributed as $F(1, n - K)$ is the square of a random variable distributed as~$t(n-K)$,
+the $t$- and $F$-tests give the same test result.
+
+Sometimes, the null is that a set of individual regression coefficients equal certain
+values.  For example, assume $K = 2$ and consider
+%
+\[
+  \mathrm{H}_0 \colon \beta_1 = 1 \quad \text{and} \quad \beta_2 = 0.
+\]
+%
+This can be written as a linear hypothesis $\vec{R}\bm{\beta} = \vec{r}$ for
+$\vec{R} = \vec{I}_2$ and $\vec{r} = (1, 0)'$.  So the $F$-test can be used.  It is
+tempting, however, to conduct the $t$-test separately for each individual coefficient of
+the hypothesis.  We might accept~$\mathrm{H}_0$ if both restrictions $\beta_1 = 1$ and
+$\beta_2 = 0$ pass the $t$-test.  This amounts to using the confidence region of
+%
+\[
+  \bigl\{(\beta_1, \beta_2) \mid
+    b_1 - SE(b_1) \cdot t_{\alpha/2}(n-K) < \beta_1
+    < b_1 + SE(b_1) \cdot t_{\alpha/2}(n-K),
+\]
+\[
+  \qquad b_2 - SE(b_2) \cdot t_{\alpha/2}(n-K) < \beta_2
+    < b_2 + SE(b_2) \cdot t_{\alpha/2}(n-K) \bigr\},
+\]
+%
+which is a rectangular region in the $(\beta_1, \beta_2)$ plane, as illustrated in
+Figure~\ref{fig:1.5}.  If $(1, 0)$, the point in the $(\beta_1, \beta_2)$ plane specified
+by the null, falls in this region, one would accept the null.  On the other hand, the
+confidence region for the $F$-test is
+%
+\[
+  \Bigl\{(\beta_1, \beta_2) \mid
+    (b_1 - \beta_1,\; b_2 - \beta_2)\,
+    \widehat{\Var(\vec{b} \mid \vec{X})}^{-1}
+    \begin{bmatrix} b_1 - \beta_1 \\ b_2 - \beta_2 \end{bmatrix}
+    < 2 F_\alpha(\#\vec{r}, n - K) \Bigr\}.
+\]
+%
+Since $\widehat{\Var(\vec{b} \mid \vec{X})}$ is positive definite, the $F$-test acceptance
+region is an ellipse in the $(\beta_1, \beta_2)$ plane.  The two confidence regions look
+typically like Figure~\ref{fig:1.5}.
+
+The $F$-test should be preferred to the test using two $t$-ratios for two reasons.
+First, if the size (significance level) in each of the two $t$-tests is~$\alpha$, then
+the overall size (the probability that $(1, 0)$ is outside the rectangular region) is
+not~$\alpha$.  Second, as will be noted in the next section (see~(1.5.19)), the $F$-test
+is a likelihood ratio test and likelihood-ratio tests have certain desirable properties.
+So even if the significance level in each $t$-test is controlled so that the overall size
+is~$\alpha$, the test is less desirable than the $F$-test.%
+\footnote{For more details on the relationship between the $t$-test and the $F$-tests,
+see Scheff\'{e} (1959, p.~46).}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.9\textwidth,trim=50 400 50 400,clip]{figures/fig_1_5.png}
+\caption{$t$- versus $F$-Tests}
+\label{fig:1.5}
+\end{figure}
+
+
+%% ─── An Example of a Test Statistic Whose Distribution Depends on X ───────────
+\subsection*{An Example of a Test Statistic Whose Distribution Depends on X}
+
+To place the discussion of this section in a proper perspective, it may be useful to note
+that there are some statistics whose conditional distribution depends on~$\vec{X}$.
+Consider the celebrated \textbf{Durbin--Watson statistic}:
+%
+\[
+  \frac{\sum_{i=2}^{n}(e_i - e_{i-1})^2}{\sum_{i=1}^{n} e_i^2}.
+\]
+%
+The conditional distribution, and hence the critical values, of this statistic depend
+on~$\vec{X}$, but J.~Durbin and G.\,S.~Watson have shown that the critical values fall
+between two bounds (which depends on the sample size, the number of regressors, and
+whether the regressor includes a constant).  Therefore, the critical values for the
+unconditional distribution, too, fall between these bounds.
+
+The statistic is designed for testing whether there is no serial correlation in the error
+term.  Thus, the null hypothesis is Assumption~1.4, while the maintained hypothesis is the
+other assumptions of the classical regression model (including the strict exogeneity
+assumption) and the normality assumption.  But, as emphasized in Section~1.1, the strict
+exogeneity assumption is not satisfied in time-series models typically encountered in
+econometrics, and serial correlation is an issue that arises only in time-series models.
+Thus, the Durbin--Watson statistic is not useful in econometrics.  More useful tests for
+serial correlation, which are all based on large-sample theory, will be covered in the
+next chapter.

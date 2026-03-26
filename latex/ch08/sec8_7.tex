@@ -1,0 +1,371 @@
+% sec8_7.tex — Section 8.7: Serially Correlated Observations
+
+So far, we have assumed i.i.d.\ observations in deriving the asymptotic variance of
+ML estimators. This section is concerned with ML estimation when observations
+are serially correlated.
+
+\subsection*{Two Questions}
+
+When observations are serially correlated, there arise two distinct questions. The
+first is whether the ML estimator that maximizes a likelihood function derived from
+the assumption of i.i.d.\ observations is consistent and asymptotically normal when
+indeed the observations are serially correlated. More precisely, suppose that the
+observation vector $\mathbf{w}_t$ is ergodic stationary but not necessarily i.i.d., and consider
+the ML estimator that maximizes
+\begin{equation}
+  Q_n(\boldsymbol{\theta})
+  = \frac{1}{n}\sum_{t=1}^{n} \log f(\mathbf{w}_t;\, \boldsymbol{\theta}),
+  \label{eq:8.7.1} \tag{8.7.1}
+\end{equation}
+where $\log f(\mathbf{w}_t;\, \boldsymbol{\theta})$ is the log likelihood for observation~$t$. This objective function
+would be ($1/n$ times) the log likelihood of the sample $(\mathbf{w}_1, \ldots, \mathbf{w}_n)$ if the observations were i.i.d. Even though the log likelihood for observation~$t$,
+$\log f(\mathbf{w}_t;\, \boldsymbol{\theta})$,
+is correctly specified, this objective function is misspecified because it assumes,
+incorrectly, that $\{\mathbf{w}_t\}$ is i.i.d. The ML estimator that maximizes this objective function is a quasi-ML estimator because the likelihood function is misspecified. Is a
+quasi-ML estimator that incorrectly assumes no serial correlation consistent and
+asymptotically normal?
+
+We have actually answered this first question in the previous chapter. By
+Propositions~7.5 and~7.6, the quasi-ML estimator is consistent because it is an
+M-estimator, with $m(\mathbf{w}_t;\, \boldsymbol{\theta})$ given by the log likelihood for observation~$t$. For
+asymptotic normality, the relevant theorem is Proposition~7.8, which spells out
+conditions under which an M-estimator is asymptotically normal. Just reproducing the conclusion of Proposition~7.8, the expression for the asymptotic variance is
+given by
+\begin{equation}
+  \avar(\hat{\boldsymbol{\theta}})
+  = \bigl(\E[\mathbf{H}(\mathbf{w}_t;\, \boldsymbol{\theta}_0)]\bigr)^{-1}
+    \boldsymbol{\Sigma}
+    \bigl(\E[\mathbf{H}(\mathbf{w}_t;\, \boldsymbol{\theta}_0)]\bigr)^{-1},
+  \label{eq:8.7.2} \tag{8.7.2}
+\end{equation}
+where $\boldsymbol{\theta}_0$ is the true value of $\boldsymbol{\theta}$,
+$\mathbf{H}(\mathbf{w}_t;\, \boldsymbol{\theta})$ is the Hessian for observation~$t$, and
+$\boldsymbol{\Sigma}$ is
+the long-run variance of the score for observation~$t$ evaluated at $\boldsymbol{\theta}_0$,
+$\mathbf{s}(\mathbf{w}_t;\, \boldsymbol{\theta}_0)$. This
+asymptotic variance can be consistently estimated by
+\begin{equation}
+  \widehat{\avar}(\hat{\boldsymbol{\theta}})
+  = \biggl\{\frac{1}{n}\sum_{t=1}^{n}
+    \mathbf{H}(\mathbf{w}_t;\, \hat{\boldsymbol{\theta}})\biggr\}^{-1}
+    \hat{\boldsymbol{\Sigma}}
+    \biggl\{\frac{1}{n}\sum_{t=1}^{n}
+    \mathbf{H}(\mathbf{w}_t;\, \hat{\boldsymbol{\theta}})\biggr\}^{-1},
+  \label{eq:8.7.3} \tag{8.7.3}
+\end{equation}
+where $\hat{\boldsymbol{\Sigma}}$ is a consistent estimate of $\boldsymbol{\Sigma}$. Any of the ``nonparametric'' methods discussed in Chapter~6 (such as the VARHAC) can be used to calculate $\hat{\boldsymbol{\Sigma}}$ from the
+estimated series $\{\mathbf{s}(\mathbf{w}_t;\, \hat{\boldsymbol{\theta}})\}$; there is no need to parameterize the serial correlation
+in $\{\mathbf{s}(\mathbf{w}_t;\, \boldsymbol{\theta}_0)\}$.
+
+The second question is what is the likelihood function that properly accounts
+for serial correlation in observations and what are the properties of the ``genuine''
+ML estimator that maximizes it. The question can be posed for conditional ML
+as well as unconditional ML. In conditional ML, we divide the observation vector
+$\mathbf{w}_t$ into two groups, the dependent variable $y_t$ and the regressors $\mathbf{x}_t$, and examine
+the conditional distribution of $(y_1, \ldots, y_n)$ conditional on $(\mathbf{x}_1, \ldots, \mathbf{x}_n)$. Parameterizing this conditional distribution is relatively straightforward when $\{\mathbf{w}_t\}$ is i.i.d.,
+because it can be written as a product over~$t$ of the conditional distribution of $y_t$
+given $\mathbf{x}_t$. In fact, this i.i.d.\ case is what we have examined in this and previous
+chapters. If $\{\mathbf{w}_t\}$ is serially correlated, however, the researcher does not know the
+dynamic interaction between $y_t$ and $\mathbf{x}_t$ well enough to be able to write down the
+conditional distribution.\footnote{For a discussion of conditional ML when the complete specification of the dynamic interaction is not possible or undesirable, see Wooldridge (1994, Section~5). For a discussion of possible restrictions on the dynamic
+interaction (such as ``Granger causality'' and ``weak exogeneity''), see, e.g., Davidson and MacKinnon (1993,
+Section~18.2).}
+In the rest of this section, we deal only with examples
+of unconditional ML with serially correlated observations.
+
+\subsection*{Unconditional ML for Dependent Observations}
+
+We start out with the simplest case of a univariate series. Let $(y_0, y_1, \ldots, y_n)$ be the
+sample. (For notational convenience, we assume that the sample includes observation for $t = 0$.) When the observations are serially correlated, the density function
+of the sample can no longer be expressed as a product of individual densities. However, it can be written down in terms of a series of conditional probability density
+functions. The joint density function of $(y_0, y_1)$ can be written as
+\begin{equation}
+  f(y_0, y_1) = f(y_1 \mid y_0)\,f(y_0).
+  \label{eq:8.7.4} \tag{8.7.4}
+\end{equation}
+Similarly, for $(y_0, y_1, y_2)$,
+\begin{equation}
+  f(y_0, y_1, y_2) = f(y_2 \mid y_1, y_0)\,f(y_0, y_1).
+  \label{eq:8.7.5} \tag{8.7.5}
+\end{equation}
+Substituting \eqref{eq:8.7.4} into this, we obtain
+\begin{equation}
+  f(y_0, y_1, y_2) = f(y_2 \mid y_1, y_0)\,f(y_1 \mid y_0)\,f(y_0).
+  \label{eq:8.7.6} \tag{8.7.6}
+\end{equation}
+A repeated use of this sort of sequential substitution produces
+\begin{equation}
+  f(y_0, y_1, \ldots, y_n)
+  = \prod_{t=1}^{n} f(y_t \mid y_{t-1}, \ldots, y_1, y_0)\,f(y_0).
+  \label{eq:8.7.7} \tag{8.7.7}
+\end{equation}
+If the conditional density $f(y_t \mid y_{t-1}, \ldots, y_1, y_0)$ and the unconditional density
+$f(y_0)$ are parameterized by a finite-dimensional parameter vector $\boldsymbol{\theta}$, then ($1/n$
+times) the log likelihood of the sample $(y_0, y_1, \ldots, y_n)$ can be written as
+\begin{equation}
+  \frac{1}{n}\sum_{t=1}^{n}
+    \log f(y_t \mid y_{t-1}, \ldots, y_1, y_0;\, \boldsymbol{\theta})
+  + \frac{1}{n}\log f(y_0;\, \boldsymbol{\theta}).
+  \label{eq:8.7.8} \tag{8.7.8}
+\end{equation}
+The ML estimator $\tilde{\boldsymbol{\theta}}$ of the true parameter value $\boldsymbol{\theta}_0$ is the $\boldsymbol{\theta}$ that maximizes this log
+likelihood function. We will call this ML estimator the \textbf{exact ML estimator}.
+
+\subsection*{ML Estimation of AR(1) Processes}
+
+In Section~6.2, we considered in some detail first-order autoregressive (AR(1))
+processes. If we assume for an AR(1) process that the error term is normally
+distributed, we obtain a \textbf{Gaussian AR(1) process}:
+\begin{equation}
+  y_t = c_0 + \phi_0 y_{t-1} + \varepsilon_t,
+  \label{eq:8.7.9} \tag{8.7.9}
+\end{equation}
+with $\varepsilon_t \sim \text{i.i.d.\ } N(0, \sigma_0^2)$. We assume the stationarity condition that $|\phi_0| < 1$.
+So $\{y_t\}$ is ergodic stationary by Proposition~6.1(d). From Section~6.2, we know
+that the unconditional mean of $y_t$ is $c_0/(1 - \phi_0)$ and the unconditional variance
+is $\sigma_0^2/(1 - \phi_0^2)$. Furthermore, since $y_t$ can be written as a weighted average of
+$(\varepsilon_t, \varepsilon_{t-1}, \ldots)$, its distribution is normal when $\varepsilon_t$ is normal. Therefore,
+\begin{equation}
+  y_0 \sim N\!\biggl(\frac{c_0}{1 - \phi_0},\;
+    \frac{\sigma_0^2}{1 - \phi_0^2}\biggr).
+  \label{eq:8.7.10} \tag{8.7.10}
+\end{equation}
+Also, it follows directly from \eqref{eq:8.7.9} and the normality assumption that
+\begin{equation}
+  y_t \mid (y_{t-1}, \ldots, y_1, y_0)
+  \sim N(c_0 + \phi_0 y_{t-1},\, \sigma_0^2).
+  \label{eq:8.7.11} \tag{8.7.11}
+\end{equation}
+Therefore, using the formula \eqref{eq:8.7.7}, the joint density of $(y_0, y_1, \ldots, y_n)$ for a
+hypothetical parameter value $\boldsymbol{\theta} \equiv (c, \phi, \sigma^2)'$ can be written as
+\begin{multline}
+  f(y_0, y_1, \ldots, y_n;\, \boldsymbol{\theta})
+  = \prod_{t=1}^{n}\biggl\{
+    \frac{1}{\sqrt{2\pi\sigma^2}}
+    \exp\biggl[-\frac{1}{2\sigma^2}(y_t - c - \phi y_{t-1})^2\biggr]\biggr\} \\
+  \times \frac{1}{\sqrt{2\pi\frac{\sigma^2}{1-\phi^2}}}
+    \exp\Biggl[-\frac{\Bigl(y_0 - \frac{c}{1-\phi}\Bigr)^2}
+    {2\frac{\sigma^2}{1-\phi^2}}\Biggr].
+  \label{eq:8.7.12} \tag{8.7.12}
+\end{multline}
+Taking logs and dividing both sides by~$n$, we obtain the objective function for exact
+ML:
+\begin{multline}
+  \tilde{Q}_n(\boldsymbol{\theta})
+  = \frac{1}{n}\sum_{t=1}^{n}
+    \biggl\{-\frac{1}{2}\log(2\pi) - \frac{1}{2}\log(\sigma^2)
+    - \frac{1}{2\sigma^2}(y_t - c - \phi y_{t-1})^2\biggr\} \\
+  + \frac{1}{n}\biggl\{-\frac{1}{2}\log(2\pi)
+    - \frac{1}{2}\log\!\Bigl(\frac{\sigma^2}{1-\phi^2}\Bigr)
+    - \frac{\Bigl(y_0 - \frac{c}{1-\phi}\Bigr)^2}
+      {2\frac{\sigma^2}{1-\phi^2}}\biggr\}.
+  \label{eq:8.7.13} \tag{8.7.13}
+\end{multline}
+The exact ML estimator $\tilde{\boldsymbol{\theta}}$ of the AR(1) process is the $\boldsymbol{\theta}$ that maximizes this objective function. Assuming an interior solution, the estimator solves the first-order
+conditions (the likelihood equations) obtained by setting $\frac{\partial \tilde{Q}_n}{\partial \boldsymbol{\theta}}$
+to zero. They are a
+system of equations that are nonlinear in $\boldsymbol{\theta}$, so finding $\tilde{\boldsymbol{\theta}}$ requires iterative algorithms such as those described in Section~7.5.
+
+\subsection*{Conditional ML Estimation of AR(1) Processes}
+
+The source of the nonlinearity in the likelihood equations is the log likelihood of
+$y_0$. As an alternative, consider dropping this term and maximizing
+\begin{equation}
+  Q_n(\boldsymbol{\theta})
+  = \frac{1}{n}\sum_{t=1}^{n}
+    \biggl\{-\frac{1}{2}\log(2\pi) - \frac{1}{2}\log(\sigma^2)
+    - \frac{1}{2\sigma^2}(y_t - c - \phi y_{t-1})^2\biggr\}.
+  \label{eq:8.7.14} \tag{8.7.14}
+\end{equation}
+Using the relation $f(y_0, y_1, \ldots, y_n) = f(y_1, \ldots, y_n \mid y_0)\,f(y_0)$ and \eqref{eq:8.7.12}, we
+see that this objective function is ($1/n$ times) the log of the likelihood conditional
+on the first observation $y_0$,
+\begin{equation}
+  f(y_1, y_2, \ldots, y_n \mid y_0;\, \boldsymbol{\theta})
+  = \prod_{t=1}^{n}\biggl\{
+    \frac{1}{\sqrt{2\pi\sigma^2}}
+    \exp\biggl[-\frac{1}{2\sigma^2}(y_t - c - \phi y_{t-1})^2\biggr]\biggr\}.
+  \label{eq:8.7.15} \tag{8.7.15}
+\end{equation}
+
+Let $\hat{\boldsymbol{\theta}}$ be the $\boldsymbol{\theta}$ that maximizes the log conditional likelihood \eqref{eq:8.7.14} (conditional
+on~$y_0$). This ML estimator will henceforth be called the \textbf{$y_0$-conditional ML estimator}. Here, conditioning is on $y_0$, which makes the estimator here conceptually
+different from the conditional ML estimators of the previous sections where conditioning is on $\mathbf{x}_t$.
+
+Before examining the relationship between the two ML estimators, the exact
+ML estimator $\tilde{\boldsymbol{\theta}}$ and the $y_0$-conditional ML estimator $\hat{\boldsymbol{\theta}}$, we give two derivations of
+the asymptotic properties of the latter. The first derivation is based on the explicit
+solution for the estimator. Recall from Section~1.5 and Example~7.2 that the objective function in the ML estimation of the linear regression model $y_t = \mathbf{x}_t'\boldsymbol{\beta}_0 + \varepsilon_t$
+for i.i.d.\ observations is
+\begin{equation}
+  \frac{1}{n}\sum_{t=1}^{n}
+    \biggl\{-\frac{1}{2}\log(2\pi) - \frac{1}{2}\log(\sigma^2)
+    - \frac{1}{2\sigma^2}(y_t - \mathbf{x}_t'\boldsymbol{\beta})^2\biggr\}.
+  \label{eq:8.7.16} \tag{8.7.16}
+\end{equation}
+It was shown in Section~1.5, and is very easy to show, that the ML estimator of
+$\boldsymbol{\beta}_0$ is the OLS coefficient estimator and the ML estimator of $\sigma_0^2$ equals the sum
+of squared residuals divided by the sample size. Now, with $\mathbf{x}_t = (1, y_{t-1})'$ and
+$\boldsymbol{\beta}_0 = (c_0, \phi_0)'$, the objective function for the linear regression model reduces to
+$Q_n(\boldsymbol{\theta})$ in \eqref{eq:8.7.14}, the conditional log likelihood for the AR(1) process. Therefore,
+algebraically, the conditional ML estimator $(\hat{c}, \hat{\phi})$ of $(c_0, \phi_0)$ is numerically the
+same as the OLS coefficient estimator in the regression of $y_t$ on a constant and $y_{t-1}$,
+and the conditional ML estimator $\hat{\sigma}^2$ of $\sigma_0^2$ is the sum of squared residuals divided
+by~$n$. Regarding the asymptotic properties of the estimator, we have shown in
+Section~6.4 that $(\hat{c}, \hat{\phi})$ is consistent and asymptotically normal with the asymptotic
+variance indicated in Proposition~6.7 for $p = 1$ and that $\hat{\sigma}^2$ is consistent for $\sigma_0^2$.
+Therefore, for the asymptotic normality of the conditional ML estimator $(\hat{c}, \hat{\phi})$,
+which maximizes the $y_0$-conditional likelihood for normal errors, the normality
+assumption is not needed.
+
+The second derivation is more indirect but nevertheless more instructive. As
+just noted, the objective function $Q_n(\boldsymbol{\theta})$ coincides with \eqref{eq:8.7.16} with
+$\mathbf{x}_t = (1, y_{t-1})'$
+and $\boldsymbol{\beta}_0 = (c_0, \phi_0)'$. Since $\{y_t, \mathbf{x}_t\}$ is merely ergodic stationary and not necessarily
+i.i.d., the conditional ML estimator $(\hat{c}, \hat{\phi}, \hat{\sigma}^2)$ can be viewed as the quasi-ML estimator considered in Proposition~7.6. It has been verified in Example~7.8 that the
+objective function satisfies all the conditions of Proposition~7.6 if $\E(\mathbf{x}_t\mathbf{x}_t')$ where
+$\mathbf{x}_t = (1, y_{t-1})'$ is nonsingular. We have shown in Section~6.4 that this nonsingularity condition is satisfied for AR(1) processes if $\sigma_0^2 > 0$. Thus, the conditional ML
+is consistent. To prove asymptotic normality, view the conditional ML estimator
+as an M-estimator with $\mathbf{w}_t = (y_t, y_{t-1})'$ and
+\begin{equation}
+  m(\mathbf{w}_t;\, \boldsymbol{\theta})
+  = -\frac{1}{2}\log(2\pi) - \frac{1}{2}\log(\sigma^2)
+    - \frac{1}{2\sigma^2}(y_t - c - \phi y_{t-1})^2.
+  \label{eq:8.7.17} \tag{8.7.17}
+\end{equation}
+The relevant theorem, therefore, is Proposition~7.8. Let $\mathbf{s}(\mathbf{w}_t;\, \boldsymbol{\theta})$ be the score for
+observation~$t$ and let $\mathbf{H}(\mathbf{w}_t;\, \boldsymbol{\theta})$ be the Hessian for observation~$t$ associated with this
+$m$ function, and consider the conditions (1)--(5) of Proposition~7.8. The discussion
+in Example~7.10 implies that all the conditions except for~(3) hold if $\E(\mathbf{x}_t\mathbf{x}_t')$ where
+$\mathbf{x}_t = (1, y_{t-1})'$ is nonsingular, which as just noted is satisfied if $\sigma_0^2 > 0$. This leaves
+condition~(3) that
+$\frac{1}{\sqrt{n}}\sum_{t=1}^{n} \mathbf{s}(\mathbf{w}_t;\, \boldsymbol{\theta}_0) \dto N(\mathbf{0}, \boldsymbol{\Sigma})$.
+In the AR(1) model, $f(y_t \mid y_{t-1}, \ldots, y_1, y_0) = f(y_t \mid y_{t-1})$. As you will show in Review Question~1, this
+special feature of the joint density function implies that the sequence
+$\{\mathbf{s}(\mathbf{w}_t;\, \boldsymbol{\theta}_0)\}$ is
+a martingale difference sequence. Since $\mathbf{s}(\mathbf{w}_t;\, \boldsymbol{\theta}_0)$ is a function of
+$\mathbf{w}_t = (y_t, y_{t-1})'$
+and $\{y_t\}$ is ergodic stationary, the sequence $\{\mathbf{s}(\mathbf{w}_t;\, \boldsymbol{\theta}_0)\}$ also is ergodic stationary.
+So by the ergodic stationary martingale difference CLT of Chapter~2, we can claim
+that condition~(3) is satisfied with
+\begin{equation}
+  \boldsymbol{\Sigma}
+  = \E\bigl[\mathbf{s}(\mathbf{w}_t;\, \boldsymbol{\theta}_0)\,
+    \mathbf{s}(\mathbf{w}_t;\, \boldsymbol{\theta}_0)'\bigr].
+  \label{eq:8.7.18} \tag{8.7.18}
+\end{equation}
+
+Finally, it is easy to show the information matrix equality for observation~$t$ that
+$-\E[\mathbf{H}(\mathbf{w}_t;\, \boldsymbol{\theta}_0)]
+= \E[\mathbf{s}(\mathbf{w}_t;\, \boldsymbol{\theta}_0)\,\mathbf{s}(\mathbf{w}_t;\, \boldsymbol{\theta}_0)']$
+(a proof is in Example~7.10). Substituting this and \eqref{eq:8.7.18} into \eqref{eq:8.7.2}, we conclude that the asymptotic variance of the
+$y_0$-conditional ML estimator $\hat{\boldsymbol{\theta}}$ is given by
+\begin{equation}
+  \avar(\hat{\boldsymbol{\theta}})
+  = -\bigl(\E[\mathbf{H}(\mathbf{w}_t;\, \boldsymbol{\theta}_0)]\bigr)^{-1}
+  = \bigl(\E[\mathbf{s}(\mathbf{w}_t;\, \boldsymbol{\theta}_0)\,
+    \mathbf{s}(\mathbf{w}_t;\, \boldsymbol{\theta}_0)']\bigr)^{-1}.
+  \label{eq:8.7.19} \tag{8.7.19}
+\end{equation}
+That is, the usual conclusion for a correctly specified ML estimator for i.i.d.\ observations is applicable to the $y_0$-conditional ML estimator that maximizes the correctly specified conditional likelihood \eqref{eq:8.7.14} for dependent observations.\footnote{This argument can be applied to models more general than autoregressive processes. See Lemma~5.2 of
+Wooldridge (1994).}
+
+The difference between \eqref{eq:8.7.13} and \eqref{eq:8.7.14} is the log likelihood of $y_0$ divided
+by~$n$. If the sample size $n$ is sufficiently large, then the first observation $y_0$ makes a
+negligible contribution to the likelihood of the sample. The exact ML estimator and
+the $y_0$-conditional ML estimator turn out to have the same asymptotic distribution,
+provided that $|\phi| < 1$ (see, e.g., Fuller, 1996, Sections~8.1 and~8.4). For this
+reason, in most applications the parameters of an autoregression are estimated by
+OLS ($y_0$-conditional ML) rather than exact ML.
+
+\subsection*{Conditional ML Estimation of AR(\texorpdfstring{$p$}{p}) and VAR(\texorpdfstring{$p$}{p}) Processes}
+
+A \textbf{Gaussian AR($p$)} process can be written as
+\begin{equation}
+  y_t = c_0 + \phi_{01} y_{t-1} + \phi_{02} y_{t-2} + \cdots + \phi_{0p} y_{t-p}
+  + \varepsilon_t,
+  \label{eq:8.7.20} \tag{8.7.20}
+\end{equation}
+with $\varepsilon_t \sim \text{i.i.d.\ } N(0, \sigma_0^2)$. The conditional ML estimation of the AR($p$) process is
+completely analogous to the AR(1) case. If the sample is $(y_{-p+1}, y_{-p+2}, \ldots, y_0,
+y_1, \ldots, y_n)$, then ($1/n$ times) the log likelihood of the sample conditional on
+$(y_{-p+1}, \ldots, y_0)$ is \eqref{eq:8.7.16} with
+\[
+  \mathbf{x}_t = (1, y_{t-1}, \ldots, y_{t-p})' \quad\text{and}\quad
+  \boldsymbol{\beta}_0 = (c_0, \phi_{01}, \phi_{02}, \ldots, \phi_{0p})'.
+\]
+Therefore, the conditional ML (conditional on $(y_{-p+1}, \ldots, y_0)$) estimator
+of $(c_0, \phi_{01}, \ldots, \phi_{0p})$ is numerically the same as the OLS coefficient estimator in
+the regression of $y_t$ on a constant and $p$ lagged values of $y_t$. The conditional ML
+estimate of $\sigma_0^2$ is the sum of squared residuals divided by the sample size. By
+Proposition~6.7, the conditional ML estimator of the coefficients is consistent and
+asymptotically normal if the stationarity condition (that the roots of
+$1 - \phi_{01}z - \cdots - \phi_{0p}z^p = 0$ be greater than~1 in absolute value) is satisfied. Again as in the AR(1)
+case, the error term does not need to be normal for consistency and asymptotic
+normality. The exact ML estimates and the conditional ML estimates have the
+same asymptotic distribution if the stationarity condition is satisfied.
+
+These results generalize readily to vector processes. A \textbf{Gaussian VAR($p$)}
+($p$-th order vector autoregression) can be written as
+\begin{equation}
+  \underset{(M \times 1)}{\mathbf{y}_t}
+  = \mathbf{c}_0 + \boldsymbol{\Phi}_{01}\mathbf{y}_{t-1}
+  + \cdots + \boldsymbol{\Phi}_{0p}\mathbf{y}_{t-p}
+  + \boldsymbol{\varepsilon}_t,
+  \label{eq:8.7.21} \tag{8.7.21}
+\end{equation}
+with $\boldsymbol{\varepsilon}_t \sim \text{i.i.d.\ } N(\mathbf{0}, \boldsymbol{\Omega}_0)$.
+The objective function in the conditional ML estimation
+is ($1/n$ times) the log conditional likelihood:
+\begin{equation}
+  Q_n(\boldsymbol{\theta})
+  = -\frac{M}{2}\log(2\pi)
+    + \frac{1}{2}\log(|\boldsymbol{\Omega}^{-1}|)
+    - \frac{1}{2n}\sum_{t=1}^{n}
+      \{(\mathbf{y}_t - \boldsymbol{\Pi}'\mathbf{x}_t)'
+      \boldsymbol{\Omega}^{-1}
+      (\mathbf{y}_t - \boldsymbol{\Pi}'\mathbf{x}_t)\},
+  \label{eq:8.7.22} \tag{8.7.22}
+\end{equation}
+where
+\begin{equation}
+  \boldsymbol{\Pi}' \equiv
+  \begin{bmatrix}
+    \mathbf{c} & \boldsymbol{\Phi}_1 & \boldsymbol{\Phi}_2 & \cdots & \boldsymbol{\Phi}_p
+  \end{bmatrix}, \quad
+  \mathbf{x}_t \equiv
+  \begin{bmatrix} 1 \\ \mathbf{y}_{t-1} \\ \mathbf{y}_{t-2} \\ \vdots \\ \mathbf{y}_{t-p} \end{bmatrix}.
+  \label{eq:8.7.23} \tag{8.7.23}
+\end{equation}
+This coincides with the objective function in the ML estimation of the multivariate regression model considered in Section~8.4. Therefore, the conditional ML
+estimate of $(\mathbf{c}_0, \boldsymbol{\Pi}_0)$ is numerically the same as the equation-by-equation OLS estimator. It is consistent and asymptotically normal if the coefficient matrices satisfy
+the stationarity condition (that all the roots of
+$|\mathbf{I}_M - \boldsymbol{\Phi}_{01}z - \cdots - \boldsymbol{\Phi}_{0p}z^p| = 0$ be
+greater than~1 in absolute value). This result does not require the error vector $\boldsymbol{\varepsilon}_t$ to
+be normally distributed.
+
+\bigskip
+\noindent\rule{\textwidth}{0.4pt}
+\textbf{QUESTIONS FOR REVIEW}
+\medskip
+
+\begin{enumerate}
+\item (Score is m.d.s.)\quad
+  Consider the Gaussian AR(1) process \eqref{eq:8.7.9} and let
+  $\mathbf{s}(\mathbf{w}_t;\, \boldsymbol{\theta})$
+  be the score for observation~$t$ (the gradient of \eqref{eq:8.7.17}) with
+  $\mathbf{w}_t = (y_t, y_{t-1})'$
+  and $\boldsymbol{\theta} = (c, \phi, \sigma^2)'$.
+
+  \begin{enumerate}[label=(\alph*)]
+  \item Show that
+    \[
+      \mathbf{s}(\mathbf{w}_t;\, \boldsymbol{\theta})
+      = \begin{bmatrix}
+          \frac{1}{\sigma^2}\mathbf{x}_t \cdot (y_t - \mathbf{x}_t'\boldsymbol{\beta}) \\[6pt]
+          -\frac{1}{2\sigma^2} + \frac{1}{2\sigma^4}(y_t - \mathbf{x}_t'\boldsymbol{\beta})^2
+        \end{bmatrix},
+    \]
+    where $\boldsymbol{\beta} = (c, \phi)'$ and $\mathbf{x}_t = (1, y_{t-1})'$.
+  \end{enumerate}
+\end{enumerate}

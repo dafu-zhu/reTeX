@@ -1,0 +1,332 @@
+% sec4_1.tex — Section 4.1: The Multiple-Equation Model
+
+\section{The Multiple-Equation Model}
+\label{sec:4.1}
+
+To be able to deal with more than one equation, we need to complicate the notation
+by introducing an additional subscript designating the equation. For example, the
+dependent variable of the $m$-th equation for observation $i$ will be denoted $y_{im}$.
+
+\subsection*{Linearity}
+
+There are $M$ linear equations, each of which is a linear equation like the one in
+Assumption~3.1:
+
+\begin{assumption}[linearity]
+\label{ass:4.1}
+\textit{There are $M$ linear equations}
+\begin{equation}
+y_{im} = \mathbf{z}_{im}' \boldsymbol{\delta}_m + \varepsilon_{im}
+\quad (m = 1, 2, \ldots, M;\, i = 1, 2, \ldots, n),
+\label{eq:4.1.1}
+\end{equation}
+\textit{where $n$ is the sample size, $\mathbf{z}_{im}$ is the $L_m$-dimensional vector of regressors,
+$\boldsymbol{\delta}_m$ is the conformable coefficient vector, and $\varepsilon_{im}$ is an unobservable
+error term in the $m$-th equation.}
+\end{assumption}
+
+The model will make no assumptions about the \textbf{interequation} (or \textbf{contemporaneous})
+\textbf{correlation} between the errors $(\varepsilon_{i1}, \ldots, \varepsilon_{iM})$.
+Also, no \textit{a priori} restrictions are placed on the coefficients from different equations.
+That is, the model assumes no \textbf{cross-equation restrictions} on the coefficients.
+These points can be illustrated in
+
+\begin{quote}
+\textbf{Example 4.1 (wage equation):}\quad
+In the Griliches exercise of Chapter~3, we estimated the wage equation.
+In one specification, Griliches adds to it the equation for $KWW$ (score on the
+``Knowledge of the World of Work'' test):
+\begin{align*}
+LW_i &= \phi_1 + \beta_1 S_i + \gamma_1 IQ_i + \pi\, EXPR_i + \varepsilon_{i1}, \\
+KWW_i &= \phi_2 + \beta_2 S_i + \gamma_2 IQ_i + \varepsilon_{i2},
+\end{align*}
+where (to refresh your memory) $LW_i$ is the log wage of the $i$-th individual in
+the first year of the survey, $S_i$ is schooling in years, $IQ_i$ is IQ, and $EXPR_i$ is
+experience in years. In this example, $M = 2$, $L_1 = 4$, $L_2 = 3$,
+$y_{i1} = LW_i$, $y_{i2} = KWW_i$, and
+\begin{equation}
+\mathbf{z}_{i1} = \begin{bmatrix} 1 \\ S_i \\ IQ_i \\ EXPR_i \end{bmatrix}, \quad
+\mathbf{z}_{i2} = \begin{bmatrix} 1 \\ S_i \\ IQ_i \end{bmatrix}, \quad
+\boldsymbol{\delta}_1 = \begin{bmatrix} \phi_1 \\ \beta_1 \\ \gamma_1 \\ \pi \end{bmatrix}, \quad
+\boldsymbol{\delta}_2 = \begin{bmatrix} \phi_2 \\ \beta_2 \\ \gamma_2 \end{bmatrix}.
+\label{eq:4.1.2}
+\end{equation}
+\end{quote}
+
+The errors $\varepsilon_{i1}$ and $\varepsilon_{i2}$ can be correlated. The correlation arises if, for example,
+there is an unobservable individual characteristic that affects both the
+wage rate and the test score. There are no cross-equation restrictions such as
+$\beta_1 = \beta_2$.
+
+Cross-equation restrictions naturally arise in \textbf{panel data} models where the
+same relationship can be estimated for different points in time.
+
+\begin{quote}
+\textbf{Example 4.2 (wage equation for two years):}\quad
+The NLS-Y data we used for the Griliches exercise actually has information for 1980,
+so we can estimate two wage equations, one for the first point in time (say, 1969)
+and the other for 1980:
+\begin{align*}
+LW69_i &= \phi_1 + \beta_1 S69_i + \gamma_1 IQ_i + \pi_1 EXPR69_i + \varepsilon_{i1}, \\
+LW80_i &= \phi_2 + \beta_2 S80_i + \gamma_2 IQ_i + \pi_2 EXPR80_i + \varepsilon_{i2}.
+\end{align*}
+In the language of multiple equations, $S69_i$ (education in 1969) and $S80_i$
+(education in 1980) are two different variables. It would be natural to entertain
+the case where the coefficients remained unchanged over time, with
+$\phi_1 = \phi_2$, $\beta_1 = \beta_2$, $\gamma_1 = \gamma_2$, $\pi_1 = \pi_2$.
+This is a set of linear cross-equation restrictions.
+\end{quote}
+
+As will be shown in Section~4.3 below, testing (linear or nonlinear) cross-equation
+restrictions is straightforward. Estimation while imposing the restriction that the
+coefficients are the same across equations will be considered in Section~4.6.
+
+\subsection*{Stationarity and Ergodicity}
+
+Let $\mathbf{x}_{im}$ be the vector of $K_m$ instruments for the $m$-th equation. Although not
+frequently the case in practice, the set of instruments can differ across equations,
+and so the number of instruments, $K_m$, can depend on the equation.
+
+\begin{quote}
+\textbf{Example 4.1 (continued):}\quad
+Suppose that $IQ_i$ is endogenous in both equations
+and that there is a variable, $MED_i$ (mother's education), that is predetermined
+in the first equation (so $\E(MED_i\, \varepsilon_{i1}) = 0$). So the instruments for the $LW$
+equation are $(1, S_i, EXPR_i, MED_i)$. If these instruments are also orthogonal
+to $\varepsilon_{i2}$, then the $KWW$ equation can be estimated with the same set of instruments
+as the $LW$ equation. In this example, $K_1 = K_2 = 4$, and
+\begin{equation}
+\mathbf{x}_{i1} = \mathbf{x}_{i2} = \begin{bmatrix} 1 \\ S_i \\ EXPR_i \\ MED_i \end{bmatrix}.
+\label{eq:4.1.3}
+\end{equation}
+\end{quote}
+
+The multiple-equation version of Assumption~3.2 is
+
+\begin{assumption}[ergodic stationarity]
+\label{ass:4.2}
+\textit{Let\/ $\mathbf{w}_i$ be unique and nonconstant elements
+of $(y_{i1}, \ldots, y_{iM}, \mathbf{z}_{i1}, \ldots, \mathbf{z}_{iM},
+\mathbf{x}_{i1}, \ldots, \mathbf{x}_{iM})$.
+$\{\mathbf{w}_i\}$ is jointly stationary and ergodic.}
+\end{assumption}
+
+This assumption is stronger than just assuming that ergodic stationarity is satisfied
+for each equation of the system. Even if $\{y_{im}, \mathbf{z}_{im}, \mathbf{x}_{im}\}$
+is stationary and ergodic for each individual equation $m$, it does not necessarily follow,
+strictly speaking, that the larger process $\{\mathbf{w}_i\}$, which is the union of individual
+processes, is (jointly) stationary and ergodic (see Example~2.3 of Chapter~2 for an
+example of a vector nonstationary process whose components are univariate stationary
+processes). In practice, the distinction is somewhat blurred because the equations
+often share common variables.
+
+\begin{quote}
+\textbf{Example 4.1 (continued):}\quad
+Because $\mathbf{z}_{i1}$, $\mathbf{z}_{i2}$, $\mathbf{x}_{i1}$,
+and $\mathbf{x}_{i2}$ for the example have some common elements,
+$\mathbf{w}_i$ has only six elements:
+$(LW_i, KWW_i, S_i, IQ_i, EXPR_i, MED_i)$.
+The ergodic stationarity assumption for the first equation
+of this example is that $\{LW_i, S_i, IQ_i, EXPR_i, MED_i\}$ is jointly stationary and
+ergodic. Assumption~4.2 requires that the joint process include $KWW_i$.
+\end{quote}
+
+\subsection*{Orthogonality Conditions}
+
+The orthogonality conditions for the $M$-equation system are just a collection of the
+orthogonality conditions for individual equations.
+
+\begin{assumption}[orthogonality conditions]
+\label{ass:4.3}
+\textit{For each equation $m$, the $K_m$ variables in $\mathbf{x}_{im}$ are predetermined.
+That is, the following orthogonality conditions are satisfied:}
+\[
+\E(\mathbf{x}_{im} \cdot \varepsilon_{im}) = \mathbf{0}
+\quad (m = 1, 2, \ldots, M).
+\]
+\end{assumption}
+
+So there are $\sum_m K_m$ orthogonality conditions in total. If we define
+\begin{equation}
+\underset{(\sum_{m=1}^{M} K_m \times 1)}{\mathbf{g}_i}
+\equiv \begin{bmatrix} \mathbf{x}_{i1} \cdot \varepsilon_{i1} \\ \vdots \\
+\mathbf{x}_{iM} \cdot \varepsilon_{iM} \end{bmatrix},
+\label{eq:4.1.4}
+\end{equation}
+then all those orthogonality conditions can be written compactly as
+$\E(\mathbf{g}_i) = \mathbf{0}$.
+Note that we are not assuming ``cross'' orthogonalities; for example, $\mathbf{x}_{i1}$
+does not have to be orthogonal to $\varepsilon_{i2}$, although it is required to be orthogonal
+to $\varepsilon_{i1}$. However, if a variable is included in both $\mathbf{x}_{i1}$
+and $\mathbf{x}_{i2}$, then the assumption does imply that the variable is orthogonal to
+both $\varepsilon_{i1}$ and $\varepsilon_{i2}$.
+
+\begin{quote}
+\textbf{Example 4.1 (continued):}\quad
+$\sum_m K_m$ in the current example is $8\; (= 4 + 4)$
+and $\mathbf{g}_i$ is
+\[
+\mathbf{g}_i = \begin{bmatrix}
+\varepsilon_{i1} \\ S_i\, \varepsilon_{i1} \\ EXPR_i\, \varepsilon_{i1} \\
+MED_i\, \varepsilon_{i1} \\
+\varepsilon_{i2} \\ S_i\, \varepsilon_{i2} \\ EXPR_i\, \varepsilon_{i2} \\
+MED_i\, \varepsilon_{i2}
+\end{bmatrix}.
+\]
+Because $\mathbf{x}_{i1}$ and $\mathbf{x}_{i2}$ have the same set of instruments,
+each instrument is orthogonal to both $\varepsilon_{i1}$ and $\varepsilon_{i2}$.
+\end{quote}
+
+\subsection*{Identification}
+
+Having set up the orthogonality conditions for multiple equations, we can derive
+the identification condition in much the same way as in the single-equation case.
+The multiple-equation version of (3.3.1) is
+\begin{equation}
+\mathbf{g}(\mathbf{w}_i;\, \boldsymbol{\delta})
+\equiv \begin{bmatrix}
+\mathbf{x}_{i1} \cdot (y_{i1} - \mathbf{z}_{i1}' \boldsymbol{\delta}_1) \\
+\vdots \\
+\mathbf{x}_{iM} \cdot (y_{iM} - \mathbf{z}_{iM}' \boldsymbol{\delta}_M)
+\end{bmatrix},
+\label{eq:4.1.5}
+\end{equation}
+where $\mathbf{w}_i$ is as in Assumption~4.2, and $\boldsymbol{\delta}$ without the subscript
+is a stacked vector of coefficients:
+\begin{equation}
+\underset{(\sum_{m=1}^{M} L_m \times 1)}{\boldsymbol{\delta}}
+= \begin{bmatrix} \boldsymbol{\delta}_1 \\ \vdots \\ \boldsymbol{\delta}_M \end{bmatrix}.
+\label{eq:4.1.6}
+\end{equation}
+
+So the orthogonality conditions can be written as
+$\E[\mathbf{g}(\mathbf{w}_i;\, \boldsymbol{\delta})] = \mathbf{0}$.
+The coefficient vector is identified if $\tilde{\boldsymbol{\delta}} = \boldsymbol{\delta}$
+is the only solution to the system of equations
+\begin{equation}
+\E[\mathbf{g}(\mathbf{w}_i;\, \tilde{\boldsymbol{\delta}})] = \mathbf{0}.
+\label{eq:4.1.7}
+\end{equation}
+
+Using the definition~\eqref{eq:4.1.5}, we can rewrite the left-hand side of this
+equation, $\E[\mathbf{g}(\mathbf{w}_i;\, \tilde{\boldsymbol{\delta}})]$, as
+\begin{align}
+\E[\mathbf{g}(\mathbf{w}_i;\, \tilde{\boldsymbol{\delta}})]
+&\equiv \begin{bmatrix}
+\E[\mathbf{x}_{i1} \cdot (y_{i1} - \mathbf{z}_{i1}' \tilde{\boldsymbol{\delta}}_1)] \\
+\vdots \\
+\E[\mathbf{x}_{iM} \cdot (y_{iM} - \mathbf{z}_{iM}' \tilde{\boldsymbol{\delta}}_M)]
+\end{bmatrix} \notag \\
+&= \begin{bmatrix}
+\E(\mathbf{x}_{i1} \cdot y_{i1}) \\ \vdots \\ \E(\mathbf{x}_{iM} \cdot y_{iM})
+\end{bmatrix}
+- \begin{bmatrix}
+\E(\mathbf{x}_{i1} \mathbf{z}_{i1}') \tilde{\boldsymbol{\delta}}_1 \\
+\vdots \\
+\E(\mathbf{x}_{iM} \mathbf{z}_{iM}') \tilde{\boldsymbol{\delta}}_M
+\end{bmatrix} \notag \\
+&= \begin{bmatrix}
+\E(\mathbf{x}_{i1} \cdot y_{i1}) \\ \vdots \\ \E(\mathbf{x}_{iM} \cdot y_{iM})
+\end{bmatrix}
+- \begin{bmatrix}
+\E(\mathbf{x}_{i1} \mathbf{z}_{i1}') & & \\
+& \ddots & \\
+& & \E(\mathbf{x}_{iM} \mathbf{z}_{iM}')
+\end{bmatrix}
+\begin{bmatrix} \tilde{\boldsymbol{\delta}}_1 \\ \vdots \\ \tilde{\boldsymbol{\delta}}_M \end{bmatrix}
+\notag \\
+&\equiv \boldsymbol{\sigma}_{\mathbf{x}\mathbf{y}}
+- \boldsymbol{\Sigma}_{\mathbf{x}\mathbf{z}}\, \tilde{\boldsymbol{\delta}},
+\label{eq:4.1.8}
+\end{align}
+where
+\begin{equation}
+\boldsymbol{\sigma}_{\mathbf{x}\mathbf{y}}
+\equiv \begin{bmatrix}
+\E(\mathbf{x}_{i1} \cdot y_{i1}) \\ \vdots \\ \E(\mathbf{x}_{iM} \cdot y_{iM})
+\end{bmatrix}, \quad
+\boldsymbol{\Sigma}_{\mathbf{x}\mathbf{z}}
+\equiv \begin{bmatrix}
+\E(\mathbf{x}_{i1} \mathbf{z}_{i1}') & & \\
+& \ddots & \\
+& & \E(\mathbf{x}_{iM} \mathbf{z}_{iM}')
+\end{bmatrix}.
+\label{eq:4.1.9}
+\end{equation}
+(The third equality in \eqref{eq:4.1.8} is obtained by formula (A.4) of Appendix~A
+for multiplication of partitioned matrices.) Therefore, the system of equations
+determining $\tilde{\boldsymbol{\delta}}$ can be written as
+\begin{equation}
+\boldsymbol{\Sigma}_{\mathbf{x}\mathbf{z}}\, \tilde{\boldsymbol{\delta}}
+= \boldsymbol{\sigma}_{\mathbf{x}\mathbf{y}},
+\label{eq:4.1.10}
+\end{equation}
+which is the \textit{same} in form as (3.3.4), the system of equations determining
+$\tilde{\boldsymbol{\delta}}$ in the single-equation case!
+
+It then follows from the discussion of identification for the single-equation case
+that a necessary and sufficient condition for identification is that
+$\boldsymbol{\Sigma}_{\mathbf{x}\mathbf{z}}$ be of full column rank.
+But, since $\boldsymbol{\Sigma}_{\mathbf{x}\mathbf{z}}$ is block diagonal,
+this condition is equivalent to
+
+\begin{assumption}[rank condition for identification]
+\label{ass:4.4}
+\textit{For each $m$ $(= 1, 2, \ldots, M)$,
+$\E(\mathbf{x}_{im} \mathbf{z}_{im}')$ $(K_m \times L_m)$
+is of full column rank.}
+\end{assumption}
+
+It should be clear why the identification condition becomes thus. We can uniquely
+determine all coefficient vectors $(\boldsymbol{\delta}_1, \ldots, \boldsymbol{\delta}_M)$
+if and only if each coefficient vector $\boldsymbol{\delta}_m$ is uniquely determined, which occurs
+if and only if Assumption~3.4 holds for each equation. The rank condition is this
+simple because there are no \textit{a priori} cross-equation restrictions. Identification
+when the coefficients are assumed to be the same across equations will be covered
+in Section~4.6.
+
+\subsection*{The Assumption for Asymptotic Normality}
+
+As in the single-equation estimation, the orthogonality conditions need to be
+strengthened for asymptotic normality:
+
+\begin{assumption}[$\mathbf{g}_i$ is a martingale difference sequence with finite second moments]
+\label{ass:4.5}
+\textit{$\{\mathbf{g}_i\}$ is a joint martingale difference sequence.
+$\E(\mathbf{g}_i \mathbf{g}_i')$ is nonsingular.}
+\end{assumption}
+
+The same comment that we made above about joint ergodic stationarity applies
+here: the assumption is stronger than requiring the same for each equation. As in
+the previous chapters, we use the symbol $\mathbf{S}$ for $\avar(\bar{\mathbf{g}})$,
+the asymptotic variance of $\bar{\mathbf{g}}$ (i.e., the variance of the limiting distribution
+of $\sqrt{n}\, \bar{\mathbf{g}}$). By the CLT for stationary and ergodic martingale difference
+sequences (see Section~2.2), it equals $\E(\mathbf{g}_i \mathbf{g}_i')$.
+It has the following partitioned structure:
+\begin{equation}
+\underset{(\sum_{m=1}^{M} K_m \times \sum_{m=1}^{M} K_m)}{\mathbf{S}}
+= \E(\mathbf{g}_i \mathbf{g}_i')
+= \begin{bmatrix}
+\E(\varepsilon_{i1}\, \varepsilon_{i1}\, \mathbf{x}_{i1} \mathbf{x}_{i1}') & \cdots &
+\E(\varepsilon_{i1}\, \varepsilon_{iM}\, \mathbf{x}_{i1} \mathbf{x}_{iM}') \\
+\vdots & & \vdots \\
+\E(\varepsilon_{iM}\, \varepsilon_{i1}\, \mathbf{x}_{iM} \mathbf{x}_{i1}') & \cdots &
+\E(\varepsilon_{iM}\, \varepsilon_{iM}\, \mathbf{x}_{iM} \mathbf{x}_{iM}')
+\end{bmatrix}.
+\label{eq:4.1.11}
+\end{equation}
+That is, the $(m, h)$ block of $\mathbf{S}$ is
+$\E(\varepsilon_{im}\, \varepsilon_{ih}\, \mathbf{x}_{im} \mathbf{x}_{ih}')$
+$(m, h = 1, 2, \ldots, M)$.
+
+In sum, the multiple-equation model is a system of equations where the assumptions
+we made for the single-equation model apply to each equation, with the added
+requirement of jointness (such as joint stationarity) where applicable.
+
+\subsection*{Connection to the ``Complete'' System of Simultaneous Equations}
+
+The multiple-equation model presented in most other textbooks, called the ``complete''
+system of simultaneous equations, adds more assumptions to our model.
+Those additional assumptions are \textit{not} needed for the development of multiple-equation
+GMM, but if you are curious about them, you can at this junction make a
+detour to the first two subsections of Section~8.5.

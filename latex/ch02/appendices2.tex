@@ -1,0 +1,205 @@
+% appendices2.tex — Appendices 2.A and 2.B for Chapter 2
+
+\subsection*{Appendix 2.A: Asymptotics with Fixed Regressors}
+
+To prove results similar in conclusion to Proposition~2.5, we add to Assumption~2.1 the following.
+
+\begin{assumption}[2.A.1]
+\label{ass:2.A.1}
+$\mathbf{X}$ is deterministic. As $n \to \infty$,
+$\mathbf{S}_{\mathbf{xx}} \to \bm{\Sigma}_{\mathbf{xx}}$, a nonsingular matrix
+(conventional convergence here, because $\mathbf{X}$ is nonrandom).
+\end{assumption}
+
+\begin{assumption}[2.A.2]
+\label{ass:2.A.2}
+$\{\varepsilon_i\}$ is i.i.d.\ with $\E(\varepsilon_i) = 0$ and $\Var(\varepsilon_i) = \sigma^2$.
+\end{assumption}
+
+\begin{proposition}[2.A.1 (asymptotics with fixed regressors)]
+\label{prop:2.A.1}
+Under Assumptions~2.1, \ref{ass:2.A.1}, and \ref{ass:2.A.2}, plus an assumption
+called the Lindeberg condition on $\{\mathbf{g}_i\}$ (where
+$\mathbf{g}_i \equiv \mathbf{x}_i \cdot \varepsilon_i$), the same conclusions as in Proposition~2.5 hold.
+\end{proposition}
+
+Rather than stating the Lindeberg condition, we explain why such condition is
+needed. To prove the asymptotic normality of $\mathbf{b}$, we would take (2.3.8) and show
+that $\sqrt{n}\,\bar{\mathbf{g}}$ converges to a normal distribution. The technical difficulty is that
+the sequence $\{\mathbf{g}_i\}$ is a sequence of nonrandom vectors. For example,
+\[
+\Var(\mathbf{g}_i) = \E(\varepsilon_i^2\,\mathbf{x}_i\mathbf{x}_i')
+= \E(\varepsilon_i^2)\,\mathbf{x}_i\mathbf{x}_i'
+= \sigma^2\,\mathbf{x}_i\mathbf{x}_i'
+\]
+is not constant across observations. Consequently, neither the Lindeberg--Levy CLT
+nor the Martingale Differences CLT is applicable. Fortunately, however, there
+is a generalization of the Lindeberg--Levy CLT to nonstationary processes with
+nonconstant variance, called the \textbf{Lindeberg--Feller CLT}, which places a technical
+restriction on the tail distribution of $\mathbf{g}_i$ to prevent observations with large
+$\mathbf{x}_i$ from dominating the distribution of $\sqrt{n}\,\bar{\mathbf{g}}$.
+
+
+\subsection*{Appendix 2.B: Proof of Proposition 2.10}
+
+This appendix provides a proof of Proposition~\ref{prop:2.10}. We start with the expression
+for $\hat{\gamma}_j$ given in \eqref{eq:2.10.12}. The first part of the proof is to find an expression that is
+asymptotically equivalent.
+%
+\begin{align*}
+\sqrt{n}\,\hat{\gamma}_j
+&= \sqrt{n}\,\tilde{\gamma}_j
+- \frac{1}{n}\sum_{t=j+1}^{n}
+(\mathbf{x}_{t-j}\cdot\varepsilon_t + \mathbf{x}_t\cdot\varepsilon_{t-j})'\,
+\sqrt{n}\,(\mathbf{b} - \bm{\beta}) \\
+&\quad + \sqrt{n}\,(\mathbf{b} - \bm{\beta})'\Bigl(\frac{1}{n}\sum_{t=j+1}^{n}
+\mathbf{x}_t\,\mathbf{x}_{t-j}'\Bigr)(\mathbf{b} - \bm{\beta}) \\
+&\underset{a}{\sim}
+\sqrt{n}\,\tilde{\gamma}_j
+- \frac{1}{n}\sum_{t=j+1}^{n}
+(\mathbf{x}_{t-j}\cdot\varepsilon_t + \mathbf{x}_t\cdot\varepsilon_{t-j})'\,
+\sqrt{n}\,(\mathbf{b} - \bm{\beta}) \\
+&\qquad \text{(since the last term above vanishes)}
+\end{align*}
+%
+\begin{align*}
+&\underset{a}{\sim}
+\sqrt{n}\,\tilde{\gamma}_j
+- \E(\mathbf{x}_{t-j}\cdot\varepsilon_t + \mathbf{x}_t\cdot\varepsilon_{t-j})'\,
+\sqrt{n}\,(\mathbf{b} - \bm{\beta}) \\
+&\qquad \Bigl(\text{since }
+\frac{1}{n}\sum_{t=j+1}^{n}
+(\mathbf{x}_{t-j}\cdot\varepsilon_t + \mathbf{x}_t\cdot\varepsilon_{t-j})
+\pto \E(\mathbf{x}_{t-j}\cdot\varepsilon_t + \mathbf{x}_t\cdot\varepsilon_{t-j})\Bigr) \\
+&= \sqrt{n}\,\tilde{\gamma}_j - \bm{\mu}_j'\,\sqrt{n}\,(\mathbf{b} - \bm{\beta})
+\quad \text{where } \bm{\mu}_j \equiv \E(\mathbf{x}_t\cdot\varepsilon_{t-j}) \\
+&\qquad \text{(since } \E(\mathbf{x}_{t-j}\cdot\varepsilon_t) = \mathbf{0}
+\text{ by \eqref{eq:2.10.15})} \\
+&= \sqrt{n}\,\tilde{\gamma}_j
+- \bm{\mu}_j'\,\sqrt{n}\,\mathbf{S}_{\mathbf{xx}}^{-1}
+\frac{1}{n}\sum_{t=1}^{n}\mathbf{x}_t\cdot\varepsilon_t \\
+&= \sqrt{n}\,\frac{1}{n}\sum_{t=j+1}^{n}\varepsilon_t\varepsilon_{t-j}
+- \bm{\mu}_j'\,\sqrt{n}\,\mathbf{S}_{\mathbf{xx}}^{-1}
+\frac{1}{n}\sum_{t=1}^{n}\mathbf{x}_t\cdot\varepsilon_t
+\quad \text{(by \eqref{eq:2.10.7})} \\
+&\underset{a}{\sim}
+\sqrt{n}\,\frac{1}{n}\sum_{t=1}^{n}\varepsilon_t\varepsilon_{t-j}
+- \bm{\mu}_j'\,\sqrt{n}\,\bm{\Sigma}_{\mathbf{xx}}^{-1}
+\frac{1}{n}\sum_{t=1}^{n}\mathbf{x}_t\cdot\varepsilon_t
+\quad (\text{since } \mathbf{S}_{\mathbf{xx}} \pto \bm{\Sigma}_{\mathbf{xx}}) \\
+&\qquad \Bigl(\text{since }
+\sqrt{n}\,\frac{1}{n}\sum_{t=1}^{n}\varepsilon_t\varepsilon_{t-j}
+- \sqrt{n}\,\frac{1}{n}\sum_{t=j+1}^{n}\varepsilon_t\varepsilon_{t-j} \\
+&\qquad\qquad = \frac{1}{\sqrt{n}}\sum_{t=1}^{j}\varepsilon_t\varepsilon_{t-j}
+\pto 0 \text{ for each } j\Bigr) \\
+&\underset{a}{\sim}
+\mathbf{c}_j'\sqrt{n}\,\bar{\mathbf{g}}_j,
+\end{align*}
+%
+where
+%
+\begin{equation}
+\mathbf{c}_j \equiv \begin{bmatrix} 1 \\ -\bm{\Sigma}_{\mathbf{xx}}^{-1}\bm{\mu}_j
+\end{bmatrix}_{((K+1)\times 1)}, \quad
+\bar{\mathbf{g}}_j \equiv \frac{1}{n}\sum_{t=1}^{n}\underset{((K+1)\times 1)}{\mathbf{g}_{jt}}, \quad
+\mathbf{g}_{jt} \equiv \begin{bmatrix}
+\varepsilon_{t-j}\varepsilon_t \\ \mathbf{x}_t\cdot\varepsilon_t
+\end{bmatrix}_{((K+1)\times 1)}.
+\label{eq:2.B.1}
+\end{equation}
+%
+Thus, letting
+\[
+\hat{\bm{\gamma}} \equiv \begin{bmatrix}
+\hat{\gamma}_1 \\ \vdots \\ \hat{\gamma}_p
+\end{bmatrix}_{(p\times 1)},
+\]
+we have proved that
+\[
+\sqrt{n}\,\hat{\bm{\gamma}} \underset{a}{\sim}
+\mathbf{C}'\sqrt{n}\,\bar{\mathbf{g}}
+\]
+where
+\[
+\underset{(p(K+1)\times p)}{\mathbf{C}}
+\equiv \begin{bmatrix}
+\mathbf{c}_1 & & \\ & \ddots & \\ & & \mathbf{c}_p
+\end{bmatrix}, \quad
+\underset{(p(K+1)\times 1)}{\bar{\mathbf{g}}}
+\equiv \frac{1}{n}\sum_{t=1}^{n}\mathbf{g}_t, \quad
+\underset{(p(K+1)\times 1)}{\mathbf{g}_t}
+\equiv \begin{bmatrix}
+\mathbf{g}_{1t} \\ \vdots \\ \mathbf{g}_{pt}
+\end{bmatrix}.
+\]
+
+The second part of the proof is to show that $\mathbf{g}_t$ is a martingale difference
+sequence, namely, that
+\[
+\E(\mathbf{g}_{jt} \mid \mathbf{g}_{t-1}, \mathbf{g}_{t-2}, \ldots\,) = \mathbf{0}
+\quad (\text{for } j = 1, 2, \ldots, p).
+\]
+%
+But this easily follows from the Law of Total Expectations, the fact that
+$(\mathbf{g}_{t-1}, \mathbf{g}_{t-2}, \ldots)$ has less information than
+$(\mathbf{x}_t, \mathbf{x}_{t-1}, \ldots, \varepsilon_{t-1}, \varepsilon_{t-2}, \ldots)$,
+and \eqref{eq:2.10.15}.
+
+Clearly, $\mathbf{g}_t$ is ergodic stationary. Therefore, by the ergodic stationary Martingale Differences CLT, $\sqrt{n}\,\bar{\mathbf{g}} \dto N(\mathbf{0}, \E(\mathbf{g}_t\mathbf{g}_t'))$.
+The next step is to calculate $\E(\mathbf{g}_t\mathbf{g}_t')$. Its $(j, k)$ block is
+%
+\[
+\underset{((K+1)\times(K+1))}{\E(\mathbf{g}_{jt}\mathbf{g}_{kt}')}
+= \begin{bmatrix}
+\E(\varepsilon_t^2\varepsilon_{t-j}\varepsilon_{t-k})
+  & \E(\mathbf{x}_t'\varepsilon_t^2\varepsilon_{t-j}) \\
+\E(\mathbf{x}_t\varepsilon_t^2\varepsilon_{t-k})
+  & \E(\varepsilon_t^2\,\mathbf{x}_t\mathbf{x}_t')
+\end{bmatrix}.
+\]
+%
+By using the Law of Total Expectations and \eqref{eq:2.10.16}, it is easy to show that
+%
+\begin{equation}
+\underset{((K+1)\times(K+1))}{\E(\mathbf{g}_{jt}\mathbf{g}_{kt}')}
+= \begin{bmatrix}
+\sigma^4\delta_{jk} & \sigma^2\bm{\mu}_k' \\
+\sigma^2\bm{\mu}_j & \sigma^2\bm{\Sigma}_{\mathbf{xx}}
+\end{bmatrix},
+\label{eq:2.B.2}
+\end{equation}
+%
+where $\delta_{jk}$ is ``Kronecker's delta,'' which is 1 if $j = k$ and 0 otherwise.
+
+Since, as shown above,
+$\sqrt{n}\,\hat{\bm{\gamma}} \underset{a}{\sim} \mathbf{C}'\sqrt{n}\,\bar{\mathbf{g}}$
+and $\sqrt{n}\,\bar{\mathbf{g}} \dto N(\mathbf{0}, \E(\mathbf{g}_t\mathbf{g}_t'))$, we have
+\[
+\avar(\hat{\bm{\gamma}})
+\;(\equiv \text{variance of limiting distribution of }
+\sqrt{n}\,\hat{\bm{\gamma}})
+= \mathbf{C}'\,\E(\mathbf{g}_t\mathbf{g}_t')\,\mathbf{C}.
+\]
+Its $(j, k)$ element is
+\[
+(j, k) \text{ element of } \avar(\hat{\bm{\gamma}})
+= \mathbf{c}_j'\,\E(\mathbf{g}_{jt}\mathbf{g}_{kt}')\,\mathbf{c}_k.
+\]
+
+Substituting \eqref{eq:2.B.2} into this and using the definition of $\mathbf{c}_j$ in \eqref{eq:2.B.1}, we obtain,
+after some simple calculations,
+\[
+(j, k) \text{ element of } \avar(\hat{\bm{\gamma}})
+= \sigma^4 \cdot \bigl[\delta_{jk}
+- \bm{\mu}_j'\,\bm{\Sigma}_{\mathbf{xx}}^{-1}\,\bm{\mu}_k/\sigma^2\bigr].
+\]
+So
+\[
+\sqrt{n}\,\hat{\bm{\gamma}} \dto
+N(\mathbf{0},\;\sigma^4\mathbf{I}_p - \sigma^4\mathbf{\Phi}),
+\]
+where $\mathbf{\Phi}$ is defined in Proposition~\ref{prop:2.10}. Since
+$\sqrt{n}\,\hat{\bm{\rho}} \underset{a}{\sim} \sqrt{n}\,\hat{\bm{\gamma}}/\sigma^2$,
+the limiting distribution of $\sqrt{n}\,\hat{\bm{\rho}}$ is the same as that of
+$\sqrt{n}\,\hat{\bm{\gamma}}/\sigma^2$, which is
+$N(\mathbf{0}, \mathbf{I}_p - \mathbf{\Phi})$. \qed

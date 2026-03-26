@@ -1,0 +1,258 @@
+% sec6_3.tex — Section 6.3: Vector Processes
+
+It is straightforward to extend all the concepts introduced so far to vector processes.
+
+A \textbf{vector white noise process} $\{\bm{\varepsilon}_t\}$ is a jointly covariance-stationary process
+satisfying
+\begin{equation}
+  \E(\bm{\varepsilon}_t) = \mathbf{0}, \quad
+  \E(\bm{\varepsilon}_t \bm{\varepsilon}_t') = \bm{\Omega} \;\text{(positive definite)}, \quad \text{and} \quad
+  \E(\bm{\varepsilon}_t \bm{\varepsilon}_{t-j}') = \mathbf{0} \quad \text{for } j \neq 0.
+  \label{eq:6.3.1}
+\end{equation}
+Since $\bm{\Omega}$ is not restricted to being diagonal, there can be contemporaneous correlation
+between the elements of $\bm{\varepsilon}_t$. Perfect correlation among the elements of $\bm{\varepsilon}_t$ is
+ruled out because $\bm{\Omega}$ is required to be positive definite.
+
+A \textbf{vector MA($\infty$) process} is the obvious vector version of \eqref{eq:6.1.6}:
+\begin{equation}
+  \mathbf{y}_t = \bm{\mu} + \sum_{j=0}^{\infty} \bm{\Psi}_j \bm{\varepsilon}_{t-j}
+  \quad \text{with } \bm{\Psi}_0 = \mathbf{I},
+  \label{eq:6.3.2}
+\end{equation}
+where $\{\bm{\Psi}_j\}$ are square matrices. The sequence of coefficient matrices is said to be
+absolutely summable if each element is absolutely summable. That is, if $\psi_{k\ell j}$ is
+the $(k, \ell)$ element of $\bm{\Psi}_j$,
+\begin{equation}
+  \text{``$\{\bm{\Psi}_j\}$ is absolutely summable''} \;\Leftrightarrow\;
+  \text{``}\sum_{j=0}^{\infty} |\psi_{k\ell j}| < \infty \;\text{for all } (k, \ell).\text{''}
+  \label{eq:6.3.3}
+\end{equation}
+With this definition, Proposition~6.1 generalizes to the multivariate case in an obvious
+way. In particular, if $\bm{\Gamma}_j$ ($\equiv \E[(\mathbf{y}_t - \bm{\mu})(\mathbf{y}_{t-j} - \bm{\mu})']$) is the $j$-th order autocovariance
+matrix, then the expression for autocovariances in part~(b) of Proposition~6.1
+becomes
+\begin{equation}
+  \bm{\Gamma}_j = \sum_{k=0}^{\infty} \bm{\Psi}_{j+k}\,\bm{\Omega}\,\bm{\Psi}_k'
+  \quad (j = 0, 1, 2, \ldots).
+  \label{eq:6.3.4}
+\end{equation}
+(This formula also covers $j = -1, -2, \ldots$ because $\bm{\Gamma}_{-j} = \bm{\Gamma}_j'$.)
+
+A \textbf{multivariate filter} can be written as
+\[
+  \mathbf{H}(L) = \mathbf{H}_0 + \mathbf{H}_1 L + \mathbf{H}_2 L^2 + \cdots\,,
+\]
+where $\{\mathbf{H}_j\}$ is a sequence of (not necessarily square) matrices. So if $H_{k\ell j}$ is the
+$(k, \ell)$ element of $\mathbf{H}_j$, the $(k, \ell)$ element of $\mathbf{H}(L)$ is
+\[
+  H_{k\ell 0} + H_{k\ell 1} L + H_{k\ell 2} L^2 + \cdots\,.
+\]
+The multivariate version of Proposition~6.2 is obvious, with $\mathbf{y}_t = \mathbf{H}(L)\,\mathbf{x}_t$.
+
+\subsection*{Product of Filters}
+
+Let $\mathbf{A}(L)$ and $\mathbf{B}(L)$ be two filters where $\{\mathbf{A}_j\}$ is $m \times r$ and $\{\mathbf{B}_j\}$ is $r \times s$ so that
+the matrix product $\mathbf{A}_j \mathbf{B}_k$ can be defined. The product of two filters, $\mathbf{D}(L) =
+\mathbf{A}(L)\,\mathbf{B}(L)$ is an $m \times s$ filter whose coefficient matrix sequence $\{\mathbf{D}_j\}$ is given by
+the multivariate version of the convolution formula \eqref{eq:6.1.12}:
+\begin{equation}
+\begin{aligned}
+  \mathbf{A}_0 \mathbf{B}_0 &= \mathbf{D}_0, \\
+  \mathbf{A}_0 \mathbf{B}_1 + \mathbf{A}_1 \mathbf{B}_0 &= \mathbf{D}_1, \\
+  \mathbf{A}_0 \mathbf{B}_2 + \mathbf{A}_1 \mathbf{B}_1 + \mathbf{A}_2 \mathbf{B}_0 &= \mathbf{D}_2, \\
+  &\;\;\vdots \\
+  \mathbf{A}_0 \mathbf{B}_j + \mathbf{A}_1 \mathbf{B}_{j-1} + \mathbf{A}_2 \mathbf{B}_{j-2}
+  + \cdots + \mathbf{A}_{j-1} \mathbf{B}_1 + \mathbf{A}_j \mathbf{B}_0 &= \mathbf{D}_j, \\
+  &\;\;\vdots\,.
+\end{aligned}
+\label{eq:6.3.5}
+\end{equation}
+
+\subsection*{Inverses}
+
+Let $\mathbf{A}(L)$ and $\mathbf{B}(L)$ be two filters whose coefficient matrices are square. $\mathbf{B}(L)$ is
+said to be the \textbf{inverse} of $\mathbf{A}(L)$ and is denoted $\mathbf{A}(L)^{-1}$ if
+\begin{equation}
+  \mathbf{A}(L)\,\mathbf{B}(L) = \mathbf{I}.
+  \label{eq:6.3.6}
+\end{equation}
+For any arbitrary sequence of square matrices $\{\mathbf{A}_j\}$, the inverse of $\mathbf{A}(L)$ exists if
+$\mathbf{A}_0$ is nonsingular. It is easy to show that inverses are commutative (see Review
+Question~2), so
+\[
+  \mathbf{A}(L)\,\mathbf{A}(L)^{-1} = \mathbf{A}(L)^{-1}\,\mathbf{A}(L).
+\]
+
+\subsection*{Absolutely Summable Inverses of Lag Polynomials}
+
+A \textbf{\textit{p}-th degree lag matrix polynomial} is
+\begin{equation}
+  \bm{\Phi}(L) = \mathbf{I}_r - \bm{\Phi}_1 L - \bm{\Phi}_2 L^2 - \cdots - \bm{\Phi}_p L^p,
+  \label{eq:6.3.7}
+\end{equation}
+where $\{\bm{\Phi}_j\}$ is a sequence of $r \times r$ matrices with $\bm{\Phi}_p \neq \mathbf{0}$. From the theory of
+homogeneous difference equations, the stability condition for the multivariate case
+is as follows:
+
+All the roots of the determinantal equation
+\begin{equation}
+  |\mathbf{I} - \bm{\Phi}_1 z - \cdots - \bm{\Phi}_p z^p| = 0
+  \label{eq:6.3.8}
+\end{equation}
+are greater than 1 in absolute value (i.e., lie outside the unit circle).
+
+Or, equivalently,
+
+All the roots of the determinantal equation
+\begin{equation}
+  |\mathbf{I} z^p - \bm{\Phi}_1 z^{p-1} - \cdots - \bm{\Phi}_p| = 0
+  \label{eq:6.3.8prime}
+  \tag{6.3.8$'$}
+\end{equation}
+are less than 1 in absolute value (i.e., lie inside the unit circle).
+
+As an example, consider a first-degree lag polynomial $\bm{\Phi}(L) = \mathbf{I} - \bm{\Phi}_1 L$ where
+$\bm{\Phi}_1 = (\phi_{k\ell})$ is $2 \times 2$. Equation~\eqref{eq:6.3.8} can be written as
+\[
+  \begin{vmatrix}
+    1 - \phi_{11} z & -\phi_{12} z \\
+    -\phi_{21} z & 1 - \phi_{22} z
+  \end{vmatrix}
+  = 1 - (\phi_{11} + \phi_{22}) z + (\phi_{11} \phi_{22} - \phi_{21} \phi_{12}) z^2 = 0.
+\]
+
+With the stability condition thus generalized, Proposition~6.3 generalizes in an
+obvious way. Let $\bm{\Psi}(L) = \bm{\Phi}(L)^{-1}$. Each component of the coefficient matrix
+sequence $\{\bm{\Psi}_j\}$ will be bounded in absolute value by a geometrically declining
+sequence.
+
+The multivariate analogue of an $\text{AR}(p)$ is a \textbf{vector autoregressive process
+of \textit{p}-th order} (\textbf{VAR(\textit{p})}). It is the unique covariance-stationary solution under
+stationarity condition \eqref{eq:6.3.8} to the following vector stochastic difference equation:
+\begin{equation}
+\begin{gathered}
+  \mathbf{y}_t - \bm{\Phi}_1 \mathbf{y}_{t-1} - \cdots - \bm{\Phi}_p \mathbf{y}_{t-p}
+  = \mathbf{c} + \bm{\varepsilon}_t \quad \text{or} \quad
+  \bm{\Phi}(L)(\mathbf{y}_t - \bm{\mu}) = \bm{\varepsilon}_t \\
+  \text{where} \quad
+  \bm{\Phi}(L) = \mathbf{I}_r - \bm{\Phi}_1 L - \bm{\Phi}_2 L^2 - \cdots - \bm{\Phi}_p L^p
+  \quad \text{and} \quad
+  \bm{\mu} = \bm{\Phi}(1)^{-1} \mathbf{c},
+\end{gathered}
+\label{eq:6.3.9}
+\end{equation}
+where $\bm{\Phi}_p \neq \mathbf{0}$. For example, a bivariate VAR(1) can be written out in full as a
+two-equation system with common regressors:
+\begin{align*}
+  y_{1t} &= c_1 + \phi_{11} y_{1,t-1} + \phi_{12} y_{2,t-1} + \varepsilon_{1t}, \\
+  y_{2t} &= c_2 + \phi_{21} y_{1,t-1} + \phi_{22} y_{2,t-1} + \varepsilon_{2t}, \quad
+  \text{where } \bm{\Phi}_1 =
+  \begin{bmatrix} \phi_{11} & \phi_{12} \\ \phi_{21} & \phi_{22} \end{bmatrix}.
+\end{align*}
+More generally, an $M$-variate VAR($p$) is a set of $M$ equations with $Mp + 1$ common
+regressors. Proposition~6.4 generalizes straightforwardly to the multivariate case.
+In particular, each element of $\bm{\Gamma}_j$ is bounded in absolute value by a geometrically
+declining sequence.
+
+Vector autoregressions are a very popular tool for analyzing the dynamic interrelationship
+between key macro variables. A thorough treatment can be found in
+Hamilton (1994, Chapter~11).
+
+The multivariate analogue of an $\text{ARMA}(p, q)$ is a \textbf{vector ARMA(\textit{p}, \textit{q})}
+(\textbf{VARMA(\textit{p}, \textit{q})}). It is the unique covariance-stationary solution under the stationarity
+condition to the following vector stochastic difference equation:
+\begin{equation}
+\begin{gathered}
+  \mathbf{y}_t = \mathbf{c} + \bm{\Phi}_1 \mathbf{y}_{t-1} + \bm{\Phi}_2 \mathbf{y}_{t-2}
+  + \cdots + \bm{\Phi}_p \mathbf{y}_{t-p} + \bm{\varepsilon}_t \\
+  + \bm{\Theta}_1 \bm{\varepsilon}_{t-1} + \bm{\Theta}_2 \bm{\varepsilon}_{t-2}
+  + \cdots + \bm{\Theta}_q \bm{\varepsilon}_{t-q} \quad \text{or} \\
+  \bm{\Phi}(L)(\mathbf{y}_t - \bm{\mu}) = \bm{\Theta}(L) \bm{\varepsilon}_t,
+\end{gathered}
+\end{equation}
+where
+\begin{equation}
+\begin{gathered}
+  \bm{\Phi}(L) = \mathbf{I} - \bm{\Phi}_1 L - \cdots - \bm{\Phi}_p L^p, \quad
+  \bm{\Theta}(L) = \mathbf{I} + \bm{\Theta}_1 L + \cdots + \bm{\Theta}_q L^q, \\
+  \bm{\mu} = \bm{\Phi}(1)^{-1} \mathbf{c},
+\end{gathered}
+\label{eq:6.3.10}
+\end{equation}
+where $\bm{\Phi}_p \neq \mathbf{0}$ and $\bm{\Theta}_q \neq \mathbf{0}$. Proposition~6.5 generalizes in an obvious way.
+
+\subsection*{Autocovariance Generating Function}
+
+The multivariate version of the autocovariance-generating function for a vector
+covariance-stationary process $\{\mathbf{y}_t\}$ is
+\begin{equation}
+  \mathbf{G}_Y(z) = \sum_{j=-\infty}^{\infty} \bm{\Gamma}_j z^j
+  = \bm{\Gamma}_0 + \sum_{j=1}^{\infty} (\bm{\Gamma}_j z^j + \bm{\Gamma}_j' z^{-j})
+  \quad (\text{since } \bm{\Gamma}_{-j} = \bm{\Gamma}_j').
+  \label{eq:6.3.11}
+\end{equation}
+The spectrum of a vector process $\{\mathbf{y}_t\}$ is defined as
+\begin{equation}
+  \mathbf{s}_Y(\omega) = \frac{1}{2\pi}\,\mathbf{G}_Y(e^{-i\omega}).
+  \label{eq:6.3.12}
+\end{equation}
+
+Proposition~6.6 generalizes easily. In particular, if $\mathbf{H}(L)$ is an $r \times s$ absolutely
+summable filter and $\mathbf{G}_X(z)$ is the autocovariance-generating function of an $s$-dimensional
+covariance-stationary process $\{\mathbf{x}_t\}$ with absolutely summable autocovariances,
+then the autocovariance-generating function of $\mathbf{y}_t = \mathbf{H}(L)\,\mathbf{x}_t$ is given by
+\begin{equation}
+  \underset{(r \times r)}{\mathbf{G}_Y(z)} =
+  \underset{(r \times s)}{\mathbf{H}(z)}\;
+  \underset{(s \times s)}{\mathbf{G}_X(z)}\;
+  \underset{(s \times r)}{\mathbf{H}(z^{-1})'}.
+  \label{eq:6.3.13}
+\end{equation}
+
+As special cases of this, we have
+\begin{align}
+  \text{vector white noise}: \; \mathbf{G}_Y(z) &= \bm{\Omega},
+  \label{eq:6.3.14} \\
+  \text{VMA}(\infty): \; \mathbf{G}_Y(z) &= \bm{\Psi}(z)\,\bm{\Omega}\,\bm{\Psi}(z^{-1})',
+  \label{eq:6.3.15} \\
+  \text{VAR}(p): \; \mathbf{G}_Y(z) &= [\bm{\Phi}(z)^{-1}]\,\bm{\Omega}\,[\bm{\Phi}(z^{-1})^{-1}]',
+  \label{eq:6.3.16} \\
+  \text{VARMA}(p,q): \; \mathbf{G}_Y(z) &= [\bm{\Phi}(z)^{-1}][\bm{\Theta}(z)]\,\bm{\Omega}\,
+  [\bm{\Theta}(z^{-1})]'\,[\bm{\Phi}(z^{-1})^{-1}]'.
+  \label{eq:6.3.17}
+\end{align}
+For example, if $\mathbf{y}_t = \bm{\varepsilon}_t + \bm{\Theta}_1 \bm{\varepsilon}_{t-1}$,
+\[
+  \mathbf{G}_Y(z) = (\mathbf{I} + \bm{\Theta}_1 z)\,\bm{\Omega}\,(\mathbf{I} + \bm{\Theta}_1' z^{-1}).
+\]
+
+\subsection*{Questions for Review}
+
+\begin{enumerate}
+\item Verify \eqref{eq:6.3.4} for vector MA(1).
+
+\item (Commutativity of inverses) \; Verify the commutativity of inverses, that is,
+``$\mathbf{A}(L)\,\mathbf{B}(L) = \mathbf{I}$'' $\Leftrightarrow$ ``$\mathbf{B}(L)\,\mathbf{A}(L) = \mathbf{I}$'' for two square filters of dimension
+$r$ with $|\mathbf{A}_0| \neq 0$ and $|\mathbf{B}_0| \neq 0$. \textbf{Hint:} Set $\mathbf{D}_0 = \mathbf{I}$, $\mathbf{D}_j = \mathbf{0}$ ($j \geq 1$)
+in \eqref{eq:6.3.5} and solve for $\mathbf{B}$'s. Show that this $\mathbf{B}(L)$ satisfies $\mathbf{B}(L)\,\mathbf{A}(L) = \mathbf{I}$.
+
+\item (Lack of commutativity for multivariate filters) \; Provide an example where
+$\mathbf{A}(L)$ and $\mathbf{B}(L)$ are $2 \times 2$ but $\mathbf{A}(L)\,\mathbf{B}(L) \neq \mathbf{B}(L)\,\mathbf{A}(L)$. \textbf{Hint:} How about
+$\mathbf{A}(L) = \mathbf{I} + \mathbf{A}_1 L$ and $\mathbf{B}(L) = \mathbf{I} + \mathbf{B}_1 L$? Find two square matrices $\mathbf{A}_1$ and $\mathbf{B}_1$
+such that $\mathbf{A}_1 \mathbf{B}_1 \neq \mathbf{B}_1 \mathbf{A}_1$.
+
+\item Verify the multivariate version of \eqref{eq:6.1.15b}, namely,
+\[
+  \text{``}\mathbf{A}(L)\,\mathbf{B}(L) = \mathbf{D}(L)\text{''} \;\Leftrightarrow\;
+  \text{``}\mathbf{B}(L) = \mathbf{A}(L)^{-1}\,\mathbf{D}(L)\text{''}
+  \;\Leftrightarrow\;
+  \text{``}\mathbf{A}(L) = \mathbf{D}(L)\,\mathbf{B}(L)^{-1},\text{''}
+\]
+provided $\mathbf{A}_0$ and $\mathbf{B}_0$ are nonsingular.
+So, to solve $\mathbf{A}(L)\,\mathbf{B}(L) = \mathbf{D}(L)$ for $\mathbf{B}(L)$, ``multiply both sides
+by the left'' by $\mathbf{A}(L)^{-1}$.
+
+\item Show that $[\mathbf{A}(L)\,\mathbf{B}(L)]^{-1} = \mathbf{B}(L)^{-1}\,\mathbf{A}(L)^{-1}$, provided that $\mathbf{A}_0$ and $\mathbf{B}_0$ are nonsingular.
+\textbf{Hint:} By definition, $\mathbf{A}(L)\,\mathbf{B}(L)\,[\mathbf{A}(L)\,\mathbf{B}(L)]^{-1} = \mathbf{I}$.
+\end{enumerate}

@@ -1,0 +1,254 @@
+% sec8_4.tex — Section 8.4: Multivariate Regressions
+
+In Section~1.5 and also in Example~7.2 of Chapter~7, we pointed out that the OLS
+estimator of the linear regression model is numerically the same as the ML estimator of the same model with normal errors. We have derived the GMM estimators
+for the single-equation models with endogenous regressors in Chapter~3 and for
+their multiple-equation versions in Chapter~4, but we have not indicated what the
+ML estimators for those models are. In this section and the next, we derive those
+ML counterparts. This section examines the ML estimation of the multivariate
+regression model, which is the simplest multiple-equation model.
+
+\subsection*{The Multivariate Regression Model Restated}
+
+The multivariate regression model is described by Assumptions~4.1--4.5 and~4.7,
+with $\mathbf{z}_{tm} = \mathbf{x}_t$ for all $m = 1, 2, \ldots, M$. To change the notation of Chapter~4,
+the system of $M$ equations can be written as
+\begin{equation}
+  y_{tm} = \underset{(1 \times K)}{\mathbf{x}_t'} \;
+  \underset{(K \times 1)}{\boldsymbol{\pi}_{0m}}
+  + v_{tm}
+  \quad (m = 1, 2, \ldots, M;\; t = 1, 2, \ldots, n).
+  \label{eq:8.4.1} \tag{8.4.1}
+\end{equation}
+Here, we maintain the convention of designating the true parameter vector by subscript~0. If we define
+\begin{equation}
+  \underset{(M \times 1)}{\mathbf{y}_t}
+  = \begin{bmatrix} y_{t1} \\ y_{t2} \\ \vdots \\ y_{tM} \end{bmatrix}, \quad
+  \underset{(M \times 1)}{\mathbf{v}_t}
+  = \begin{bmatrix} v_{t1} \\ v_{t2} \\ \vdots \\ v_{tM} \end{bmatrix}, \quad
+  \underset{(K \times M)}{\boldsymbol{\Pi}_0}
+  = \begin{bmatrix}
+    \boldsymbol{\pi}_{01} & \boldsymbol{\pi}_{02} & \cdots & \boldsymbol{\pi}_{0M}
+  \end{bmatrix},
+  \label{eq:8.4.2} \tag{8.4.2}
+\end{equation}
+then the $M$-equation system can be written compactly as
+\begin{equation}
+  \mathbf{y}_t = \boldsymbol{\Pi}_0'\mathbf{x}_t + \mathbf{v}_t
+  \quad (t = 1, 2, \ldots, n).
+  \label{eq:8.4.3} \tag{8.4.3}
+\end{equation}
+The model has the following features.
+\begin{itemize}
+\item $\{y_t, \mathbf{x}_t\}$ is ergodic stationary (Assumption~4.2).
+\item The common regressors $\mathbf{x}_t$ are predetermined in that
+  $\E(\mathbf{x}_t \cdot v_{tm}) = \mathbf{0}$ for all~$m$ (Assumption~4.3).
+\item The rank condition for identification (Assumption~4.4) reduces to the familiar
+  condition that $\E(\mathbf{x}_t\mathbf{x}_t')$ be nonsingular.
+\item The error vector is conditionally homoskedastic in that
+  $\E(\mathbf{v}_t\mathbf{v}_t' \mid \mathbf{x}_t) = \boldsymbol{\Omega}_0$, and
+  $\boldsymbol{\Omega}_0$ is positive definite (Assumption~4.7).
+\end{itemize}
+
+The GMM estimator of $\boldsymbol{\pi}_{0m}$ is the OLS estimator:
+\begin{equation}
+  \hat{\boldsymbol{\pi}}_m
+  = \biggl(\frac{1}{n}\sum_{t=1}^{n} \mathbf{x}_t\mathbf{x}_t'\biggr)^{-1}
+    \biggl(\frac{1}{n}\sum_{t=1}^{n} \mathbf{x}_t \cdot y_{tm}\biggr).
+  \label{eq:8.4.4} \tag{8.4.4}
+\end{equation}
+So the GMM (OLS) estimate of $\boldsymbol{\Pi}_0$ is given by
+\begin{equation}
+  \underset{(K \times M)}{\hat{\boldsymbol{\Pi}}}
+  = \biggl(\frac{1}{n}\sum_{t=1}^{n} \mathbf{x}_t\mathbf{x}_t'\biggr)^{-1}
+    \underset{(K \times K)}{\phantom{x}}
+    \biggl(\frac{1}{n}\sum_{t=1}^{n} \mathbf{x}_t\mathbf{y}_t'\biggr).
+    \underset{(K \times M)}{\phantom{x}}
+  \label{eq:8.4.5} \tag{8.4.5}
+\end{equation}
+
+\subsection*{The Likelihood Function}
+
+The model is not yet specific enough to lend itself to ML estimation. We make the
+supplementary assumptions that (1) $\mathbf{v}_t \mid \mathbf{x}_t \sim N(\mathbf{0}, \boldsymbol{\Omega}_0)$, and
+(2) $\{y_t, \mathbf{x}_t\}$ is i.i.d.
+(This assumption strengthens Assumptions~4.2 and~4.5.)
+
+The multivariate regression model with the normality assumption~(1) implies
+that $\mathbf{y}_t \mid \mathbf{x}_t \sim N(\boldsymbol{\Pi}_0'\mathbf{x}_t, \boldsymbol{\Omega}_0)$.
+The density of this multivariate normal distribution is
+\begin{equation}
+  (2\pi)^{-M/2}\,|\boldsymbol{\Omega}_0|^{-1/2}
+  \exp\biggl[-\frac{1}{2}(\mathbf{y}_t - \boldsymbol{\Pi}_0'\mathbf{x}_t)'
+    \boldsymbol{\Omega}_0^{-1}
+    (\mathbf{y}_t - \boldsymbol{\Pi}_0'\mathbf{x}_t)\biggr].
+  \label{eq:8.4.6} \tag{8.4.6}
+\end{equation}
+Replacing the true parameter values $(\boldsymbol{\Pi}_0, \boldsymbol{\Omega}_0)$ by their hypothetical values
+$(\boldsymbol{\Pi}, \boldsymbol{\Omega})$ and taking logs, we obtain the log conditional likelihood for observation~$t$:
+\begin{multline}
+  \log f(\mathbf{y}_t \mid \mathbf{x}_t;\, \boldsymbol{\Pi}, \boldsymbol{\Omega}) \\
+  = -\frac{M}{2}\log(2\pi)
+    + \frac{1}{2}\log(|\boldsymbol{\Omega}^{-1}|)
+    - \frac{1}{2}(\mathbf{y}_t - \boldsymbol{\Pi}'\mathbf{x}_t)'
+      \boldsymbol{\Omega}^{-1}
+      (\mathbf{y}_t - \boldsymbol{\Pi}'\mathbf{x}_t),
+  \label{eq:8.4.7} \tag{8.4.7}
+\end{multline}
+where use has been made of the fact that $-\log(|\boldsymbol{\Omega}|) = \log(|\boldsymbol{\Omega}^{-1}|)$.
+
+For a random sample, $1/n$ times the log conditional likelihood of the sample
+is the average over~$t$ of the log conditional likelihood for observation~$t$. So the
+objective function $Q_n(\boldsymbol{\Pi}, \boldsymbol{\Omega})$ is
+\begin{equation}
+  Q_n(\boldsymbol{\Pi}, \boldsymbol{\Omega})
+  = -\frac{M}{2}\log(2\pi)
+    + \frac{1}{2}\log(|\boldsymbol{\Omega}^{-1}|)
+    - \frac{1}{2n}\sum_{t=1}^{n}
+      (\mathbf{y}_t - \boldsymbol{\Pi}'\mathbf{x}_t)'
+      \boldsymbol{\Omega}^{-1}
+      (\mathbf{y}_t - \boldsymbol{\Pi}'\mathbf{x}_t).
+  \label{eq:8.4.8} \tag{8.4.8}
+\end{equation}
+It is left as Review Question~2 to show that the last term can be written as
+\begin{equation}
+  \frac{1}{2n}\sum_{t=1}^{n}
+    (\mathbf{y}_t - \boldsymbol{\Pi}'\mathbf{x}_t)'
+    \boldsymbol{\Omega}^{-1}
+    (\mathbf{y}_t - \boldsymbol{\Pi}'\mathbf{x}_t)
+  = \frac{1}{2}\,\tr[\boldsymbol{\Omega}^{-1}\hat{\boldsymbol{\Omega}}(\boldsymbol{\Pi})],
+  \label{eq:8.4.9} \tag{8.4.9}
+\end{equation}
+where $\hat{\boldsymbol{\Omega}}(\boldsymbol{\Pi})$ is defined as
+\begin{equation}
+  \underset{(M \times M)}{\hat{\boldsymbol{\Omega}}(\boldsymbol{\Pi})}
+  \equiv \frac{1}{n}\sum_{t=1}^{n}
+    (\mathbf{y}_t - \boldsymbol{\Pi}'\mathbf{x}_t)
+    (\mathbf{y}_t - \boldsymbol{\Pi}'\mathbf{x}_t)'.
+  \label{eq:8.4.10} \tag{8.4.10}
+\end{equation}
+So the objective function can be rewritten as
+\begin{equation}
+  Q_n(\boldsymbol{\Pi}, \boldsymbol{\Omega})
+  = -\frac{M}{2}\log(2\pi)
+    + \frac{1}{2}\log(|\boldsymbol{\Omega}^{-1}|)
+    - \frac{1}{2}\,\tr[\boldsymbol{\Omega}^{-1}\hat{\boldsymbol{\Omega}}(\boldsymbol{\Pi})].
+  \label{eq:8.4.11} \tag{8.4.11}
+\end{equation}
+The ML estimate of $(\boldsymbol{\Pi}_0, \boldsymbol{\Omega}_0)$ is the $(\boldsymbol{\Pi}, \boldsymbol{\Omega})$ that maximizes this objective function.
+
+The parameter space for $(\boldsymbol{\Pi}_0, \boldsymbol{\Omega}_0)$ is
+\[
+  \{(\boldsymbol{\Pi}, \boldsymbol{\Omega}) \mid \boldsymbol{\Omega} \text{ is symmetric and positive definite}\}.
+\]
+
+\subsection*{Maximizing the Likelihood Function}
+
+We now prove that the solution to the maximization problem is numerically the
+same as the GMM estimator. That is, the ML estimator of $\boldsymbol{\Pi}_0$ is given by the
+GMM/OLS estimator $\hat{\boldsymbol{\Pi}}$ in \eqref{eq:8.4.5} and the ML estimate of $\boldsymbol{\Omega}_0$ is given by
+\begin{equation}
+  \hat{\boldsymbol{\Omega}}
+  = \frac{1}{n}\sum_{t=1}^{n}
+    \hat{\mathbf{v}}_t \hat{\mathbf{v}}_t'
+  = \hat{\boldsymbol{\Omega}}(\hat{\boldsymbol{\Pi}}),
+  \label{eq:8.4.12} \tag{8.4.12}
+\end{equation}
+where $\hat{\mathbf{v}}_t \equiv \mathbf{y}_t - \hat{\boldsymbol{\Pi}}'\mathbf{x}_t$.
+
+It is left as Analytical Exercise~2 to show that, under the assumptions of the
+multivariate regression model stated above, $\hat{\boldsymbol{\Omega}}(\boldsymbol{\Pi})$ is positive definite with probability one for any given $\boldsymbol{\Pi}$ for sufficiently large~$n$. So we can assume that
+$\hat{\boldsymbol{\Omega}}(\boldsymbol{\Pi})$ is positive definite, not just positive semidefinite.
+The proof that the GMM estimator
+is numerically the same as the ML estimator is based on the following two-step
+maximization of the objective function.
+
+\medskip
+\noindent\textit{Step 1:}\quad
+The first step is to maximize $Q_n(\boldsymbol{\Pi}, \boldsymbol{\Omega})$ with respect to $\boldsymbol{\Omega}$, taking $\boldsymbol{\Pi}$ as
+given. For this purpose, the following fact from matrix algebra is useful.
+
+\begin{quote}
+\textit{An Inequality Involving Trace and Determinant:}\footnote{This result is implied by Lemma~A.6 of Johansen (1995). The uniqueness of the minimizer is due to the
+linearity of the trace operator and the strict concavity of $\log(|\mathbf{A}|)$ noted in Magnus and Neudecker (1988, p.~222).}\quad
+Let $\mathbf{A}$ and $\mathbf{B}$
+be two symmetric and positive definite matrices of the same size.
+Then the function
+\[
+  f(\mathbf{A}) \equiv \log(|\mathbf{A}|) - \tr(\mathbf{A}\mathbf{B})
+\]
+is maximized uniquely by $\mathbf{A} = \mathbf{B}^{-1}$.
+\end{quote}
+
+This result, with $\mathbf{A} = \boldsymbol{\Omega}^{-1}$ and
+$\mathbf{B} = \hat{\boldsymbol{\Omega}}(\boldsymbol{\Pi})$, immediately implies that the
+objective function \eqref{eq:8.4.11} is maximized uniquely by
+$\boldsymbol{\Omega} = \hat{\boldsymbol{\Omega}}(\boldsymbol{\Pi})$, given $\boldsymbol{\Pi}$.
+Substituting this $\boldsymbol{\Omega}$ into \eqref{eq:8.4.11} gives ($1/n$ times) the \textbf{concentrated
+log likelihood function} (concentrated with respect to $\boldsymbol{\Omega}$):
+\begin{align}
+  Q_n^*(\boldsymbol{\Pi})
+  &\equiv Q_n(\boldsymbol{\Pi},\, \hat{\boldsymbol{\Omega}}(\boldsymbol{\Pi})) \notag \\
+  &= -\frac{M}{2}\log(2\pi)
+     + \frac{1}{2}\log(|\hat{\boldsymbol{\Omega}}(\boldsymbol{\Pi})^{-1}|)
+     - \frac{1}{2}\,\tr[\hat{\boldsymbol{\Omega}}(\boldsymbol{\Pi})^{-1}
+       \hat{\boldsymbol{\Omega}}(\boldsymbol{\Pi})] \notag \\
+  &= -\frac{M}{2}\log(2\pi)
+     - \frac{1}{2}\log(|\hat{\boldsymbol{\Omega}}(\boldsymbol{\Pi})|)
+     - \frac{M}{2}.
+  \label{eq:8.4.13} \tag{8.4.13}
+\end{align}
+
+\medskip
+\noindent\textit{Step 2:}\quad
+Looking at the concentrated log likelihood function $Q_n^*(\boldsymbol{\Pi})$, we see that
+the ML estimator of $\boldsymbol{\Pi}_0$ should minimize
+\begin{equation}
+  |\hat{\boldsymbol{\Omega}}(\boldsymbol{\Pi})|
+  = \biggl|\frac{1}{n}\sum_{t=1}^{n}
+    (\mathbf{y}_t - \boldsymbol{\Pi}'\mathbf{x}_t)
+    (\mathbf{y}_t - \boldsymbol{\Pi}'\mathbf{x}_t)'\biggr|.
+  \label{eq:8.4.14} \tag{8.4.14}
+\end{equation}
+It is left as Analytical Exercise~1 to show that this is minimized by the
+OLS estimator $\hat{\boldsymbol{\Pi}}$ given in \eqref{eq:8.4.5}. Finally, setting
+$\boldsymbol{\Pi} = \hat{\boldsymbol{\Pi}}$ in \eqref{eq:8.4.10}
+gives \eqref{eq:8.4.12}.
+
+\subsection*{Consistency and Asymptotic Normality}
+
+We have shown in Chapter~4, without the normality assumption (that $\varepsilon_t \mid \mathbf{x}_t$ is
+normal) or the i.i.d.\ assumption for $\{y_t, \mathbf{x}_t\}$, that the GMM/OLS estimator
+$\hat{\boldsymbol{\Pi}}$ in \eqref{eq:8.4.5} is consistent and asymptotically normal and that $\hat{\boldsymbol{\Omega}}$ in
+\eqref{eq:8.4.12} is consistent.
+It then follows, trivially, that the ML estimator of $\boldsymbol{\Pi}_0$ is consistent and asymptotically normal and the ML estimator of $\boldsymbol{\Omega}_0$ is consistent. It is worth emphasizing
+that the ML estimator of $\boldsymbol{\Pi}_0$ based on the likelihood function that assumes normality is consistent and asymptotically normal even if the error term is not normally
+distributed.
+
+We will not be concerned with the asymptotic normality of the ML estimator
+of $\boldsymbol{\Omega}_0$, $\hat{\boldsymbol{\Omega}}(\hat{\boldsymbol{\Pi}})$. One way to demonstrate the asymptotic normality would be to verify
+the conditions of the relevant asymptotic normality theorem of the previous chapter.
+
+\bigskip
+\noindent\rule{\textwidth}{0.4pt}
+\textbf{QUESTION FOR REVIEW}
+\medskip
+
+\begin{enumerate}
+\item Prove \eqref{eq:8.4.9}. \textbf{Hint:} Use the following properties of the trace operator.
+  (1) $\tr(x) = x$ if $x$ is a scalar,
+  (2) $\tr(\mathbf{A} + \mathbf{B}) = \tr(\mathbf{A}) + \tr(\mathbf{B})$, and
+  (3) $\tr(\mathbf{A}\mathbf{B}) = \tr(\mathbf{B}\mathbf{A})$ provided $\mathbf{A}\mathbf{B}$ and $\mathbf{B}\mathbf{A}$
+  are well defined. The answer is
+  \begin{align*}
+    \frac{1}{n}\sum_{t=1}^{n}
+      &(\mathbf{y}_t - \boldsymbol{\Pi}'\mathbf{x}_t)'
+      \boldsymbol{\Omega}^{-1}
+      (\mathbf{y}_t - \boldsymbol{\Pi}'\mathbf{x}_t) \\
+    &= \tr\biggl[\frac{1}{n}\sum_{t=1}^{n}
+      (\mathbf{y}_t - \boldsymbol{\Pi}'\mathbf{x}_t)'
+      \boldsymbol{\Omega}^{-1}
+      (\mathbf{y}_t - \boldsymbol{\Pi}'\mathbf{x}_t)\biggr] \\
+    &\phantom{= \tr\biggl[} \vdots
+  \end{align*}
+\end{enumerate}

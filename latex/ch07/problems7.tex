@@ -1,0 +1,160 @@
+% problems7.tex — Problem Set and Answers for Chapter 7
+
+\begin{problemset}
+
+\subsection*{Analytical Exercises}
+
+\exercise[1] (Kullback-Leibler information inequality) \enspace Let $f(y \mid \mathbf{x}; \bm{\theta})$ be a parametric family of hypothetical conditional density functions, with the true density function given by $f(y \mid \mathbf{x}; \bm{\theta}_0)$. Suppose $\E[\log f(y \mid \mathbf{x}; \bm{\theta})]$ exists and is finite for all $\bm{\theta}$. The Kullback-Leibler information inequality states that
+\begin{align*}
+&\text{Prob}[f(y \mid \mathbf{x}; \bm{\theta}) \neq f(y \mid \mathbf{x}; \bm{\theta}_0)] > 0 \\
+&\quad \Rightarrow \quad \E[\log f(y \mid \mathbf{x}; \bm{\theta})] < \E[\log f(y \mid \mathbf{x}; \bm{\theta}_0)].
+\end{align*}
+
+Prove this by taking the following steps. In the proof, for simplicity only, assume that $f(y \mid \mathbf{x}; \bm{\theta}) > 0$ for all $(y, \mathbf{x})$ and $\bm{\theta}$, so that it is legitimate to take logs of the density $f(y \mid \mathbf{x}; \bm{\theta})$.
+
+\begin{enumerate}[label=(\alph*)]
+\item Suppose $\text{Prob}[f(y \mid \mathbf{x}; \bm{\theta}) \neq f(y \mid \mathbf{x}; \bm{\theta}_0)] > 0$. Let $\mathbf{w} = (y, \mathbf{x}')'$ and define
+\[
+a(\mathbf{w}) \equiv f(y \mid \mathbf{x}; \bm{\theta}) / f(y \mid \mathbf{x}; \bm{\theta}_0).
+\]
+Verify that $a(\mathbf{w}) \neq 1$ with positive probability, so that $a(\mathbf{w})$ is a nonconstant random variable.
+
+\item The strict version of \textbf{Jensen's inequality} states that
+\begin{quote}
+if $c(x)$ is a strictly concave function and $x$ is a nonconstant random variable, then $\E[c(x)] < c(\E(x))$.
+\end{quote}
+Using this fact, show that
+\[
+\E[\log a(\mathbf{w})] < \log(\E[a(\mathbf{w})]).
+\]
+\textbf{Hint:} $\log(x)$ is strictly concave.
+
+\item Show that $\E[a(\mathbf{w})] = 1$. \textbf{Hint:} The conditional mean of $a(\mathbf{w})$ equals 1 because
+\begin{align*}
+\E[a(\mathbf{w}) \mid \mathbf{x}] &= \int a(\mathbf{w})\,f(y \mid \mathbf{x}; \bm{\theta}_0)\,dy \\
+&= \int \frac{f(y \mid \mathbf{x}; \bm{\theta})}{f(y \mid \mathbf{x}; \bm{\theta}_0)}\,f(y \mid \mathbf{x}; \bm{\theta}_0)\,dy \\
+&= \int f(y \mid \mathbf{x}; \bm{\theta})\,dy = 1.
+\end{align*}
+The last equality holds because $f(y \mid \mathbf{x}; \bm{\theta})$ is a density function for any $\mathbf{x}$ and $\bm{\theta}$. Note well that the conditional expectation is taken with respect to the true conditional density $f(y \mid \mathbf{x}; \bm{\theta}_0)$.
+
+\item Finally, show the desired result.
+\end{enumerate}
+
+\exercise[2] (Information matrix equality) \enspace For ML, the score vector and the Hessian for observation $(y, \mathbf{x})$ can be rewritten (with $\mathbf{w} \equiv (y, \mathbf{x}')')$ as:
+\[
+\underset{(p \times 1)}{\mathbf{s}(\mathbf{w}; \bm{\theta})} = \frac{\partial\log f(y \mid \mathbf{x}; \bm{\theta})}{\partial\bm{\theta}}, \quad \underset{(p \times p)}{\mathbf{H}(\mathbf{w}; \bm{\theta})} = \frac{\partial\mathbf{s}(\mathbf{w}; \bm{\theta})}{\partial\bm{\theta}'} = \frac{\partial^2\log f(y \mid \mathbf{x}; \bm{\theta})}{\partial\bm{\theta}\,\partial\bm{\theta}'}.
+\]
+
+As usual, for simplicity, assume $f(y \mid \mathbf{x}, \bm{\theta}) > 0$ for all $(y, \mathbf{x})$ and $\bm{\theta}$, so it is legitimate to take logs of the density function.
+
+\begin{enumerate}[label=(\alph*)]
+\item Assuming that integration (i.e., taking expectations) and differentiation can be interchanged, show that $\E[\mathbf{s}(\mathbf{w}; \bm{\theta}_0)] = \mathbf{0}$. \textbf{Hint:} Since $f(y \mid \mathbf{x}; \bm{\theta})$ is a hypothetical density, its integral is unity:
+\[
+\int f(y \mid \mathbf{x}; \bm{\theta})\,dy = 1.
+\]
+Differentiate both sides of this equation with respect to $\bm{\theta}$ and then change the order of differentiation and integration to obtain the identity
+\[
+\int \mathbf{s}(\mathbf{w}; \bm{\theta})\,f(y \mid \mathbf{x}; \bm{\theta})\,dy = \underset{(p \times 1)}{\mathbf{0}}.
+\]
+Set $\bm{\theta} = \bm{\theta}_0$ and obtain $\E[\mathbf{s}(\mathbf{w}; \bm{\theta}_0) \mid \mathbf{x}] = \mathbf{0}$.
+
+\item Show the information matrix equality:
+\[
+-\E[\mathbf{H}(\mathbf{w}; \bm{\theta}_0)] = \E[\mathbf{s}(\mathbf{w}; \bm{\theta}_0)\,\mathbf{s}(\mathbf{w}; \bm{\theta}_0)'].
+\]
+\textbf{Hint:} Differentiating both sides of the above identity in the previous hint and assuming that the order of differentiation and integration can be interchanged, we obtain
+\[
+\int \frac{\partial}{\partial\bm{\theta}'}\bigl[\mathbf{s}(\mathbf{w}; \bm{\theta})\,f(y \mid \mathbf{x}; \bm{\theta})\bigr]\,dy = \underset{(p \times p)}{\mathbf{0}}.
+\]
+Show that the integrand can be written as
+\[
+\frac{\partial}{\partial\bm{\theta}'}\bigl[\mathbf{s}(\mathbf{w}; \bm{\theta})\,f(y \mid \mathbf{x}; \bm{\theta})\bigr] = \mathbf{H}(\mathbf{w}; \bm{\theta})\,f(y \mid \mathbf{x}; \bm{\theta}) + \mathbf{s}(\mathbf{w}; \bm{\theta})\,\mathbf{s}(\mathbf{w}; \bm{\theta})'\,f(y \mid \mathbf{x}; \bm{\theta}).
+\]
+\end{enumerate}
+
+\exercise[3] (Trinity for linear regression model) \enspace Consider the linear regression model with normal errors, whose conditional density for observation $t$ is
+\[
+\log f(y_t \mid \mathbf{x}_t; \bm{\beta}, \sigma^2) = -\frac{1}{2}\log(2\pi) - \frac{1}{2}\log(\sigma^2) - \frac{(y_t - \mathbf{x}_t'\bm{\beta})^2}{2\sigma^2}.
+\]
+
+Let $(\hat{\bm{\beta}}, \hat{\sigma}^2)$ be the unrestricted ML estimate of $\bm{\theta} = (\bm{\beta}', \sigma^2)'$ and let $(\tilde{\bm{\beta}}, \tilde{\sigma}^2)$ be the restricted ML estimate subject to the constraint $\mathbf{R}\bm{\beta} = \mathbf{c}$ where $\mathbf{R}$ is an $r \times K$ matrix of known constants. Assume that $\Theta = \mathbb{R}^K \times \mathbb{R}_{++}$ and that $\E(\mathbf{x}_t\mathbf{x}_t')$ is nonsingular. Also, let
+\[
+\hat{\bm{\Sigma}} = \begin{bmatrix} \frac{1}{\hat{\sigma}^2}\frac{1}{n}\sum_{t=1}^{n}\mathbf{x}_t\mathbf{x}_t' & \mathbf{0} \\[4pt] \mathbf{0}' & \frac{1}{2(\hat{\sigma}^2)^2} \end{bmatrix}, \quad \tilde{\bm{\Sigma}} = \begin{bmatrix} \frac{1}{\tilde{\sigma}^2}\frac{1}{n}\sum_{t=1}^{n}\mathbf{x}_t\mathbf{x}_t' & \mathbf{0} \\[4pt] \mathbf{0}' & \frac{1}{2(\tilde{\sigma}^2)^2} \end{bmatrix}.
+\]
+
+\begin{enumerate}[label=(\alph*)]
+\item Verify that $\hat{\bm{\beta}}$ minimizes the sum of squared residuals. So it is the OLS estimator. Verify that $\tilde{\bm{\beta}}$ minimizes the sum of squared residuals subject to the constraint $\mathbf{R}\bm{\beta} = \mathbf{c}$. So it is the restricted least squares estimator.
+
+\item Let $Q_n(\bm{\theta}) = \frac{1}{n}\sum_{t=1}^{n}\log f(y_t \mid \mathbf{x}_t; \bm{\beta}, \sigma^2)$. Show that
+\begin{align*}
+Q_n(\hat{\bm{\theta}}) &= -\frac{1}{2}\log(2\pi) - \frac{1}{2} - \frac{1}{2}\log\!\left(\frac{SSR_U}{n}\right), \\
+Q_n(\tilde{\bm{\theta}}) &= -\frac{1}{2}\log(2\pi) - \frac{1}{2} - \frac{1}{2}\log\!\left(\frac{SSR_R}{n}\right),
+\end{align*}
+where $SSR_U$ $(\equiv \sum(y_t - \mathbf{x}_t'\hat{\bm{\beta}})^2)$ is the unrestricted sum of squared residuals and $SSR_R$ $(\equiv \sum(y_t - \mathbf{x}_t'\tilde{\bm{\beta}})^2)$ is the restricted sum of squared residuals. \textbf{Hint:} Show that $\hat{\sigma}^2 = SSR_U/n$ and $\tilde{\sigma}^2 = SSR_R/n$.
+
+\item Verify that the $\hat{\bm{\Sigma}}$ given here, although not the same as $-\frac{1}{n}\sum_{t=1}^{n}\mathbf{H}(\mathbf{w}_t; \hat{\bm{\theta}})$, is consistent for $-\E[\mathbf{H}(\mathbf{w}_t; \bm{\theta}_0)]$. Verify that the $\tilde{\bm{\Sigma}}$ given here, although not the same as $-\frac{1}{n}\sum_{t=1}^{n}\mathbf{H}(\mathbf{w}_t; \tilde{\bm{\theta}})$, is consistent for $-\E[\mathbf{H}(\mathbf{w}_t; \bm{\theta}_0)]$. \textbf{Hint:} From the discussion in Example~7.8, $\hat{\bm{\theta}}$ is consistent. As mentioned in Section~7.4, $\tilde{\bm{\theta}}$ too is consistent under the null. Given the consistency of $\hat{\bm{\theta}}$ and $\tilde{\bm{\theta}}$, it should be easy to show that $\hat{\sigma}^2$ and $\tilde{\sigma}^2$ are consistent for $\sigma^2$.
+
+\item Show that the Wald, LM, and LR statistics using $\hat{\bm{\Sigma}}$ and $\tilde{\bm{\Sigma}}$ given here in the formulas in Table~\ref{tab:7.2} can be written as
+\begin{align*}
+W &= n \cdot \frac{(\mathbf{R}\hat{\bm{\beta}} - \mathbf{c})'[\mathbf{R}(\mathbf{X}'\mathbf{X})^{-1}\mathbf{R}']^{-1}(\mathbf{R}\hat{\bm{\beta}} - \mathbf{c})}{SSR_U}, \\[4pt]
+LM &= n \cdot \frac{(\mathbf{y} - \mathbf{X}\tilde{\bm{\beta}})'\mathbf{P}(\mathbf{y} - \mathbf{X}\tilde{\bm{\beta}})}{SSR_R}, \\[4pt]
+LR &= n \cdot \left\{\log\!\left(\frac{SSR_R}{n}\right) - \log\!\left(\frac{SSR_U}{n}\right)\right\},
+\end{align*}
+where $\mathbf{y}$ $(n \times 1)$ and $\mathbf{X}$ $(n \times K)$ are the data vector and matrix associated with $y_t$ and $\mathbf{x}_t$, and $\mathbf{P} = \mathbf{X}(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'$. \textbf{Hint:} The $\mathbf{A}(\hat{\bm{\theta}})$ $(r \times (K+1))$ in Table~\ref{tab:7.2} is
+\[
+\bigl(\underset{(r \times K)}{\mathbf{R}} \;\vdots\; \underset{(r \times 1)}{\mathbf{0}}\bigr).
+\]
+
+\item Show that the three statistics can also be written as
+\begin{align*}
+W &= n \cdot \frac{SSR_R - SSR_U}{SSR_U}, \\[4pt]
+LM &= n \cdot \frac{SSR_R - SSR_U}{SSR_R}, \\[4pt]
+LR &= n \cdot \log\!\left(\frac{SSR_R}{SSR_U}\right).
+\end{align*}
+\textbf{Hint:} As we have shown in an analytical exercise of Chapter~1,
+\begin{align*}
+SSR_R - SSR_U &= (\hat{\bm{\beta}} - \tilde{\bm{\beta}})'(\mathbf{X}'\mathbf{X})(\hat{\bm{\beta}} - \tilde{\bm{\beta}}) \\
+&= (\mathbf{R}\hat{\bm{\beta}} - \mathbf{c})'[\mathbf{R}(\mathbf{X}'\mathbf{X})^{-1}\mathbf{R}']^{-1}(\mathbf{R}\hat{\bm{\beta}} - \mathbf{c}) \\
+&= (\mathbf{y} - \mathbf{X}\tilde{\bm{\beta}})'\mathbf{P}(\mathbf{y} - \mathbf{X}\tilde{\bm{\beta}}).
+\end{align*}
+
+\item Show that $W \geq LR \geq LM$. (These inequalities do not always hold in nonlinear regression models.)
+\end{enumerate}
+
+\end{problemset}
+
+\begin{answers}
+
+\answer{2a} Since $f(y \mid \mathbf{x}; \bm{\theta})$ is a hypothetical density, its integral is unity:
+\begin{equation}
+\tag{1}
+\int f(y \mid \mathbf{x}; \bm{\theta})\,dy = 1.
+\end{equation}
+
+This is an identity, valid for any $\bm{\theta} \in \Theta$. Differentiating both sides of this identity with respect to $\bm{\theta}$, we obtain
+\begin{equation}
+\tag{2}
+\frac{\partial}{\partial\bm{\theta}}\int f(y \mid \mathbf{x}; \bm{\theta})\,dy = \underset{(p \times 1)}{\mathbf{0}}.
+\end{equation}
+
+If the order of differentiation and integration can be interchanged, then
+\begin{equation}
+\tag{3}
+\frac{\partial}{\partial\bm{\theta}}\int f(y \mid \mathbf{x}; \bm{\theta})\,dy = \int \frac{\partial}{\partial\bm{\theta}}f(y \mid \mathbf{x}; \bm{\theta})\,dy.
+\end{equation}
+
+But by the definition of the score, $\mathbf{s}(\mathbf{w}; \bm{\theta}) = \frac{\partial}{\partial\bm{\theta}}f(y \mid \mathbf{x}; \bm{\theta})$. Substituting this into (3), we obtain
+\begin{equation}
+\tag{4}
+\int \mathbf{s}(\mathbf{w}; \bm{\theta})\,f(y \mid \mathbf{x}; \bm{\theta})\,dy = \underset{(p \times 1)}{\mathbf{0}}.
+\end{equation}
+
+This holds for any $\bm{\theta} \in \Theta$, in particular, for $\bm{\theta}_0$. Setting $\bm{\theta} = \bm{\theta}_0$, we obtain
+\begin{equation}
+\tag{5}
+\int \mathbf{s}(\mathbf{w}; \bm{\theta}_0)\,f(y \mid \mathbf{x}; \bm{\theta}_0)\,dy = \E[\mathbf{s}(\mathbf{w}; \bm{\theta}_0) \mid \mathbf{x}] = \underset{(p \times 1)}{\mathbf{0}}.
+\end{equation}
+
+Then, by the Law of Total Expectations, we obtain the desired result.
+
+\end{answers}

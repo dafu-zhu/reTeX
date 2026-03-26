@@ -1,0 +1,457 @@
+% sec5_2.tex — Section 5.2: The Fixed-Effects Estimator
+
+\section{The Fixed-Effects Estimator}
+\label{sec:5.2}
+
+\subsection*{The Formula}
+
+As already mentioned, the fixed-effects estimator is defined for the transformed
+system. Multiplying both sides of \eqref{eq:5.1.1pp} on page~329 from the left by $\mathbf{Q}$ and
+making use of the fact that $\mathbf{Q}\mathbf{1}_M = \mathbf{0}$, we obtain
+\[
+  \mathbf{Q}\mathbf{y}_i = \mathbf{Q}\mathbf{F}_i \boldsymbol{\beta} + \mathbf{Q}\boldsymbol{\eta}_i
+\]
+or
+\begin{equation}
+  \tilde{\mathbf{y}}_i = \widetilde{\mathbf{F}}_i \boldsymbol{\beta} + \tilde{\boldsymbol{\eta}}_i
+  \quad (i = 1, 2, \ldots, n),
+  \label{eq:5.2.1} \tag{5.2.1}
+\end{equation}
+where
+\begin{equation}
+  \underset{(M \times 1)}{\tilde{\mathbf{y}}_i} \equiv \mathbf{Q}\mathbf{y}_i, \quad
+  \underset{(M \times \#\boldsymbol{\beta})}{\widetilde{\mathbf{F}}_i} \equiv \mathbf{Q}\mathbf{F}_i, \quad
+  \underset{(M \times 1)}{\tilde{\boldsymbol{\eta}}_i} \equiv \mathbf{Q}\boldsymbol{\eta}_i.
+  \label{eq:5.2.2} \tag{5.2.2}
+\end{equation}
+
+Thus, the fixed effect $\alpha_i$ and common regressors drop out in the transformed equations.
+Now form the pooled sample of transformed $\mathbf{y}_i$ and $\mathbf{F}_i$ as
+\begin{equation}
+  \underset{(Mn \times 1)}{\tilde{\mathbf{y}}}
+  \equiv \begin{bmatrix} \tilde{\mathbf{y}}_1 \\ \vdots \\ \tilde{\mathbf{y}}_n \end{bmatrix}, \quad
+  \underset{(Mn \times \#\boldsymbol{\beta})}{\widetilde{\mathbf{F}}}
+  \equiv \begin{bmatrix} \widetilde{\mathbf{F}}_1 \\ \vdots \\ \widetilde{\mathbf{F}}_n \end{bmatrix}.
+  \label{eq:5.2.3} \tag{5.2.3}
+\end{equation}
+
+The \textbf{fixed-effects estimator} of $\boldsymbol{\beta}$, denoted $\hat{\boldsymbol{\beta}}_{\text{FE}}$,
+is the pooled OLS estimator, that
+is, the OLS estimator applied to the pooled sample $(\tilde{\mathbf{y}}, \widetilde{\mathbf{F}})$
+of size $Mn$. Therefore,
+\begin{align}
+  \hat{\boldsymbol{\beta}}_{\text{FE}}
+  &\equiv (\widetilde{\mathbf{F}}'\widetilde{\mathbf{F}})^{-1}\widetilde{\mathbf{F}}'\tilde{\mathbf{y}}
+  \notag \\
+  &= \biggl(\frac{1}{n}\sum_{i=1}^{n}\widetilde{\mathbf{F}}_i'\widetilde{\mathbf{F}}_i\biggr)^{\!-1}
+     \frac{1}{n}\sum_{i=1}^{n}\widetilde{\mathbf{F}}_i'\tilde{\mathbf{y}}_i
+  \notag \\
+  &= \biggl[\frac{1}{n}\sum_{i=1}^{n}(\mathbf{Q}\mathbf{F}_i)'(\mathbf{Q}\mathbf{F}_i)\biggr]^{\!-1}
+     \frac{1}{n}\sum_{i=1}^{n}(\mathbf{Q}\mathbf{F}_i)'(\mathbf{Q}\mathbf{y}_i)
+  \notag \\
+  &= \biggl(\frac{1}{n}\sum_{i=1}^{n}\mathbf{F}_i'\mathbf{Q}\mathbf{Q}\mathbf{F}_i\biggr)^{\!-1}
+     \frac{1}{n}\sum_{i=1}^{n}\mathbf{F}_i'\mathbf{Q}\mathbf{Q}\mathbf{y}_i
+  \notag \\
+  &= \biggl(\frac{1}{n}\sum_{i=1}^{n}\mathbf{F}_i'\mathbf{Q}\mathbf{F}_i\biggr)^{\!-1}
+     \frac{1}{n}\sum_{i=1}^{n}\mathbf{F}_i'\mathbf{Q}\mathbf{y}_i
+  \quad \text{(since $\mathbf{Q}$ is symmetric and idempotent).}
+  \label{eq:5.2.4} \tag{5.2.4}
+\end{align}
+
+Substituting \eqref{eq:5.2.1} into \eqref{eq:5.2.4}, the sampling error can be obtained as
+\begin{align}
+  \hat{\boldsymbol{\beta}}_{\text{FE}} - \boldsymbol{\beta}
+  &= \biggl(\frac{1}{n}\sum_{i=1}^{n}\widetilde{\mathbf{F}}_i'\widetilde{\mathbf{F}}_i\biggr)^{\!-1}
+     \frac{1}{n}\sum_{i=1}^{n}\widetilde{\mathbf{F}}_i'\tilde{\boldsymbol{\eta}}_i
+  \notag \\
+  &= \biggl(\frac{1}{n}\sum\mathbf{F}_i'\mathbf{Q}\mathbf{F}_i\biggr)^{\!-1}
+     \frac{1}{n}\sum\mathbf{F}_i'\mathbf{Q}\boldsymbol{\eta}_i.
+  \label{eq:5.2.5} \tag{5.2.5}
+\end{align}
+
+Because it is based on deviations from group means, the fixed-effects estimator
+is also known as the \textbf{within estimator} or the \textbf{covariance estimator}. Another,
+and perhaps more popular, derivation is to apply OLS to levels, i.e., not in deviations
+but with group ($i$) specific dummies added to the list of regressors. For this
+reason the estimator is also called the \textbf{least squares dummy variables (LSDV)}
+estimator. The LSDV interpretation allows us to see what additional assumptions
+are needed for the error-components model in developing a finite-sample theory
+for the estimator. This is left as Analytical Exercise~1.
+
+\subsection*{Large-Sample Properties}
+
+As you will prove in Analytical Exercise~2, the fixed-effects estimator can also be
+written as a GMM estimator, which lends itself to a straightforward development
+of large-sample theory for the fixed-effects estimator summarized in Proposition
+5.1 below. Proving the proposition, however, can be accomplished more easily by
+inspecting the expression \eqref{eq:5.2.5} for sampling error.
+
+\begin{proposition}[large-sample properties of the fixed-effects estimator]
+\label{prop:5.1}
+Consider the error-components model (consisting of \eqref{eq:5.1.1pp} on page~329,
+\eqref{eq:5.1.2}, \eqref{eq:5.1.8}, \eqref{eq:5.1.4}--\eqref{eq:5.1.6}, and
+\eqref{eq:5.1.15}), but relax the SUR assumption \eqref{eq:5.1.8b} by
+requiring only that
+\begin{equation}
+  \E(\mathbf{f}_{im} \cdot \eta_{ih}) = \mathbf{0} \quad
+  \textit{for all } m, h \;(= 1, 2, \ldots, M),
+  \label{eq:5.2.6} \tag{5.2.6}
+\end{equation}
+where $\mathbf{f}_{im}'$ is the $m$-th row of\/ $\mathbf{F}_i$.
+Define $\tilde{\mathbf{y}}_i$, $\widetilde{\mathbf{F}}_i$, and $\tilde{\boldsymbol{\eta}}_i$
+by \eqref{eq:5.2.2}. Then:
+\begin{enumerate}[label=(\alph*)]
+\item the fixed-effects estimator \eqref{eq:5.2.4} is consistent and asymptotically normal with
+\begin{equation}
+  \avar(\hat{\boldsymbol{\beta}}_{\mathrm{FE}})
+  = \bigl[\E(\widetilde{\mathbf{F}}_i'\widetilde{\mathbf{F}}_i)\bigr]^{-1}\,
+    \E\!\bigl[\widetilde{\mathbf{F}}_i'\,\E(\tilde{\boldsymbol{\eta}}_i\tilde{\boldsymbol{\eta}}_i')\widetilde{\mathbf{F}}_i\bigr]\,
+    \bigl[\E(\widetilde{\mathbf{F}}_i'\widetilde{\mathbf{F}}_i)\bigr]^{-1}.
+  \label{eq:5.2.7} \tag{5.2.7}
+\end{equation}
+
+\item This asymptotic variance is consistently estimated by
+\begin{equation}
+  \widehat{\avar}(\hat{\boldsymbol{\beta}}_{\mathrm{FE}})
+  = \biggl(\frac{1}{n}\sum_{i=1}^{n}\widetilde{\mathbf{F}}_i'\widetilde{\mathbf{F}}_i\biggr)^{\!-1}
+    \biggl(\frac{1}{n}\sum_{i=1}^{n}\widetilde{\mathbf{F}}_i'\hat{\mathbf{V}}\widetilde{\mathbf{F}}_i\biggr)
+    \biggl(\frac{1}{n}\sum_{i=1}^{n}\widetilde{\mathbf{F}}_i'\widetilde{\mathbf{F}}_i\biggr)^{\!-1},
+  \label{eq:5.2.8} \tag{5.2.8}
+\end{equation}
+\end{enumerate}
+\end{proposition}
+\noindent
+where $\hat{\mathbf{V}}$ is the sample cross-moment matrix of transformed residuals associated
+with the fixed-effects estimator:
+\begin{equation}
+  \underset{(M \times M)}{\hat{\mathbf{V}}}
+  \equiv \frac{1}{n}\sum_{i=1}^{n}
+  (\tilde{\mathbf{y}}_i - \widetilde{\mathbf{F}}_i\hat{\boldsymbol{\beta}}_{\text{FE}})
+  (\tilde{\mathbf{y}}_i - \widetilde{\mathbf{F}}_i\hat{\boldsymbol{\beta}}_{\text{FE}})'.
+  \label{eq:5.2.9} \tag{5.2.9}
+\end{equation}
+
+The only nontrivial part of the proof is to show:
+\begin{enumerate}
+\item[(1)] $\E(\widetilde{\mathbf{F}}_i'\widetilde{\mathbf{F}}_i)$ is nonsingular (and hence invertible),
+\item[(2)] $\E(\mathbf{F}_i'\mathbf{Q}\boldsymbol{\eta}_i) = \mathbf{0}$ (which is needed for consistency), and
+\item[(3)] $\E(\widetilde{\mathbf{F}}_i'\tilde{\boldsymbol{\eta}}_i\tilde{\boldsymbol{\eta}}_i'\widetilde{\mathbf{F}}_i)$
+  (which is the Avar of $\frac{1}{n}\sum_{i=1}^{n}\widetilde{\mathbf{F}}_i'\tilde{\boldsymbol{\eta}}_i$)
+  $= \E\!\bigl[\widetilde{\mathbf{F}}_i'\,\E(\tilde{\boldsymbol{\eta}}_i\tilde{\boldsymbol{\eta}}_i')\widetilde{\mathbf{F}}_i\bigr]$.
+\end{enumerate}
+
+The rest of the proof is an easy application of Kolmogorov's LLN and the Lindeberg-Levy CLT.
+
+Proving that \eqref{eq:5.1.15} implies (1) is left as an optional analytical exercise.
+
+To prove (2), use formula (4.6.16b) and rewrite the expectation as
+\begin{align}
+  \E(\mathbf{F}_i'\mathbf{Q}\boldsymbol{\eta}_i)
+  &= \E\biggl(\sum_{m=1}^{M}\sum_{h=1}^{M}q_{mh}\,\mathbf{f}_{im}\cdot\eta_{ih}\biggr)
+  \quad (q_{mh} \equiv (m,h)\text{ element of }\mathbf{Q})
+  \notag \\
+  &= \sum_{m=1}^{M}\sum_{h=1}^{M}q_{mh}\,\E(\mathbf{f}_{im}\cdot\eta_{ih}).
+  \label{eq:5.2.10} \tag{5.2.10}
+\end{align}
+This is zero by the orthogonality conditions \eqref{eq:5.2.6}.
+
+Proof of (3) is as follows. First note that
+\[
+  \E(\widetilde{\mathbf{F}}_i'\tilde{\boldsymbol{\eta}}_i\tilde{\boldsymbol{\eta}}_i'\widetilde{\mathbf{F}}_i)
+  = \E\!\bigl[\widetilde{\mathbf{F}}_i'\,\E(\tilde{\boldsymbol{\eta}}_i\tilde{\boldsymbol{\eta}}_i' \mid \mathbf{x}_i)\,\widetilde{\mathbf{F}}_i\bigr].
+\]
+(This follows by the Law of Total Expectations and by the fact that $\mathbf{x}_i$
+$[= \text{union of } (\mathbf{z}_{i1}, \ldots, \mathbf{z}_{iM})]$ includes the elements of $\mathbf{F}_i$ and
+$\widetilde{\mathbf{F}}_i$ is a function of $\mathbf{F}_i$.) But
+$\E(\tilde{\boldsymbol{\eta}}_i\tilde{\boldsymbol{\eta}}_i' \mid \mathbf{x}_i)$
+equals the unconditional mean $\E(\tilde{\boldsymbol{\eta}}_i\tilde{\boldsymbol{\eta}}_i')$ because
+\begin{align}
+  \E(\tilde{\boldsymbol{\eta}}_i\tilde{\boldsymbol{\eta}}_i' \mid \mathbf{x}_i)
+  &= \E(\tilde{\boldsymbol{\varepsilon}}_i\tilde{\boldsymbol{\varepsilon}}_i' \mid \mathbf{x}_i)
+  \quad (\text{since } \tilde{\boldsymbol{\varepsilon}}_i
+  \equiv \mathbf{Q}\boldsymbol{\varepsilon}_i
+  = \mathbf{Q}(\mathbf{1}_M \cdot \alpha_i + \boldsymbol{\eta}_i)
+  = \mathbf{Q}\boldsymbol{\eta}_i = \tilde{\boldsymbol{\eta}}_i)
+  \notag \\
+  &= \mathbf{Q}\,\E(\boldsymbol{\varepsilon}_i\boldsymbol{\varepsilon}_i' \mid \mathbf{x}_i)\,\mathbf{Q}
+  \notag \\
+  &= \mathbf{Q}\,\E(\boldsymbol{\varepsilon}_i\boldsymbol{\varepsilon}_i')\,\mathbf{Q}
+  \quad (\text{by \eqref{eq:5.1.5}})
+  \notag \\
+  &= \E(\tilde{\boldsymbol{\varepsilon}}_i\tilde{\boldsymbol{\varepsilon}}_i')
+  \notag \\
+  &= \E(\tilde{\boldsymbol{\eta}}_i\tilde{\boldsymbol{\eta}}_i')
+  \quad (\text{since } \tilde{\boldsymbol{\varepsilon}}_i = \tilde{\boldsymbol{\eta}}_i).
+  \label{eq:5.2.11} \tag{5.2.11}
+\end{align}
+
+A glance at the expression for the asymptotic variance should make you suspect
+that there must be some other estimator that is asymptotically more efficient,
+because the asymptotic variance of an efficient estimator can be written as the
+inverse of a matrix. Indeed, as you will prove in Analytical Exercise~2, there is
+available an estimator that is asymptotically more efficient than the fixed-effects
+estimator.
+
+\subsection*{Digression: When $\boldsymbol{\eta}_i$ Is Spherical}
+
+The usual error-components model assumes, additionally, that the second error
+component $\boldsymbol{\eta}_i$ is spherical:
+\begin{equation}
+  \E(\boldsymbol{\eta}_i\boldsymbol{\eta}_i') = \sigma_\eta^2 \mathbf{I}_M,
+  \quad \text{so that }
+  \E(\tilde{\boldsymbol{\eta}}_i\tilde{\boldsymbol{\eta}}_i') = \sigma_\eta^2 \mathbf{Q}.
+  \label{eq:5.2.12} \tag{5.2.12}
+\end{equation}
+
+If, as in many panel data sets, $m$ is time, this assumption is often referred to as the
+assumption of no ``serial correlation.'' The lack of serial correlation in this sense
+should not be confused with the condition that $\boldsymbol{\eta}_i$ be uncorrelated with $\boldsymbol{\eta}_j$
+for $i \neq j$. The latter is a consequence of our maintained assumption that the sample is i.i.d.
+
+Substituting this into \eqref{eq:5.2.7} and noting that
+$\mathbf{Q}\widetilde{\mathbf{F}}_i = \widetilde{\mathbf{F}}_i$, we find that the expression
+for the asymptotic variance simplifies to
+\begin{equation}
+  \avar(\hat{\boldsymbol{\beta}}_{\text{FE}})
+  = \sigma_\eta^2 \cdot \bigl[\E(\widetilde{\mathbf{F}}_i'\widetilde{\mathbf{F}}_i)\bigr]^{-1}.
+  \label{eq:5.2.13} \tag{5.2.13}
+\end{equation}
+
+If there is a consistent estimate, $\hat{\sigma}_\eta^2$, of $\sigma_\eta^2$, then the asymptotic variance is consistently
+estimated by
+\begin{equation}
+  \widehat{\avar}(\hat{\boldsymbol{\beta}}_{\text{FE}})
+  = \hat{\sigma}_\eta^2 \cdot
+  \biggl(\frac{1}{n}\sum_{i=1}^{n}\widetilde{\mathbf{F}}_i'\widetilde{\mathbf{F}}_i\biggr)^{\!-1},
+  \label{eq:5.2.14} \tag{5.2.14}
+\end{equation}
+which equals $n$ times $\hat{\sigma}_\eta^2 \cdot (\widetilde{\mathbf{F}}'\widetilde{\mathbf{F}})^{-1}$,
+that is, $n$ times the usual expression for the estimated variance matrix when OLS is applied to the pooled sample
+$(\tilde{\mathbf{y}}, \widetilde{\mathbf{F}})$ of size $Mn$.
+
+To extend the OLS analogy, define $SSR$ as
+\begin{equation}
+  SSR = (\tilde{\mathbf{y}} - \widetilde{\mathbf{F}}\hat{\boldsymbol{\beta}}_{\text{FE}})'
+  (\tilde{\mathbf{y}} - \widetilde{\mathbf{F}}\hat{\boldsymbol{\beta}}_{\text{FE}})
+  = \sum_{i=1}^{n}(\tilde{\mathbf{y}}_i - \widetilde{\mathbf{F}}_i\hat{\boldsymbol{\beta}}_{\text{FE}})'
+  (\tilde{\mathbf{y}}_i - \widetilde{\mathbf{F}}_i\hat{\boldsymbol{\beta}}_{\text{FE}}).
+  \label{eq:5.2.15} \tag{5.2.15}
+\end{equation}
+
+In the pooled OLS on deviations from group means, there are $\#\boldsymbol{\beta}$ coefficients to be
+estimated. The usual OLS estimate of the error variance is
+\begin{equation}
+  \frac{SSR}{Mn - \#\boldsymbol{\beta}}.
+  \label{eq:5.2.16} \tag{5.2.16}
+\end{equation}
+
+This, however, is \emph{not} a consistent estimator of $\sigma_\eta^2$. You will be asked to show in Analytical
+Exercise~3 that a consistent estimator is
+\begin{equation}
+  \frac{SSR}{Mn - n - \#\boldsymbol{\beta}}.
+  \label{eq:5.2.17} \tag{5.2.17}
+\end{equation}
+
+(For that matter, $SSR/(Mn - n)$ is also consistent.) The reason $n$ has to be subtracted
+from the denominator of \eqref{eq:5.2.16} is that $M$ transformed equations are not
+linearly independent; for both sides of the $M$ transformed equations, the sum is
+always zero, as you can see by multiplying both sides of \eqref{eq:5.2.1} from left by $\mathbf{1}_M'$
+and making use of $\mathbf{1}_M'\mathbf{Q} = \mathbf{0}'$. The effective sample size of the pooled sample is
+$Mn - n$, not $Mn$. Use of \eqref{eq:5.2.16} instead of \eqref{eq:5.2.17} is a very common mistake,
+which results in an underestimation of standard errors and an overestimation of
+$t$-values. For example, if $M = 3$, $n = 1{,}000$, and $\#\boldsymbol{\beta} = 5$, the $t$-values will be
+overestimated by about 23\% ($=$ square root of 2995/1995 minus one).
+
+\subsection*{Random Effects versus Fixed Effects}
+
+Now get back to the general case of no restriction on $\E(\boldsymbol{\eta}_i\boldsymbol{\eta}_i')$, so the error term
+can have an arbitrary pattern of ``serial correlation'' across $m$. Comparing \eqref{eq:5.2.6}
+with \eqref{eq:5.1.8}, we see that the orthogonality conditions \emph{not} used by the fixed-effects
+estimator are
+\begin{equation}
+  \E(\mathbf{f}_{im} \cdot \alpha_i) = \mathbf{0} \text{ for all } m, \quad
+  \E(\mathbf{b}_i \cdot \alpha_i) = \mathbf{0}, \quad
+  \E(\mathbf{b}_i \cdot \eta_{im}) = \mathbf{0} \text{ for all } m.
+  \label{eq:5.2.18} \tag{5.2.18}
+\end{equation}
+
+That is, the fixed-effects estimator is robust to the failure of \eqref{eq:5.2.18}.
+Let $\hat{\boldsymbol{\beta}}_{\text{RE}}$ be the elements of
+$\hat{\boldsymbol{\delta}}_{\text{RE}}$ (the random-effects estimator applied to the original $M$-equation
+system \eqref{eq:5.1.1pp} on page~329) that correspond to $\boldsymbol{\beta}$:
+\begin{equation}
+  \hat{\boldsymbol{\delta}}_{\text{RE}} \equiv
+  \begin{bmatrix} \hat{\boldsymbol{\beta}}_{\text{RE}} \\ \hat{\boldsymbol{\gamma}}_{\text{RE}} \end{bmatrix}.
+  \label{eq:5.2.19} \tag{5.2.19}
+\end{equation}
+
+Also, let $\avar(\hat{\boldsymbol{\beta}}_{\text{RE}})$ be the asymptotic variance of
+$\hat{\boldsymbol{\beta}}_{\text{RE}}$. It is the leading submatrix
+of $\avar(\hat{\boldsymbol{\delta}}_{\text{RE}})$ (given by (4.6.9$'$) on page~293)
+corresponding to $\boldsymbol{\beta}$.
+
+The random-effects estimator $\hat{\boldsymbol{\beta}}_{\text{RE}}$ is an efficient estimator while
+$\hat{\boldsymbol{\beta}}_{\text{FE}}$ is consistent
+but not efficient. However, if \eqref{eq:5.2.18} is violated,
+$\hat{\boldsymbol{\beta}}_{\text{RE}}$ is no longer guaranteed
+to be consistent, while $\hat{\boldsymbol{\beta}}_{\text{FE}}$ remains consistent. Thus, a natural test of \eqref{eq:5.2.18} is to
+consider the difference between the two estimators,
+\begin{equation}
+  \hat{\mathbf{q}} \equiv \hat{\boldsymbol{\beta}}_{\text{FE}} - \hat{\boldsymbol{\beta}}_{\text{RE}}.
+  \label{eq:5.2.20} \tag{5.2.20}
+\end{equation}
+
+It is easy to prove that $\sqrt{n}\,\hat{\mathbf{q}}$ is asymptotically normal. The Hausman principle
+(originally developed for ML estimators but proved to be applicable to GMM estimators
+in Analytical Exercise~9 to Chapter~3) implies that
+\begin{equation}
+  \avar(\hat{\mathbf{q}})
+  = \avar(\hat{\boldsymbol{\beta}}_{\text{FE}}) - \avar(\hat{\boldsymbol{\beta}}_{\text{RE}}).
+  \label{eq:5.2.21} \tag{5.2.21}
+\end{equation}
+
+(So, there is no need to incorporate the asymptotic covariance between
+$\hat{\boldsymbol{\beta}}_{\text{FE}}$ and
+$\hat{\boldsymbol{\beta}}_{\text{RE}}$ because it is zero.) By Proposition~4.7, the leading submatrix of (4.6.9$'$)
+on page~293 provides a consistent estimator of $\avar(\hat{\boldsymbol{\beta}}_{\text{RE}})$.
+By Proposition~5.1,
+$\avar(\hat{\boldsymbol{\beta}}_{\text{FE}})$ is consistently estimated by \eqref{eq:5.2.8}.
+A consistent estimator of $\avar(\hat{\mathbf{q}})$,
+therefore, is the difference. Write this as $\widehat{\avar}(\hat{\mathbf{q}})$.
+It is proved in the appendix
+that (i) $\avar(\hat{\mathbf{q}})$ is nonsingular (and hence positive definite) and (ii) the Hausman
+statistic defined below is guaranteed to be nonnegative for any sample $\{\mathbf{y}_i, \mathbf{Z}_i\}$. To
+summarize,
+
+\begin{proposition}[Hausman specification test]
+\label{prop:5.2}
+Suppose the assumptions of the
+error-components model (\eqref{eq:5.1.1pp} on page~329, \eqref{eq:5.1.2}, \eqref{eq:5.1.8},
+\eqref{eq:5.1.4}--\eqref{eq:5.1.6},
+and \eqref{eq:5.1.15}) hold. Define $\hat{\mathbf{q}}$ and $\widehat{\avar}(\hat{\mathbf{q}})$
+as just described. Then the Hausman statistic
+\begin{equation}
+  H \equiv n \cdot \hat{\mathbf{q}}'\bigl(\widehat{\avar}(\hat{\mathbf{q}})\bigr)^{-1}\hat{\mathbf{q}}
+  \label{eq:5.2.22} \tag{5.2.22}
+\end{equation}
+is distributed asymptotically chi-square with $\#\boldsymbol{\beta}$ degrees of freedom.
+It is nonnegative in finite samples.
+\end{proposition}
+
+This test is a specification test because it can detect a failure of \eqref{eq:5.2.18} which is
+part of the maintained assumptions of the error-components model. More specifically,
+consider a sequence of local alternatives that satisfy all the assumptions
+of the error-components model except \eqref{eq:5.2.18}.\footnote{The notion of local alternatives
+was introduced in Section~2.4.}
+With some additional technical
+assumptions, it can be shown that the Hausman statistic converges to a noncentral
+$\chi^2$ distribution with a noncentrality parameter along those sequences of local alternatives.\footnote{See Newey (1985). The required technical assumption is Newey's Assumption~5.}
+That is, the Hausman statistic has power against local alternatives under
+which the random-effects estimator is inconsistent.
+
+\subsection*{Relaxing Conditional Homoskedasticity}
+
+It is straightforward to derive the large sample distribution of the fixed-effects estimator
+without conditional homoskedasticity. As will be seen in the next section,
+extension of the large sample results to cover unbalanced panels is actually easier
+without conditional homoskedasticity.
+
+\begin{proposition}[fixed-effects estimator without conditional homoskedasticity]
+\label{prop:5.3}
+Drop conditional homoskedasticity \eqref{eq:5.1.5} from the hypothesis of Proposition~5.1.
+Define $\tilde{\mathbf{y}}_i$, $\widetilde{\mathbf{F}}_i$, and $\tilde{\boldsymbol{\eta}}_i$
+by \eqref{eq:5.2.2}. Then:
+\begin{enumerate}[label=(\alph*)]
+\item the fixed-effects estimator \eqref{eq:5.2.4} is consistent and asymptotically normal with
+\begin{equation}
+  \avar(\hat{\boldsymbol{\beta}}_{\mathrm{FE}})
+  = \bigl[\E(\widetilde{\mathbf{F}}_i'\widetilde{\mathbf{F}}_i)\bigr]^{-1}\,
+    \E(\widetilde{\mathbf{F}}_i'\tilde{\boldsymbol{\eta}}_i\tilde{\boldsymbol{\eta}}_i'\widetilde{\mathbf{F}}_i)\,
+    \bigl[\E(\widetilde{\mathbf{F}}_i'\widetilde{\mathbf{F}}_i)\bigr]^{-1}.
+  \label{eq:5.2.23} \tag{5.2.23}
+\end{equation}
+
+\item If, furthermore, some appropriate finite fourth-moment assumption (which is
+  an adaptation of Assumption~4.6) is satisfied, then the asymptotic variance is
+  consistently estimated by
+\begin{equation}
+  \widehat{\avar}(\hat{\boldsymbol{\beta}}_{\mathrm{FE}})
+  = \biggl(\frac{1}{n}\sum_{i=1}^{n}\widetilde{\mathbf{F}}_i'\widetilde{\mathbf{F}}_i\biggr)^{\!-1}
+    \biggl(\frac{1}{n}\sum_{i=1}^{n}\widetilde{\mathbf{F}}_i'\hat{\boldsymbol{\eta}}_i\hat{\boldsymbol{\eta}}_i'\widetilde{\mathbf{F}}_i\biggr)
+    \biggl(\frac{1}{n}\sum_{i=1}^{n}\widetilde{\mathbf{F}}_i'\widetilde{\mathbf{F}}_i\biggr)^{\!-1},
+  \label{eq:5.2.24} \tag{5.2.24}
+\end{equation}
+where $\hat{\boldsymbol{\eta}}_i \equiv \tilde{\mathbf{y}}_i - \widetilde{\mathbf{F}}_i\hat{\boldsymbol{\beta}}_{\mathrm{FE}}$
+(this $\hat{\boldsymbol{\eta}}_i$ should not be confused with
+$\tilde{\boldsymbol{\eta}}_i$ in \eqref{eq:5.2.1}).
+\end{enumerate}
+\end{proposition}
+
+Again, there are two ways to prove this. Write the fixed-effects estimator as a
+GMM estimator and then apply the large sample theory of GMM estimators. Or
+you can prove it directly by inspecting the expression \eqref{eq:5.2.4} for the sampling error.
+The only non-trivial part of the proof is that the middle summation in the expression
+for $\widehat{\avar}(\hat{\boldsymbol{\beta}}_{\text{FE}})$ converges in probability to its population counterpart,
+$\E(\widetilde{\mathbf{F}}_i'\tilde{\boldsymbol{\eta}}_i\tilde{\boldsymbol{\eta}}_i'\widetilde{\mathbf{F}}_i)$.
+The required technique is very similar to the one used for proving Proposition~4.2
+and so is not repeated here.
+
+\bigskip
+\noindent\rule{\textwidth}{0.5pt}
+\textsc{Questions for Review}
+\medskip
+
+\begin{enumerate}
+\item For the large sample results of this section to hold, do we have to assume that
+  $\alpha_i$ and $\boldsymbol{\eta}_i$ are orthogonal to each other?
+
+\item (Dropping redundant equations)\quad As mentioned in the text, the $M$ transformed
+  equations are not linearly independent in the sense that any one of the $M$ transformed
+  equations is a linear combination of the remaining $M-1$ equations. So
+  consider forming a pooled sample of size $Mn - n$ by dropping one transformed
+  equation (say, the last equation) for each group ($i$). Is the OLS estimator on
+  this smaller pooled sample the fixed-effects estimator? [Answer: No.]
+
+\item (Importance of cross orthogonalities)\quad Suppose \eqref{eq:5.2.6} holds for $m = h$ but
+  not necessarily for $m \neq h$. Would the fixed-effects estimator be necessarily
+  consistent? [Answer: No.]
+
+\item Verify that $\E(\tilde{\boldsymbol{\eta}}_i\tilde{\boldsymbol{\eta}}_i')$ is singular.
+  (Nevertheless, $\E\!\bigl[\widetilde{\mathbf{F}}_i'\,\E(\tilde{\boldsymbol{\eta}}_i\tilde{\boldsymbol{\eta}}_i')\widetilde{\mathbf{F}}_i\bigr]$
+  in \eqref{eq:5.2.7} and
+  $\E(\widetilde{\mathbf{F}}_i'\tilde{\boldsymbol{\eta}}_i\tilde{\boldsymbol{\eta}}_i'\widetilde{\mathbf{F}}_i)$
+  in \eqref{eq:5.2.23} are nonsingular, as an optional analytical exercise will
+  ask you to show.)
+
+\item (Consistent estimation of error covariances)\quad To prove that \eqref{eq:5.2.9} is consistent
+  for $\E(\tilde{\boldsymbol{\eta}}_i\tilde{\boldsymbol{\eta}}_i')$, you would apply Proposition~4.1 to the transformed system of
+  $M$ equations. Verify that the conditions of the proposition are satisfied here.
+  In particular, is the requirement that $\E(\mathbf{f}_{im}\tilde{\mathbf{f}}_{im}')$
+  (where $\tilde{\mathbf{f}}_{im}$ is the $m$-th row of
+  $\widetilde{\mathbf{F}}_i$) be finite satisfied by the error-component model?
+  \textbf{Hint:} $\tilde{\mathbf{f}}_{im}$ is a linear
+  transformation of $\mathbf{x}_i$. \eqref{eq:5.1.5} and \eqref{eq:5.1.6}
+  imply that $\E(\mathbf{x}_i\mathbf{x}_i')$ is nonsingular.
+
+\item (What the Hausman statistic tests)\quad For simplicity, assume
+  $\boldsymbol{\Sigma}\;(\equiv \E(\boldsymbol{\varepsilon}_i\boldsymbol{\varepsilon}_i'))$ is
+  known. Also for simplicity, assume that there are no common regressors, so
+  $\mathbf{z}_{im} = \mathbf{f}_{im}$ and \eqref{eq:5.2.18} reduces to
+  $\E(\mathbf{z}_{im} \cdot \alpha_i) = \mathbf{0}$ for all $m$. This is the
+  restriction \emph{not} used by the fixed-effects estimator. Is the random-effects estimator
+  necessarily inconsistent when \eqref{eq:5.1.8a} fails but all the other assumptions
+  of the error-components model (such as \eqref{eq:5.1.8b}) are satisfied?
+  \textbf{Hint:} Show
+  that, without \eqref{eq:5.1.8a},
+  \[
+    \plim \hat{\boldsymbol{\delta}}_{\text{RE}} - \boldsymbol{\delta}
+    = (\mathbf{Z}_i'\boldsymbol{\Sigma}^{-1}\mathbf{Z}_i)^{-1}\,
+      \E(\mathbf{Z}_i'\boldsymbol{\Sigma}^{-1}\boldsymbol{\varepsilon}_i),
+  \]
+  where $\boldsymbol{\varepsilon}_i = \mathbf{1}_M \cdot \alpha_i + \boldsymbol{\eta}_i$.
+  Provided \eqref{eq:5.1.8b} holds, \eqref{eq:5.1.8a} is \emph{sufficient} for
+  $\E(\mathbf{Z}_i'\boldsymbol{\Sigma}^{-1}\boldsymbol{\varepsilon}_i)$ to be zero.
+  Is it necessary? Thus, strictly speaking, the Hausman
+  test is not a test of \eqref{eq:5.1.8a}; it is a test of
+  $\E(\mathbf{Z}_i'\boldsymbol{\Sigma}^{-1}\boldsymbol{\varepsilon}_i) = \mathbf{0}$.
+\end{enumerate}

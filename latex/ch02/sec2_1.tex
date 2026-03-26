@@ -1,0 +1,446 @@
+% sec2_1.tex — Section 2.1: Review of Limit Theorems for Sequences of Random Variables
+
+The material of this section concerns the limiting behavior of a sequence of random
+variables, $(z_1, z_2, \ldots)$.  Since the material may already be familiar to you, we
+present it rather formally, in a series of definitions and theorems.  An authoritative
+source is Rao (1973, Chapter 2c) which gives proofs of all the theorems included
+in this section.  In this section and the rest of this book, a sequence $(z_1, z_2, \ldots)$
+will be denoted by $\{z_n\}$.
+
+%% ─── Various Modes of Convergence ──────────────────────────────────────────
+\subsection*{Various Modes of Convergence}
+
+\paragraph{Convergence in Probability.}
+A sequence of random scalars $\{z_n\}$ \textbf{converges in probability} to a constant
+(non-random) $\alpha$ if, for any $\varepsilon > 0$,
+\begin{equation}
+  \lim_{n \to \infty} \mathrm{Prob}(|z_n - \alpha| > \varepsilon) = 0.
+  \label{eq:2.1.1}
+\end{equation}
+The constant $\alpha$ is called the \textbf{probability limit} of $z_n$ and is written as
+``$\plim_{n \to \infty} z_n = \alpha$'' or ``$z_n \pto \alpha$''.  Evidently,
+\[
+  \text{``}z_n \pto \alpha\text{''} \quad \text{is the same as} \quad
+  \text{``}z_n - \alpha \pto 0.\text{''}
+\]
+
+This definition of convergence in probability is extended to a sequence of random
+vectors or random matrices (by viewing a matrix as a vector whose elements have
+been rearranged) by requiring element-by-element convergence in probability.
+That is, a sequence of $K$-dimensional random vectors $\{\mathbf{z}_n\}$ converges in
+probability to a $K$-dimensional vector of constants $\bm{\alpha}$ if, for any $\varepsilon > 0$,
+\begin{equation}
+  \lim_{n \to \infty} \mathrm{Prob}(|z_{nk} - \alpha_k| > \varepsilon) = 0
+  \quad \text{for all } k \ (= 1, 2, \ldots, K),
+  \label{eq:2.1.2}
+\end{equation}
+where $z_{nk}$ is the $k$-th element of $\mathbf{z}_n$ and $\alpha_k$ the $k$-th element of $\bm{\alpha}$.
+
+\paragraph{Almost Sure Convergence.}
+A sequence of random scalars $\{z_n\}$ \textbf{converges almost surely} to a constant
+$\alpha$ if
+\begin{equation}
+  \mathrm{Prob}\!\left(\lim_{n \to \infty} z_n = \alpha\right) = 1.
+  \label{eq:2.1.3}
+\end{equation}
+We write this as ``$z_n \asto \alpha$.''  The extension to random vectors is analogous
+to that for convergence in probability.  As will be mentioned below, this concept
+of convergence is stronger than convergence in probability; that is, if a sequence
+converges almost surely, then it converges in probability.  The concept involved
+in \eqref{eq:2.1.3} is harder to grasp because the probability is about an event
+concerning an infinite sequence $(z_1, z_2, \ldots)$.  For our purposes, however, all
+that matters is that almost sure convergence is stronger than convergence in
+probability.  If we can show that a sequence converges almost surely, that is one
+way to prove the sequence converges in probability.
+
+\paragraph{Convergence in Mean Square.}
+A sequence of random scalars $\{z_n\}$ \textbf{converges in mean square} (or
+\textbf{in quadratic mean}) to $\alpha$ (written as ``$z_n \to_{\text{m.s.}} \alpha$'') if
+\begin{equation}
+  \lim_{n \to \infty} \E[(z_n - \alpha)^2] = 0.
+  \label{eq:2.1.4}
+\end{equation}
+The extension to random vectors is analogous to that for convergence in
+probability: $\mathbf{z}_n \to_{\text{m.s.}} \bm{\alpha}$ if each element of $\mathbf{z}_n$
+converges in mean square to the corresponding component of $\bm{\alpha}$.
+
+\paragraph{Convergence to a Random Variable.}
+In these definitions of convergence, the limit is a constant (i.e., a real number).
+The limit can be a random variable.  We say that a sequence of $K$-dimensional
+random variables $\{\mathbf{z}_n\}$ converges to a $K$-dimensional random variable
+$\mathbf{z}$ and write $\mathbf{z}_n \pto \mathbf{z}$ if $\{\mathbf{z}_n - \mathbf{z}\}$
+converges to $\mathbf{0}$:
+\begin{align}
+  \text{``}\mathbf{z}_n \pto \mathbf{z}\text{''} &\quad \text{is the same as} \quad
+  \text{``}\mathbf{z}_n - \mathbf{z} \pto \mathbf{0}.\text{''} \label{eq:2.1.5a} \\
+\intertext{Similarly,}
+  \text{``}\mathbf{z}_n \asto \mathbf{z}\text{''} &\quad \text{is the same as} \quad
+  \text{``}\mathbf{z}_n - \mathbf{z} \asto \mathbf{0},\text{''} \label{eq:2.1.5b} \\
+  \text{``}\mathbf{z}_n \to_{\text{m.s.}} \mathbf{z}\text{''} &\quad \text{is the same as} \quad
+  \text{``}\mathbf{z}_n - \mathbf{z} \to_{\text{m.s.}} \mathbf{0}.\text{''} \label{eq:2.1.5c}
+\end{align}
+
+\paragraph{Convergence in Distribution.}
+Let $\{z_n\}$ be a sequence of random scalars and $F_n$ be the cumulative distribution
+function (c.d.f.)\ of $z_n$.  We say that $\{z_n\}$ \textbf{converges in distribution}
+to a random scalar $z$ if the c.d.f.\ $F_n$ of $z_n$ converges to the c.d.f.\ $F$ of
+$z$ at every continuity point of $F$.\footnote{Do not be concerned about the
+qualifier ``at every continuity point of $F$.''  For the most part, except possibly
+for the chapters on the discrete or limited dependent variable, the relevant
+distribution is continuous, and the distribution function is continuous at all points.}
+We write ``$z_n \dto z$'' or ``$z_n \to_{\text{L}} z$'' and call $F$ the
+\textbf{asymptotic} (or \textbf{limit} or \textbf{limiting}) \textbf{distribution}
+of $z_n$.  Sometimes we write ``$z_n \dto F$,'' when the distribution $F$ is
+well-known.  For example, ``$z_n \dto N(0,1)$'' should read ``$z_n \dto z$ and
+the distribution of $z$ is $N(0,1)$ (normal distribution with mean 0 and variance 1).''
+It can be shown from the definition that convergence in probability is stronger
+than convergence in distribution, that is,
+\begin{equation}
+  \text{``}\mathbf{z}_n \pto \mathbf{z}\text{''} \;\Rightarrow\;
+  \text{``}\mathbf{z}_n \dto \mathbf{z}.\text{''}
+  \label{eq:2.1.6}
+\end{equation}
+
+A special case of convergence in distribution is that $z$ is a constant (a trivial
+random variable).
+
+The extension to a sequence of random vectors is immediate: $\mathbf{z}_n \dto \mathbf{z}$
+if the joint c.d.f.\ $F_n$ of the random vector $\mathbf{z}_n$ converges to the joint
+c.d.f.\ $F$ of $\mathbf{z}$ at every continuity point of $F$.  Note, however, that,
+unlike the other concepts of convergence, for convergence in distribution,
+element-by-element convergence does not necessarily mean convergence for the
+vector sequence.  That is, ``each element of $\mathbf{z}_n \dto$ corresponding element
+of $\mathbf{z}$'' does not necessarily imply ``$\mathbf{z}_n \dto \mathbf{z}$.''
+A common way to establish the connection between scalar convergence and vector
+convergence in distribution is
+
+\medskip
+\noindent\textbf{Multivariate Convergence in Distribution Theorem:}\quad
+\emph{(stated in Rao, 1973, p.~128) Let $\{\mathbf{z}_n\}$ be a sequence of
+$K$-dimensional random vectors.  Then:}
+\[
+  \text{``}\mathbf{z}_n \dto \mathbf{z}\text{''} \;\Leftrightarrow\;
+  \text{``}\bm{\lambda}'\mathbf{z}_n \dto \bm{\lambda}'\mathbf{z}
+  \text{ for any $K$-dimensional vector of real numbers.''}\!
+\]
+
+%% ─── Convergence in Distribution vs. Convergence in Moments ────────────────
+\subsection*{Convergence in Distribution vs.\ Convergence in Moments}
+
+It is worth emphasizing that the moments of the limit distribution of $z_n$ are not
+necessarily equal to the limits of the moments of $z_n$.  For example,
+``$z_n \dto z$'' does not necessarily imply
+``$\lim_{n \to \infty} \E(z_n) = \E(z)$.''  However,
+
+\begin{lemma}[convergence in distribution and in moments]
+\label{lem:2.1}
+Let $\alpha_{sn}$ be the $s$-th moment of $z_n$ and
+$\lim_{n \to \infty} \alpha_{sn} = \alpha_s$ where $\alpha_s$ is finite
+(i.e., a real number).  Then:
+\[
+  \text{``}z_n \dto z\text{''} \;\Rightarrow\;
+  \text{``$\alpha_s$ is the $s$-th moment of $z$.''}\!
+\]
+\end{lemma}
+
+Thus, for example, if the variance of a sequence of random variables converging
+in distribution converges to some \emph{finite} number, then that number is the
+variance of the limiting distribution.
+
+%% ─── Relation among Modes of Convergence ───────────────────────────────────
+\subsection*{Relation among Modes of Convergence}
+
+Some modes of convergence are weaker than others.  The following theorem
+establishes the relationship between the four modes of convergence.
+
+\begin{lemma}[relationship among the four modes of convergence]
+\label{lem:2.2}
+\begin{enumerate}[label=(\alph*)]
+  \item $\text{``}\mathbf{z}_n \to_{\emph{m.s.}} \bm{\alpha}\text{''} \;\Rightarrow\;
+        \text{``}\mathbf{z}_n \pto \bm{\alpha}.\text{''}$
+        So $\text{``}\mathbf{z}_n \to_{\emph{m.s.}} \mathbf{z}\text{''} \;\Rightarrow\;
+        \text{``}\mathbf{z}_n \pto \mathbf{z}.\text{''}$
+  \item $\text{``}\mathbf{z}_n \asto \bm{\alpha}\text{''} \;\Rightarrow\;
+        \text{``}\mathbf{z}_n \pto \bm{\alpha}.\text{''}$
+        So $\text{``}\mathbf{z}_n \asto \mathbf{z}\text{''} \;\Rightarrow\;
+        \text{``}\mathbf{z}_n \pto \mathbf{z}.\text{''}$
+  \item $\text{``}\mathbf{z}_n \pto \bm{\alpha}\text{''} \;\Leftrightarrow\;
+        \text{``}\mathbf{z}_n \dto \bm{\alpha}.\text{''}$
+        \emph{(That is, if the limiting random variable is a constant
+        [a trivial random variable], convergence in distribution is the same
+        as convergence in probability.)}
+\end{enumerate}
+\end{lemma}
+
+%% ─── Three Useful Results ──────────────────────────────────────────────────
+\subsection*{Three Useful Results}
+
+Having defined the modes of convergence, we can state three results essential for
+developing large-sample theory.
+
+\begin{lemma}[preservation of convergence for continuous transformation]
+\label{lem:2.3}
+Suppose $\mathbf{a}(\cdot)$ is a vector-valued continuous function that does not
+depend on $n$.
+\begin{enumerate}[label=(\alph*)]
+  \item $\text{``}\mathbf{z}_n \pto \bm{\alpha}\text{''} \;\Rightarrow\;
+        \text{``}\mathbf{a}(\mathbf{z}_n) \pto \mathbf{a}(\bm{\alpha}).\text{''}$
+        Stated differently,
+        \[
+          \plim_{n \to \infty} \mathbf{a}(\mathbf{z}_n)
+          = \mathbf{a}\!\left(\plim_{n \to \infty} \mathbf{z}_n\right)
+        \]
+        provided the plim exists.
+  \item $\text{``}\mathbf{z}_n \dto \mathbf{z}\text{''} \;\Rightarrow\;
+        \text{``}\mathbf{a}(\mathbf{z}_n) \dto \mathbf{a}(\mathbf{z}).\text{''}$
+\end{enumerate}
+\end{lemma}
+
+An immediate implication of Lemma~\ref{lem:2.3}(a) is that the usual arithmetic
+operations preserve convergence in probability.  For example:
+\begin{align*}
+  &\text{``}x_n \pto \beta,\; y_n \pto \gamma\text{''} \;\Rightarrow\;
+   \text{``}x_n + y_n \pto \beta + \gamma\text{''} \\
+  &\text{``}x_n \pto \beta,\; y_n \pto \gamma\text{''} \;\Rightarrow\;
+   \text{``}x_n y_n \pto \beta\gamma.\text{''} \\
+  &\text{``}x_n \pto \beta,\; y_n \pto \gamma\text{''} \;\Rightarrow\;
+   \text{``}x_n/y_n \pto \beta/\gamma,\text{''  provided that } \gamma \neq 0. \\
+  &\text{``}\mathbf{Y}_n \pto \bm{\Gamma}\text{''} \;\Rightarrow\;
+   \text{``}\mathbf{Y}_n^{-1} \pto \bm{\Gamma}^{-1},\text{'' provided that
+   $\bm{\Gamma}$ is invertible.}
+\end{align*}
+
+The next result about combinations of convergence in probability and in
+distribution will be used repeatedly to derive the asymptotic distribution of the
+estimator.
+
+\begin{lemma}
+\label{lem:2.4}
+\begin{enumerate}[label=(\alph*)]
+  \item $\text{``}\mathbf{x}_n \dto \mathbf{x},\;
+         \mathbf{y}_n \pto \bm{\alpha}\text{''} \;\Rightarrow\;
+         \text{``}\mathbf{x}_n + \mathbf{y}_n \dto \mathbf{x} + \bm{\alpha}.\text{''}$
+  \item $\text{``}\mathbf{x}_n \dto \mathbf{x},\;
+         \mathbf{y}_n \pto \mathbf{0}\text{''} \;\Rightarrow\;
+         \text{``}\mathbf{y}_n'\mathbf{x}_n \pto \mathbf{0}.\text{''}$
+  \item $\text{``}\mathbf{x}_n \dto \mathbf{x},\;
+         \mathbf{A}_n \pto \mathbf{A}\text{''} \;\Rightarrow\;
+         \text{``}\mathbf{A}_n\mathbf{x}_n \dto \mathbf{A}\mathbf{x},\text{''}$
+         provided that $\mathbf{A}_n$ and $\mathbf{x}_n$ are conformable.
+         In particular, if\/ $\mathbf{x} \sim N(\mathbf{0}, \bm{\Sigma})$, then
+         $\mathbf{A}_n\mathbf{x}_n \dto N(\mathbf{0},
+         \mathbf{A}\bm{\Sigma}\mathbf{A}')$.
+  \item $\text{``}\mathbf{x}_n \dto \mathbf{x},\;
+         \mathbf{A}_n \pto \mathbf{A}\text{''} \;\Rightarrow\;
+         \text{``}\mathbf{x}_n'\mathbf{A}_n^{-1}\mathbf{x}_n \dto
+         \mathbf{x}'\mathbf{A}^{-1}\mathbf{x},\text{''}$
+         provided that $\mathbf{A}_n$ and $\mathbf{x}_n$ are conformable and
+         $\mathbf{A}$ is nonsingular.
+\end{enumerate}
+\end{lemma}
+
+Parts (a) and (c) are sometimes called \textbf{Slutzky's Theorem}.  By setting
+$\bm{\alpha} = \mathbf{0}$, part (a) implies:
+\begin{equation}
+  \text{``}\mathbf{x}_n \dto \mathbf{x},\;
+  \mathbf{y}_n \pto \mathbf{0}\text{''} \;\Rightarrow\;
+  \text{``}\mathbf{x}_n + \mathbf{y}_n \dto \mathbf{x}.\text{''}
+  \label{eq:2.1.7}
+\end{equation}
+That is, if $\mathbf{z}_n = \mathbf{x}_n + \mathbf{y}_n$ and
+$\mathbf{y}_n \pto \mathbf{0}$ (i.e., if $\mathbf{z}_n - \mathbf{x}_n \pto \mathbf{0}$),
+then the asymptotic distribution of $\mathbf{z}_n$ is the same as that of
+$\mathbf{x}_n$.  When $\mathbf{z}_n - \mathbf{x}_n \pto \mathbf{0}$, we sometimes
+(but not always) say that the two sequences are \textbf{asymptotically equivalent}
+and write it as
+\[
+  \text{``}\mathbf{z}_n \underset{a}{\sim} \mathbf{x}_n\text{''} \quad \text{or} \quad
+  \text{``}\mathbf{z}_n = \mathbf{x}_n + o_p,\text{''}
+\]
+where $o_p$ is some suitable random variable ($\mathbf{y}_n$ here) that converges
+to zero in probability.
+
+A standard trick in deriving the asymptotic distribution of a sequence of random
+variables is to find an asymptotically equivalent sequence whose asymptotic
+distribution is easier to derive.  In particular, by replacing $\mathbf{y}_n$ by
+$\mathbf{y}_n - \bm{\alpha}$ in part (b) of the lemma, we obtain
+\begin{equation}
+  \text{``}\mathbf{x}_n \dto \mathbf{x},\;
+  \mathbf{y}_n \pto \bm{\alpha}\text{''} \;\Rightarrow\;
+  \text{``}\mathbf{y}_n'\mathbf{x}_n \underset{a}{\sim}
+  \bm{\alpha}'\mathbf{x}_n\text{''} \quad \text{or} \quad
+  \text{``}\mathbf{y}_n'\mathbf{x}_n = \bm{\alpha}'\mathbf{x}_n + o_p.\text{''}
+  \label{eq:2.1.8}
+\end{equation}
+The $o_p$ here is $(\mathbf{y}_n - \bm{\alpha})'\mathbf{x}_n$.  Therefore,
+replacing $\mathbf{y}_n$ by its probability limit does not change the asymptotic
+distribution of $\mathbf{y}_n'\mathbf{x}_n$, \emph{provided} $\mathbf{x}_n$
+converges in distribution to some random variable.
+
+The third result will allow us to test nonlinear hypotheses given the asymptotic
+distribution of the estimator.
+
+\begin{lemma}[the ``delta method'']
+\label{lem:2.5}
+Suppose $\{\mathbf{x}_n\}$ is a sequence of $K$-dimensional random vectors such
+that $\mathbf{x}_n \pto \bm{\beta}$ and
+\[
+  \sqrt{n}(\mathbf{x}_n - \bm{\beta}) \dto \mathbf{z},
+\]
+and suppose $\mathbf{a}(\cdot)\colon \mathbb{R}^K \to \mathbb{R}^r$ has continuous
+first derivatives with $\mathbf{A}(\bm{\beta})$ denoting the $r \times K$ matrix of
+first derivatives evaluated at $\bm{\beta}$:
+\[
+  \underset{(r \times K)}{\mathbf{A}(\bm{\beta})}
+  = \frac{\partial \mathbf{a}(\bm{\beta})}{\partial \bm{\beta}'}.
+\]
+Then
+\[
+  \sqrt{n}[\mathbf{a}(\mathbf{x}_n) - \mathbf{a}(\bm{\beta})]
+  \dto \mathbf{A}(\bm{\beta})\mathbf{z}.
+\]
+In particular:
+\[
+  \text{``}\sqrt{n}(\mathbf{x}_n - \bm{\beta}) \dto N(\mathbf{0}, \bm{\Sigma})\text{''}
+  \;\Rightarrow\;
+  \text{``}\sqrt{n}[\mathbf{a}(\mathbf{x}_n) - \mathbf{a}(\bm{\beta})]
+  \dto N\!\big(\mathbf{0},\,
+  \mathbf{A}(\bm{\beta})\,\bm{\Sigma}\,\mathbf{A}(\bm{\beta})'\big).\text{''}
+\]
+\end{lemma}
+
+\begin{proof}
+By the mean-value theorem from calculus (see Section~7.3 for a statement of the
+theorem), there exists a $K$-dimensional vector $\mathbf{y}_n$ between
+$\mathbf{x}_n$ and $\bm{\beta}$ such that
+\[
+  \mathbf{a}(\mathbf{x}_n) - \mathbf{a}(\bm{\beta})
+  = \underset{(r \times K)}{\mathbf{A}(\mathbf{y}_n)}
+    \underset{(K \times 1)}{(\mathbf{x}_n - \bm{\beta})}.
+\]
+Multiplying both sides by $\sqrt{n}$, we obtain
+\[
+  \sqrt{n}[\mathbf{a}(\mathbf{x}_n) - \mathbf{a}(\bm{\beta})]
+  = \mathbf{A}(\mathbf{y}_n)\sqrt{n}(\mathbf{x}_n - \bm{\beta}).
+\]
+Since $\mathbf{y}_n$ is between $\mathbf{x}_n$ and $\bm{\beta}$ and since
+$\mathbf{x}_n \pto \bm{\beta}$, we know that $\mathbf{y}_n \pto \bm{\beta}$.
+Moreover, the first derivative $\mathbf{A}(\cdot)$ is continuous by assumption.
+So by Lemma~\ref{lem:2.3}(a),
+\[
+  \mathbf{A}(\mathbf{y}_n) \pto \mathbf{A}(\bm{\beta}).
+\]
+By Lemma~\ref{lem:2.4}(c), this and the hypothesis that
+$\sqrt{n}(\mathbf{x}_n - \bm{\beta}) \dto \mathbf{z}$ imply that
+\[
+  \mathbf{A}(\mathbf{y}_n)\sqrt{n}(\mathbf{x}_n - \bm{\beta})
+  \;\big(= \sqrt{n}[\mathbf{a}(\mathbf{x}_n) - \mathbf{a}(\bm{\beta})]\big)
+  \dto \mathbf{A}(\bm{\beta})\mathbf{z}. \qedhere
+\]
+\end{proof}
+
+%% ─── Viewing Estimators as Sequences of Random Variables ───────────────────
+\subsection*{Viewing Estimators as Sequences of Random Variables}
+
+Let $\hat{\bm{\theta}}_n$ be an estimator of a parameter vector $\bm{\theta}$ based
+on a sample of size $n$.  The sequence $\{\hat{\bm{\theta}}_n\}$ is an example of a
+sequence of random variables, so the concepts introduced in this section for
+sequences of random variables are applicable to $\{\hat{\bm{\theta}}_n\}$.  We say
+that an estimator $\hat{\bm{\theta}}_n$ is \textbf{consistent for} $\bm{\theta}$ if
+\[
+  \plim_{n \to \infty} \hat{\bm{\theta}}_n = \bm{\theta} \quad \text{or} \quad
+  \hat{\bm{\theta}}_n \pto \bm{\theta}.
+\]
+
+The \textbf{asymptotic bias} of $\hat{\bm{\theta}}_n$ is defined as
+$\plim_{n \to \infty} \hat{\bm{\theta}}_n - \bm{\theta}$.\footnote{Some authors use
+the term ``asymptotic bias'' differently.  Amemiya (1985), for example, defines it
+to mean $\lim_{n \to \infty} \E(\hat{\bm{\theta}}_n) - \bm{\theta}$.}
+So if the estimator is consistent, its asymptotic bias is zero.  A consistent
+estimator $\hat{\bm{\theta}}_n$ is \textbf{asymptotically normal} if
+\[
+  \sqrt{n}(\hat{\bm{\theta}}_n - \bm{\theta}) \dto N(\mathbf{0}, \bm{\Sigma}).
+\]
+Such an estimator is called $\bm{\sqrt{n}}$\textbf{-consistent}.  The acronym
+sometimes used for ``consistent and asymptotically normal'' is \textbf{CAN}.  The
+variance matrix $\bm{\Sigma}$ is called the \textbf{asymptotic variance} and is
+denoted $\avar(\hat{\bm{\theta}}_n)$.  Some authors use the notation
+$\avar(\hat{\bm{\theta}}_n)$ to mean $\bm{\Sigma}/n$ (which is zero in the limit).
+In this book, $\avar(\hat{\bm{\theta}}_n)$ is the variance of the limiting
+distribution of $\sqrt{n}(\hat{\bm{\theta}}_n - \bm{\theta})$.
+
+%% ─── Laws of Large Numbers and Central Limit Theorems ──────────────────────
+\subsection*{Laws of Large Numbers and Central Limit Theorems}
+
+For a sequence of random scalars $\{z_i\}$, the \textbf{sample mean}
+$\bar{z}_n$ is defined as
+\[
+  \bar{z}_n \equiv \frac{1}{n} \sum_{i=1}^{n} z_i.
+\]
+Consider the sequence $\{\bar{z}_n\}$.  Laws of large numbers (LLNs) concern
+conditions under which $\{\bar{z}_n\}$ converges either in probability or almost
+surely.  An LLN is called strong if the convergence is almost surely and weak if
+the convergence is in probability.  We can derive the following weak LLN easily
+from Part~(a) of Lemma~\ref{lem:2.2}.
+
+\medskip
+\noindent\textbf{A Version of Chebychev's Weak LLN:}
+\[
+  \text{``}\lim_{n \to \infty} \E(\bar{z}_n) = \mu,\;
+  \lim_{n \to \infty} \Var(\bar{z}_n) = 0\text{''} \;\Rightarrow\;
+  \text{``}\bar{z}_n \pto \mu.\text{''}
+\]
+
+\medskip
+This holds because, under the condition specified, it is easy to prove (see an
+analytical question) that $\bar{z}_n \to_{\text{m.s.}} \mu$.  The following strong
+LLN assumes that $\{z_i\}$ is i.i.d.\ (independently and identically distributed),
+but the variance does not need to be finite.
+
+\medskip
+\noindent\textbf{Kolmogorov's Second Strong Law of Large Numbers:}\quad
+\emph{Let $\{z_i\}$ be i.i.d.\ with $\E(z_i) = \mu$.\footnote{So the mean exists
+and is finite (a real number).  When a moment (e.g., the mean) is indicated, as
+here, then by implication the moment is assumed to exist and is finite.}
+Then $\bar{z}_n \asto \mu$.}
+
+\medskip
+These LLNs extend readily to random vectors by requiring element-by-element
+convergence.
+
+Central Limit Theorems (CLTs) are about the limiting behavior of the difference
+between $\bar{z}_n$ and $\E(\bar{z}_n)$ (which equals $\E(z_i)$ if $\{z_i\}$ is
+i.i.d.)\ blown up by $\sqrt{n}$.  The only Central Limit Theorem we need for the
+case of i.i.d.\ sequences is:
+
+\medskip
+\noindent\textbf{Lindeberg--Levy CLT:}\quad
+\emph{Let $\{\mathbf{z}_i\}$ be i.i.d.\ with
+$\E(\mathbf{z}_i) = \bm{\mu}$ and $\Var(\mathbf{z}_i) = \bm{\Sigma}$.  Then}
+\[
+  \sqrt{n}(\bar{\mathbf{z}}_n - \bm{\mu})
+  = \frac{1}{\sqrt{n}} \sum_{i=1}^{n} (\mathbf{z}_i - \bm{\mu})
+  \dto N(\mathbf{0},\, \bm{\Sigma}).
+\]
+
+This reads: a sequence of random vectors
+$\{\sqrt{n}(\bar{\mathbf{z}}_n - \bm{\mu})\}$ converges in distribution to a random
+vector whose distribution is $N(\mathbf{0}, \bm{\Sigma})$.  (Usually, the
+Lindeberg--Levy CLT is for a sequence of \emph{scalar} random variables.  The
+vector version displayed above is derived from the scalar version as follows.
+Let $\{\mathbf{z}_i\}$ be i.i.d.\ with $\E(\mathbf{z}_i) = \bm{\mu}$ and
+$\Var(\mathbf{z}_i) = \bm{\Sigma}$, and let $\bm{\lambda}$ be any vector of real
+numbers of the same dimension.  Then $\{\bm{\lambda}'\mathbf{z}_n\}$ is a sequence
+of scalar random variables with $\E(\bm{\lambda}'\mathbf{z}_n) = \bm{\lambda}'\bm{\mu}$
+and $\Var(\bm{\lambda}'\mathbf{z}_n) = \bm{\lambda}'\bm{\Sigma}\bm{\lambda}$.  The
+scalar version of Lindeberg--Levy then implies that
+\[
+  \sqrt{n}(\bm{\lambda}'\bar{\mathbf{z}}_n - \bm{\lambda}'\bm{\mu})
+  = \bm{\lambda}'\sqrt{n}(\bar{\mathbf{z}}_n - \bm{\mu})
+  \dto N(0,\, \bm{\lambda}'\bm{\Sigma}\bm{\lambda}).
+\]
+But this limit distribution is the distribution of $\bm{\lambda}'\mathbf{x}$ where
+$\mathbf{x} \sim N(\mathbf{0}, \bm{\Sigma})$.  So by the Multivariate Convergence
+in Distribution Theorem stated a few pages back,
+$\{\sqrt{n}(\bar{\mathbf{z}}_n - \bm{\mu})\} \dto \mathbf{x}$, which is the claim
+of the vector version of Lindeberg--Levy.)

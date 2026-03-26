@@ -1,0 +1,508 @@
+% sec4_6.tex — Section 4.6: Common Coefficients
+
+\section{Common Coefficients}
+\label{sec:4.6}
+
+In many applications, particularly in panel data contexts, you deal with a special
+case of the multiple-equation model where the number of regressors is the same
+across equations with the same coefficients. Such a model is a special case of the
+multiple-equation model of Section~4.1. This section shows how to apply GMM
+to multiple equations while imposing the common coefficient restriction. It will be
+shown at the end that the seemingly restrictive model actually includes as a special
+case the multiple-equation model \textit{without} the common coefficient restriction.
+
+\subsection*{The Model with Common Coefficients}
+
+With common coefficients, the multiple-equation system becomes
+
+\begin{quote}
+\textbf{Assumption 4.1$'$ (linearity):}\quad
+\textit{There are $M$ linear equations to be estimated:}
+\begin{equation}
+y_{im} = \mathbf{z}_{im}' \boldsymbol{\delta} + \varepsilon_{im}
+\quad (m = 1, 2, \ldots, M;\; i = 1, 2, \ldots, n),
+\label{eq:4.6.1}
+\end{equation}
+\textit{where $n$ is the sample size, $\mathbf{z}_{im}$ is an $L$-dimensional vector of
+regressors, $\boldsymbol{\delta}$ is an $L$-dimensional coefficient vector common to all
+equations, and $\varepsilon_{im}$ is an unobservable error term of the $m$-th equation.}
+\end{quote}
+
+Of the other assumptions of the multiple-equation model, Assumptions~4.2--4.6,
+only Assumption~4.4 (identification) needs to be modified to reflect the common
+coefficient restriction. The multiple-equation version of
+$\mathbf{g}(\mathbf{w}_i;\, \tilde{\boldsymbol{\delta}})$ is now
+\begin{equation}
+\mathbf{g}(\mathbf{w}_i;\, \tilde{\boldsymbol{\delta}})
+\equiv \begin{bmatrix}
+\mathbf{x}_{i1} \cdot (y_{i1} - \mathbf{z}_{i1}' \tilde{\boldsymbol{\delta}}) \\
+\vdots \\
+\mathbf{x}_{iM} \cdot (y_{iM} - \mathbf{z}_{iM}' \tilde{\boldsymbol{\delta}})
+\end{bmatrix},
+\label{eq:4.6.2}
+\end{equation}
+so that $\E[\mathbf{g}(\mathbf{w}_i;\, \tilde{\boldsymbol{\delta}})]$ becomes
+\begin{equation}
+\E[\mathbf{g}(\mathbf{w}_i;\, \tilde{\boldsymbol{\delta}})]
+= \begin{bmatrix}
+\E(\mathbf{x}_{i1} \cdot y_{i1}) \\ \vdots \\ \E(\mathbf{x}_{iM} \cdot y_{iM})
+\end{bmatrix}
+- \begin{bmatrix}
+\E(\mathbf{x}_{i1} \cdot \mathbf{z}_{i1}') \tilde{\boldsymbol{\delta}} \\
+\vdots \\
+\E(\mathbf{x}_{iM} \cdot \mathbf{z}_{iM}') \tilde{\boldsymbol{\delta}}
+\end{bmatrix}
+= \underset{(\sum_{m=1}^{M} K_m \times 1)}{\boldsymbol{\sigma}_{\mathbf{xy}}}
+- \underset{(\sum_{m=1}^{M} K_m \times L)}{\boldsymbol{\Sigma}_{\mathbf{xz}}}
+\underset{(L \times 1)}{\tilde{\boldsymbol{\delta}}},
+\label{eq:4.6.3}
+\end{equation}
+where
+\begin{equation}
+\boldsymbol{\sigma}_{\mathbf{xy}}
+\equiv \begin{bmatrix}
+\E(\mathbf{x}_{i1} \cdot y_{i1}) \\ \vdots \\ \E(\mathbf{x}_{iM} \cdot y_{iM})
+\end{bmatrix}, \quad
+\boldsymbol{\Sigma}_{\mathbf{xz}}
+\equiv \begin{bmatrix}
+\E(\mathbf{x}_{i1} \mathbf{z}_{i1}') \\ \vdots \\ \E(\mathbf{x}_{iM} \mathbf{z}_{iM}')
+\end{bmatrix}.
+\label{eq:4.6.4}
+\end{equation}
+So the implication of common coefficients is that $\boldsymbol{\Sigma}_{\mathbf{xz}}$
+is now a stacked, not a block diagonal, matrix. With this change, the system of
+equations determining $\tilde{\boldsymbol{\delta}}$ is again~\eqref{eq:4.1.10}, so the
+identification condition is
+
+\begin{quote}
+\textbf{Assumption 4.4$'$ (identification with common coefficients):}\quad
+\textit{The $\sum_{m=1}^{M} K_m \times L$ matrix $\boldsymbol{\Sigma}_{\mathbf{xz}}$
+defined in~\eqref{eq:4.6.4} is of full column rank.}
+\end{quote}
+
+This condition is weaker than Assumption~4.4, which requires that each equation
+of the system be identified. Indeed, a sufficient condition for identification is that
+$\E(\mathbf{x}_{im} \mathbf{z}_{im}')$ be of full column rank for \textit{some}
+$m$.\footnote{Proof: If $\E(\mathbf{x}_{im} \mathbf{z}_{im}')$ is of full column rank,
+its rank is $L$. Since the rank of a matrix is also equal to the number of linearly
+independent rows, $\E(\mathbf{x}_{im} \mathbf{z}_{im}')$ has $L$ linearly independent
+rows. Thus, $\boldsymbol{\Sigma}_{\mathbf{xz}}$ has at least $L$ linearly independent rows.}
+This is thanks to the \textit{a priori} restriction that the coefficients are the same
+across equations. It is possible that the system is identified even if none of the
+equations are identified individually.
+
+\subsection*{The GMM Estimator}
+
+It is left to you to verify that $\mathbf{g}_n(\tilde{\boldsymbol{\delta}})$
+can be written as $\mathbf{s}_{\mathbf{xy}} - \mathbf{S}_{\mathbf{xz}} \tilde{\boldsymbol{\delta}}$ with
+\begin{equation}
+\mathbf{s}_{\mathbf{xy}}
+\equiv \begin{bmatrix}
+\dfrac{1}{n} \displaystyle\sum_{i=1}^{n} \mathbf{x}_{i1} \cdot y_{i1} \\[6pt]
+\vdots \\[4pt]
+\dfrac{1}{n} \displaystyle\sum_{i=1}^{n} \mathbf{x}_{iM} \cdot y_{iM}
+\end{bmatrix}, \quad
+\mathbf{S}_{\mathbf{xz}}
+\equiv \begin{bmatrix}
+\dfrac{1}{n} \displaystyle\sum_{i=1}^{n} \mathbf{x}_{i1} \mathbf{z}_{i1}' \\[6pt]
+\vdots \\[4pt]
+\dfrac{1}{n} \displaystyle\sum_{i=1}^{n} \mathbf{x}_{iM} \mathbf{z}_{iM}'
+\end{bmatrix},
+\label{eq:4.6.5}
+\end{equation}
+so that the GMM estimator with a $\sum_m K_m \times \sum_m K_m$ weighting matrix
+$\hat{\mathbf{W}}$ is~\eqref{eq:4.2.3} with the sampling error given
+by~\eqref{eq:4.2.4}. Provided that $\boldsymbol{\Sigma}_{\mathbf{xz}}$
+and $\mathbf{S}_{\mathbf{xz}}$ are as just redefined and $\boldsymbol{\delta}$
+is interpreted as the common coefficient, large-sample theory for the
+multiple-equation model with common coefficients is the same as that with separate
+coefficients developed in Section~4.3, with Assumption~4.1$'$ replacing
+Assumption~4.1, Assumption~4.4$'$ replacing Assumption~4.4, and the residual
+$\hat{e}_i$ redefined to be $y_{im} - \mathbf{z}_{im}' \hat{\boldsymbol{\delta}}$
+(not $y_{im} - \mathbf{z}_{im}' \hat{\boldsymbol{\delta}}_m$) for some consistent
+estimate of the $L$-dimensional common coefficient vector $\boldsymbol{\delta}$.
+
+In order to relate this GMM estimator to popular estimators in the literature,
+it is necessary to write out the GMM formula in full. Substituting~\eqref{eq:4.6.5}
+into~\eqref{eq:4.2.3}, we obtain
+\begin{align}
+\hat{\boldsymbol{\delta}}(\hat{\mathbf{W}})
+&= \left(
+\begin{bmatrix}
+\dfrac{1}{n} \displaystyle\sum \mathbf{z}_{i1} \mathbf{x}_{i1}' & \cdots &
+\dfrac{1}{n} \displaystyle\sum \mathbf{z}_{iM} \mathbf{x}_{iM}'
+\end{bmatrix}
+\begin{bmatrix}
+\hat{\mathbf{W}}_{11} & \cdots & \hat{\mathbf{W}}_{1M} \\
+\vdots & & \vdots \\
+\hat{\mathbf{W}}_{M1} & \cdots & \hat{\mathbf{W}}_{MM}
+\end{bmatrix}
+\begin{bmatrix}
+\dfrac{1}{n} \displaystyle\sum \mathbf{x}_{i1} \mathbf{z}_{i1}' \\[6pt]
+\vdots \\[4pt]
+\dfrac{1}{n} \displaystyle\sum \mathbf{x}_{iM} \mathbf{z}_{iM}'
+\end{bmatrix}
+\right)^{-1} \notag \\[6pt]
+&\quad \times
+\begin{bmatrix}
+\dfrac{1}{n} \displaystyle\sum \mathbf{z}_{i1} \mathbf{x}_{i1}' & \cdots &
+\dfrac{1}{n} \displaystyle\sum \mathbf{z}_{iM} \mathbf{x}_{iM}'
+\end{bmatrix}
+\begin{bmatrix}
+\hat{\mathbf{W}}_{11} & \cdots & \hat{\mathbf{W}}_{1M} \\
+\vdots & & \vdots \\
+\hat{\mathbf{W}}_{M1} & \cdots & \hat{\mathbf{W}}_{MM}
+\end{bmatrix}
+\begin{bmatrix}
+\dfrac{1}{n} \displaystyle\sum \mathbf{x}_{i1} \cdot y_{i1} \\[6pt]
+\vdots \\[4pt]
+\dfrac{1}{n} \displaystyle\sum \mathbf{x}_{iM} \cdot y_{iM}
+\end{bmatrix} \notag \\[6pt]
+&= \left[\sum_{m=1}^{M} \sum_{h=1}^{M}
+\Bigl\{\Bigl(\frac{1}{n} \sum_{i=1}^{n} \mathbf{z}_{im} \mathbf{x}_{im}'\Bigr)
+\hat{\mathbf{W}}_{mh}
+\Bigl(\frac{1}{n} \sum_{i=1}^{n} \mathbf{x}_{ih} \mathbf{z}_{ih}'\Bigr)
+\Bigr\}\right]^{-1} \notag \\
+&\quad \times
+\left[\sum_{m=1}^{M} \sum_{h=1}^{M}
+\Bigl\{\Bigl(\frac{1}{n} \sum_{i=1}^{n} \mathbf{z}_{im} \mathbf{x}_{im}'\Bigr)
+\hat{\mathbf{W}}_{mh}
+\Bigl(\frac{1}{n} \sum_{i=1}^{n} \mathbf{x}_{ih} \cdot y_{ih}\Bigr)
+\Bigr\}\right],
+\label{eq:4.6.6}
+\end{align}
+where $\hat{\mathbf{W}}_{mh}$ is the $(m,h)$ block of $\hat{\mathbf{W}}$.
+(For the second equality, use formula (A.8) of Appendix~A.)
+The efficient GMM estimator obtains if the $\hat{\mathbf{W}}$ in this expression
+is replaced by the inverse of $\widehat{\mathbf{S}}$ defined in~\eqref{eq:4.3.2}.
+
+\subsection*{Imposing Conditional Homoskedasticity}
+
+The efficient GMM estimator obtains when we set in~\eqref{eq:4.6.6}
+$\hat{\mathbf{W}} = \widehat{\mathbf{S}}^{-1}$ where $\widehat{\mathbf{S}}$
+is a consistent estimator of $\mathbf{S}$. As before, we can impose conditional
+homoskedasticity to reduce the efficient GMM estimator to popular estimators.
+The FIVE estimator obtains if $\widehat{\mathbf{S}}$ is given by~\eqref{eq:4.5.3}.
+
+If we further assume that the set of instruments is the same across equations,
+then, as before, this $\widehat{\mathbf{S}}$ has the Kronecker product structure
+\[
+\widehat{\mathbf{S}} = \widehat{\boldsymbol{\Sigma}} \otimes
+\Bigl(\frac{1}{n} \sum \mathbf{x}_i \mathbf{x}_i'\Bigr),
+\]
+so that $\hat{\mathbf{W}}_{mh}$ in~\eqref{eq:4.6.6} is given by~\eqref{eq:4.5.11},
+resulting in what should be called the 3SLS estimator with common coefficients:
+\begin{equation}
+\left[\sum_{m=1}^{M} \sum_{h=1}^{M}
+\Bigl\{\hat{\sigma}^{mh} \cdot
+\Bigl(\frac{1}{n} \sum \mathbf{z}_{im} \mathbf{x}_i'\Bigr)
+\Bigl(\frac{1}{n} \sum \mathbf{x}_i \mathbf{x}_i'\Bigr)^{-1}
+\Bigl(\frac{1}{n} \sum \mathbf{x}_i \mathbf{z}_{ih}'\Bigr)
+\Bigr\}\right]^{-1}
+\left[\sum_{m=1}^{M} \sum_{h=1}^{M}
+\Bigl\{\hat{\sigma}^{mh} \cdot
+\Bigl(\frac{1}{n} \sum \mathbf{z}_{im} \mathbf{x}_i'\Bigr)
+\Bigl(\frac{1}{n} \sum \mathbf{x}_i \mathbf{x}_i'\Bigr)^{-1}
+\Bigl(\frac{1}{n} \sum \mathbf{x}_i \cdot y_{ih}\Bigr)
+\Bigr\}\right],
+\label{eq:4.6.7}
+\end{equation}
+where $\hat{\sigma}^{mh}$ is the $(m,h)$ element of
+$\widehat{\boldsymbol{\Sigma}}^{-1}$.
+If, in addition, the SUR condition~\eqref{eq:4.5.18} is assumed, then the
+``disappearance of $\mathbf{x}$'' occurs in~\eqref{eq:4.6.7} and the efficient
+GMM estimator becomes what is called (for historical reasons) the
+\textbf{random-effects estimator}:
+\begin{equation}
+\hat{\boldsymbol{\delta}}_{\mathrm{RE}}
+= \left[\sum_{m=1}^{M} \sum_{h=1}^{M}
+\hat{\sigma}^{mh} \Bigl(\frac{1}{n} \sum_{i=1}^{n}
+\mathbf{z}_{im} \mathbf{z}_{ih}'\Bigr)\right]^{-1}
+\sum_{m=1}^{M} \sum_{h=1}^{M}
+\hat{\sigma}^{mh} \Bigl(\frac{1}{n} \sum_{i=1}^{n}
+\mathbf{z}_{im} \cdot y_{ih}\Bigr).
+\label{eq:4.6.8}
+\end{equation}
+Its asymptotic variance is
+\begin{equation}
+\avar(\hat{\boldsymbol{\delta}}_{\mathrm{RE}})
+= \left[\sum_{m=1}^{M} \sum_{h=1}^{M}
+\sigma^{mh}\, \E(\mathbf{z}_{im} \mathbf{z}_{ih}')\right]^{-1}.
+\label{eq:4.6.9}
+\end{equation}
+(To derive this, go back to the general formula~\eqref{eq:4.3.3} for the Avar of
+efficient GMM. Set $\boldsymbol{\Sigma}_{\mathbf{xz}}$ as in~\eqref{eq:4.6.4},
+$\mathbf{S} = \boldsymbol{\Sigma} \otimes \E(\mathbf{x}_i \mathbf{x}_i')$,
+use formula (A.8) of Appendix~A to calculate the matrix product, and observe the
+``disappearance of $\mathbf{x}$'' that~\eqref{eq:4.5.16} becomes~\eqref{eq:4.5.16p}
+on page~280 under the SUR assumption~\eqref{eq:4.5.18}.)
+It is consistently estimated by
+\begin{equation}
+\widehat{\avar}(\hat{\boldsymbol{\delta}}_{\mathrm{RE}})
+= \left[\sum_{m=1}^{M} \sum_{h=1}^{M}
+\hat{\sigma}^{mh} \Bigl(\frac{1}{n} \sum_{i=1}^{n}
+\mathbf{z}_{im} \mathbf{z}_{ih}'\Bigr)\right]^{-1}.
+\label{eq:4.6.10}
+\end{equation}
+
+We summarize the result about the random-effects estimator as
+
+\begin{proposition}[large-sample properties of the random-effects estimator]
+\label{prop:4.7}
+\textit{Suppose Assumptions~4.1$'$, 4.2, 4.3, 4.4$'$, 4.5, and~4.7 hold with
+$\mathbf{x}_i = \text{union of}\; (\mathbf{z}_{i1}, \ldots, \mathbf{z}_{iM})$.
+Let\/ $\boldsymbol{\Sigma}$ be the $M \times M$ matrix whose $(m,h)$ element is
+$\E(\varepsilon_{im}\, \varepsilon_{ih})$, and let\/ $\widehat{\boldsymbol{\Sigma}}$
+be a consistent estimate of\/ $\boldsymbol{\Sigma}$. Then}
+\begin{enumerate}[label=(\alph*)]
+\item $\hat{\boldsymbol{\delta}}_{\mathrm{RE}}$, \textit{given by~\eqref{eq:4.6.8}
+is consistent, asymptotically normal, and efficient, with\/
+$\avar(\hat{\boldsymbol{\delta}}_{\mathrm{RE}})$ given by~\eqref{eq:4.6.9}.}
+
+\item \textit{The estimated asymptotic variance~\eqref{eq:4.6.10} is consistent for\/
+$\avar(\hat{\boldsymbol{\delta}}_{\mathrm{RE}})$.}
+
+\item \textit{(Sargan's statistic)}
+\[
+J(\hat{\boldsymbol{\delta}}_{\mathrm{RE}},\, \widehat{\mathbf{S}}^{-1})
+\equiv n \cdot \mathbf{g}_n(\hat{\boldsymbol{\delta}}_{\mathrm{RE}})'
+\widehat{\mathbf{S}}^{-1}\, \mathbf{g}_n(\hat{\boldsymbol{\delta}}_{\mathrm{RE}})
+\dto \chi^2(MK - L),
+\]
+\textit{where\/ $\widehat{\mathbf{S}} = \widehat{\boldsymbol{\Sigma}} \otimes
+\bigl(\frac{1}{n} \sum_i \mathbf{x}_i \mathbf{x}_i'\bigr)$,
+$K$ is the number of common instruments, and\/
+$\mathbf{g}_n(\tilde{\boldsymbol{\delta}}) = \mathbf{s}_{\mathbf{xy}} -
+\mathbf{S}_{\mathbf{xz}} \tilde{\boldsymbol{\delta}}$ with\/
+$\mathbf{s}_{\mathbf{xy}}$ and\/ $\mathbf{S}_{\mathbf{xz}}$ given
+by~\eqref{eq:4.6.5}.}
+\end{enumerate}
+\end{proposition}
+
+Below we will rewrite the formulas~\eqref{eq:4.6.8}--\eqref{eq:4.6.10} in more
+elegant forms.
+
+\subsection*{Pooled OLS}
+
+For the SUR of the previous section, we obtained $\widehat{\boldsymbol{\Sigma}}$
+from the residuals from the equation-by-equation OLS. The consistency is all that
+is required for $\widehat{\boldsymbol{\Sigma}}$, so the same procedure works here
+just as well, but the finite sample distribution of
+$\hat{\boldsymbol{\delta}}_{\mathrm{RE}}$ might be improved if we exploit the
+\textit{a priori} restriction that the coefficients be the same across equations
+in the estimation of $\widehat{\boldsymbol{\Sigma}}$.
+So consider setting $\hat{\mathbf{W}}$ to
+\[
+\mathbf{I}_M \otimes \Bigl(\frac{1}{n} \sum \mathbf{x}_i \mathbf{x}_i'\Bigr)^{-1},
+\]
+rather than
+\[
+\widehat{\boldsymbol{\Sigma}}^{-1} \otimes
+\Bigl(\frac{1}{n} \sum \mathbf{x}_i \mathbf{x}_i'\Bigr)^{-1},
+\]
+in the first-step GMM estimation for the purpose of an initial consistent
+estimate of $\boldsymbol{\delta}$. The estimator is~\eqref{eq:4.6.8} with
+$\hat{\sigma}^{mh} = 1$ for $m = h$ and $0$ for $m \neq h$,
+which can be written as
+\begin{equation}
+\hat{\boldsymbol{\delta}}_{\text{pooled OLS}}
+= \left[\sum_{m=1}^{M} \Bigl(\frac{1}{n} \sum_{i=1}^{n}
+\mathbf{z}_{im} \mathbf{z}_{im}'\Bigr)\right]^{-1}
+\sum_{m=1}^{M} \Bigl(\frac{1}{n} \sum_{i=1}^{n}
+\mathbf{z}_{im} \cdot y_{im}\Bigr)
+= \Bigl(\sum_{i=1}^{n} \sum_{m=1}^{M}
+\mathbf{z}_{im} \mathbf{z}_{im}'\Bigr)^{-1}
+\sum_{i=1}^{n} \sum_{m=1}^{M} \mathbf{z}_{im} \cdot y_{im},
+\label{eq:4.6.11}
+\end{equation}
+which is simply the OLS estimator on the sample of size $Mn$ where observations
+are pooled across equations. For this reason, the estimator is called the
+\textbf{pooled OLS} estimator. The expression suggests that the orthogonality conditions
+that are being exploited are
+\begin{equation}
+\E(\mathbf{z}_{i1} \cdot \varepsilon_{i1} + \cdots
++ \mathbf{z}_{iM} \cdot \varepsilon_{iM}) = \mathbf{0},
+\label{eq:4.6.12}
+\end{equation}
+which does not involve the ``cross'' orthogonalities
+$\E(\mathbf{z}_{im} \cdot \varepsilon_{ih}) = \mathbf{0}$ $(m \neq h)$.
+It is left as an analytical exercise to show that the pooled OLS is the GMM estimator
+exploiting~\eqref{eq:4.6.12}.
+
+Because it is so easy to calculate, pooled OLS is a popular option for those
+researchers who do not want to program estimators. The estimator is also robust
+to the failure of the ``cross'' orthogonalities. But it is important to keep in mind
+that the standard errors printed out by the OLS package, which do not take into
+account the interequation cross moments ($\sigma_{mh}$), are biased.
+For the pooled OLS estimator, which is a GMM estimator with a nonoptimal choice of
+$\hat{\mathbf{W}}$, the correct formula for the asymptotic variance is (3.5.1)
+of Proposition~3.1. Setting
+$\mathbf{W} = \mathbf{I}_M \otimes [\E(\mathbf{x}_i \mathbf{x}_i')]^{-1}$,
+$\mathbf{S} = \boldsymbol{\Sigma} \otimes \E(\mathbf{x}_i \mathbf{x}_i')$,
+$\boldsymbol{\Sigma}_{\mathbf{xz}}$ as in~\eqref{eq:4.6.4}, and again observing the
+disappearance of $\mathbf{x}$, we obtain
+\begin{equation}
+\avar(\hat{\boldsymbol{\delta}}_{\text{pooled OLS}})
+= \left[\sum_{m=1}^{M} \E(\mathbf{z}_{im} \mathbf{z}_{im}')\right]^{-1}
+\sum_{m=1}^{M} \sum_{h=1}^{M}
+\sigma_{mh}\, \E(\mathbf{z}_{im} \mathbf{z}_{ih}')
+\left[\sum_{m=1}^{M} \E(\mathbf{z}_{im} \mathbf{z}_{im}')\right]^{-1},
+\label{eq:4.6.13}
+\end{equation}
+which is consistently estimated by
+\begin{equation}
+\Bigl(\sum_{m=1}^{M} \frac{1}{n} \sum_{i=1}^{n}
+\mathbf{z}_{im} \mathbf{z}_{im}'\Bigr)^{-1}
+\sum_{m=1}^{M} \sum_{h=1}^{M}
+\hat{\sigma}_{mh} \frac{1}{n} \sum_{i=1}^{n}
+\mathbf{z}_{im} \mathbf{z}_{ih}'
+\Bigl(\sum_{m=1}^{M} \frac{1}{n} \sum_{i=1}^{n}
+\mathbf{z}_{im} \mathbf{z}_{im}'\Bigr)^{-1}.
+\label{eq:4.6.14}
+\end{equation}
+Since the pooled OLS estimator is consistent, the associated residual can be used to
+calculate $\hat{\sigma}_{mh}$ $(m, h = 1, \ldots, M)$ in this expression.
+The correct standard errors of pooled OLS are the square roots of $(1/n$ times)
+the diagonal element of this matrix.
+
+\subsection*{Beautifying the Formulas}
+
+These formulas for the random-effects and pooled OLS estimators are quite straightforward
+to derive but look complicated, with double and triple summations. They
+can, however, be beautified---and at the same time more useful for programming---if
+we introduce some new matrix notation. Let
+\begin{equation}
+\underset{(M \times 1)}{\mathbf{y}_i}
+= \begin{bmatrix} y_{i1} \\ \vdots \\ y_{iM} \end{bmatrix}, \quad
+\underset{(M \times L)}{\mathbf{Z}_i}
+= \begin{bmatrix} \mathbf{z}_{i1}' \\ \vdots \\ \mathbf{z}_{iM}' \end{bmatrix}, \quad
+\underset{(M \times 1)}{\boldsymbol{\varepsilon}_i}
+= \begin{bmatrix} \varepsilon_{i1} \\ \vdots \\ \varepsilon_{iM} \end{bmatrix},
+\label{eq:4.6.15}
+\end{equation}
+so that the $M$-equation system with common coefficients in Assumption~4.1$'$ can
+be written compactly as
+\begin{equation}
+\mathbf{y}_i = \mathbf{Z}_i \boldsymbol{\delta} + \boldsymbol{\varepsilon}_i
+\quad (i = 1, 2, \ldots, n).
+\tag{4.6.1$'$}
+\label{eq:4.6.1p}
+\end{equation}
+
+The beautification of the complicated formulas utilizes the following algebraic
+results:
+\begin{align}
+\sum_{m=1}^{M} \mathbf{z}_{im} \mathbf{z}_{im}' &= \mathbf{Z}_i' \mathbf{Z}_i, \quad
+\sum_{m=1}^{M} \mathbf{z}_{im} \cdot y_{im} = \mathbf{Z}_i' \mathbf{y}_i,
+\label{eq:4.6.16a} \\
+\sum_{m=1}^{M} \sum_{h=1}^{M} c_{mh} \cdot \mathbf{z}_{im} \cdot y_{ih}
+&= \mathbf{Z}_i' \mathbf{C} \mathbf{y}_i, \quad
+\sum_{m=1}^{M} \sum_{h=1}^{M} c_{mh} \cdot \mathbf{z}_{im} \mathbf{z}_{ih}'
+= \mathbf{Z}_i' \mathbf{C} \mathbf{Z}_i
+\label{eq:4.6.16b}
+\end{align}
+for any $M \times M$ matrix $\mathbf{C} = (c_{mh})$.
+Now take the triple summation in~\eqref{eq:4.6.8}
+\begin{align}
+\sum_{m=1}^{M} \sum_{h=1}^{M} \hat{\sigma}^{mh} \cdot
+\Bigl(\frac{1}{n} \sum_{i=1}^{n} \mathbf{z}_{im} \cdot y_{ih}\Bigr)
+&= \frac{1}{n} \sum_{i=1}^{n}
+\Bigl(\sum_{m=1}^{M} \sum_{h=1}^{M} \hat{\sigma}^{mh} \cdot
+\mathbf{z}_{im} \cdot y_{ih}\Bigr)
+\quad \text{(by changing order of summations)} \notag \\
+&= \frac{1}{n} \sum_{i=1}^{n} \mathbf{Z}_i'
+\widehat{\boldsymbol{\Sigma}}^{-1} \mathbf{y}_i
+\quad \text{(by~\eqref{eq:4.6.16b} with
+$\mathbf{C} = \widehat{\boldsymbol{\Sigma}}^{-1}$).}
+\label{eq:4.6.17}
+\end{align}
+
+Similarly, by~\eqref{eq:4.6.16b} with
+$\mathbf{C} = \widehat{\boldsymbol{\Sigma}}^{-1}$, the other triple summation
+in~\eqref{eq:4.6.8} becomes
+\begin{equation}
+\sum_{m=1}^{M} \sum_{h=1}^{M} \hat{\sigma}^{mh}
+\frac{1}{n} \sum \mathbf{z}_{im} \mathbf{z}_{ih}'
+= \frac{1}{n} \sum_{i=1}^{n} \mathbf{Z}_i'
+\widehat{\boldsymbol{\Sigma}}^{-1} \mathbf{Z}_i.
+\label{eq:4.6.18}
+\end{equation}
+
+The double and triple summations in~\eqref{eq:4.6.9} and~\eqref{eq:4.6.10}
+can be written similarly. We have thus rewritten the random-effects formulas as
+\begin{align}
+\hat{\boldsymbol{\delta}}_{\mathrm{RE}}
+&= \Bigl(\frac{1}{n} \sum_{i=1}^{n} \mathbf{Z}_i'
+\widehat{\boldsymbol{\Sigma}}^{-1} \mathbf{Z}_i\Bigr)^{-1}
+\frac{1}{n} \sum_{i=1}^{n} \mathbf{Z}_i'
+\widehat{\boldsymbol{\Sigma}}^{-1} \mathbf{y}_i,
+\tag{4.6.8$'$} \label{eq:4.6.8p} \\
+\avar(\hat{\boldsymbol{\delta}}_{\mathrm{RE}})
+&= \bigl(\E(\mathbf{Z}_i' \boldsymbol{\Sigma}^{-1} \mathbf{Z}_i)\bigr)^{-1},
+\tag{4.6.9$'$} \label{eq:4.6.9p} \\
+\widehat{\avar}(\hat{\boldsymbol{\delta}}_{\mathrm{RE}})
+&= \Bigl(\frac{1}{n} \sum_{i=1}^{n} \mathbf{Z}_i'
+\widehat{\boldsymbol{\Sigma}}^{-1} \mathbf{Z}_i\Bigr)^{-1}.
+\tag{4.6.10$'$} \label{eq:4.6.10p}
+\end{align}
+
+Using~\eqref{eq:4.6.16a}, the pooled OLS formulas can be written as
+\begin{align}
+\hat{\boldsymbol{\delta}}_{\text{pooled OLS}}
+&= \Bigl(\frac{1}{n} \sum_{i=1}^{n} \mathbf{Z}_i' \mathbf{Z}_i\Bigr)^{-1}
+\frac{1}{n} \sum_{i=1}^{n} \mathbf{Z}_i' \mathbf{y}_i,
+\tag{4.6.11$'$} \label{eq:4.6.11p} \\
+\avar(\hat{\boldsymbol{\delta}}_{\text{pooled OLS}})
+&= [\E(\mathbf{Z}_i' \mathbf{Z}_i)]^{-1}\,
+\E(\mathbf{Z}_i' \boldsymbol{\Sigma} \mathbf{Z}_i)\,
+[\E(\mathbf{Z}_i' \mathbf{Z}_i)]^{-1},
+\tag{4.6.13$'$} \label{eq:4.6.13p} \\
+\widehat{\avar}(\hat{\boldsymbol{\delta}}_{\text{pooled OLS}})
+&= \Bigl(\frac{1}{n} \sum \mathbf{Z}_i' \mathbf{Z}_i\Bigr)^{-1}
+\Bigl(\frac{1}{n} \sum \mathbf{Z}_i'
+\widehat{\boldsymbol{\Sigma}} \mathbf{Z}_i\Bigr)
+\Bigl(\frac{1}{n} \sum \mathbf{Z}_i' \mathbf{Z}_i\Bigr)^{-1}.
+\tag{4.6.14$'$} \label{eq:4.6.14p}
+\end{align}
+
+These formulas are not just pretty; as will be seen in the next section, they will be
+useful for handling certain classes of panel data (called \textbf{unbalanced panel data}).
+
+\subsection*{The Restriction That Isn't}
+
+Although it appears that the model of this section, with the common coefficient
+assumption, is a special case of the model of Section~4.1, the latter can be cast in
+the format of the model of this section with a proper redefinition of regressors.
+For example, consider Example~4.1. Instead of defining $\mathbf{z}_{i1}$ and
+$\mathbf{z}_{i2}$ as in~\eqref{eq:4.1.2}, define them as
+\[
+\mathbf{z}_{i1} = \begin{bmatrix}
+1 \\ S_i \\ IQ_i \\ EXPR_i \\ 0 \\ 0 \\ 0
+\end{bmatrix}, \quad
+\mathbf{z}_{i2} = \begin{bmatrix}
+0 \\ 0 \\ 0 \\ 0 \\ 1 \\ S_i \\ IQ_i
+\end{bmatrix} \quad \text{with} \quad
+\boldsymbol{\delta} = \begin{bmatrix}
+\phi_1 \\ \beta_1 \\ \gamma_1 \\ \pi \\ \phi_2 \\ \beta_2 \\ \gamma_2
+\end{bmatrix}.
+\]
+Then the two-equation system fits the format of Assumption~4.1$'$.
+(See Review Question~5 below for a demonstration of the same point more generally.)
+
+Furthermore, a system in which only a subset of variables have common coefficients
+can be written in the form of Assumption~4.1$'$. Consider Example~4.2.
+Suppose we wish to assume \textit{a priori} that the coefficients of schooling, $IQ$, and
+experience remain constant over time (so $\beta_1 = \beta_2 = \beta$,
+$\gamma_1 = \gamma_2 = \gamma$, $\pi_1 = \pi_2 = \pi$) but the intercept does not.
+The translation is accomplished by setting
+\begin{equation}
+\mathbf{z}_{i1} = \begin{bmatrix} 1 \\ 0 \\ S69_i \\ IQ_i \\ EXPR69_i \end{bmatrix}, \quad
+\mathbf{z}_{i2} = \begin{bmatrix} 0 \\ 1 \\ S80_i \\ IQ_i \\ EXPR80_i \end{bmatrix}, \quad
+\boldsymbol{\delta} = \begin{bmatrix} \phi_1 \\ \phi_2 \\ \beta \\ \gamma \\ \pi \end{bmatrix}.
+\label{eq:4.6.19}
+\end{equation}
+
+Therefore, the common coefficient restriction is not restrictive. We could have
+derived the GMM estimator for the model of Section~4.1 as a special case of the
+GMM estimator with the common coefficient restriction. But the model without
+the restriction is perhaps an easier introduction to multiple equations.

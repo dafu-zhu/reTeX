@@ -1,0 +1,345 @@
+% sec2_4.tex — Section 2.4: Hypothesis Testing
+
+Statistical inference in large-sample theory is based on test statistics whose
+asymptotic distributions are known under the truth of the null hypothesis.
+Derivation of the distribution of test statistics is easier than in finite-sample
+theory because we are only concerned about the large-sample \emph{approximation}
+to the exact distribution.  In this section we derive test statistics, assuming
+throughout that a consistent estimator, $\widehat{\mathbf{S}}$, of
+$\mathbf{S}$ $(\equiv \E(\mathbf{g}_i\mathbf{g}_i'))$ is available.  The issue of
+consistent estimation of $\mathbf{S}$ will be taken up in the next section.
+
+%% ─── Testing Linear Hypotheses ─────────────────────────────────────────────
+\subsection*{Testing Linear Hypotheses}
+
+Consider testing a hypothesis about the $k$-th coefficient $\beta_k$.
+Proposition~\ref{prop:2.1} implies that under the null
+$\mathrm{H}_0\colon \beta_k = \bar{\beta}_k$,
+\[
+  \sqrt{n}(b_k - \bar{\beta}_k) \dto N\!\big(0,\, \avar(b_k)\big)
+  \quad \text{and} \quad
+  \widehat{\avar(b_k)} \pto \avar(b_k),
+\]
+where $b_k$ is the $k$-th element of $\mathbf{b}$ and $\avar(b_k)$ is the $(k,k)$
+element of the $K \times K$ matrix $\avar(\mathbf{b})$.  So Lemma~\ref{lem:2.4}(c)
+guarantees that
+\begin{equation}
+  t_k \equiv \frac{\sqrt{n}(b_k - \bar{\beta}_k)}
+  {\sqrt{\widehat{\avar(b_k)}}}
+  = \frac{b_k - \bar{\beta}_k}{SE^*(b_k)}
+  \dto N(0, 1),
+  \label{eq:2.4.1}
+\end{equation}
+where
+\[
+  SE^*(b_k) \equiv \sqrt{\tfrac{1}{n} \cdot \widehat{\avar(b_k)}}
+  \equiv \sqrt{\tfrac{1}{n} \cdot
+  (\mathbf{S}_{\mathbf{xx}}^{-1}\,\widehat{\mathbf{S}}\,
+  \mathbf{S}_{\mathbf{xx}}^{-1})_{kk}}.
+\]
+The denominator in this $t$-ratio, $SE^*(b_k)$, is called the
+\textbf{heteroskedasticity-consistent standard error},
+\textbf{(heteroskedasticity-)robust standard error}, or \textbf{White's standard
+error}.  The reason for this terminology is that the error term can be conditionally
+heteroskedastic; recall that we have not assumed conditional homoskedasticity (that
+$\E(\varepsilon_i^2 \mid \mathbf{x}_i)$ does not depend on $\mathbf{x}_i$) to derive
+the asymptotic distribution of $t_k$.  This $t$-ratio is called the \textbf{robust}
+$t$-ratio, to distinguish it from the $t$-ratio of Chapter~1.  The relationship
+between these two sorts of $t$-ratio will be discussed in Section~2.6.
+
+Given this $t$-ratio, testing the null hypothesis
+$\mathrm{H}_0\colon \beta_k = \bar{\beta}_k$ at a significance level of $\alpha$
+proceeds as follows:
+
+\smallskip
+\noindent\emph{Step~1:} Calculate $t_k$ by the formula \eqref{eq:2.4.1}.
+
+\noindent\emph{Step~2:} Look up the table of $N(0,1)$ to find the critical value
+$t_{\alpha/2}$ which leaves $\alpha/2$ to the upper tail of the standard normal
+distribution.  (example: if $\alpha = 5\%$, $t_{\alpha/2} = 1.96$.)
+
+\noindent\emph{Step~3:} Accept the hypothesis if $|t_k| < t_{\alpha/2}$; otherwise
+reject.
+
+\smallskip
+The differences from the finite-sample $t$-test are: (1) the way the standard error
+is calculated is different, (2) we use the table of $N(0,1)$ rather than that of
+$t(n-K)$, and (3) the \textbf{actual size} or \textbf{exact size} of the test (the
+probability of Type~I error given the sample size) equals the \textbf{nominal size}
+(i.e., the desired significance level $\alpha$) only approximately, although the
+approximation becomes arbitrarily good as the sample size increases.  The difference
+between the exact size and the nominal size of a test is called the \textbf{size
+distortion}.  Since $t_k$ is asymptotically standard normal, the size distortion of
+the $t$-test converges to zero as the sample size $n$ goes to infinity.
+
+Thus, we have proved the first half of
+
+\begin{proposition}[robust $t$-ratio and Wald statistic]
+\label{prop:2.3}
+Suppose Assumptions~\ref{ass:2.1}--\ref{ass:2.5} hold, and suppose there is
+available a consistent estimate $\widehat{\mathbf{S}}$ of\/
+$\mathbf{S}$ $(= \E(\mathbf{g}_i\mathbf{g}_i'))$.  As before, let
+\[
+  \widehat{\avar(\mathbf{b})}
+  \equiv \mathbf{S}_{\mathbf{xx}}^{-1}\,\widehat{\mathbf{S}}\,
+  \mathbf{S}_{\mathbf{xx}}^{-1}.
+\]
+Then
+\begin{enumerate}[label=(\alph*)]
+  \item Under the null hypothesis $\mathrm{H}_0\colon \beta_k = \bar{\beta}_k$,
+    $t_k$ defined in \eqref{eq:2.4.1} $\dto N(0,1)$.
+  \item Under the null hypothesis
+    $\mathrm{H}_0\colon \mathbf{R}\bm{\beta} = \mathbf{r}$, where $\mathbf{R}$ is an
+    $\#\mathbf{r} \times K$ matrix (where $\#\mathbf{r}$, the dimension of\/
+    $\mathbf{r}$, is the number of restrictions) of full row rank,
+    \begin{equation}
+      W \equiv n \cdot (\mathbf{R}\mathbf{b} - \mathbf{r})'
+      \{\mathbf{R}[\widehat{\avar(\mathbf{b})}]\mathbf{R}'\}^{-1}
+      (\mathbf{R}\mathbf{b} - \mathbf{r})
+      \dto \chi^2(\#\mathbf{r}).
+      \label{eq:2.4.2}
+    \end{equation}
+\end{enumerate}
+\end{proposition}
+
+What remains to be shown is that $W \dto \chi^2(\#\mathbf{r})$, which is a
+straightforward application of Lemma~\ref{lem:2.4}(d).
+
+\begin{proof}[Proof (continued)]
+Write $W$ as
+\[
+  W = \mathbf{c}_n'\mathbf{Q}_n^{-1}\mathbf{c}_n
+  \quad \text{where} \quad
+  \mathbf{c}_n \equiv \sqrt{n}(\mathbf{R}\mathbf{b} - \mathbf{r})
+  \;\text{and}\;
+  \mathbf{Q}_n \equiv \mathbf{R}\,\widehat{\avar(\mathbf{b})}\,\mathbf{R}'.
+\]
+Under $\mathrm{H}_0$,
+$\mathbf{c}_n = \mathbf{R}\sqrt{n}(\mathbf{b} - \bm{\beta})$.  So by
+Proposition~\ref{prop:2.1},
+\[
+  \mathbf{c}_n \dto \mathbf{c} \quad \text{where} \quad
+  \mathbf{c} \sim N\!\big(\mathbf{0},\,
+  \mathbf{R}\,\avar(\mathbf{b})\,\mathbf{R}'\big).
+\]
+Also by Proposition~\ref{prop:2.1},
+\[
+  \mathbf{Q}_n \pto \mathbf{Q} \quad \text{where} \quad
+  \mathbf{Q} \equiv \mathbf{R}\,\avar(\mathbf{b})\,\mathbf{R}'.
+\]
+Because $\mathbf{R}$ is of full row rank and $\avar(\mathbf{b})$ is positive
+definite, $\mathbf{Q}$ is invertible.  Therefore, by Lemma~\ref{lem:2.4}(d),
+\[
+  W \dto \mathbf{c}'\mathbf{Q}^{-1}\mathbf{c}.
+\]
+Since the $\#\mathbf{r}$-dimensional random vector $\mathbf{c}$ is normally
+distributed and since $\mathbf{Q}$ equals $\Var(\mathbf{c})$,
+$\mathbf{c}'\mathbf{Q}^{-1}\mathbf{c} \sim \chi^2(\#\mathbf{r})$.
+\end{proof}
+
+This chi-square statistic $W$ is a Wald statistic because it is based on unrestricted
+estimates ($\mathbf{b}$ and $\widehat{\avar(\mathbf{b})}$ here) not constrained by
+the null hypothesis $\mathrm{H}_0$.  Testing $\mathrm{H}_0$ at a significance level
+of $\alpha$ proceeds as follows.
+
+\smallskip
+\noindent\emph{Step~1:} Calculate the $W$ statistic by the formula \eqref{eq:2.4.2}.
+
+\noindent\emph{Step~2:} Look up the table of $\chi^2(\#\mathbf{r})$ distribution to
+find the critical value $\chi_\alpha^2(\#\mathbf{r})$ that gives $\alpha$ to the upper
+tail of the $\chi^2(\#\mathbf{r})$ distribution.
+
+\noindent\emph{Step~3:} If $W < \chi_\alpha^2(\#\mathbf{r})$, then accept
+$\mathrm{H}_0$; otherwise reject.
+
+\smallskip
+The probability of Type~I error approaches $\alpha$ as the sample becomes larger.
+As will be made clear in Section~2.6, this Wald statistic is closely related to the
+familiar $F$-test under conditional homoskedasticity.
+
+%% ─── The Test Is Consistent ───────────────────────────────────────────────
+\subsection*{The Test Is Consistent}
+
+Recall from basic statistics that the (finite-sample) \textbf{power} of a test is the
+probability of rejecting the null hypothesis when it is false given a sample of finite
+size (that is, the power is 1 minus the probability of Type~II error).  Power will
+obviously depend on the DGP (i.e., how the data were actually generated) considered
+as the alternative as well as on the size (significance level) of the test.  For
+example, consider any DGP $\{y_i, \mathbf{x}_i\}$ satisfying
+Assumptions~\ref{ass:2.1}--\ref{ass:2.5} but \emph{not} the null hypothesis
+$\mathrm{H}_0\colon \beta_k = \bar{\beta}_k$.  The power of the $t$-test of size
+$\alpha$ against this alternative is
+\[
+  \text{power} = \mathrm{Prob}(|t_k| > t_{\alpha/2}),
+\]
+which depends on the DGP in question because the DGP controls the distribution of
+$t_k$.  We say that a test is \textbf{consistent} against a set of DGPs, none of which
+satisfies the null, if the power against any particular member of the set approaches
+unity as $n \to \infty$ for any assumed significance level.
+
+That the $t$-test is consistent against the set of alternatives (DGPs) satisfying
+Assumptions~\ref{ass:2.1}--\ref{ass:2.5} can be seen as follows.  Look at the
+expression \eqref{eq:2.4.1} for the $t$-ratio, reproduced here:
+\[
+  t_k \equiv \frac{\sqrt{n}(b_k - \bar{\beta}_k)}
+  {\sqrt{\widehat{\avar(b_k)}}}.
+\]
+The denominator converges to $\sqrt{\avar(b_k)}$ despite the fact that the DGP does
+not satisfy the null (recall that all parts of Proposition~\ref{prop:2.1} hold
+regardless of the truth of the null, provided Assumptions~\ref{ass:2.1}--\ref{ass:2.5}
+are satisfied).  On the other hand, the numerator tends to $+\infty$ or $-\infty$
+because $b_k$ converges in probability to the DGP's $\beta_k$, which is different
+from $\bar{\beta}_k$.  So the power tends to unity as the sample size $n$ tends to
+infinity, implying that the $t$-test of Proposition~\ref{prop:2.3} is consistent
+against those alternatives, the DGPs that do not satisfy the null.  The same is true
+for the Wald test.
+
+%% ─── Asymptotic Power ─────────────────────────────────────────────────────
+\subsection*{Asymptotic Power}
+
+For later use in the next chapter, we define here the \textbf{asymptotic power} of a
+consistent test.  As noted above, the power of the $t$-test approaches to unity as
+the sample size increases while the DGP taken as the alternative is held fixed.
+But if the DGP gets closer and closer to the null as the sample size increases, the
+power may not converge to unity.  A sequence of such DGPs is called a
+\textbf{sequence of local alternatives}.  For the regression model and for the null
+of $\mathrm{H}_0\colon \beta_k = \bar{\beta}_k$, it is a sequence of DGPs such
+that (i) the $n$-th DGP, $\{y_i^{(n)}, \mathbf{x}_i^{(n)}\}$
+$(i = 1, 2, \ldots)$, satisfies Assumptions~\ref{ass:2.1}--\ref{ass:2.5} and
+converges in a certain sense to a fixed DGP
+$\{y_i, \mathbf{x}_i\}$,\footnote{See, e.g., Assumption~1 of Newey (1985) for a
+precise statement.} and (ii)~the value of $\beta_k$ of the $n$-th DGP,
+$\beta_k^{(n)}$, converges to $\bar{\beta}_k$.  Suppose, further, that
+$\beta_k^{(n)}$ satisfies
+\begin{equation}
+  \beta_k^{(n)} = \bar{\beta}_k + \frac{\gamma}{\sqrt{n}}
+  \label{eq:2.4.3}
+\end{equation}
+for some given $\gamma \neq 0$.  So $\beta_k^{(n)}$ approaches to $\bar{\beta}_k$
+at a rate proportional to $1/\sqrt{n}$.  This special sequence of local alternatives
+is called a \textbf{Pitman drift} or a \textbf{Pitman sequence}.  Substituting
+\eqref{eq:2.4.3} into \eqref{eq:2.4.1}, the $t$-ratio above can be rewritten as
+\begin{equation}
+  t_k = \frac{\sqrt{n}(b_k - \beta_k^{(n)})}
+  {\sqrt{\widehat{\avar(b_k)}}}
+  + \frac{\gamma}{\sqrt{\widehat{\avar(b_k)}}}.
+  \label{eq:2.4.4}
+\end{equation}
+
+If the sample of size $n$ is generated by the $n$-th DGP of a Pitman drift, does
+$t_k$ converge to a nontrivial distribution?  Since the $n$-th DGP satisfies
+Assumptions~\ref{ass:2.1}--\ref{ass:2.5}, the first term on the right hand side of
+\eqref{eq:2.4.4} converges in distribution to $N(0,1)$ by parts~(b) and (c) of
+Proposition~\ref{prop:2.1}.  By part~(c) of Proposition~\ref{prop:2.1} and the fact
+that $\{y_i^{(n)}, \mathbf{x}_i^{(n)}\}$ ``converges'' to a fixed DGP, the second
+term converges in probability to
+\begin{equation}
+  \mu \equiv \frac{\gamma}{\sqrt{\avar(b_k)}},
+  \label{eq:2.4.5}
+\end{equation}
+where $\avar(b_k)$ is evaluated at the fixed DGP.  Therefore,
+$t_k \dto N(\mu, 1)$ along this sequence of local alternatives.  If the significance
+level is $\alpha$, the power converges to
+\begin{equation}
+  \mathrm{Prob}(|x| > t_{\alpha/2})
+  \label{eq:2.4.6}
+\end{equation}
+where $x \sim N(\mu, 1)$ and $t_{\alpha/2}$ is the level-$\alpha$ critical value.
+This probability is called the \textbf{asymptotic power}.  It is a measure of the
+ability of the test to detect small deviations of the model from the null hypothesis.
+Evidently, the larger is $|\mu|$, the higher is the asymptotic power for any given
+size $\alpha$.  By a similar argument, it is easy to show that the Wald statistic
+converges to a distribution called \textbf{noncentral chi-squared}.
+
+%% ─── Testing Nonlinear Hypotheses ─────────────────────────────────────────
+\subsection*{Testing Nonlinear Hypotheses}
+
+The Wald statistic can be generalized to a test of a set of nonlinear restrictions on
+$\bm{\beta}$.  Consider a null hypothesis of the form
+\[
+  \mathrm{H}_0\colon \mathbf{a}(\bm{\beta}) = \mathbf{0}.
+\]
+Here, $\mathbf{a}$ is a vector-valued function with continuous first derivatives.
+Let $\#\mathbf{a}$ be the dimension of $\mathbf{a}(\bm{\beta})$ (so the null
+hypothesis has $\#\mathbf{a}$ restrictions), and let $\mathbf{A}(\bm{\beta})$ be the
+$\#\mathbf{a} \times K$ matrix of first derivatives evaluated at $\bm{\beta}$:
+$\mathbf{A}(\bm{\beta}) = \partial \mathbf{a}(\bm{\beta})/\partial \bm{\beta}'$.
+For the hypothesis to be well-defined, we assume that $\mathbf{A}(\bm{\beta})$ is
+of full row rank (this is the generalization of the requirement for linear hypothesis
+$\mathbf{R}\bm{\beta} = \mathbf{r}$ that $\mathbf{R}$ is of full row rank).
+Lemma~\ref{lem:2.5} of Section~2.1 and Proposition~\ref{prop:2.1}(b) imply that
+\begin{equation}
+  \sqrt{n}[\mathbf{a}(\mathbf{b}) - \mathbf{a}(\bm{\beta})]
+  \dto \mathbf{c}, \quad
+  \mathbf{c} \sim N\!\big(\mathbf{0},\,
+  \mathbf{A}(\bm{\beta})\,\avar(\mathbf{b})\,\mathbf{A}(\bm{\beta})'\big).
+  \label{eq:2.4.7}
+\end{equation}
+Since $\mathbf{a}(\bm{\beta}) = \mathbf{0}$ under $\mathrm{H}_0$,
+\eqref{eq:2.4.7} becomes
+\begin{equation}
+  \sqrt{n}\,\mathbf{a}(\mathbf{b}) \dto \mathbf{c}, \quad
+  \mathbf{c} \sim N\!\big(\mathbf{0},\,
+  \mathbf{A}(\bm{\beta})\,\avar(\mathbf{b})\,\mathbf{A}(\bm{\beta})'\big).
+  \label{eq:2.4.8}
+\end{equation}
+Since $\mathbf{b} \pto \bm{\beta}$ by Proposition~\ref{prop:2.1}(a),
+Lemma~\ref{lem:2.3}(a) implies that
+$\mathbf{A}(\mathbf{b}) \pto \mathbf{A}(\bm{\beta})$.  By
+Proposition~\ref{prop:2.1}(c),
+$\widehat{\avar(\mathbf{b})} \pto \avar(\mathbf{b})$.  So by
+Lemma~\ref{lem:2.3}(a),
+\begin{equation}
+  \mathbf{A}(\mathbf{b})\,\widehat{\avar(\mathbf{b})}\,\mathbf{A}(\mathbf{b})'
+  \pto \mathbf{A}(\bm{\beta})\,\avar(\mathbf{b})\,\mathbf{A}(\bm{\beta})'
+  = \Var(\mathbf{c}).
+  \label{eq:2.4.9}
+\end{equation}
+Because $\mathbf{A}(\bm{\beta})$ is of full row rank and $\avar(\mathbf{b})$ is
+positive definite, $\Var(\mathbf{c})$ is invertible.  Then Lemma~\ref{lem:2.4}(d),
+\eqref{eq:2.4.8}, and \eqref{eq:2.4.9} imply
+\begin{equation}
+  \sqrt{n}\,\mathbf{a}(\mathbf{b})'
+  \{\mathbf{A}(\mathbf{b})\,\widehat{\avar(\mathbf{b})}\,
+  \mathbf{A}(\mathbf{b})'\}^{-1}
+  \sqrt{n}\,\mathbf{a}(\mathbf{b})
+  \dto \mathbf{c}'\,\Var(\mathbf{c})^{-1}\,\mathbf{c}
+  \sim \chi^2(\#\mathbf{a}).
+  \label{eq:2.4.10}
+\end{equation}
+Combining two $\sqrt{n}$'s in \eqref{eq:2.4.10} into one $n$, we have proved
+
+\paragraph{Proposition 2.3 (continued):}
+
+\begin{enumerate}[label=(\alph*), start=3]
+  \item \emph{Under the null hypothesis with $\#\mathbf{a}$ restrictions
+    $\mathrm{H}_0\colon \mathbf{a}(\bm{\beta}) = \mathbf{0}$, such that
+    $\mathbf{A}(\bm{\beta})$, the $\#\mathbf{a} \times K$ matrix of continuous first
+    derivatives of\/ $\mathbf{a}(\bm{\beta})$, is of full row rank, we have}
+    \begin{equation}
+      W \equiv n \cdot \mathbf{a}(\mathbf{b})'
+      \{\mathbf{A}(\mathbf{b})\,\widehat{\avar(\mathbf{b})}\,
+      \mathbf{A}(\mathbf{b})'\}^{-1}
+      \mathbf{a}(\mathbf{b})
+      \dto \chi^2(\#\mathbf{a}).
+      \label{eq:2.4.11}
+    \end{equation}
+\end{enumerate}
+
+Part~(c) is a generalization of (b); by setting
+$\mathbf{a}(\bm{\beta}) = \mathbf{R}\bm{\beta} - \mathbf{r}$,
+\eqref{eq:2.4.11} reduces to \eqref{eq:2.4.2}, the Wald statistic for linear
+restrictions.
+
+The choice of $\mathbf{a}(\cdot)$ for representing a given set of restrictions is not
+unique.  For example, $\beta_1\beta_2 = 1$ can be written as
+$a(\bm{\beta}) = 0$ with $a(\bm{\beta}) = \beta_1\beta_2 - 1$ or with
+$a(\bm{\beta}) = \beta_1 - 1/\beta_2$.  While part~(c) of the proposition guarantees
+that in large samples the outcome of the Wald test is the same regardless of the
+choice of the function $\mathbf{a}$, the numerical value of the Wald statistic $W$
+does depend on the representation, and the test outcome can be different in finite
+samples.  In the above example, the second representation,
+$a(\bm{\beta}) = \beta_1 - 1/\beta_2$, does not satisfy the requirement of continuous
+derivatives at $\beta_2 = 0$.  Indeed, a Monte Carlo study by Gregory and Veall
+(1985) reports that, when $\beta_2$ is close to zero, the Wald test based on the
+second representation rejects the null too often in small samples.

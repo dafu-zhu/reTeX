@@ -1,0 +1,225 @@
+% sec1_7_part2.tex — Section 1.7 (part 2): Testing, R², residuals (pp. 65--70)
+
+\subsection*{Testing the Homogeneity of the Cost Function}
+
+Before proceeding to the estimation of the restricted model~\eqref{eq:1.7.6}, in order
+to test the homogeneity restriction $\beta_3 + \beta_4 + \beta_5 = 1$, we will first
+estimate the unrestricted model~\eqref{eq:1.7.4}.  If one uses the data available in
+printed form in Nerlove's paper, the OLS estimate of the equation is:
+\begin{equation}
+\begin{aligned}
+  \log(TC_i) &= \underset{(1.8)}{-3.5} + \underset{(0.017)}{0.72}\,\log(Q_i)
+    + \underset{(0.29)}{0.44}\,\log(p_{i1}) \\
+  &\quad - \underset{(0.34)}{0.22}\,\log(p_{i2})
+    + \underset{(0.10)}{0.43}\,\log(p_{i3}) \\[6pt]
+  R^2 &= 0.926,\quad \text{mean of dep.\ variable} = 1.72, \\
+  SER &= 0.392,\quad SSR = 21.552,\quad n = 145.
+\end{aligned}
+\label{eq:1.7.7}
+\end{equation}
+Here, numbers in parentheses are the standard errors of the OLS coefficient estimates.
+Since $\beta_2 = 1/r$, the estimate of the degree of returns to scale implied by the OLS
+coefficient estimates is about $1.4$ $(= 1/0.72)$.  The OLS estimate of
+$\beta_4 = \alpha_2/r$ has the wrong sign.  As noted by Nerlove, there are reasons to
+believe that $p_{i2}$, the rental price of capital, is poorly measured.  This may explain
+why $b_4$ is so imprecisely determined (i.e., the standard error is large relative to the
+size of the coefficient estimate) that one cannot reject the hypothesis that $\beta_4 = 0$
+with a $t$-ratio of $-0.65$ $(= -0.22/0.34)$.\footnote{The consequence of measurement
+error is not just that the coefficient of the variable measured with error is poorly
+determined; it could also contaminate the coefficient estimates for all other regressors.
+The appropriate context to address this problem is the large sample theory for endogenous
+regressors in Chapter~3.}
+
+To test the homogeneity restriction $\text{H}_0\colon \beta_3 + \beta_4 + \beta_5 = 1$,
+we could write the hypothesis in the form $\vec{R}\bm{\beta} = \vec{r}$ with
+$\vec{R} = (0,\,0,\,1,\,1,\,1)$ and $\vec{r} = 1$ and use the formula~(1.4.9) to
+calculate the $F$-ratio.  Alternatively, we can use the $F$-ratio formula~(1.4.11).  The
+unrestricted model producing $SSR_U$ is~\eqref{eq:1.7.4} and the restricted model
+producing $SSR_R$ is~\eqref{eq:1.7.6}, which superimposes the null hypothesis on the
+unrestricted model.  The OLS estimate of~\eqref{eq:1.7.6} is
+\begin{equation}
+\begin{aligned}
+  \log\!\left(\frac{TC_i}{p_{i3}}\right)
+  &= \underset{(0.88)}{-4.7} + \underset{(0.017)}{0.72}\,\log(Q_i) \\
+  &\quad + \underset{(0.20)}{0.59}\,\log(p_{i1}/p_{i3})
+    - \underset{(0.19)}{0.007}\,\log(p_{i2}/p_{i3}) \\[6pt]
+  R^2 &= 0.932,\quad \text{mean of dep.\ var.} = -1.48, \\
+  SER &= 0.39,\quad SSR = 21.640,\quad n = 145.
+\end{aligned}
+\label{eq:1.7.8}
+\end{equation}
+
+The $F$ test of the homogeneity restriction proceeds as follows.
+
+\textbf{Step~1:} Using~(1.4.11), the $F$-ratio can be calculated as
+\[
+  \frac{(21.640 - 21.552)/1}{21.552/(145 - 5)} = 0.57.
+\]
+
+\textbf{Step~2:} Find the critical value.  The number of restrictions (equations) in
+the null hypothesis is 1, and $K$ (the number of coefficients in the unrestricted
+model) is 5.  So the degrees of freedom are 1 and $140$ $(= 145 - 5)$.  From the table
+of $F$ distributions, the critical value is about 3.9.
+
+\textbf{Step~3:} Thus, we can easily accept the homogeneity restriction, a very
+comforting conclusion for those who take microeconomics seriously (like us).
+
+\subsection*{Detour: A Cautionary Note on $R^2$}
+
+The $R^2$ of 0.926 is surprisingly high for cross-section estimates, but some of the
+explanatory power of the regression comes from the scale effect that total costs increase
+with firm size.  To gauge the contribution of the scale effect on the $R^2$, subtract
+$\log(Q_i)$ from both sides of~\eqref{eq:1.7.4} to obtain an equivalent cost function:
+\begin{equation}
+\begin{aligned}
+  \log\!\left(\frac{TC_i}{Q_i}\right)
+  &= \beta_1 + (\beta_2 - 1)\log(Q_i) \\
+  &\quad + \beta_3\log(p_{i1}) + \beta_4\log(p_{i2})
+    + \beta_5\log(p_{i3}) + \varepsilon_i.
+\end{aligned}
+\tag{\ref{eq:1.7.4}$'$}
+\label{eq:1.7.4p}
+\end{equation}
+Here, the dependent variable is the average cost rather than total costs.  Application of
+the OLS to~\eqref{eq:1.7.4p} using the same data yields
+\begin{equation}
+\begin{aligned}
+  \log\!\left(\frac{TC_i}{Q_i}\right)
+  &= \underset{(1.8)}{-3.5} - \underset{(0.017)}{0.28}\,\log(Q_i) \\
+  &\quad + \underset{(0.29)}{0.44}\,\log(p_{i1})
+    - \underset{(0.34)}{0.22}\,\log(p_{i2})
+    + \underset{(0.10)}{0.43}\,\log(p_{i3}) \\[6pt]
+  R^2 &= 0.695,\quad \text{mean of dep.\ var.} = -4.83, \\
+  SER &= 0.392,\quad SSR = 21.552,\quad n = 145.
+\end{aligned}
+\label{eq:1.7.9}
+\end{equation}
+As you no doubt have anticipated, the output coefficient is now $-0.28$ $(= 0.72 - 1)$
+with the standard errors and the other coefficient estimates unchanged.  The $R^2$
+changes only because the dependent variable is different.  It is nonsense to say that the
+higher $R^2$ makes~\eqref{eq:1.7.4} preferable to~\eqref{eq:1.7.4p}, because the two
+equations represent the same model.  The point is: when comparing equations on the basis
+of the fit, the equations must share the same dependent variable.
+
+\subsection*{Testing Constant Returns to Scale}
+
+As an application of the $t$-test, consider testing whether returns to scale are constant
+($r = 1$).  We take the maintained hypothesis to be the restricted model~\eqref{eq:1.7.6}.
+Because $\beta_2$ (the log output coefficient) equals 1 if and only if $r = 1$, the null
+hypothesis is that $\text{H}_0\colon \beta_2 = 1$.  The $t$-test of constant returns to
+scale proceeds as follows.
+
+\textbf{Step~1:} Calculate the $t$-ratio for the hypothesis.  From the estimation of the
+restricted model, we have $b_2 = 0.72$ with a standard error of 0.017, so
+\[
+  t\text{-ratio} = \frac{0.72 - 1}{0.017} = -16.
+\]
+Because the maintained hypothesis here is the restricted model~\eqref{eq:1.7.6}, $K$
+(the number of coefficients) $= 4$.
+
+\textbf{Step~2:} Look for the critical value in the $t(141)$ distribution.  If the size
+of the test is 5 percent, the critical value is 1.98.
+
+\textbf{Step~3:} Since the absolute value of the $t$-ratio is far greater than the
+critical value, we reject the hypothesis of constant returns to scale.
+
+\subsection*{Importance of Plotting Residuals}
+
+The regression has a problem that cannot be seen from the estimated coefficients and
+their standard errors.  Figure~1.7 plots the residuals against $\log(Q_i)$.  Notice two
+things from the plot.  First, as output increases, the residuals first tend to be
+positive, then negative, and again positive.  This strongly suggests that the degree of
+returns to scale ($r$) is not constant as assumed in the log-linear specification.
+Second, the residuals are more widely scattered for lower outputs, which is a sign of a
+failure of the homoskedasticity assumption that the error variance does not depend on the
+regressors.  To deal with these problems, Nerlove divided the sample of 145 firms into
+five groups of 29, ordered by output, and estimated the model~\eqref{eq:1.7.6}
+separately for each group.  This amounts to allowing all the coefficients (including
+$\beta_2 = 1/r$) \emph{and} the error variance to differ across the five groups
+differing in size.  Nerlove finds that returns to scale diminish steadily, from a high of
+well over 2 to a low of slightly below 1, over the output range of the data.  In the
+empirical exercise of this chapter, the reader is asked to replicate this finding and do
+some further analysis using \textbf{dummy variables} and the weighted least squares.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.9\textwidth,trim=50 400 50 400,clip]{figures/fig_1_7.png}
+\caption{Plot of Residuals against Log Output}
+\label{fig:1.7}
+\end{figure}
+
+\subsection*{Subsequent Developments}
+
+One strand of the subsequent literature is concerned about generalizing the Cobb-Douglas
+technology while maintaining the assumption of cost minimization.  An obvious alternative
+to Cobb-Douglas is the Constant Elasticity of Substitution (CES) production function,
+but it has two problems.  First, the cost function implied by the CES production function
+is highly nonlinear (which, though, could be overcome by the use of nonlinear least
+squares to be covered in Chapter~7).  Second, the CES technology implies a constant
+degree of returns to scale.  One of Nerlove's main findings is that the degree varies
+with output.  Christensen and Greene (1976) are probably the first to estimate the
+technology parameters allowing for variable degrees of returns to scale.  Using the
+\textbf{translog cost function} introduced by Christensen, Jorgenson, and Lau (1973),
+they find that the significant scale economies evident in the 1955 data were mostly
+exhausted by 1970, with most firms operating at much higher output levels where the AC
+curve is essentially flat.  Their work will be examined in detail in Chapter~4.
+
+Another issue is whether regulated firms minimize costs.  The influential paper by
+Averch and Johnson (1962) argues that the practice by regulators to guarantee utilities
+a ``fair rate of return'' on their capital stock distorts the choice of input levels.
+Consequently, unless the fair rate of return is used in the calculation of $p_{i2}$, the
+true technology parameters cannot be estimated from the cost function.
+
+\medskip\noindent
+\textsc{Questions for Review}
+
+\begin{enumerate}
+\item (Review of duality theory) Consult your favorite microeconomic textbook to
+  remember how to derive the Cobb-Douglas cost function from the Cobb-Douglas
+  production function.
+
+\item (Change of units) In Nerlove's data, output is measured in kilowatt hours.
+  If output were measured in megawatt hours, how would the estimated restricted
+  regression change?
+
+\item (Recovering technology parameters from regression coefficients) Show that the
+  technology parameters $(\mu, \alpha_1, \alpha_2, \alpha_3)$ can be determined uniquely
+  from the first four equations in~\eqref{eq:1.7.5} and the definition
+  $r \equiv \alpha_1 + \alpha_2 + \alpha_3$.  (Do not use the fifth equation
+  $\beta_5 = \alpha_3/r$.)
+
+\item (Recovering left-out coefficients from restricted OLS) Calculate the restricted
+  OLS estimate of $\beta_5$ from~\eqref{eq:1.7.8}.  How do you calculate the standard
+  error of $b_5$ from the printout of the restricted OLS?  \textbf{Hint:} Write
+  $b_5 = a + \vec{c}'\vec{b}$ for suitably chosen $a$ and $\vec{c}$ where $\vec{b}$
+  here is $(b_1, \ldots, b_4)'$.  So
+  $\Var(b_5 \mid \vec{X}) = \vec{c}'\,\Var(\vec{b} \mid \vec{X})\,\vec{c}$.
+
+\item If you take $p_{i2}$ instead of $p_{i3}$ and subtract $\log(p_{i2})$ from both
+  sides of~\eqref{eq:1.7.4}, how does the restricted regression look?  Without actually
+  estimating it on Nerlove's data, can you tell from the estimated restricted regression
+  in the text what the restricted OLS estimate of $(\beta_1, \ldots, \beta_5)$ will be?
+  Their standard errors?  The $SSR$?  What about the $R^2$?
+
+\item Why is the $R^2$ of 0.926 from the unrestricted model~\eqref{eq:1.7.7}
+  \emph{lower} than the $R^2$ of 0.932 from the restricted model~\eqref{eq:1.7.8}?
+
+\item A more realistic assumption about the rental price of capital may be that there is
+  an economy-wide capital market so $p_{i2}$ is the same across firms.  In this case,
+  \begin{enumerate}[label=(\alph*)]
+  \item Can we estimate the technology parameters?  \textbf{Hint:} The answer is yes, but
+    why?  When $p_{i2}$ is constant,~\eqref{eq:1.7.4} will have the perfect
+    multicollinearity problem.  But recall that $(\beta_1, \ldots, \beta_5)$ are not free
+    parameters.
+  \item Can we test homogeneity of the cost function in factor prices?
+  \end{enumerate}
+
+\item Taking logs of both sides of the production function~\eqref{eq:1.7.1}, one can
+  derive the log-linear relationship:
+  \[
+    \log(Q_i) = \alpha_0 + \alpha_1\log(x_{i1}) + \alpha_2\log(x_{i2})
+      + \alpha_3\log(x_{i3}) + \varepsilon_i,
+  \]
+  where $\alpha_0 \equiv \E[\log(A_i)]$ and
+  $\varepsilon_i \equiv \log(A_i) - \alpha_0$.
+\end{enumerate}

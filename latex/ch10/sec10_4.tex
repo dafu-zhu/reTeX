@@ -1,0 +1,456 @@
+% sec10_4.tex — Section 10.4: Inference on Cointegrating Vectors
+
+In the previous section, we examined whether an I(1) system is cointegrated. In
+this section, we assume that the system is known to be cointegrated and that the
+cointegration rank and the associated triangular representation are known.\footnote{%
+In practice, we rarely have such knowledge, and the decision to entertain a system with $h$ cointegrating
+relationships is usually based on the outcome of prior tests (such as those mentioned in the previous section)
+designed for determining the cointegration rank. This creates a \textbf{pretest problem}, because the distribution of the
+estimated cointegrating vectors does not take into account the uncertainty about the cointegration rank. This issue
+has not been studied extensively.}
+Our
+interest is to estimate the cointegrating vectors in the triangular representation and
+to make inference about them. For the most part, we focus on the special case
+where the cointegration rank is~1; the general case is briefly discussed at the end of
+the section.
+
+\subsection*{The SOLS Estimator}
+
+For the $h = 1$ case, the triangular representation is
+\begin{equation}
+  \begin{cases}
+    y_{1t} = \mu + \boldsymbol{\gamma}' \mathbf{y}_{2t} + z_t^* \\[3pt]
+    \underset{((n-1) \times 1)}{\Delta \mathbf{y}_{2t}}
+      = \boldsymbol{\delta}_2 + \mathbf{u}_{2t}
+  \end{cases}, \quad
+  \begin{bmatrix}
+    \underset{(1 \times 1)}{z_t^*} \\[3pt]
+    \underset{((n-1) \times 1)}{\mathbf{u}_{2t}}
+  \end{bmatrix}
+  = \underset{(n \times n)}{\boldsymbol{\Psi}^*(L)} \;
+    \underset{(n \times 1)}{\boldsymbol{\varepsilon}_t},
+  \label{eq:10.4.1} \tag{10.4.1}
+\end{equation}
+where $\mathbf{y}_{2t}$ is not cointegrated. (This is just reproducing (10.2.3) and (10.2.5) with
+(10.2.39) for $h = 1$.) So the regression (10.3.1) is now the cointegrating regression.
+Therefore, there exists a unique $(n - 1)$-dimensional vector $\boldsymbol{\gamma}$ such that
+$y_{1t} - \hat{\boldsymbol{\gamma}}'\mathbf{y}_{2t}$
+is a stationary process ($z_t^*$) plus some time-invariant random variable ($\mu$) when
+$\hat{\boldsymbol{\gamma}} = \boldsymbol{\gamma}$ and has a stochastic trend when
+$\hat{\boldsymbol{\gamma}} \neq \boldsymbol{\gamma}$. This suggests that the OLS estimate
+$(\hat{\mu}, \hat{\boldsymbol{\gamma}})$ of the coefficient vector, which minimizes the sum of squared residuals,
+is consistent. In fact, as was shown by Phillips and Durlauf (1986) and Stock
+(1987) for the case where $\boldsymbol{\delta}_2$ in (10.4.1) ($= \E(\Delta\mathbf{y}_{2t})$) is zero and by Hansen (1992a,
+Theorem~1(b)) for the $\boldsymbol{\delta}_2 \neq \mathbf{0}$ case, the OLS estimate $\hat{\boldsymbol{\gamma}}$ is superconsistent for the
+cointegrating vector $\boldsymbol{\gamma}$, with the sampling error converging to 0 at a rate faster than
+the usual rate of $\sqrt{T}$.\footnote{%
+The speed of convergence is $T$ if $\boldsymbol{\delta}_2 = \mathbf{0}$, and $T^{3/2}$ if $\boldsymbol{\delta}_2 \neq \mathbf{0}$. All the studies cited here assume that $\mu$
+is a fixed constant. The same conclusion should hold even if $\mu$ is treated as random. As mentioned in Section
+10.1 (see the paragraph right below (10.1.21)), strictly speaking, $\mu + z_t^*$ is not stationary even if $z_t^*$ is stationary.
+However, since $\mu$ and $z_t^*$ are asymptotically independent as $t \to \infty$, $\mu + z_t^*$ is asymptotically stationary, which
+is all that is needed for the asymptotic results here.}
+Also, the $R^2$ converges to unity.\footnote{%
+For a statement of the conditions under which these results hold, see Hamilton (1994, Proposition~19.2).
+Those conditions are restrictions on $\boldsymbol{\Psi}^*(L)\boldsymbol{\varepsilon}_t$ in (10.4.1).}
+The OLS estimator of $\boldsymbol{\gamma}$
+from the cointegrating regression will be referred to as the \textbf{``static'' OLS (SOLS)}
+estimator of the cointegrating vector. Since the SOLS estimator is consistent, the
+residuals converge to a zero-mean stationary process. Thus, if a univariate unit-root
+test such as the ADF test is applied to the residuals, the test will reject the I(1)
+null in large samples. This is why the residual-based test of the previous section is
+consistent against cointegration.
+
+This fact --- that the OLS coefficient estimates are consistent when the regres\-sors
+are I(1) and not cointegrated --- is a remarkable result, in sharp contrast to the
+case of stationary regressors. To appreciate the contrast, remember from Chap\-ter~3
+what it takes to obtain a consistent estimator of $\boldsymbol{\gamma}$ when the regressors $\mathbf{y}_{2t}$
+are stationary: for the OLS estimator to be consistent, the error term $z_t^*$ has to be
+uncorrelated with $\mathbf{y}_{2t}$; otherwise we need instrumental variables for $\mathbf{y}_{2t}$. In contrast,
+if $y_{1t}$ is cointegrated with $\mathbf{y}_{2t}$ and if the I(1) regressors $\mathbf{y}_{2t}$ are not cointegrated, as
+here, then we do not have to worry about the simultaneity bias, at least in large
+samples, even though the error term $z_t^*$ and the I(1) regressors are correlated.\footnote{%
+If $\mathbf{y}_{2t}$ is cointegrated, then $h \geq 2$ and the regression (10.3.1)---with $n - 1$ regressors---is no longer a
+cointegrating regression (a cointegrating regression should have $n - h$ regressors, see the triangular representation
+(10.2.8)). This case can be handled by the general methodology presented by Sims, Stock, and Watson (1990).
+See Hamilton (1994, Chapter~18) or Watson (1994, Section~2) for an accessible exposition of the methodology.}
+
+In finite samples, however, the bias of the SOLS estimator (the difference
+between the expected value of the estimator and the true value) can be large, as
+noted by Banerjee et al.\ (1986) and Stock (1987). Another shortcoming of SOLS
+is that the asymptotic distribution of the associated $t$ value depends on nuisance
+parameters (which are the coefficients in $\boldsymbol{\Psi}^*(L)$ in (10.4.1)), so it is difficult to do
+inference. Later in this section we will introduce another estimator (to be referred
+to as the ``DOLS'' estimator) which is efficient and whose associated test statistics
+(such as the $t$- and Wald statistics) have conventional asymptotic distributions.
+
+\subsection*{The Bivariate Example}
+
+To be clear about the source and nature of the correlation between the error term
+and the I(1) regressors and also to pave the way for the introduction of the DOLS
+estimator, consider the bivariate version of (10.4.1). For the time being, assume
+$\boldsymbol{\Psi}^*(L) = \boldsymbol{\Psi}_0^*$ (so there is no serial correlation in $(z_t^*, u_{2t})$),
+$\boldsymbol{\delta}_2 = 0$, and $\mu = 0$. The
+triangular representation can be written as
+\begin{equation}
+  \begin{cases}
+    y_{1t} = \gamma y_{2t} + z_t^* \\
+    \Delta y_{2t} = u_{2t}
+  \end{cases}, \quad
+  \begin{bmatrix} z_t^* \\ u_{2t} \end{bmatrix}
+  = \boldsymbol{\Psi}_0^* \, \boldsymbol{\varepsilon}_t.
+  \label{eq:10.4.2} \tag{10.4.2}
+\end{equation}
+The error term $z_t^*$ and the I(1) regressor $y_{2t}$ in the cointegrating regression in
+(10.4.2) can be correlated because
+\begin{align}
+  \text{Cov}(y_{2t}, z_t^*)
+  &= \text{Cov}(y_{2,0} + \Delta y_{2,1} + \Delta y_{2,2} + \cdots + \Delta y_{2t},\; z_t^*)
+  \notag \\
+  &= \text{Cov}(\Delta y_{2,1} + \Delta y_{2,2} + \cdots + \Delta y_{2t},\; z_t^*)
+    \quad (\text{since } \text{Cov}(y_{2,0}, z_t^*) = 0)
+  \notag \\
+  &= \text{Cov}(u_{2,1} + u_{2,2} + \cdots + u_{2t},\; z_t^*)
+    \quad (\text{since } \Delta y_{2t} = u_{2t})
+  \notag \\
+  &= \text{Cov}(u_{2t}, z_t^*)
+    \quad (\text{since } (u_{2t}, z_t^*) \text{ is i.i.d.}).
+  \label{eq:10.4.3} \tag{10.4.3}
+\end{align}
+Since $\boldsymbol{\Psi}_0^*$ and $\boldsymbol{\Omega}$ are not restricted to be diagonal, $z_t^*$ and $u_{2t}$ can be contemporane\-ously
+correlated.
+
+To isolate this possible correlation, consider the least squares projection of $z_t^*$
+on a constant and $u_{2t}$ ($= \Delta y_{2t}$). Recall from Section~2.9 that
+$\tilde{\E}^*(y \mid 1, x) = [\E(y) - \beta_0 \E(x)] + \beta_0 x$
+where $\beta_0 = \text{Cov}(x, y)/\Var(x)$ and that the least squares
+projection error, $y - \tilde{\E}^*(y \mid 1, x)$, has mean zero and is uncorrelated with $x$. Here,
+the mean is zero for both $z_t^*$ and $u_{2t}$. So
+$\tilde{\E}^*(z_t^* \mid 1, u_{2t}) = \beta_0 u_{2t}$ and, if we denote
+the least squares projection error by $v_t \equiv z_t^* - \tilde{\E}^*(z_t^* \mid 1, u_{2t})$, we have
+\begin{gather}
+  z_t^* = \beta_0 u_{2t} + v_t,
+  \notag \\
+  \E(v_t) = 0, \quad
+  \text{Cov}(u_{2t}, v_t) = 0, \quad
+  \text{Cov}(\Delta y_{2t}, v_t) = 0.
+  \label{eq:10.4.4} \tag{10.4.4}
+\end{gather}
+Substituting this into the cointegrating regression, we obtain
+\begin{equation}
+  y_{1t} = \gamma y_{2t} + \beta_0 \Delta y_{2t} + v_t.
+  \label{eq:10.4.5} \tag{10.4.5}
+\end{equation}
+This regression will be referred to as the \textbf{augmented cointegrating regression}.
+Now we show that the I(1) regressor $y_{2t}$ is \emph{strictly exogenous} in that
+$\text{Cov}(y_{2s}, v_t) = 0$ for all $t, s$. By construction,
+$\text{Cov}(\Delta y_{2t}, v_t) = 0$. For $\text{Cov}(\Delta y_{2s}, v_t)$ for $t \neq s$,
+\begin{align}
+  \text{Cov}(\Delta y_{2s}, v_t)
+  &= \text{Cov}(u_{2s}, v_t)
+   = \text{Cov}(u_{2s}, z_t^* - \beta_0 u_{2t})
+  \notag \\
+  &= \text{Cov}(u_{2s}, z_t^*) - \beta_0 \,\text{Cov}(u_{2s}, u_{2t}) = 0,
+  \label{eq:10.4.6} \tag{10.4.6}
+\end{align}
+because $(z_t^*, u_{2t})$ is i.i.d. So $\Delta y_{2t}$ is strictly exogenous. The strict exogeneity of
+$\Delta y_{2t}$ implies the same for $y_{2t}$, because
+\begin{align}
+  \text{Cov}(y_{2s}, v_t)
+  &= \text{Cov}(y_{2,0} + \Delta y_{2,1} + \Delta y_{2,2} + \cdots + \Delta y_{2s},\; v_t)
+  \notag \\
+  &= 0 \quad \text{for all } t, s \text{ by (10.4.6)}.
+  \label{eq:10.4.7} \tag{10.4.7}
+\end{align}
+
+\subsection*{Continuing with the Bivariate Example}
+
+To recapitulate, we have shown that, in the augmented cointegrating regression
+(10.4.5), the I(1) regressor is strictly exogenous if $\boldsymbol{\Psi}^*(L) = \boldsymbol{\Psi}_0^*$. Let
+$(\hat{\gamma}, \hat{\beta}_0)$ be
+the OLS coefficient estimate of $(\gamma, \beta_0)$ from the augmented cointegrating regres\-sion.
+(This $\hat{\gamma}$ should be distinguished from the SOLS estimator of $\gamma$ in the coin\-tegrating
+regression in (10.4.2).) This regression, (10.4.5), is very similar to the
+augmented autoregression (9.4.6) in that one of the two regressors is zero-mean
+I(0) and the other is driftless I(1). We have shown for the augmented
+autoregression that the ``$\mathbf{X}'\mathbf{X}$'' matrix, if properly scaled by $T$ and $\sqrt{T}$, is asymptotically
+diagonal, so the existence of I(0) regressors can be ignored for the purpose of
+deriving the limiting distribution of $\hat{\gamma}$, the OLS estimator of the coefficient of the
+I(1) regressor. The same is true here, and the same argument exploiting the asymp\-totic
+diagonality of the suitably scaled ``$\mathbf{X}'\mathbf{X}$'' matrix shows that the usual $t$-value
+for the hypothesis that $\gamma = \gamma_0$ is asymptotically equivalent to
+\begin{equation}
+  \tilde{t}
+  = \frac{\displaystyle \frac{1}{T} \sum_{t=1}^{T} y_{2t} v_t}
+         {\displaystyle \sqrt{\frac{\sigma_v^2}{T^2}
+           \sum_{t=1}^{T} (y_{2t})^2}},
+  \label{eq:10.4.8} \tag{10.4.8}
+\end{equation}
+where $\sigma_v^2$ is the variance of $v_t$. That is, the difference between the usual $t$-value
+and $\tilde{t}$ in (10.4.8) converges to zero in probability, so the limiting distribution of $t$
+and that of $\tilde{t}$ are the same.
+
+In the augmented autoregression used for the ADF test, the limiting distribu\-tion
+of the ADF $t$-statistic was nonstandard (it is the Dickey-Fuller $t$-distribution).
+In contrast, the asymptotic distribution of $\tilde{t}$ (and hence that of the usual $t$-value)
+is \emph{standard normal}. To see why, first recall that the I(1) regressor $y_{2t}$ is strictly
+exogenous in that $\text{Cov}(y_{2s}, v_t) = 0$ for all $t, s$. To develop intuition, \emph{temporar\-ily}
+assume that $(z_t^*, u_{2t})$ is jointly normal. Then $y_{2s}$ and $v_t$ are independent for
+all $(s, t)$, not just uncorrelated. Consequently, the distribution of $v_t$ conditional on
+$(y_{2,1}, y_{2,2}, \ldots, y_{2T})$ is the same as its unconditional distribution, which is $N(0, \sigma_v^2)$.
+So the distribution of the numerator of (10.4.8) conditional on $(y_{2,1}, y_{2,2}, \ldots,
+y_{2T})$ is
+\[
+  N\biggl(0, \; \frac{\sigma_v^2}{T^2} \sum_{t=1}^{T} (y_{2t})^2\biggr).
+\]
+But the standard deviation of this normal distribution equals the denominator of
+$\tilde{t}$, so
+\[
+  \tilde{t} \mid (y_{2,1}, y_{2,2}, \ldots, y_{2T}) \sim N(0, 1).
+\]
+Since this conditional distribution of $\tilde{t}$ does not depend on $(y_{2,1}, y_{2,2}, \ldots, y_{2T})$, the
+\emph{un}conditional distribution of $\tilde{t}$, too, is $N(0, 1)$. (This type of argument is not new to
+you; see the paragraph containing (1.4.3) of Chapter~1.) Recall from Chapter~2 that,
+even if the normality assumption is dropped, the distribution of the usual $t$-value
+is standard normal, albeit asymptotically, in large samples. The same conclusion
+is true here: the limiting distribution of $\tilde{t}$ is $N(0, 1)$ even if $(z_t^*, u_{2t})$ is not jointly
+normal. Proving this requires an argument different from the type used in Chapter~2,
+because $y_{2t}$ here has a stochastic trend. We will not give a formal proof here; just
+an executive summary. It consists of two parts. The first is to derive the limiting
+distribution of the numerator of (10.4.8) (which can be done using a result stated
+in, e.g., Proposition~18.1(e) of Hamilton, 1994, or Lemma~2.3(c) of Watson, 1994).
+This distribution is nonstandard. The second is to show that normalization (10.4.8)
+converts the nonstandard distribution into a normal distribution (Lemma~5.1 of Park
+and Phillips, 1988).
+
+This example of a bivariate I(1) system is special in several respects: (a) there
+is no serial correlation in the error process $(z_t^*, u_{2t})$, (b) the I(1) regressor $y_{2t}$ is a
+scalar, (c) $y_{2t}$ has no drift, and (d) $\mu = 0$. Of these, relaxing (a) requires some
+thoughts.
+
+\subsection*{Allowing for Serial Correlation}
+
+If it is not the case that $\boldsymbol{\Psi}^*(L) = \boldsymbol{\Psi}_0^*$ as in (10.4.2), then $(z_t^*, u_{2t})$ is serially corre\-lated.
+Consequently, the I(1) regressor $y_{2t}$ in the augmented cointegrating regres\-sion
+(10.4.5) is no longer strictly exogenous because $\text{Cov}(\Delta y_{2s}, v_t)$, while still zero
+for $t = s$, is no longer guaranteed to be zero for $t \neq s$. To remove this correlation,
+consider the least squares projection of $z_t^*$ on the current, past, and future values of
+$u_2$, not just on the current value of $u_2$. Noting that $\Delta y_{2t} = u_{2t}$, the projection can
+be written as
+\begin{equation}
+  z_t^* = \boldsymbol{\beta}(L) \Delta \mathbf{y}_{2t} + v_t, \quad
+  \boldsymbol{\beta}(L) \equiv \sum_{j=-\infty}^{\infty} \boldsymbol{\beta}_j L^j.
+  \label{eq:10.4.9} \tag{10.4.9}
+\end{equation}
+(This $v_t$ is different from the $v_t$ in (10.4.5).) By construction, $\E(v_t) = 0$ and
+$\text{Cov}(\Delta y_{2s}, v_t) = 0$ for all $t, s$. The two-sided filter $\boldsymbol{\beta}(L)$ can be of infinite order,
+but suppose---for now---that it is not and $\beta_j = 0$ for $|j| > p$. Thus,
+\begin{align}
+  z_t^*
+  &= \boldsymbol{\beta}_0 \Delta \mathbf{y}_{2t}
+    + \boldsymbol{\beta}_{-1} \Delta \mathbf{y}_{2,t+1} + \cdots
+    + \boldsymbol{\beta}_{-p} \Delta \mathbf{y}_{2,t+p}
+  \notag \\
+  &\quad + \boldsymbol{\beta}_1 \Delta \mathbf{y}_{2,t-1} + \cdots
+    + \boldsymbol{\beta}_p \Delta \mathbf{y}_{2,t-p} + v_t.
+  \label{eq:10.4.10} \tag{10.4.10}
+\end{align}
+Substituting this into the cointegrating regression in (10.4.2), we obtain the (vastly)
+augmented cointegrating regression
+\begin{align}
+  y_{1t}
+  &= \gamma y_{2t}
+    + \boldsymbol{\beta}_0 \Delta \mathbf{y}_{2t}
+    + \boldsymbol{\beta}_{-1} \Delta \mathbf{y}_{2,t+1} + \cdots
+    + \boldsymbol{\beta}_{-p} \Delta \mathbf{y}_{2,t+p}
+  \notag \\
+  &\quad + \boldsymbol{\beta}_1 \Delta \mathbf{y}_{2,t-1} + \cdots
+    + \boldsymbol{\beta}_p \Delta \mathbf{y}_{2,t-p} + v_t.
+  \label{eq:10.4.11} \tag{10.4.11}
+\end{align}
+Since $\text{Cov}(\Delta y_{2s}, v_t) = 0$ for all $t$ and $s$, $\Delta y_{2t}$ is strictly exogenous, which means
+(as seen above) that the level regressor $y_{2t}$ too is strictly exogenous. Thus, by
+including not just the current change but also past and future changes of the I(1)
+regressor in the augmented cointegrating regression, we are able to maintain the
+strict exogeneity of $y_{2t}$. The OLS estimator of the cointegrating vector $\boldsymbol{\gamma}$ based
+on this augmented cointegrating regression is referred to as the \textbf{``dynamic'' OLS
+(DOLS)}, to distinguish it from the SOLS estimator based on the cointegrating
+regression without changes in $y_2$.
+
+There are $2 + 2p$ regressors, the first of which is driftless I(1) and the rest
+zero-mean I(0). As before, with suitable scaling by $T$ and $\sqrt{T}$, the I(1) regressor
+is asymptotically uncorrelated with the $2p + 1$ zero-mean I(0) regressors, so that
+the suitably scaled $\mathbf{X}'\mathbf{X}$ matrix is again block diagonal and the zero-mean I(0)
+regressors can be ignored for the purpose of deriving the limiting distribution of
+the DOLS estimate of $\gamma$. Therefore, the expression for the random variable that is
+asymptotically equivalent to the $t$-value for $\gamma = \gamma_0$ is again given by (10.4.8), the
+expression derived for the case where $(z_t^*, u_{2t})$ is serially uncorrelated.
+
+However, when $(z_t^*, u_{2t})$ is serially correlated, the derivation of the asymp\-totic
+distribution of (10.4.8) is not the same as when $(z_t^*, u_{2t})$ is serially uncorre\-lated,
+because the error term $v_t$ can now be serially correlated; the projection
+(10.4.9), while eliminating the correlation between $\Delta y_{2s}$ and $v_t$ for all $s, t$, does
+not remove its own serial correlation in $v_t$. To examine the asymptotic distribution,
+let $\mathbf{V}$ ($T \times T$) be the autocovariance matrix of $T$ successive values of $v_t$ and
+$\lambda_v^2$ be
+the long-run variance of $v_t$. Also, let $\mathbf{X}$ in the rest of this subsection be the $T \times 1$
+matrix $(y_{2,1}, y_{2,2}, \ldots, y_{2T})'$. Again, to develop intuition, temporarily assume that
+$(z_t^*, u_{2t})$ are jointly normal. Then, since $y_{2t}$ is strictly exogenous, the distribution
+of the numerator of (10.4.8) conditional on $\mathbf{X}$ is normal with mean zero and the
+conditional variance
+\begin{equation}
+  \frac{1}{T^2} \mathbf{X}'\mathbf{V}\mathbf{X}.
+  \label{eq:10.4.12} \tag{10.4.12}
+\end{equation}
+The square root of this would have to replace the denominator of (10.4.8) to make
+the ratio standard normal in finite samples. Fortunately, it turns out (see Corollary
+2.7 of Phillips, 1988) that, in large samples, the distribution of the numerator is the
+same as the distribution you would get if $v_t$ were serially uncorrelated but with the
+variance of $\lambda_v^2$ rather than $\sigma_v^2$.
+
+Therefore, all that is required to modify the ratio (10.4.8) to accommodate
+serial correlation in $v_t$ is to replace $\sigma_v^2$ ($\equiv \Var(v_t)$) by $\lambda_v^2$ (the long-run variance of
+$v_t$), namely, if $\tilde{t}$ is given by (10.4.8) with $\sigma_v^2$ still in the denominator, its rescaled
+value
+\begin{equation}
+  \left(\frac{\sigma_v}{\lambda_v}\right) \cdot \tilde{t}
+  \label{eq:10.4.13} \tag{10.4.13}
+\end{equation}
+is asymptotically $N(0, 1)$! Since the OLS $t$-value for $\gamma$ is asymptotically equivalent
+to $\tilde{t}$, it follows that
+\begin{equation}
+  \left(\frac{s}{\hat{\lambda}_v}\right) \cdot t \dto N(0, 1),
+  \label{eq:10.4.14} \tag{10.4.14}
+\end{equation}
+where $\hat{\lambda}_v$ is some consistent estimator of $\lambda_v$ and $s$ is the usual OLS standard error
+of regression (it is easy to show that $s$ is consistent for $\sigma_v$). Put differently, if we
+rescale the usual standard error of $\hat{\gamma}$ (the OLS estimate of the $y_{2t}$ coefficient in
+(10.4.11)) as
+\begin{equation}
+  \text{rescaled standard error}
+  = \left(\frac{\hat{\lambda}_v}{s}\right) \times \text{usual standard error},
+  \label{eq:10.4.15} \tag{10.4.15}
+\end{equation}
+then the $t$-value based on this rescaled standard error is asymptotically $N(0, 1)$.
+
+The foregoing argument is applicable only to the coefficient of the I(1) regres\-sor,
+so the $t$-values for $\boldsymbol{\beta}$'s in (10.4.11), even when their standard errors are rescaled
+as just described, are not necessarily $N(0, 1)$ in large samples.
+
+Since the regressors are strictly exogenous, the discussion in Sections~1.6 and
+6.7 suggests that the GLS might be applicable. However, the fact noted above that
+$\mathbf{X}'\mathbf{V}\mathbf{X}$ behaves asymptotically like $\lambda_v\mathbf{X}'\mathbf{X}$ implies that the GLS estimator of
+$\gamma$ (to
+be referred to as the \textbf{DGLS} estimator) is asymptotically equivalent to the DOLS
+estimator (or more precisely, $T$ times the difference converges to 0 in probability)
+(see Phillips, 1988, and Phillips and Park, 1988). Therefore, there is no efficiency
+gain from correcting for the serial correlation in the error term $v_t$ by GLS.
+
+A consistent estimate of $\lambda_v$ is easy to obtain. Recall that in Section~6.6 we
+used the VARHAC procedure to estimate the long-run variance matrix of a vector
+process. The same procedure can be applied to the present case of a scalar error
+process. Consider fitting an AR($p$) process to the residuals, $\hat{v}_t$, from the augmented
+cointegrating regression
+\begin{equation}
+  \hat{v}_t = \phi_1 \hat{v}_{t-1} + \phi_2 \hat{v}_{t-2}
+    + \cdots + \phi_p \hat{v}_{t-p} + e_t
+  \quad (t = p + 1, \ldots, T).
+  \label{eq:10.4.16} \tag{10.4.16}
+\end{equation}
+(This $p$ should not be confused with the $p$ in the augmented cointegrating regres\-sion.)
+Use the BIC to pick the lag length by searching over the possible lag lengths
+of $0, 1, \ldots, T^{1/3}$. Using the relation (6.2.21) on page~385 and noting that the long-run
+variance is the value at $z = 1$ of the autocovariance-generating function, the
+long-run variance $\lambda_v^2$ of $v_t$ can be estimated by
+\begin{equation}
+  \hat{\lambda}_v^2
+  = \frac{\hat{\sigma}_e^2}{(1 - \hat{\phi}_1 - \cdots - \hat{\phi}_p)^2}, \quad
+  \hat{\sigma}_e^2
+  = \frac{1}{T - p} \sum_{t=p+1}^{T} \hat{e}_t^2,
+  \label{eq:10.4.17} \tag{10.4.17}
+\end{equation}
+where $\hat{\phi}_j$ ($j = 1, 2, \ldots, p$) are the estimated AR($p$) coefficients and $\hat{e}_t$ is the
+residual from the AR($p$) equation (10.4.16).
+
+\subsection*{General Case}
+
+We now turn to the general case of an $n$-dimensional cointegrated system with
+possibly nonzero drift. We focus on the $h = 1$ case because extending it to the case
+where $h > 1$ is straightforward. So the triangular representation is (10.4.1) and the
+augmented cointegrating regression is
+\begin{align}
+  y_{1t}
+  &= \mu + \boldsymbol{\gamma}' \mathbf{y}_{2t}
+    + \boldsymbol{\beta}_0' \Delta \mathbf{y}_{2t}
+    + \boldsymbol{\beta}_{-1}' \Delta \mathbf{y}_{2,t+1} + \cdots
+    + \boldsymbol{\beta}_{-p}' \Delta \mathbf{y}_{2,t+p}
+  \notag \\
+  &\quad + \boldsymbol{\beta}_1' \Delta \mathbf{y}_{2,t-1} + \cdots
+    + \boldsymbol{\beta}_p' \Delta \mathbf{y}_{2,t-p} + v_t.
+  \label{eq:10.4.18} \tag{10.4.18}
+\end{align}
+Here, $\boldsymbol{\beta}_j$ ($j = 0, 1, 2, \ldots, p, -1, -2, \ldots, -p$) are the least squares projection
+coefficients in the projection of $z_t^*$ (the error in the cointegrating regression) on the
+current, past, and future values of $\Delta\mathbf{y}_2$. The DOLS estimator of the cointegrating
+vector $\boldsymbol{\gamma}$ is simply the OLS estimator of $\boldsymbol{\gamma}$ from this augmented cointegrating
+regression.
+
+The following results are proved in Saikkonen (1991) and Stock and Watson
+(1993).\footnote{%
+These authors assume that $\mu$ is a fixed constant. However, the same conclusions would hold even if $\mu$ were
+a time-invariant random variable.}
+
+\begin{enumerate}
+\item The bivariate results derived above carry over. That is, the DOLS estimator
+  of $\boldsymbol{\gamma}$ is superconsistent and the properly rescaled $t$- and Wald statistics for
+  hypotheses about $\boldsymbol{\gamma}$ have the conventional asymptotic distributions (standard
+  normal and chi squared). The proper rescaling is to multiply the usual $t$-value
+  by $(s/\hat{\lambda}_v)$ and the Wald statistics by the square of $(s/\hat{\lambda}_v)$. This simple rescaling,
+  however, does not work for the $t$-value and the Wald statistic for hypotheses in\-volving
+  $\mu$ or $\boldsymbol{\beta}_j$.
+
+\item If the two-sided filter $\boldsymbol{\beta}(L)$ in the projection of $z_t^*$ on the leads and lags of
+  $\Delta\mathbf{y}_{2t}$
+  is infinite order, then the error term $v_t$ includes the truncation remainder,
+  \[
+    \sum_{j=p+1}^{\infty} \boldsymbol{\beta}_{-j}' \Delta\mathbf{y}_{2,t+j}
+    + \sum_{j=p+1}^{\infty} \boldsymbol{\beta}_j' \Delta\mathbf{y}_{2,t-j}.
+  \]
+  All the results just mentioned above carry over, provided that $p$ in (10.4.18)
+  is made to increase with the sample size $T$ at a rate slower than $T^{1/3}$. See
+  Saikkonen (1991, Section~4) for a statement of required regularity conditions.
+
+\item The estimator is efficient in some precise sense.\footnote{%
+  The $t$-value is asymptotically $N(0, 1)$, but the DOLS estimator itself is not asymptotically normal. So the
+  usual criterion of comparing the variances of the asymptotic distributions among asymptotically normal estima\-tors
+  is not applicable here. See Saikkonen (1991, Section~3) for an appropriate definition of efficiency.}
+  The estimator is asymp\-totically
+  equivalent to other efficient estimators such as Johansen's maximum
+  likelihood procedure based on the VECM, the Fully Modified estimator of
+  Phillips and Hansen (1990), and a nonlinear least squares estimator of Phillips
+  and Loretan (1991) (and also to the DGLS, as mentioned above). For all these
+  efficient estimators, the $t$- and Wald statistics for hypotheses about $\boldsymbol{\gamma}$, cor\-rectly
+  rescaled if necessary, have standard asymptotic distributions (see
+  Watson, 1994, Section~3.4.3, for more details).
+\end{enumerate}
+
+\subsection*{Other Estimators and Finite-Sample Properties}
+
+Stock and Watson (1993) examined the finite-sample performance of these estima\-tors
+just mentioned (excluding the Phillips-Loretan estimator). For the DGPs and
+the sample sizes ($T = 100$ and 300) they examined, the following results emerged.
+(1)~The bias is smallest for the Johansen estimator and largest for SOLS. (2)~How\-ever,
+the variance of the Johansen estimator is much larger than those for the other
+efficient estimators, and DOLS has the smallest root mean square error (RMSE).
+(3)~For all estimators examined, the distribution of the $t$-values (correctly rescaled
+if necessary) tends to be spread out relative to $N(0, 1)$, suggesting that the null will
+be rejected too often. These conclusions are broadly consistent with the assessment
+of Monte Carlo studies found in Maddala and Kim (1998, Section~5.7).
+
+\subsection*{Question for Review}
+
+\begin{enumerate}
+\item As we have emphasized, there is a similarity between augmented autoregres\-sion
+  (9.4.6) on page~587 and augmented cointegrating regression (10.4.5). Then
+  why is the $t$-value on the I(1) regressor in the augmented cointegrating regres\-sion
+  (10.4.5) asymptotically $N(0, 1)$ while that in (9.4.6) is not?
+\end{enumerate}

@@ -1,0 +1,202 @@
+% sec2_6.tex — Section 2.6: Implications of Conditional Homoskedasticity
+
+The test statistics developed in Sections~2.4 and 2.5 are different from the
+finite-sample counterparts of Section~1.4 designed for testing the same null hypothesis.
+How are they related?  What is the asymptotic distribution of the $t$ and $F$ statistics
+of Chapter~1?  This section answers these questions.
+
+It turns out that the robust $t$-ratio is numerically equal to the $t$-ratio of
+Section~1.4, for a particular choice of $\widehat{\mathbf{S}}$.  Therefore, the
+asymptotic distribution of the $t$-ratio of Section~1.4 is the same as that of the
+robust $t$-ratio, if that particular choice is consistent for $\mathbf{S}$.  The same
+relationship holds between the $F$-ratio of Section~1.4 and the Wald statistic $W$ of
+this chapter.  Under the conditional homoskedasticity assumption stated below, that
+particular choice is indeed consistent.
+
+%% ─── Conditional versus Unconditional Homoskedasticity ───────────────────────
+\subsection*{Conditional versus Unconditional Homoskedasticity}
+
+The conditional homoskedasticity assumption is:
+
+\begin{assumption}[conditional homoskedasticity]
+\label{ass:2.7}
+\begin{equation}
+  \E(\varepsilon_i^2 \mid \mathbf{x}_i) = \sigma^2 > 0.
+  \label{eq:2.6.1}
+\end{equation}
+\end{assumption}
+
+This assumption implies that the unconditional second moment $\E(\varepsilon_i^2)$ equals
+$\sigma^2$ by the Law of Total Expectations.  To be clear about the distinction between
+unconditional and conditional homoskedasticity, consider the following example.
+
+\begin{example}[unconditionally homoskedastic but conditionally heteroskedastic errors]
+\label{ex:2.6}
+As already observed, if $\{y_i, \mathbf{x}_i\}$ is stationary, so is
+$\{\varepsilon_i\}$, and the error is \emph{un}conditionally homoskedastic in that
+$\E(\varepsilon_i^2)$ does not depend on $i$.  To illustrate that the error can
+nevertheless be conditionally heteroskedastic, suppose that $\varepsilon_i$ is written as
+$\varepsilon_i \equiv \eta_i f(\mathbf{x}_i)$, where $\{\eta_i\}$ is zero-mean
+$\E(\eta_i) = 0$ and is independent of $\mathbf{x}_i$.  The conditional second moment of
+$\varepsilon_i$ depends on $\mathbf{x}_i$ because
+\begin{align*}
+  \E(\varepsilon_i^2 \mid \mathbf{x}_i)
+    &= \E(\eta_i^2 f(\mathbf{x}_i)^2 \mid \mathbf{x}_i)
+    \quad (\text{since } \varepsilon_i \equiv \eta_i f(\mathbf{x}_i)) \\
+    &= f(\mathbf{x}_i)^2 \,\E(\eta_i^2 \mid \mathbf{x}_i)
+    \quad (\text{by the linearity of conditional expectations}) \\
+    &= f(\mathbf{x}_i)^2 \,\E(\eta_i^2)
+    \quad (\text{since } \eta_i \text{ is independent of } \mathbf{x}_i
+      \text{ by assumption}),
+\end{align*}
+which varies across $i$ because of the variation in $f(\mathbf{x}_i)$ across $i$.
+\end{example}
+
+%% ─── Reduction to Finite-Sample Formulas ─────────────────────────────────────
+\subsection*{Reduction to Finite-Sample Formulas}
+
+To examine the large-sample distribution of the $t$ and $F$ statistics of Chapter~1
+under the additional Assumption~2.7, we first examine the \emph{algebraic} relationship
+to their robust counterparts.  Consider the following choice for the estimate of
+$\mathbf{S}$:
+\[
+  \widehat{\mathbf{S}} = s^2 \mathbf{S}_{\mathbf{xx}},
+\]
+where $s^2$ is the OLS estimate of $\sigma^2$.  (We will show in a moment that this
+estimator is consistent under conditional homoskedasticity.)  Then the expression (2.3.5)
+for $\widehat{\avar}(\mathbf{b})$ becomes
+\begin{equation}
+  \widehat{\avar}(\mathbf{b}) = s^2 \mathbf{S}_{\mathbf{xx}}^{-1}
+    = n \cdot s^2 \cdot (\mathbf{X}'\mathbf{X})^{-1}.
+  \label{eq:2.6.2}
+\end{equation}
+Substituting this expression into (2.4.1), we see that the robust standard error becomes
+\begin{equation}
+  \sqrt{s^2 \text{ times } (k,k) \text{ element of } (\mathbf{X}'\mathbf{X})^{-1}},
+  \label{eq:2.6.3}
+\end{equation}
+which is the usual standard error in finite-sample theory.  So the robust $t$-ratio is
+numerically identical to the usual finite-sample $t$-ratio when we set
+$\widehat{\mathbf{S}} = s^2 \mathbf{S}_{\mathbf{xx}}$.  Similarly, substituting
+\eqref{eq:2.6.2} into the expression for the Wald statistic (2.4.2), we obtain
+\begin{align}
+  W &= n \cdot (\mathbf{R}\mathbf{b} - \mathbf{r})'
+    \bigl\{\mathbf{R}[n \cdot s^2 \cdot (\mathbf{X}'\mathbf{X})^{-1}]\mathbf{R}'
+    \bigr\}^{-1} (\mathbf{R}\mathbf{b} - \mathbf{r}) \notag \\
+    &= (\mathbf{R}\mathbf{b} - \mathbf{r})'
+    \bigl\{\mathbf{R}[s^2 \cdot (\mathbf{X}'\mathbf{X})^{-1}]\mathbf{R}'
+    \bigr\}^{-1} (\mathbf{R}\mathbf{b} - \mathbf{r})
+    \quad (\text{the two } n\text{'s cancel}) \notag \\
+    &= (\mathbf{R}\mathbf{b} - \mathbf{r})'
+    \bigl\{\mathbf{R}[(\mathbf{X}'\mathbf{X})^{-1}]\mathbf{R}'
+    \bigr\}^{-1} (\mathbf{R}\mathbf{b} - \mathbf{r}) / s^2 \notag \\
+    &= r \cdot F \quad (\text{by the definition of (1.4.9) of the } F\text{-ratio})
+      \notag \\
+    &= (SSR_R - SSR_U)/s^2 \quad (\text{by (1.4.11)}).
+\end{align}
+Thus, when we set $\widehat{\mathbf{S}} = s^2 \mathbf{S}_{\mathbf{xx}}$, the Wald
+statistic $W$ is numerically identical to $\#r \cdot F$ (where $\#r$ is the number of
+restrictions in the null hypothesis).
+
+%% ─── Large-Sample Distribution of t and F Statistics ─────────────────────────
+\subsection*{Large-Sample Distribution of $t$ and $F$ Statistics}
+
+It then follows from Proposition~2.3 that the $t$-ratio (2.4.1) is asymptotically
+$N(0,1)$ and $\#r \cdot F$ asymptotically $\chi^2(\#r)$, if
+$s^2 \mathbf{S}_{\mathbf{xx}}$ is consistent for $\mathbf{S}$.  That
+$s^2 \mathbf{S}_{\mathbf{xx}}$ is consistent for $\mathbf{S}$ can be seen as follows.
+Under conditional homoskedasticity, the matrix of fourth moments $\mathbf{S}$ can be
+expressed as a product of second moments:
+\begin{align}
+  \mathbf{S} &= \E(\mathbf{g}_i \mathbf{g}_i')
+    = \E(\mathbf{x}_i \mathbf{x}_i' \varepsilon_i^2)
+    \quad (\text{since } \mathbf{g}_i \equiv \mathbf{x}_i \cdot \varepsilon_i) \notag \\
+    &= \E[\E(\mathbf{x}_i \mathbf{x}_i' \varepsilon_i^2 \mid \mathbf{x}_i)]
+    \quad (\text{by the Law of Total Expectations}) \notag \\
+    &= \E[\mathbf{x}_i \mathbf{x}_i' \,\E(\varepsilon_i^2 \mid \mathbf{x}_i)]
+    \quad (\text{by the linearity of conditional expectations}) \notag \\
+    &= \E(\mathbf{x}_i \mathbf{x}_i' \sigma^2)
+    \quad (\text{by Assumption~2.7}) \notag \\
+    &= \sigma^2 \,\E(\mathbf{x}_i \mathbf{x}_i')
+    = \sigma^2 \bm{\Sigma}_{\mathbf{xx}}.
+  \label{eq:2.6.4}
+\end{align}
+This decomposition has several implications.
+\begin{itemize}
+  \item ($\bm{\Sigma}_{\mathbf{xx}}$ is nonsingular) \;
+    Since by Assumption~2.5 $\mathbf{S}$ is nonsingular, this decomposition of
+    $\mathbf{S}$ implies that $\sigma^2 > 0$ and $\bm{\Sigma}_{\mathbf{xx}}$ is
+    nonsingular.  Hence, Assumption~2.4 (rank condition) is implied.
+
+  \item (No need for fourth-moment assumption) \;
+    By ergodic stationarity $\mathbf{S}_{\mathbf{xx}} \pto \bm{\Sigma}_{\mathbf{xx}}$.
+    By Proposition~2.2, $s^2$ is consistent for $\sigma^2$ under Assumptions~2.1--2.4.
+    Thus, $s^2 \mathbf{S}_{\mathbf{xx}} \pto \sigma^2 \bm{\Sigma}_{\mathbf{xx}}
+    = \mathbf{S}$.  We do not need the fourth-moment assumption (Assumption~2.6) for
+    consistency.
+\end{itemize}
+
+As another implication of \eqref{eq:2.6.4}, the expression for $\avar(\mathbf{b})$ can
+be simplified: inserting \eqref{eq:2.6.4} into (2.3.4) of Proposition~2.1, the expression
+for $\avar(\mathbf{b})$ becomes
+\begin{equation}
+  \avar(\mathbf{b}) = \sigma^2 \bm{\Sigma}_{\mathbf{xx}}^{-1}.
+  \label{eq:2.6.5}
+\end{equation}
+Thus, we have proved
+
+\begin{proposition}[large-sample properties of $\mathbf{b}$, $t$, and $F$ under
+conditional homoskedasticity]
+\label{prop:2.5}
+\emph{Suppose Assumptions~2.1--2.5 and 2.7 are satisfied.  Then}
+\begin{enumerate}[label=(\alph*)]
+  \item \emph{(Asymptotic distribution of $\mathbf{b}$) \; The OLS estimator
+    $\mathbf{b}$ of $\bm{\beta}$ is consistent and asymptotically normal with}
+    $\avar(\mathbf{b}) = \sigma^2 \bm{\Sigma}_{\mathbf{xx}}^{-1}$.
+
+  \item \emph{(Consistent estimation of asymptotic variance) \; Under the same set of
+    assumptions, $\avar(\mathbf{b})$ is consistently estimated by}
+    $\widehat{\avar}(\mathbf{b}) = s^2 \mathbf{S}_{\mathbf{xx}}^{-1}
+    = n \cdot s^2 \cdot (\mathbf{X}'\mathbf{X})^{-1}$.
+
+  \item \emph{(Asymptotic distribution of the $t$ and $F$ statistics of the
+    finite-sample theory) \; Under $\mathrm{H}_0\colon \beta_k = \bar{\beta}_k$, the
+    usual $t$-ratio (1.4.5) is asymptotically distributed as $N(0,1)$.  Under
+    $\mathrm{H}_0\colon \mathbf{R}\bm{\beta} = \mathbf{r}$,
+    $\#r \cdot F$ is asymptotically $\chi^2(\#r)$, where $F$ is the $F$ statistic from
+    (1.4.9) and $\#r$ is the number of restrictions in $\mathrm{H}_0$.}
+\end{enumerate}
+\end{proposition}
+
+%% ─── Variations of Asymptotic Tests ──────────────────────────────────────────
+\subsection*{Variations of Asymptotic Tests under Conditional Homoskedasticity}
+
+According to this result, you should look up the $N(0,1)$ table to find the critical
+value to be compared with the $t$-ratio (1.4.5) and the $\chi^2$ table for the statistic
+$\#r \cdot F$ derived from (1.4.9).  Some researchers replace the $s^2$ in (1.4.5) and
+(1.4.9) by $\frac{1}{n} \sum_i e_i^2$.  That is, the degrees of freedom $n - K$ is
+replaced by $n$, or the degrees of freedom adjustment implicit in $s^2$ is removed.
+The difference this substitution makes vanishes in large samples, because
+$\lim_{n \to \infty} [n/(n - K)] = 1$.  Therefore, regardless of which test to use, the
+outcome of the test will be the same if the sample size is sufficiently large.
+
+Another variation is to retain the degrees of freedom $n - K$ but use the $t(n - K)$
+table for the $t$ ratio and the $F(\#r, n - K)$ table for $F$, which is \emph{exactly}
+the prescription of finite-sample theory.  This, too, is asymptotically valid because, as
+$n - K$ tends to infinity (which is what happens when $n \to \infty$ with $K$ fixed),
+the $t(n - K)$ distribution converges to $N(0,1)$ (just compare the $t$ table for large
+degrees of freedom with the standard normal table) and $F(\#r, n - K)$ to
+$\chi^2(\#r)/\#r$.  Put differently, even if the error is not normally distributed and the
+regressors are merely predetermined (orthogonal to the error term) and not strictly
+exogenous, the distribution of the $t$-ratio (1.4.5) is well approximated by $t(n - K)$,
+and the distribution of the $F$ ratio by $F(\#r, n - K)$.
+
+These variations are all asymptotically equivalent in that the differences in values
+vanishes in large samples and hence (by Lemma~2.4(a)) their asymptotic distributions are
+the same.  However, when the sample size is only moderately large, the approximation to
+the finite-sample or exact distribution of test statistics may be better with $t(n - K)$
+and $F(\#r, n - K)$, rather than with $N(0,1)$ and $\chi^2(\#r)$.  Because the exact
+distribution depends on the DGP, there is no simple guide as to which variation works
+better in finite samples.  This issue of which table --- $N(0,1)$
+or $t(n - K)$ --- should be used for moderate sample sizes will be taken up in the
+Monte Carlo exercise of this chapter.
