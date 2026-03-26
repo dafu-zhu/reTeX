@@ -21,9 +21,6 @@ This keeps master lightweight. Output branches can be large (hundreds of `.tex` 
 # Clone master only (recommended) — skips all output branches
 git clone --single-branch https://github.com/dafu-zhu/reTeX.git
 
-# If you need a specific conversion's output later:
-git fetch origin output/applied_pde_solutions_manual
-git checkout output/applied_pde_solutions_manual
 ```
 
 ## Quick Start
