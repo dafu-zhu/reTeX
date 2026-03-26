@@ -1,71 +1,85 @@
+---
+name: compile-fix
+description: "Automated LaTeX compile → diagnose → fix → recompile loop. Iterates until 0 errors or max 10 attempts. Use when LaTeX compilation fails, when the user says 'fix compilation', 'compile errors', 'make it build', or after any batch of LaTeX changes. Also trigger after /pdf-to-latex completes a batch."
+---
+
 # LaTeX Compile-Fix Loop
 
-Automated compile → diagnose → fix → recompile cycle until 0 errors.
+Compile a LaTeX project, diagnose errors, fix them programmatically, and recompile. Repeat until clean or max 10 iterations.
 
-## Usage
-`/compile-fix [latex_dir]`
+## Input
+- Optional: path to latex directory (default: `latex/`)
 
-Default: current project's `latex/` directory.
+## Output
+- Compiled PDF at `latex/<book_name>.pdf`
+- Inventory report (sections, equations, figures, exercises)
+
+---
 
 ## Build Convention
-- All auxiliary files (.aux, .log, .idx, .toc, .out) go in `latex/build/` — never pollute `latex/`
-- Output PDF goes to `latex/` root with clean name: `book_name_in_snake_case.pdf`
-- Chapter PDFs: `book_name_in_snake_case_chXX.pdf`
-- Set `TEXINPUTS` so pdflatex resolves inputs from `latex/` while writing to `build/`
 
-### Compile command
+All auxiliary files go in `latex/build/`. The `latex/` root stays clean.
+
 ```bash
 cd latex/
 export TEXINPUTS="$(pwd)//:build//:"
 mkdir -p build
 pdflatex -interaction=nonstopmode -file-line-error -output-directory=build main.tex
-# Copy result to root
-cp build/main.pdf ./book_name.pdf
 ```
 
-## Process (fully automated, iterate until clean)
+Read `BOOK_NAME` from `book.conf`. Copy `build/main.pdf` → `latex/<BOOK_NAME>.pdf`.
 
-### Step 1: Compile (into build/)
-```bash
-export TEXINPUTS="$LATEX_DIR//:$LATEX_DIR/build//:"
-pdflatex -interaction=nonstopmode -file-line-error -output-directory="$LATEX_DIR/build" main.tex
+---
+
+## Loop
+
+```
+REPEAT (max 10):
+  1. Compile into build/
+  2. Count errors (grep "^! " or file-line-error patterns)
+  3. If 0 errors → copy PDF, run inventory check, DONE
+  4. Categorize errors by file, then by type
+  5. Fix highest-impact category first (errors cascade)
+  6. Go to 1
 ```
 
-### Step 2: If 0 errors → copy PDF to latex/ root with clean name → report success → DONE
+---
 
-### Step 3: Categorize errors
-Group by file, then by error type:
-- `Undefined control sequence` → missing package or typo
-- `Missing $ inserted` → math outside math mode
-- `Argument of \X has extra }` → brace mismatch, often `\left/\right` inside macro args
-- `Bad math environment delimiter` → `\boxed{\[...\]}` or similar nesting
-- `Something's wrong--perhaps a missing \item` → enumerate outside list context
-- `Paragraph ended before \X` → unclosed braces across paragraphs
+## Error Categories and Fixes
 
-### Step 4: Fix programmatically
-**CRITICAL: Use Python only, NEVER sed** (sed interprets `\f` as form feed, corrupts `\frac`)
+Apply fixes using **Python `re` module only**. Never use `sed` — it interprets `\f` as form feed byte (0x0c), silently corrupting `\frac` and similar commands.
 
-Common fixes (apply in order):
-1. `\begin{boxed}...\end{boxed}` → `\boxed{...}` (invalid environment)
-2. `\begin{defbox}...\end{defbox}` inside equation → `\boxed{...}` (can't nest tcolorbox in equation)
-3. `\boxed{$...$...}` inside `\[...\]` → `\fbox{\parbox{}{...}}` (double math mode)
-4. `\boxed{\[...\]}` → `\[\boxed{...}\]` (wrong nesting)
-5. `\foreach` in PGFPlots with variable arithmetic in domain → expand manually
-6. `\frac{partial}{partial x}` → `\frac{\partial}{\partial x}` (missing backslashes)
-7. Form feed bytes (0x0c) → strip with Python `bytes.replace(b'\x0c', b'')`
-8. `\fbox{\parbox{...}{` with premature `}}` → move content inside
+| Error Pattern | Root Cause | Fix |
+|---------------|-----------|-----|
+| `\begin{boxed}...\end{boxed}` | Invalid environment | → `\boxed{...}` |
+| `\begin{defbox}` inside `equation` | tcolorbox can't nest in math | → `\boxed{...}` |
+| `\boxed{$...$}` inside `\[...\]` | Double math mode | → `\fbox{\parbox{0.8\textwidth}{...}}` |
+| `\boxed{\[...\]}` | Wrong nesting | → `\[\boxed{...}\]` |
+| `\foreach` in PGFPlots domain with arithmetic | pgfplots can't evaluate `{\k+1}` | Expand to individual `\addplot` calls |
+| `\frac{partial}{partial x}` | Missing backslash | → `\frac{\partial}{\partial x}` |
+| Form feed bytes (0x0c) in .tex files | sed corruption artifact | Strip with `bytes.replace(b'\x0c', b'')` |
+| `\fbox{\parbox{...}{` with premature `}}` | Script split content outside box | Move content inside, fix closing braces |
 
-### Step 5: Recompile (into build/) → go to Step 2
+---
 
-### Step 6: After clean compile, run inventory check
-Count per chapter: sections, equations, figures, exercises. Report totals.
+## Inventory Check
+
+After clean compile, count per chapter:
+
+```python
+sections   = count(r'\\section\{')
+equations  = count(r'\\begin\{(?:equation|align|gather|multline)\*?\}')
+figures    = count(r'\\begin\{figure\}')
+exercises  = count(r'\\item')
+```
+
+Report as table. Sections should match the book's TOC exactly.
+
+---
 
 ## Rules
-- Max 10 iterations. If still errors after 10, report remaining and stop.
-- Fix one error category at a time (most impactful first — errors cascade)
-- After fixing, always recompile to verify fix didn't break other things
-- ALL build artifacts stay in `build/` — latex/ root stays clean
-- Output PDF naming: all lowercase, underscores for spaces, e.g. `applied_partial_differential_equations.pdf`
 
-## Arguments
-- `$ARGUMENTS` — optional path to latex directory
+- Fix one category per iteration, recompile, verify before next category
+- Fixing is sequential Ch 1 → Ch N when errors cascade (e.g., missing equation shifts all downstream numbering)
+- If error count doesn't decrease after a fix, reassess — the fix may have introduced new issues
+- After 10 iterations with remaining errors, report what's left and stop
