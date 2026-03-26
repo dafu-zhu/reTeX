@@ -10,6 +10,22 @@ Convert scanned PDF textbooks into structured, multi-chapter LaTeX projects with
 - **Compile-fix loop** — automated error detection and programmatic fixing
 - **Quantitative verification** — counts sections, equations, figures, exercises to validate completeness
 
+## Branch Structure
+
+- **`master`** — pipeline code, skills, scripts, and templates only. No converted content.
+- **`output/<book_name>`** — each conversion lives on its own branch (e.g., `output/applied_pde_solutions_manual`). Generated `.tex` files, figures, and build config go here.
+
+This keeps master lightweight. Output branches can be large (hundreds of `.tex` files + extracted PNGs), so clone only master unless you need a specific conversion:
+
+```bash
+# Clone master only (recommended) — skips all output branches
+git clone --single-branch https://github.com/dafu-zhu/reTeX.git
+
+# If you need a specific conversion's output later:
+git fetch origin output/applied_pde_solutions_manual
+git checkout output/applied_pde_solutions_manual
+```
+
 ## Quick Start
 
 ```bash
@@ -18,6 +34,7 @@ cp your_textbook.pdf pdfs/scanned.pdf
 
 # 2. Run the pipeline (in Claude Code)
 /pdf-to-latex pdfs/scanned.pdf
+# This auto-creates an output/<book_name> branch
 
 # 3. Build the PDF
 ./scripts/build.sh              # Full book
