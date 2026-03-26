@@ -1,17 +1,19 @@
-% preamble.tex — Shared LaTeX preamble for textbook conversion
-% Page geometry configured to match the source textbook
+% preamble.tex — Shared LaTeX preamble for Instructor's Manual conversion
+% Applied PDE with Fourier Series and BVP, 4th Ed. — Richard Haberman
 
-\documentclass[10pt,openright]{book}
+\documentclass[10pt]{book}
+
+% TOC: show only chapters (matching original manual's clean 14-entry TOC)
+\setcounter{tocdepth}{0}
 
 %% ── Page Geometry ──────────────────────────────────────────────
-% Original is approximately 6.5" x 9.5" Prentice Hall format
+% US Letter with generous margins matching scanned source
 \usepackage[
-  paperwidth=6.5in,
-  paperheight=9.5in,
+  letterpaper,
   top=1in,
-  bottom=1in,
-  left=0.85in,
-  right=0.85in,
+  bottom=1.2in,
+  left=1.1in,
+  right=1.1in,
   headheight=14pt,
   headsep=0.3in,
   footskip=0.4in
@@ -20,86 +22,38 @@
 %% ── Encoding & Fonts ──────────────────────────────────────────
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
-\usepackage{lmodern}          % Latin Modern (close to Computer Modern)
-\usepackage{microtype}        % Improved typography
+\usepackage{lmodern}
+\usepackage{microtype}
 
 %% ── Math ───────────────────────────────────────────────────────
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{amsthm}
-\usepackage{mathtools}        % Extensions to amsmath
-\usepackage{bm}               % Bold math symbols
+\usepackage{mathtools}
+\usepackage{bm}
 
-% Equation numbering: (chapter.section.number)
-\numberwithin{equation}{section}
-
-% Figure/table numbering: chapter.section.number
-\usepackage{chngcntr}
-\counterwithin{figure}{section}
-\counterwithin{table}{section}
-
-%% ── Boxed Equations/Definitions ────────────────────────────────
-\usepackage[most]{tcolorbox}
-
-% Simple box style matching the book's thin-border boxes
-\newtcolorbox{defbox}{
-  colback=white,
-  colframe=black,
-  boxrule=0.5pt,
-  arc=0pt,
-  left=6pt, right=6pt, top=4pt, bottom=4pt,
-  boxsep=2pt
-}
-
-%% ── Theorem Environments ───────────────────────────────────────
-\theoremstyle{plain}
-\newtheorem{theorem}{Theorem}[section]
-\newtheorem{lemma}[theorem]{Lemma}
-\newtheorem{corollary}[theorem]{Corollary}
-\newtheorem{proposition}[theorem]{Proposition}
-
-\theoremstyle{definition}
-\newtheorem{definition}{Definition}[section]
-\newtheorem{example}{Example}[section]
-
-\theoremstyle{remark}
-\newtheorem{remark}{Remark}[section]
-
-%% ── Exercises ──────────────────────────────────────────────────
+%% ── Solution Environment ────────────────────────────────────────
+% Solutions are labeled by original exercise number: "1.4.1 (a)"
 \usepackage{enumitem}
 
-% Exercise label style — configure per book, then forget about it.
-%   \exercisestyle{prefix}{counter} is called for each item label.
-%   Default: "1.2.1." "1.2.2." (section-prefixed)
-%   Override examples:
-%     Plain numbers:       \renewcommand{\exerciselabel}[1]{\textbf{\arabic*.}}
-%     Parenthesized:       \renewcommand{\exerciselabel}[1]{\textbf{(\arabic*)}}
-%     Chapter-only prefix: \renewcommand{\exerciselabel}[1]{\textbf{\thechapter.\arabic*.}}
-\newcommand{\exerciselabel}[1]{\textbf{#1.\arabic*.}}
-\newcommand{\exerciseref}[1]{#1.\arabic*}
+% Each solution block: \begin{solution}{1.4.1} ... \end{solution}
+% Content uses (a), (b), etc. as sub-items when needed
+\newenvironment{solution}[1]{%
+  \par\medskip\noindent\textbf{#1}\quad\ignorespaces
+}{\par\medskip}
 
-\newenvironment{exercises}[1]{%
-  \subsection*{Exercises #1}%
-  \begin{enumerate}[label={\exerciselabel{#1}},ref={\exerciseref{#1}},leftmargin=*]%
-}{%
-  \end{enumerate}%
-}
+% For multi-part solutions: \part{a}, \part{b}, etc.
+\newcommand{\solpart}[1]{\par\noindent(#1)\quad}
 
-% Starred exercise marker
-\newcommand{\starred}{\textsuperscript{*}}
+%% ── Section Headings ────────────────────────────────────────────
+% The manual uses "Section X.Y" as sub-headings within each chapter
+\usepackage{titlesec}
+\titleformat{\section}[block]{\bfseries\large}{}{0pt}{Section }
+\titlespacing{\section}{0pt}{1.5em}{0.8em}
 
-%% ── Figures ────────────────────────────────────────────────────
+%% ── Figures (minimal — solutions manual has very few) ──────────
 \usepackage{graphicx}
 \usepackage{float}
-\usepackage{tikz}
-\usepackage{pgfplots}
-\pgfplotsset{compat=1.18}
-\usetikzlibrary{arrows.meta, patterns, decorations.markings, decorations.pathmorphing, calc}
-
-%% ── Tables ─────────────────────────────────────────────────────
-\usepackage{booktabs}
-\usepackage{array}
-\usepackage{multirow}
 
 %% ── Headers & Footers ──────────────────────────────────────────
 \usepackage{fancyhdr}
@@ -111,11 +65,9 @@
 \fancyhead[LO]{\rightmark}
 \renewcommand{\headrulewidth}{0pt}
 
-% Chapter/section mark formatting
 \renewcommand{\chaptermark}[1]{\markboth{Chapter \thechapter.\ #1}{}}
 \renewcommand{\sectionmark}[1]{\markright{\thesection\ #1}}
 
-% Plain style for chapter opening pages
 \fancypagestyle{plain}{%
   \fancyhf{}%
   \fancyfoot[C]{\thepage}%
@@ -127,15 +79,9 @@
 \hypersetup{
   colorlinks=false,
   pdfborder={0 0 0},
-  % PDF metadata — set per book
-  pdftitle={},
-  pdfauthor={}
+  pdftitle={Instructor's Manual: Applied PDE with Fourier Series and BVP},
+  pdfauthor={Richard Haberman}
 }
-\usepackage{cleveref}
-
-%% ── Index ──────────────────────────────────────────────────────
-\usepackage{makeidx}
-\makeindex
 
 %% ── Custom Commands ────────────────────────────────────────────
 
@@ -164,10 +110,7 @@
 % Laplacian
 \newcommand{\laplacian}{\nabla^2}
 
-% Double surface integral (not in all packages)
-\providecommand{\oiint}{\mathop{\oint\!\!\!\oint}\nolimits}
-
-% Common notations used in the book
+% Differentials
 \newcommand{\dx}{\,dx}
 \newcommand{\dy}{\,dy}
 \newcommand{\dt}{\,dt}
@@ -175,3 +118,5 @@
 \newcommand{\dA}{\,dA}
 \newcommand{\dV}{\,dV}
 \newcommand{\dS}{\,dS}
+\newcommand{\dr}{\,dr}
+\newcommand{\dtheta}{\,d\theta}
