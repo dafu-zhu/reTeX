@@ -94,6 +94,7 @@ cp your_textbook.pdf pdfs/scanned.pdf
 ## Roadmap
 
 - [x] Claude Code pipeline
+- [ ] **Resolve Claude copyright output filter** — Claude refuses to output content it recognizes as copyrighted; see [research](docs/research.md)
 - [ ] Move simple tasks (compile-fix, figure extraction) to [opencode](https://github.com/opencode-ai/opencode) with local/cheap models
 - [ ] Scripted Python pattern matching for compile fixes (no LLM needed)
 - [ ] Per-chapter compilation instead of per-batch

@@ -20,7 +20,7 @@ Convert a scanned textbook PDF into a multi-chapter LaTeX project with proper st
 - Each agent reads scanned PDF → writes section `.tex` files
 - Batch size: ~4 chapters, sequential batches
 - **Auto-compile after each batch** to catch errors early
-- If agent blocked by content filter: retry with rephrased prompt
+- If agent blocked by content filter: retry up to 3x → halve page range → single-page mode → OCR fallback (Nougat/Mathpix)
 
 ### Phase 2: Figures
 - Scan PDF for "Figure X.Y.Z" captions using PyMuPDF
