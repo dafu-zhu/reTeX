@@ -1,0 +1,1488 @@
+% solutions.tex — Solution Set
+\chapter*{Solution Set}
+\addcontentsline{toc}{chapter}{Solution Set}
+\label{ch:solutions}
+
+%% ══════════════════════════════════════════════════════════════
+\section*{Chapter 2}
+%% ══════════════════════════════════════════════════════════════
+
+\subsection*{Exercise 2.8}
+
+\textbf{Proof.}
+Let $\mathbf{a}_n = \bfA_n \mathbf{b}_n$, where $\bfA_n = [A_{nij}]$ and $\mathbf{b}_n = (b_{n1}, b_{n2}, \ldots, b_{nk})'$.
+Then $a_{ni} = \sum_{j=1}^{k} A_{nij} b_{nj}$. Since $A_{nij} = o(1)$ and $b_{nj} = O(1)$, $A_{nij} b_{nj} = o(1)$ by Proposition 2.7~$(iii)$. By Proposition 2.7~$(ii)$, $a_{ni} = o(1)$ because it is the sum of $k$ terms, each of which is $O(1)$. It follows that $\mathbf{a}_n \equiv \bfA_n \mathbf{b}_n = o(1)$.
+
+\subsection*{Exercise 2.13}
+
+\textbf{Proof.}
+Since $\bfZ'\bfX/n \convas \bfQ$ and $\hat{\bfP}_n \convas \bfP$, it follows from Proposition 2.11 that $\det(\bfX'\bfZ\hat{\bfP}_n\bfZ'\bfX/n^2) \convas \det(\bfQ'\bfP\bfQ)$. Since $\bfQ$ has full column rank and $\bfP$ is nonsingular by $(iii)$, $\det(\bfQ'\bfP\bfQ) > 0$. It follows that $\det(\bfX'\bfZ\hat{\bfP}_n\bfZ'\bfX/n^2) > 0$ for all $n$ sufficiently large almost surely, so that $(\bfX'\bfZ\hat{\bfP}_n\bfZ'\bfX/n^2)^{-1}$ exists for all $n$ sufficiently large $a.s.$ Hence
+\[
+  \tilde{\bfbeta}_n \equiv (\bfX'\bfZ\hat{\bfP}_n\bfZ'\bfX/n^2)^{-1}\bfX'\bfZ\hat{\bfP}_n\bfZ'\bfY/n^2
+\]
+exists for all $n$ sufficiently large $a.s.$ Given $(i)$,
+\[
+  \tilde{\bfbeta}_n = \bfbeta_o + (\bfX'\bfZ\hat{\bfP}_n\bfZ'\bfX/n^2)^{-1}\bfX'\bfZ\hat{\bfP}_n\bfZ'\bfeps/n^2.
+\]
+It follows from Proposition 2.11 that
+\[
+  \tilde{\bfbeta}_n \convas \bfbeta_o + (\bfQ'\bfP\bfQ)^{-1}\bfQ'\bfP \cdot \bfzero = \bfbeta_o
+\]
+given $(ii)$ and $(iii)$.
+
+\subsection*{Exercise 2.20}
+
+\textbf{Proof.}
+Since $\bfQ_n = O(1)$ and $\bfP_n = O(1)$, it follows from Proposition 2.16 that $\det(\bfX'\bfZ\hat{\bfP}_n\bfZ'\bfX/n^2) - \det(\bfQ_n'\bfP_n\bfQ_n) \convas 0$. Given $(iii)$, it follows from Lemma 2.19 that $\{\bfQ_n'\bfP_n\bfQ_n\}$ is uniformly positive definite, so
+\[
+  \det(\bfQ_n'\bfP_n\bfQ_n) > \delta > 0
+\]
+for all $n$ sufficiently large. It follows that $\det(\bfX'\bfZ\hat{\bfP}_n\bfZ'\bfX/n^2) > \delta/2 > 0$ for all $n$ sufficiently large almost surely. Hence
+\[
+  \tilde{\bfbeta}_n = (\bfX'\bfZ\hat{\bfP}_n\bfZ'\bfX/n^2)^{-1}\bfX'\bfZ\hat{\bfP}_n\bfZ'\bfY/n^2
+\]
+exists for all $n$ sufficiently large almost surely. Given $(i)$, $\tilde{\bfbeta}_n = \bfbeta_o + (\bfX'\bfZ\hat{\bfP}_n\bfZ'\bfX/n^2)^{-1}\bfX'\bfZ\hat{\bfP}_n\bfZ'\bfeps/n^2$. Given $(ii)$ and $(iii)$ it follows from Proposition 2.16 that $\tilde{\bfbeta}_n - (\bfbeta_o + (\bfQ_n'\bfP_n\bfQ_n)^{-1}\bfQ_n'\bfP_n \times \bfzero) \convas \bfzero$, that is, $\tilde{\bfbeta}_n \convas \bfbeta_o$.
+
+\subsection*{Exercise 2.22}
+
+\textbf{Proof.}
+\begin{enumerate}[label=(\textit{\roman*})]
+  \item By definition, there exist sets $F$, $G \subset \Omega$ with $P(F) = P(G) = 1$, where for all $\omega \in F$ it holds that $|a_n(\omega)n^{-\lambda}| < \Delta_a$ for all $n > N_a$, and for all $\omega \in G$ it holds that $|b_n(\omega)n^{-\mu}| < \Delta_b$ for all $n > N_b$. Set $\Delta = \Delta_a\Delta_b$ and $N = \max(N_a, N_b)$, then for all $\omega \in F \cap G$ it holds that $|a_n(\omega)b_n(\omega)n^{-\lambda}n^{-\mu}| < \Delta$ for all $n > N$. Since $P(F \cap G) = 1$ the first result follows. To obtain the second result, let $\Delta = \Delta_a + \Delta_b$, and set $N$ as before. Then for all $\omega \in F \cap G$ it holds that $|(a_n(\omega) + b_n(\omega))n^{-\kappa}| \leq |a_n(\omega)n^{-\lambda}| + |b_n(\omega)n^{-\mu}| < \Delta_a + \Delta_b = \Delta$ for all $n > N$.
+
+  \item By definition, there exist sets $F$, $G \subset \Omega$ with $P(F) = P(G) = 1$, where for all $\omega \in F$ it holds that $a_n(\omega) = o(n^{\lambda})$ and for all $\omega \in G$ it holds that $b_n(\omega) = o(n^{\mu})$. By Proposition 2.7, $a_n(\omega)b_n(\omega) = o(n^{\lambda+\mu})$ and $a_n(\omega) + b_n(\omega) = o(n^{\kappa})$ on $F \cap G$. Since $P(F \cap G) = 1$ the results follow.
+
+  \item Define $F$ as in $(i)$ and $G$ as in $(ii)$. The result follows immediately by Proposition 2.7 and the fact that $P(F \cap G) = 1$.
+\end{enumerate}
+
+\subsection*{Exercise 2.29}
+
+\textbf{Proof.}
+The proof is identical to that of Exercise 2.13 except that Proposition 2.27 is used instead of Proposition 2.11 and convergence in probability replaces convergence almost surely.
+
+\subsection*{Exercise 2.32}
+
+\textbf{Proof.}
+The proof is identical to that of Exercise 2.20 except that Proposition 2.30 is used in place of Proposition 2.16 and convergence in probability replaces convergence almost surely.
+
+\subsection*{Exercise 2.35}
+
+\textbf{Proof.}
+\begin{enumerate}[label=(\textit{\roman*})]
+  \item Since $a_n = O_p(n^{\lambda})$ and $b_n = O_p(n^{\mu})$, we know that for a given $\eps > 0$ there exist $\Delta_{a,\eps}$, $\Delta_{b,\eps}$, $N_{a,\eps}$, and $N_{b,\eps}$ such that $P(\omega : |n^{-\lambda}a_n| > \Delta_{a,\eps}) < \eps/2$ for $n > N_{a,\eps}$ and $P(\omega : |n^{-\mu}b_n| > \Delta_{b,\eps}) < \eps/2$ for $n > N_{b,\eps}$. Define $N = \max(N_{a,\eps}, N_{b,\eps})$ and $\Delta_\eps = \Delta_{a,\eps}\Delta_{b,\eps}$. Now if
+\[
+  |n^{-\lambda-\mu}a_n(\omega)b_n(\omega)| = |n^{-\lambda}a_n(\omega)||n^{-\mu}b_n(\omega)| > \Delta_\eps = \Delta_{a,\eps}\Delta_{b,\eps}
+\]
+then $|n^{-\lambda}a_n(\omega)| > \Delta_{a,\eps}$ or $|n^{-\mu}b_n(\omega)| > \Delta_{b,\eps}$. So
+\begin{align*}
+  P(\omega : |n^{-\lambda-\mu}a_n(\omega)b_n(\omega)| > \Delta_\eps)
+  &\leq P(\omega : |n^{-\lambda}a_n(\omega)| > \Delta_{a,\eps}) \\
+  &\quad + P(\omega : |n^{-\mu}b_n(\omega)| > \Delta_{b,\eps}) \\
+  &< \eps/2 + \eps/2 = \eps
+\end{align*}
+for $n > N$, which proves that $a_n b_n = O_p(n^{\lambda+\mu})$.
+
+Next, let $\Delta'_\eps = \Delta_{a,\eps} + \Delta_{b,\eps}$. Since $n^{-\lambda}, n^{-\mu} > n^{\kappa}$ it follows that
+\begin{align*}
+  P(|n^{-\kappa}(a_n + b_n)| > \Delta'_\eps) &\leq P(|(n^{-\lambda}a_n + n^{-\mu}b_n)| > \Delta'_\eps) \\
+  &< P(|(n^{-\lambda}a_n| + |n^{-\mu}b_n| > \Delta'_\eps) \\
+  &< P(|n^{-\lambda}a_n| > \Delta_{a,\eps}) + P(|n^{-\mu}b_n| > \Delta_{b,\eps}) \\
+  &< \eps/2 + \eps/2 = \eps.
+\end{align*}
+for $n > N$, which proves that $a_n + b_n = O_p(n^{\kappa})$.
+
+  \item We have $n^{-\lambda}a_n \convp 0$, $n^{-\mu}b_n \convp 0$. It follows from Proposition 2.30 that $n^{-(\lambda+\mu)}a_n b_n \convp 0$ so that $a_n b_n = o_p(n^{\lambda+\mu})$. Consider $\{a_n + b_n\}$. Since $\{b_n\}$ is also $O_p(n^{\mu})$, it follows from $(i)$ that $a_n + b_n = O_p(n^{\kappa})$.
+
+  \item We need to prove that for any $\eps > 0$, there exist $\delta_\eps > 0$ and $N_\eps \in \mathbb{N}$ such that
+\[
+  P(|n^{-\lambda-\mu}a_n b_n| > \delta_\eps) < \eps
+\]
+for all $n > N$. By definition there exist $N_{a,\eps} \in \mathbb{N}$ and $\Delta_{a,\eps} < \infty$ such that $P(\omega : |n^{-\lambda}a_n| > \Delta_{a,\eps}) < \eps/2$ for all $n > N_{a,\eps}$. Define $\delta_{b,\eps} \equiv \delta_\eps / \Delta_{a,\eps} > 0$; then by the definition of convergence in probability, there exists $N_{b,\eps}$ such that $P(|n^{-\mu}b_n| > \delta_{b,\eps}) < \eps/2$ for all $n > N_{b,\eps}$. As in $(i)$ we have that
+\[
+  P(|n^{-\lambda-\mu}a_n b_n| > \delta_\eps) \leq P(|n^{-\lambda}a_n| > \Delta_{a,\eps}) + P(|n^{-\mu}b_n| > \delta_{b,\eps}) < \eps.
+\]
+Since this holds for arbitrary choice of $\eps > 0$, we have shown that $a_n b_n = o_p(n^{\lambda+\mu})$.
+
+Consider $\{a_n + b_n\}$. Since $\{b_n\}$ is also $O_p(n^{\mu})$, it follows from $(i)$ that $a_n + b_n = O_p(n^{\kappa})$.
+\end{enumerate}
+
+%% ══════════════════════════════════════════════════════════════
+\section*{Chapter 3}
+%% ══════════════════════════════════════════════════════════════
+
+\subsection*{Exercise 3.6}
+
+\textbf{Proof.}
+We verify the conditions of Exercise 2.13. Given $(ii)$, the elements of $\{\bfZ_t \eps_t\}$ and $\{\bfZ_t \bfX_t'\}$ are i.i.d.\ sequences by Proposition 3.3. The elements of $\{\bfZ_t \eps_t\}$ and $\{\bfZ_t \bfX_t'\}$ have finite expected absolute values given $(iii.b)$ and $(iv.a)$. By Theorem 3.1,
+\[
+  \bfZ'\bfeps/n = n^{-1}\sum_{t=1}^{n} \bfZ_t \eps_t \convas \bfzero
+\]
+and
+\[
+  \bfZ'\bfX/n = n^{-1}\sum_{t=1}^{n} \bfZ_t \bfX_t' \convas \bfQ,
+\]
+finite with full column rank. Since $(iv.c)$ is also given, the conditions of Exercise 2.13 are satisfied and the result follows.
+
+\subsection*{Exercise 3.13}
+
+\textbf{Proof.}
+By Minkowski's inequality,
+\begin{align*}
+  E\bigg|\sum_{h=1}^{p} X_{thi}\eps_{th}\bigg|^{1+\delta}
+  &\leq \left[\sum_{h=1}^{p} (E|X_{thi}\eps_{th}|^{1+\delta})^{1/(1+\delta)}\right]^{1+\delta} \\
+  &< \left[\sum_{h=1}^{p} \Delta^{1/(1+\delta)}\right]^{1+\delta}
+  = p^{1+\delta}\Delta \equiv \Delta'.
+\end{align*}
+
+\subsection*{Exercise 3.14}
+
+\textbf{Proof.}
+We verify the conditions of Theorem 2.18. By Proposition 3.10, $\{\bfX_t \eps_t\}$ and $\{\bfX_t \bfX_t'\}$ are independent sequences with elements satisfying the moment condition of Corollary 3.9 given $(iii.b)$, $(iv.a)$, and using the results of Corollary 3.12 and Exercise 3.13. It follows from Corollary 3.9 that
+\[
+  \bfX'\bfeps/n = n^{-1}\sum_{t=1}^{n} \bfX_t \eps_t \convas \bfzero
+\]
+and
+\[
+  \bfX'\bfX/n - \bfM_n = n^{-1}\sum_{t=1}^{n} \bfX_t\bfX_t' - \bfM_n \convas \bfzero.
+\]
+$\bfM_n = O(1)$ given $(iv.a)$ as a consequence of Jensen's inequality and the Cauchy--Schwarz inequality. To show this, consider the $i,j$th element of $\bfM_n$,
+\[
+  n^{-1}\sum_{t=1}^{n}\sum_{h=1}^{p} E(X_{thi}X_{thj}).
+\]
+Now
+\begin{align*}
+  n^{-1}\sum_{t=1}^{n}\sum_{h=1}^{p} E(X_{thi}X_{thj})
+  &\leq n^{-1}\sum_{t=1}^{n}\sum_{h=1}^{p} |E(X_{thi}X_{thj})| \\
+  &\leq n^{-1}\sum_{t=1}^{n}\sum_{h=1}^{p} E\,|X_{thi}X_{thj}| \\
+  &\leq n^{-1}\sum_{t=1}^{n}\sum_{h=1}^{p} \left(E\,|X_{thi}|^2\, E\,|X_{thj}|^2\right)^{1/2} \\
+  &< n^{-1}\sum_{t=1}^{n}\sum_{h=1}^{p} \Delta' \\
+  &= p\Delta' < \infty
+\end{align*}
+given $(iv.a)$. Hence, the conditions of Theorem 2.18 are satisfied and the result follows.
+
+\subsection*{Exercise 3.38}
+
+\textbf{Proof.}
+We verify the conditions of Exercise 2.13. Given $(ii)$, $\{\bfZ_t \eps_t\}$ and $\{\bfZ_t \bfX_t'\}$ are stationary ergodic sequences by Proposition 3.36, with elements having finite expected absolute values given $(iii.b)$ and $(iv.a)$. By the ergodic theorem (Theorem 3.34),
+\[
+  \bfZ'\bfeps/n = n^{-1}\sum_{t=1}^{n} \bfZ_t \eps_t \convas \bfzero
+\]
+and
+\[
+  \bfZ'\bfX/n = n^{-1}\sum_{t=1}^{n} \bfZ_t \bfX_t' \convas \bfQ,
+\]
+finite with full column rank. Since $(iv.c)$ is also given, the conditions of Exercise 2.13 are satisfied and the result follows.
+
+\subsection*{Exercise 3.51}
+
+\textbf{Proof.}
+We verify the conditions of Theorem 2.18. Given $(ii)$, $\{\bfX_t \eps_t\}$ and $\{\bfX_t \bfX_t'\}$ are mixing sequences with $\phi$ of size $-r/(2r-1)$, $r > 1$, or $\alpha$ of size $-r/(r-1)$, $r > 1$, by Proposition 3.50. Given $(iii.b)$ and $(iv.a)$ the elements of $\{\bfX_t \eps_t\}$ and $\{\bfX_t \bfX_t'\}$ satisfy the moment condition of Corollary 3.48 by Minkowski's inequality and the Cauchy--Schwarz inequality. It follows that $\bfX'\bfeps/n \convas \bfzero$ and $\bfX'\bfX/n - \bfM_n \convas \bfzero$. $\bfM_n = O(1)$ by Jensen's inequality given $(iv.a)$. Hence the conditions of Theorem 2.18 are satisfied and the result follows.
+
+\subsection*{Exercise 3.53}
+
+\textbf{Proof.}
+$(i)$ The following conditions are sufficient:
+\begin{enumerate}[label=(\textit{\roman*})]
+  \item $Y_t = \alpha_o Y_{t-1} + \beta_o X_t + \eps_t$, $|\alpha_o| < 1$, $|\beta_o| < \infty$;
+  \item $\{(Y_t, X_t)\}$ is a mixing sequence with $\phi$ of size $-r/(2r-1)$, $r > 1$, or $\alpha$ of size $-r/(r-1)$, $r > 1$;
+  \item\begin{enumerate}[label=(\alph*)]
+    \item $E(X_{t-j}\eps_t) = 0$, $j = 0, 1, \ldots$ and all $t$;
+    \item $E(\eps_t \eps_{t-j}) = 0$, $j = 1, 2, \ldots$ and all $t$;
+  \end{enumerate}
+  \item\begin{enumerate}[label=(\alph*)]
+    \item $E|X_t^2|^{r+\delta} < \Delta < \infty$ and $E|\eps_t^2|^{r+\delta} < \Delta < \infty$ for some $0 < \delta < r$ and all $t$;
+    \item $\bfM_n \equiv E(\bfX'\bfX/n)$ has $\det(\bfM_n) > \gamma > 0$ for all $n$ sufficiently large, where $\bfX_t \equiv (Y_{t-1}, X_t)'$.
+  \end{enumerate}
+\end{enumerate}
+
+First, we verify the hint (see Laha and Rohatgi, 1979, p.~53). We are given that
+\[
+  \sum_{t=1}^{n} (E|\mathcal{Z}_t|^p)^{1/p} < \infty.
+\]
+By Minkowski's inequality for finite sums,
+\[
+  E\left|\sum_{t=1}^{n} |\mathcal{Z}_t|\right|^{p} \leq \left(\sum_{t=1}^{n} (E|\mathcal{Z}_t|^p)^{1/p}\right)^{p}
+\]
+for all $n \geq 1$. Hence
+\begin{align*}
+  \lim_{n \to \infty} E\left|\sum_{t=1}^{n} |\mathcal{Z}_t|\right|^{p}
+  &\leq \lim_{n \to \infty} \left(\sum_{t=1}^{n} (E|\mathcal{Z}_t|^p)^{1/p}\right)^{p} \\
+  &= \left(\sum_{t=1}^{\infty} (E|\mathcal{Z}_t|^p)^{1/p}\right)^{p}
+\end{align*}
+by continuity of the function $g(x) \equiv x^p$. Consequently,
+\begin{align*}
+  E\left|\sum_{t=1}^{\infty} \mathcal{Z}_t\right|^{p}
+  &= E \lim_{n \to \infty} \left|\sum_{t=1}^{n} \mathcal{Z}_t\right|^{p} \\
+  &\leq E \lim_{n \to \infty} \left(\sum_{t=1}^{n} |\mathcal{Z}_t|\right)^{p} \\
+  &= \lim_{n \to \infty} E\left|\sum_{t=1}^{n} |\mathcal{Z}_t|\right|^{p} \\
+  &\leq \left(\sum_{t=1}^{\infty} (E|\mathcal{Z}_t|^p)^{1/p}\right)^{p},
+\end{align*}
+where we have applied the monotone convergence theorem to the function $f_n = |\sum_{t=1}^{n}|{\mathcal{Z}_t}||^{p}$ with limit $f = |\sum_{t=1}^{\infty}|{\mathcal{Z}_t}||^{p}$ ($0 < f_1 \leq f_2 \leq \cdots \leq f_n \to f$). Thus we obtain the desired result.
+
+Next, we verify the conditions of Exercise 3.51. First $\{(Y_t, X_t)\}$ mixing implies $\{(\bfX_t', \eps_t)\} \equiv \{(Y_{t-1}, X_t, \eps_t)\}$ is mixing and of the same sizes, given $(i)$ and $(ii)$ by Theorem 3.49.
+
+Next, by repeated substitution we can write $Y_t$ as
+\[
+  Y_t = \beta_o \sum_{j=0}^{\infty} \alpha_o^j X_{t-j} + \sum_{j=0}^{\infty} \alpha_o^j \eps_{t-j},
+\]
+so that
+\[
+  Y_{t-1}\eps_t = \beta_o \sum_{j=0}^{\infty} \alpha_o^j X_{t-j-1}\eps_t + \sum_{j=0}^{\infty} \alpha_o^j \eps_{t-j-1}\eps_t.
+\]
+
+Consider $Z_t = |\beta_o|\sum_{j=0}^{\infty}|\alpha_o|^j|X_{t-j-1}\eps_t| + \sum_{j=0}^{\infty}|\alpha_o|^j|\eps_{t-j-1}\eps_t|$. Since the elements $E|X_{t-j-1}\eps_t| < \Delta_{x\eps} < \infty$ and $E|\eps_{t-j-1}\eps_t| < \Delta_\eps < \infty$ (apply Cauchy--Schwarz inequality and $(iv)$), we have that $E(Z_t) \leq \frac{|\beta_o|}{1-|\alpha_o|}\Delta_{x\eps} + \frac{1}{1-|\alpha_o|}\Delta_\eps < \infty$. So by Proposition 3.52 we can interchange the summation and expectation operators. Hence
+\[
+  E(Y_{t-1}\eps_t) = \beta_o \sum_{j=0}^{\infty} \alpha_o^j E(X_{t-j-1}\eps_t) + \sum_{j=0}^{\infty} \alpha_o^j E(\eps_{t-j-1}\eps_t) = 0,
+\]
+given $(iii.a)$ and $(iii.b)$. Therefore
+\[
+  E(\bfX_t \eps_t) \equiv (E(Y_{t-1}\eps_t), E(X_t\eps_t))' = \bfzero
+\]
+so that condition $(iii.a)$ of Exercise 3.51 is satisfied.
+
+Now consider condition $(iii.b)$. By the Cauchy--Schwarz inequality,
+\[
+  E|X_t\eps_t|^{r+\delta} \leq (E|X_t^2|^{r+\delta}E|\eps_t^2|^{r+\delta})^{1/2} < \Delta < \infty
+\]
+given $(iv.a)$. Further,
+\[
+  E|Y_{t-1}\eps_t|^{r+\delta} \leq (E|Y_{t-1}^2|^{r+\delta}E|\eps_t^2|^{r+\delta})^{1/2} < (\Delta'\Delta)^{1/2} < \infty,
+\]
+provided $E|Y_{t-1}^2|^{r+\delta} < \Delta' < \infty$ for some $\Delta'$. To show this, we write $Y_t$ as above and apply Minkowski's inequality:
+\begin{align*}
+  E|Y_{t-1}^2|^{r+\delta}
+  &= E\left|\beta_o\sum_{j=0}^{\infty}\alpha_o^j X_{t-j} + \sum_{j=0}^{\infty}\alpha_o^j\eps_{t-j}\right|^{2(r+\delta)} \\
+  &\leq \left[\sum_{j=0}^{\infty}\left(E\left[(\alpha_o^j\beta_o X_{t-j})^{2(r+\delta)}\right]\right)^{\frac{1}{2(r+\delta)}} + \left(E\left[(\alpha_o^j\eps_{t-j})^{2(r+\delta)}\right]\right)^{\frac{1}{2(r+\delta)}}\right]^{2(r+\delta)} \\
+  &= \left[\sum_{j=0}^{\infty}\alpha_o^j\beta_o\left(E\left[X_{t-j}^{2(r+\delta)}\right]\right)^{\frac{1}{2(r+\delta)}} + \alpha_o^j\left(E\left[\eps_{t-j}^{2(r+\delta)}\right]\right)^{\frac{1}{2(r+\delta)}}\right]^{2(r+\delta)} \\
+  &< \left[\sum_{j=0}^{\infty}\alpha_o^j\beta_o\,(\Delta)^{\frac{1}{2(r+\delta)}} + \alpha_o^j\,(\Delta)^{\frac{1}{2(r+\delta)}}\right]^{2(r+\delta)} \\
+  &= \left[\frac{\beta_o + 1}{1 - \alpha_o}(\Delta)^{\frac{1}{2(r+\delta)}}\right]^{2(r+\delta)} \leq \left|\frac{\beta_o + 1}{1 - \alpha_o}\right|^{2(r+\delta)}\Delta < \infty.
+\end{align*}
+if and only if $|\alpha_o| < 1$, where we have again used Proposition 3.52 to pass the expectation operator through the summation operator. Therefore $(i)$ and $(iv.a)$ ensure that $(iii.b)$ is satisfied. We now see that all the conditions of Exercise 3.51 hold, so that the OLS estimate of $(\alpha_o, \beta_o)$ is consistent.
+
+$(ii)$ Consider the following data generating process:
+\begin{align*}
+  Y_t &= \alpha_o Y_{t-1} + \eps_t \\
+  \eps_t &= \rho_o \eps_{t-1} + v_t,
+\end{align*}
+where we set $\beta_o = 0$ and assume $E(Y_{t-1}v_t) = 0$, $E(Y_{t-1}\eps_{t-1}) = E(Y_t\eps_t)$, and $E(\eps_t^2) = \operatorname{var}(\eps_t) = \sigma_o^2$. Then from Chapter 1 we know that
+\[
+  E(Y_{t-1}\eps_t) = \sigma_o^2\rho_o/(1 - \rho_o\alpha_o).
+\]
+Therefore, if $\sigma_o^2 \neq 0$ and $\rho_o \neq 0$, condition $(iii.a)$ of Exercise 3.51 is violated.
+
+\subsection*{Exercise 3.77}
+
+\textbf{Proof.}
+We verify the moment condition of Theorem 3.76. Since $E|\mathcal{Z}_t|^{2r} < \Delta < \infty$ for all $t$, it follows that
+\begin{align*}
+  \sum_{t=1}^{\infty} E|\mathcal{Z}_t|^{2r}/t^{1+r}
+  &< \sum_{t=1}^{\infty} \Delta/t^{1+r} \\
+  &= \Delta\sum_{t=1}^{\infty} t^{-(1+r)} < \infty.
+\end{align*}
+since $\sum_{t=1}^{\infty} t^{-(1+r)} < \infty$ for any $r > 0$. The result follows from Theorem 3.76.
+
+\subsection*{Exercise 3.79}
+
+\textbf{Proof.}
+We verify the conditions of Exercise 2.20. First, note that $\bfZ'\bfeps/n = n^{-1}\sum_{h=1}^{p}\bfZ_h\bfeps_h$, where $\bfZ_h$ is the $n \times l$ matrix with rows $\bfZ_{th}$ and $\bfeps_h$ is the $n \times 1$ error vector with elements $\eps_{th}$. By assumption $(iii.a)$, $\{Z_{thi}\eps_{th}, \mathcal{F}_t\}$ is a martingale difference sequence. Given $(iii.b)$, the moment conditions of Exercise 3.77 are satisfied so that $n^{-1}\sum_{t=1}^{n}Z_{thi}\eps_{th} \convas 0$, $h = 1, \ldots, p$, $i = 1, \ldots, l$, and therefore $\bfZ'\bfeps/n \convas \bfzero$ by Proposition 2.11.
+
+Next, Proposition 3.50 ensures that $\{\bfZ_t\bfX_t'\}$ is a mixing sequence given $(ii)$, which satisfies the conditions of Corollary 3.48 given $(iv.a)$. It follows from Corollary 3.48 that $\bfZ'\bfX/n - \bfQ_n \convas \bfzero$, and $\bfQ_n = O(1)$ given $(iv.a)$ by Jensen's inequality. Hence the conditions of Exercise 2.20 are satisfied and the result follows.
+
+%% ══════════════════════════════════════════════════════════════
+\section*{Chapter 4}
+%% ══════════════════════════════════════════════════════════════
+
+\subsection*{Exercise 4.18}
+
+\textbf{Proof.}
+Let $\bfV$ be $k \times k$ with eigenvalues $\lambda_1, \ldots, \lambda_k$. Since $\bfV$ is real and symmetric it can be diagonalized by $\bfV = \bfQ'\bfD\bfQ$, where $\bfD = \diag(\lambda_1, \ldots, \lambda_k)$ is the matrix with the eigenvalues of $\bfV$ along its diagonal and zeros elsewhere, and $\bfQ$ is an orthogonal matrix that has as its rows the standardized eigenvectors of $\bfV$ corresponding to $\lambda_1, \ldots, \lambda_k$. Furthermore, since $\bfV$ is positive (semi) definite its eigenvalues satisfy $\lambda_i > 0$ ($\lambda_i > 0$), $i = 1, \ldots, k$. Hence, defining $\bfD^{1/2} \equiv \diag(\lambda_1^{1/2}, \ldots, \lambda_k^{1/2})$, we can define the square root of $\bfV$ as
+\[
+  \bfV^{1/2} = \bfQ'\bfD^{1/2}\bfQ,
+\]
+which is clearly positive (semi) definite. From
+\[
+  (\bfV^{1/2})' = \bfQ'(\bfD^{1/2})'(\bfQ')' = \bfV^{1/2}
+\]
+we see that $\bfV^{1/2}$ is symmetric, and we verify that
+\begin{align*}
+  \bfV^{1/2}\bfV^{1/2} &= \bfQ'\bfD^{1/2}\bfQ\bfQ'\bfD^{1/2}\bfQ \\
+  &= \bfQ'\bfD^{1/2}\bfD^{1/2}\bfQ \\
+  &= \bfV,
+\end{align*}
+where we used the fact that $\bfQ$ is orthogonal.
+
+The mapping $\bfV \longmapsto (\bfQ, \bfD)$ is continuous because for any matrix with $\lim_{n\to\infty}\bfH_n = \bfzero$, it holds that $\lim_{n\to\infty}\bfQ(\bfV + \bfH_n)\bfQ' = \bfD$, thus
+\[
+  \lim_{n\to\infty}(\bfV + \bfH_n) = \bfQ'\bfD\bfQ.
+\]
+Since also $\lambda \mapsto \sqrt{\lambda}$ is continuous ($\lambda > 0$) then it follows that $\bfV \mapsto \bfV^{1/2}$ is continuous.
+
+\subsection*{Exercise 4.19}
+
+\textbf{Proof.}
+If $\mathcal{Z} \sim N(\bfzero, \bfV)$ it follows from Example 4.12 that
+\[
+  \bfV^{-1/2}\mathcal{Z} \sim N(\bfzero, \bfI),
+\]
+since $\bfV^{-1/2}\bfV\bfV^{-1/2} = \bfI$.
+
+\subsection*{Exercise 4.26}
+
+\textbf{Proof.}
+Since $\bfZ'\bfX/n - \bfQ_n \convp \bfzero$, where $\bfQ_n$ is finite and has full column rank for all $n$ sufficiently large, and $\hat{\bfP}_n - \bfP_n \convp \bfzero$, where $\bfP_n$ is finite and nonsingular for all $n$ sufficiently large, it follows from Proposition 2.30 that
+\[
+  \bfX'\bfZ\hat{\bfP}_n\bfZ'\bfX/n^2 - \bfQ_n'\bfP_n\bfQ_n \convp \bfzero.
+\]
+Also since $\bfQ_n'\bfP_n\bfQ_n$ is nonsingular for all $n$ sufficiently large by Lemma 2.19 given $(iii)$, $(\bfX'\bfZ\hat{\bfP}_n\bfZ'\bfX/n^2)^{-1}$ and $\hat{\bfbeta}_n$ exist in probability. So given $(i)$
+\[
+  \sqrt{n}(\tilde{\bfbeta}_n - \bfbeta_o) = (\bfX'\bfZ\hat{\bfP}_n\bfZ'\bfX/n^2)^{-1}(\bfX'\bfZ/n)\hat{\bfP}_n n^{-1/2}\bfZ'\bfeps.
+\]
+Hence, given $(ii)$,
+\begin{align*}
+  &\sqrt{n}(\tilde{\bfbeta}_n - \bfbeta_o) - (\bfQ_n'\bfP_n\bfQ_n)^{-1}\bfQ_n'\bfP_n n^{-1/2}\bfZ'\bfeps \\
+  &\quad = [(\bfX'\bfZ\hat{\bfP}_n\bfZ'\bfX/n^2)^{-1}(\bfX'\bfZ/n)\hat{\bfP}_n \\
+  &\qquad\quad - (\bfQ_n'\bfP_n\bfQ_n)^{-1}\bfQ_n'\bfP_n]\bfV_n^{1/2}\bfV_n^{-1/2}n^{-1/2}\bfZ'\bfeps.
+\end{align*}
+
+Premultiplying by $\bfD_n^{-1/2}$ yields
+\begin{align*}
+  &\bfD_n^{-1/2}\sqrt{n}(\tilde{\bfbeta}_n - \bfbeta_o) - \bfD_n^{-1/2}(\bfQ_n'\bfP_n\bfQ_n)^{-1}\bfQ_n'\bfP_n n^{-1/2}\bfZ'\bfeps \\
+  &\quad = \bfD_n^{-1/2}[(\bfX'\bfZ\hat{\bfP}_n\bfZ'\bfX/n^2)^{-1}(\bfX'\bfZ/n)\hat{\bfP}_n - (\bfQ\bfP_n\bfQ_n)^{-1}\bfQ_n'\bfP_n]\bfV_n^{1/2}\bfV_n^{-1/2}n^{-1/2}\bfZ'\bfeps.
+\end{align*}
+
+Now $\bfV_n^{-1/2}n^{-1/2}\bfZ'\bfeps \stackrel{A}{\sim} N(\bfzero, \bfI)$ given $(ii)$ and
+\[
+  \bfD_n^{-1/2}[(\bfX'\bfZ\hat{\bfP}_n\bfZ'\bfX/n^2)^{-1}(\bfX'\bfZ/n)\hat{\bfP}_n - (\bfQ_n'\bfP_n\bfQ_n)^{-1}\bfQ_n'\bfP_n]\bfV_n^{1/2} = o_p(1)
+\]
+since $\bfD_n^{-1/2} = O(1)$ and $\bfV_n^{1/2} = O(1)$ given $(ii)$ and $(iii)$, and
+\[
+  (\bfX'\bfZ\hat{\bfP}_n\bfZ'\bfX/n^2)^{-1}(\bfX'\bfZ/n)\hat{\bfP}_n - (\bfQ_n'\bfP_n\bfQ_n)^{-1}\bfQ_n'\bfP_n = o_p(1),
+\]
+given $(iii)$ by Proposition 2.30. Hence, by Lemma 4.6,
+\[
+  \bfD_n^{-1/2}\sqrt{n}(\tilde{\bfbeta}_n - \bfbeta_o) \convp \bfzero.
+\]
+By Lemma 4.7, $\bfD_n^{-1/2}\sqrt{n}(\tilde{\bfbeta}_n - \bfbeta_o)$ has the same limiting distribution as
+\[
+  \bfD_n^{-1/2}(\bfQ_n'\bfP_n\bfQ_n)^{-1}\bfQ_n'\bfP_n n^{-1/2}\bfZ'\bfeps.
+\]
+
+We find the asymptotic distribution of this random vector by applying Corollary 4.24 with $\bfA_n' \equiv (\bfQ_n'\bfP_n\bfQ_n)^{-1}\bfQ_n'\bfP_n$ and $\mathbf{\Gamma}_n \equiv \bfD_n$, which immediately yields
+\[
+  \bfD_n^{-1/2}(\bfQ_n'\bfP_n\bfQ_n)^{-1}\bfQ_n'\bfP_n n^{-1/2}\bfZ'\bfeps \stackrel{A}{\sim} N(\bfzero, \bfI).
+\]
+Since $(ii)$, $(iii)$ and $(iv)$ hold, $\hat{\bfD}_n - \bfD_n \convp \bfzero$ as an immediate consequence of Proposition 2.30.
+
+\subsection*{Exercise 4.33}
+
+\textbf{Proof.}
+Given that $\hat{\bfV}_n - \bfV_n \convp \bfzero$ and $\ddot{\bfV}_n - \bfV_n \convp \bfzero$, it follows from Proposition 2.30 that $\hat{\bfV}_n - \ddot{\bfV}_n = (\hat{\bfV}_n - \bfV_n) - (\ddot{\bfV}_n - \bfV_n) \convp \bfzero$. It immediately follows from Proposition 2.30 that $\mathcal{W}_n - \mathcal{LM}_n \convp 0$.
+
+\subsection*{Exercise 4.34}
+
+\textbf{Proof.}
+From the solution to the constrained minimization problem we know that
+\[
+  \ddot{\bflambda}_n = 2(\bfR(\bfX'\bfX/n)^{-1}\bfR')^{-1}(\bfR\ddot{\bfbeta}_n - \mathbf{r}).
+\]
+Now $\bfY - \bfX\ddot{\bfbeta}_n = \bfY - \bfX_1\ddot{\bfbeta}_{1n} - \bfX_2\ddot{\bfbeta}_{2n} = \bfY - \bfX_1\tilde{\bfbeta}_{1n} = \ddot{\bfeps}$ so that
+\[
+  \ddot{\bflambda}_n = 2(\bfR(\bfX'\bfX/n)^{-1}\bfR')^{-1}\bfR(\bfX'\bfX/n)^{-1}\bfX'\ddot{\bfeps}/n.
+\]
+
+Partitioning $\bfR$ as $[\bfzero, \bfI_q]$ and $\bfX'\bfX$ as
+\[
+  \bfX'\bfX = \begin{bmatrix} \bfX_1'\bfX_1 & \bfX_1'\bfX_2 \\ \bfX_2'\bfX_1 & \bfX_2'\bfX_2 \end{bmatrix}
+\]
+and applying the formula for a partitioned inverse gives
+\[
+  \bfR(\bfX'\bfX)^{-1}\bfR' = (\bfX_2'(\bfI - \bfX_1(\bfX_1'\bfX_1)^{-1}\bfX_1')\bfX_2)^{-1}
+\]
+and
+\[
+  \bfR(\bfX'\bfX)^{-1}\bfX' = (\bfX_2'(\bfI - \bfX_1(\bfX_1'\bfX_1)^{-1}\bfX_1')\bfX_2)^{-1}\bfX_2'(\bfI - \bfX_1(\bfX_1'\bfX_1)^{-1}\bfX_1').
+\]
+Hence by substitution
+\[
+  \ddot{\bflambda}_n = 2\bfX_2'(\bfI - \bfX_1(\bfX_1'\bfX_1)^{-1}\bfX_1')\ddot{\bfeps}/n = 2\bfX_2'\ddot{\bfeps}/n
+\]
+since $\ddot{\bfeps} = (\bfI - \bfX_1(\bfX_1'\bfX_1)^{-1}\bfX_1')\bfY$ and $\bfI - \bfX_1(\bfX_1'\bfX_1)^{-1}\bfX_1'$ is idempotent.
+
+\subsection*{Exercise 4.35}
+
+\textbf{Proof.}
+Substituting $\hat{\bfV}_n = \tilde{\sigma}_n^2(\bfX'\bfX/n)$ into the Lagrange multiplier statistic of Theorem 4.32 yields
+\[
+  \mathcal{LM}_n = n\ddot{\bflambda}_n'\bfR[\ddot{\bfeps}'\ddot{\bfeps}/n(\bfX'\bfX/n)]^{-1}\bfR'\ddot{\bflambda}_n/4.
+\]
+From Exercise 4.34, $\ddot{\bflambda}_n = 2\bfX_2'\ddot{\bfeps}/n$ under $H_0 : \bfbeta_2 = \bfzero$. Substituting this into the above expression and rearranging gives
+\[
+  \mathcal{LM}_n = n\ddot{\bfeps}'\bfX_2\bfR(\bfX'\bfX)^{-1}\bfR'\bfX_2'\ddot{\bfeps}/(\ddot{\bfeps}'\ddot{\bfeps}).
+\]
+Recalling that $\bfX_2\bfR = (\bfzero, \bfX_2)$ and $\ddot{\bfeps}'\bfX_1 = \bfzero$ we can write
+\[
+  \ddot{\bfeps}'\bfX_2\bfR = \ddot{\bfeps}'(\bfzero, \bfX_2) = \ddot{\bfeps}'(\bfX_1, \bfX_2) = \ddot{\bfeps}'\bfX,
+\]
+which upon substitution immediately yields the result.
+
+\subsection*{Exercise 4.40}
+
+\textbf{Proof.}
+We are given that $s(\bfbeta) = \beta_3 - \beta_1\beta_2$. Hence $\nabla s(\bfbeta) = (-\beta_2, -\beta_1, 1)'$. Substituting $s(\hat{\bfbeta}_n)$ and $\nabla s(\hat{\bfbeta}_n)$ into the Wald statistic of Theorem 4.39 yields
+\[
+  \mathcal{W}_n = n(\hat{\beta}_{3n} - \hat{\beta}_{1n}\hat{\beta}_{2n})^2/\hat{\Gamma}_n,
+\]
+where
+\[
+  \hat{\Gamma}_n = (-\hat{\beta}_{2n}, -\hat{\beta}_{1n}, 1)(\bfX'\bfX/n)^{-1}\hat{\bfV}_n(\bfX'\bfX/n)^{-1}(-\hat{\beta}_{2n}, -\hat{\beta}_{1n}, 1)'.
+\]
+Note that $\mathcal{W}_n \stackrel{A}{\sim} \chi_1^2$ in this case.
+
+\subsection*{Exercise 4.41}
+
+\textbf{Proof.}
+The Lagrange multiplier statistic is motivated by the constrained minimization problem
+\[
+  \min_{\bfbeta} (\bfY - \bfX\bfbeta)'(\bfY - \bfX\bfbeta)/n \quad \text{s.t. } \mathbf{s}(\bfbeta) = \bfzero.
+\]
+The Lagrangian for the problem is
+\[
+  \mathcal{L} = (\bfY - \bfX\bfbeta)'(\bfY - \bfX\bfbeta)/n + \mathbf{s}(\bfbeta)'\bflambda
+\]
+and the first order conditions are
+\begin{align*}
+  \partial\mathcal{L}/\partial\bfbeta &= 2(\bfX'\bfX/n)\bfbeta - 2\bfX'\bfY/n + \nabla\mathbf{s}(\bfbeta)'\bflambda = \bfzero \\
+  \partial\mathcal{L}/\partial\bflambda &= \mathbf{s}(\bfbeta) = \bfzero.
+\end{align*}
+Setting $\hat{\bfbeta}_n = (\bfX'\bfX/n)^{-1}\bfX'\bfY/n$ and taking a mean value expansion of $\mathbf{s}(\bfbeta)$ around $\hat{\bfbeta}_n$ gives
+\begin{align*}
+  \partial\mathcal{L}/\partial\bfbeta &= 2(\bfX'\bfX/n)(\bfbeta - \hat{\bfbeta}_n) + \nabla\mathbf{s}(\bfbeta)'\bflambda = \bfzero \\
+  \partial\mathcal{L}/\partial\bflambda &= \mathbf{s}(\hat{\bfbeta}_n) + \nabla\bar{\mathbf{s}}'(\bfbeta - \hat{\bfbeta}_n) = \bfzero,
+\end{align*}
+where $\nabla\bar{\mathbf{s}}'$ is the $q \times k$ Jacobian of $\mathbf{s}$ with $i$th row evaluated at a mean value $\bar{\bfbeta}_n^{(i)}$. Premultiplying the first equation by $\nabla\bar{\mathbf{s}}'(\bfX'\bfX/n)^{-1}$ and substituting $-\mathbf{s}(\hat{\bfbeta}_n) = \nabla\bar{\mathbf{s}}'(\bfbeta - \hat{\bfbeta}_n)$ gives
+\[
+  \ddot{\bflambda}_n = 2[\nabla\bar{\mathbf{s}}'(\bfX'\bfX/n)^{-1}\nabla\mathbf{s}(\hat{\bfbeta}_n)]^{-1}\mathbf{s}(\hat{\bfbeta}_n).
+\]
+Thus, following the procedures of Theorems 4.32 and 4.39 we could propose the statistic
+\[
+  \mathcal{LM}_n = n\ddot{\bflambda}_n'\hat{\bfLambda}_n^{-1}\ddot{\bflambda}_n,
+\]
+where
+\begin{align*}
+  \hat{\bfLambda}_n &\equiv 4(\nabla\bar{\mathbf{s}}'(\bfX'\bfX/n)^{-1}\nabla\mathbf{s}(\hat{\bfbeta}_n))^{-1}\nabla\mathbf{s}(\hat{\bfbeta}_n)'(\bfX'\bfX/n)^{-1}\hat{\bfV}_n \\
+  &\quad\times (\bfX'\bfX/n)^{-1}\nabla\mathbf{s}(\hat{\bfbeta}_n)(\nabla\bar{\mathbf{s}}'(\bfX'\bfX/n)^{-1}\nabla\mathbf{s}(\ddot{\bfbeta}_n))^{-1}.
+\end{align*}
+
+The preceding statistic, however, is not very useful because it depends on generally unknown mean values and also on the unconstrained estimate $\hat{\bfbeta}_n$. An asymptotically equivalent statistic replaces $\nabla\bar{\mathbf{s}}'$ by $\nabla\mathbf{s}(\ddot{\bfbeta}_n)'$ and $\hat{\bfbeta}_n$ by $\ddot{\bfbeta}_n$:
+\[
+  \mathcal{LM}_n = n\ddot{\bflambda}_n'\ddot{\bfLambda}_n^{-1}\ddot{\bflambda}_n,
+\]
+where
+\[
+  \ddot{\bflambda}_n = 2[\nabla\mathbf{s}(\ddot{\bfbeta}_n)'(\bfX'\bfX/n)^{-1}\nabla\mathbf{s}(\ddot{\bfbeta}_n)]^{-1}\mathbf{s}(\ddot{\bfbeta}_n)
+\]
+and
+\begin{align*}
+  \ddot{\bfLambda}_n &= 4[\nabla\mathbf{s}(\ddot{\bfbeta}_n)'(\bfX'\bfX/n)^{-1}\nabla\mathbf{s}(\ddot{\bfbeta}_n)]^{-1} \\
+  &\quad\times \nabla\mathbf{s}(\ddot{\bfbeta}_n)'(\bfX'\bfX/n)^{-1}\ddot{\bfV}_n(\bfX'\bfX/n)^{-1}\nabla\mathbf{s}(\ddot{\bfbeta}_n) \\
+  &\quad\times [\nabla\mathbf{s}(\ddot{\bfbeta}_n)'(\bfX'\bfX/n)^{-1}\nabla\mathbf{s}(\ddot{\bfbeta}_n)]^{-1}.
+\end{align*}
+
+To show that $\mathcal{LM}_n \stackrel{A}{\sim} \chi_q^2$ under $H_0$ we note that $\mathcal{LM}_n$ differs from $\mathcal{W}_n$ only in that $\ddot{\bfV}_n$ is used in place of $\hat{\bfV}_n$ and $\ddot{\bfbeta}_n$ replaces $\hat{\bfbeta}_n$. Since $\ddot{\bfbeta}_n - \hat{\bfbeta}_n \convp \bfzero$ and $\ddot{\bfV}_n - \hat{\bfV}_n \convp \bfzero$ under $H_0$ given the conditions of Theorem 4.25, it follows from Proposition 2.30 that
+\[
+  \mathcal{LM}_n - \mathcal{W}_n \convp 0
+\]
+given that $\nabla\mathbf{s}$ is continuous. Hence $\mathcal{LM}_n \stackrel{A}{\sim} \chi_q^2$ by Lemma 4.7.
+
+\subsection*{Exercise 4.42}
+
+\textbf{Proof.}
+First consider testing the hypothesis $\bfR\bfbeta_o = \mathbf{r}$. Analogous to Theorem 4.31 the Wald statistic is
+\[
+  \mathcal{W}_n \equiv n(\bfR\tilde{\bfbeta}_n - \mathbf{r})'\hat{\mathbf{\Gamma}}_n^{-1}(\bfR\tilde{\bfbeta}_n - \mathbf{r}) \convd \chi_q^2
+\]
+under $H_0$, where
+\begin{align*}
+  \hat{\mathbf{\Gamma}}_n &\equiv \bfR\hat{\bfD}_n\bfR' \\
+  &= \bfR(\bfX'\bfZ\hat{\bfP}_n\bfZ'\bfX/n^2)^{-1}(\bfX'\bfZ/n)\hat{\bfP}_n\hat{\bfV}_n\hat{\bfP}_n(\bfZ'\bfX/n) \\
+  &\quad\times (\bfX'\bfZ\hat{\bfP}_n\bfZ'\bfX/n^2)^{-1}\bfR'.
+\end{align*}
+
+To prove $\mathcal{W}_n$ has an asymptotic $\chi_q^2$ distribution under $H_0$, we note that
+\[
+  \bfR\tilde{\bfbeta}_n - \mathbf{r} = \bfR(\tilde{\bfbeta}_n - \bfbeta_o)
+\]
+so
+\[
+  \mathbf{\Gamma}_n^{-1/2}\sqrt{n}(\bfR\tilde{\bfbeta}_n - \mathbf{r}) = \mathbf{\Gamma}_n^{-1/2}\bfR\sqrt{n}(\tilde{\bfbeta}_n - \bfbeta_o),
+\]
+where
+\[
+  \mathbf{\Gamma}_n = \bfR(\bfQ_n'\bfP_n\bfQ_n)^{-1}\bfQ_n'\bfP_n\bfV_n\bfP_n\bfQ_n(\bfQ_n'\bfP_n\bfQ_n)^{-1}\bfR'.
+\]
+It follows from Corollary 4.24 that $\mathbf{\Gamma}_n^{-1/2}\bfR\sqrt{n}(\tilde{\bfbeta}_n - \bfbeta_o) \stackrel{A}{\sim} N(\bfzero, \bfI)$ so that $\mathbf{\Gamma}_n^{-1/2}\sqrt{n}(\bfR\tilde{\bfbeta}_n - \mathbf{r}) \stackrel{A}{\sim} N(\bfzero, \bfI)$. Since $\hat{\bfD}_n - \bfD_n \convp \bfzero$ from Exercise 4.26, it follows that $\hat{\bfLambda}_n - \bfLambda_n \convp \bfzero$ by Proposition 2.30. Hence $\mathcal{W}_n \stackrel{A}{\sim} \chi_q^2$ by Theorem 4.30.
+
+We can derive the Lagrange multiplier statistic from the constrained minimization problem:
+\[
+  \min_{\bfbeta} (\bfY - \bfX\bfbeta)'\bfZ\hat{\bfP}_n\bfZ'(\bfY - \bfX\bfbeta)/n^2 \quad \text{s.t. } \bfR\bfbeta = \mathbf{r}.
+\]
+The first-order conditions are
+\begin{align*}
+  \partial\mathcal{L}/\partial\bfbeta &= 2(\bfX'\bfZ\hat{\bfP}_n\bfZ'\bfX/n^2)\bfbeta - 2(\bfX'\bfZ/n)\hat{\bfP}_n\bfZ'\bfY/n + \bfR\bflambda = \bfzero \\
+  \partial\mathcal{L}/\partial\bflambda &= \bfR\bfbeta - \mathbf{r} = \bfzero,
+\end{align*}
+where $\bflambda$ is the vector of Lagrange multipliers. It follows that
+\begin{align*}
+  \ddot{\bflambda}_n &= 2(\bfR(\bfX'\bfZ\hat{\bfP}_n\bfZ'\bfX/n^2)^{-1}\bfR')^{-1}(\bfR\ddot{\bfbeta}_n - \mathbf{r}) \\
+  \ddot{\bfbeta}_n &= \tilde{\bfbeta}_n - (\bfX'\bfZ\hat{\bfP}_n\bfZ'\bfX/n^2)^{-1}\bfR'\ddot{\bflambda}_n/2.
+\end{align*}
+Hence, analogous to Theorem 4.32, $\mathcal{LM}_n \equiv n\ddot{\bflambda}_n'\ddot{\bfLambda}_n^{-1}\ddot{\bflambda}_n \stackrel{A}{\sim} \chi_q^2$ under $H_0$, where
+\begin{align*}
+  \hat{\bfLambda}_n &\equiv 4(\bfR(\bfX'\bfZ\hat{\bfP}_n\bfZ'\bfX/n^2)^{-1}\bfR')^{-1}\bfR(\bfX'\bfZ\hat{\bfP}_n\bfZ'\bfX/n^2)^{-1} \\
+  &\quad\times (\bfX'\bfZ/n)\hat{\bfP}_n\hat{\bfV}_n\hat{\bfP}_n(\bfZ'\bfX/n)(\bfX'\bfZ\hat{\bfP}_n\bfZ'\bfX/n^2)^{-1} \\
+  &\quad\times \bfR'(\bfR(\bfX'\bfZ\hat{\bfP}_n\bfZ'\bfX/n^2)^{-1}\bfR')^{-1}
+\end{align*}
+and $\ddot{\bfV}_n$ is computed under the constrained regression such that $\ddot{\bfV}_n - \hat{\bfV}_n \convp \bfzero$ under $H_0$. If we can show that $\mathcal{LM}_n - \mathcal{W}_n \convp 0$, then we can apply Lemma 4.7 to conclude $\mathcal{LM}_n \stackrel{A}{\sim} \chi_q^2$. Note that $\mathcal{LM}_n$ differs from $\mathcal{W}_n$ in that $\ddot{\bfV}_n$ is used in place of $\hat{\bfV}_n$ and $\ddot{\bfbeta}_n$ replaces $\tilde{\bfbeta}_n$. Since $\ddot{\bfbeta}_n - \tilde{\bfbeta}_n \convp \bfzero$ and $\ddot{\bfV}_n - \hat{\bfV}_n \convp \bfzero$ under $H_0$ given the conditions of Exercise 4.26, it follows from Proposition 2.30 that
+\[
+  \mathcal{LM}_n - \mathcal{W}_n \convp 0.
+\]
+
+Next, consider the nonlinear hypothesis $\mathbf{s}(\bfbeta_o) = \bfzero$. The Wald statistic is easily seen to be
+\[
+  \mathcal{W}_n \equiv n\mathbf{s}(\tilde{\bfbeta}_n)'\hat{\mathbf{\Gamma}}_n^{-1}\mathbf{s}(\tilde{\bfbeta}_n),
+\]
+where
+\[
+  \hat{\mathbf{\Gamma}}_n^{-1} \equiv \nabla\mathbf{s}(\tilde{\bfbeta}_n)'\hat{\bfD}_n\nabla\mathbf{s}(\tilde{\bfbeta}_n)
+\]
+and $\hat{\bfD}_n$ is given in Exercise 4.26. The proof that $\mathcal{W}_n \stackrel{A}{\sim} \chi_q^2$ under $H_0$ is identical to that of Theorem 4.39 except that $\tilde{\bfbeta}_n$ replaces $\hat{\bfbeta}_n$, $\hat{\bfD}_n$ is appropriately defined, and the results of Exercise 4.26 are used in place of those of Theorem 4.25.
+
+The Lagrange Multiplier statistic can be derived in a manner analogous to Exercise 4.41, and the result is that the Lagrange multiplier statistic has the form of the Wald statistic with the constrained estimates $\ddot{\bfbeta}_n$ and $\ddot{\bfV}_n$ replacing $\tilde{\bfbeta}_n$ and $\hat{\bfV}_n$. Thus
+\[
+  \mathcal{LM}_n = n\ddot{\bflambda}_n'\ddot{\bfLambda}_n^{-1}\ddot{\bflambda}_n,
+\]
+where
+\[
+  \bflambda_n = 2[\nabla\mathbf{s}(\ddot{\bfbeta}_n)'(\bfX'\bfZ\hat{\bfP}_n\bfZ'\bfX/n^2)^{-1}\nabla\mathbf{s}(\ddot{\bfbeta}_n)]^{-1}\mathbf{s}(\ddot{\bfbeta}_n)
+\]
+and
+\begin{align*}
+  \ddot{\bfLambda}_n &= 4[\nabla\mathbf{s}(\ddot{\bfbeta}_n)'(\bfX'\bfZ\hat{\bfP}_n\bfZ'\bfX/n^2)^{-1}\nabla\mathbf{s}(\ddot{\bfbeta}_n)]^{-1} \\
+  &\quad\times \nabla\mathbf{s}(\ddot{\bfbeta}_n)'(\bfX'\bfZ\hat{\bfP}_n\bfZ'\bfX/n^2)^{-1}(\bfX'\bfZ/n)\hat{\bfP}_n\ddot{\bfV}_n\hat{\bfP}_n(\bfZ'\bfX/n) \\
+  &\quad\times (\bfX'\bfZ\hat{\bfP}_n\bfZ'\bfX/n^2)^{-1}\nabla\mathbf{s}(\ddot{\bfbeta}_n)[\nabla\mathbf{s}(\ddot{\bfbeta}_n)'(\bfX'\bfZ\hat{\bfP}_n\bfZ'\bfX/n^2)^{-1}\nabla\mathbf{s}(\ddot{\bfbeta}_n)]^{-1}.
+\end{align*}
+
+Now $\ddot{\bfV}_n - \bfV_n \convp \bfzero$ and $\nabla\mathbf{s}(\ddot{\bfbeta}_n) - \nabla\mathbf{s}(\bfbeta) \convp \bfzero$ given that $\nabla\mathbf{s}(\bfbeta)$ is continuous. It follows from Proposition 2.30 that $\mathcal{LM}_n - \mathcal{W}_n \convp 0$, so that $\mathcal{LM}_n \stackrel{A}{\sim} \chi_q^2$ by Lemma 4.7.
+
+\subsection*{Exercise 4.46}
+
+\textbf{Proof.}
+Under the conditions of Exercise 4.26, Proposition 4.45 tells us that the asymptotically efficient estimator is
+\begin{align*}
+  \bfbeta_n^* &= (\bfX'\bfX\hat{\bfV}_n^{-1}\bfX'\bfX)^{-1}\bfX'\bfX\hat{\bfV}_n^{-1}\bfX'\bfY \\
+  &= (\bfX'\bfX)^{-1}\hat{\bfV}_n(\bfX'\bfX)^{-1}\bfX'\bfX\hat{\bfV}_n^{-1}\bfX'\bfY \\
+  &= (\bfX'\bfX)^{-1}\bfX'\bfY = \hat{\bfbeta}_n,
+\end{align*}
+where we substituted $\bfX'\bfX = \hat{\bfV}_n$.
+
+\subsection*{Exercise 4.47}
+
+\textbf{Proof.}
+We assume the conditions of Exercise 4.26 are satisfied. In addition, we assume $\tilde{\sigma}_n^2(\bfZ'\bfZ/n) - \sigma_o^2\mathbf{L}_n \convp \bfzero$ so that $\hat{\bfV}_n = \tilde{\sigma}_n^2(\bfZ'\bfZ/n)$. (This follows from a law of large numbers.) Then from Proposition 4.45 it follows that the asymptotically efficient estimator is
+\begin{align*}
+  \bfbeta_n^* &= (\bfX'\bfZ(\tilde{\sigma}_n^2(\bfZ'\bfZ/n))^{-1}\bfZ'\bfX)^{-1}\bfX'\bfZ(\tilde{\sigma}_n^2(\bfZ'\bfZ/n))^{-1}\bfZ'\bfY \\
+  &= (\bfX'\bfZ(\bfZ'\bfZ)^{-1}\bfZ'\bfX)^{-1}\bfX'\bfZ(\bfZ'\bfZ)^{-1}\bfZ'\bfY \\
+  &= \tilde{\bfbeta}_{2SLS}.
+\end{align*}
+
+\subsection*{Exercise 4.48}
+
+\textbf{Proof.}
+From the definition
+\begin{align*}
+  \sqrt{n}(\bfbeta_n^{**} - \bfbeta_n^*) &= (\bfX'\bfZ\hat{\bfP}_n\bfZ'\bfX/n^2)^{-1}\nabla\mathbf{s}(\bfbeta_n^*) \\
+  &\quad\times [\nabla\mathbf{s}(\bfbeta_n^*)'(\bfX'\bfZ\hat{\bfP}_n\bfZ'\bfX/n^2)^{-1}\nabla\mathbf{s}(\bfbeta_n^*)]^{-1}\sqrt{n}\mathbf{s}(\bfbeta_n^*)
+\end{align*}
+it follows that $\sqrt{n}(\bfbeta_n^{**} - \bfbeta_n^*) \convp \bfzero$ provided that $(\bfX'\bfZ\hat{\bfP}_n\bfZ'\bfX/n^2)^{-1} = O_p(1)$, $\nabla\mathbf{s}(\bfbeta_n^*) = O_p(1)$, and $\sqrt{n}\mathbf{s}(\bfbeta_n^*) = o_p(1)$. The first two are easy to show, so we just show that $\sqrt{n}\mathbf{s}(\bfbeta_n^*) = o_p(1)$. Taking a mean value expansion and substituting the definition of $\bfbeta_n^*$ gives
+\begin{align*}
+  \sqrt{n}\,\mathbf{s}(\bfbeta_n^*) &= \sqrt{n}\,\mathbf{s}(\tilde{\bfbeta}_n) + \sqrt{n}\nabla\bar{\mathbf{s}}_n'(\bfbeta_n^* - \tilde{\bfbeta}_n) \\
+  &= \sqrt{n}\,\mathbf{s}(\tilde{\bfbeta}_n) - \nabla\bar{\mathbf{s}}_n'(\bfX'\bfZ\hat{\bfP}_n\bfZ'\bfX)^{-1}\nabla\mathbf{s}(\tilde{\bfbeta}_n) \\
+  &\quad\times [\nabla\mathbf{s}(\tilde{\bfbeta}_n)'(\bfX'\bfZ\hat{\bfP}_n\bfZ'\bfX)^{-1}\nabla\mathbf{s}(\tilde{\bfbeta}_n)]^{-1}\sqrt{n}\mathbf{s}(\tilde{\bfbeta}_n) \\
+  &= \left(\bfI - \nabla\bar{\mathbf{s}}_n'(\bfX'\bfZ\hat{\bfP}_n\bfZ'\bfX)^{-1}\nabla\mathbf{s}(\tilde{\bfbeta}_n)\right. \\
+  &\quad\left.\times [\nabla\mathbf{s}(\tilde{\bfbeta}_n)'(\bfX'\bfZ\hat{\bfP}_n\bfZ'\bfX)^{-1}\nabla\mathbf{s}(\tilde{\bfbeta}_n)]^{-1}\right)\sqrt{n}\mathbf{s}(\tilde{\bfbeta}_n).
+\end{align*}
+
+Now
+\[
+  \bfI - \nabla\bar{\mathbf{s}}_n'(\bfX'\bfZ\hat{\bfP}_n\bfZ'\bfX)^{-1}\nabla\mathbf{s}(\tilde{\bfbeta}_n)[\nabla\mathbf{s}(\tilde{\bfbeta}_n)'(\bfX'\bfZ\hat{\bfP}_n\bfZ'\bfX)^{-1}\nabla\mathbf{s}(\tilde{\bfbeta}_n)]^{-1} = o_p(1)
+\]
+since $\nabla\bar{\mathbf{s}}_n - \nabla\mathbf{s}(\tilde{\bfbeta}_n) = o_p(1)$, and $\sqrt{n}\,\mathbf{s}(\tilde{\bfbeta}_n) = \sqrt{n}\,\mathbf{s}(\bfbeta_o) + \nabla\bar{\mathbf{s}}_n'\sqrt{n}(\tilde{\bfbeta}_n - \bfbeta_o) = \bfzero + O_p(1)O_p(1) = O_p(1)$ by Lemma 4.6, and the result follows.
+
+\subsection*{Exercise 4.56}
+
+\textbf{Proof.}
+Since $\bfX_t^o$ is $\mathcal{F}_{t-1}$-measurable then so is $\bfZ_t^o(\bfgamma^*) = \bfX_t^o\bfOmega_t^{-1}$. For brevity, we write $\bfZ_t^o = \bfZ_t^o(\bfgamma^*)$ in the following.
+
+We have
+\begin{align*}
+  E^o\left(n^{-1}\sum_{t=1}^{n}\bfZ_t^o\eps_t\right)
+  &= E^o\left(n^{-1}\sum_{t=1}^{n}E^o(\bfZ_t^o\eps_t|\mathcal{F}_{t-1})\right) \\
+  &= E^o\left(n^{-1}\sum_{t=1}^{n}\bfZ_t^o E^o(\eps_t|\mathcal{F}_{t-1})\right) \\
+  &= \bfzero,
+\end{align*}
+and by the martingale difference property
+\begin{align*}
+  \bfV_n &= \operatorname{var}^o\left(n^{-1}\sum_{t=1}^{n}\bfZ_t^o\eps_t\right) \\
+  &= E^o\left(n^{-1}\sum_{t=1}^{n}\bfZ_t^o\eps_t\eps_t'\bfZ_t^{o\prime}\right) \\
+  &= E^o\left(n^{-1}\sum_{t=1}^{n}\bfZ_t^o E^o(\eps_t\eps_t'|\mathcal{F}_{t-1})\bfZ_t^{o\prime}\right) \\
+  &= E^o\left(n^{-1}\sum_{t=1}^{n}\bfZ_t^o\bfOmega_t\bfZ_t^{o\prime}\right) \\
+  &= E^o\left(n^{-1}\sum_{t=1}^{n}\bfX_t^o\bfOmega_t^{-1}\bfX_t^{o\prime}\right).
+\end{align*}
+
+Set $\hat{\bfV}_n = n^{-1}\sum_{t=1}^{n}\bfX_t^o\bfOmega_t^{-1}\bfX_t^{o\prime}$.
+
+With $\bfZ_t^o = \bfX_t^o\bfOmega_t^{-1}$ we have
+\begin{align*}
+  \bfbeta_n^* &= \left(\sum_{t=1}^{n}\bfX_t^o\bfZ_t^{o\prime}\hat{\bfV}_n^{-1}\sum_{t=1}^{n}\bfZ_t^o\bfX_t^{o\prime}\right)^{-1}\sum_{t=1}^{n}\bfX_t^o\bfZ_t^{o\prime}\hat{\bfV}_n^{-1}\sum_{t=1}^{n}\bfZ_t^o\bfY_t^o \\
+  &= \left(\sum_{t=1}^{n}\bfX_t^o\bfOmega_t^{-1}\bfX_t^{o\prime}\right)^{-1}\sum_{t=1}^{n}\bfX_t^o\bfOmega_t^{-1}\bfY_t^o \\
+  &= (\bfX'\bfOmega^{-1}\bfX)^{-1}\bfX'\bfOmega^{-1}\bfY.
+\end{align*}
+
+\subsection*{Exercise 4.58}
+
+\textbf{Proof.}
+We have
+\begin{align*}
+  \bfbeta_n^* &= \left(\sum_{t=1}^{n}\bfX_t^o\bfOmega_t^{-1}\bfX_t^{o\prime}\right)^{-1}\sum_{t=1}^{n}\bfX_t^o\bfOmega_t^{-1}\bfY_t^o \\
+  &= \left(\sum_{t=1}^{n}\bfX_t^o\bfOmega_t^{-1}\bfX_t^{o\prime}\right)^{-1}\sum_{t=1}^{n}\bfX_t^o\bfOmega_t^{-1}(\bfX_t^{o\prime}\bfbeta^o + \eps_t) \\
+  &= \bfbeta^o + \left(\sum_{t=1}^{n}\bfX_t^o\bfOmega_t^{-1}\bfX_t^{o\prime}\right)^{-1}\sum_{t=1}^{n}\bfX_t^o\bfOmega_t^{-1}\eps_t.
+\end{align*}
+Set
+\[
+  \mathbf{m}_n^o(\bfgamma^*) = n^{-1}\sum_{t=1}^{n}\bfX_t^o\bfOmega_t^{-1}\eps_t
+\]
+and we have
+\begin{align*}
+  \sqrt{n}(\bfbeta_n^* - \bfbeta^o) &= \left(n^{-1}\sum_{t=1}^{n}\bfX_t^o\bfOmega_t^{-1}\bfX_t^{o\prime}\right)^{-1}n^{1/2}\mathbf{m}_n^o(\bfgamma^*) \\
+  &= \bfQ_n^o(\bfgamma^*)^{-1}n^{1/2}\mathbf{m}_n^o(\bfgamma^*) \\
+  &\quad + \left[\left(n^{-1}\sum_{t=1}^{n}\bfX_t^o\bfOmega_t^{-1}\bfX_t^{o\prime}\right)^{-1} - \bfQ_n^o(\bfgamma^*)^{-1}\right]n^{1/2}\mathbf{m}_n^o(\bfgamma^*) \\
+  &= \bfQ_n^o(\bfgamma^*)^{-1}n^{1/2}\mathbf{m}_n^o(\bfgamma^*) + o_{p^o}(1)
+\end{align*}
+using Theorem 4.54 $(iii.a)$ and $(ii)$. So
+\[
+  \operatorname{avar}^o(\bfbeta_n^*) = \bfQ_n^o(\bfgamma^*)^{-1}\bfV_n^o(\bfgamma^*)\bfQ_n^o(\bfgamma^*)^{-1},
+\]
+where
+\begin{align*}
+  \bfV_n^o(\bfgamma^*) &= E^o\left(n^{-1}\sum_{t=1}^{n}\bfX_t^o\bfOmega_t^{-1}\eps_t\eps_t'\bfOmega_t^{-1}\bfX_t^{o\prime}\right) \\
+  &= n^{-1}\sum_{t=1}^{n}E^o(\bfX_t^o\bfOmega_t^{-1}\eps_t\eps_t'\bfOmega_t^{-1}\bfX_t^{o\prime}) \\
+  &= n^{-1}\sum_{t=1}^{n}E^o(\bfX_t^o\bfOmega_t^{-1}E^o(\eps_t\eps_t'|\mathcal{F}_{t-1})\bfOmega_t^{-1}\bfX_t^{o\prime}) \\
+  &= n^{-1}\sum_{t=1}^{n}E^o(\bfX_t^o\bfOmega_t^{-1}\bfX_t^{o\prime})
+\end{align*}
+using the law of iterated expectations.
+
+By assumption, $\bfQ_n^o(\bfgamma^*) = n^{-1}\sum_{t=1}^{n}E^o(\bfX_t^o\bfOmega_t^{-1}\bfX_t^{o\prime})$, so
+\[
+  \operatorname{avar}^o(\bfbeta_n^*) = \left[n^{-1}\sum_{t=1}^{n}E^o(\bfX_t^o\bfOmega_t^{-1}\bfX_t^{o\prime})\right]^{-1}
+\]
+
+Consistency of $\hat{\bfD}_n$ follows given Theorem 4.54 $(iii.a)$ and the assumption that $\bfQ_n^o(\bfgamma^*) = n^{-1}\sum_{t=1}^{n}E^o(\bfX_t^o\bfOmega_t^{-1}\bfX_t^{o\prime})$ by the continuity of the inverse function and given that $\bfQ_n^o(\bfgamma^*) = \bfV_n^o(\bfgamma^*)$ is uniformly positive definite.
+
+\subsection*{Exercise 4.60}
+
+\textbf{Proof.}
+Similar to Exercise 4.58 we have that
+\begin{align*}
+  \sqrt{n}(\bfbeta_n^* - \bfbeta^o) &= \left(n^{-1}\sum_{t=1}^{n}\bfX_t^o\hat{\bfOmega}_{nt}^{-1}\bfX_t^{o\prime}\right)^{-1}n^{-1/2}\sum_{t=1}^{n}\bfX_t^o\hat{\bfOmega}_{nt}^{-1}\eps_t \\
+  &= \left(n^{-1}\sum_{t=1}^{n}E^o(\bfX_t^o\bfOmega_t^{o\,-1}\bfX_t^{o\prime})\right)^{-1}n^{-1/2}\sum_{t=1}^{n}\bfX_t^o\bfOmega_t^{o\,-1}\eps_t \\
+  &\quad + [\left(n^{-1}\sum_{t=1}^{n}\bfX_t^o\hat{\bfOmega}_{nt}^{-1}\bfX_t^{o\prime}\right)^{-1} - \left(n^{-1}\sum_{t=1}^{n}E^o(\bfX_t^o\bfOmega_t^{o\,-1}\bfX_t^{o\prime})\right)^{-1}] \\
+  &\quad\times n^{-1/2}\sum_{t=1}^{n}\bfX_t^o\bfOmega_t^{o\,-1}\eps_t \\
+  &\quad + \left(n^{-1}\sum_{t=1}^{n}E^o(\bfX_t^o\bfOmega_t^{o\,-1}\bfX_t^{o\prime})\right)^{-1} \\
+  &\quad\times [n^{-1/2}\sum_{t=1}^{n}\bfX_t^o\hat{\bfOmega}_{nt}^{-1}\eps_t - n^{-1/2}\sum_{t=1}^{n}\bfX_t^o\bfOmega_t^{o\,-1}\eps_t] \\
+  &\quad + [\left(n^{-1}\sum_{t=1}^{n}\bfX_t^o\hat{\bfOmega}_{nt}^{-1}\bfX_t^{o\prime}\right)^{-1} - \left(n^{-1}\sum_{t=1}^{n}E^o(\bfX_t^o\bfOmega_t^{o\,-1}\bfX_t^{o\prime})\right)^{-1}] \\
+  &\quad\times [n^{-1/2}\sum_{t=1}^{n}\bfX_t^o\hat{\bfOmega}_{nt}^{-1}\eps_t - n^{-1/2}\sum_{t=1}^{n}\bfX_t^o\bfOmega_t^{o\,-1}\eps_t] \\
+  &= \left(n^{-1}\sum_{t=1}^{n}E^o(\bfX_t^o\bfOmega_t^{o\,-1}\bfX_t^{o\prime})\right)^{-1}n^{-1/2}\sum_{t=1}^{n}\bfX_t^o\bfOmega_t^{o\,-1}\eps_t \\
+  &\quad + o_{p^o}(1)O_{p^o}(1) + O(1)o_{p^o}(1) + o_{p^o}(1)o_{p^o}(1)
+\end{align*}
+using Theorem 4.54 conditions $(iii.a)$ and $(ii)$ on the second, third, and fourth terms.
+
+It follows that
+\[
+  \operatorname{avar}^o(\bfbeta_n^*) = \left(n^{-1}\sum_{t=1}^{n}E^o(\bfX_t^o\bfOmega_t^{o\,-1}\bfX_t^{o\prime})\right)^{-1},
+\]
+which is consistently estimated by
+\[
+  \hat{\bfD}_n = \left(n^{-1}\sum_{t=1}^{n}\bfX_t^o\hat{\bfOmega}_{nt}^{-1}\bfX_t^{o\prime}\right)^{-1},
+\]
+given Theorem 4.54 $(iii.a)$.
+
+\subsection*{Exercise 4.61}
+
+\textbf{Proof.}
+$(i)$ Let $\bar{\bfW}_t^o = (1, W_t^o)'$; then
+\begin{align*}
+  \hat{\alpha}_n &= \left(n^{-1}\sum_{t=1}^{n}\bar{\bfW}_t^o\bar{\bfW}_t^{o\prime}\right)^{-1}n^{-1}\sum_{t=1}^{n}\bar{\bfW}_t^o\hat{e}_t^2 \\
+  &= \left(n^{-1}\sum_{t=1}^{n}\bar{\bfW}_t^o\bar{\bfW}_t^{o\prime}\right)^{-1}n^{-1}\sum_{t=1}^{n}\bar{\bfW}_t^o(\eps_t - \bfX_t^{o\prime}(\hat{\bfbeta}_n - \bfbeta^o))^2 \\
+  &= \left(n^{-1}\sum_{t=1}^{n}\bar{\bfW}_t^o\bar{\bfW}_t^{o\prime}\right)^{-1}n^{-1}\sum_{t=1}^{n}\bar{\bfW}_t^o\eps_t^2 \\
+  &\quad - 2\left(n^{-1}\sum_{t=1}^{n}\bar{\bfW}_t^o\bar{\bfW}_t^{o\prime}\right)^{-1}n^{-1}\sum_{t=1}^{n}\bar{\bfW}_t^o\eps_t\bfX_t^{o\prime}(\hat{\bfbeta}_n - \bfbeta^o) \\
+  &\quad + \left(n^{-1}\sum_{t=1}^{n}\bar{\bfW}_t^o\bar{\bfW}_t^{o\prime}\right)^{-1}n^{-1}\sum_{t=1}^{n}\bar{\bfW}_t^o(\bfX_t^{o\prime}(\hat{\bfbeta}_n - \bfbeta^o))^2 \\
+  &= \left(n^{-1}\sum_{t=1}^{n}\bar{\bfW}_t^o\bar{\bfW}_t^{o\prime}\right)^{-1}n^{-1}\sum_{t=1}^{n}\bar{\bfW}_t^o\bar{\bfW}_t^{o\prime}\bfalpha_o + o_{p^o}(1) + o_{p^o}(1) \\
+  &= \bfalpha_o + o_{p^o}(1),
+\end{align*}
+provided that
+\begin{align*}
+  \left(n^{-1}\sum_{t=1}^{n}\bar{\bfW}_t^o\bar{\bfW}_t^{o\prime}\right)^{-1} &= O_{p^o}(1), \\
+  n^{-1}\sum_{t=1}^{n}\bar{\bfW}_t^o\eps_t\bfX_t^{o\prime} &= O_{p^o}(1), \\
+  n^{-1}\sum_{t=1}^{n}\bar{\bfW}_t^o(\bfX_t^{o\prime} \otimes \bfX_t^{o\prime}) &= O_{p^o}(1),
+\end{align*}
+and $(\hat{\bfbeta}_n - \bfbeta^o) = o_{p^o}(1)$.
+
+The third condition enables us to verify
+\[
+  n^{-1}\sum_{t=1}^{n}\bar{\bfW}_t^o(\bfX_t^{o\prime}\otimes\bfX_t^{o\prime})\operatorname{vec}((\hat{\bfbeta}_n - \bfbeta^o)(\hat{\bfbeta}_n - \bfbeta^o)') = O_{p^o}(1)o_{p^o}(1) = o_{p^o}(1).
+\]
+
+The first condition holds quite generally since $W_t^o$ is bounded. Set $\bar{W}_n^o \equiv n^{-1}\sum_{t=1}^{n}W_t^o$ then
+\[
+  n^{-1}\sum_{t=1}^{n}\bar{\bfW}_t^o\bar{\bfW}_t^{o\prime} = \begin{pmatrix} 1 & \bar{W}_n^o \\ \bar{W}_n^o & n^{-1}\sum_{t=1}^{n}W_t^{o\,2} \end{pmatrix}.
+\]
+If this matrix is uniformly nonsingular, its inverse is $O_{p^o}(1)$, and for that it suffices that $\bar{W}_n^o$ is bounded away from zero and one.
+
+$(ii)$ Consider
+\begin{align*}
+  &n^{-1/2}\sum_{t=1}^{n}\bfX_t^o\hat{\bfOmega}_{nt}^{-1}\eps_t - n^{-1/2}\sum_{t=1}^{n}\bfX_t^o\bfOmega_t^{o\,-1}\eps_t \\
+  &= n^{-1/2}\sum_{t=1}^{n}\bfX_t^o(\hat{\bfOmega}_{nt}^{-1} - \bfOmega_t^{o\,-1})\eps_t \\
+  &= n^{-1/2}\sum_{t=1}^{n}\bfX_t^o((\bar{\bfW}_t^{o\prime}\hat{\alpha}_n)^{-1} - (\bar{\bfW}_t^{o\prime}\bfalpha^o)^{-1})\eps_t 1[W_t^o = 0] \\
+  &\quad + n^{-1/2}\sum_{t=1}^{n}\bfX_t^o((\hat{\alpha}_{1n} + \hat{\alpha}_{2n})^{-1} - (\alpha_1^o + \alpha_2^o)^{-1})\eps_t 1[W_t^o = 1] \\
+  &= ((\hat{\alpha}_{1n})^{-1} - (\alpha_1^o)^{-1})n^{-1/2}\sum_{t=1}^{n}\bfX_t^o\eps_t 1[W_t^o = 0] \\
+  &\quad + ((\hat{\alpha}_{1n} + \hat{\alpha}_{2n})^{-1} - (\alpha_1^o + \alpha_2^o)^{-1})n^{-1/2}\sum_{t=1}^{n}\bfX_t^o\eps_t 1[W_t^o = 1] \\
+  &= o_{p^o}(1)O_{p^o}(1) + o_{p^o}(1)O_{p^o}(1)
+\end{align*}
+
+To obtain the final equality, we apply the martingale difference central limit theorem to the terms $n^{-1/2}\sum_{t=1}^{n}\bfX_t^o\eps_t 1[W_t^o = j]$, $j = 0, 1$, and require that $\alpha_1^o$ and $\alpha_1^o + \alpha_2^o$ are different from zero.
+
+Similarly,
+\begin{align*}
+  &n^{-1}\sum_{t=1}^{n}\bfX_t^o\hat{\bfOmega}_{nt}^{-1}\bfX_t^{o\prime} - n^{-1}\sum_{t=1}^{n}\bfX_t^o\bfOmega_t^{o\,-1}\bfX_t^{o\prime} \\
+  &= ((\hat{\alpha}_{1n})^{-1} - (\alpha_1^o)^{-1})n^{-1}\sum_{t=1}^{n}\bfX_t^o\bfX_t^{o\prime}1[W_t^o = 0] \\
+  &\quad + ((\hat{\alpha}_{1n} + \hat{\alpha}_{2n})^{-1} - (\alpha_1^o + \alpha_2^o)^{-1})n^{-1}\sum_{t=1}^{n}\bfX_t^o\bfX_t^{o\prime}1[W_t^o = 1] \\
+  &= o_{p^o}(1)O_{p^o}(1) + o_{p^o}(1)O_{p^o}(1).
+\end{align*}
+
+\subsection*{Exercise 4.63}
+
+\textbf{Proof.}
+Similar to Exercise 4.60 we have
+\begin{align*}
+  \sqrt{n}(\bfbeta_n^* - \bfbeta^o) &= \left(n^{-1}\sum_{t=1}^{n}\tilde{\bfX}_t^o\hat{\bfOmega}_{nt}^{-1}\hat{\bfX}_t^{o\prime}\right)^{-1}n^{-1/2}\sum_{t=1}^{n}\tilde{\bfX}_t^o\hat{\bfOmega}_{nt}^{-1}\eps_t \\
+  &= \left(n^{-1}\sum_{t=1}^{n}E^o(\tilde{\bfX}_t^o\bfOmega_t^{o\,-1}\bfX_t^{o\prime})\right)^{-1}n^{-1/2}\sum_{t=1}^{n}\tilde{\bfX}_t^o\bfOmega_t^{o\,-1}\eps_t \\
+  &\quad + o_{p^o}(1)O_{p^o}(1) + O(1)o_{p^o}(1) + o_{p^o}(1)o_{p^o}(1)
+\end{align*}
+applying Theorem 4.54 conditions $(iii.a)$ and $(ii)$ to the second, third, and fourth terms.
+
+Since
+\[
+  E^o(\tilde{\bfX}_t^o\bfOmega_t^{o\,-1}\bfX_t^{o\prime}) = E^o(E^o(\tilde{\bfX}_t^o\bfOmega_t^{o\,-1}\bfX_t^{o\prime})|\mathcal{F}_{t-1}) = E^o(\tilde{\bfX}_t^o\bfOmega_t^{o\,-1}\tilde{\bfX}_t^{o\prime})
+\]
+by the law of iterated expectations, we have
+\[
+  \operatorname{avar}^o(\bfbeta_n^*) = \left(n^{-1}\sum_{t=1}^{n}E^o(\tilde{\bfX}_t^o\bfOmega_t^{o\,-1}\tilde{\bfX}_t^{o\prime})\right)^{-1}.
+\]
+
+To show the matrix is consistently estimated by
+\[
+  \hat{\bfD}_n = 2\left(n^{-1}\sum_{t=1}^{n}\hat{\bfX}_t^o\hat{\bfOmega}_{nt}^{-1}\bfX_t^{o\prime} + n^{-1}\sum_{t=1}^{n}\bfX_t^o\hat{\bfOmega}_{nt}^{-1}\hat{\bfX}_t^{o\prime}\right)^{-1},
+\]
+it suffices that $\hat{\bfD}_n^{-1} - \operatorname{avar}^o(\bfbeta_n^*)^{-1} = o_{p^o}(1)$. We have
+\begin{align*}
+  &\hat{\bfD}_n^{-1} - \operatorname{avar}^o(\bfbeta_n^*)^{-1} \\
+  &= (1/2)(n^{-1}\sum_{t=1}^{n}\hat{\bfX}_t^o\hat{\bfOmega}_{nt}^{-1}\bfX_t^{o\prime} + n^{-1}\sum_{t=1}^{n}\bfX_t^o\hat{\bfOmega}_{nt}^{-1}\hat{\bfX}_t^{o\prime}) \\
+  &\quad - n^{-1}\sum_{t=1}^{n}E^o(\tilde{\bfX}_t^o\bfOmega_t^{o\,-1}\tilde{\bfX}_t^{o\prime}) \\
+  &= (1/2)(n^{-1}\sum_{t=1}^{n}\hat{\bfX}_t^o\hat{\bfOmega}_{nt}^{-1}\bfX_t^{o\prime} - n^{-1}\sum_{t=1}^{n}E^o(\tilde{\bfX}_t^o\bfOmega_t^{o\,-1}\bfX_t^{o\prime})) \\
+  &\quad + (1/2)(n^{-1}\sum_{t=1}^{n}\bfX_t^o\hat{\bfOmega}_{nt}^{-1}\hat{\bfX}_t^{o\prime} - n^{-1}\sum_{t=1}^{n}E^o(\bfX_t^o\bfOmega_t^{o\,-1}\tilde{\bfX}_t^{o\prime})),
+\end{align*}
+again using the law of iterated expectations.
+
+Now
+\[
+  n^{-1}\sum_{t=1}^{n}\hat{\bfX}_t^o\hat{\bfOmega}_{nt}^{-1}\bfX_t^{o\prime} - n^{-1}\sum_{t=1}^{n}E^o(\tilde{\bfX}_t^o\bfOmega_t^{o\,-1}\bfX_t^{o\prime}) \stackrel{p^o}{\longrightarrow} \bfzero
+\]
+by Theorem 4.54 condition $(iii)$ and Theorem 4.62 condition $(iii)$ and the result follows.
+
+\subsection*{Exercise 4.64}
+
+\textbf{Proof.}
+$(i)(a)$ Set $\bfv_t = \bfX_t^{o} - E(\bfX_t^{o\prime}|\mathcal{F}_{t-1})$ so that $\bfX_t^{o\prime} = \bfZ_t^{o\prime}\bfpi_o + \bfv_t$. Then
+\begin{align*}
+  \hat{\bfpi}_n &= \left(n^{-1}\sum_{t=1}^{n}\bfZ_t^o\bfZ_t^{o\prime}\right)^{-1}n^{-1}\sum_{t=1}^{n}\bfZ_t^o\bfX_t^{o\prime} \\
+  &= \bfpi_o + (n^{-1}\sum_{t=1}^{n}\bfZ_t^o\bfZ_t^{o\prime})^{-1}n^{-1}\sum_{t=1}^{n}\bfZ_t^o\bfv_t \\
+  &= \bfpi_o + o_{p^o}(1)
+\end{align*}
+given $n^{-1}\sum_{t=1}^{n}\bfZ_t^o\bfZ_t^{o\prime} = O_{p^o}(1)$ and $n^{-1}\sum_{t=1}^{n}\bfZ_t^o\bfv_t = o_{p^o}(1)$; the latter follows by the martingale difference weak law of large numbers.
+
+$(b)$ Substituting
+\[
+  \hat{e}_t = \eps_t + \bfX_t^{o\prime}(\bfbeta^o - \tilde{\bfbeta}_n)
+\]
+we have that
+\begin{align*}
+  \hat{\bfSigma}_n &= n^{-1}\sum_{t=1}^{n}\hat{e}_t\hat{e}_t' \\
+  &= n^{-1}\sum_{t=1}^{n}\eps_t\eps_t' \\
+  &\quad + n^{-1}\sum_{t=1}^{n}\eps_t(\bfbeta^o - \tilde{\bfbeta}_n)'\bfX_t^o + n^{-1}\sum_{t=1}^{n}\bfX_t^{o\prime}(\bfbeta^o - \tilde{\bfbeta}_n)\eps_t' \\
+  &\quad + n^{-1}\sum_{t=1}^{n}\bfX_t^{o\prime}(\bfbeta^o - \tilde{\bfbeta}_n)(\bfbeta^o - \tilde{\bfbeta}_n)'\bfX_t^o.
+\end{align*}
+
+Given that $n^{-1}\sum_{t=1}^{n}\eps_t\bfX_t^o$ and $n^{-1}\sum_{t=1}^{n}\bfX_t^{o\prime}\bfX_t^o$ are $O_{p^o}(1)$, that
+\[
+  n^{-1}\sum_{t=1}^{n}\bfZ_t^{o\prime}\bfZ_t^o = O_{p^o}(1)
+\]
+\[
+  n^{-1}\sum_{t=1}^{n}\bfZ_t^{o\prime}\eps_t = o_{p^o}(1),
+\]
+so that $(\bfbeta^o - \tilde{\bfbeta}_n) = o_{p^o}(1)$, it follows that the last three terms vanish in probability. To see this, apply the rule $\operatorname{vec}(ABC) = (C' \otimes A)\operatorname{vec}(B)$ to each of terms, for example
+\[
+  \operatorname{vec}\left(n^{-1}\sum_{t=1}^{n}\eps_t(\bfbeta^o - \tilde{\bfbeta}_n)'\bfX_t^o\right) = n^{-1}\sum_{t=1}^{n}(\bfX_t^{o\prime} \otimes \eps_t)\operatorname{vec}((\bfbeta^o - \tilde{\bfbeta}_n)') = O_{p^o}(1)o_{p^o}(1) = o_{p^o}(1).
+\]
+
+Given $n^{-1}\sum_{t=1}^{n}\eps_t\eps_t' \stackrel{p^o}{\longrightarrow} \bfSigma^o$ it then follows that $\hat{\bfSigma}_n = \bfSigma^o + o_{p^o}(1)$.
+
+$(ii)$ To verify condition $(iii)$ of Theorem 4.62 we write
+\begin{align*}
+  &n^{-1/2}\sum_{t=1}^{n}\hat{\bfpi}_n'\bfZ_t^o\hat{\bfSigma}_n^{-1}\eps_t - n^{-1/2}\sum_{t=1}^{n}\bfpi_o'\bfZ_t^o\bfSigma^{o\,-1}\eps_t \\
+  &= \hat{\bfpi}_n'n^{-1/2}\sum_{t=1}^{n}\bfZ_t^o(\hat{\bfSigma}_n^{-1} - \bfSigma^{o\,-1})\eps_t \\
+  &\quad + \hat{\bfpi}_n'n^{-1/2}\sum_{t=1}^{n}\bfZ_t^o\bfSigma^{o\,-1}\eps_t - \bfpi_o'n^{-1/2}\sum_{t=1}^{n}\bfZ_t^o\bfSigma^{o\,-1}\eps_t \\
+  &= \hat{\bfpi}_n'n^{-1/2}\sum_{t=1}^{n}(\eps_t'\otimes\bfZ_t^o)\operatorname{vec}(\hat{\bfSigma}_n^{-1} - \bfSigma^{o\,-1}) \\
+  &\quad + (\hat{\bfpi}_n' - \bfpi_o')n^{-1/2}\sum_{t=1}^{n}\bfZ_t^o\bfSigma^{o\,-1}\eps_t \\
+  &= O_{p^o}(1)O_{p^o}(1)o_{p^o}(1) + o_{p^o}(1)O_{p^o}(1) = o_{p^o}(1).
+\end{align*}
+
+Similarly, to verify $(vi)$ of Theorem 4.62 we write
+\begin{align*}
+  &n^{-1}\sum_{t=1}^{n}\hat{\bfpi}_n'\bfZ_t^o\hat{\bfSigma}_n^{-1}\bfX_t^o - n^{-1}\sum_{t=1}^{n}\bfpi_o'\bfZ_t^o\bfSigma^{o\,-1}\bfX_t^o \\
+  &= \hat{\bfpi}_n'n^{-1}\sum_{t=1}^{n}(\bfX_t'\otimes\bfZ_t^o)\operatorname{vec}(\hat{\bfSigma}_n^{-1} - \bfSigma^{o\,-1}) \\
+  &\quad + (\hat{\bfpi}_n' - \bfpi_o')n^{-1}\sum_{t=1}^{n}\bfZ_t^o\bfSigma^{o\,-1}\bfX_t \\
+  &= O_{p^o}(1)o_{p^o}(1) + o_{p^o}(1)O_{p^o}(1) = o_{p^o}(1).
+\end{align*}
+
+%% ══════════════════════════════════════════════════════════════
+\section*{Chapter 5}
+%% ══════════════════════════════════════════════════════════════
+
+\subsection*{Exercise 5.4}
+
+\textbf{Proof.}
+We verify the conditions of Exercise 4.26. To apply Theorem 5.2, let $\mathcal{Z}_t \equiv \bflambda'\bfV^{-1/2}\bfZ_t\eps_t$, where $\bflambda'\bflambda = 1$ and consider
+\[
+  n^{-1/2}\sum_{t=1}^{n}\bflambda'\bfV^{-1/2}\bfZ_t\eps_t = n^{-1/2}\sum_{t=1}^{n}\mathcal{Z}_t.
+\]
+The summands $\mathcal{Z}_t$ are i.i.d.\ by Proposition 3.2 given $(ii)$, with $E(\mathcal{Z}_t) = 0$ given $(iii.a)$ and $\operatorname{var}(\mathcal{Z}_t) = \bflambda'\bfV^{-1/2}\bfV\bfV^{-1/2}\bflambda = 1$ given $(iii.b)$ and $(iii.c)$. Therefore
+\[
+  n^{-1/2}\sum_{t=1}^{n}\mathcal{Z}_t = n^{-1/2}\sum_{t=1}^{n}\bflambda'\bfV^{-1/2}\bfZ_t\eps_t = \bflambda'\bfV^{-1/2}n^{-1/2}\bfZ'\bfeps \stackrel{A}{\sim} N(0,1)
+\]
+by Theorem 5.2. It follows from Proposition 5.1 that $\bfV^{-1/2}n^{-1/2}\bfZ'\bfeps \stackrel{A}{\sim} N(\bfzero, \bfI)$ since if $\mathcal{Y} \sim N(\bfzero, \bfI)$ then $\bflambda'\mathcal{Y} \sim N(0,1)$, for all $\bflambda$, $\bflambda'\bflambda = 1$. By $(iii.b)$ and $(iii.c)$ we have that $\bfV$ is $O(1)$ and nonsingular. It follows from Theorem 3.1 and Theorem 2.24 that $\bfZ'\bfX/n - \bfQ \convp \bfzero$ given $(ii)$, $(iv.a)$, and $(iv.b)$. Since the remaining conditions of Exercise 4.26 are satisfied by assumption, the result follows.
+
+\subsection*{Exercise 5.5}
+
+\textbf{Proof.}
+Given the i.i.d.\ assumption of Exercise 5.4 it follows that
+\[
+  \bfV = n^{-1}\sum_{t=1}^{n}E(\eps_t^2\bfZ_t\bfZ_t') = E(\eps_t^2\bfZ_t\bfZ_t').
+\]
+Now
+\begin{align*}
+  E(\eps_t^2\bfZ_t'\bfZ_t) &= E(E(\eps_t^2\bfZ_t\bfZ_t'|\bfZ_t)) \\
+  &= E(E(\eps_t^2|\bfZ_t)\bfZ_t\bfZ_t') \\
+  &= \sigma_o^2 E(\bfZ_t\bfZ_t') \equiv \sigma_o^2\mathbf{L}.
+\end{align*}
+Hence $\bfV = \sigma_o^2\mathbf{L}$. It follows from Exercise 4.47 that the efficient IV estimator chooses $\bfP = \bfV^{-1}$ to yield the two stage least squares estimator,
+\[
+  \tilde{\bfbeta}_{2SLS} = (\bfX'\bfZ(\bfZ'\bfZ)^{-1}\bfZ'\bfX)^{-1}\bfX'\bfZ(\bfZ'\bfZ)^{-1}\bfZ'\bfY.
+\]
+
+The natural estimator for $\bfV$ is $\hat{\bfV}_n = \tilde{\sigma}_n^2(\bfZ'\bfZ/n)$, where
+\[
+  \tilde{\sigma}_n^2 = (\bfY - \bfX\tilde{\bfbeta}_{2SLS})'(\bfY - \bfX\tilde{\bfbeta}_{2SLS})/n.
+\]
+
+The conditions of Exercise 5.4 are not quite strong enough to ensure $\hat{\bfV}_n$ is consistent for $\bfV$. It suffices that we add
+\begin{enumerate}[label=($\roman*'$)]
+  \item $E|\eps_t^2| < \infty$
+\end{enumerate}
+\begin{enumerate}[label=($\roman{enumi}\roman*'$)]
+  \setcounter{enumi}{1}
+  \item\begin{enumerate}[label=(\alph*)]
+    \item $E\,|Z_{ti}^2| < \infty$, $i = 1, \ldots, l$;
+    \item $E|X_{tj}^2| < \infty$, $j = 1, \ldots, k$;
+    \item $\mathbf{L} \equiv E(\bfZ_t\bfZ_t')$ is nonsingular.
+  \end{enumerate}
+\end{enumerate}
+
+Note that $(ii'.a)$ and $(ii'.b)$ together imply $(iv.a)$ by the Cauchy--Schwarz inequality.
+
+We show that $\bfZ'\bfZ/n \convp \mathbf{L}$ and $\tilde{\sigma}_n^2 \convp \sigma_o^2$. Since $\{\bfZ_t\bfZ_t'\}$ is an i.i.d.\ sequence given $(ii)$, it follows that $\bfZ'\bfZ/n = n^{-1}\sum_{t=1}^{n}\bfZ_t\bfZ_t' \convp \mathbf{L}$ by Theorem 3.1 and Theorem 2.24 given $(ii'.a)$. Next consider
+\begin{align*}
+  \tilde{\sigma}_n^2 &= n^{-1}(\bfeps - \bfX(\tilde{\bfbeta}_{2SLS} - \bfbeta_o))'(\bfeps - \bfX(\tilde{\bfbeta}_{2SLS} - \bfbeta_o)) \\
+  &= \bfeps'\bfeps/n - 2(\tilde{\bfbeta}_{2SLS} - \bfbeta_o)'\bfX'\bfeps/n + (\tilde{\bfbeta}_{2SLS} - \bfbeta_o)'(\bfX'\bfX/n)(\tilde{\bfbeta}_{2SLS} - \bfbeta_o).
+\end{align*}
+Now $\tilde{\bfbeta}_{2SLS} - \bfbeta_o \convas \bfzero$. The elements of $\bfX_t\eps_t$ have finite expected absolute value given $(i')$ and $(ii'.b)$. Hence $\bfX'\bfeps/n = O_{a.s.}(1)$ by Theorem 3.1. Similarly, $\bfX_t\bfX_t'$ has finite expected absolute value given $(ii'.b)$. Since $\{\bfX_t\bfX_t'\}$ is an i.i.d.\ sequence it follows from Theorem 3.1 that $\bfX'\bfX/n = O_{a.s.}(1)$. Therefore
+\[
+  2(\tilde{\bfbeta}_{2SLS} - \bfbeta_o)\bfX'\bfeps/n \convp \bfzero
+\]
+and
+\[
+  (\tilde{\bfbeta}_{2SLS} - \bfbeta_o)'(\bfX'\bfX/n)(\tilde{\bfbeta}_{2SLS} - \bfbeta_o) \convp \bfzero
+\]
+by Theorem 2.24 and Proposition 2.30. Finally, consider
+\[
+  \bfeps'\bfeps/n = n^{-1}\sum_{t=1}^{n}\eps_t^2.
+\]
+Now $\{\eps_t^2\}$ is an i.i.d.\ sequence given $(ii)$ with finite expected absolute value given $(i')$. It follows from Theorem 3.1 that $n^{-1}\sum_{t=1}^{n}\eps_t^2 - E(\eps_t^2) = n^{-1}\sum_{t=1}^{n}\eps_t^2 - \sigma_o^2 \convas 0$.
+
+Hence $\hat{\bfV}_n - \bfV = \tilde{\sigma}_n^2(\bfZ'\bfZ/n) - \sigma_o^2\mathbf{L} \convp \bfzero$ by Proposition 2.30. Given that $\sigma_o^2 > 0$ and $\mathbf{L}$ is nonsingular it follows from Proposition 2.30 that
+\[
+  \hat{\bfP}_n - \bfP = \hat{\bfV}_n^{-1} - \bfV^{-1} = (\tilde{\sigma}_n^2(\bfZ'\bfZ/n))^{-1} - (\sigma_o^2\mathbf{L})^{-1} \convp \bfzero.
+\]
+This completes the exercise.
+
+\subsection*{Exercise 5.9}
+
+\textbf{Proof.}
+For an identically distributed sequence $\{\mathcal{Z}_t\}$ with $E(\mathcal{Z}_t) = \mu$, $\operatorname{var}(\mathcal{Z}_t) = \sigma^2 < \infty$, the Lindeberg condition reduces to
+\[
+  \lim_{n\to\infty}\sigma^{-2}\int_{(z-\mu)^2 > \eps n\sigma^2} (z-\mu)^2 \,dF(z) = 0.
+\]
+
+Now let
+\[
+  g_n(z) = (z-\mu)^2 \mathbf{1}_{\{(z-\mu)^2 \leq \eps n\sigma^2\}}(z).
+\]
+Then $\{g_n\}$ is a increasing sequence of functions that converges to the function $g(z) = (z-\mu)^2$. The monotone convergence theorem (see Rao, 1973, p.~135) allows us to interchange limit and integral
+\begin{align*}
+  \lim_{n\to\infty}\int_{(z-\mu)^2 \leq \eps n\sigma^2}(z-\mu)^2\,dF(z)
+  &= \lim_{n\to\infty}\int_{-\infty}^{\infty}g_n(z)\,dF(z) \\
+  &= \int_{-\infty}^{\infty}\lim_{n\to\infty}g_n(z)\,dF(z) \\
+  &= \int_{-\infty}^{\infty}(z-\mu)^2\,dF(z) = \sigma^2.
+\end{align*}
+
+Now
+\begin{align*}
+  \lim_{n\to\infty}\sigma^{-2}\int_{(z-\mu)^2 > \eps n\sigma^2}(z-\mu)^2\,dF(z)
+  &= \lim_{n\to\infty}\sigma^{-2}\left[\sigma^2 - \int_{(z-\mu)^2 \leq \eps n\sigma^2}(z-\mu)^2\,dF(z)\right] \\
+  &= \sigma^{-2}\left[\sigma^2 - \lim_{n\to\infty}\int_{-\infty}^{\infty}g_n(z)\,dF(z)\right] \\
+  &= \sigma^{-2}\left[\sigma^2 - \sigma^2\right] = 0.
+\end{align*}
+
+\subsection*{Exercise 5.12}
+
+\textbf{Proof.}
+We verify the conditions of Theorem 4.25. To apply Theorem 5.11, let $\mathcal{Z}_{nt} \equiv \bflambda'\bfV_n^{-1/2}\bfX_t'\eps_t$ and consider
+\[
+  n^{-1/2}\sum_{t=1}^{n}\bflambda'\bfV_n^{-1/2}\bfX_t\eps_t = n^{-1/2}\sum_{t=1}^{n}\mathcal{Z}_{nt}.
+\]
+
+The summands $\mathcal{Z}_{nt}$ are independent by Proposition 3.3 given $(ii)$, with $E(\mathcal{Z}_{nt}) = 0$ given $(iii.a)$, and
+\begin{align*}
+  \bar{\sigma}_n^2 &\equiv \operatorname{var}(\sqrt{n}\mathcal{Z}) = \bflambda'\bfV_n^{-1/2}\operatorname{var}(n^{-1/2}\bfX'\bfeps)\bfV_n^{-1/2}\bflambda \\
+  &= \bflambda'\bfV_n^{-1/2}\bfV_n\bfV_n^{-1/2}\bflambda = 1
+\end{align*}
+given $(iii.c)$. By $(iii.b)$ $E|\mathcal{Z}_{nt}|^{2+\delta}$ is uniformly bounded (apply Minkowski's inequality). Hence, for all $\bflambda$, $\bflambda'\bflambda = 1$,
+\[
+  n^{-1/2}\sum_{t=1}^{n}\mathcal{Z}_{nt} = n^{-1/2}\sum_{t=1}^{n}\bflambda'\bfV_n^{-1/2}\bfX_t\eps_t = \bflambda'\bfV_n^{-1/2}n^{-1/2}\bfX'\bfeps \stackrel{A}{\sim} N(0,1).
+\]
+and therefore $\bfV_n^{-1/2}n^{-1/2}\bfX'\bfeps \stackrel{A}{\sim} N(\bfzero, \bfI)$ by Proposition 5.1.
+
+Assumptions $(ii)$, $(iv.a)$, and $(iv.b)$ ensure that $\bfX'\bfX/n - \bfM_n \convp \bfzero$ by Corollary 3.9 and Theorem 2.24. Given $(iv.a)$ $\bfM_n = O(1)$ and uniformly positive definite given $(iv.b)$. Since $(v)$ also holds, the result follows from Theorem 4.25.
+
+\subsection*{Exercise 5.18}
+
+\textbf{Proof.}
+The following conditions are sufficient for asymptotic normality:
+\begin{enumerate}[label=($\roman*'$)]
+  \item\begin{enumerate}[label=(\alph*)]
+    \item $Y_t = \beta_{o1}Y_{t-1} + \beta_{o2}Y_{t-2} + \eps_t$;
+    \item $-1 < \beta_{o2} < 1$;\quad $\beta_{o2} - \beta_{o1} < 1$;\quad $\beta_{o1} + \beta_{o2} < 1$;
+  \end{enumerate}
+  \item\begin{enumerate}[label=(\alph*)]
+    \item $\{\eps_t\}$ is a stationary, ergodic sequence;
+    \item $\{\eps_t, \mathcal{F}_t\}$ is a martingale difference sequence, where
+    \[
+      \mathcal{F}_t = \sigma(\ldots, \eps_{t-1}, \eps_t);
+    \]
+  \end{enumerate}
+  \item\begin{enumerate}[label=(\alph*)]
+    \item $E(\eps_t^2|\mathcal{F}_{t-1}) = \sigma_o^2 > 0$.
+    \item $E|\eps_t|^4 = \Delta < \infty$.
+  \end{enumerate}
+\end{enumerate}
+
+We verify the conditions of Theorem 5.17.
+
+$(i)$ is implied by $(i')$.
+
+$(ii)$ $\{(\bfX_t', \eps_t)\} \equiv \{(Y_{t-1}, Y_{t-2}, \eps_t)\}$ is a stationary ergodic sequence by Theorem 3.35,
+
+$(iii.a)$ The data generating process given in $(i'.a)$ is an $AR(2)$ time series process and condition $(i'.b)$ is the familiar stationarity condition that the roots of the polynomial $1 - \beta_{o1}z - \beta_{o2}z^2$ lie outside the unit disk. Given $(i'.b)$ we can write $Y_t$ as an infinite moving average, $Y_t = \sum_{j=0}^{\infty}c_j\eps_{t-j}$, where $c_j = (|\beta_{o2}|^{1/2})^j a(j)$ and $|a(j)| < \Delta' < \infty$ for all $j > 0$ (see Dhrymes, 1980, pp.~394--395.) Since $|\beta_{o2}| < 1$ it follows that $\sum_{j=0}^{\infty}|c_j| < \infty$. Thus, $Y_t$ is $\mathcal{F}_t$-measurable and
+\begin{align*}
+  E(Y_{t-1}\eps_t|\mathcal{F}_{t-1}) &= Y_{t-1}E(\eps_t|\mathcal{F}_{t-1})) = 0 \\
+  E(Y_{t-2}\eps_t|\mathcal{F}_{t-1}) &= Y_{t-2}E(\eps_t|\mathcal{F}_{t-1})) = 0.
+\end{align*}
+Given $(ii'.a)$ $\{\bfX_t\eps_t, \mathcal{F}_t\}$ is a martingale difference sequence and hence a mixingale. Therefore Theorem 5.17 $(iii.a)$ holds.
+
+$(iii.b)$ We have that $E|Y_{t-1}\eps_t|^2 < (E|Y_{t-1}|^4)^{1/2}(E|\eps_t|^4)^{1/2}$ by the Cauchy--Schwarz inequality. Hence, if we can show $E|Y_{t-1}|^4 < \infty$, then condition $(iii.b)$ is verified. Now by Minkowski's inequality (see Exercise 3.53),
+\begin{align*}
+  E|Y_t|^4 &= E\left|\sum_{j=0}^{\infty}c_j\eps_{t-j}\right|^4 \\
+  &\leq \left(\sum_{j=0}^{\infty}|c_j|\left(E\,|\eps_{t-j}|^4\right)^{1/4}\right)^4 \\
+  &< \Delta\left(\sum_{j=0}^{\infty}|c_j|\right)^4 < \infty.
+\end{align*}
+
+$(iii.c)$ By the martingale difference assumption and by stationarity we have that
+\[
+  \bfV_n = n^{-1}\sum_{t=1}^{n}E(\bfX_t\eps_t\eps_t\bfX_t') = \sigma_o^2 E(\bfX_t\bfX_t')
+  = \sigma_o^2\begin{pmatrix} E(Y_{t-1}^2) & E(Y_{t-1}Y_{t-2}) \\ E(Y_{t-2}Y_{t-1}) & E(Y_{t-2}^2) \end{pmatrix} = \sigma_o^2\bfM,
+\]
+which is positive definite if $E(Y_{t-1}^2) - E(Y_{t-2}Y_{t-1})^2 > 0$ or equivalently, if $E(Y_t^2) > E(|Y_tY_{t-1}|)$. Now
+\begin{align*}
+  E(Y_t^2) &= \sigma_o^2(1-\beta_{o2})[(1+\beta_{o2})(1-\beta_{o2}) - \beta_{o1}^2]^{-1} \\
+  E(Y_tY_{t-1}) &= \sigma_o^2\beta_{o1}[(1+\beta_{o2})(1-\beta_{o2}) - \beta_{o1}^2]^{-1},
+\end{align*}
+(see Granger and Newbold, 1977, Ch.~1) so $E(Y_t^2) > E(|Y_tY_{t-1}|)$ holds if and only if $(1-\beta_{o2}) > |\beta_{o1}|$. This is ensured by $(i'.b)$, and the condition holds.
+
+$(iv.a)$ $E|Y_{t-i}^2| < \infty$ is directly implied by $E|Y_{t-i}^4| < \Delta$ using Jensen's inequality.
+
+$(iv.b)$ That $\bfM$ is positive definite was proven in $(iii.c)$.
+
+\subsection*{Exercise 5.19}
+
+\textbf{Proof.}
+We verify the conditions of Exercise 4.26. The proof that
+\[
+  \bfV_n^{-1/2}n^{-1/2}\bfZ'\bfeps \stackrel{A}{\sim} N(\bfzero, \bfI)
+\]
+is exactly parallel to the proof that
+\[
+  \bfV_n^{-1/2}n^{-1/2}\bfX'\bfeps \stackrel{A}{\sim} N(\bfzero, \bfI)
+\]
+in Theorem 5.17 with $\bfZ$ replacing $\bfX$ everywhere. Next, $\bfZ'\bfX/n - \bfQ \convp \bfzero$ by the ergodic theorem (Theorem 3.34) given $(ii)$, $(iv.a)$, and $(iv.b)$, where $\bfQ$ is finite with full column rank. Since the conditions of Exercise 4.26 are satisfied, it follows that
+\[
+  \bfD_n^{-1/2}\sqrt{n}(\tilde{\bfbeta}_n - \bfbeta_o) \stackrel{A}{\sim} N(\bfzero, \bfI),
+\]
+where
+\[
+  \bfD_n \equiv (\bfQ'\bfP\bfQ)^{-1}\bfQ'\bfP\bfV_n\bfP\bfQ(\bfQ'\bfP\bfQ)^{-1}.
+\]
+Since $\bfD_n - \bfD \to \bfzero$ it follows that
+\[
+  \bfD^{-1/2}\sqrt{n}(\tilde{\bfbeta}_n - \bfbeta_o) - \bfD_n^{-1/2}\sqrt{n}(\tilde{\bfbeta}_n - \bfbeta_o)
+  = (\bfD^{-1/2}\bfD_n^{1/2} - \bfI)\bfD_n^{-1/2}\sqrt{n}(\tilde{\bfbeta}_n - \bfbeta_o) \convp \bfzero
+\]
+by Lemma 4.6. Therefore, by Lemma 4.7, $\bfD^{-1/2}\sqrt{n}(\tilde{\bfbeta}_n - \bfbeta_o) \stackrel{A}{\sim} N(\bfzero, \bfI)$.
+
+\subsection*{Exercise 5.21}
+
+\textbf{Proof.}
+We verify the conditions of Theorem 4.25. First we apply Theorem 5.20 and Proposition 5.1 to show that $\bfV_n^{-1/2}n^{-1/2}\bfX'\bfeps \stackrel{A}{\sim} N(\bfzero, \bfI)$. Consider
+\[
+  \bflambda'\bfV_n^{-1/2}n^{-1/2}\bfX'\bfeps = n^{-1/2}\sum_{t=1}^{n}\bflambda'\bfV_n^{-1/2}\bfX_t\eps_t.
+\]
+
+By Theorem 3.49, $\{\bflambda'\bfV_n^{-1/2}\bfX_t\eps_t\}$ is a mixing sequence, with either $\phi$ of size $-r/2(r-1)$, $r > 2$, or $\alpha$ of size $-r/(r-2)$, $r > 2$, given $(ii)$. Further, $E(\bflambda'\bfV_n^{-1/2}\bfX_t\eps_t) = 0$ given $(iii.a)$, and application of Minkowski's inequality gives
+\[
+  E(|\bflambda'\bfV_n^{-1/2}\bfX_t\eps_t|^{r+\delta}) < \Delta < \infty
+\]
+for some $\delta > 0$ and for all $t$ given $(iii.b)$.
+
+It follows from Theorem 5.20 that for all $\bflambda$, $\bflambda'\bflambda = 1$, we have
+\[
+  n^{-1/2}\sum_{t=1}^{n}\bflambda'\bfV_n^{-1/2}\bfX_t\eps_t = \bflambda'\bfV_n^{-1/2}n^{-1/2}\bfX'\bfeps \stackrel{A}{\sim} N(0,1).
+\]
+Hence, by Proposition 5.1, $\bfV_n^{-1/2}n^{-1/2}\bfX'\bfeps \stackrel{A}{\sim} N(\bfzero, \bfI)$, so Theorem 4.25 $(ii)$ holds.
+
+Next, $\bfX'\bfX/n - \bfM_n \convp \bfzero$ by Corollary 3.48 and Theorem 2.24 given $(iv.a)$ $\bfM_n = O(1)$ and $\det(\bfM_n) > \delta > 0$ for all $n$ sufficiently large given $(iv.b)$. Hence, the conditions of Theorem 4.25 are satisfied and the result follows.
+
+\subsection*{Exercise 5.22}
+
+\textbf{Proof.}
+The following conditions are sufficient for asymptotic normality:
+\begin{enumerate}[label=($\roman*'$)]
+  \item\begin{enumerate}[label=(\alph*)]
+    \item $Y_t = \beta_{o1}Y_{t-1} + \beta_{o2}W_t + \eps_t$;
+    \item $|\beta_{o1}| < 1$, $|\beta_{o2}| < \infty$;
+  \end{enumerate}
+  \item $\{Y_t\}$ is a mixing sequence with either $\phi$ of size $-r/2(r-1)$, $r > 2$, or $\alpha$ of size $-r/(r-2)$, $r > 2$; $\{W_t\}$ is a bounded nonstochastic sequence.
+  \item\begin{enumerate}[label=(\alph*)]
+    \item $E(\eps_t|\mathcal{F}_{t-1}) = 0$, $\quad t = 1, 2, \ldots$, where $\mathcal{F}_t = \sigma(Y_t, Y_{t-1}, \ldots)$;
+    \item $E|\eps_t|^{2r} < \Delta < \infty$, $\quad t = 1, 2, \ldots$;
+    \item $\bfV_n \equiv \operatorname{var}(n^{-1/2}\sum_{t=1}^{n}\bfX_t\eps_t)$ is uniformly positive definite, where $\bfX_t \equiv (Y_{t-1}, W_t)$;
+  \end{enumerate}
+  \item\begin{enumerate}[label=(\alph*)]
+    \item $\bfM_n \equiv E(\bfX'\bfX/n)$ has $\det(\bfM_n) > \delta > 0$ for all $n$ sufficiently large.
+  \end{enumerate}
+\end{enumerate}
+
+We verify the conditions of Exercise 5.21. Since $\eps_t = Y_t - \beta_{o1}Y_{t-1} - \beta_{o2}W_t$, it follows from Theorem 3.49 that $\{(\bfX_t, \eps_t)\} = \{(Y_{t-1}, W_t, \eps_t)\}$ is mixing with either $\phi$ of size $-r/2(r-1)$, $r > 2$, or $\alpha$ of size $-r/(r-2)$, $r > 2$, given $(ii')$. Thus, condition $(ii)$ of Exercise 5.21 is satisfied.
+
+Next consider condition $(iii)$. Now $E(W_t\eps_t) = W_tE(\eps_t) = 0$ given $(iii'.a)$ and $(iii'.c)$. Hence, $E(\bfX_t\eps_t) = (E(Y_{t-1}\eps_t), E(W_t\eps_t))' = \bfzero$ so that $(iii.a)$ is satisfied.
+
+Turning to condition $(iii.b)$ we have $E|W_t\eps_t|^r = \Delta'E|\eps_t|^r < \Delta'\Delta < \infty$ given $(iii'.b)$, where $|W_t| < \Delta' < \infty$. Also
+\[
+  E|Y_{t-1}\eps_t|^r < (E|Y_{t-1}|^{2r})^{1/2}(E|\eps_t|^{2r})^{1/2}
+\]
+by the Cauchy--Schwarz inequality. Since $E|\eps_t|^{2r} < \Delta < \infty$ given $(iii'.b)$, it remains to be shown that $E|Y_t|^{2r} < \infty$. Applying Minkowski's inequality (see Exercise 3.53),
+\begin{align*}
+  E|Y_t|^{2r} &= E\left|\beta_{o2}\sum_{j=0}^{\infty}\beta_{o1}^j W_{t-j} + \sum_{j=0}^{\infty}\beta_{o1}^j\eps_{t-j}\right|^{2r} \\
+  &\leq \left(|\beta_{o2}|\Delta' + \Delta^{1/(2r)}\sum_{j=0}^{\infty}|\beta_{o1}^j|\right)^{2r} < \infty
+\end{align*}
+if and only if $|\beta_{o1}| < 1$. Therefore, $E|Y_{t-1}\eps_t|^r < \infty$ given $(i')$ and $(iv'.a)$ so that condition $(iii.b)$ is satisfied. Next, condition 5.21 $(iii.c)$ is imposed by 5.22 $(iii'.c)$. It remains to verify condition 5.21 $(iv.a)$. Now $E|W_t^2|^r = |W_t|^{2r} < \Delta'^{2r}$ given $(iv'.a)$ and $E|Y_t^2|^{r/2} < \infty$ as shown previously. Hence, all conditions of Exercise 5.21 are satisfied so that the OLS estimate of $(\beta_{o1}, \beta_{o2})$ is consistent and asymptotically normal.
+
+\subsection*{Exercise 5.27}
+
+\textbf{Proof.}
+First, we apply Corollary 5.26 and Proposition 5.1 to show that
+\[
+  \bfV_n^{-1/2}n^{-1/2}\bfZ'\bfeps \stackrel{A}{\sim} N(\bfzero, \bfI).
+\]
+Given $(iii'.a)$, $\{\bfZ_t\eps_t\}$ is a martingale difference sequence with $\operatorname{var}(n^{-1/2}\bfZ'\bfeps) = \bfV_n$ finite by $(iii'.b)$ with $\det(\bfV_n) > \delta > 0$ for all $n$ sufficiently large given $(iii'.c)$. Hence, consider
+\[
+  \bflambda'\bfV_n^{-1/2}n^{-1/2}\bfZ'\bfeps = n^{-1/2}\sum_{t=1}^{n}\bflambda'\bfV_n^{-1/2}\bfZ_t\eps_t.
+\]
+
+By writing
+\[
+  \bflambda'\bfV_n^{-1/2}\bfZ_t\eps_t = \sum_{h=1}^{p}\sum_{i=1}^{k}\tilde{\lambda}_{in}Z_{thi}\eps_{th},
+\]
+as $E(Z_{thi}\eps_{th}|\mathcal{F}_{t-1}) = 0$ given $(iii.a)$. Applying Minkowski's inequality yields
+\begin{align*}
+  E|\bflambda'\bfV_n^{-1/2}\bfZ_t\eps_t|^r &= E\left|\sum_{h=1}^{p}\sum_{i=1}^{k}\tilde{\lambda}_{in}Z_{thi}\eps_{th}\right|^r \\
+  &\leq \left[\sum_{h=1}^{p}\sum_{i=1}^{k}\tilde{\lambda}_{in}\left(E\,|Z_{thi}\eps_{th}|^r\right)^{1/r}\right]^r \\
+  &< \left[\Delta\sum_{h=1}^{p}\sum_{i=1}^{k}\Delta^{1/r}\right]^r < \infty
+\end{align*}
+given $(iii'.b)$. Further,
+\begin{align*}
+  \bar{\sigma}_n^2 &= \operatorname{var}(\bflambda'\bfV_n^{-1/2}n^{-1/2}\bfZ'\bfeps) \\
+  &= \bflambda'\bfV_n^{-1/2}\operatorname{var}(n^{-1/2}\bfZ'\bfeps)\bfV_n^{-1/2}\bflambda = 1
+\end{align*}
+for all $n$ sufficiently large.
+
+Next, consider
+\[
+  n^{-1}\sum_{t=1}^{n}\bflambda'\bfV_n^{-1/2}\bfZ_t\eps_t\eps_t'\bfZ_t'\bfV_n^{-1/2}\bflambda.
+\]
+Since $\{\bfZ_t\eps_t\eps_t'\bfZ_t'\}$ is a mixing sequence with either $\phi$ of size $-r/2(r-1)$, $r > 2$, or $\alpha$ of size $-r/(r-2)$, $r > 2$, by Theorem 3.49 it follows that $n^{-1}\sum_{t=1}^{n}\bfZ_t\eps_t\eps_t'\bfZ_t' - \bfV_n \convp \bfzero$ given $(iii'.b)$. By Proposition 2.30,
+\[
+  n^{-1}\sum_{t=1}^{n}\bflambda'\bfV_n^{-1/2}\bfZ_t\eps_t\eps_t'\bfZ_t'\bfV_n^{-1/2}\bflambda - \bflambda'\bfV_n^{-1/2}\bfV_n\bfV_n^{-1/2}\bflambda - 1 \convp 0.
+\]
+
+Hence, the sequence $\{\bflambda'\bfV_n^{-1/2}\bfZ_t\eps_t\}$ satisfies the conditions of Corollary 5.26, and it follows that $\bflambda\bfV_n^{-1/2}n^{-1/2}\sum_{t=1}^{n}\bfZ_t\eps_t = \bflambda'\bfV_n^{-1/2}n^{-1/2}\bfZ'\bfeps \stackrel{A}{\sim} N(0,1)$. By Proposition 5.1, $\bfV_n^{-1/2}n^{-1/2}\bfZ'\bfeps \stackrel{A}{\sim} N(\bfzero, \bfI)$.
+
+Now, given $(ii')$, $(iv.a)$, and $(iv.b)$, $\bfZ'\bfX/n - \bfQ_n \convp \bfzero$ by Corollary 3.48 and Theorem 2.24. The remaining results follow as before.
+
+%% ══════════════════════════════════════════════════════════════
+\section*{Chapter 6}
+%% ══════════════════════════════════════════════════════════════
+
+\subsection*{Exercise 6.2}
+
+\textbf{Proof.}
+The following conditions are sufficient:
+\begin{enumerate}[label=(\textit{\roman*})]
+  \item $\bfY_t = \bfX_t'\bfbeta_o + \bfeps_t$, $\quad t = 1, 2, \ldots$, $\quad \bfbeta_o \in \mathbb{R}^k$;
+  \item $\{(\bfZ_t', \bfX_t', \eps_t)\}$ is a mixing sequence with either $\phi$ of size $-r/2(r-1)$, $r > 2$, or $\alpha$ of size $-r/(r-2)$, $r > 2$;
+  \item\begin{enumerate}[label=(\alph*)]
+    \item $E(Z_{tgi}\eps_{th}|\mathcal{F}_{t-1}) = 0$ for all $t$, where $\{\mathcal{F}_t\}$ is adapted to $\{Z_{tgi}\eps_{th}\}$, $g, h = 1, \ldots, p$, $i = 1, \ldots, l$;
+    \item $E|Z_{tgi}\eps_{th}|^{r+\delta} < \Delta < \infty$ and $E|\eps_{th}|^{r+\delta} < \Delta < \infty$ for some $\delta > 0$, $g, h = 1, \ldots, p$, $i = 1, \ldots, l$, and all $t$;
+    \item $E(\eps_t\eps_t'|\bfZ_t) = \sigma_o^2\bfI_p$, $t = 1, \ldots, n$;
+  \end{enumerate}
+  \item\begin{enumerate}[label=(\alph*)]
+    \item $E|Z_{thi}|^{r+\delta} < \Delta < \infty$ and $E|X_{thj}|^{r+\delta} < \Delta < \infty$ for some $\delta > 0$, $h = 1, \ldots, p$, $i = 1, \ldots, l$, $j = 1, \ldots k$, and all $t$;
+    \item $\bfQ_n \equiv E(\bfZ'\bfX/n)$ has full column rank uniformly in $n$ for all $n$ sufficiently large;
+    \item $\mathbf{L}_n \equiv E(\bfZ'\bfZ/n)$ has $\det(\mathbf{L}_n) > \delta > 0$ for all $n$ sufficiently large.
+  \end{enumerate}
+\end{enumerate}
+
+Given conditions $(i)$--$(iv)$, the asymptotically efficient estimator is
+\[
+  \tilde{\bfbeta}_n = \tilde{\bfbeta}_{2SLS} = (\bfX'\bfZ(\bfZ'\bfZ)^{-1}\bfZ'\bfX)^{-1}\bfX'\bfZ(\bfZ'\bfZ)^{-1}\bfZ'\bfY
+\]
+by Exercise 4.47. First, consider $\bfZ'\bfZ/n$. Now $\{\bfZ_t\bfZ_t'\}$ is a mixing sequence with the same size as $\{(\bfZ_t', \bfX_t', \eps_t)\}$ by Proposition 3.50. Hence, by Corollary 3.48, $\bfZ'\bfZ/n - \mathbf{L}_n = n^{-1}\sum_{t=1}^{n}\bfZ_t\bfZ_t' - n^{-1}\sum_{t=1}^{n}E(\bfZ_t\bfZ_t') \convas \bfzero$ given $(iv.a)$ and $\bfZ'\bfZ/n \convp \mathbf{L}$ by Theorem 2.24.
+
+Next consider
+\[
+  \tilde{\sigma}_n^2 \equiv (np)^{-1}(\bfY - \bfX\tilde{\bfbeta}_n)'(\bfY - \bfX\tilde{\bfbeta}_n) = (np)^{-1}(\bfeps - \bfX(\tilde{\bfbeta}_n - \bfbeta_o))'(\bfeps - \bfX(\tilde{\bfbeta}_n - \bfbeta_o)).
+\]
+This can be written as
+\[
+  \tilde{\sigma}_n^2 = \bfeps'\bfeps/(np) - 2(\tilde{\bfbeta}_n - \bfbeta_o)'\bfX'\bfeps/(np) + (\tilde{\bfbeta}_n - \bfbeta_o)'(\bfX'\bfX/n)(\tilde{\bfbeta}_n - \bfbeta_o)/p.
+\]
+As the conditions of Exercise 3.79 are satisfied, it follows that $\tilde{\bfbeta}_n - \bfbeta_o \convas \bfzero$. Also, $\bfX'\bfeps/n = O_{a.s.}(1)$ by Corollary 3.48 given $(ii)$, $(iii.b)$, and $(iv.a)$. Similarly, $\bfX_t\bfX_t'$ has finite expected absolute value given $(iv.a)$. Since $\{\bfX_t\bfX_t'\}$ is a mixing sequence with size given in $(ii)$ with elements satisfying the moment condition of Corollary 3.48 given $(iv.a)$, so that $\bfX'\bfX/n = O_{a.s.}(1)$ and therefore $(\tilde{\bfbeta}_n - \bfbeta_o)'(\bfX'\bfX/n)(\tilde{\bfbeta}_n - \bfbeta_o) \convp \bfzero$. Finally, consider
+\[
+  \bfeps'\bfeps/(np) = p^{-1}\sum_{h=1}^{p}n^{-1}\sum_{t=1}^{n}\eps_{th}^2.
+\]
+Now for any $h = 1, \ldots, p$, $\{\eps_{th}^2\}$ is a mixing sequence with $\phi$ of size $-r/2(r-1)$, $r > 2$, or $\alpha$ of size $-r/(r-2)$, $r > 2$. As $\{\eps_{th}^2\}$ satisfies the moment condition of Corollary 3.48 given $(iii.b)$ and $E(\eps_{th}^2) = \sigma_o^2$ given $(iii.c)$, it follows that
+\[
+  n^{-1}\sum_{t=1}^{n}\eps_{th}^2 - n^{-1}\sum_{t=1}^{n}E(\eps_{th}^2) = n^{-1}\sum_{t=1}^{n}\eps_{th}^2 - \sigma_o^2 \convp 0,
+\]
+Hence, $\bfeps'\bfeps/(np) \convp \sigma_o^2$, and it follows that $\tilde{\sigma}_n^2 \convp \sigma_o^2$ by Exercise 2.35.
+
+\subsection*{Exercise 6.6}
+
+\textbf{Proof.}
+The proof is analogous to that of Theorem 6.3. Consider for simplicity the case $p = 1$. We decompose $\hat{\bfV}_n - \bfV_n$ as follows:
+\begin{align*}
+  \hat{\bfV}_n - \bfV_n &= n^{-1}\sum_{t=1}^{n}\eps_t^2\bfZ_t\bfZ_t' - n^{-1}\sum_{t=1}^{n}E(\eps_t^2\bfZ_t\bfZ_t') \\
+  &\quad - 2n^{-1}\sum_{t=1}^{n}(\tilde{\bfbeta}_n - \bfbeta_o)'\bfX_t'\eps_t\bfZ_t\bfZ_t' \\
+  &\quad + n^{-1}\sum_{t=1}^{n}(\tilde{\bfbeta}_n - \bfbeta_o)'\bfX_t\bfX_t'(\tilde{\bfbeta}_n - \bfbeta_o)\bfZ_t\bfZ_t'.
+\end{align*}
+
+Now $\{\eps_t^2\bfZ_t\bfZ_t'\}$ is a mixing sequence with either $\phi$ of size $-r/(2r-1)$, $r > 1$, or $\alpha$ of size $-r/(r-1)$, $r > 1$, given $(ii)$ with elements satisfying the moment condition of Corollary 3.48 given $(iii.b)$. Hence
+\[
+  n^{-1}\sum_{t=1}^{n}\eps_t^2\bfZ_t\bfZ_t' - n^{-1}\sum_{t=1}^{n}E(\eps_t^2\bfZ_t\bfZ_t') \convp \bfzero.
+\]
+
+The remaining terms converge to zero in probability as in Theorem 6.3, where we now use results on mixing sequences in place of results on stationary, ergodic sequences. For example, by the Cauchy--Schwarz inequality,
+\[
+  E|X_{t\kappa}Z_{ti}Z_{tj}\eps_t|^{r+\delta} < \left(E|X_{t\kappa}Z_{ti}|^{2(r+\delta)}\right)^{1/2}\left(E|Z_{tj}\eps_t|^{2(r+\delta)}\right)^{1/2} < \Delta < \infty
+\]
+given $(iii.b)$ and $(iv.a)$. As $\{X_{t\kappa}Z_{ti}Z_{tj}\eps_t\}$ is a mixing sequence with size given in $(ii)$ and it satisfies the moment condition of Corollary 3.48, it follows that
+\begin{align*}
+  n^{-1}\sum_{t=1}^{n}X_{t\kappa}Z_{ti}Z_{tj}\eps_t - n^{-1}\sum_{t=1}^{n}E(X_{t\kappa}Z_{ti}Z_{tj}\eps_t) &\convp 0.
+\end{align*}
+
+Since $\tilde{\bfbeta}_n - \bfbeta_o \convp \bfzero$ under the conditions given, we have
+\[
+  n^{-1}\sum_{t=1}^{n}(\tilde{\bfbeta}_n - \bfbeta_o)'\bfX_t'\eps_t\bfZ_t\bfZ_t' \convp \bfzero
+\]
+by Exercise 2.35. Finally, consider the third term. The Cauchy--Schwarz inequality gives $E|X_{t\kappa}X_{t\lambda}Z_{ti}Z_{tj}|^{r+\delta} < \infty$ so that
+\[
+  n^{-1}\sum_{t=1}^{n}X_{t\kappa}X_{t\lambda}Z_{ti}Z_{tj} - n^{-1}\sum_{t=1}^{n}E(X_{t\kappa}X_{t\lambda}Z_{ti}Z_{tj}) \convp 0
+\]
+by Corollary 3.48. Thus the third term vanishes in probability and application of Exercise 2.35 yields $\hat{\bfV}_n - \bfV_n \convp \bfzero$.
+
+\subsection*{Exercise 6.7}
+
+\textbf{Proof.}
+The proof is immediate from Exercise 5.27 and Exercise 6.6.
+
+\subsection*{Exercise 6.8}
+
+\textbf{Proof.}
+Conditions $(i)$--$(iv)$ ensure that Exercise 6.6 holds for $\tilde{\bfbeta}_n$ and $\hat{\bfV}_n - \bfV_n \convp \bfzero$. Next set $\hat{\bfP}_n = \hat{\bfV}_n^{-1}$ in Exercise 6.7. Then $\bfP_n = \bfV_n^{-1}$ and the result follows.
+
+\subsection*{Exercise 6.12}
+
+\textbf{Proof.}
+Exactly as in the proof of Theorem 6.9, all the terms
+\begin{align*}
+  &(n-\tau)^{-1}\sum_{t=\tau+1}^{n}\bfZ_t\eps_t\eps_{t-\tau}\bfZ_{t-\tau}' - E(\bfZ_t\eps_t\eps_{t-\tau}\bfZ_{t-\tau}') \\
+  &-(n-\tau)^{-1}\sum_{t=\tau+1}^{n}\bfZ_t\bfX_t'(\tilde{\bfbeta}_n - \bfbeta_o)\eps_{t-\tau}\bfZ_{t-\tau}' \\
+  &-(n-\tau)^{-1}\sum_{t=\tau+1}^{n}\bfZ_t\eps_t(\tilde{\bfbeta}_n - \bfbeta_o)'\bfX_{t-\tau}\bfZ_{t-\tau}' \\
+  &+(n-\tau)^{-1}\sum_{t=\tau+1}^{n}\bfZ_t\bfX_t'(\tilde{\bfbeta}_n - \bfbeta_o)(\tilde{\bfbeta}_n - \bfbeta_o)'\bfX_{t-\tau}\bfZ_{t-\tau}'.
+\end{align*}
+converge to zero in probability. Note that Theorem 3.49 is invoked to guarantee the summands are mixing sequences with size given in $(ii)$, and the Cauchy--Schwarz inequality is used to verify the moment condition of Corollary 3.48. For example, given $(ii)$ $\{\bfZ_t\eps_t\eps_{t-\tau}\bfZ_{t-\tau}'\}$ is a mixing sequence with either $\phi$ of size $-r/(2r-2)$, $r > 2$, or $\alpha$ of size $-r/(r-2)$, $r > 2$, with elements satisfying the moment condition of Corollary 3.48 given $(iii.b)$.
+
+Hence
+\[
+  (n-\tau)^{-1}\sum_{t=\tau+1}^{n}\bfZ_t\eps_t\eps_{t-\tau}\bfZ_{t-\tau}' - (n-\tau)^{-1}\sum_{t=\tau+1}^{n}E(\bfZ_t\eps_t\eps_{t-\tau}\bfZ_{t-\tau}') \convp \bfzero.
+\]
+The remaining terms can be shown to converge to zero in probability in a manner similar to Theorem 6.3.
+
+\subsection*{Exercise 6.13}
+
+\textbf{Proof.}
+Immediate from Theorem 5.22 and Exercise 6.12.
+
+\subsection*{Exercise 6.14}
+
+\textbf{Proof.}
+Conditions $(i)$--$(iv)$ ensure that Exercise 6.12 holds for $\tilde{\bfbeta}_n$ and $\hat{\bfV}_n - \bfV_n \convp \bfzero$. Next set $\hat{\bfP}_n = \hat{\bfV}_n^{-1}$ in Exercise 6.13. Then $\bfP_n = \bfV_n^{-1}$ and the result follows.
+
+\subsection*{Exercise 6.15}
+
+\textbf{Proof.}
+Under the conditions of Theorem 6.9 or Exercise 6.12 it holds that $\hat{\bfV}_n - \bfV_n \convp \bfzero$, so the result will follow if also $\tilde{\bfV}_n - \hat{\bfV}_n \convp \bfzero$. Now
+\[
+  \tilde{\bfV}_n - \hat{\bfV}_n = \sum_{\tau=1}^{m}(w_{n\tau} - 1)n^{-1}\sum_{t=\tau+1}^{n}\bfZ_t\tilde{\eps}_t\tilde{\eps}_{t-\tau}'\bfZ_{t-\tau}' + \bfZ_{t-\tau}\tilde{\eps}_{t-\tau}\tilde{\eps}_t'\bfZ_t'.
+\]
+
+Since for each $\tau = 1, \ldots, m$ we have
+\[
+  n^{-1}\sum_{t=\tau+1}^{n}\bfZ_t\tilde{\eps}_t\tilde{\eps}_{t-\tau}'\bfZ_{t-\tau}' + \bfZ_{t-\tau}\tilde{\eps}_{t-\tau}\tilde{\eps}_t'\bfZ_t' = O_p(1)
+\]
+it follows that
+\begin{align*}
+  \tilde{\bfV}_n - \hat{\bfV}_n &= \sum_{\tau=1}^{m}(w_{n\tau} - 1)O_p(1) \\
+  &= \sum_{\tau=1}^{m} o_p(1)O_p(1) = o_p(1),
+\end{align*}
+where we used that $w_{n\tau} \convp 1$.
+
+%% ══════════════════════════════════════════════════════════════
+\section*{Chapter 7}
+%% ══════════════════════════════════════════════════════════════
+
+\subsection*{Exercise 7.2}
+
+\textbf{Proof.}
+Since $\mathcal{X}_t = \mathcal{X}_0 + \sum_{s=1}^{t}\mathcal{Z}_s$, we have
+\begin{align*}
+  E(\mathcal{X}_t) &= E\left(\mathcal{X}_0 + \sum_{s=1}^{t}\mathcal{Z}_s\right) \\
+  &= 0 + \sum_{s=1}^{t}E(\mathcal{Z}_s) = 0,
+\end{align*}
+and
+\begin{align*}
+  \operatorname{var}(\mathcal{X}_t) &= \operatorname{var}\left(\mathcal{X}_0 + \sum_{s=1}^{t}\mathcal{Z}_s\right) \\
+  &= 0 + \sum_{s=1}^{t}\operatorname{var}(\mathcal{Z}_s) = t\sigma^2,
+\end{align*}
+using the independence between $\mathcal{Z}_r$ and $\mathcal{Z}_s$ for $r \neq s$.
+
+\subsection*{Exercise 7.3}
+
+\textbf{Proof.}
+Note that
+\begin{align*}
+  \mathcal{X}_{t_4} - \mathcal{X}_{t_3} &= \mathcal{Z}_{t_4} + \mathcal{Z}_{t_4-1} + \cdots + \mathcal{Z}_{t_3+1}, \\
+  \mathcal{X}_{t_2} - \mathcal{X}_{t_1} &= \mathcal{Z}_{t_2} + \mathcal{Z}_{t_2-1} + \cdots + \mathcal{Z}_{t_1+1}.
+\end{align*}
+Since $(\mathcal{Z}_{t_1+1}, \ldots, \mathcal{Z}_{t_2})$ is independent of $(\mathcal{Z}_{t_3+1}, \ldots, \mathcal{Z}_{t_4})$ it follows from Proposition 3.2 $(ii)$ that $\mathcal{X}_{t_4} - \mathcal{X}_{t_3}$ and $\mathcal{X}_{t_2} - \mathcal{X}_{t_1}$ are independent.
+
+\subsection*{Exercise 7.4}
+
+\textbf{Proof.}
+By definition
+\begin{align*}
+  \mathcal{W}_n(b) - \mathcal{W}_n(a) &= n^{-1/2}\sum_{t=[na]+1}^{[nb]}\mathcal{Z}_t \\
+  &= n^{-1/2}([nb] - [na])^{1/2}\times ([nb] - [na])^{-1/2}\sum_{t=[na]+1}^{[nb]}\mathcal{Z}_t.
+\end{align*}
+The last term $([nb]-[na])^{-1/2}\sum_{t=[na]+1}^{[nb]}\mathcal{Z}_t \convd N(0,1)$ by the central limit theorem, and $n^{-1/2}([nb]-[na])^{1/2} = (([nb]-[na])/n)^{1/2} \to (b-a)^{1/2}$ as $n \to \infty$. Hence $\mathcal{W}_n(b) - \mathcal{W}_n(a) \convd N(0, b-a)$.
+
+\subsection*{Exercise 7.22}
+
+\textbf{Proof.}
+$(i)$ Let $\mathcal{U} \in C$, and let $\mathcal{U}_n$ be a sequence of mappings in $D$ such that $\mathcal{U}_n \to \mathcal{U}$, i.e., $b_n \equiv d_u(\mathcal{U}_n, \mathcal{U}) = \sup_{a \in [0,1]}|\mathcal{U}_n(a) - \mathcal{U}(a)| \to 0$ as $n \to \infty$. We have
+\begin{align*}
+  d_u(\mathcal{U}_n^2, \mathcal{U}^2) &= \sup_{a \in [0,1]}|\mathcal{U}_n(a)^2 - \mathcal{U}(a)^2| \\
+  &= \sup_{a \in [0,1]}|\mathcal{U}_n(a) - \mathcal{U}(a)||\mathcal{U}_n(a) + \mathcal{U}(a)| \\
+  &\leq b_n\sup_{a \in [0,1]}|\mathcal{U}_n(a) + \mathcal{U}(a)|,
+\end{align*}
+where $b_n \equiv d_u(\mathcal{U}_n, \mathcal{U})$. The boundedness of $\mathcal{U}$ and the fact that $b_n \to 0$ imply that for $n$ sufficiently large, $\mathcal{U}_n$ is bounded on $[0,1]$. Hence, $\sup_{a \in [0,1]}|\mathcal{U}_n(a) + \mathcal{U}(a)| = O(1)$ and it follows that $d_u(\mathcal{U}_n^2, \mathcal{U}^2) \to 0$, which proves that $M_1$ is continuous at $\mathcal{U}$.
+
+Now consider the function on $[0,1]$ given by
+\[
+  \mathcal{V}(a) = \begin{cases} \operatorname{int}(\frac{1}{1-a}), & \text{for } 0 \leq a < 1 \\ 0, & \text{for } a = 1. \end{cases}
+\]
+For $0 < a < 1/2$, this function is 1, then jumps to 2 for $a = 1/2$, to 3 for $a = 2/3$, and so forth. Clearly $\mathcal{V}(a)$ is continuous from the right and has left limits everywhere, so $\mathcal{V} \in D = D[0,1]$.
+
+Next, define the sequence of functions $\mathcal{V}_n(a) = \mathcal{V}(a) + \eps/n$, for some $\eps > 0$. Then $\mathcal{V}_n \in D$ and $\mathcal{V}_n \to \mathcal{V}$.
+
+Since
+\begin{align*}
+  d_u(\mathcal{V}_n^2, \mathcal{V}^2) &= \sup_{a \in [0,1]}|\mathcal{V}_n(a)^2 - \mathcal{V}(a)^2| \\
+  &= \sup_{a \in [0,1]}|(\mathcal{V}_n(a) - \mathcal{V}(a))(\mathcal{V}_n(a) + \mathcal{V}(a))| \\
+  &= (\eps/n)\sup_{a \in [0,1]}|\mathcal{V}_n(a) + \mathcal{V}(a)|
+\end{align*}
+is infinite for all $n$, we conclude that $\mathcal{V}_n^2 \not\to \mathcal{V}^2$. Hence, $M_1$ is not continuous everywhere in $D$.
+
+$(ii)$ Let $\mathcal{U} \in C$; then $\mathcal{U}$ is bounded and $\int_0^1 |\mathcal{U}(a)|\,da < \infty$. Let $\{\mathcal{U}_n\}$ be a sequence of functions in $D$ such that $\mathcal{U}_n \to \mathcal{U}$. Define $b_n \equiv d_u(\mathcal{U}_n, \mathcal{U})$; then $b_n \to 0$ and $\int_0^1 |\mathcal{U}_n(a)|\,da < \int_0^1 |\mathcal{U}(a)|\,da + b_n$.
+
+Since
+\begin{align*}
+  \left|\int_0^1 \mathcal{U}_n(a)^2\,da - \int_0^1 \mathcal{U}(a)^2\,da\right|
+  &\leq \int_0^1 |\mathcal{U}_n(a)^2 - \mathcal{U}(a)^2|\,da \\
+  &= \int_0^1 |\mathcal{U}_n(a) - \mathcal{U}(a)||\mathcal{U}_n(a) + \mathcal{U}(a)|\,da \\
+  &\leq b_n\int_0^1 |\mathcal{U}_n(a) + \mathcal{U}(a)|\,da \\
+  &\leq b_n(b_n + 2\int_0^1 |\mathcal{U}(a)|\,da) \to 0
+\end{align*}
+
+$M_2$ is continuous at $\mathcal{U} \in C$.
+
+$(iii)$ Let $\mathcal{V}(a) = a$ for all $a \in [0,1]$ and let $\mathcal{V}_n(a) = \mathcal{V}(a)$ for $a > 1/n$ and $\mathcal{V}_n(a) = 0$ for $0 < a < 1/n$. Thus $d_u(\mathcal{V}, \mathcal{V}_n) = 1/n$ and $\mathcal{V}_n \to \mathcal{V}$; however, $\int_0^1 \log(|\mathcal{V}_n(a)|)\,da \not\to \int_0^1 \log(|\mathcal{V}(a)|)\,da$, since $\int_0^1 \log(|\mathcal{V}(a)|)\,da = -1$ whereas $\int_0^1 \log(|\mathcal{V}_n(a)|)\,da = -\infty$ for all $n$. Hence, it follows that $M_3$ is not continuous.
+
+\subsection*{Exercise 7.23}
+
+\textbf{Proof.}
+If $\{\eps_t\}$ satisfies the conditions of the heterogeneous mixing CLT and is globally covariance stationary, then $(ii)$ of Theorem 7.21 follows directly from Theorem 7.18. Since $\{\eps_t\}$ is assumed to be mixing, then $\{\eps_t^2\}$ is also mixing of the same size (see Proposition 3.50). By Corollary 3.48 it also then follows that $n^{-1}\sum_{t=1}^{n}\eps_t^2 - n^{-1}\sum_{t=1}^{n}E(\eps_t^2) = o_p(1)$. So if $n^{-1}\sum_{t=1}^{n}E(\eps_t^2)$ converges as $n \to \infty$, then $(iii)$ of Theorem 7.21 holds.
+
+For $\sigma^2 = \tau^2$ it is required that $\lim n^{-1}\sum_{t=2}^{n}\sum_{s=1}^{t-1}E(\eps_{t-s}\eps_t) = 0$. It suffices that $\{\eps_t\}$ is independent or that $\{\eps_t, \mathcal{F}_t\}$ is a martingale difference sequence.
+
+\subsection*{Exercise 7.28}
+
+\textbf{Proof.}
+From Donsker's theorem and the continuous mapping theorem we have that $n^{-2}\sum_{t=1}^{n}X_t^2 \Rightarrow \sigma_1^2\int \mathcal{W}_1(a)^2\,da$. The multivariate version of Donsker's theorem states that
+\[
+  (n^{-1/2}X_{[na]}, n^{-1/2}Y_{[na]}) \Rightarrow (\sigma_1\mathcal{W}_1(a), \sigma_2\mathcal{W}_2(a)).
+\]
+Applying the continuous mapping theorem to the mapping
+\[
+  (x, y) \mapsto \int_0^1 x(a)y(a)\,da,
+\]
+we have that
+\[
+  n^{-2}\sum_{t=1}^{n}X_tY_t = n^{-1}\sum_{t=1}^{n}\sigma_1\mathcal{W}_{1n}(a_{t-1})\sigma_2\mathcal{W}_{2n}(a_{t-1}) \Rightarrow \sigma_1\sigma_2\int_0^1 \mathcal{W}_1(a)\mathcal{W}_2(a)\,da.
+\]
+
+Hence
+\begin{align*}
+  \hat{\beta}_n &= \left(n^{-2}\sum_{t=1}^{n}X_t^2\right)^{-1}n^{-2}\sum_{t=1}^{n}X_tY_t \\
+  &\Rightarrow \left(\sigma_1^2\int_0^1 \mathcal{W}_1(a)^2\,da\right)^{-1}\sigma_1\sigma_2\int_0^1 \mathcal{W}_1(a)\mathcal{W}_2(a)\,da \\
+  &= (\sigma_2/\sigma_1)\left(\int_0^1 \mathcal{W}_1(a)^2\,da\right)^{-1}\int_0^1 \mathcal{W}_1(a)\mathcal{W}_2(a)\,da.
+\end{align*}
+
+\subsection*{Exercise 7.31}
+
+\textbf{Proof.}
+Since $\{\bfeta_t, \eps_t\}$ satisfies the conditions of Theorem 7.30, it holds that
+\begin{align*}
+  (n^{-1/2}X_{[na]}, n^{-1/2}Y_{[na]}) &= (\sigma_1\mathcal{W}_{1n}(a_{t-1}), \sigma_2\mathcal{W}_{2n}(a_{t-1})) \\
+  &\Rightarrow (\sigma_1\mathcal{W}_1(a), \sigma_2\mathcal{W}_2(a)),
+\end{align*}
+where $\sigma_1^2$ and $\sigma_2^2$ are the diagonal elements of $\bfSigma$ (the off diagonal elements are zero, due to the independence of $\bfeta_t$ and $\eps_t$). Applying the continuous mapping theorem, we find $\hat{\beta}_n$ to have the same limiting distribution as we found in Exercise 7.28.
+
+\subsection*{Exercise 7.43}
+
+\textbf{Proof.}
+$(i)$ If $\{\bfeta_t\}$ and $\{\eps_t\}$ are independent, then $E(\bfeta_s\eps_t') = \bfzero$ for all $s$ and $t$. So
+\[
+  \bfLambda_n \equiv \bfSigma_1^{-1/2}n^{-1}\sum_{t=2}^{n}\sum_{s=1}^{t-1}E(\bfeta_s\eps_t')\bfSigma_2^{-1/2\prime} = \bfzero,
+\]
+and clearly $\bfLambda_n \to \bfLambda = 0$.
+
+$(ii)$ If $\bfeta_t = \eps_{t-1}$, then
+\[
+  \bfLambda_n \equiv \bfSigma_1^{-1/2}n^{-1}\sum_{t=2}^{n}\sum_{s=1}^{t-1}E(\eps_{s-1}\eps_t')\bfSigma_1^{-1/2\prime}.
+\]
+
+If the sequence $\{\eps_t\}$ is covariance stationary such that $\bfrho_h \equiv E(\eps_t\eps_{t-h}')$ is well defined, then
+\begin{align*}
+  n^{-1}\sum_{t=2}^{n}\sum_{s=1}^{t-1}E(\eps_{s-1}\eps_t') &= n^{-1}\sum_{t=2}^{n}\sum_{s=2}^{t}E(\eps_{t-s}\eps_t') \\
+  &= n^{-1}\sum_{t=2}^{n}\sum_{s=2}^{t}\bfrho_s' \\
+  &= \sum_{s=2}^{n}\frac{(n+1-s)}{n}\bfrho_s',
+\end{align*}
+so that
+\[
+  \bfLambda_n \equiv \bfSigma_1^{-1/2}\left(\sum_{s=2}^{n}\frac{(n+1-s)}{n}\bfrho_s\right)\bfSigma_1^{-1/2\prime},
+\]
+where in this situation we have
+\[
+  \bfSigma_1 = \bfSigma_2 = \lim_{n\to\infty}n^{-1}\sum_{t=1}^{n}\sum_{s=1}^{n}\bfrho_{t-s} = \bfrho_0 + \lim_{n\to\infty}\sum_{s=1}^{n-1}\frac{(n-s)}{n}(\bfrho_s + \bfrho_s').
+\]
+
+Notice that when $\{\eps_t\}$ is a sequence of independent variables such that $\bfrho_s = \bfzero$ for $s > 1$, then $\operatorname{var}(\eps_t) = \bfrho_0 = \bfSigma_1$ and $\bfLambda = \bfzero$. This remains true for the case where $\bfeta_t = \eps_t$, which is assumed in the likelihood analysis of cointegrated processes by Johansen (1988, 1991).
+
+\subsection*{Exercise 7.44}
+
+\textbf{Proof.}
+$(a)$ This follows from Theorem 7.21~$(a)$, or we have directly
+\[
+  n^{-2}\sum_{t=1}^{n}X_t^2 = \sigma_1^2\int_0^1 \mathcal{W}_{1n}(a)\mathcal{W}_{1n}(a)\,da \Rightarrow \sigma_1^2\int_0^1 \mathcal{W}_1(a)^2\,da.
+\]
+
+$(b)$ Similarly,
+\[
+  n^{-1}\sum_{t=1}^{n}X_t\eps_t = \sigma_1\int_0^1 \mathcal{W}_{1n}(a)\,d\mathcal{W}_{2n}(a)\sigma_2 \Rightarrow \sigma_1\sigma_2\int_0^1 \mathcal{W}_1(a)\,d\mathcal{W}_2(a),
+\]
+by Theorem 7.42 and using that $\bfLambda = 0$ since $\{\eps_t\}$ and $\{\bfeta_t\}$ are independent (see Exercise 7.43).
+
+$(c)$
+\begin{align*}
+  n(\hat{\beta}_n - \beta_o) &= \left(n^{-2}\sum_{t=1}^{n}X_t^2\right)^{-1}\left(n^{-1}\sum_{t=1}^{n}X_t\eps_t\right) \\
+  &\Rightarrow (\sigma_2/\sigma_1)\left[\int_0^1 \mathcal{W}_1(a)\,da\right]^{-1}\int_0^1 \mathcal{W}_1(a)\,d\mathcal{W}_2(a).
+\end{align*}
+
+$(d)$ From $(c)$ we have that $n(\hat{\beta}_n - \beta_o) = O_p(1)$, and by Exercise 2.35 we have that $(\hat{\beta}_n - \beta_o) = n^{-1}n(\hat{\beta}_n - \beta_o) = o_p(1)O_p(1) = o_p(1)$. So $\hat{\beta}_n \convp \beta_o$.

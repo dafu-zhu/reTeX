@@ -1,0 +1,1127 @@
+% ch07.tex — Chapter 7: Functional Central Limit Theory and Applications
+\chapter{Functional Central Limit Theory and Applications}\label{ch:fclt}
+
+The conditions imposed on the random elements of $\bfX_t$, $\bfY_t$, and $\mathbf{Z}_t$ appearing in the previous chapters have required that certain moments be bounded, e.g., $E|\mathcal{X}_{thi}^2|^{1+\delta} < \Delta < \infty$ for some $\delta > 0$ and for all $t$ (Exercise 5.12 $(iv.a)$). In fact, many economic time-series processes, especially those relevant for macroeconomics or finance violate this restriction. In this chapter, we develop tools to handle such processes.
+
+\section{Random Walks and Wiener Processes}\label{sec:random-walks}
+
+We begin by considering the random walk, defined as follows.
+
+\begin{definition}[Random walk]\label{def:random-walk}
+Let $\{\mathcal{X}_t\}$ be generated according to $\mathcal{X}_t = \mathcal{X}_{t-1} + \mathcal{Z}_t$, $t = 1, 2, \ldots$, where $\mathcal{X}_0 = 0$ and $\{\mathcal{Z}_t\}$ is i.i.d.\ with $E(\mathcal{Z}_t) = 0$ and $0 < \sigma^2 \equiv \var(\mathcal{Z}_t) < \infty$. Then $\{\mathcal{X}_t\}$ is a random walk.
+\end{definition}
+
+By repeated substitution we have
+\begin{align*}
+\mathcal{X}_t &= \mathcal{X}_{t-1} + \mathcal{Z}_t = \mathcal{X}_{t-2} + \mathcal{Z}_{t-1} + \mathcal{Z}_t \\
+&= \mathcal{X}_0 + \sum_{s=1}^{t} \mathcal{Z}_s \\
+&= \sum_{s=1}^{t} \mathcal{Z}_s,
+\end{align*}
+as we have assumed $\mathcal{X}_0 = 0$. It is straightforward to establish the following fact.
+
+\begin{exercises}
+\item\label{ex:7.2} If $\{\mathcal{X}_t\}$ is a random walk, then $E(\mathcal{X}_t) = 0$ and $\var(\mathcal{X}_t) = t\sigma^2$, $t = 1, 2, \ldots$ .
+\end{exercises}
+
+Because $E(\mathcal{X}_t^2)^{1/2} < E(|\mathcal{X}_t|^r)^{\frac{1}{r}}$ for all $r \geq 2$ (Jensen's Inequality), a random walk $\mathcal{X}_t$ cannot satisfy $E|\mathcal{X}_t^2|^{1+\delta} < \Delta < \infty$ for all $t$ (set $r = 2(1+\delta)$). Thus when $\bfX_t$, $\bfY_t$, or $\mathbf{Z}_t$ contain random walks, the results of the previous chapters do not apply.
+
+One way to handle such situations is to transform the process so that it \emph{does} satisfy conditions of the sort previously imposed. For example, we can take the ``first difference'' of a random walk to get $\mathcal{Z}_t = \mathcal{X}_t - \mathcal{X}_{t-1}$ (which is i.i.d.)\ and base subsequent analysis on $\mathcal{Z}_t$.
+
+Nevertheless, it is frequently of interest to examine the behavior of estimators that do not make use of such transformations, but that instead directly involve random walks or similar processes. For example, consider the least squares estimator $\hat{\beta}_n = (\bfX'\bfX)^{-1} \bfX'\bfY$, where $\bfX$ is $n \times 1$ with $X_t = Y_{t-1}$, and $Y_t$ is a random walk. To study the behavior of such estimators, we make use of \emph{Functional} Central Limit Theorems (FCLTs), which extend the Central Limit Theorems (CLTs) studied previously in just the right way.
+
+Before we can study the behavior of estimators based on random walks or similar processes, we must understand in more detail the behavior of the processes themselves. This also directly enables us to understand the way in which the FCLT extends the CLT.
+
+Thus, consider the random walk $\{\mathcal{X}_t\}$. We can write
+\[
+\mathcal{X}_n = \sum_{t=1}^{n} \mathcal{Z}_t.
+\]
+Rescaling, we have
+\[
+n^{-1/2}\mathcal{X}_n / \sigma = n^{-1/2} \sum_{t=1}^{n} \mathcal{Z}_t / \sigma.
+\]
+According to the Lindeberg-L\'{e}vy central limit theorem, we have
+\[
+n^{-1/2}\mathcal{X}_n / \sigma \convd N(0,1).
+\]
+Thus, when $n$ is large, outcomes of the random walk process are drawn from a distribution that is approximately normally distributed.
+
+Next, consider the behavior of the \emph{partial sum}
+\[
+\mathcal{X}_{[an]} = \sum_{t=1}^{[an]} \mathcal{Z}_t,
+\]
+where $1/n < a < \infty$ and $[an]$ represents the largest integer less than or equal to $an$. For $0 \leq a < 1/n$, define $\mathcal{X}_{[an]} = \mathcal{X}_0 = 0$, so the partial sum is now defined for all $0 \leq a < \infty$. Applying the same rescaling, we define
+\begin{align*}
+\mathcal{W}_n(a) &\equiv n^{-1/2}\mathcal{X}_{[an]}/\sigma \\
+&= n^{-1/2}\sum_{t=1}^{[an]} \mathcal{Z}_t / \sigma.
+\end{align*}
+
+Now
+\[
+\mathcal{W}_n(a) = n^{-1/2}\,[an]^{1/2}\left\{[an]^{-1/2}\sum_{t=1}^{[an]} \mathcal{Z}_t / \sigma\right\},
+\]
+and for given $a$, the term in the brackets $\{\cdot\}$ again obeys the CLT and converges in distribution to $N(0,1)$, whereas $n^{-1/2}\,[an]^{1/2}$ converges to $a^{1/2}$. It follows from now standard arguments that $\mathcal{W}_n(a)$ converges in distribution to $N(0,a)$.
+
+We have written $\mathcal{W}_n(a)$ so that it is clear that $\mathcal{W}_n$ can be considered to be a function of $a$. Also, because $\mathcal{W}_n(a)$ depends on the $\mathcal{Z}_t$'s, it is random. Therefore, we can think of $\mathcal{W}_n(a)$ as defining a \emph{random function} of $a$, which we write $\mathcal{W}_n$. Just as the CLT provides conditions ensuring that the rescaled random walk $n^{-1/2}\mathcal{X}_n/\sigma$ (which we can now write as $\mathcal{W}_n(1)$) converges, as $n$ becomes large, to a well-defined limiting random variable (the standard normal), the FCLT provides conditions ensuring that the random function $\mathcal{W}_n$ converges, as $n$ becomes large, to a well-defined limiting random function, say $\mathcal{W}$. The word ``Functional'' in Functional Central Limit Theorem appears because this limit is a function of $a$.
+
+The limiting random function specified by the FCLT is, as we should expect, a generalization of the standard normal random variable. This limit is called a Wiener process or a Brownian motion in honor of Norbert Wiener (1923, 1924), who provided the mathematical foundation for the theory of random motions observed and described by nineteenth century botanist Robert Brown in 1827. Of further historical interest is the fact that in his dissertation, Bachelier (1900) proposed the Brownian motion as a model for stock prices.
+
+Before we formally characterize the Wiener process, we note some further properties of random walks, suitably rescaled.
+
+\begin{exercises}
+\item\label{ex:7.3} If $\{\mathcal{X}_t\}$ is a random walk, then $\mathcal{X}_{t_4} - \mathcal{X}_{t_3}$ is independent of $\mathcal{X}_{t_2} - \mathcal{X}_{t_1}$ for all $t_1 < t_2 < t_3 < t_4$. Consequently, $\mathcal{W}_n(a_4) - \mathcal{W}_n(a_3)$ is independent of $\mathcal{W}_n(a_2) - \mathcal{W}_n(a_1)$ for all $a_i$ such that $[a_i n] = t_i$, $i = 1, \ldots, 4$.
+
+\item\label{ex:7.4} For given $0 \leq a < b < \infty$, $\mathcal{W}_n(b) - \mathcal{W}_n(a) \convd N(0, b-a)$ as $n \to \infty$.
+\end{exercises}
+
+In words, the random walk has \emph{independent increments} (Exercise 7.3) and those increments have a limiting normal distribution, with a variance reflecting the size of the interval $(b-a)$ over which the increment is taken (Exercise 7.4).
+
+It should not be surprising, therefore, that the limit of the sequence of functions $\{\mathcal{W}_n\}$ constructed from the random walk preserves these properties in the limit in an appropriate sense. In fact, these properties form the basis of the definition of the Wiener process.
+
+\begin{definition}[Wiener process]\label{def:wiener}
+Let $(\Omega, \mathcal{F}, P)$ be a complete probability space. Then $\mathcal{W} : [0,\infty) \times \Omega \to \mathbb{R}$ is a Wiener process if for each $a \in [0,\infty)$, $\mathcal{W}(a, \cdot)$ is measurable-$\mathcal{F}$, and in addition
+\begin{enumerate}[label=(\roman*)]
+\item The process starts at zero: $P[\mathcal{W}(0, \cdot) = 0] = 1$.
+\item The increments are independent: If $0 < a_0 \leq a_1 \leq \ldots \leq a_k < \infty$, then $\mathcal{W}(a_i, \cdot) - \mathcal{W}(a_{i-1}, \cdot)$ is independent of $\mathcal{W}(a_j, \cdot) - \mathcal{W}(a_{j-1}, \cdot)$, $j = 1, \ldots, k$, $j \neq i$ for all $i = 1, \ldots, k$.
+\item The increments are normally distributed: For $0 < a \leq b < \infty$ the increment $\mathcal{W}(b, \cdot) - \mathcal{W}(a, \cdot)$ is distributed as $N(0, b-a)$.
+\end{enumerate}
+\end{definition}
+
+In the definition, we have written $\mathcal{W}(a, \cdot)$ for explicitness; whenever convenient, however, we will write $\mathcal{W}(a)$ instead of $\mathcal{W}(a, \cdot)$, analogous to our notation elsewhere.
+
+Fundamental facts about the Wiener process are simple to state, but somewhat involved to prove. The interested reader may consult Billingsley (1979, Section 37) or Davidson (1994, Chapter 27) for further background and details. We record the following facts.
+
+\begin{proposition}\label{prop:wiener-existence}
+The Wiener process $\mathcal{W}$ exists; that is, there exists a function $\mathcal{W}$ satisfying the conditions of Definition~7.5.
+\end{proposition}
+
+\begin{proof}
+See Billingsley (1979, pp.\ 443--444).
+\end{proof}
+
+\begin{proposition}\label{prop:wiener-continuous}
+There exists a Wiener process $\mathcal{W}$ such that for all $\omega \in \Omega$, $\mathcal{W}(0, \omega) = 0$ and $\mathcal{W}(\cdot, \omega) : [0,\infty) \to \mathbb{R}$ is continuous on $[0,\infty)$.
+\end{proposition}
+
+\begin{proof}
+See Billingsley (1979, pp.\ 444--447).
+\end{proof}
+
+When $\mathcal{W}$ has the properties established in Proposition~7.7 we say that $\mathcal{W}$ has \emph{continuous sample paths}. ($\mathcal{W}(\cdot, \omega)$ is a \emph{sample path}.) From now on, when we speak of a Wiener process, we shall have in mind one with continuous sample paths.
+
+Even though $\mathcal{W}$ has continuous sample paths, these paths are highly irregular: they wiggle extravagantly, as the next result makes precise.
+
+\begin{proposition}\label{prop:wiener-nondiff}
+For $\omega \in F$, $P(F) = 1$, $\mathcal{W}(\cdot, \omega)$ is nowhere differentiable.
+\end{proposition}
+
+\begin{proof}
+See Billingsley (1979, pp.\ 450--451).
+\end{proof}
+
+With these basic facts in place, we can now consider the sense in which $\mathcal{W}_n$ converges to $\mathcal{W}$. Because $\mathcal{W}_n$ is a random function, our available notions of stochastic convergence for random variables are inadequate. Nevertheless, we can extend these notions naturally in a way that enables the extension to adequately treat the convergence of $\mathcal{W}_n$. Our main tool will be an extension of the notion of convergence in distribution known as \emph{weak convergence}.
+
+\section{Weak Convergence}\label{sec:weak-convergence}
+
+To obtain the right notion for weak convergence of $\mathcal{W}_n$, we need to consider what sort of function $\mathcal{W}_n$ is. Recall that by definition
+\[
+\mathcal{W}_n(a) \equiv n^{-1/2}\sum_{s=1}^{[an]} \mathcal{Z}_s / \sigma.
+\]
+Fix a realization $\omega \in \Omega$, and suppose that we first choose $a$ so that for some integer $t$, $an = t$ (i.e., $a = t/n$). Then we will consider what happens as $a$ increases to the value $(t+1)/n$. With $a = t/n$ we have $[an] = t$, so
+\[
+\mathcal{W}_n(a, \omega) = n^{-1/2}\sum_{s=1}^{t} \mathcal{Z}_s(\omega)/\sigma, \quad a = t/n.
+\]
+For $t/n < a < (t+1)/n$, we still have $[an] = t$, so
+\[
+\mathcal{W}_n(a, \omega) = n^{-1/2}\sum_{s=1}^{t} \mathcal{Z}_s(\omega)/\sigma, \quad t/n < a < (t+1)/n.
+\]
+That is, $\mathcal{W}_n(a, \omega)$ is constant for $t/n \leq a < (t+1)/n$. When $a$ hits $(t+1)/n$, we see that $\mathcal{W}_n(a, \omega)$ jumps to
+\[
+\mathcal{W}_n(a, \omega) = n^{-1/2}\sum_{s=1}^{t+1} \mathcal{Z}_s(\omega)/\sigma, \quad a = (t+1)/n.
+\]
+Thus, for given $\omega$, $\mathcal{W}_n(\cdot, \omega)$ is a piecewise constant function that jumps to a new value whenever $a = t/n$ for integer $t$. This is a simple example of a function that is said to be \emph{right continuous with left limit} (\emph{rcll}), also referred to as \emph{cadlag} (\emph{continue \`{a} droite, limites \`{a} gauche}). It follows that we need a notion of convergence that applies to functions $\mathcal{W}_n(\cdot, \omega)$ that are rcll on $[0,\infty)$ for each $\omega$ in $\Omega$.
+
+Formally, we define the rcll functions on $[0,\infty)$ as follows.
+
+\begin{definition}[rcll]\label{def:rcll}
+$D[0,\infty)$ is the space of functions $f : [0,\infty) \to \mathbb{R}$ that \emph{(i)} are right continuous and \emph{(ii)} have left limits (\emph{rcll}):
+\begin{enumerate}[label=(\roman*)]
+\item For $0 \leq a < \infty$, $f(a^+) \equiv \lim_{b \downarrow a} f(b)$ exists and $f(a^+) = f(a)$.
+\item For $0 < a < \infty$, $f(a^-) \equiv \lim_{b \uparrow a} f(b)$ exists.
+\end{enumerate}
+\end{definition}
+
+In this definition, the notation $\lim_{b \downarrow a}$ means the limit as $b$ approaches $a$ from the right ($a < b$) while $\lim_{b \uparrow a}$ means the limit as $b$ approaches $a$ from the left ($b < a$).
+
+The space $C[0,\infty)$ of continuous functions on $[0,\infty)$ is a subspace of the space $D[0,\infty)$. By Proposition~7.7, $\mathcal{W}(\cdot, \omega)$ belongs to $C[0,\infty)$ (and therefore $D[0,\infty)$) for all $\omega \in \Omega$, whereas $\mathcal{W}_n(\cdot, \omega)$ belongs to $D[0,\infty)$ for all $\omega \in \Omega$.
+
+Thus, we need an appropriate notion for weak convergence of a sequence of random elements of $D[0,\infty)$ analogous to our notion of convergence in distribution to a random element of $\mathbb{R}$.
+
+To this end, recall that if $\{\mathcal{X}_n\}$ is a sequence of real-valued random numbers then $\mathcal{X}_n \convd \mathcal{X}$ if $F_n(x) \to F(x)$ for every continuity point $x$ of $F$, where $F_n$ is the c.d.f.\ of $\mathcal{X}_n$ and $F$ is the c.d.f.\ of $\mathcal{X}$ (Definition 4.1). By definition,
+\begin{align*}
+F_n(x) &\equiv P\left\{\omega : \mathcal{X}_n(\omega) < x\right\} \\
+&= P\left\{\omega : \mathcal{X}_n(\omega) \in B_x\right\}
+\end{align*}
+and
+\begin{align*}
+F(x) &\equiv P\left\{\omega : \mathcal{X}(\omega) < x\right\} \\
+&= P\left\{\omega : \mathcal{X}(\omega) \in B_x\right\},
+\end{align*}
+where $B_x \equiv (-\infty, x]$ (a Borel set). Let $\mu_n(B_x) \equiv P\left\{\omega : \mathcal{X}_n(\omega) \in B_x\right\}$ and $\mu(B_x) \equiv P\left\{\omega : \mathcal{X}(\omega) \in B_x\right\}$. Then convergence in distribution holds if $\mu_n(B_x) \to \mu(B_x)$ for all sets $B_x$ such that $x$ is a continuity point of $F$.
+
+Observe that $x$ is a continuity point of $F$ if and only if $\mu(\{x\}) = 0$, that is, the probability that $\mathcal{X} = x$ is zero. Also note that $x$ is distinctive because it lies on the boundary of the set $B_x$. Formally, the \emph{boundary} of a set $B$, denoted $\partial B$, is the set of all points not interior to $B$. For $B_x$, we have $\partial B_x = \{x\}$. Thus, when $x$ is a continuity point of $F$, we have $\mu(\partial B_x) = 0$, and we call $B_x$ a \emph{continuity set} of $\mu$; in general, any Borel set $B$ such that $\mu(\partial B) = 0$ is called a continuity set of $\mu$, or a $\mu$-\emph{continuity set}.
+
+Thus, convergence in distribution occurs whenever
+\[
+\mu_n(B) \to \mu(B)
+\]
+for all continuity sets $B$. Clearly, this implies the original Definition 4.1, because that definition can be restated as
+\[
+\mu_n(B_x) \to \mu(B_x)
+\]
+for all continuity sets of the form $B_x = (-\infty, x]$. It turns out, however, that these two requirements are equivalent. Either can serve as a definition of convergence in distribution.
+
+In fact, the formulation in terms of generic continuity sets $B$ is ideally suited for direct extension from real valued random variables $\mathcal{X}_n$ and Borel sets $B$ (subsets of $\mathbb{R}$) not only to $D[0,\infty)$-valued random functions $\mathcal{W}_n$ and suitable Borel subsets of $D[0,\infty)$, but also to random elements of metric spaces generally and their Borel subsets. This latter fact is not just of abstract interest --- it plays a key role in the analysis of spurious regression and cointegration, as we shall see next.
+
+The required Borel subsets of $D[0,\infty)$ can be generated from the open sets of $D[0,\infty)$ in a manner precisely analogous to that in which we can generate the Borel subsets of $\mathbb{R}$ from the open sets of $\mathbb{R}$ (recall Definition 3.18 and the following comments). However, because of the richness of the set $D[0,\infty)$ we have considerable latitude in defining what we mean by an open set, and we will therefore need to exercise care in defining what an open set is. For our purposes, it is useful to define open sets using a metric $d$ on $D[0,\infty)$.
+
+Let $S$ be a set (e.g., $S = D[0,\infty)$ or $S = \mathbb{R}$). A \emph{metric} is a mapping $d : S \times S \to \mathbb{R}$ with the properties \emph{(i)} (\emph{nonnegativity}) $d(x,y) > 0$ for all $x, y \in S$, and $d(x,y) = 0$ if and only if $x = y$; \emph{(ii)} (\emph{symmetry}) $d(x,y) = d(y,x)$ for all $x, y \in S$; \emph{(iii)} (\emph{triangle inequality}) $d(x,y) < d(x,z) + d(z,y)$ for all $x, y, z \in S$. We call the pair $(S,d)$ a \emph{metric space}. For example, $d_{|\cdot|}(x,y) = |x - y|$ defines a metric on $\mathbb{R}$, and $(\mathbb{R}, d_{|\cdot|})$ is a metric space.
+
+By definition, a subset $A$ of $S$ is \emph{open in the metric} $d$ ($d$-\emph{open}) if every point $x$ of $A$ is an interior point; that is, for some $\varepsilon > 0$, the $\varepsilon$-neighborhood of $x$, $\{y \in S : d(x,y) < \varepsilon\}$, is a subset of $A$. We can now define the Borel sets of $S$.
+
+\begin{definition}\label{def:borel-sigma-field-ch7}
+Let $d$ be a metric on $S$. The Borel $\sigma$-field $\mathcal{S}_d = \mathcal{B}(S,d)$ is the smallest collection of sets (the Borel sets of $S$ with respect to $d$) that includes
+\begin{enumerate}[label=(\roman*)]
+\item all $d$-open subsets of $S$;
+\item the complement $B^c$ of any set $B$ in $\mathcal{S}_d$;
+\item the union $\bigcup_{i=1}^{\infty} B_i$ of any sequence $\{B_i\}$ in $\mathcal{S}_d$.
+\end{enumerate}
+\end{definition}
+
+Observe that different choices for the metric $d$ may generate different Borel $\sigma$-fields. When the metric $d$ is understood implicitly, we suppress explicit reference and just write $\mathcal{S} = \mathcal{S}_d$.
+
+Putting $S = \mathbb{R}$ or $S = \mathbb{R}^k$ and letting $d$ be the Euclidean metric ($d(x,y) = \|x - y\| = ((x-y)'(x-y))^{1/2}$) gives the Borel $\sigma$-fields $\mathcal{B}(\mathbb{R})$ or $\mathcal{B}(\mathbb{R}^k)$ introduced in Chapter 3. Putting $S = D[0,\infty)$ and choosing $d$ suitably will give us the needed Borel sets of $D[0,\infty)$, denoted $\mathcal{D}_{\infty,d} \equiv \mathcal{B}(D[0,\infty), d)$.
+
+The pair $(S, \mathcal{S}_d)$ is a \emph{metrized measurable space}. We obtain a \emph{metrized probability space} $(S, \mathcal{S}_d, \mu)$ by requiring that $\mu$ be a probability measure on $(S, \mathcal{S}_d)$.
+
+We can now give the desired definition of weak convergence.
+
+\begin{definition}[Weak convergence]\label{def:weak-convergence}
+Let $\mu$, $\mu_n$, $n = 1, 2, \ldots$, be probability measures on the metrized measurable space $(S, \mathcal{S})$. Then $\mu_n$ converges weakly to $\mu$, written $\mu_n \Rightarrow \mu$ or $\mu_n \xrightarrow{d} \mu$ if $\mu_n(A) \to \mu(A)$ as $n \to \infty$ for all $\mu$-continuity sets $A$ of $\mathcal{S}$.
+\end{definition}
+
+The parallel with the case of real-valued random variables $\mathcal{X}_n$ is now clear from this definition and our discussion following Definition~7.9. Indeed, Definition 4.1 is equivalent to Definition~7.11 when $(S, \mathcal{S}) = (\mathbb{R}, \mathcal{B})$.
+
+An equivalent definition can be posed in terms of suitably defined integrals of real-valued functions. Specifically $\mu_n \Rightarrow \mu$ if and only if
+\[
+\int f\,d\mu_n \to \int f\,d\mu \quad \text{as } n \to \infty
+\]
+for all bounded uniformly continuous functions $f : S \to \mathbb{R}$. (See Billingsley, 1968, pp.\ 11--14). We use Definition~7.11 because of its straightforward relation to Definition 4.1.
+
+Convergence of random elements on $(S, \mathcal{S})$ is covered by our next definition.
+
+\begin{definition}\label{def:weak-convergence-random-elements}
+Let $\mathcal{V}_n$ and $\mathcal{V}$ be random elements on $(S, \mathcal{S})$; that is $\mathcal{V}_n : \Omega \to S$ and $\mathcal{V} : \Omega \to S$ are measurable functions on a probability space $(\Omega, \mathcal{F}, P)$. Then we say that $\mathcal{V}_n$ converges weakly to $\mathcal{V}$, denoted $\mathcal{V}_n \Rightarrow \mathcal{V}$, provided that $\mu_n \Rightarrow \mu$, where $\mu_n(A) \equiv P\{\omega : \mathcal{V}_n(\omega) \in A\}$ and $\mu(A) \equiv P\{\omega : \mathcal{V}(\omega) \in A\}$ for $A \in \mathcal{S}$.
+\end{definition}
+
+\section{Functional Central Limit Theorems}\label{sec:fclt}
+
+In previous sections we have defined the functions $\mathcal{W}_n$ and the Wiener process $\mathcal{W}$ in the natural and usual way as functions mapping $[0,\infty) \times \Omega$ to the real line, $\mathbb{R}$. Typically, however, the Functional Central Limit Theorem (FCLT) and our applications of the FCLT, to which we now turn our attention, are concerned with the convergence of a restricted version of $\mathcal{W}_n$, defined by
+\[
+\mathcal{W}_n(a, \omega) = n^{-1/2}\sum_{s=1}^{[an]} \mathcal{Z}_s(\omega)/\sigma, \quad 0 < a \leq 1.
+\]
+For convenience, we continue to use the same notation, but now we have $\mathcal{W}_n : [0,1] \times \Omega \to \mathbb{R}$ and we view $\mathcal{W}_n(a)$ as defining a random element of $D[0,1]$, the functions on $[0,1]$ that are right continuous with left limits.
+
+The FCLT provides conditions under which $\mathcal{W}_n$ converges to the Wiener process restricted to $[0,1]$, which we continue to write as $\mathcal{W}$. We now view $\mathcal{W}(a)$ as defining a random element of $C[0,1]$, the continuous functions on the unit interval.
+
+In treating the FCLT, we will always be dealing with $D[0,1]$ and $C[0,1]$. Accordingly, in this context we write $D = D[0,1]$ and $C = C[0,1]$ to keep the notation simple. No confusion will arise from this shorthand.
+
+The measures whose convergence are the subject of the Functional Central Limit Theorem (FCLT) can be defined as
+\[
+\mu_n(A) \equiv P\{\omega : \mathcal{W}_n(\cdot, \omega) \in A\},
+\]
+where $A \in \mathcal{D} = \mathcal{D}_d$ for a suitable choice of metric $d$ on $D$.
+
+A study of the precise properties of the metrics typically used in this context cannot adequately be pursued here. Suffice it to say that excellent treatments can be found in Billingsley (1968, Chapter 3) and Davidson (1994, Chapter 28), where Billingsley's modification $d_B$ of the Skorokhod metric $d_S$ of the Skorokhod metric is shown to be ideally suited for studying the FCLT. The Skorokhod metric $d_S$ is itself a modification of the uniform metric $d_u$ such that $d_u(\mathcal{U}, \mathcal{V}) = \sup_{a \in [0,1]} |\mathcal{U}(a) - \mathcal{V}(a)|$, $\mathcal{U}, \mathcal{V} \in D$.
+
+The fact that $\mathcal{W}_n(a, \cdot)$ is measurable for each $a$ is enough to ensure that the set $\{\omega : \mathcal{W}_n(\cdot, \omega) \in A\}$ is a measurable set, so that the probability defining $\mu_n$ is well-defined. This is a consequence of Theorem 14.5 of Billingsley (1968, p.\ 121).
+
+The Functional Central Limit Theorem provides conditions under which $\mu_n$ converges weakly to the \emph{Wiener measure} $\mu_{\mathcal{W}}$, defined as
+\[
+\mu_{\mathcal{W}}(A) \equiv P\{\omega : \mathcal{W}(\cdot, \omega) \in A \cap C\},
+\]
+where $A \in \mathcal{D}$ and $C = C[0,1]$. When $\mu_n \Rightarrow \mu_{\mathcal{W}}$ for $\mu_n$ and $\mu_{\mathcal{W}}$ as just defined, we say that $\mathcal{W}_n$ \emph{obeys the FCLT}.
+
+The simplest FCLT is a generalization of the Lindeberg-L\'{e}vy CLT, known as Donsker's theorem (Donsker, 1951).
+
+\begin{theorem}[Donsker]\label{thm:donsker}
+Let $\{\mathcal{Z}_t\}$ be a sequence of i.i.d.\ random scalars with mean zero. If $\sigma^2 \equiv \var(\mathcal{Z}_t) < \infty$, $\sigma^2 \neq 0$, then $\mathcal{W}_n \Rightarrow \mathcal{W}$.
+\end{theorem}
+
+\begin{proof}
+See the proof given by Billingsley (1968, Theorem 16.1, pp.\ 137--138).
+\end{proof}
+
+Because pointwise convergence in distribution $\mathcal{W}_n(a, \cdot) \convd \mathcal{W}(a, \cdot)$ for each $a \in [0,1]$ is necessary (but not sufficient) for weak convergence ($\mathcal{W}_n \Rightarrow \mathcal{W}$), the Lindeberg-L\'{e}vy Central Limit Theorem ($\mathcal{W}_n(1, \cdot) \convd \mathcal{W}(1, \cdot)$) follows immediately from Donsker's theorem. Donsker's theorem is strictly stronger than Lindeberg-L\'{e}vy however, as both use identical assumptions, but Donsker's theorem delivers a much stronger conclusion.
+
+Donsker called his result an \emph{invariance principle}. Consequently, the FCLT is often referred to as an invariance principle.
+
+So far, we have assumed that the sequence $\{\mathcal{Z}_t\}$ used to construct $\mathcal{W}_n$ is i.i.d. Nevertheless, just as we can obtain central limit theorems when $\{\mathcal{Z}_t\}$ is not necessarily i.i.d., so also can we obtain functional central limit theorems when $\{\mathcal{Z}_t\}$ is not necessarily i.i.d. In fact, versions of the FCLT hold for each CLT previously given.
+
+To make the statements of our FCLTs less cumbersome than they would otherwise be, we use the following condition.
+
+\begin{definition}[Global covariance stationarity]\label{def:global-cov-stat}
+Let $\{\boldsymbol{\mathcal{Z}}_t\}$ be a sequence of $k \times 1$ random vectors such that $E(\boldsymbol{\mathcal{Z}}_t' \boldsymbol{\mathcal{Z}}_t) < \infty$, $t = 1, 2, \ldots$, and define $\Sigma_n \equiv \var(n^{-1/2} \sum_{t=1}^{n} \boldsymbol{\mathcal{Z}}_t)$. If $\Sigma \equiv \lim_{n \to \infty} \Sigma_n$ exists and is finite, then we say that $\{\boldsymbol{\mathcal{Z}}_t\}$ is globally covariance stationary. We call $\Sigma$ the global covariance matrix.
+\end{definition}
+
+For our CLTs, we have required only that $\Sigma_n = O(1)$. FCLTs can be given under this weaker requirement, but both the conditions and conclusions are more complicated to state. (See for example Wooldridge and White, 1988, and Davidson, 1994, Ch.\ 29.) Imposing the global covariance stationarity requirement gains us clarity at the cost of a mild restriction on the allowed heterogeneity. Note that global covariance stationarity does \emph{not} require us to assume that $E(\boldsymbol{\mathcal{Z}}_t \boldsymbol{\mathcal{Z}}_{t-\tau}') = E(\boldsymbol{\mathcal{Z}}_s \boldsymbol{\mathcal{Z}}_{s-\tau}')$ for all $t$, $s$, and $\tau$ (covariance stationarity).
+
+We give the following FCLTs.
+
+\begin{theorem}[Lindeberg-Feller i.n.i.d.\ FCLT]\label{thm:lf-fclt}
+Suppose $\{\mathcal{Z}_t\}$ satisfies the conditions of the Lindeberg-Feller central limit theorem (Theorem 5.6), and suppose that $\{\mathcal{Z}_t\}$ is globally covariance stationary. If $\sigma^2 \equiv \lim_{n\to\infty} \var(\mathcal{W}_n(1)) > 0$, then $\mathcal{W}_n \Rightarrow \mathcal{W}$.
+\end{theorem}
+
+\begin{proof}
+This is a straightforward consequence of Theorem 15.4 of Billingsley (1968).
+\end{proof}
+
+\begin{theorem}[Liapounov i.n.i.d.\ FCLT]\label{thm:liapounov-fclt}
+Suppose $\{\mathcal{Z}_t\}$ satisfies the conditions of the Liapounov central limit theorem (Theorem 5.10) and suppose that $\{\mathcal{Z}_t\}$ is globally covariance stationary. If $\sigma^2 \equiv \lim_{n\to\infty} \var(\mathcal{W}_n(1)) > 0$, then $\mathcal{W}_n \Rightarrow \mathcal{W}$.
+\end{theorem}
+
+\begin{proof}
+This follows immediately from Theorem~7.15, as the Liapounov moment condition implies the Lindeberg-Feller condition.
+\end{proof}
+
+\begin{theorem}[Stationary ergodic FCLT]\label{thm:stat-ergodic-fclt}
+Suppose $\{\mathcal{Z}_t\}$ satisfies the conditions of the stationary ergodic CLT (Theorem 5.16). If $\sigma^2 \equiv \lim_{n\to\infty} \var(\mathcal{W}_n(1)) > 0$, then $\mathcal{W}_n \Rightarrow \mathcal{W}$.
+\end{theorem}
+
+\begin{proof}
+This follows from Theorem 3 of Scott (1973).
+\end{proof}
+
+Note that the conditions of the stationary ergodic CLT already impose global covariance stationarity, so we do not require an explicit statement of this condition.
+
+\begin{theorem}[Heterogeneous mixing FCLT]\label{thm:het-mixing-fclt}
+Suppose $\{\mathcal{Z}_t\}$ satisfies the conditions of the heterogeneous mixing CLT (Theorem 5.20) and suppose that $\{\mathcal{Z}_t\}$ is globally covariance stationary. If $\sigma^2 \equiv \lim_{n\to\infty} \var(\mathcal{W}_n(1)) > 0$, then $\mathcal{W}_n \Rightarrow \mathcal{W}$.
+\end{theorem}
+
+\begin{proof}
+See Wooldridge and White (1988, Theorem 2.11).
+\end{proof}
+
+\begin{theorem}[Martingale difference FCLT]\label{thm:md-fclt}
+Suppose $\{\mathcal{Z}_t\}$ satisfies the conditions of the martingale difference central limit theorem (Theorem 5.24 or Corollary 5.26) and suppose that $\{\mathcal{Z}_t\}$ is globally covariance stationary. If $\sigma^2 \equiv \lim_{n\to\infty} \var(\mathcal{W}_n(1)) > 0$, then $\mathcal{W}_n \Rightarrow \mathcal{W}$.
+\end{theorem}
+
+\begin{proof}
+See McLeish (1974). See also Hall (1977).
+\end{proof}
+
+Whenever $\{\mathcal{Z}_t\}$ satisfies conditions sufficient to ensure $\mathcal{W}_n \Rightarrow \mathcal{W}$, we say $\{\mathcal{Z}_t\}$ \emph{obeys the FCLT}. The dependence and moment conditions under which $\{\mathcal{Z}_t\}$ obeys the FCLT can be relaxed further. For example, Wooldridge and White (1988) give results that do not require global covariance stationarity and that apply to infinite histories of mixing sequences with possibly trending moments. Davidson (1994) contains an excellent exposition of these and related results.
+
+\section{Regression with a Unit Root}\label{sec:unit-root}
+
+The FCLT and the following extension of Lemma 4.27 give us the tools needed to study regression for ``unit root'' processes. Our treatment here follows that of Phillips (1987). We begin with an extension of Lemma 4.27.
+
+\begin{theorem}[Continuous mapping theorem]\label{thm:cmt}
+Let the pair $(S, \mathcal{S})$ be a metrized measurable space and let $\mu$, $\mu_n$ be probability measures on $(S, \mathcal{S})$ corresponding to $\mathcal{V}$, $\mathcal{V}_n$, random elements of $S$, $n = 1, 2, \ldots$ . \emph{(i)} Let $h : S \to \mathbb{R}$ be a continuous mapping. If $\mathcal{V}_n \Rightarrow \mathcal{V}$, then $h(\mathcal{V}_n) \Rightarrow h(\mathcal{V})$. \emph{(ii)} Let $h : S \to \mathbb{R}$ be a mapping such that the set of discontinuities of $h$, $D_h \equiv \{s \in S : \lim_{r \to s} h(r) \neq h(s)\}$ has $\mu(D_h) = 0$. If $\mathcal{V}_n \Rightarrow \mathcal{V}$, then $h(\mathcal{V}_n) \Rightarrow h(\mathcal{V})$.
+\end{theorem}
+
+\begin{proof}
+See Billingsley (1968, pp.\ 29--31).
+\end{proof}
+
+Using this result, we can now prove an asymptotic distribution result for the least squares estimator with unit root regressors, analogous to Theorem 4.25.
+
+\begin{theorem}[Unit root regression]\label{thm:unit-root}
+Suppose
+\begin{enumerate}[label=(\roman*)]
+\item $Y_t = X_t \beta_o + \varepsilon_t$, $t = 1, 2, \ldots$, where $X_t = Y_{t-1}$, $\beta_o = 1$, and $Y_0 = 0$;
+\item $\mathcal{W}_n \Rightarrow \mathcal{W}$, where $\mathcal{W}_n$ is defined by $\mathcal{W}_n(a) \equiv n^{-1/2}\sum_{t=1}^{[an]} \varepsilon_t / \sigma$, $0 \leq a \leq 1$, where $\sigma^2 \equiv \lim_{n\to\infty} \var(n^{-1/2}\sum_{t=1}^{n} \varepsilon_t)$ is finite and nonzero.
+\end{enumerate}
+
+Then
+\begin{enumerate}[label=(\alph*)]
+\item $n^{-2}\sum_{t=1}^{n} Y_{t-1}^2 \Rightarrow \sigma^2 \int_0^1 \mathcal{W}(a)^2\,da$.
+
+\noindent If in addition
+\item[\emph{(iii)}] $n^{-1}\sum_{t=1}^{n} \varepsilon_t^2 \convp \tau^2$, $0 < \tau^2 < \infty$,
+
+\noindent then
+\item $n^{-1}\sum_{t=1}^{n} Y_{t-1}\varepsilon_t \Rightarrow (\sigma^2/2)\left(\mathcal{W}(1)^2 - \tau^2/\sigma^2\right)$;
+\item $n(\hat{\beta}_n - 1) \Rightarrow \left[\int_0^1 \mathcal{W}(a)^2\,da\right]^{-1}(1/2)\left(\mathcal{W}(1)^2 - \tau^2/\sigma^2\right)$;
+
+\noindent and
+\item $\hat{\beta}_n \convp 1$.
+\end{enumerate}
+\end{theorem}
+
+Before proceeding to the proof, it is helpful to make some comments concerning both the assumptions and the conclusions.
+
+First, when $\{Y_t\}$ is generated according to assumptions $(i)$ and $(ii)$ of Theorem~7.21, we will say that $\{Y_t\}$ is an \emph{integrated process}. This nomenclature arises because we can view $Y_n = \sum_{t=1}^{n} \varepsilon_t$ as an ``integral'' of $\varepsilon_t$, where $\{\varepsilon_t\}$ obeys the FCLT. Integrated processes are also commonly called ``unit root'' processes. The ``unit root'' is that of the lag polynomial $B(L)$ ensuring the good behavior of $\varepsilon_t = B(L)Y_t$; see Hamilton (1994) for background and further details. The good behavior of $\varepsilon_t$ in this context is often heuristically specified to be stationarity. Nevertheless, the good behavior relevant for us is precisely that $\{\varepsilon_t\}$ obeys the FCLT. Stationarity is neither necessary nor sufficient for the FCLT. For example, if $\{\varepsilon_t\}$ is i.i.d., then $\{\varepsilon_t - \varepsilon_{t-1}\}$ is stationary but does not obey the FCLT. (See Davidson, 1998, for further discussion.)
+
+The unit root process is an extension of the random walk, as we do not require that $\{\varepsilon_t\}$ be i.i.d. Instead, we just require that $\{\varepsilon_t\}$ obeys the FCLT. Donsker's theorem establishes that $\{\varepsilon_t\}$ i.i.d.\ is sufficient for this, but Theorems 7.15 through 7.19 show that this is not necessary.
+
+In $(i)$, we have assumed $Y_0 = 0$. A common alternate assumption is that $Y_0$ is some random variable; but $(i)$ implies instead that $Y_1$ is some random variable (i.e., $\varepsilon_1$), so, after a reassignment of indexes, the situation is identical either way. In applications, some statistics may be sensitive to the initial value, especially if this is far from zero. A simple way to avoid this sensitivity is to reset the process to zero by subtracting the initial value from all observations and working with the shifted series $\tilde{Y}_t = Y_t - Y_0$, $t = 0, 1, \ldots$, conditional on $Y_0$.
+
+In conclusion $(a)$, the integral $\int_0^1 \mathcal{W}(a)^2\,da$ appears. We interpret this as that random variable, say $\mathcal{M}$, defined by $\mathcal{M}(\omega) \equiv \int_0^1 \mathcal{W}(a,\omega)^2\,da$, $\omega \in \Omega$. For fixed $\omega$, this is just a standard (Riemann) integral, so no new integral concept is involved. We now have a situation quite unlike that studied previously. Before, $n^{-1}\sum_{t=1}^{n} X_t X_t' - M_n$ converged to zero, where $\{M_n\}$ is not random. Here, $n^{-2}\sum_{t=1}^{n} X_t X_t' = n^{-2}\sum_{t=1}^{n} Y_{t-1}^2$ converges to a random variable, $\sigma^2 \mathcal{M}$.
+
+In conclusion $(b)$, something similar happens. We have $n^{-1}\sum_{t=1}^{n} X_t \varepsilon_t = n^{-1}\sum_{t=1}^{n} Y_{t-1}\varepsilon_t$ converging to a random variable, $(\sigma^2/2)\left(\mathcal{W}(1)^2 - \tau^2/\sigma^2\right)$, whereas in previous chapters we had $n^{-1}\sum_{t=1}^{n} X_t \varepsilon_t$ converging stochastically to zero. Note that $\mathcal{W}(1)^2$ is $\chi_1^2$ (chi-squared with one degree of freedom) so the expectation of this limiting random variable is
+\[
+E\left((\sigma^2/2)\left(\mathcal{W}(1)^2 - \tau^2/\sigma^2\right)\right) = (\sigma^2/2)\left(1 - \tau^2/\sigma^2\right),
+\]
+from which we see that the expectation is not necessarily zero unless $\tau^2 = \sigma^2$, as happens for the cases in which $\{\varepsilon_t\}$ is an independent or martingale difference sequence.
+
+Together, $(a)$ and $(b)$ imply the asymptotic distribution results for the least squares estimator, conclusion $(c)$. Several things are noteworthy. First, note that the scale factor here is $n$, not $\sqrt{n}$ as it previously has been. Thus, $\hat{\beta}_n$ is ``collapsing'' to its limit at a much faster rate than before. This is sometimes called \emph{superconsistency}. Next, note that the limiting distribution is no longer normal; instead, we have a distribution that is a somewhat complicated function of a Wiener process. When $\tau^2 = \sigma^2$ (independent or martingale difference case) we have the distribution of J.\ S.\ White (1958, p.\ 1196), apart from an incorrect scaling there, as noted by Phillips (1987). For $\tau^2 = \sigma^2$, this distribution is also that tabulated by Dickey and Fuller (1979, 1981) in their famous work on testing for unit roots.
+
+In the regression setting studied in previous chapters the existence of serial correlation in $\varepsilon_t$ in the presence of a lagged dependent variable regressor leads to the inconsistency of $\hat{\beta}_n$ for $\beta_o$, as discussed in earlier chapters. Here, however, the situation is quite different. Even though the regressor is a lagged dependent variable, $\hat{\beta}_n$ is consistent for $\beta_o = 1$ (conclusion $(d)$) despite the fact that conditions 7.21 $(ii)$ and $(iii)$ permit $\{\varepsilon_t\}$ to display considerable serial correlation.
+
+The effect of the serial correlation is that $\tau^2 \neq \sigma^2$. This results in a shift of the location of the asymptotic distribution away from zero, relative to the $\tau^2 = \sigma^2$ case (no serial correlation). Despite this effect of the serial correlation in $\{\varepsilon_t\}$, we no longer have the serious adverse consequence of inconsistency of $\hat{\beta}_n$.
+
+One way of understanding why this is so is succinctly expressed by Phillips (1987, p.\ 283):
+
+\begin{quote}
+Intuitively, when the [data generating process] has a unit root, the strength of the signal (as measured by the sample variation of the regressor $Y_{t-1}$) dominates the noise by a factor of $O(n)$, so that the effects of any regressor-error correlation are annihilated in the regression as $n \to \infty$. [Notation changed to correspond.]
+\end{quote}
+
+Note, however, that even when $\tau^2 = \sigma^2$ the asymptotic distribution given in $(c)$ is not centered about zero, so an asymptotic bias is still present. The reason for this is that there generally exists a strong (negative) correlation between $\mathcal{W}(1)^2$ and $[\int_0^1 \mathcal{W}(a)^2\,da]^{-1}$, resulting from the fact that $\mathcal{W}(1)^2$ and $\mathcal{W}(a)^2$ are highly correlated for each $a$. Thus, even though $E(\mathcal{W}(1)^2 - \tau^2/\sigma^2) = 0$ with $\tau^2 = \sigma^2$ we do \emph{not} have
+\[
+E\left(\left[\int_0^1 \mathcal{W}(a)^2\,da\right]^{-1}(1/2)(\mathcal{W}(1)^2 - \tau^2/\sigma^2)\right) = 0.
+\]
+See Abadir (1995) for further details.
+
+We are now ready to prove Theorem~7.21, using what is essentially the proof of Phillips (1987, Theorem 3.1).
+
+\begin{proof}[Proof of Theorem 7.21]
+$(a)$ First rewrite $n^{-2}\sum_{t=1}^{n} Y_{t-1}^2$ in terms of $\mathcal{W}_n(a_{t-1}) \equiv n^{-1/2}Y_{t-1}/\sigma = n^{-1/2}\sum_{s=1}^{t-1} \varepsilon_s / \sigma$, where $a_{t-1} = (t-1)/n$, so that $n^{-2}\sum_{t=1}^{n} Y_{t-1}^2 = \sigma^2 n^{-1}\sum_{t=1}^{n} \mathcal{W}_n(a_{t-1})^2$. Because $\mathcal{W}_n(a)$ is constant for $(t-1)/n \leq a < t/n$, we have
+\begin{align*}
+n^{-1}\sum_{t=1}^{n} \mathcal{W}_n(a_{t-1})^2 &= \sum_{t=1}^{n} \int_{(t-1)/n}^{t/n} \mathcal{W}_n(a)^2\,da \\
+&= \int_0^1 \mathcal{W}_n(a)^2\,da.
+\end{align*}
+The continuous mapping theorem applies to $h(\mathcal{W}_n) = \int_0^1 \mathcal{W}_n(a)^2\,da$. It follows that $h(\mathcal{W}_n) \Rightarrow h(\mathcal{W})$, so that $n^{-2}\sum_{t=1}^{n} Y_{t-1}^2 \Rightarrow \sigma^2 \int_0^1 \mathcal{W}(a)^2\,da$, as claimed.
+
+$(b)$ Because $Y_{t-1} = \sigma n^{1/2}\mathcal{W}_n(a_{t-1})$, we have
+\[
+n^{-1}\sum_{t=1}^{n} Y_{t-1}\varepsilon_t = \sigma n^{-1/2}\sum_{t=1}^{n} \mathcal{W}_n(a_{t-1})\varepsilon_t.
+\]
+Now $\mathcal{W}_n(a_t) = \mathcal{W}_n(a_{t-1}) + n^{-1/2}\varepsilon_t / \sigma$, so
+\[
+\mathcal{W}_n(a_t)^2 = \mathcal{W}_n(a_{t-1})^2 + n^{-1}\varepsilon_t^2 / \sigma^2 + 2n^{-1/2}\mathcal{W}_n(a_{t-1})\varepsilon_t / \sigma.
+\]
+Thus $\sigma n^{-1/2}\mathcal{W}_n(a_{t-1})\varepsilon_t = (1/2)\sigma^2\left(\mathcal{W}_n(a_t)^2 - \mathcal{W}_n(a_{t-1})^2\right) - (1/2)n^{-1}\varepsilon_t^2$.
+
+Substituting and summing, we have
+\begin{align*}
+n^{-1}\sum_{t=1}^{n} Y_{t-1}\varepsilon_t &= (\sigma^2/2)\sum_{t=1}^{n} \mathcal{W}_n(a_t)^2 - \mathcal{W}_n(a_{t-1})^2 \\
+&\quad -(1/2)n^{-1}\sum_{t=1}^{n} \varepsilon_t^2 \\
+&= (\sigma^2/2)\,\mathcal{W}_n(1)^2 - (1/2)n^{-1}\sum_{t=1}^{n} \varepsilon_t^2.
+\end{align*}
+By Lemma 4.27 and the FCLT (condition 7.21 $(ii)$), we have $\mathcal{W}_n(1)^2 \Rightarrow \mathcal{W}(1)^2$; by condition 7.21 $(iii)$ we have $n^{-1}\sum_{t=1}^{n} \varepsilon_t^2 \convp \tau^2$. It follows by Lemma 4.27 that
+\begin{align*}
+n^{-1}\sum_{t=1}^{n} Y_{t-1}\varepsilon_t &\Rightarrow (\sigma^2/2)\mathcal{W}(1)^2 - \tau^2/2 \\
+&= (\sigma^2/2)\left(\mathcal{W}(1)^2 - \tau^2/\sigma^2\right).
+\end{align*}
+
+$(c)$ We have
+\begin{align*}
+n(\hat{\beta}_n - 1) &= n\left[\left(\sum_{t=1}^{n} Y_{t-1}^2\right)^{-1}\sum_{t=1}^{n} Y_{t-1}Y_t - \left(\sum_{t=1}^{n} Y_{t-1}^2\right)^{-1}\sum_{t=1}^{n} Y_{t-1}^2\right] \\
+&= n\left(\sum_{t=1}^{n} Y_{t-1}^2\right)^{-1}\left[\sum_{t=1}^{n} Y_{t-1}(Y_t - Y_{t-1})\right] \\
+&= \left(n^{-2}\sum_{t=1}^{n} Y_{t-1}^2\right)^{-1} n^{-1}\sum_{t=1}^{n} Y_{t-1}\varepsilon_t.
+\end{align*}
+Conclusions $(a)$ and $(b)$ and Lemma 4.27 then give the desired result:
+\begin{align*}
+n(\hat{\beta}_n - 1) &= \left(n^{-2}\sum_{t=1}^{n} Y_{t-1}^2\right)^{-1} n^{-1}\sum_{t=1}^{n} Y_{t-1}\varepsilon_t \\
+&\Rightarrow \left(\int_0^1 \mathcal{W}(a)^2\,da\right)^{-1}(1/2)\left(\mathcal{W}(1)^2 - \tau^2/\sigma^2\right).
+\end{align*}
+
+$(d)$ From $(c)$, we have $n(\hat{\beta}_n - 1) = O_p(1)$. Thus, $\hat{\beta}_n - 1 = n^{-1}(n(\hat{\beta}_n - 1)) = o(1)O_p(1) = o_p(1)$, as claimed.
+\end{proof}
+
+In the proof of $(a)$, we appealed to the continuous mapping theorem to establish that $\int_0^1 \mathcal{W}_n(a)^2\,da \Rightarrow \int_0^1 \mathcal{W}(a)^2\,da$. The next exercise asks you to verify this and then gives a situation where the continuous mapping theorem does not apply.
+
+\begin{exercises}
+\item\label{ex:7.22} For $\mathcal{U}, \mathcal{V} \in D$, put $d_u(\mathcal{U}, \mathcal{V}) = \sup_{a \in [0,1]} |\mathcal{U}(a) - \mathcal{V}(a)|$, and consider the metrized measurable spaces $(D, d_u)$ and $(\mathbb{R}, |\cdot|)$, the mapping $M_1(\mathcal{U}) = \mathcal{U}^2$, and the two functionals $M_2(\mathcal{U}) = \int_0^1 \mathcal{U}(a)^2\,da$ and $M_3(\mathcal{U}) = \int_0^1 \log|\mathcal{U}(a)|\,da$.
+\begin{enumerate}[label=(\roman*)]
+\item Show that $M_1 : (D, d_u) \to (D, d_u)$ is continuous at $\mathcal{U}$ for any $\mathcal{U} \in C$, but not everywhere in $D$.
+\item Show that $M_2 : (D, d_u) \to (\mathbb{R}, |\cdot|)$ is continuous at $\mathcal{U}$ for any $\mathcal{U} \in C$, so that $\int_0^1 \mathcal{W}_n(a)^2\,da \Rightarrow \int_0^1 \mathcal{W}(a)^2\,da$.
+\item Show that $M_3 : (D, d_u) \to (\mathbb{R}, |\cdot|)$ is not continuous everywhere in $C$, and $\int_0^1 \log(|\mathcal{W}_n(a)|)\,da \not\Rightarrow \int_0^1 \log(|\mathcal{W}(a)|)\,da$.
+\end{enumerate}
+
+\item\label{ex:7.23} Use Theorem 7.18 and a corresponding law of large numbers to state conditions on $\{\varepsilon_t\}$ ensuring that 7.21 \emph{(ii)} and 7.21 \emph{(iii)} hold, with conclusions 7.21 \emph{(a)} -- \emph{(d)} holding in consequence. What conditions suffice for $\tau^2 = \sigma^2$?
+\end{exercises}
+
+Phillips also gives a limiting distribution for the standard $t$-statistic centered for testing the hypothesis $\beta_o = 1$ (the ``unit root hypothesis''). Not surprisingly, this statistic no longer has the Student-$t$ distribution nor is it asymptotically normal; instead, the $t$-statistic limiting distribution is a function of $\mathcal{W}$, similar in form to that for $n(\hat{\beta}_n - 1)$.
+
+Although the nonstandard distribution of the $t$-statistic makes it awkward to use to test the unit root hypothesis ($\text{H}_o$: $\beta_o = 1$), a simple rearrangement leads to a convenient $\chi_1^2$ statistic, first given by Phillips and Durlauf (1986, Lemma 3.1 $(d)$). From 7.21 $(b)$ we have that
+\begin{align*}
+\left(n^{-1}\sum_{t=1}^{n} Y_{t-1}^2\right)(\hat{\beta}_n - 1) &= n^{-1}\sum_{t=1}^{n} Y_{t-1}\varepsilon_t \\
+&\Rightarrow (\sigma^2/2)\left(\mathcal{W}(1)^2 - \tau^2/\sigma^2\right).
+\end{align*}
+Thus when $\beta_o = 1$
+\[
+(2/\sigma^2)\left(n^{-1}\sum_{t=1}^{n} Y_{t-1}^2\right)(\hat{\beta}_n - 1) + \tau^2/\sigma^2 \Rightarrow \mathcal{W}(1)^2 = \chi_1^2.
+\]
+This statistic depends on the unknown quantities $\sigma^2$ and $\tau^2$, but estimators $\hat{\sigma}_n^2$ and $\hat{\tau}_n^2$ consistent for $\sigma^2$ and $\tau^2$, respectively, under the unit root null hypothesis can be straightforwardly constructed using $\varepsilon_t = Y_t - Y_{t-1}$. In particular, set $\hat{\tau}_n^2 = n^{-1}\sum_{t=1}^{n} \varepsilon_t^2$ and form $\hat{\sigma}_n^2$ using Theorem 6.20. We then have
+\[
+(2/\hat{\sigma}_n^2)\left(n^{-1}\sum_{t=1}^{n} Y_{t-1}^2\right)(\hat{\beta}_n - 1) + \hat{\tau}_n^2/\hat{\sigma}_n^2 \Rightarrow \chi_1^2,
+\]
+under the unit root null hypothesis, providing a simple unit root test procedure.
+
+Despite the convenience of the Phillips--Durlauf statistic, it turns out to have disappointing power properties, even though it can be shown to represent the locally best invariant test (see Tanaka, 1996, pp.\ 324--336). The difficulty is that its optimality is typically highly localized. In fact as Elliott, Rothenberg, and Stock (1996) note, there is no uniformly most powerful test in the present context, in sharp contrast to the typical situation of earlier chapters, where we could rely on asymptotic normality. Here, the limiting distribution is nonnormal. In consequence, there is a plethora of plausible unit root tests in the literature, and our discussion in this section has done no more than scratch the surface. Nevertheless, the basic results just given should assist the reader interested in exploring this literature. An overview of the literature is given by Phillips and Xiao (1998); of particular interest are the articles by Dickey and Fuller (1979, 1981), Elliott \emph{et al.}\ (1996), Johansen (1988, 1991), Phillips (1987), Phillips and Durlauf (1986), and Stock (1994, 1999).
+
+\section{Spurious Regression, Multivariate Wiener Processes, and Multivariate FCLTs}\label{sec:spurious}
+
+Now consider what happens when we regress a unit root process $Y_t = Y_{t-1} + \varepsilon_t$ not on its own lagged value $Y_{t-1}$, but on another unit root process, say $X_t = X_{t-1} + \eta_t$. For simplicity, assume that $\{\eta_t\}$ is i.i.d.\ and independent of the i.i.d.\ sequence $\{\varepsilon_t\}$ so that $\{Y_t\}$ and $\{X_t\}$ are independent random walks, and as before we set $X_0 = Y_0 = 0$. We can write a regression equation for $Y_t$ in terms of $X_t$ formally as
+\[
+Y_t = X_t \beta_o + u_t,
+\]
+where $\beta_o = 0$ and $u_t = Y_t$, reflecting the lack of any relation between $Y_t$ and $X_t$.
+
+We then ask how the ordinary least squares estimator
+\[
+\hat{\beta}_n = \left(\sum_{t=1}^{n} X_t^2\right)^{-1}\sum_{t=1}^{n} X_t Y_t
+\]
+behaves as $n$ becomes large. As we will see, $\hat{\beta}_n$ is not consistent for $\beta_o = 0$ but instead converges to a particular random variable. Because there is truly no relation between $Y_t$ and $X_t$, and because $\hat{\beta}_n$ is incapable of revealing this, we call this a case of ``spurious regression.'' This situation was first considered by Yule (1926), and the dangers of spurious regression were forcefully brought to the attention of economists by the Monte Carlo studies of Granger and Newbold (1974).
+
+To proceed, we write
+\begin{align*}
+\mathcal{W}_{1n}(a_t) &\equiv n^{-1/2}X_t/\sigma_1 = n^{-1/2}\sum_{s=1}^{t} \eta_s / \sigma_1, \\
+\mathcal{W}_{2n}(a_t) &\equiv n^{-1/2}Y_t/\sigma_2 = n^{-1/2}\sum_{s=1}^{t} \varepsilon_s / \sigma_2,
+\end{align*}
+where $\sigma_1^2 \equiv \lim_{n\to\infty} \var(n^{-1/2}\sum_{t=1}^{n} \eta_t)$ and $\sigma_2^2 \equiv \lim_{n\to\infty} \var(n^{-1/2}\sum_{t=1}^{n} \varepsilon_t)$, and $a_t = t/n$ as before. Substituting for $X_t$ and $Y_t$ and, for convenience, treating $\hat{\beta}_{n-1}$ instead of $\hat{\beta}_n$ we can write
+\begin{align*}
+\hat{\beta}_{n-1} &= \left(\sum_{t=1}^{n} X_{t-1}^2\right)^{-1}\sum_{t=1}^{n} X_{t-1}Y_{t-1} \\
+&= \left(\sigma_1^2 n\sum_{t=1}^{n} \mathcal{W}_{1n}(a_{t-1})^2\right)^{-1} \sigma_1 \sigma_2 n \sum_{t=1}^{n} \mathcal{W}_{1n}(a_{t-1})\mathcal{W}_{2n}(a_{t-1}) \\
+&= (\sigma_2/\sigma_1)\left(n^{-1}\sum_{t=1}^{n} \mathcal{W}_{1n}(a_{t-1})^2\right)^{-1} n^{-1}\sum_{t=1}^{n} \mathcal{W}_{1n}(a_{t-1})\mathcal{W}_{2n}(a_{t-1}).
+\end{align*}
+From the proof of Theorem~7.21 $(a)$, we have that
+\[
+n^{-1}\sum_{t=1}^{n} \mathcal{W}_{1n}(a_{t-1})^2 \Rightarrow \int_0^1 \mathcal{W}_1(a)^2\,da,
+\]
+where $\mathcal{W}_1$ is a Wiener process. We also have
+\[
+n^{-1}\sum_{t=1}^{n} \mathcal{W}_{1n}(a_{t-1})\mathcal{W}_{2n}(a_{t-1}) = \sum_{t=1}^{n}\int_{(t-1)/n}^{t/n} \mathcal{W}_{1n}(a)\mathcal{W}_{2n}(a)\,da,
+\]
+because $\mathcal{W}_{1n}(a)\mathcal{W}_{2n}(a)$ is constant for $(t-1)/n \leq a < t/n$. Thus
+\[
+n^{-1}\sum_{t=1}^{n} \mathcal{W}_{1n}(a_{t-1})\mathcal{W}_{2n}(a_{t-1}) = \int_0^1 \mathcal{W}_{1n}(a)\mathcal{W}_{2n}(a)\,da.
+\]
+We might expect this to converge in distribution to $\int_0^1 \mathcal{W}_1(a)\mathcal{W}_2(a)\,da$, where $\mathcal{W}_1$ and $\mathcal{W}_2$ are independent Wiener processes. (Why?) If so, then we have
+\[
+\hat{\beta}_n \Rightarrow (\sigma_2/\sigma_1)\left[\int_0^1 \mathcal{W}_1(a)^2\,da\right]^{-1}\int_0^1 \mathcal{W}_1(a)\mathcal{W}_2(a)\,da,
+\]
+which is a nondegenerate random variable. $\hat{\beta}_n$ is then not consistent for $\beta_o = 0$, so the regression is ``spurious.''
+
+Nevertheless, we do not yet have all the tools needed to draw this conclusion formally. In particular, we need to extend the notion of a univariate Wiener process to that of a multivariate Wiener process, and for this we need to extend the spaces of functions we consider from $C[0,\infty)$ or $D[0,\infty)$ to Cartesian product spaces $C^k[0,\infty) \equiv \times_{j=1}^{k} C[0,\infty)$ and $D^k[0,\infty) \equiv \times_{j=1}^{k} D[0,\infty)$.
+
+\begin{definition}[Multivariate Wiener process]\label{def:multivariate-wiener}
+$\boldsymbol{\mathcal{W}} = (\mathcal{W}_1, \ldots, \mathcal{W}_k)'$ is a multivariate ($k$-dimensional) Wiener process if $\mathcal{W}_1, \ldots, \mathcal{W}_k$ are independent ($\mathbb{R}$-valued) Wiener processes.
+\end{definition}
+
+The multivariate Wiener process exists (e.g., Breiman, 1992, Ch.\ 12), has independent increments, and has increments $\boldsymbol{\mathcal{W}}(a, \cdot) - \boldsymbol{\mathcal{W}}(b, \cdot)$ distributed as multivariate normal $N(\mathbf{0}, (a-b)\bfI)$, $0 < b \leq a < \infty$, as is straightforwardly shown. Further, there is a version such that for all $\omega \in \Omega$, $\boldsymbol{\mathcal{W}}(0, \omega) = \mathbf{0}$ and $\boldsymbol{\mathcal{W}}(\cdot, \omega) : [0,\infty) \to \mathbb{R}^k$ is continuous, a consequence of Proposition~7.7 and the fact that $\boldsymbol{\mathcal{W}}$ is continuous if and only if its components are continuous. Thus, there is a version of the multivariate Wiener process taking values in $C^k[0,\infty)$, so that $\boldsymbol{\mathcal{W}}$ is a random element of $C^k[0,\infty)$. As in the univariate case, when we speak of a multivariate Wiener process, we shall have in mind one with continuous sample paths. When dealing with multivariate FCLTs it will suffice here to restrict attention to functions defined on $[0,1]$. We thus write $C^k \equiv \times_{j=1}^{k} C[0,1]$ and $D^k \equiv \times_{j=1}^{k} D[0,1]$.
+
+Analogous to the univariate case, we can define a multivariate random walk as follows.
+
+\begin{definition}[Multivariate random walk]\label{def:multivariate-rw}
+Let $\boldsymbol{\mathcal{X}}_t = \boldsymbol{\mathcal{X}}_{t-1} + \boldsymbol{\mathcal{Z}}_t$, $t = 1, 2, \ldots$, where $\boldsymbol{\mathcal{X}}_0 = \mathbf{0}$ ($k \times 1$) and $\{\boldsymbol{\mathcal{Z}}_t\}$ is a sequence of i.i.d.\ $k \times 1$ vectors $\boldsymbol{\mathcal{Z}}_t = (\mathcal{Z}_{t1}, \ldots, \mathcal{Z}_{tk})'$ such that $E(\boldsymbol{\mathcal{Z}}_t) = 0$ and $E(\boldsymbol{\mathcal{Z}}_t \boldsymbol{\mathcal{Z}}_t') = \Sigma$, a finite positive definite matrix. Then $\{\boldsymbol{\mathcal{X}}_t\}$ is a multivariate ($k$-dimensional) random walk.
+\end{definition}
+
+We form the rescaled partial sums as
+\[
+\boldsymbol{\mathcal{W}}_n(a) \equiv \Sigma^{-1/2}n^{-1/2}\sum_{t=1}^{[an]} \boldsymbol{\mathcal{Z}}_t.
+\]
+The components of $\boldsymbol{\mathcal{W}}_n$ are the individual partial sums
+\[
+\mathcal{W}_{nj}(a) = n^{-1/2}\sum_{t=1}^{[an]} \tilde{\mathcal{Z}}_{tj}, \quad j = 1, \ldots, k,
+\]
+where $\tilde{\mathcal{Z}}_{tj}$ is the $j$th element of $\Sigma^{-1/2}\boldsymbol{\mathcal{Z}}_t$. For given $\omega$, the components $\mathcal{W}_{nj}(\cdot, \omega)$ are piecewise constant, so $\boldsymbol{\mathcal{W}}_n$ is a random element of $D^k$.
+
+We expect that a multivariate version of Donsker's theorem should hold, analogous to the multivariate CLT, so that $\boldsymbol{\mathcal{W}}_n \Rightarrow \boldsymbol{\mathcal{W}}$. To establish this formally, we study the weak convergence of the measures $\mu_n$, defined by
+\[
+\mu_n(A) = P\{\omega : \boldsymbol{\mathcal{W}}_n(\cdot, \omega) \in A\},
+\]
+where now $A \in \mathcal{B}(D^k, d)$ for a suitable choice of metric $d$ on $D^k$. For example, we can choose $d(x,y) = \sum_{j=1}^{k} d_B(x_j, y_j)$ for $x = (x_1, \ldots, x_k)'$, $y = (y_1, \ldots, y_k)'$, $x_j, y_j \in D$ with $d_B$ the Billingsley metric on $D$.
+
+The multivariate FCLT provides conditions under which $\mu_n$ converges to the multivariate Wiener measure $\mu_{\boldsymbol{\mathcal{W}}}$ defined by
+\[
+\mu_{\boldsymbol{\mathcal{W}}}(A) = P\{\omega : \boldsymbol{\mathcal{W}}(\cdot, \omega) \in A \cap C^k\},
+\]
+where $A \in \mathcal{B}(D^k, d)$. When $\mu_n \Rightarrow \mu_{\boldsymbol{\mathcal{W}}}$ we say that $\boldsymbol{\mathcal{W}}_n \Rightarrow \boldsymbol{\mathcal{W}}$ and that $\boldsymbol{\mathcal{W}}_n$ obeys the multivariate FCLT, or that $\{\boldsymbol{\mathcal{Z}}_t\}$ obeys the multivariate FCLT.
+
+To establish the multivariate FCLT it is often convenient to apply an analog of the Cram\'{e}r-Wold device (e.g., Wooldridge and White, 1988).
+
+\begin{proposition}[Functional Cram\'{e}r-Wold device]\label{prop:functional-cramer-wold}
+Let $\{\boldsymbol{\mathcal{V}}_n\}$ be a sequence of random elements of $D^k$ and let $\boldsymbol{\mathcal{V}}$ be a random element of $D^k$ (not necessarily the Wiener process). Then $\boldsymbol{\mathcal{V}}_n \Rightarrow \boldsymbol{\mathcal{V}}$ if and only if $\boldsymbol{\lambda}'\boldsymbol{\mathcal{V}}_n \Rightarrow \boldsymbol{\lambda}'\boldsymbol{\mathcal{V}}$ for all $\boldsymbol{\lambda} \in \mathbb{R}^k$, $\boldsymbol{\lambda}'\boldsymbol{\lambda} = 1$.
+\end{proposition}
+
+\begin{proof}
+See Wooldridge and White (1988), proof of Proposition 4.1.
+\end{proof}
+
+Applying the functional Cram\'{e}r-Wold device makes it straightforward to establish multivariate versions of Theorems 7.13 and 7.15 through 7.19. To complete our discussion of spurious regression, we state the multivariate Donsker Theorem.
+
+\begin{theorem}[Multivariate Donsker]\label{thm:multivariate-donsker}
+Let $\{\boldsymbol{\mathcal{Z}}_t\}$ be a sequence of i.i.d.\ $k \times 1$ vectors $\boldsymbol{\mathcal{Z}}_t = (\mathcal{Z}_{t1}, \ldots, \mathcal{Z}_{tk})'$ such that $E(\boldsymbol{\mathcal{Z}}_t) = 0$ and $E(\boldsymbol{\mathcal{Z}}_t \boldsymbol{\mathcal{Z}}_t') = \Sigma$, a finite nonsingular matrix. Then $\boldsymbol{\mathcal{W}}_n \Rightarrow \boldsymbol{\mathcal{W}}$.
+\end{theorem}
+
+\begin{proof}
+Fix $\boldsymbol{\lambda} \in \mathbb{R}^k$, $\boldsymbol{\lambda}'\boldsymbol{\lambda} = 1$. Then $\boldsymbol{\lambda}'\boldsymbol{\mathcal{W}}_n(a) = n^{-1/2}\sum_{t=1}^{[an]} \boldsymbol{\lambda}'\Sigma^{-1/2}\boldsymbol{\mathcal{Z}}_t$, where $\{\boldsymbol{\lambda}'\Sigma^{-1/2}\boldsymbol{\mathcal{Z}}_t\}$ is i.i.d.\ with $E(\boldsymbol{\lambda}'\Sigma^{-1/2}\boldsymbol{\mathcal{Z}}_t) = 0$ and
+\begin{align*}
+\var(\boldsymbol{\lambda}'\Sigma^{-1/2}\boldsymbol{\mathcal{Z}}_t) &= \boldsymbol{\lambda}'\Sigma^{-1/2}E(\boldsymbol{\mathcal{Z}}_t \boldsymbol{\mathcal{Z}}_t')\Sigma^{-1/2}\boldsymbol{\lambda} \\
+&= \boldsymbol{\lambda}'\Sigma^{-1/2}\Sigma\Sigma^{-1/2}\boldsymbol{\lambda} = \boldsymbol{\lambda}'\boldsymbol{\lambda} = 1.
+\end{align*}
+The conditions of Donsker's Theorem~7.13 hold, so $\boldsymbol{\lambda}'\boldsymbol{\mathcal{W}}_n \Rightarrow \mathcal{W}$, the univariate Wiener process. Now $\mathcal{W} = \boldsymbol{\lambda}'\boldsymbol{\mathcal{W}}$ and this holds for all $\boldsymbol{\lambda} \in \mathbb{R}^k$, $\boldsymbol{\lambda}'\boldsymbol{\lambda} = 1$. The result then follows by the functional Cram\'{e}r-Wold device.
+\end{proof}
+
+At last we have what we need to state a formal result for spurious regression. We leave the proof as an exercise.
+
+\begin{exercises}
+\item\label{ex:7.28} \textbf{(Spurious regression)} Let $\{X_t\}$ and $\{Y_t\}$ be independent random walks, $X_t = X_{t-1} + \eta_t$ and $Y_t = Y_{t-1} + \varepsilon_t$, where $\sigma_1^2 \equiv E(\eta_t^2)$ and $\sigma_2^2 \equiv E(\varepsilon_t^2)$. Then $\hat{\beta}_n \Rightarrow (\sigma_2/\sigma_1)\left[\int_0^1 \mathcal{W}_1(a)^2\,da\right]^{-1}\int_0^1 \mathcal{W}_1(a)\mathcal{W}_2(a)\,da$, where $\boldsymbol{\mathcal{W}} = (\mathcal{W}_1, \mathcal{W}_2)'$ is a bivariate Wiener process. (\emph{Hint: apply the multivariate Donsker Theorem and the continuous mapping theorem with $S = D^2$.})
+\end{exercises}
+
+Not only does $\hat{\beta}_n$ not converge to zero (the true value of $\beta_o$) in this case, but it can be shown that the usual $t$-statistic tends to $\infty$, giving the misleading impression that $\hat{\beta}_n$ is highly statistically significant. See Watson (1994, p.\ 2863) for a nice discussion and Phillips (1986) for further details.
+
+For each univariate FCLT, there is an analogous multivariate FCLT. This follows from the following result.
+
+\begin{theorem}[Multivariate FCLT]\label{thm:multivariate-fclt}
+Suppose that $\{\boldsymbol{\mathcal{Z}}_t\}$ is globally covariance stationary with mean zero and nonsingular global covariance matrix $\Sigma$ such that for each $\boldsymbol{\lambda} \in \mathbb{R}^k$, $\boldsymbol{\lambda}'\boldsymbol{\lambda} = 1$, $\{\boldsymbol{\lambda}'\Sigma^{-1/2}\boldsymbol{\mathcal{Z}}_t\}$ obeys the FCLT. Then $\boldsymbol{\mathcal{W}}_n \Rightarrow \boldsymbol{\mathcal{W}}$.
+\end{theorem}
+
+\begin{proof}
+Fix $\boldsymbol{\lambda} \in \mathbb{R}^k$, $\boldsymbol{\lambda}'\boldsymbol{\lambda} = 1$. Then $\boldsymbol{\lambda}'\boldsymbol{\mathcal{W}}_n(a) = n^{-1/2}\sum_{t=1}^{[an]} \boldsymbol{\lambda}'\Sigma^{-1/2}\boldsymbol{\mathcal{Z}}_t$. Now $E(\boldsymbol{\lambda}'\Sigma^{-1/2}\boldsymbol{\mathcal{Z}}_t) = 0$ and $\var(\boldsymbol{\lambda}'\boldsymbol{\mathcal{W}}_n(1)) \to 1$ as $n \to \infty$. Because $\{\boldsymbol{\lambda}'\Sigma^{-1/2}\boldsymbol{\mathcal{Z}}_t\}$ satisfies the FCLT, we have $\boldsymbol{\lambda}'\boldsymbol{\mathcal{W}}_n \Rightarrow \mathcal{W} = \boldsymbol{\lambda}'\boldsymbol{\mathcal{W}}$. This follows for all $\boldsymbol{\lambda} \in \mathbb{R}^k$, $\boldsymbol{\lambda}'\boldsymbol{\lambda} = 1$, so the conclusion follows by the functional Cram\'{e}r-Wold device.
+\end{proof}
+
+Quite general multivariate FCLTs are available. See Wooldridge and White (1988) and Davidson (1994, Ch.\ 29) for some further results and discussion. For example, here is a useful multivariate FCLT for heterogeneous mixing processes, which follows as an immediate corollary to Wooldridge and White (1988, Corollary 4.2).
+
+\begin{theorem}[Heterogeneous mixing multivariate FCLT]\label{thm:het-mixing-multi-fclt}
+Let $\{\boldsymbol{\mathcal{Z}}_{nt}\}$ be a double array of $k \times 1$ random vectors $\boldsymbol{\mathcal{Z}}_{nt} = (\mathcal{Z}_{nt1}, \ldots, \mathcal{Z}_{ntk})'$ such that $\{\boldsymbol{\mathcal{Z}}_{nt}\}$ is mixing with $\phi$ of size $-r/(2r-2)$ or $\alpha$ of size $-r/(r-2)$, $r > 2$. Suppose further that $E|\mathcal{Z}_{ntj}| < \Delta < \infty$, $E(\mathcal{Z}_{ntj}) = 0$, $n, t = 1, 2, \ldots$, $j = 1, \ldots, k$. If $\{\boldsymbol{\mathcal{Z}}_{nt}\}$ is globally covariance stationary with nonsingular global covariance matrix $\Sigma = \lim_{n\to\infty} \var(n^{-1/2}\sum_{t=1}^{n} \boldsymbol{\mathcal{Z}}_{nt})$, then $\boldsymbol{\mathcal{W}}_n \Rightarrow \boldsymbol{\mathcal{W}}$.
+\end{theorem}
+
+\begin{proof}
+Under the conditions given, $\boldsymbol{\lambda}'\Sigma^{-1/2}\boldsymbol{\mathcal{Z}}_{nt}$ obeys the heterogeneous mixing FCLT, Theorem~7.18. As $\boldsymbol{\mathcal{Z}}_{nt}$ is globally covariance stationary, the result follows from Theorem~7.29. See also Wooldridge and White (1988, Corollary 4.2).
+\end{proof}
+
+Our next exercise is an application of this result.
+
+\begin{exercises}
+\item\label{ex:7.31} Determine the behavior of the least squares estimator $\hat{\beta}_n$ when the unit root process $Y_t = Y_{t-1} + \varepsilon_t$ is regressed on the unit root process $X_t = X_{t-1} + \eta_t$, where $\{\eta_t\}$ is independent of $\{\varepsilon_t\}$, and $\{\eta_t, \varepsilon_t\}$ satisfies the conditions of Theorem~7.30.
+\end{exercises}
+
+\section{Cointegration and Stochastic Integrals}\label{sec:cointegration}
+
+Continuing with the spurious regression setup in which $\{X_t\}$ and $\{Y_t\}$ are independent random walks, consider what happens if we take a nontrivial linear combination of $X_t$ and $Y_t$:
+\[
+a_1 Y_t + a_2 X_t = a_1 Y_{t-1} + a_2 X_{t-1} + a_1 \varepsilon_t + a_2 \eta_t,
+\]
+where $a_1$ and $a_2$ are not both zero. We can write this as
+\[
+Z_t = Z_{t-1} + v_t,
+\]
+where $Z_t = a_1 Y_t + a_2 X_t$ and $v_t = a_1 \varepsilon_t + a_2 \eta_t$. Thus, $Z_t$ is again a random walk process, as $\{v_t\}$ is i.i.d.\ with mean zero and finite variance, given that $\{\varepsilon_t\}$ and $\{\eta_t\}$ each are i.i.d.\ with mean zero and finite variance. No matter what coefficients $a_1$ and $a_2$ we choose, the resulting linear combination is again a random walk, hence an integrated or unit root process.
+
+Now consider what happens when $\{X_t\}$ is a random walk (hence integrated) as before, but $\{Y_t\}$ is instead generated according to $Y_t = X_t \beta_o + \varepsilon_t$, with $\{\varepsilon_t\}$ again i.i.d. By itself, $\{Y_t\}$ is an integrated process, because
+\[
+Y_t - Y_{t-1} = (X_t - X_{t-1})\beta_o + \varepsilon_t - \varepsilon_{t-1}
+\]
+so that
+\begin{align*}
+Y_t &= Y_{t-1} + \eta_t \beta_o + \varepsilon_t - \varepsilon_{t-1} \\
+&= Y_{t-1} + \zeta_t,
+\end{align*}
+where $\zeta_t = \eta_t \beta_o + \varepsilon_t - \varepsilon_{t-1}$ is readily verified to obey the FCLT.
+
+Despite the fact that both $\{X_t\}$ and $\{Y_t\}$ are integrated processes, the situation is very different from that considered at the outset of this section. Here, there is indeed a linear combination of $X_t$ and $Y_t$ that is \emph{not} an integrated process: putting $a_1 = 1$ and $a_2 = -\beta_o$ we have
+\[
+a_1 Y_t + a_2 X_t = Y_t - \beta_o X_t = \varepsilon_t,
+\]
+which is i.i.d. This is an example of a pair $\{X_t, Y_t\}$ of \emph{cointegrated processes}.
+
+\begin{definition}[Cointegrated processes]\label{def:cointegration}
+Let $\boldsymbol{\mathcal{X}}_t = (\mathcal{X}_{t1}, \ldots, \mathcal{X}_{tk})'$ be a vector of integrated processes. If there exists a $k \times 1$ vector $\mathbf{a}$ such that the linear combination $\{\mathcal{Z}_t = \mathbf{a}'\boldsymbol{\mathcal{X}}_t\}$ obeys the FCLT, then $\boldsymbol{\mathcal{X}}_t$ is a vector of cointegrated processes.
+\end{definition}
+
+Cointegrated processes were introduced by Granger (1981). This paper and that of Engle and Granger (1987) have had a major impact on modern econometrics, and there is now a voluminous literature on the theory and application of cointegration. Excellent treatments can be found in Johansen (1988, 1991, 1996), Phillips (1991), Sims, Stock, and Watson (1990) and Stock and Watson (1993).
+
+Our purpose here is not to pursue the various aspects of the theory of cointegration. Instead, we restrict our attention to developing the tools necessary to analyze the behavior of the least squares estimator $\hat{\boldsymbol{\beta}}_n = (\sum_{t=1}^{n} \bfX_t \bfX_t')^{-1}\sum_{t=1}^{n} \bfX_t \bfY_t$, when $(\bfX_t, \bfY_t)$ is a vector of cointegrated processes.
+
+For the case of scalar $X_t$,
+\begin{align*}
+\hat{\beta}_n &= \left(\sum_{t=1}^{n} X_t^2\right)^{-1}\sum_{t=1}^{n} X_t(X_t \beta_o + \varepsilon_t) \\
+&= \beta_o + \left(\sum_{t=1}^{n} X_t^2\right)^{-1}\sum_{t=1}^{n} X_t \varepsilon_t.
+\end{align*}
+For now, we maintain the assumption that $\{X_t\}$ is a random walk and that $\{\varepsilon_t\}$ is i.i.d., independent of $\{\eta_t\}$ (which underlies $\{X_t\}$). We later relax these requirements.
+
+From the expression above, we see that the behavior of $\hat{\beta}_n$ is determined by that of $\sum_{t=1}^{n} X_t^2$ and $\sum_{t=1}^{n} X_t \varepsilon_t$, so we consider each of these in turn.
+
+First consider $\sum_{t=1}^{n} X_t^2$. From Theorem~7.21 $(a)$ we know that
+\[
+n^{-2}\sum_{t=1}^{n} X_t^2 \Rightarrow \sigma_1^2 \int_0^1 \mathcal{W}_1(a)^2\,da,
+\]
+where $\sigma_1^2 = E(\eta_t^2)$.
+
+Next, consider $\sum_{t=1}^{n} X_t \varepsilon_t$. Substituting $X_t = X_{t-1} + \eta_t$ we have
+\[
+n^{-1}\sum_{t=1}^{n} X_t \varepsilon_t = n^{-1}\sum_{t=1}^{n} X_{t-1}\varepsilon_t + n^{-1}\sum_{t=1}^{n} \eta_t \varepsilon_t.
+\]
+Under our assumptions, $\{\eta_t \varepsilon_t\}$ obeys a law of large numbers, so the last term converges to $E(\eta_t \varepsilon_t) = 0$. We thus focus on $n^{-1}\sum_{t=1}^{n} X_{t-1}\varepsilon_t$. If we write
+\begin{align*}
+\mathcal{W}_{1n}(a_t) &= n^{-1/2}\sum_{s=1}^{t} \eta_s / \sigma_1 \\
+\mathcal{W}_{2n}(a_t) &= n^{-1/2}\sum_{s=1}^{t} \varepsilon_s / \sigma_2,
+\end{align*}
+where, as before, we set $a_t = t/n$, we have $X_{t-1} = n^{1/2}\sigma_1 \mathcal{W}_{1n}(a_{t-1})$ and $\varepsilon_t = n^{1/2}\sigma_2\left(\mathcal{W}_{2n}(a_t) - \mathcal{W}_{2n}(a_{t-1})\right)$. Substituting these expressions we obtain
+\begin{align*}
+n^{-1}\sum_{t=1}^{n} X_{t-1}\varepsilon_t &= n^{-1}\sum_{t=1}^{n} n^{1/2}\sigma_1 \mathcal{W}_{1n}(a_{t-1}) \times n^{1/2}\sigma_2 \left(\mathcal{W}_{2n}(a_t) - \mathcal{W}_{2n}(a_{t-1})\right) \\
+&= \sigma_1 \sigma_2 \sum_{t=1}^{n} \mathcal{W}_{1n}(a_{t-1})\left(\mathcal{W}_{2n}(a_t) - \mathcal{W}_{2n}(a_{t-1})\right).
+\end{align*}
+The summation appearing in the expression immediately above has a prototypical form that plays a central role not only in the estimation of the parameters of cointegration models, but in a range of other contexts as well.
+
+The analysis of such expressions is facilitated by defining a \emph{stochastic integral} as
+\[
+\int_0^1 \mathcal{W}_{1n}\,d\mathcal{W}_{2n} \equiv \sum_{t=1}^{n} \mathcal{W}_{1n}(a_{t-1})\left(\mathcal{W}_{2n}(a_t) - \mathcal{W}_{2n}(a_{t-1})\right).
+\]
+Writing the expression in this way and noting that $\boldsymbol{\mathcal{W}}_n = (\mathcal{W}_{1n}, \mathcal{W}_{2n})' \Rightarrow \boldsymbol{\mathcal{W}}$ suggest that we might expect that
+\[
+\int_0^1 \mathcal{W}_{1n}\,d\mathcal{W}_{2n} \Rightarrow \int_0^1 \mathcal{W}_1\,d\mathcal{W}_2,
+\]
+where the integral on the right, involving the stochastic differential $d\mathcal{W}_2$, will have to be given a suitable meaning, as this expression does not correspond to any of the standard integrals familiar from elementary calculus.
+
+Under certain conditions this convergence does hold. Chan and Wei (1988) were the first to establish a result of this sort. Nevertheless, this result is not generally valid. Instead, as we describe in more detail below, a recentering may be needed to accommodate dependence in the increments of $\mathcal{W}_1$ or $\mathcal{W}_{2n}$ not present in the increments of $\mathcal{W}_1$ and $\mathcal{W}_2$. As it turns out, the generic result is that
+\[
+\int_0^1 \mathcal{W}_{1n}\,d\mathcal{W}_{2n} - \Lambda_n \Rightarrow \int_0^1 \mathcal{W}_1\,d\mathcal{W}_2,
+\]
+where $\Lambda_n$ performs the recentering.
+
+We proceed by first making sense of the integral on the right, using the phenomenally successful theory of stochastic integration developed by Ito in the 1940's; see Ito (1944). We then discuss the issues involved in establishing the limiting behavior of $\int_0^1 \mathcal{W}_{1n}\,d\mathcal{W}_{2n}$.
+
+To ensure that the stochastic integrals defined below are properly behaved, we make use of the notion of the \emph{filtration generated by} $\boldsymbol{\mathcal{W}}$.
+
+\begin{definition}[Filtration generated by $\boldsymbol{\mathcal{W}}$]\label{def:filtration-wiener}
+Let $\boldsymbol{\mathcal{W}}$ be a standard multivariate Wiener process. The filtration generated by $\boldsymbol{\mathcal{W}}$ is the sequence of $\sigma$-fields $\{\mathcal{F}_t,\, t \in [0,\infty)\}$, where $\mathcal{F}_t = \sigma(\boldsymbol{\mathcal{W}}(a),\, 0 \leq a < t)$.
+\end{definition}
+
+Note that $\{\mathcal{F}_t\}$ is an increasing sequence of $\sigma$-fields ($\mathcal{F}_a \subset \mathcal{F}_t$, $a < t$). In what follows, the $\sigma$-field $\mathcal{F}_t$ will always denote that just defined.
+
+We can now define the random step functions that provide the foundation for Ito's stochastic integral, parallel to the construction of the familiar Riemann integral.
+
+\begin{definition}[Random step function]\label{def:random-step-function}
+Suppose there is a finite sequence of real numbers $0 = a_0 < a_1 < \cdots < a_n$ and a sequence of random variables $\eta_t$, with $E(\eta_t^2) < \infty$, where $\eta_t$ is adapted to $\mathcal{F}_t$, $t = 0, \ldots, n-1$. Let $f : [0,\infty) \times \Omega \to \mathbb{R}$ be defined so that $f(a, \cdot) = \eta_t$ for $a_t < a < a_{t+1}$. Then $f$ is a random step function.
+\end{definition}
+
+The Ito stochastic integral is straightforward to define for random step functions.
+
+\begin{definition}\label{def:ito-step}
+Let $\mathcal{W}$ be a component of $\boldsymbol{\mathcal{W}}$. The Ito stochastic integral of a random step function $f$ is defined as
+\[
+\mathcal{I}(f) \equiv \sum_{t=1}^{n} \eta_{t-1}(\mathcal{W}(a_t) - \mathcal{W}(a_{t-1})).
+\]
+\end{definition}
+
+We also write $\mathcal{I}(f) = \int_0^{\infty} f\,d\mathcal{W}$ or $\mathcal{I}(f) = \int_0^{\infty} f(a)\,d\mathcal{W}(a)$ in this case.
+
+The Ito stochastic integral of a random step function has finite second moment:
+
+\begin{proposition}\label{prop:ito-step-moment}
+If $f$ is a random step function, then
+\[
+E(\mathcal{I}(f)^2) = E\!\left(\int_0^{\infty} f(a)^2\,da\right) < \infty.
+\]
+\end{proposition}
+
+\begin{proof}
+See Brze\'{z}niak and Zastawniak (1999, pp.\ 182--183).
+\end{proof}
+
+To extend the definition of the Ito stochastic integral to a class of functions wider than the random step functions, we use the random step functions as approximations, analogous to the construction of the Riemann integral. Specifically, we define the Ito stochastic integral for functions well approximated by random step functions in mean square. We first define the class of square integrable stochastic functions.
+
+\begin{definition}[Square integrable (adapted) stochastic function]\label{def:sq-integrable}
+Let $f : [0,\infty) \times \Omega \to \mathbb{R}$ be such that $f(a, \cdot)$ is measurable for each $a \in [0,\infty)$. If $E\!\left(\int_0^{\infty} f(a)^2\,da\right) < \infty$, then $f$ is a square integrable stochastic function. If in addition $f(a, \cdot)$ is measurable-$\mathcal{F}_a$ for each $a \in [0,\infty)$ then $f$ is a square integrable adapted stochastic function.
+\end{definition}
+
+For square integrable stochastic functions, we have $E\!\left(\int_0^{\infty} f(a)^2\,da\right) = \int_0^{\infty} E\!\left(f(a)^2\right)\,da$. (Why?)
+
+\begin{definition}[Approximatable stochastic function]\label{def:approximatable}
+Let $f$ be a square integrable adapted stochastic function such that there is a sequence $\{f_n\}$ of random step functions such that
+\[
+\lim_{n\to\infty} E\!\left(\int_0^{\infty} |f(a) - f_n(a)|^2\,da\right) = 0.
+\]
+Then $f$ is an approximatable stochastic function and $\{f_n\}$ is a sequence of approximating step functions for $f$.
+\end{definition}
+
+A general definition of the Ito stochastic integral can now be given.
+
+\begin{definition}[Ito stochastic integral]\label{def:ito-general}
+Suppose $f$ is an approximatable stochastic function. If for any sequence $\{f_n\}$ of approximating step functions for $f$ there exists a random variable $\mathcal{I}(f)$ with $E(\mathcal{I}(f)) < \infty$ and such that $\lim_{n\to\infty} E\!\left(|\mathcal{I}(f) - \mathcal{I}(f_n)|^2\right) = 0$, then we call $\mathcal{I}(f)$ the Ito stochastic integral and write
+\[
+\mathcal{I}(f) = \int_0^{\infty} f(a)\,d\mathcal{W}(a) = \int_0^{\infty} f\,d\mathcal{W}.
+\]
+\end{definition}
+
+\begin{proposition}\label{prop:ito-unique}
+For every approximatable stochastic function the Ito stochastic integral exists, is unique (to within equality, a.s.), and satisfies
+\[
+E\!\left(\mathcal{I}(f)^2\right) = E\!\left(\int_0^{\infty} f(a)^2\,da\right).
+\]
+\end{proposition}
+
+\begin{proof}
+See Brze\'{z}niak and Zastawniak (1999, pp.\ 184--185).
+\end{proof}
+
+In the light of this result, if $f$ is an approximatable stochastic function, we shall also call $f$ a \emph{stochastically integrable} function.
+
+If $1_{[b,c)} f$ is stochastically integrable, we can define
+\begin{align*}
+\int_b^c f(a)\,d\mathcal{W}(a) &\equiv \int_0^{\infty} 1_{[b,c)}(a)f(a)\,d\mathcal{W}(a) \\
+&= \mathcal{I}(1_{[b,c)} f),
+\end{align*}
+where $1_{[b,c)}(a) = 1$ if $b < a < c$ and is zero otherwise. We also write $\mathcal{I}(1_{[b,c)} f) = \int_b^c f\,d\mathcal{W}$.
+
+It is not always easy to check that a function $f$ is stochastically integrable. The next result establishes that $f$ is stochastically integrable if it is continuous almost surely and properly adapted.
+
+\begin{proposition}\label{prop:continuous-integrable}
+Let $f$ be a stochastic function with continuous sample paths almost surely such that $f(a, \cdot)$ is measurable-$\mathcal{F}_a$ for all $a \in [0,\infty)$. Then
+\begin{enumerate}[label=(\roman*)]
+\item if $f$ is a square integrable stochastic function, then $f$ is stochastically integrable;
+\item if $1_{[b,c)} f$ is a square integrable stochastic function, then $1_{[b,c)} f$ is stochastically integrable.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+See Brze\'{z}niak and Zastawniak (1999, pp.\ 187--188).
+\end{proof}
+
+We can now make sense of the integral $\int_0^1 \mathcal{W}_1\,d\mathcal{W}_2$ that led to the foregoing discussion. Put $\boldsymbol{\mathcal{W}} = (\mathcal{W}_1, \mathcal{W}_2)$, $f = \mathcal{W}_1$ and $\mathcal{W} = \mathcal{W}_2$, and apply Proposition~7.41. By definition, $f = \mathcal{W}_1$ is a stochastic function with continuous sample paths, with $\mathcal{W}_1(a)$ measurable-$\mathcal{F}_a$, $a \in [0,\infty)$. To verify that $1_{[0,1]} f = 1_{[0,1]} \mathcal{W}_1$ is square integrable, as required for Proposition~7.41 $(ii)$, we write $E\left[\int 1_{[0,1]}(a)\mathcal{W}_1(a)^2\,da\right] = E\int_0^1 \mathcal{W}_1(a)^2\,da = \int_0^1 E(\mathcal{W}_1(a)^2)\,da = \int_0^1 a\,da = [a^2/2]_0^1 = 1/2 < \infty$. $f = \mathcal{W}_1$ is therefore stochastically integrable on $[0,1]$, ensuring that $\int_0^1 \mathcal{W}_1\,d\mathcal{W}_2$ is well defined.
+
+We can extend the notion of Ito stochastic integral to vector- or matrix-valued integrals; these forms appear commonly in applications. Specifically, let $\mathbf{f}$ be $m \times 1$, let $\mathbf{F}$ be $m \times k$ and let $\boldsymbol{\mathcal{W}}$ be $k \times 1$. Then
+\[
+\int_b^c \mathbf{f}\,d\boldsymbol{\mathcal{W}}'
+\]
+is an $m \times k$ matrix with elements
+\[
+\sum_{j=1}^{k} \int_b^c f_i\,d\mathcal{W}_j, \quad i = 1, \ldots, m, \quad j = 1, \ldots, k,
+\]
+and
+\[
+\int_b^c \mathbf{F}\,d\boldsymbol{\mathcal{W}}
+\]
+is an $m \times 1$ vector with elements
+\[
+\sum_{j=1}^{k} \int_b^c F_{ij}\,d\mathcal{W}_j, \quad i = 1, \ldots, m.
+\]
+For example, the matrix
+\[
+\int_b^c \boldsymbol{\mathcal{W}}\,d\boldsymbol{\mathcal{W}}'
+\]
+is the $k \times k$ matrix of random variables with elements $\int_b^c \mathcal{W}_i\,d\mathcal{W}_j$, $i, j = 1, \ldots, k$.
+
+We now turn our attention to the limiting behavior of $\int_0^1 \mathcal{W}_{1n}\,d\mathcal{W}_{2n}$. For this, consider a more general setup in which we have $(\boldsymbol{\mathcal{U}}_n, \boldsymbol{\mathcal{V}}_n) \Rightarrow (\boldsymbol{\mathcal{U}}, \boldsymbol{\mathcal{V}})$, and consider the limiting behavior of
+\[
+\int_0^1 \boldsymbol{\mathcal{U}}_n\,d\boldsymbol{\mathcal{V}}_n'.
+\]
+Contrary to what one might at first expect it is not true in general that $\int_0^1 \boldsymbol{\mathcal{U}}_n\,d\boldsymbol{\mathcal{V}}_n' \Rightarrow \int_0^1 \boldsymbol{\mathcal{U}}\,d\boldsymbol{\mathcal{V}}'$.
+
+To see this, recall from Theorem~7.21 $(b)$ that $n^{-1}\sum_{t=1}^{n} Y_{t-1}\varepsilon_t \Rightarrow (\sigma^2/2)(\mathcal{W}(1)^2 - \tau^2/\sigma^2)$, where $\tau^2 = \plim\, n^{-1}\sum_{t=1}^{n} \varepsilon_t^2$. Writing $\mathcal{W}_n(a_{t-1}) = n^{-1/2}\sum_{s=1}^{t-1} \varepsilon_s / \sigma$, we have
+\begin{align*}
+n^{-1}\sum_{t=1}^{n} Y_{t-1}\varepsilon_t &= \sigma n^{-1/2}\sum_{t=1}^{n} \mathcal{W}_n(a_{t-1})\varepsilon_t \\
+&= \sigma^2 \sum_{t=1}^{n} \mathcal{W}_n(a_{t-1})(\mathcal{W}_n(a_t) - \mathcal{W}_n(a_{t-1})) \\
+&= \sigma^2 \int_0^1 \mathcal{W}_n\,d\mathcal{W}_n,
+\end{align*}
+where the first equality is taken from the proof of Theorem~7.21 $(b)$, the second uses the fact that $\varepsilon_t = \sigma n^{1/2}(\mathcal{W}_n(a_t) - \mathcal{W}_n(a_{t-1}))$, and the third uses the definition of a stochastic integral.
+
+Now if $(\boldsymbol{\mathcal{U}}_n, \boldsymbol{\mathcal{V}}_n) \Rightarrow (\boldsymbol{\mathcal{U}}, \boldsymbol{\mathcal{V}})$ were to imply
+\[
+\int_0^1 \boldsymbol{\mathcal{U}}_n\,d\boldsymbol{\mathcal{V}}_n' \Rightarrow \int_0^1 \boldsymbol{\mathcal{U}}\,d\boldsymbol{\mathcal{V}}',
+\]
+then $\mathcal{W}_n \Rightarrow \mathcal{W}$ (as assumed in conditions 7.21$(ii)$) would imply that
+\[
+\int_0^1 \mathcal{W}_n\,d\mathcal{W}_n \Rightarrow \int_0^1 \mathcal{W}\,d\mathcal{W}.
+\]
+(Set $\boldsymbol{\mathcal{U}}_n = \boldsymbol{\mathcal{V}}_n = \mathcal{W}_n$ and $\boldsymbol{\mathcal{U}} = \boldsymbol{\mathcal{V}} = \mathcal{W}$.) It is a standard exercise in stochastic integration to show that
+\[
+\int_0^1 \mathcal{W}\,d\mathcal{W} = (1/2)(\mathcal{W}(1)^2 - 1),
+\]
+so we would then have
+\[
+n^{-1}\sum_{t=1}^{n} Y_{t-1}\varepsilon_t \Rightarrow (\sigma^2/2)(\mathcal{W}(1)^2 - 1).
+\]
+But we have already seen that
+\begin{align*}
+n^{-1}\sum_{t=1}^{n} Y_{t-1}\varepsilon_t &= \sigma^2 \int_0^1 \mathcal{W}_n\,d\mathcal{W}_n \\
+&\Rightarrow (\sigma^2/2)(\mathcal{W}(1)^2 - \tau^2/\sigma^2).
+\end{align*}
+We now see that the convergence we might have naively expected does not hold in general, because we can have $\tau^2 \neq \sigma^2$. Clearly, more is going on than might appear at first glance.
+
+To see what this is, let $\{\eta_t\}$ and $\{\varepsilon_t\}$ each obey the FCLT, and write
+\begin{align*}
+\mathcal{U}_n(a_t) &= n^{-1/2}\sum_{s=1}^{t} \eta_s / \sigma_1 \\
+\mathcal{V}_n(a_t) &= n^{-1/2}\sum_{s=1}^{t} \varepsilon_s / \sigma_2,
+\end{align*}
+with $a_t = t/n$ and the definitions $\sigma_1^2 \equiv \lim_{n\to\infty} \var(n^{-1/2}\sum_{t=1}^{n} \eta_t)$, and $\sigma_2^2 \equiv \lim_{n\to\infty} \var(n^{-1/2}\sum_{t=1}^{n} \varepsilon_t)$. Then
+\begin{align*}
+\int_0^1 \mathcal{U}_n\,d\mathcal{V}_n &= \sum_{t=1}^{n} \mathcal{U}_n(a_{t-1})(\mathcal{V}_n(a_t) - \mathcal{V}_n(a_{t-1})) \\
+&= n^{-1/2}\sum_{t=1}^{n} \mathcal{U}_n(a_{t-1})\varepsilon_t / \sigma_2 \\
+&= n^{-1}\sum_{t=2}^{n} \sum_{s=1}^{t-1} \eta_s \varepsilon_t / (\sigma_1 \sigma_2).
+\end{align*}
+Taking expectations, we have, say,
+\begin{align*}
+E\!\left(\int_0^1 \mathcal{U}_n\,d\mathcal{V}_n\right) &= E\!\left(n^{-1}\sum_{t=2}^{n}\sum_{s=1}^{t-1} \eta_s \varepsilon_t / (\sigma_1 \sigma_2)\right) \\
+&= n^{-1}\sum_{t=2}^{n}\sum_{s=1}^{t-1} E(\eta_s \varepsilon_t)/(\sigma_1 \sigma_2) \\
+&\equiv \Lambda_n.
+\end{align*}
+The value of $\Lambda_n$ depends on the covariances $E(\eta_s \varepsilon_t)$, $s = 1, \ldots, t-1$, $t = 1, \ldots, n$. If these are all zero, as happens, for example, when $\eta_t = \varepsilon_t$ and $\{\varepsilon_t\}$ is either independent or a martingale difference sequence, then $\Lambda_n$ is zero. If, however, $\varepsilon_t$ is correlated with past values $\eta_s$, $s = 1, \ldots, t-1$, then $\Lambda_n$ need not be zero.
+
+By assumption, we have that $\mathcal{U}_n \Rightarrow \mathcal{U}$ and $\mathcal{V}_n \Rightarrow \mathcal{V}$, where $\mathcal{U}$ and $\mathcal{V}$ are both standard Wiener processes (not necessarily independent of each other). Now the expectation of $\int_0^1 \mathcal{U}\,d\mathcal{V}$ depends not at all on the covariance properties of $\{\varepsilon_t\}$ and $\{\eta_t\}$. In fact, it can be shown that $E(\int_0^1 \mathcal{U}\,d\mathcal{V}) = 0$. Thus, at a minimum, we must recenter $\int_0^1 \mathcal{U}_n\,d\mathcal{V}_n$ to
+\[
+\int_0^1 \mathcal{U}_n\,d\mathcal{V}_n - \Lambda_n,
+\]
+to ensure that its expectation matches that of $\int_0^1 \mathcal{U}\,d\mathcal{V}$.
+
+In fact, for the stochastic processes we study, this recentering is enough to give us what we want. Conditions ensuring that $\{\varepsilon_t\}$ and $\{\eta_t\}$ obey the FCLT together with the assumption that $\Lambda_n \to \Lambda$ are sufficient to deliver
+\[
+\int_0^1 \mathcal{U}_n\,d\mathcal{V}_n - \Lambda_n \Rightarrow \int_0^1 \mathcal{U}\,d\mathcal{V},
+\]
+a consequence of Theorem 4.1 of DeJong and Davidson (2000). DeJong and Davidson's proof is sophisticated and involved. We therefore content ourselves with stating corollaries to DeJong and Davidson's (2000) Theorem 4.1 that deliver the desired results for our cointegration setup.
+
+For this, we let $\{\boldsymbol{\eta}_t\}$ and $\{\boldsymbol{\varepsilon}_t\}$ be $m \times 1$ and $k \times 1$ vectors, respectively, and define
+\begin{align*}
+\boldsymbol{\mathcal{U}}_n(a) &= \Sigma_1^{-1/2}n^{-1/2}\sum_{t=1}^{[an]} \boldsymbol{\eta}_t \\
+\boldsymbol{\mathcal{V}}_n(a) &= \Sigma_2^{-1/2}n^{-1/2}\sum_{t=1}^{[an]} \boldsymbol{\varepsilon}_t,
+\end{align*}
+where $\Sigma_1 \equiv \lim_{n\to\infty} \var(n^{-1/2}\sum_{t=1}^{n} \boldsymbol{\eta}_t)$ and $\Sigma_2 \equiv \lim_{n\to\infty} \var(n^{-1/2}\sum_{t=1}^{n} \boldsymbol{\varepsilon}_t)$. We also define
+\[
+\Lambda_n \equiv \Sigma_1^{-1/2}n^{-1}\sum_{t=2}^{n}\sum_{s=1}^{t} E(\boldsymbol{\eta}_s \boldsymbol{\varepsilon}_t')\Sigma_2^{-1/2\prime}.
+\]
+
+\begin{theorem}[i.i.d.\ stochastic integral convergence]\label{thm:iid-stoch-int}
+Suppose that $\{\boldsymbol{\eta}_t\}$ and $\{\boldsymbol{\varepsilon}_t\}$ are i.i.d.\ sequences each satisfying the conditions of the multivariate Donsker theorem. Suppose also that $\Lambda_n \to \Lambda$, a finite matrix. Then
+\[
+\left(\boldsymbol{\mathcal{U}}_n, \boldsymbol{\mathcal{V}}_n, \int_0^1 \boldsymbol{\mathcal{U}}_n\,d\boldsymbol{\mathcal{V}}_n' - \Lambda_n\right) \Rightarrow \left(\boldsymbol{\mathcal{U}}, \boldsymbol{\mathcal{V}}, \int_0^1 \boldsymbol{\mathcal{U}}\,d\boldsymbol{\mathcal{V}}'\right).
+\]
+\end{theorem}
+
+\begin{proof}
+The argument of the proof of DeJong and Davidson (2000, Theorem 4.1) specialized to the i.i.d.\ case delivers the result.
+\end{proof}
+
+Note that we have stated the conclusion in terms of the joint convergence of $\boldsymbol{\mathcal{U}}_n$, $\boldsymbol{\mathcal{V}}_n$ and $\int_0^1 \boldsymbol{\mathcal{U}}_n\,d\boldsymbol{\mathcal{V}}_n' - \Lambda_n$. This is convenient because it permits easy application of the continuous mapping theorem, as DeJong and Davidson (2000) note.
+
+\begin{exercises}
+\item\label{ex:7.43} \emph{(i)} Verify that $\Lambda = \mathbf{0}$ when $\{\boldsymbol{\eta}_t\}$ and $\{\boldsymbol{\varepsilon}_t\}$ are independent and the conditions of Theorem 7.42 hold, so that $\int_0^1 \boldsymbol{\mathcal{U}}_n\,d\boldsymbol{\mathcal{V}}_n' \Rightarrow \int_0^1 \boldsymbol{\mathcal{U}}\,d\boldsymbol{\mathcal{V}}'$. \emph{(ii)} Find the value of $\Lambda$ when $\boldsymbol{\eta}_t = \boldsymbol{\varepsilon}_{t-1}$.
+
+\item\label{ex:7.44} \textbf{(Cointegrated regression with random walk)} Suppose the following two conditions hold.
+\begin{enumerate}[label=(\roman*)]
+\item $\{\varepsilon_t\}$ and $\{\eta_t\}$ are independent i.i.d.\ processes with $E(\varepsilon_t) = E(\eta_t) = 0$, $0 < \sigma_1^2 \equiv \var(\eta_t) < \infty$ and $0 < \sigma_2^2 \equiv \var(\varepsilon_t) < \infty$.
+\item $Y_t = X_t' \beta_o + \varepsilon_t$, $t = 1, \ldots$, where $X_t = X_{t-1} + \eta_t$, $t = 1, \ldots$, and $X_0 = 0$, with $\beta_o \in \mathbb{R}$.
+\end{enumerate}
+
+Then for independent standard Wiener processes $\mathcal{W}_1$, $\mathcal{W}_2$,
+\begin{enumerate}[label=(\alph*)]
+\item $n^{-2}\sum_{t=1}^{n} X_t^2 \Rightarrow \sigma_1^2 \int_0^1 \mathcal{W}_1(a)^2\,da$;
+\item $n^{-1}\sum_{t=1}^{n} X_t \varepsilon_t \Rightarrow \sigma_1 \sigma_2 \int_0^1 \mathcal{W}_1(a)\,d\mathcal{W}_2(a)$;
+\item $n(\hat{\beta}_n - \beta_o) \Rightarrow \sigma_2 / \sigma_1 \left[\int_0^1 \mathcal{W}_1(a)\,da\right]^{-1}\int_0^1 \mathcal{W}_1(a)\,d\mathcal{W}_2(a)$;
+\item $\hat{\beta}_n \convp \beta_o$.
+\end{enumerate}
+\end{exercises}
+
+Now suppose that $\bfX_t$ is a $k \times 1$ vector of integrated processes, $\bfX_t = \bfX_{t-1} + \boldsymbol{\eta}_t$ and that $Y_t = \bfX_t'\boldsymbol{\beta}_o + \varepsilon_t$. Further let $\boldsymbol{\zeta}_t \equiv (\boldsymbol{\eta}_t', \varepsilon_t)'$ obey the multivariate FCLT. $\{X_t\}$ and $\{Y_t\}$ will then be integrated though not necessarily random walk processes. To handle this case, let
+\[
+\Sigma \equiv \lim_{n\to\infty} \var(n^{-1/2}\sum_{t=1}^{n} \boldsymbol{\zeta}_t),
+\]
+and define the $(k+1) \times 1$ vector
+\[
+\boldsymbol{\xi}_t = \Sigma^{-1/2}\boldsymbol{\zeta}_t,
+\]
+so that $\boldsymbol{\zeta}_t = \Sigma^{1/2}\boldsymbol{\xi}_t$. Using this, we can write
+\begin{align*}
+\bfX_t &= \bfX_{t-1} + \boldsymbol{\eta}_t \\
+&= \bfX_{t-1} + \mathbf{D}_1'\Sigma^{1/2}\boldsymbol{\xi}_t,
+\end{align*}
+where $\mathbf{D}_1'$ is the $k \times (k+1)$ selection matrix such that $\mathbf{D}_1'\boldsymbol{\zeta}_t = \boldsymbol{\eta}_t$. Similarly, we can write
+\begin{align*}
+Y_t &= \bfX_t'\boldsymbol{\beta}_o + \varepsilon_t \\
+&= \bfX_t'\boldsymbol{\beta}_o + \mathbf{D}_2'\Sigma^{1/2}\boldsymbol{\xi}_t,
+\end{align*}
+where $\mathbf{D}_2'$ is the $1 \times (k+1)$ selection vector such that $\mathbf{D}_2'\boldsymbol{\zeta}_t = \varepsilon_t$.
+
+Next, we write
+\[
+\boldsymbol{\mathcal{W}}_n(a_t) = n^{-1/2}\sum_{s=1}^{t} \boldsymbol{\xi}_s, \quad a_t = t/n.
+\]
+With this notation we have
+\[
+n^{-2}\sum_{t=1}^{n} \bfX_t \bfX_t' = n^{-1}\sum_{t=1}^{n} \mathbf{D}_1'\Sigma^{1/2}\boldsymbol{\mathcal{W}}_n(a_t)\boldsymbol{\mathcal{W}}_n(a_t)'\Sigma^{1/2\prime}\mathbf{D}_1.
+\]
+Provided that $\{\boldsymbol{\xi}_t\}$ obeys the multivariate FCLT, we have
+\[
+n^{-2}\sum_{t=1}^{n} \bfX_t \bfX_t' \Rightarrow \mathbf{D}_1'\Sigma^{1/2}\int_0^1 \boldsymbol{\mathcal{W}}(a)\boldsymbol{\mathcal{W}}(a)'\,da\;\Sigma^{1/2\prime}\mathbf{D}_1.
+\]
+We also have
+\begin{align*}
+n^{-1}\sum_{t=1}^{n} \bfX_t \varepsilon_t &= n^{-1}\sum_{t=1}^{n} \bfX_{t-1}\varepsilon_t + n^{-1}\sum_{t=1}^{n} \boldsymbol{\eta}_t \varepsilon_t \\
+&= \sum_{t=1}^{n} \mathbf{D}_1'\Sigma^{1/2}\boldsymbol{\mathcal{W}}_n(a_{t-1})(\boldsymbol{\mathcal{W}}_n(a_t) - \boldsymbol{\mathcal{W}}_n(a_{t-1}))'\Sigma^{1/2\prime}\mathbf{D}_2 \\
+&\quad + n^{-1}\sum_{t=1}^{n} \boldsymbol{\eta}_t \varepsilon_t \\
+&= \mathbf{D}_1'\Sigma^{1/2}\int_0^1 \boldsymbol{\mathcal{W}}_n\,d\boldsymbol{\mathcal{W}}_n'\;\Sigma^{1/2\prime}\mathbf{D}_2 + n^{-1}\sum_{t=1}^{n} \boldsymbol{\eta}_t \varepsilon_t.
+\end{align*}
+The second term, $n^{-1}\sum_{t=1}^{n} \boldsymbol{\eta}_t \varepsilon_t$, can be handled with a law of large numbers. To handle the first term, we apply the following corollary of Theorem 4.1 of DeJong and Davidson (2000).
+
+\begin{theorem}[Heterogeneous mixing stochastic integral convergence]\label{thm:het-mixing-stoch-int}
+Suppose that $\{\boldsymbol{\eta}_t\}$ and $\{\boldsymbol{\varepsilon}_t\}$ are vector-valued mixing sequences each satisfying the conditions of the heterogeneous mixing multivariate FCLT (Theorem~7.30). Suppose also that $\Lambda_n \to \Lambda$, a finite matrix. Then
+\[
+\left(\boldsymbol{\mathcal{U}}_n, \boldsymbol{\mathcal{V}}_n, \int_0^1 \boldsymbol{\mathcal{U}}_n\,d\boldsymbol{\mathcal{V}}_n' - \Lambda_n\right) \Rightarrow \left(\boldsymbol{\mathcal{U}}, \boldsymbol{\mathcal{V}}, \int_0^1 \boldsymbol{\mathcal{U}}\,d\boldsymbol{\mathcal{V}}'\right).
+\]
+\end{theorem}
+
+\begin{proof}
+This is an immediate corollary of Theorem 4.1 of DeJong and Davidson (2000).
+\end{proof}
+
+\begin{theorem}[Cointegrating regression with mixing innovations]\label{thm:coint-mixing}
+Suppose
+\begin{enumerate}[label=(\roman*)]
+\item $\{\boldsymbol{\zeta}_t = (\boldsymbol{\eta}_t', \varepsilon_t)'\}$ is a globally covariance stationary mixing process of $(k+1) \times 1$ vectors with $\phi$ of size $-r/(2r-2)$ or $\alpha$ of size $-r/(r-2)$, $r > 2$, such that $E(\boldsymbol{\zeta}_t) = 0$, $E(|\zeta_{ti}|^r) < \Delta < \infty$, $i = 1, \ldots, k+1$ and for all $t$. Suppose further that $\Sigma \equiv \lim_{n\to\infty} \var(n^{-1/2}\sum_{t=1}^{n} \boldsymbol{\zeta}_t)$ is finite and nonsingular.
+\item $Y_t = \bfX_t'\boldsymbol{\beta}_o + \varepsilon_t$, $t = 1, 2, \ldots$, where $\bfX_t = \bfX_{t-1} + \boldsymbol{\eta}_t$, $t = 1, 2, \ldots$, and $\bfX_0 = \mathbf{0}$, with $\boldsymbol{\beta}_o \in \mathbb{R}^k$.
+\end{enumerate}
+
+Let $\boldsymbol{\mathcal{W}}$ denote a standard multivariate Wiener process, let $\mathbf{D}_1'$ be the $k \times (k+1)$ selection matrix such that $\mathbf{D}_1'\boldsymbol{\zeta}_t = \boldsymbol{\eta}_t$, let $\mathbf{D}_2'$ be the $1 \times (k+1)$ selection vector such that $\mathbf{D}_2'\boldsymbol{\zeta}_t = \varepsilon_t$, let
+\[
+\Lambda \equiv \lim_{n\to\infty} \Sigma^{-1/2}n^{-1}\sum_{t=2}^{n}\sum_{s=1}^{t} E(\boldsymbol{\zeta}_s \boldsymbol{\zeta}_t')\Sigma^{-1/2\prime},
+\]
+and let $\Gamma \equiv \lim_{n\to\infty} n^{-1}\sum_{t=1}^{n} E(\boldsymbol{\zeta}_t \varepsilon_t)$.
+
+Then $\Lambda$ and $\Gamma$ are finite and
+\begin{enumerate}[label=(\alph*)]
+\item $n^{-2}\sum_{t=1}^{n} \bfX_t \bfX_t' \Rightarrow \mathbf{D}_1'\Sigma^{1/2}\left[\int_0^1 \boldsymbol{\mathcal{W}}(a)\boldsymbol{\mathcal{W}}(a)'\,da\right]\Sigma^{1/2\prime}\mathbf{D}_1$.
+\item $n^{-1}\sum_{t=1}^{n} \bfX_t \varepsilon_t \Rightarrow \mathbf{D}_1'\Sigma^{1/2}\left[\int_0^1 \boldsymbol{\mathcal{W}}\,d\boldsymbol{\mathcal{W}}' + \Lambda\right]\Sigma^{1/2\prime}\mathbf{D}_2 + \Gamma$.
+\item
+\begin{align*}
+n(\hat{\boldsymbol{\beta}}_n - \boldsymbol{\beta}_o) &\Rightarrow \left[\mathbf{D}_1'\Sigma^{1/2}\left[\int_0^1 \boldsymbol{\mathcal{W}}(a)\boldsymbol{\mathcal{W}}(a)'\,da\right]\Sigma^{1/2\prime}\mathbf{D}_1\right]^{-1} \\
+&\quad \times \left[\mathbf{D}_1'\Sigma^{1/2}\left[\int_0^1 \boldsymbol{\mathcal{W}}\,d\boldsymbol{\mathcal{W}}' + \Lambda\right]\Sigma^{1/2\prime}\mathbf{D}_2 + \Gamma\right].
+\end{align*}
+\item $\hat{\boldsymbol{\beta}}_n \convp \boldsymbol{\beta}_o$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+The mixing and moment conditions ensure the finiteness of $\Lambda$ and $\Gamma$. $(a)$ Under the mixing conditions of $(i)$ $\{\boldsymbol{\xi}_t = \Sigma^{-1/2}\boldsymbol{\zeta}_t\}$ obeys the heterogeneous mixing multivariate FCLT, so the result follows from the argument preceding the statement of the theorem.
+
+$(b)$ As we wrote above,
+\[
+n^{-1}\sum_{t=1}^{n} \bfX_t \varepsilon_t = \mathbf{D}_1'\Sigma^{1/2}\int_0^1 \boldsymbol{\mathcal{W}}_n\,d\boldsymbol{\mathcal{W}}_n'\;\Sigma^{1/2\prime}\mathbf{D}_2 + n^{-1}\sum_{t=1}^{n} \boldsymbol{\eta}_t \varepsilon_t.
+\]
+Under mixing conditions of $(i)$ $\{\boldsymbol{\eta}_t', \varepsilon_t\}$ obeys the law of large numbers, so $n^{-1}\sum_{t=1}^{n} \boldsymbol{\eta}_t \varepsilon_t \convp \Gamma$. Theorem~7.45 applies given $(i)$ to ensure $\int_0^1 \boldsymbol{\mathcal{W}}_n\,d\boldsymbol{\mathcal{W}}_n' \Rightarrow \int_0^1 \boldsymbol{\mathcal{W}}\,d\boldsymbol{\mathcal{W}}' + \Lambda$. The result follows by Lemma 4.27.
+
+$(c)$ The results of $(a)$ and $(b)$, together with Lemma 4.27 deliver the conclusion, as $n(\hat{\boldsymbol{\beta}}_n - \boldsymbol{\beta}_o) = \left(n^{-2}\sum_{t=1}^{n} \bfX_t \bfX_t'\right)^{-1} n^{-1}\sum_{t=1}^{n} \bfX_t \varepsilon_t$.
+
+$(d)$ $\hat{\boldsymbol{\beta}}_n - \boldsymbol{\beta}_o = n^{-1}\left(n(\hat{\boldsymbol{\beta}}_n - \boldsymbol{\beta}_o)\right) = o(1)O_p(1) = o_p(1)$.
+\end{proof}
+
+Observe that the conclusions here extend those of Exercise 7.44 in a natural way.
+
+The statement of the results can be somewhat simplified by making use of the notion of a \emph{Brownian motion with covariance} $\Sigma$, defined as $\boldsymbol{\mathcal{B}} = \Sigma^{1/2}\boldsymbol{\mathcal{W}}$, denoted $\text{BM}(\Sigma)$, where $\boldsymbol{\mathcal{W}}$ is a standard Wiener process (Brownian motion). With this notation we have
+\begin{align*}
+n(\hat{\boldsymbol{\beta}}_n - \boldsymbol{\beta}_o) &\Rightarrow \left[\mathbf{D}_1'\int_0^1 \boldsymbol{\mathcal{B}}(a)\boldsymbol{\mathcal{B}}(a)'\,da\;\mathbf{D}_1\right]^{-1} \\
+&\quad \times \left[\mathbf{D}_1'\left[\int_0^1 \boldsymbol{\mathcal{B}}\,d\boldsymbol{\mathcal{B}}' + \Sigma^{1/2}\Lambda\Sigma^{1/2\prime}\right]\mathbf{D}_2 + \Gamma\right].
+\end{align*}
+In conclusion $(c)$, we observe the presence of the term
+\[
+\left[\mathbf{D}_1'\int_0^1 \boldsymbol{\mathcal{B}}(a)\boldsymbol{\mathcal{B}}(a)'\,da\;\mathbf{D}_1\right]^{-1}\left(\mathbf{D}_1'\Sigma^{1/2}\Lambda\Sigma^{1/2\prime}\mathbf{D}_2 + \Gamma\right).
+\]
+The component involving $\Lambda$ arises from serial correlation in $\boldsymbol{\zeta}_t$; the component involving $\Gamma$ arises from correlation between $\boldsymbol{\eta}_t$ and $\varepsilon_t$. As in the case of a unit root regression, the effect of serial correlation in the errors is not to induce inconsistency of $\hat{\boldsymbol{\beta}}_n$; instead, the asymptotic distribution exhibits a bias. Similarly, the correlation between the regressors $\bfX_t$ and the errors $\varepsilon_t$ also does not result in inconsistency of $\hat{\boldsymbol{\beta}}_n$, as it does in the results of previous chapters. Instead, the effect is again the more modest effect of an asymptotic bias in $\hat{\boldsymbol{\beta}}_n$. As in the case of regression with a unit root, we note that even when $\Lambda$ and $\Gamma$ vanish, the asymptotic distribution still is not centered around zero, due to the presence of correlation between $\int_0^1 \boldsymbol{\mathcal{B}}(a)\boldsymbol{\mathcal{B}}(a)'\,da$ and $\int_0^1 \boldsymbol{\mathcal{B}}\,d\boldsymbol{\mathcal{B}}'$. Asymptotic bias thus remains, although inconsistency does not arise.
+
+The least squares estimator $\hat{\boldsymbol{\beta}}_n$ is only the simplest of a fascinating array of estimators proposed for cointegrating regressions, and the results depend heavily on the placement of the unit roots and the nature of the cointegrating relationships. We cannot address these issues here; rather, our intent is that the material presented will provide basic understanding and useful tools for the reader interested in delving more deeply into that literature. For further reading, the reader is directed to the works of Hansen (1992a,b), Johansen (1988, 1991, 1996), Park and Phillips (1988, 1989), Phillips (1987), Saikkonen (1992), Sims, Stock, and Watson (1990), and Wooldridge (1994).
+
+\section*{References}
+
+\begin{description}
+\item Abadir, K.\ M.\ (1995). ``The joint density of two functionals of a Brownian motion.'' \emph{Mathematical Methods of Statistics}, 4, 449--462.
+
+\item Bachelier, L.\ B.\ J.\ A.\ (1900). \emph{Th\'{e}orie de la sp\'{e}culation}, Th\`{e}se--Facult\'{e} des sciences de Paris. Gauthier-Villars, Paris.
+
+\item Billingsley, P.\ (1968). \emph{Convergence of Probability Measures}. Wiley, New York.
+
+\item[] \hspace{2em} (1979). \emph{Probability and Measure}. Wiley, New York.
+
+\item Breiman, L.\ (1992). \emph{Probability}. Siam, Philadelphia.
+
+\item Brze\'{z}niak, Z.\ and T.\ Zastawniak (1999). \emph{Basic Stochastic Processes: A Course Through Exercises}. Springer-Verlag, New York.
+
+\item Chan, N.\ H.\ and C.\ Z.\ Wei (1988). ``Limiting distributions of least squares estimates of unstable autoregressive processes.'' \emph{Annals of Statistics}, 16, 367--401.
+
+\item Davidson, J.\ (1994). \emph{Stochastic Limit Theory}. Oxford University Press, New York.
+
+\item[] \hspace{2em} (1998). ``When is a time series $I(0)$? Evaluating the memory properties of nonlinear dynamic models.'' Cardiff University Discussion Paper.
+
+\item DeJong R.\ M.\ and J.\ Davidson (2000). ``The functional central limit theorem and weak convergence to stochastic integrals I: Weakly dependent processes,'' forthcoming in \emph{Econometric Theory}, 16.
+
+\item Dickey, D.\ A.\ and W.\ A.\ Fuller (1979). ``Distribution of the estimators for autoregressive time series with a unit root.'' \emph{Journal of the American Statistical Association}, 74, 427--431.
+
+\item[] \hspace{2em} and \rule{2em}{0.4pt} (1981). ``Likelihood ratio statistics for autoregressive time series with a unit root.'' \emph{Econometrica}, 49, 1057--1072.
+
+\item Donsker, M.\ D.\ (1951). ``An invariance principle for certain probability limit theorems.'' \emph{Memoirs of the American Mathematical Society}, 6, 1--12.
+
+\item Elliott, G., T.\ J.\ Rothenberg and J.\ H.\ Stock (1996). ``Efficient tests for an autoregressive unit root.'' \emph{Econometrica}, 64, 813--836.
+
+\item Engle, R.\ F.\ and C.\ W.\ J.\ Granger (1987). ``Cointegration and error correction: representation, estimation and testing.'' \emph{Econometrica}, 55, 251--276.
+
+\item Granger, C.\ W.\ J.\ (1981). ``Some properties of time series data and their use in econometric model specification.'' \emph{Journal of Econometrics}, 16, 121--130.
+
+\item[] \hspace{2em} and P.\ Newbold (1974). ``Spurious regressions in econometrics.'' \emph{Journal of Econometrics}, 2, 111--120.
+
+\item Hall, P.\ (1977). ``Martingale invariance principles.'' \emph{Annals of Probability}, 5, 875--877.
+
+\item Hamilton, J.\ D.\ (1994). \emph{Time Series Analysis}, Princeton University Press, Princeton.
+
+\item Hansen, B.\ E.\ (1992a). ``Efficient estimation and testing of cointegrating vectors in the presence of deterministic trends.'' \emph{Journal of Econometrics}, 53, 87--121.
+
+\item[] \hspace{2em} (1992b). ``Heteroskedastic cointegration.'' \emph{Journal of Econometrics}, 54, 139--158.
+
+\item Ito, K.\ (1944). ``Stochastic integral.'' \emph{Proc.\ Imperial Acad.\ Tokyo}, 20, 519--524.
+
+\item Johansen, S.\ (1988). ``Statistical analysis of cointegration vectors.'' \emph{Journal of Economic Dynamics and Control}, 12, 231--254.
+
+\item[] \hspace{2em} (1991). ``Estimation and hypothesis testing of cointegration vectors in Gaussian vector autoregressive models.'' \emph{Econometrica}, 59, 1551--1580.
+
+\item[] \hspace{2em} (1996). \emph{Likelihood-Based Inference in Cointegrated Vector Autoregressive Models}. 2nd ed. Oxford University Press, Oxford.
+
+\item McLeish, D.\ L.\ (1974). ``Dependent central limit theorems and invariance principles.'' \emph{Annals of Probability}, 2, 620--628.
+
+\item Park, J.\ Y.\ and P.\ C.\ B.\ Phillips (1988). ``Statistical inference in regressions with integrated processes: Part 1.'' \emph{Econometric Theory}, 4, 468--497.
+
+\item[] \hspace{2em} and \rule{2em}{0.4pt} (1989). ``Statistical inference in regressions with integrated processes: Part 2.'' \emph{Econometric Theory}, 5, 95--132.
+
+\item Phillips, P.\ C.\ B.\ (1986). ``Understanding spurious regressions in econometrics.'' \emph{Journal of Econometrics}, 33, 311--340.
+
+\item[] \hspace{2em} (1987). ``Time series regression with a unit root.'' \emph{Econometrica}, 55, 277--301.
+
+\item[] \hspace{2em} (1991). ``Optimal inference in cointegrated systems.'' \emph{Econometrica}, 59, 283--306.
+
+\item[] \hspace{2em} and S.\ N.\ Durlauf (1986). ``Multiple time series regression with integrated processes.'' \emph{Review of Economic Studies}, 53, 473--496.
+
+\item[] \hspace{2em} and Z.\ Xiao (1998). ``A primer on unit root testing.'' Cowles Foundation Discussion Papers No.\ 1189.
+
+\item Saikkonen, P.\ (1992). ``Estimation and testing of cointegrated systems by an autoregressive approximation.'' \emph{Econometric Theory}, 8, 1--27.
+
+\item Scott, D.\ J.\ (1973). ``Central limit theorems for martingales and for processes with stationary increments using a Skorokhod representation approach.'' \emph{Advances in Applied Probability}, 5, 119--137.
+
+\item Sims, C.\ A., J.\ H.\ Stock, and M.\ W.\ Watson (1990). ``Inference in linear time series models with some unit roots.'' \emph{Econometrica}, 58, 113--144.
+
+\item Stock, J.\ H.\ (1994). ``Unit roots, structural breaks and trends.'' In \emph{Handbook of Econometrics}, vol.\ 4, R.\ F.\ Engle and D.\ McFadden eds., pp.\ 2739--2841. North-Holland, Amsterdam.
+
+\item[] \hspace{2em} (1999). ``A class of tests for integration and cointegration.'' In \emph{Cointegration, Causality, and Forecasting: A Festschrift in Honour of Clive W.~J.\ Granger}, R.\ F.\ Engle and H.\ White eds., pp.\ 135--167. Oxford University Press, Oxford.
+
+\item[] \hspace{2em} and M.\ W.\ Watson (1993). ``A simple estimator of cointegrating vectors in higher order integrated systems.'' \emph{Econometrica}, 61, 783--820.
+
+\item Tanaka, K.\ (1996). \emph{Time Series Analysis: Nonstationary and Noninvertible Distribution Theory}. Wiley, New York.
+
+\item Watson, M.\ W.\ (1994). ``Vector autoregressions and cointegration.'' In \emph{Handbook of Econometrics}, vol.\ 4, R.\ F.\ Engle and D.\ McFadden eds., pp.\ 2843--2915. North-Holland, Amsterdam.
+
+\item White, J.\ S.\ (1958). ``The limiting distribution of the serial correlation coefficient in the explosive case.'' \emph{Annals of Mathematical Statistics}, 29, 1188--1197.
+
+\item Wooldridge, J.\ M.\ (1994). ``Estimation and inference for dependent processes.'' In \emph{Handbook of Econometrics}, vol.\ 4, R.\ F.\ Engle and D.\ McFadden eds., pp.\ 2639--2738. North-Holland, Amsterdam.
+
+\item[] \hspace{2em} and H.\ White (1988). ``Some invariance principles and central limit theorems for dependent heterogeneous processes.'' \emph{Econometric Theory}, 4, 210--230.
+
+\item Yule, G.\ U.\ (1926). ``Why do we sometimes get nonsense-correlations between time series?'' \emph{Journal of the Royal Statistical Society}, 89, 1--64.
+\end{description}

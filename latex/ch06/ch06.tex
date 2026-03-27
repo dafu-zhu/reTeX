@@ -1,0 +1,923 @@
+% ch06.tex — Chapter 6: Estimating Asymptotic Covariance Matrices
+\chapter{Estimating Asymptotic Covariance Matrices}\label{ch:covariance-matrices}
+
+In all the preceding chapters, we defined $\bfV_n \equiv \var(n^{-1/2}\bfX'\bfeps)$ or $\bfV_n \equiv \var(n^{-1/2}\bfZ'\bfeps)$ and assumed that a consistent estimator $\hat{\bfV}_n$ for $\bfV_n$ is available. In this chapter we obtain conditions that allow us to find convenient consistent estimators $\hat{\bfV}_n$. Because the theory of estimating $\var(n^{-1/2}\bfX'\bfeps)$ is identical to that of estimating $\var(n^{-1/2}\bfZ'\bfeps)$, we consider only the latter. Further, because the optimal choice for $\bfP_n$ is $\bfV_n^{-1}$, as we saw in Chapter 4, conditions that permit consistent estimation of $\bfV_n$ will also permit consistent estimation of $\bfP_n = \bfV_n^{-1}$ by $\hat{\bfP}_n = \hat{\bfV}_n^{-1}$.
+
+\section{General Structure of \texorpdfstring{$\bfV_n$}{Vn}}\label{sec:general-structure}
+
+Before proceeding to look at special cases, it is helpful to examine the general form of $\bfV_n$. We have
+\[
+  \bfV_n \equiv \var(n^{-1/2}\bfZ'\bfeps) = E(\bfZ'\bfeps\bfeps'\bfZ/n),
+\]
+because we assume that $E(n^{-1/2}\bfZ'\bfeps) = \bfzero$. In terms of individual observations, this can be expressed as
+\[
+  \bfV_n = E\left(n^{-1}\sum_{t=1}^{n}\sum_{\tau=1}^{n}\bfZ_t\eps_t\eps_\tau'\bfZ_\tau'\right).
+\]
+
+An equivalent way of writing the summation on the right is helpful in obtaining further insight. We can also write
+\begin{align*}
+  \bfV_n &= n^{-1}\sum_{t=1}^{n}E(\bfZ_t\eps_t\eps_t'\bfZ_t') \\
+    &\quad + n^{-1}\sum_{\tau=1}^{n-1}\sum_{t=\tau+1}^{n}
+      E(\bfZ_t\eps_t\eps_{t-\tau}'\bfZ_{t-\tau}' + \bfZ_{t-\tau}\eps_{t-\tau}\eps_t'\bfZ_t') \\
+    &= n^{-1}\sum_{t=1}^{n}\var(\bfZ_t\eps_t) \\
+    &\quad + n^{-1}\sum_{\tau=1}^{n-1}\sum_{t=\tau+1}^{n}
+      \Cov(\bfZ_t\eps_t,\bfZ_{t-\tau}\eps_{t-\tau}) + \Cov(\bfZ_{t-\tau}\eps_{t-\tau},\bfZ_t\eps_t).
+\end{align*}
+
+The last expression reveals that $\bfV_n$ is the average of the variances of $\bfZ_t\eps_t$ plus a term that takes into account the covariances between $\bfZ_t\eps_t$ and $\bfZ_{t-\tau}\eps_{t-\tau}$ for all $t$ and $\tau$. We consider three important special cases.
+
+\emph{Case 1}. The first case we consider occurs when $\{\bfZ_t\eps_t\}$ is uncorrelated, so that
+\[
+  \Cov(\bfZ_t\eps_t,\bfZ_{t-\tau}\eps_{t-\tau}) = \Cov(\bfZ_{t-\tau}\eps_{t-\tau},\bfZ_t\eps_t)' = \bfzero
+\]
+for all $t \neq \tau$, so
+\[
+  \bfV_n = n^{-1}\sum_{t=1}^{n}E(\bfZ_t\eps_t\eps_t'\bfZ_t').
+\]
+This occurs when $\{(\bfZ_t',\eps_t)\}$ is an independent sequence or when $\{\bfZ_t\eps_t,\mathcal{F}_t\}$ is a martingale difference sequence for some adapted $\sigma$-fields $\mathcal{F}_t$.
+
+\emph{Case 2}. The next case we consider occurs when $\{\bfZ_t\eps_t\}$ is ``finitely correlated,'' so that
+\[
+  \Cov(\bfZ_t\eps_t,\bfZ_{t-\tau}\eps_{t-\tau}) = \Cov(\bfZ_{t-\tau}\eps_{t-\tau},\bfZ_t\eps_t)' = \bfzero
+\]
+for all $\tau > m$, $1 < m < \infty$, so
+\begin{align*}
+  \bfV_n &= n^{-1}\sum_{t=1}^{n}E(\bfZ_t\eps_t\eps_t'\bfZ_t') \\
+    &\quad + n^{-1}\sum_{\tau=1}^{m}\sum_{t=\tau+1}^{n}
+      E(\bfZ_t\eps_t\eps_{t-\tau}'\bfZ_{t-\tau}') + E(\bfZ_{t-\tau}\eps_{t-\tau}\eps_t'\bfZ_t').
+\end{align*}
+
+This case arises when $E(\bfZ_t\eps_t|\mathcal{F}_{t-\tau}) = \bfzero$ for some $\tau$, $1 < \tau < \infty$ and adapted $\sigma$-fields $\mathcal{F}_t$. A simple example of this case arises when $\bfZ_t$ is nonstochastic and $\eps_t$ is a scalar MA(1) process, i.e.,
+\[
+  \eps_t = \alpha v_t + v_{t-1},
+\]
+where $\{v_t\}$ is an i.i.d.\ sequence with $E(v_t)=0$. Setting $\mathcal{F}_t = \sigma(\ldots,\eps_t)$, we readily verify that $E(\bfZ_t\eps_t|\mathcal{F}_{t-\tau}) = \bfZ_t E(\eps_t|\mathcal{F}_{t-\tau}) = \bfzero$ for $\tau \geq 2$, implying that
+\begin{align*}
+  \bfV_n &= n^{-1}\sum_{t=1}^{n}E(\bfZ_t\eps_t\eps_t\bfZ_t') \\
+    &\quad + n^{-1}\sum_{t=2}^{n}E(\bfZ_t\eps_t\eps_{t-1}\bfZ_{t-1}') + E(\bfZ_{t-1}\eps_{t-1}\eps_t\bfZ_t').
+\end{align*}
+
+\emph{Case 3}. The last case that we consider occurs when $\{\bfZ_t\eps_t\}$ is an asymptotically uncorrelated sequence so that
+\[
+  \Cov(\bfZ_t\eps_t,\bfZ_{t-\tau}\eps_{t-\tau}) = \Cov(\bfZ_{t-\tau}\eps_{t-\tau},\bfZ_t\eps_t)' \to \bfzero \quad \text{as } \tau \to \infty.
+\]
+Rather than making direct use of the assumption that $\{(\bfZ_t',\eps_t)\}$ is asymptotically uncorrelated, we shall assume that $\{(\bfZ_t',\eps_t)\}$ is a mixing sequence, which will suffice for asymptotic uncorrelatedness.
+
+In what follows, we typically assume that nothing more is known about the correlation structure of $\{\bfZ_t\eps_t\}$ beyond that it falls in one of these three cases. If additional knowledge were available, then it could be used to estimate $\bfV_n$; more importantly, however, it could be used to obtain efficient estimators as discussed in Chapter 4. The analysis of this chapter is thus relevant in the common situation in which this knowledge is absent.
+
+\section{Case 1: \texorpdfstring{$\{\bfZ_t\eps_t\}$}{Zt et} Uncorrelated}\label{sec:case1}
+
+In this section, we treat the case in which
+\[
+  \bfV_n = n^{-1}\sum_{t=1}^{n}E(\bfZ_t\eps_t\eps_t'\bfZ_t').
+\]
+A special case of major importance arises when
+\[
+  E(\eps_t\eps_t'|\bfZ_t) = \sigma_o^2\bfI,
+\]
+so that
+\[
+  \bfV_n = n^{-1}\sum_{t=1}^{n}\sigma_o^2 E(\bfZ_t\bfZ_t') = \sigma_o^2\mathbf{L}_n.
+\]
+Our first result applies to this case.
+
+\begin{theorem}\label{thm:6.1}
+Suppose $\bfV_n = \sigma_o^2\mathbf{L}_n$, where $\sigma_o^2 < \infty$ and $\mathbf{L}_n$ is $O(1)$. If there exists $\tilde{\sigma}_n^2$ such that $\tilde{\sigma}_n^2 \convp \sigma_o^2$ and if $\bfZ'\bfZ/n - \mathbf{L}_n \convp \bfzero$, then $\hat{\bfV}_n \equiv \tilde{\sigma}_n^2\bfZ'\bfZ/n$ is such that $\hat{\bfV}_n - \bfV_n \convp \bfzero$.
+\end{theorem}
+
+\begin{proof}
+Immediate from Proposition 2.30.
+\end{proof}
+
+\begin{exercises}
+\item\label{ex:6.2} \textit{Using Exercise 3.79, find conditions that ensure that $\tilde{\sigma}_n^2 \convp \sigma_o^2$ and $\bfZ'\bfZ/n - \mathbf{L}_n \convp \bfzero$, where $\tilde{\sigma}_n^2 = (\bfY - \bfX\bar{\bfbeta}_n)'(\bfY - \bfX\bar{\bfbeta}_n)/(np)$.}
+\end{exercises}
+
+Conditions under which $\tilde{\sigma}_n^2 \to \sigma_o^2$ and $\bfZ'\bfZ/n - \mathbf{L}_n \convp \bfzero$ are easily found from the results of Chapter~3.
+
+In the remainder of this section we consider the cases in which the sequence $\{(\bfZ_t',\bfX_t',\eps_t)\}$ is stationary or $\{(\bfZ_t',\bfX_t',\eps_t)\}$ is a heterogeneous sequence. We invoke the martingale difference assumption in each case, which allows results for independent observations to follow as direct corollaries.
+
+The results that we obtain next are motivated by the following considerations. We are interested in estimating
+\[
+  \bfV_n = n^{-1}\sum_{t=1}^{n}E(\bfZ_t\eps_t\eps_t'\bfZ_t').
+\]
+If both $\bfZ_t$ and $\eps_t$ were observable, a consistent estimator is easily available from the results of Chapter~3, say,
+\[
+  \tilde{\bfV}_n \equiv n^{-1}\sum_{t=1}^{n}\bfZ_t\eps_t\eps_t'\bfZ_t'.
+\]
+For example, if $\{(\bfZ_t',\eps_t)\}$ were a stationary ergodic sequence, then as long as the elements of $\bfZ_t\eps_t\eps_t'\bfZ_t'$ have finite expected absolute value, it follows from the ergodic theorem that $\tilde{\bfV}_n - \bfV_n \convas \bfzero$. Of course, $\eps_t$ is not observable. However, it can be estimated by
+\[
+  \tilde{\eps}_t \equiv \bfY_t - \bfX_t'\tilde{\bfbeta}_n,
+\]
+where $\tilde{\bfbeta}_n$ is consistent for $\bfbeta_o$. This leads us to consider estimators of the form
+\[
+  \hat{\bfV}_n \equiv n^{-1}\sum_{t=1}^{n}\bfZ_t\tilde{\eps}_t\tilde{\eps}_t'\bfZ_t'.
+\]
+As we prove next, replacing $\eps_t$ with $\tilde{\eps}_t$ makes no difference asymptotically under general conditions, so $\hat{\bfV}_n - \bfV_n \convas \bfzero$. These conditions are precisely specified for stationary sequences by the next result.
+
+\begin{theorem}\label{thm:6.3}
+Suppose that
+\begin{enumerate}[label=(\roman*)]
+  \item $\bfY_t = \bfX_t'\bfbeta_o + \eps_t$, \quad $t = 1,2,\ldots$\,, \quad $\bfbeta_o \in \mathbb{R}^k$;
+  \item $\{(\bfZ_t',\bfX_t',\eps_t)\}$ is a stationary ergodic sequence;
+  \item\begin{enumerate}[label=(\alph*)]
+    \item $\{\bfZ_t\eps_t,\mathcal{F}_t\}$ is a martingale difference sequence;
+    \item $E|Z_{thi}\eps_{th}|^2 < \infty$, $h = 1,\ldots,p$, $i = 1,\ldots,l$;
+    \item $\bfV_n \equiv \var(n^{-1/2}\bfZ'\bfeps) = \var(\bfZ_t\eps_t) \equiv \bfV$ is positive definite;
+  \end{enumerate}
+  \item\begin{enumerate}[label=(\alph*)]
+    \item $E|Z_{thi}X_{thj}|^2 < \infty$, $h = 1,\ldots,p$, $i = 1,\ldots,l$, $j = 1,\ldots,k$;
+    \item $\bfQ \equiv E(\bfZ_t\bfX_t')$ has full column rank;
+    \item $\hat{\bfP}_n \convp \bfP$, finite, symmetric, and positive definite.
+  \end{enumerate}
+\end{enumerate}
+Then $\hat{\bfV}_n - \bfV \convp \bfzero$, and $\hat{\bfV}_n^{-1} - \bfV^{-1} \convp \bfzero$.
+\end{theorem}
+
+\begin{proof}
+By definition and assumption (\textit{iii.a}),
+\[
+  \hat{\bfV}_n - \bfV = n^{-1}\sum_{t=1}^{n}\bfZ_t\tilde{\eps}_t\tilde{\eps}_t'\bfZ_t' - E(\bfZ_t\eps_t\eps_t'\bfZ_t').
+\]
+Now $\tilde{\eps}_t \equiv \bfY_t - \bfX_t'\tilde{\bfbeta}_n = \bfY_t - \bfX_t'\bfbeta_o - \bfX_t'(\tilde{\bfbeta}_n - \bfbeta_o) = \eps_t - \bfX_t'(\tilde{\bfbeta}_n - \bfbeta_o)$, given assumption $(i)$. Substituting for $\tilde{\eps}_t$, we have
+\begin{align*}
+  \hat{\bfV}_n - \bfV &= n^{-1}\sum_{t=1}^{n}\bfZ_t(\eps_t - \bfX_t'(\tilde{\bfbeta}_n - \bfbeta_o))(\eps_t - \bfX_t'(\tilde{\bfbeta}_n - \bfbeta_o))'\bfZ_t' \\
+    &\qquad - E(\bfZ_t\eps_t\eps_t'\bfZ_t') \\
+  &= n^{-1}\sum_{t=1}^{n}\bfZ_t\eps_t\eps_t'\bfZ_t' - E(\bfZ_t\eps_t\eps_t'\bfZ_t') \\
+  &\quad - n^{-1}\sum_{t=1}^{n}\bfZ_t\bfX_t'(\tilde{\bfbeta}_n - \bfbeta_o)\eps_t'\bfZ_t' \\
+  &\quad - n^{-1}\sum_{t=1}^{n}\bfZ_t\eps_t(\tilde{\bfbeta}_n - \bfbeta_o)'\bfX_t\bfZ_t' \\
+  &\quad + n^{-1}\sum_{t=1}^{n}\bfZ_t\bfX_t'(\tilde{\bfbeta}_n - \bfbeta_o)(\tilde{\bfbeta}_n - \bfbeta_o)'\bfX_t\bfZ_t'.
+\end{align*}
+Given $(ii)$ and $(iii.b)$, the ergodic theorem ensures that $n^{-1}\sum_{t=1}^{n}\bfZ_t\eps_t\eps_t'\bfZ_t' - E(\bfZ_t\eps_t\eps_t'\bfZ_t') \convas \bfzero$, and therefore also vanishes in probability. It suffices that the remaining terms also vanish in probability, by Exercise~2.35.
+
+To analyze the remaining terms, recall that $\vect(\bfA\bfB\bfC) = (\bfC'\otimes\bfA)\vect(\bfB)$, and apply this to the second summation with $\bfA$, $\bfB$, and $\bfC$ chosen to give
+\[
+  \vect\left(n^{-1}\sum_{t=1}^{n}\bfZ_t\bfX_t'(\tilde{\bfbeta}_n - \bfbeta_o)\eps_t'\bfZ_t'\right) = n^{-1}\sum_{t=1}^{n}\vect\left(\bfZ_t\bfX_t'(\tilde{\bfbeta}_n - \bfbeta_o)\eps_t'\bfZ_t'\right)
+  = n^{-1}\sum_{t=1}^{n}(\bfZ_t\eps_t \otimes \bfZ_t\bfX_t')\vect(\tilde{\bfbeta}_n - \bfbeta_o).
+\]
+The conditions of the theorem ensure that $\tilde{\bfbeta}_n \convp \bfbeta_o$ by Exercise~3.38, so it suffices that $n^{-1}\sum_{t=1}^{n}(\bfZ_t\eps_t \otimes \bfZ_t\bfX_t')$ is $O_p(1)$ by Corollary 2.36. But this is guaranteed by the ergodic theorem, provided that $E(\bfZ_t\eps_t \otimes \bfZ_t\bfX_t')$ is finite. Conditions $(iii.b)$ and $(iv.a)$ ensure this, as can be verified by repeated application of the Cauchy-Schwarz inequality.
+
+Thus,
+\[
+  n^{-1}\sum_{t=1}^{n}(\bfZ_t\eps_t \otimes \bfZ_t\bfX_t')\vect(\tilde{\bfbeta}_n - \bfbeta_o) \convp \bfzero.
+\]
+
+Similarly, apply $\vect(\bfA\bfB\bfC) = (\bfC'\otimes\bfA)\vect(\bfB)$ to obtain
+\begin{align*}
+  \vect\left(n^{-1}\sum_{t=1}^{n}\bfZ_t\bfX_t'(\tilde{\bfbeta}_n - \bfbeta_o)(\tilde{\bfbeta}_n - \bfbeta_o)'\bfX_t\bfZ_t'\right)
+  &= n^{-1}\sum_{t=1}^{n}(\bfZ_t\bfX_t' \otimes \bfZ_t\bfX_t')\vect\left((\tilde{\bfbeta}_n - \bfbeta_o)(\tilde{\bfbeta}_n - \bfbeta_o)'\right).
+\end{align*}
+Again we have $\tilde{\bfbeta}_n - \bfbeta_o \convp \bfzero$, so this term vanishes provided that $E(\bfZ_t\bfX_t' \otimes \bfZ_t\bfX_t')$ is finite. This is true given $(iv.a)$, as can be verified by Cauchy-Schwarz. The desired result $\hat{\bfV}_n - \bfV \convp \bfzero$ now follows by Exercise~2.35. As $\bfV$ is positive definite given $(iii.c)$, it follows from Proposition~2.30 that $\hat{\bfV}_n^{-1} - \bfV^{-1} \convp \bfzero$.
+\end{proof}
+
+Comparing the conditions of this result with those of Theorem~5.25, we see that we have strengthened moment condition $(iv.a)$ and that this, together with the other assumptions, implies assumption $(v)$ of Theorem~5.25. An immediate corollary of this fact is that the conclusions of Theorem~5.25 hold under the conditions of Theorem~6.3.
+
+\begin{corollary}\label{cor:6.4}
+Suppose conditions $(i)$--$(iv)$ of Theorem~\ref{thm:6.3} hold. Then
+\[
+  \bfD^{-1/2}\sqrt{n}(\tilde{\bfbeta}_n - \bfbeta_o) \xrightarrow{A} N(\bfzero,\bfI)
+\]
+where
+\[
+  \bfD \equiv (\bfQ'\bfP\bfQ)^{-1}\bfQ'\bfP\bfV\bfP\bfQ(\bfQ'\bfP\bfQ)^{-1}.
+\]
+Further, $\hat{\bfD}_n - \bfD \convp \bfzero$, where
+\[
+  \hat{\bfD}_n = (\bfX'\bfZ\hat{\bfP}_n\bfZ'\bfX/n^2)^{-1}(\bfX'\bfZ/n)\hat{\bfP}_n\hat{\bfV}_n\hat{\bfP}_n(\bfZ'\bfX/n)(\bfX'\bfZ\hat{\bfP}_n\bfZ'\bfX/n^2)^{-1}.
+\]
+\end{corollary}
+
+\begin{proof}
+Immediate from Theorem~5.25 and Theorem~\ref{thm:6.3}.
+\end{proof}
+
+The usefulness of this result arises in situations in which it is inappropriate to assume that
+\[
+  E(\eps_t\eps_t'|\bfZ_t) = \sigma_o^2\bfI,
+\]
+that is, when the errors $\eps_t$ exhibit heteroskedasticity of unknown form. The present results thus provide an instrumental variables analog of the heteroskedasticity-consistent covariance matrix estimator of White (1980).
+
+The results of Theorem~\ref{thm:6.3} and Corollary~\ref{cor:6.4} suggest a simple two-step procedure for obtaining the efficient estimator of Proposition~4.45, i.e.,
+\[
+  \bfbeta_n^* = (\bfX'\bfZ\hat{\bfV}_n^{-1}\bfZ'\bfX)^{-1}\bfX'\bfZ\hat{\bfV}_n^{-1}\bfZ'\bfY.
+\]
+First, one obtains a consistent estimator for $\bfbeta_o$, for example, the 2SLS estimator,
+\[
+  \tilde{\bfbeta}_n = (\bfX'\bfZ(\bfZ'\bfZ)^{-1}\bfZ'\bfX)^{-1}\bfX'\bfZ(\bfZ'\bfZ)^{-1}\bfZ'\bfY,
+\]
+and forms
+\[
+  \hat{\bfV}_n = n^{-1}\sum_{t=1}^{n}\bfZ_t\tilde{\eps}_t\tilde{\eps}_t'\bfZ_t',
+\]
+where $\tilde{\eps}_t \equiv \bfY_t - \bfX_t'\tilde{\bfbeta}_n$. Second, this estimator is then used to compute the efficient estimator $\bfbeta_n^*$. Because $\bfbeta_n^*$ can be computed in this way, it is called the \emph{two-stage instrumental variables} (2SIV) estimator, introduced by White (1982). Formally, we have the following result.
+
+\begin{corollary}\label{cor:6.5}
+Suppose that
+\begin{enumerate}[label=(\roman*)]
+  \item $\bfY_t = \bfX_t'\bfbeta_o + \eps_t$, \quad $t = 1,2,\ldots$\,, \quad $\bfbeta_o \in \mathbb{R}^k$;
+  \item $\{(\bfZ_t',\bfX_t',\eps_t)\}$ is a stationary ergodic sequence;
+  \item\begin{enumerate}[label=(\alph*)]
+    \item $\{\bfZ_t\eps_t,\mathcal{F}_t\}$ is a martingale difference sequence;
+    \item $E|Z_{thi}\eps_{th}|^2 < \infty$, $h = 1,\ldots,p$, $i = 1,\ldots,l$;
+    \item $\bfV_n \equiv \var(n^{-1/2}\bfZ'\bfeps) = \var(\bfZ_t\eps_t) \equiv \bfV$ is positive definite;
+  \end{enumerate}
+  \item\begin{enumerate}[label=(\alph*)]
+    \item $E|Z_{thi}X_{thj}|^2 < \infty$, $h = 1,\ldots,p$, $i = 1,\ldots,l$, $j = 1,\ldots,k$, and $E|\bfZ_{thi}|^2 < \infty$, $h = 1,\ldots,p$, $i = 1,\ldots,l$;
+    \item $\bfQ \equiv E(\bfZ_t\bfX_t')$ has full column rank;
+    \item $\mathbf{L} \equiv E(\bfZ_t\bfZ_t')$ is positive definite.
+  \end{enumerate}
+\end{enumerate}
+Define
+\[
+  \hat{\bfV}_n \equiv n^{-1}\sum_{t=1}^{n}\bfZ_t\tilde{\eps}_t\tilde{\eps}_t'\bfZ_t',
+\]
+where $\tilde{\eps}_t \equiv \bfY_t - \bfX_t'\tilde{\bfbeta}_n$, $\tilde{\bfbeta}_n \equiv (\bfX'\bfZ(\bfZ'\bfZ)^{-1}\bfZ'\bfX)^{-1}\bfX'\bfZ(\bfZ'\bfZ)^{-1}\bfZ'\bfY$, and define
+\[
+  \bfbeta_n^* \equiv (\bfX'\bfZ\hat{\bfV}_n^{-1}\bfZ'\bfX)^{-1}\bfX'\bfZ\hat{\bfV}_n^{-1}\bfZ'\bfY.
+\]
+Then $\bfD^{-1/2}\sqrt{n}(\bfbeta_n^* - \bfbeta_o) \xrightarrow{A} N(\bfzero,\bfI)$, where
+\[
+  \bfD = (\bfQ'\bfV^{-1}\bfQ)^{-1}.
+\]
+Further, $\hat{\bfD}_n - \bfD \convp \bfzero$, where
+\[
+  \hat{\bfD}_n = (\bfX'\bfZ\hat{\bfV}_n^{-1}\bfZ'\bfX/n^2)^{-1}.
+\]
+\end{corollary}
+
+\begin{proof}
+Conditions $(i)$--$(iv)$ ensure that Theorem~\ref{thm:6.3} holds for $\tilde{\bfbeta}_n$. (Note that the second part of $(iv.a)$ is redundant if $\bfX_t$ contains a constant.) Next set $\hat{\bfP}_n = \hat{\bfV}_n^{-1}$ in Corollary~\ref{cor:6.4}. Then $\bfP = \bfV^{-1}$, and the result follows.
+\end{proof}
+
+This result is the most explicit asymptotic normality result obtained so far, because all of the conditions are stated directly in terms of the stochastic properties of the instrumental variables, regressors, and errors. The remainder of the asymptotic normality results stated in this chapter will also share this convenient feature.
+
+We note that results for the OLS estimator follow as a special case upon setting $\bfZ_t = \bfX_t$ and that results for the i.i.d.\ case follow as immediate corollaries, since an i.i.d.\ sequence is a stationary ergodic martingale difference sequence when $E(\bfZ_t\eps_t) = \bfzero$.
+
+Analogous results hold for heterogeneous sequences. Because the proofs are completely parallel to those just given, they are left as an exercise for the reader.
+
+\begin{exercises}
+\item\label{ex:6.6} \textit{Prove the following result. Suppose}
+\begin{enumerate}[label=(\roman*)]
+  \item $\bfY_t = \bfX_t'\bfbeta_0 + \eps_t$, \quad $t = 1,2,\ldots$\,, \quad $\bfbeta_o \in \mathbb{R}^k$;
+  \item $\{(\bfZ_t',\bfX_t',\eps_t)\}$ \textit{is a mixing sequence with either $\phi$ of size $-r/(2r-1)$, $r>1$, or $\alpha$ of size $-r/(r-1)$, $r>1$;}
+  \item\begin{enumerate}[label=(\alph*)]
+    \item $\{\bfZ_t\eps_t,\mathcal{F}_t\}$ \textit{is a martingale difference sequence;}
+    \item $E|Z_{thi}\eps_{th}|^{2(r+\delta)} < \Delta < \infty$ \textit{for some $\delta > 0$ and all $h = 1,\ldots,p$, $i = 1,\ldots,l$, and $t$;}
+    \item $\bfV_n \equiv \var(n^{-1/2}\bfZ'\bfeps)$ \textit{is uniformly positive definite;}
+  \end{enumerate}
+  \item\begin{enumerate}[label=(\alph*)]
+    \item $E|Z_{thi}X_{thj}|^{2(r+\delta)} < \Delta < \infty$ \textit{for some $\delta > 0$ and all $h = 1,\ldots,p$, $i = 1,\ldots,l$, $j = 1,\ldots,k$, and $t$;}
+    \item $\bfQ_n \equiv E(\bfZ'\bfX/n)$ \textit{has uniformly full column rank;}
+    \item $\hat{\bfP}_n - \bfP_n \convp \bfzero$, \textit{where $\bfP_n = O(1)$ is symmetric and uniformly positive definite.}
+  \end{enumerate}
+\end{enumerate}
+\textit{Then $\hat{\bfV}_n - \bfV_n \convp \bfzero$ and $\hat{\bfV}_n^{-1} - \bfV_n^{-1} \convp \bfzero$.}
+
+\item\label{ex:6.7} \textit{Prove the following result. Suppose conditions $(i)$--$(iv)$ of Exercise~\ref{ex:6.6} hold. Then $\bfD_n^{-1/2}\sqrt{n}(\tilde{\bfbeta}_n - \bfbeta_o) \xrightarrow{A} N(\bfzero,\bfI)$, where}
+\[
+  \bfD_n \equiv (\bfQ_n'\bfP_n\bfQ_n)^{-1}\bfQ_n'\bfP_n\bfV_n\bfP_n\bfQ_n(\bfQ_n'\bfP_n\bfQ_n)^{-1}.
+\]
+\textit{Further, $\hat{\bfD}_n - \bfD_n \convp \bfzero$, where}
+\[
+  \hat{\bfD}_n = (\bfX'\bfZ\hat{\bfP}_n\bfZ'\bfX/n^2)^{-1}(\bfX'\bfZ/n)\hat{\bfP}_n\hat{\bfV}_n\hat{\bfP}_n(\bfZ'\bfX/n)(\bfX'\bfZ\hat{\bfP}_n\bfZ'\bfX/n^2)^{-1}.
+\]
+
+\item\label{ex:6.8} \textit{Prove the following result. Suppose}
+\begin{enumerate}[label=(\roman*)]
+  \item $\bfY_t = \bfX_t'\bfbeta_o + \eps_t$, \quad $t = 1,2,\ldots$\,, \quad $\bfbeta_o \in \mathbb{R}^k$;
+  \item $\{(\bfZ_t',\bfX_t',\eps_t)\}$ \textit{is a mixing sequence with either $\phi$ of size $-r/(2r-1)$, $r>1$, or $\alpha$ of size $-r/(r-1)$, $r>1$;}
+  \item\begin{enumerate}[label=(\alph*)]
+    \item $\{\bfZ_t\eps_t,\mathcal{F}_t\}$ \textit{is a martingale difference sequence;}
+    \item $E|Z_{thi}\eps_{th}|^{2(r+\delta)} < \Delta < \infty$ \textit{for some $\delta > 0$ and all $h = 1,\ldots,p$, $i = 1,\ldots,l$, and $t$;}
+    \item $\bfV_n \equiv \var(n^{-1/2}\bfZ'\bfeps)$ \textit{is uniformly positive definite;}
+  \end{enumerate}
+  \item\begin{enumerate}[label=(\alph*)]
+    \item $E|Z_{thi}X_{thj}|^{2(r+\delta)} < \Delta < \infty$ \textit{and $E|Z_{thi}|^{(r+\delta)} < \Delta < \infty$, for some $\delta > 0$ and all $h = 1,\ldots,p$, $i = 1,\ldots,l$, $j = 1,\ldots,k$, and $t = 1,2,\ldots$\,;}
+    \item $\bfQ_n \equiv E(\bfZ'\bfX/n)$ \textit{has uniformly full column rank;}
+    \item $\mathbf{L}_n \equiv E(\bfZ'\bfZ/n)$ \textit{is uniformly positive definite.}
+  \end{enumerate}
+\end{enumerate}
+\textit{Define}
+\[
+  \hat{\bfV}_n \equiv n^{-1}\sum_{t=1}^{n}\bfZ_t\tilde{\eps}_t\tilde{\eps}_t'\bfZ_t',
+\]
+\textit{where $\tilde{\eps}_t \equiv \bfY_t - \bfX_t'\tilde{\bfbeta}_n$, $\tilde{\bfbeta}_n \equiv (\bfX'\bfZ(\bfZ'\bfZ)^{-1}\bfZ'\bfX)^{-1}\bfX'\bfZ(\bfZ'\bfZ)^{-1}\bfZ'\bfY$, and define}
+\[
+  \bfbeta_n^* \equiv (\bfX'\bfZ\hat{\bfV}_n^{-1}\bfZ'\bfX)^{-1}\bfX'\bfZ\hat{\bfV}_n^{-1}\bfZ'\bfY.
+\]
+\textit{Then $\bfD_n^{-1/2}\sqrt{n}(\bfbeta_n^* - \bfbeta_o) \xrightarrow{A} N(\bfzero,\bfI)$, where}
+\[
+  \bfD_n = (\bfQ_n'\bfV_n^{-1}\bfQ_n)^{-1}.
+\]
+\textit{Further, $\hat{\bfD}_n - \bfD_n \convp \bfzero$, where}
+\[
+  \hat{\bfD}_n = (\bfX'\bfZ\hat{\bfV}_n^{-1}\bfZ'\bfX/n^2)^{-1}.
+\]
+\end{exercises}
+
+This result allows for unconditional heterogeneity not allowed by Corollary~\ref{cor:6.5}, at the expense of imposing somewhat stronger memory and moment conditions. Results for the independent case follow as corollaries because independent sequences are $\phi$-mixing sequences for which we can set $r = 1$. Thus the present result contains the result of White (1982) as a special case but also allows for the presence of dynamic effects (lagged dependent or predetermined variables) not permitted there, as well as applying explicitly to systems of equations or panel data.
+
+\section{Case 2: \texorpdfstring{$\{\bfZ_t\eps_t\}$}{Zt et} Finitely Correlated}\label{sec:case2}
+
+Here we treat the case in which, for $m < \infty$,
+\begin{align*}
+  \bfV_n &= n^{-1}\sum_{t=1}^{n}E(\bfZ_t\eps_t\eps_t'\bfZ_t') \\
+    &\quad + n^{-1}\sum_{t=2}^{n}E(\bfZ_t\eps_t\eps_{t-1}'\bfZ_{t-1}') + E(\bfZ_{t-1}\eps_{t-1}\eps_t'\bfZ_t') \\
+    &\quad\vdots \\
+    &\quad + n^{-1}\sum_{t=m+1}^{n}E(\bfZ_t\eps_t\eps_{t-m}'\bfZ_{t-m}') + E(\bfZ_{t-m}\eps_{t-m}\eps_t'\bfZ_t') \\
+  &= n^{-1}\sum_{t=1}^{n}E(\bfZ_t\eps_t\eps_t'\bfZ_t') \\
+    &\quad + n^{-1}\sum_{\tau=1}^{m}\sum_{t=\tau+1}^{n}E(\bfZ_t\eps_t\eps_{t-\tau}'\bfZ_{t-\tau}') + E(\bfZ_{t-\tau}\eps_{t-\tau}\eps_t'\bfZ_t').
+\end{align*}
+Throughout, we shall assume that this structure is generated by a knowledge that $E(\bfZ_t\eps_t|\mathcal{F}_{t-\tau}) = \bfzero$ for $\tau = m+1 < \infty$ and adapted $\sigma$-fields $\mathcal{F}_t$. The other conditions imposed and methods of proof will be nearly identical to those of the preceding section.
+
+First we consider the estimator
+\begin{align*}
+  \hat{\bfV}_n &= n^{-1}\sum_{t=1}^{n}\bfZ_t\tilde{\eps}_t\tilde{\eps}_t'\bfZ_t' \\
+    &\quad + n^{-1}\sum_{\tau=1}^{m}\sum_{t=\tau+1}^{n}\bfZ_t\tilde{\eps}_t\tilde{\eps}_{t-\tau}'\bfZ_{t-\tau}' + \bfZ_{t-\tau}\tilde{\eps}_{t-\tau}\tilde{\eps}_t'\bfZ_t'.
+\end{align*}
+It turns out that $\hat{\bfV}_n - \bfV_n \convp \bfzero$ under general conditions, as we now demonstrate.
+
+\begin{theorem}\label{thm:6.9}
+Suppose that
+\begin{enumerate}[label=(\roman*)]
+  \item $\bfY_t = \bfX_t'\bfbeta_o + \eps_t$, \quad $t = 1,2,\ldots$\,, \quad $\bfbeta_o \in \mathbb{R}^k$;
+  \item $\{(\bfZ_t',\bfX_t',\eps_t)\}$ is a stationary ergodic sequence;
+  \item\begin{enumerate}[label=(\alph*)]
+    \item $E(\bfZ_t\eps_t|\mathcal{F}_{t-\tau}) = \bfzero$ for $\tau = m+1 < \infty$ and adapted $\sigma$-fields $\mathcal{F}_t$;
+    \item $E|Z_{thi}\eps_{th}|^2 < \infty$, $h = 1,\ldots,p$, $i = 1,\ldots,l$;
+    \item $\bfV_n \equiv \var(n^{-1/2}\bfZ'\bfeps) = \bfV$ is positive definite;
+  \end{enumerate}
+  \item\begin{enumerate}[label=(\alph*)]
+    \item $E\,|Z_{thi}X_{thj}|^2 < \infty$, $h = 1,\ldots,p$, $i = 1,\ldots,l$, $j = 1,\ldots,k$;
+    \item $\bfQ \equiv E(\bfZ_t\bfX_t')$ has full column rank;
+    \item $\hat{\bfP}_n \convp \bfP$, finite, symmetric, and positive definite.
+  \end{enumerate}
+\end{enumerate}
+Then $\hat{\bfV}_n - \bfV \convp \bfzero$ and $\hat{\bfV}_n^{-1} - \bfV^{-1} \convp \bfzero$.
+\end{theorem}
+
+\begin{proof}
+By definition and assumption (\textit{iii.a}),
+\begin{align*}
+  \hat{\bfV}_n - \bfV &= n^{-1}\sum_{t=1}^{n}\bfZ_t\tilde{\eps}_t\tilde{\eps}_t'\bfZ_t' - E(\bfZ_t\eps_t\eps_t'\bfZ_t') \\
+    &\quad + n^{-1}\sum_{\tau=1}^{m}\sum_{t=\tau+1}^{n}\bigl[\bfZ_t\tilde{\eps}_t\tilde{\eps}_{t-\tau}'\bfZ_{t-\tau}' - E(\bfZ_t\eps_t\eps_{t-\tau}'\bfZ_{t-\tau}') \\
+    &\qquad\qquad + \bfZ_{t-\tau}\tilde{\eps}_{t-\tau}\tilde{\eps}_t'\bfZ_t' - E(\bfZ_{t-\tau}\eps_{t-\tau}\eps_t'\bfZ_t')\bigr].
+\end{align*}
+If we can show that
+\[
+  n^{-1}\sum_{t=\tau+1}^{n}\bfZ_t\tilde{\eps}_t\tilde{\eps}_{t-\tau}'\bfZ_{t-\tau}' - E(\bfZ_t\eps_t\eps_{t-\tau}'\bfZ_{t-\tau}') \convp \bfzero, \quad \tau = 0,\ldots,m,
+\]
+then the desired result follows by Exercise~2.35.
+
+Now
+\begin{align*}
+  n^{-1}&\sum_{t=\tau+1}^{n}\bfZ_t\tilde{\eps}_t\tilde{\eps}_{t-\tau}'\bfZ_{t-\tau}' - E(\bfZ_t\eps_t\eps_{t-\tau}'\bfZ_{t-\tau}') \\
+  &= ((n-\tau)/n)(n-\tau)^{-1}\sum_{t=\tau+1}^{n}\bfZ_t\tilde{\eps}_t\tilde{\eps}_{t-\tau}'\bfZ_{t-\tau}' - E(\bfZ_t\eps_t\eps_{t-\tau}'\bfZ_{t-\tau}').
+\end{align*}
+For $\tau = 0,\ldots,m$, we have $((n-\tau)/n) \to 1$ as $n \to \infty$, so it suffices to show that for $\tau = 0,\ldots,m$,
+\[
+  (n-\tau)^{-1}\sum_{t=\tau+1}^{n}\bfZ_t\tilde{\eps}_t\tilde{\eps}_{t-\tau}'\bfZ_{t-\tau}' - E(\bfZ_t\eps_t\eps_{t-\tau}'\bfZ_{t-\tau}') \convp \bfzero.
+\]
+
+As before, replace $\tilde{\eps}_t$ with $\tilde{\eps}_t = \eps_t - \bfX_t'(\tilde{\bfbeta}_n - \bfbeta_o)$, to obtain
+\begin{align*}
+  (n-\tau)^{-1}&\sum_{t=\tau+1}^{n}\bfZ_t\tilde{\eps}_t\tilde{\eps}_{t-\tau}'\bfZ_{t-\tau}' - E(\bfZ_t\eps_t\eps_{t-\tau}'\bfZ_{t-\tau}') \\
+  &= (n-\tau)^{-1}\sum_{t=\tau+1}^{n}\bfZ_t\eps_t\eps_{t-\tau}'\bfZ_{t-\tau}' - E(\bfZ_t\eps_t\eps_{t-\tau}'\bfZ_{t-\tau}') \\
+  &\quad - (n-\tau)^{-1}\sum_{t=\tau+1}^{n}\bfZ_t\bfX_t'(\tilde{\bfbeta}_n - \bfbeta_o)\eps_{t-\tau}'\bfZ_{t-\tau}' \\
+  &\quad - (n-\tau)^{-1}\sum_{t=\tau+1}^{n}\bfZ_t\eps_t(\tilde{\bfbeta}_n - \bfbeta_o)'\bfX_{t-\tau}\bfZ_{t-\tau}' \\
+  &\quad + (n-\tau)^{-1}\sum_{t=\tau+1}^{n}\bfZ_t\bfX_t'(\tilde{\bfbeta}_n - \bfbeta_o)(\tilde{\bfbeta}_n - \bfbeta_o)'\bfX_{t-\tau}\bfZ_{t-\tau}'.
+\end{align*}
+The desired result follows by Exercise~2.35 if each of the terms above vanishes in probability.
+
+The first term vanishes almost surely (in probability) by the ergodic theorem given $(ii)$ and $(iii.b)$. For the second, use $\vect(\bfA\bfB\bfC) = (\bfC'\otimes\bfA)\vect(\bfB)$ to write
+\[
+  \vect\left((n-\tau)^{-1}\sum_{t=\tau+1}^{n}\bfZ_t\bfX_t'(\tilde{\bfbeta}_n - \bfbeta_o)\eps_{t-\tau}'\bfZ_{t-\tau}'\right)
+  = (n-\tau)^{-1}\sum_{t=\tau+1}^{n}(\bfZ_{t-\tau}\eps_{t-\tau}\otimes\bfZ_t\bfX_t')\vect(\tilde{\bfbeta}_n - \bfbeta_o).
+\]
+The conditions of the theorem ensure $\tilde{\bfbeta}_n \convp \bfbeta_o$ by Exercise~3.38, so it suffices that $(n-\tau)^{-1}\sum_{t=\tau+1}^{n}(\bfZ_{t-\tau}\eps_{t-\tau}\otimes\bfZ_t\bfX_t')$ is $O_p(1)$ by Corollary 2.36. But this follows by the ergodic theorem, given $(iii.b)$ and $(iv.a)$ upon application of Cauchy-Schwarz's inequality.
+
+Similar argument establishes that
+\[
+  \vect\left((n-\tau)^{-1}\sum_{t=\tau+1}^{n}\bfZ_t\eps_t(\tilde{\bfbeta}_n - \bfbeta_o)'\bfX_{t-\tau}\bfZ_{t-\tau}'\right)
+  = (n-\tau)^{-1}\sum_{t=\tau+1}^{n}\left(\bfZ_{t-\tau}\bfX_{t-\tau}'\otimes\bfZ_t\eps_t\right)\vect((\tilde{\bfbeta}_n - \bfbeta_o)') \convp \bfzero.
+\]
+
+For the final term, use $\vect(\bfA\bfB\bfC) = (\bfC'\otimes\bfA)\vect(\bfB)$ to write
+\begin{align*}
+  \vect\left((n-\tau)^{-1}\sum_{t=\tau+1}^{n}\bfZ_t\bfX_t'(\tilde{\bfbeta}_n - \bfbeta_o)(\tilde{\bfbeta}_n - \bfbeta_o)'\bfX_{t-\tau}\bfZ_{t-\tau}'\right) \\
+  = (n-\tau)^{-1}\sum_{t=\tau+1}^{n}\left(\bfZ_{t-\tau}\bfX_{t-\tau}'\otimes\bfZ_t\bfX_t'\right)\vect\left((\tilde{\bfbeta}_n - \bfbeta_o)(\tilde{\bfbeta}_n - \bfbeta_o)'\right).
+\end{align*}
+The conditions of the theorem ensure $\tilde{\bfbeta}_n \convp \bfbeta_o$, while conditions $(ii)$ and $(iv.a)$ ensure that the ergodic theorem applies, which implies
+\[
+  (n-\tau)^{-1}\sum_{t=\tau+1}^{n}\left(\bfZ_{t-\tau}\bfX_{t-\tau}'\otimes\bfZ_t\bfX_t'\right) = O_p(1).
+\]
+The final term thus vanishes by Corollary~2.36 and the proof is complete.
+\end{proof}
+
+Results analogous to Corollaries~\ref{cor:6.4} and \ref{cor:6.5} also follow similarly.
+
+\begin{corollary}\label{cor:6.10}
+Suppose conditions $(i)$--$(iv)$ of Theorem~\ref{thm:6.9} hold. Then $\bfD^{-1/2}\sqrt{n}(\tilde{\bfbeta}_n - \bfbeta_o) \xrightarrow{A} N(\bfzero,\bfI)$, where
+\[
+  \bfD \equiv (\bfQ'\bfP\bfQ)^{-1}\bfQ'\bfP\bfV\bfP\bfQ(\bfQ'\bfP\bfQ)^{-1}.
+\]
+Further, $\hat{\bfD}_n - \bfD \convp \bfzero$, where
+\[
+  \hat{\bfD}_n = (\bfX'\bfZ\hat{\bfP}_n\bfZ'\bfX/n^2)^{-1}(\bfX'\bfZ/n)\hat{\bfP}_n\hat{\bfV}_n\hat{\bfP}_n(\bfZ'\bfX/n)(\bfX'\bfZ\hat{\bfP}_n\bfZ'\bfX/n^2)^{-1}.
+\]
+\end{corollary}
+
+\begin{proof}
+Immediate from Exercise~5.19 and Theorem~\ref{thm:6.9}.
+\end{proof}
+
+\begin{corollary}\label{cor:6.11}
+Suppose that
+\begin{enumerate}[label=(\roman*)]
+  \item $\bfY_t = \bfX_t'\bfbeta_0 + \eps_t$, \quad $t = 1,2,\ldots$\,, \quad $\bfbeta_o \in \mathbb{R}^k$;
+  \item $\{(\bfZ_t',\bfX_t',\eps_t)\}$ is a stationary ergodic sequence;
+  \item\begin{enumerate}[label=(\alph*)]
+    \item $E(\bfZ_t\eps_t|\mathcal{F}_{t-\tau}) = \bfzero$ for $\tau = m+1 < \infty$ and adapted $\sigma$-fields $\mathcal{F}_t$;
+    \item $E|Z_{thi}\eps_{th}|^2 < \infty$, $h = 1,\ldots,p$, $i = 1,\ldots,l$;
+    \item $\bfV_n \equiv \var(n^{-1/2}\bfZ'\bfeps) = \bfV$ is positive definite;
+  \end{enumerate}
+  \item\begin{enumerate}[label=(\alph*)]
+    \item $E|Z_{thi}X_{thj}|^2 < \infty$, $h = 1,\ldots,p$, $i = 1,\ldots,l$, $j = 1,\ldots,k$, and $E|\bfZ_{thi}|^2 < \infty$, $h = 1,\ldots,p$, $i = 1,\ldots,l$;
+    \item $\bfQ \equiv E(\bfZ_t\bfX_t')$ has full column rank;
+    \item $\mathbf{L} \equiv E(\bfZ_t\bfZ_t')$ is positive definite.
+  \end{enumerate}
+\end{enumerate}
+Define
+\begin{align*}
+  \hat{\bfV}_n &\equiv n^{-1}\sum_{t=1}^{n}\bfZ_t\tilde{\eps}_t\tilde{\eps}_t'\bfZ_t' \\
+    &\quad + \sum_{\tau=1}^{m}\sum_{t=\tau+1}^{n}\bfZ_t\tilde{\eps}_t\tilde{\eps}_{t-\tau}'\bfZ_{t-\tau}' + \bfZ_{t-\tau}\tilde{\eps}_{t-\tau}\tilde{\eps}_t'\bfZ_t',
+\end{align*}
+where $\tilde{\eps}_t \equiv \bfY_t - \bfX_t'\tilde{\bfbeta}_n$, $\tilde{\bfbeta}_n \equiv (\bfX'\bfZ(\bfZ'\bfZ)^{-1}\bfZ'\bfX)^{-1}\bfX'\bfZ(\bfZ'\bfZ)^{-1}\bfZ'\bfY$, and define
+\[
+  \bfbeta_n^* \equiv (\bfX'\bfZ\hat{\bfV}_n^{-1}\bfZ'\bfX)^{-1}\bfX'\bfZ\hat{\bfV}_n^{-1}\bfZ'\bfY.
+\]
+Then $\bfD^{-1/2}\sqrt{n}(\bfbeta_n^* - \bfbeta_o) \xrightarrow{A} N(\bfzero,\bfI)$, where
+\[
+  \bfD = (\bfQ'\bfV^{-1}\bfQ)^{-1}.
+\]
+Further, $\hat{\bfD}_n - \bfD \convp \bfzero$, where
+\[
+  \hat{\bfD}_n = (\bfX'\bfZ\hat{\bfV}_n^{-1}\bfZ'\bfX/n^2)^{-1}.
+\]
+\end{corollary}
+
+\begin{proof}
+Conditions $(i)$--$(iv)$ ensure that Theorem~\ref{thm:6.9} holds for $\tilde{\bfbeta}_n$. Set $\hat{\bfP}_n = \hat{\bfV}_n^{-1}$ in Corollary~\ref{cor:6.10}. Then $\bfP_n = \bfV_n^{-1}$ and the result follows.
+\end{proof}
+
+Results for mixing sequences parallel those of Exercises~6.6--6.8.
+
+\begin{exercises}
+\item\label{ex:6.12} \textit{Prove the following result. Suppose}
+\begin{enumerate}[label=(\roman*)]
+  \item $\bfY_t = \bfX_t'\bfbeta_o + \eps_t$, \quad $t = 1,2,\ldots$\,, \quad $\bfbeta_o \in \mathbb{R}^k$;
+  \item $\{(\bfZ_t',\bfX_t',\eps_t)\}$ \textit{is a mixing sequence with either $\phi$ of size $-r/(r-2)$, $r>2$, or $\alpha$ of size $-r/(r-2)$, $r>2$;}
+  \item\begin{enumerate}[label=(\alph*)]
+    \item $E(\bfZ_t\eps_t|\mathcal{F}_{t-\tau}) = \bfzero$ \textit{for $\tau = m+1 < \infty$ and adapted $\sigma$-fields $\mathcal{F}_t$, $t = 1,2,\ldots$\,;}
+    \item $E|Z_{thi}\eps_{th}|^{r+\delta} < \Delta < \infty$ \textit{for some $\delta > 0$ and all $h = 1,\ldots,p$, $i = 1,\ldots,l$, and $t = 1,2,\ldots$\,;}
+    \item $\bfV_n \equiv \var(n^{-1/2}\sum_{t=1}^{n}\bfZ_t\eps_t)$ \textit{is uniformly positive definite;}
+  \end{enumerate}
+  \item\begin{enumerate}[label=(\alph*)]
+    \item $E|Z_{thi}X_{thj}|^{r+\delta} < \Delta < \infty$ \textit{for some $\delta > 0$ and all $h = 1,\ldots,p$, $i = 1,\ldots,l$, $j = 1,\ldots,k$, and $t = 1,2,\ldots$\,;}
+    \item $\bfQ_n \equiv E(\bfZ'\bfX/n)$ \textit{has uniformly full column rank;}
+    \item $\hat{\bfP}_n - \bfP_n \convp \bfzero$, \textit{where $\bfP_n = O(1)$ is symmetric and uniformly positive definite.}
+  \end{enumerate}
+\end{enumerate}
+\textit{Then $\hat{\bfV}_n - \bfV_n \convp \bfzero$ and $\hat{\bfV}_n^{-1} - \bfV_n^{-1} \convp \bfzero$.}
+
+\textit{(Hint: be careful to handle $r$ properly to ensure the proper mixing size requirements.)}
+
+\item\label{ex:6.13} \textit{Prove the following result. Suppose conditions $(i)$--$(iv)$ of Exercise~\ref{ex:6.12} hold. Then $\bfD_n^{-1/2}\sqrt{n}(\tilde{\bfbeta}_n - \bfbeta_o) \xrightarrow{A} N(\bfzero,\bfI)$, where}
+\[
+  \bfD_n \equiv (\bfQ_n'\bfP_n\bfQ_n)^{-1}\bfQ_n'\bfP_n\bfV_n\bfP_n\bfQ_n(\bfQ_n'\bfP_n\bfQ_n)^{-1}.
+\]
+\textit{Further, $\hat{\bfD}_n - \bfD_n \convp \bfzero$, where}
+\[
+  \hat{\bfD}_n = (\bfX'\bfZ\hat{\bfP}_n\bfZ'\bfX/n^2)^{-1}(\bfX'\bfZ/n)\hat{\bfP}_n\hat{\bfV}_n\hat{\bfP}_n(\bfZ'\bfX/n)(\bfX'\bfZ\hat{\bfP}_n\bfZ'\bfX/n^2)^{-1}.
+\]
+
+\textit{(Hint: apply Theorem~5.23.)}
+
+\item\label{ex:6.14} \textit{Prove the following result. Suppose}
+\begin{enumerate}[label=(\roman*)]
+  \item $\bfY_t = \bfX_t'\bfbeta_o + \eps_t$, \quad $t = 1,2,\ldots$\,, \quad $\bfbeta_o \in \mathbb{R}^k$;
+  \item $\{(\bfZ_t',\bfX_t',\eps_t)\}$ \textit{is a mixing sequence with either $\phi$ of size $-r/(r-2)$, $r>2$, or $\alpha$ of size $-r/(r-2)$, $r>2$;}
+  \item\begin{enumerate}[label=(\alph*)]
+    \item $E(\bfZ_t\eps_t|\mathcal{F}_{t-\tau}) = \bfzero$ \textit{for $\tau = m+1 < \infty$ and adapted $\sigma$-fields $\mathcal{F}_t$, $t = 1,2,\ldots$\,;}
+    \item $E|Z_{thi}\eps_{th}|^{r+\delta} < \Delta < \infty$ \textit{for some $\delta > 0$ and all $h = 1,\ldots,p$, $i = 1,\ldots,l$, and $t = 1,2,\ldots$\,;}
+    \item $\bfV_n \equiv \var(n^{-1/2}\sum_{t=1}^{n}\bfZ_t\eps_t)$ \textit{is uniformly positive definite;}
+  \end{enumerate}
+  \item\begin{enumerate}[label=(\alph*)]
+    \item $E|Z_{thi}X_{thj}|^{r+\delta} < \Delta < \infty$ \textit{for some $\delta > 0$ and all $h = 1,\ldots,p$, $i = 1,\ldots,l$, $j = 1,\ldots,k$, and $t = 1,2,\ldots$\,;}
+    \item $\bfQ_n \equiv E(\bfZ'\bfX/n)$ \textit{has uniformly full column rank;}
+    \item $\mathbf{L}_n \equiv E(\bfZ'\bfZ/n)$ \textit{is uniformly positive definite.}
+  \end{enumerate}
+\end{enumerate}
+\textit{Define}
+\begin{align*}
+  \hat{\bfV}_n &= n^{-1}\sum_{t=1}^{n}\bfZ_t\tilde{\eps}_t\tilde{\eps}_t'\bfZ_t' \\
+    &\quad + n^{-1}\sum_{\tau=1}^{m}\sum_{t=\tau+1}^{n}\bfZ_t\tilde{\eps}_t\tilde{\eps}_{t-\tau}'\bfZ_{t-\tau}' + \bfZ_{t-\tau}\tilde{\eps}_{t-\tau}\tilde{\eps}_t'\bfZ_t',
+\end{align*}
+\textit{where $\tilde{\eps}_t \equiv \bfY_t - \bfX_t'\tilde{\bfbeta}_n$, $\tilde{\bfbeta}_n \equiv (\bfX'\bfZ(\bfZ'\bfZ)^{-1}\bfZ'\bfX)^{-1}\bfX'\bfZ(\bfZ'\bfZ)^{-1}\bfZ'\bfY$, and define}
+\[
+  \bfbeta_n^* \equiv (\bfX'\bfZ\hat{\bfV}_n^{-1}\bfZ'\bfX)^{-1}\bfX'\bfZ\hat{\bfV}_n^{-1}\bfZ'\bfY.
+\]
+\textit{Then $\bfD_n^{-1/2}\sqrt{n}(\bfbeta_n^* - \bfbeta_o) \xrightarrow{A} N(\bfzero,\bfI)$, where}
+\[
+  \bfD_n = (\bfQ_n'\bfV_n^{-1}\bfQ_n)^{-1}.
+\]
+\textit{Further, $\hat{\bfD}_n - \bfD_n \convp \bfzero$, where}
+\[
+  \hat{\bfD}_n = (\bfX'\bfZ\hat{\bfV}_n^{-1}\bfZ'\bfX/n^2)^{-1}.
+\]
+\end{exercises}
+
+Because $\hat{\bfV}_n - \bfV_n \convp \bfzero$ and $\bfV_n$ is assumed uniformly positive definite, it follows that $\hat{\bfV}_n$ is positive definite with probability approaching one as $n \to \infty$. In fact, as the proofs of the theorems demonstrate, the convergence is almost sure (provided $\hat{\bfP}_n - \bfP_n \convas \bfzero$), so $\hat{\bfV}_n$ will then be positive definite for all $n$ sufficiently large almost surely.
+
+Nevertheless, for given $n$ and particular samples, $\hat{\bfV}_n$ as just analyzed can fail to be positive definite. In fact, not only can it be positive semidefinite, but it can be indefinite. This is clearly inconvenient, as negative variance estimates can lead to results that are utterly useless for testing hypotheses or for any other purpose where variance estimates are required.
+
+What can be done? A simple but effective strategy is to consider the following weighted version of $\hat{\bfV}_n$,
+\begin{align*}
+  \tilde{\bfV}_n &= n^{-1}\sum_{t=1}^{n}\bfZ_t\tilde{\eps}_t\tilde{\eps}_t'\bfZ_t' \\
+    &\quad + n^{-1}\sum_{\tau=1}^{m}w_{n\tau}\sum_{t=\tau+1}^{n}\bfZ_t\tilde{\eps}_t\tilde{\eps}_{t-\tau}'\bfZ_{t-\tau}' + \bfZ_{t-\tau}\tilde{\eps}_{t-\tau}\tilde{\eps}_t'\bfZ_t'.
+\end{align*}
+The estimator $\hat{\bfV}_n$ obtains when $w_{n\tau} = 1$ for all $n$ and $\tau$. Moreover, consistency of $\tilde{\bfV}_n$ is straightforward to ensure, as the following exercise asks you to verify.
+
+\begin{exercises}
+\item\label{ex:6.15} \textit{Show that under the conditions of Theorem~\ref{thm:6.9} or Exercise~\ref{ex:6.12} a sufficient condition to ensure $\tilde{\bfV}_n - \bfV_n \convp \bfzero$ is that $w_{n\tau} \convp 1$ for each $\tau = 1,\ldots,m$.}
+\end{exercises}
+
+Subject to this requirement, we can then manipulate $w_{n\tau}$ to ensure positive definiteness of $\tilde{\bfV}_n$ in finite samples. One natural way to proceed is to let the properties of $\hat{\bfV}_n$ suggest how to choose $w_{n\tau}$. In particular, if $\hat{\bfV}_n$ is positive definite (as evidenced by having all positive eigenvalues), then set $w_{n\tau} = 1$. (As is trivially verified, this ensures $w_{n\tau} \convp 1$.) Otherwise, choose $w_{n\tau}$ to enforce positive definiteness in some principled way. For example, choose $w_{n\tau} = f(\tau,\theta_n)$ and adjust $\theta_n$ to the extent needed to achieve positive definite $\tilde{\bfV}_n$. For example, one might choose $w_{n\tau} = 1 - \theta_n\tau$ $(\theta_n > 0)$, $w_{n\tau} = (\theta_n)^\tau$ $(\theta_n < 1)$, or $w_{n\tau} = \exp(-\theta_n\tau)$ $(\theta_n > 0)$. More sophisticated methods are available, but as a practical matter, this simple approach will often suffice.
+
+\section{Case 3: \texorpdfstring{$\{\bfZ_t\eps_t\}$}{Zt et} Asymptotically Uncorrelated}\label{sec:case3}
+
+In this section we consider the general case in which
+\begin{align*}
+  \bfV_n &= n^{-1}\sum_{t=1}^{n}E(\bfZ_t\eps_t\eps_t'\bfZ_t') \\
+    &\quad + n^{-1}\sum_{\tau=1}^{n-1}\sum_{t=\tau+1}^{n}E(\bfZ_t\eps_t\eps_{t-\tau}'\bfZ_{t-\tau}') + E(\bfZ_{t-\tau}\eps_{t-\tau}\eps_t'\bfZ_t').
+\end{align*}
+The essential restriction we impose is that as $\tau \to \infty$ the covariance (correlation) between $\bfZ_t\eps_t$ and $\bfZ_{t-\tau}\eps_{t-\tau}$ goes to zero. We ensure this behavior by assuming that $\{(\bfZ_t',\bfX_t',\eps_t)\}$ is a mixing sequence. In the stationary case, we replace ergodicity with mixing, which, as we saw in Chapter~3, implies ergodicity. Mixing is not the weakest possible requirement. Mixingale conditions can also be used in the present context. Nevertheless, to keep our analysis tractable we restrict attention to mixing processes.
+
+The fact that mixing sequences are asymptotically uncorrelated is a consequence of the following lemma.
+
+\begin{lemma}\label{lem:6.16}
+Let $\mathcal{Z}$ be a random variable measurable with respect to $\mathcal{F}_{n+\tau}^\infty$, $0 < \tau < \infty$, such that $\|\mathcal{Z}\|_q \equiv [E|\mathcal{Z}|^q]^{1/q} < \infty$ for some $q > 1$, and let $1 < r \leq q$. Then
+\[
+  \left\|E(\mathcal{Z}|\mathcal{F}_{-\infty}^n) - E(\mathcal{Z})\right\|_r \leq 2[\phi(\tau)]^{1-1/q}\,\|\mathcal{Z}\|_q
+\]
+and
+\[
+  \left\|E(\mathcal{Z}|\mathcal{F}_{-\infty}^n) - E(\mathcal{Z})\right\|_r \leq 2(2^{1/r}+1)[\alpha(\tau)]^{1/r - 1/q}\,\|\mathcal{Z}\|_q.
+\]
+\end{lemma}
+
+\begin{proof}
+This follows immediately from Lemma~2.1 of McLeish (1975).
+\end{proof}
+
+For mixing sequences, $\phi(\tau)$ or $\alpha(\tau)$ goes to zero as $\tau \to \infty$, so this result imposes bounds on the rate that the conditional expectation of $\mathcal{Z}$, given the past up to period $n$, converges to the unconditional expectation as the time separation $\tau$ gets larger and larger.
+
+By setting $r = 2$, we obtain the following result.
+
+\begin{corollary}\label{cor:6.17}
+Let $E(\mathcal{Z}_n) = E(\mathcal{Z}_{n+\tau}) = 0$ and suppose $\var(\mathcal{Z}_n) < \infty$, and for some $q > 2$, $E|\mathcal{Z}_{n+\tau}|^q < \infty$, $0 < \tau < \infty$. Then
+\[
+  |E(\mathcal{Z}_n\mathcal{Z}_{n+\tau})| \leq 2\phi(\tau)^{1-1/q}(\var(\mathcal{Z}_n))^{1/2}\,\|\mathcal{Z}_{n+\tau}\|_q
+\]
+and
+\begin{align*}
+  |E(\mathcal{Z}_n\mathcal{Z}_{n+\tau})| &\leq 2(2^{1/2}+1)\alpha(\tau)^{1/2-1/q}(\var(\mathcal{Z}_n))^{1/2} \\
+    &\quad \times\|\mathcal{Z}_{n+\tau}\|_q.
+\end{align*}
+\end{corollary}
+
+\begin{proof}
+Put $\mathcal{F}_{-\infty}^n = \sigma(\ldots,\mathcal{Z}_n)$ and $\mathcal{F}_{n+\tau}^\infty = \sigma(\mathcal{Z}_{n+\tau},\ldots\,)$. By the law of iterated expectations,
+\begin{align*}
+  E(\mathcal{Z}_n\mathcal{Z}_{n+\tau}) &= E(E(\mathcal{Z}_n\mathcal{Z}_{n+\tau}|\mathcal{F}_{-\infty}^n)) \\
+    &= E(\mathcal{Z}_n E(\mathcal{Z}_{n+\tau}|\mathcal{F}_{-\infty}^n))
+\end{align*}
+by Proposition~3.65. It follows from the Cauchy-Schwarz inequality and Jensen's inequality that
+\[
+  |E(\mathcal{Z}_n\mathcal{Z}_{n+\tau})| \leq E(\mathcal{Z}_n^2)^{1/2}E(E(\mathcal{Z}_{n+\tau}|\mathcal{F}_{-\infty}^n)^2)^{1/2}.
+\]
+By Lemma~\ref{lem:6.16}, we have
+\[
+  E(E(\mathcal{Z}_{n+\tau}|\mathcal{F}_{-\infty}^n)^2)^{1/2} \leq 2\phi(\tau)^{1-1/q}\,\|\mathcal{Z}_{n+\tau}\|_q
+\]
+and
+\[
+  E(E(\mathcal{Z}_{n+\tau}|\mathcal{F}_{-\infty}^n)^2)^{1/2} \leq 2(2^{1/2}+1)\alpha(\tau)^{1/2-1/q}\,\|\mathcal{Z}_{n+\tau}\|_q,
+\]
+where we set $r = 2$ in Lemma~\ref{lem:6.16}. Combining these inequalities yields the final results,
+\[
+  |E(\mathcal{Z}_n\mathcal{Z}_{n+\tau})| \leq 2\phi(\tau)^{1-1/q}(\var(\mathcal{Z}_n))^{1/2}\,\|\mathcal{Z}_{n+\tau}\|_q\,,
+\]
+and
+\[
+  |E(\mathcal{Z}_n\mathcal{Z}_{n+\tau})| \leq 2(2^{1/2}+1)\alpha(\tau)^{1/2-1/q}(\var(\mathcal{Z}_n))^{1/2}\,\|\mathcal{Z}_{n+\tau}\|_q\,.
+\]
+\end{proof}
+
+The direct implication of this result is that mixing sequences are asymptotically uncorrelated, because $\phi(\tau) \to 0$ $(q > 2)$ or $\alpha(\tau) \to 0$ $(q > 2)$ implies $|E(\mathcal{Z}_n\mathcal{Z}_{n+\tau})| \to 0$ as $\tau \to \infty$. For mixing sequences, it follows that $\bfV_n$ might be well approximated by
+\begin{align*}
+  \bar{\bfV}_n &\equiv w_{n0}\, n^{-1}\sum_{t=1}^{n}E(\bfZ_t\eps_t\eps_t'\bfZ_t') \\
+    &\quad + n^{-1}\sum_{\tau=1}^{m}w_{n\tau}\sum_{t=\tau+1}^{n}E(\bfZ_t\eps_t\eps_{t-\tau}'\bfZ_{t-\tau}') + E(\bfZ_{t-\tau}\eps_{t-\tau}\eps_t'\bfZ_t')
+\end{align*}
+for some value $m$, because the neglected terms (those with $m < \tau < n$) will be small in absolute value if $m$ is sufficiently large. Note, however, that if $m$ is simply kept fixed as $n$ grows, the number of neglected terms grows, and may grow in such a way that the sum of the neglected terms does not remain negligible. This suggests that $m$ will have to grow with $n$, so that the terms in $\bfV_n$ ignored by $\bar{\bfV}_n$ remain negligible. We will write $m_n$ to make this dependence explicit.
+
+Note that in $\bar{\bfV}_n$ we have introduced weights $w_{n\tau}$ analogous to those appearing in $\tilde{\bfV}_n$ of the previous section. This facilitates our analysis of an extension of that estimator, which we now define as
+\begin{align*}
+  \tilde{\bfV}_n &\equiv w_{n0}\, n^{-1}\sum_{t=1}^{n}\bfZ_t\tilde{\eps}_t\tilde{\eps}_t'\bfZ_t' \\
+    &\quad + n^{-1}\sum_{\tau=1}^{m_n}w_{n\tau}\sum_{t=\tau+1}^{n}\bfZ_t\tilde{\eps}_t\tilde{\eps}_{t-\tau}'\bfZ_{t-\tau}' + \bfZ_{t-\tau}\tilde{\eps}_{t-\tau}\tilde{\eps}_t'\bfZ_t'.
+\end{align*}
+We establish the consistency of $\tilde{\bfV}_n$ for $\bfV_n$ by first showing that under suitable conditions $\tilde{\bfV}_n - \bar{\bfV}_n \convp \bfzero$ and then showing that $\bar{\bfV}_n - \tilde{\bfV}_n \convp \bfzero$.
+
+Now, however, it will not be enough for consistency just to require $w_{n\tau} \convp 1$, as we also have to properly treat $m_n \to \infty$. For simplicity, we consider only nonstochastic weights $w_{n\tau}$ in what follows. Stochastic weights can be treated straightforwardly in a similar manner. Our next result provides conditions under which $\tilde{\bfV}_n - \bfV_n \to \bfzero$.
+
+\begin{lemma}\label{lem:6.18}
+Let $\{\mathcal{Z}_{nt}\}$ be a double array of random $k \times 1$ vectors such that $E(|\mathcal{Z}_{nt}'\mathcal{Z}_{nt}|^{r/2}) < \Delta < \infty$ for some $r > 2$, $E(\mathcal{Z}_{nt}) = \bfzero$, $n, t = 1,2,\ldots$\,, and $\{\mathcal{Z}_{nt}\}$ is mixing with $\phi$ of size $-r/(r-1)$ or $\alpha$ of size $-2r/(r-2)$. Define
+\begin{align*}
+  \bar{\bfV}_n &\equiv w_{n0}\, n^{-1}\sum_{t=1}^{n}E(\mathcal{Z}_{nt}\mathcal{Z}_{nt}') \\
+    &\quad + n^{-1}\sum_{\tau=1}^{m_n}w_{n\tau}\sum_{t=\tau+1}^{n}E(\mathcal{Z}_{nt}\mathcal{Z}_{n,t-\tau}') + E(\mathcal{Z}_{n,t-\tau}\mathcal{Z}_{nt}').
+\end{align*}
+If $m_n \to \infty$ as $n \to \infty$, if $|w_{n\tau}| < \Delta$, $n = 1,2,\ldots$\,; $\tau = 1,\ldots,m_n$, and if for each $\tau$, $w_{n\tau} \to 1$ as $n \to \infty$ then $\bar{\bfV}_n - \bfV_n \to \bfzero$.
+\end{lemma}
+
+\begin{proof}
+See Gallant and White (1988, Lemma~6.6).
+\end{proof}
+
+Here we see the explicit requirements that $m_n \to \infty$ and $w_{n\tau} \to 1$ for each $\tau$.
+
+Our next result is an intermediate lemma related to Lemma~6.19 of White (1984). That result, however, contained an error, as pointed out by Phillips (1985) and Newey and West (1987), that resulted in an incorrect rate for $m_n$. The following result gives a correct rate.
+
+\begin{lemma}\label{lem:6.19}
+Let $\{\mathcal{Z}_{nt}\}$ be a double array of random $k \times 1$ vectors such that $E(|\mathcal{Z}_{nt}'\mathcal{Z}_{nt}|^r) < \Delta < \infty$ for some $r > 2$, $E(\mathcal{Z}_{nt}) = \bfzero$, $n, t = 1,2,\ldots$ and $\{\mathcal{Z}_{nt}\}$ is mixing with $\phi$ of size $-r/(r-1)$ or $\alpha$ of size $-2r/(r-2)$. Define
+\[
+  \zeta_{nt\tau}^{ij} = \mathcal{Z}_{nti}\mathcal{Z}_{n,t-\tau,j} - E(\mathcal{Z}_{nti}\mathcal{Z}_{n,t-\tau,j}).
+\]
+If $m_n = o(n^{1/4})$ and $|w_{n\tau}| < \Delta$, $n = 1,2,\ldots$\,, $\tau = 1,\ldots,m_n$, then for all $i, j = 1,\ldots,k$
+\[
+  n^{-1}\sum_{\tau=1}^{m_n}w_{n\tau}\sum_{t=\tau+1}^{n}\zeta_{nt\tau}^{ij} \convp 0.
+\]
+\end{lemma}
+
+\begin{proof}
+See Gallant and White (1988, Lemma~6.7~$(d)$).
+\end{proof}
+
+We now have the results we need to establish the consistency of a generally useful estimator for $\var(n^{-1}\sum_{t=1}^{n}\mathcal{Z}_{nt})$.
+
+\begin{theorem}\label{thm:6.20}
+Let $\{\mathcal{Z}_{nt}\}$ be a double array of random $k \times 1$ vectors such that $E(|\mathcal{Z}_{nt}'\mathcal{Z}_{nt}|^r) < \Delta < \infty$ for some $r > 2$, $E(\mathcal{Z}_{nt}) = \bfzero$, $n, t = 1,2,\ldots$ and $\{\mathcal{Z}_{nt}\}$ is mixing with $\phi$ of size $-r/(r-1)$ or $\alpha$ of size $-2r/(r-2)$. Define
+\[
+  \bfV_n \equiv \var(n^{-1}\sum_{t=1}^{n}\mathcal{Z}_{nt}),
+\]
+and for any sequence $\{m_n\}$ of integers and any triangular array $\{w_{n\tau}: n = 1,2,\ldots\,;\,\tau = 1,\ldots,m_n\}$ define
+\begin{align*}
+  \tilde{\bfV}_n &\equiv w_{n0}\, n^{-1}\sum_{t=1}^{n}\mathcal{Z}_{nt}\mathcal{Z}_{nt}' \\
+    &\quad + n^{-1}\sum_{\tau=1}^{m_n}w_{n\tau}\sum_{t=\tau+1}^{n}\mathcal{Z}_{nt}\mathcal{Z}_{n,t-\tau}' + \mathcal{Z}_{n,t-\tau}\mathcal{Z}_{nt}'.
+\end{align*}
+If $m_n \to \infty$ as $n \to \infty$, $m_n = o(n^{1/4})$, and if $|w_{n\tau}| < \Delta$, $n = 1,2,\ldots$\,, $\tau = 1,\ldots,m_n$, and if for each $\tau$, $w_{n\tau} \to 1$ as $n \to \infty$ then $\tilde{\bfV}_n - \bfV_n \convp \bfzero$.
+\end{theorem}
+
+\begin{proof}
+For $\bar{\bfV}_n$ as defined in Lemma~\ref{lem:6.18} we have
+\[
+  \tilde{\bfV}_n - \bfV_n = (\tilde{\bfV}_n - \bar{\bfV}_n) + (\bar{\bfV}_n - \bfV_n).
+\]
+By Lemma~\ref{lem:6.18} it follows that $\bar{\bfV}_n - \bfV_n \to \bfzero$ so the result holds if $\tilde{\bfV}_n - \bar{\bfV}_n \convp \bfzero$.
+
+Now
+\begin{align*}
+  \tilde{\bfV}_n - \bar{\bfV}_n &= w_{n0}\, n^{-1}\sum_{t=1}^{n}\mathcal{Z}_{nt}\mathcal{Z}_{nt}' - E(\mathcal{Z}_{nt}\mathcal{Z}_{nt}') \\
+    &\quad + n^{-1}\sum_{\tau=1}^{m_n}w_{n\tau}\sum_{t=\tau+1}^{n}\mathcal{Z}_{nt}\mathcal{Z}_{n,t-\tau}' - E(\mathcal{Z}_{nt}\mathcal{Z}_{n,t-\tau}') \\
+    &\quad + n^{-1}\sum_{\tau=1}^{m_n}w_{n\tau}\sum_{t=\tau+1}^{n}\mathcal{Z}_{n,t-\tau}\mathcal{Z}_{nt}' - E(\mathcal{Z}_{n,t-\tau}\mathcal{Z}_{nt}').
+\end{align*}
+The first term converges almost surely to zero by the mixing law of large numbers Corollary~3.48, while the next term, which has $i,j$ element
+\[
+  n^{-1}\sum_{\tau=1}^{m_n}w_{n\tau}\sum_{t=\tau+1}^{n}\mathcal{Z}_{nti}\mathcal{Z}_{n,t-\tau,j} - E(\mathcal{Z}_{nti}\mathcal{Z}_{n,t-\tau,j})
+\]
+converges in probability to zero by Lemma~\ref{lem:6.19}. The final term is the transpose of the preceding term so it too vanishes in probability, and the result follows.
+\end{proof}
+
+With this result, we can establish the consistency of $\hat{\bfV}_n$ for the instrumental variables estimator by setting $\mathcal{Z}_{nt} = \bfZ_t\eps_t$ and handling the additional terms that arise from the presence of $\tilde{\eps}_t$ in place of $\eps_t$ with an application of Lemma~6.19.
+
+Because the results for stationary mixing sequences follow as corollaries to the results for general mixing sequences, we state only the results for general mixing sequences.
+
+\begin{theorem}\label{thm:6.21}
+Suppose
+\begin{enumerate}[label=(\roman*)]
+  \item $\bfY_t = \bfX_t'\bfbeta_o + \eps_t$, \quad $t = 1,2,\ldots$\,, \quad $\bfbeta_o \in \mathbb{R}^k$;
+  \item $\{(\bfZ_t',\bfX_t',\eps_t)\}$ is a mixing sequence with either $\phi$ of size $-r/(r-1)$ or $\alpha$ of size $-2r/(r-2)$, $r > 2$;
+  \item\begin{enumerate}[label=(\alph*)]
+    \item $E(\bfZ_t\eps_t) = \bfzero$, \quad $t = 1,2,\ldots$\,;
+    \item $E|Z_{thi}\eps_{th}|^{2(r+\delta)} < \Delta < \infty$ for some $\delta > 0$, $h = 1,\ldots,p$, $i = 1,\ldots,l$, and all $t$;
+    \item $\bfV_n \equiv \var(n^{-1/2}\sum_{t=1}^{n}\bfZ_t\eps_t)$ is uniformly positive definite;
+  \end{enumerate}
+  \item\begin{enumerate}[label=(\alph*)]
+    \item $E|Z_{thi}X_{thj}|^{2(r+\delta)} < \Delta < \infty$ for some $\delta > 0$ and all $h = 1,\ldots,p$, $i = 1,\ldots,l$, $j = 1,\ldots,k$, and $t = 1,2,\ldots$\,;
+    \item $\bfQ_n \equiv E(\bfZ'\bfX/n)$ has uniformly full column rank;
+    \item $\hat{\bfP}_n - \bfP_n \convp \bfzero$, where $\bfP_n = O(1)$ and is symmetric and uniformly positive definite.
+  \end{enumerate}
+\end{enumerate}
+Define $\tilde{\bfV}_n$ as above. If $m_n \to \infty$ as $n \to \infty$ such that $m_n = o(n^{1/4})$, and if $|w_{n\tau}| < \Delta$, $n = 1,2,\ldots$\,, $\tau = 1,\ldots,m_n$ such that $w_{n\tau} \to 1$ as $n \to \infty$ for each $\tau$, then $\tilde{\bfV}_n - \bfV_n \convp \bfzero$ and $\tilde{\bfV}_n^{-1} - \bfV_n^{-1} \convp \bfzero$.
+\end{theorem}
+
+\begin{proof}
+By definition
+\begin{align*}
+  \tilde{\bfV}_n - \bfV_n &= w_{n0}\,n^{-1}\sum_{t=1}^{n}\bfZ_t\tilde{\eps}_t\tilde{\eps}_t'\bfZ_t' \\
+    &\quad + n^{-1}\sum_{\tau=1}^{m_n}w_{n\tau}\sum_{t=\tau+1}^{n}\bfZ_t\tilde{\eps}_t\tilde{\eps}_{t-\tau}'\bfZ_{t-\tau}' + \bfZ_{t-\tau}\tilde{\eps}_{t-\tau}\tilde{\eps}_t'\bfZ_t' - \bfV_n.
+\end{align*}
+Substituting $\tilde{\eps}_t = \eps_t - \bfX_t'(\tilde{\bfbeta}_n - \bfbeta_o)$ gives
+\begin{align*}
+  \tilde{\bfV}_n - \bfV_n &= w_{n0}\, n^{-1}\sum_{t=1}^{n}\bfZ_t\eps_t\eps_t'\bfZ_t' \\
+    &\quad + n^{-1}\sum_{\tau=1}^{m_n}w_{n\tau}\sum_{t=\tau+1}^{n}\bfZ_t\eps_t\eps_{t-\tau}'\bfZ_{t-\tau}' + \bfZ_{t-\tau}\eps_{t-\tau}\eps_t'\bfZ_t' - \bfV_n + \bfA_n,
+\end{align*}
+where
+\begin{align*}
+  \bfA_n &= -w_{n0}\, n^{-1}\sum_{t=1}^{n}\bfZ_t\eps_t(\tilde{\bfbeta}_n - \bfbeta_o)'\bfX_t\bfZ_t' \\
+    &\quad - w_{n0}\, n^{-1}\sum_{t=1}^{n}\bfZ_t\bfX_t'(\tilde{\bfbeta}_n - \bfbeta_o)\eps_t'\bfZ_t' \\
+    &\quad + w_{n0}\, n^{-1}\sum_{t=1}^{n}\bfZ_t\bfX_t'(\tilde{\bfbeta}_n - \bfbeta_o)(\tilde{\bfbeta}_n - \bfbeta_o)'\bfX_t\bfZ_t' \\
+    &\quad - n^{-1}\sum_{\tau=1}^{m_n}w_{n\tau}\sum_{t=\tau+1}^{n}\bfZ_t\eps_t(\tilde{\bfbeta}_n - \bfbeta_o)'\bfX_{t-\tau}\bfZ_{t-\tau}' \\
+    &\quad - n^{-1}\sum_{\tau=1}^{m_n}w_{n\tau}\sum_{t=\tau+1}^{n}\bfZ_t\bfX_t'(\tilde{\bfbeta}_n - \bfbeta_o)\eps_{t-\tau}'\bfZ_{t-\tau}' \\
+    &\quad + n^{-1}\sum_{\tau=1}^{m_n}w_{n\tau}\sum_{t=\tau+1}^{n}\bfZ_t\bfX_t'(\tilde{\bfbeta}_n - \bfbeta_o)(\tilde{\bfbeta}_n - \bfbeta_o)'\bfX_{t-\tau}\bfZ_{t-\tau}' \\
+    &\quad - n^{-1}\sum_{\tau=1}^{m_n}w_{n\tau}\sum_{t=\tau+1}^{n}\bfZ_{t-\tau}\eps_{t-\tau}(\tilde{\bfbeta}_n - \bfbeta_o)'\bfX_t\bfZ_t' \\
+    &\quad - n^{-1}\sum_{\tau=1}^{m_n}w_{n\tau}\sum_{t=\tau+1}^{n}\bfZ_{t-\tau}\bfX_{t-\tau}'(\tilde{\bfbeta}_n - \bfbeta_o)\eps_t'\bfZ_t' \\
+    &\quad + n^{-1}\sum_{\tau=1}^{m_n}w_{n\tau}\sum_{t=\tau+1}^{n}\bfZ_{t-\tau}\bfX_{t-\tau}'(\tilde{\bfbeta}_n - \bfbeta_o)(\tilde{\bfbeta}_n - \bfbeta_o)'\bfX_t\bfZ_t'.
+\end{align*}
+The conditions of the theorem ensure that the conditions of Theorem~\ref{thm:6.20} hold for $\mathcal{Z}_{nt} = \bfZ_t\eps_t$, so that
+\[
+  w_{n0}\, n^{-1}\sum_{t=1}^{n}\bfZ_t\eps_t\eps_t'\bfZ_t' + n^{-1}\sum_{\tau=1}^{m_n}w_{n\tau}\sum_{t=\tau+1}^{n}\bfZ_t\eps_t\eps_{t-\tau}'\bfZ_{t-\tau}' + \bfZ_{t-\tau}\eps_{t-\tau}\eps_t'\bfZ_t' - \bfV_n \convp \bfzero.
+\]
+
+The desired result then follows provided that all remaining terms (in $\bfA_n$) vanish in probability.
+
+The mixing and moment conditions imposed are more than enough to ensure that the terms involving $w_{n0}$ vanish in probability, by arguments identical to those used in the proof of Exercise~6.6. Thus, consider the term
+\begin{align*}
+  \vect&\left(n^{-1}\sum_{\tau=1}^{m_n}w_{n\tau}\sum_{t=\tau+1}^{n}\bfZ_t\eps_t(\tilde{\bfbeta}_n - \bfbeta_o)'\bfX_{t-\tau}\bfZ_{t-\tau}'\right) \\
+  &= n^{-1}\sum_{\tau=1}^{m_n}w_{n\tau}\sum_{t=\tau+1}^{n}(\bfZ_{t-\tau}\bfX_{t-\tau}'\otimes\bfZ_t\eps_t)\vect((\tilde{\bfbeta}_n - \bfbeta_o)') \\
+  &= n^{-1}\sum_{\tau=1}^{m_n}w_{n\tau}\sum_{t=\tau+1}^{n}\bigl[(\bfZ_{t-\tau}\bfX_{t-\tau}'\otimes\bfZ_t\eps_t) \\
+  &\qquad - E(\bfZ_{t-\tau}\bfX_{t-\tau}'\otimes\bfZ_t\eps_t)\bigr]\vect((\tilde{\bfbeta}_n - \bfbeta_o)') \\
+  &\quad + n^{-1}\sum_{\tau=1}^{m_n}w_{n\tau}\sum_{t=\tau+1}^{n}E\left(\bfZ_{t-\tau}\bfX_{t-\tau}'\otimes\bfZ_t\eps_t\right)\vect((\tilde{\bfbeta}_n - \bfbeta_o)').
+\end{align*}
+
+Applying Lemma~\ref{lem:6.19} with $\mathcal{Z}_{nt} = \vect(\bfZ_t\bfX_t'\otimes\bfZ_t\eps_t)$ we have that
+\[
+  n^{-1}\sum_{\tau=1}^{m_n}w_{n\tau}\sum_{t=\tau+1}^{n}\left(\bfZ_{t-\tau}\bfX_{t-\tau}'\otimes\bfZ_t\eps_t\right) - E(\bfZ_{t-\tau}\bfX_{t-\tau}'\otimes\bfZ_t\eps_t) \convp \bfzero.
+\]
+This together with the fact that $\tilde{\bfbeta}_n - \bfbeta_o \convp \bfzero$ ensures that the first of the two terms above vanishes. It therefore suffices to show that
+\[
+  n^{-1}\sum_{\tau=1}^{m_n}w_{n\tau}\sum_{t=\tau+1}^{n}E\left(\bfZ_{t-\tau}\bfX_{t-\tau}'\otimes\bfZ_t\eps_t\right)\vect((\tilde{\bfbeta}_n - \bfbeta_o)')
+\]
+vanishes in probability.
+
+Under the conditions of the theorem, we have $\sqrt{n}(\tilde{\bfbeta}_n - \bfbeta_o) = O_p(1)$ (by asymptotic normality, Theorem~5.23) so it will suffice that
+\[
+  n^{-3/2}\sum_{\tau=1}^{m_n}w_{n\tau}\sum_{t=\tau+1}^{n}E\left(\bfZ_{t-\tau}\bfX_{t-\tau}'\otimes\bfZ_t\eps_t\right) = o(1).
+\]
+Applying the triangle inequality and Jensen's inequality we have
+\begin{align*}
+  \left|n^{-3/2}\sum_{\tau=1}^{m_n}w_{n\tau}\sum_{t=\tau+1}^{n}E\left(\bfZ_{t-\tau}\bfX_{t-\tau}'\otimes\bfZ_t\eps_t\right)\right|
+    &< n^{-3/2}\sum_{\tau=1}^{m_n}|w_{n\tau}|\sum_{t=\tau+1}^{n}E|\bfZ_{t-\tau}\bfX_{t-\tau}'\otimes\bfZ_t\eps_t|,
+\end{align*}
+where the absolute value and inequality are understood to hold element by element. Because second moments of $\bfZ_t\bfX_t'$ and $\bfZ_t\eps_t$ are uniformly bounded, the Minkowski and Cauchy-Schwarz inequalities ensure the existence of a finite matrix $\boldsymbol{\Delta}$ such that $E|\bfZ_{t-\tau}\bfX_{t-\tau}'\otimes\bfZ_t\eps_t| < \boldsymbol{\Delta}$. Further $|w_{n\tau}| \leq \Delta$ so that
+\begin{align*}
+  n^{-3/2}\sum_{\tau=1}^{m_n}w_{n\tau}\sum_{t=\tau+1}^{n}E|\bfZ_{t-\tau}\bfX_{t-\tau}'\otimes\bfZ_t\eps_t|
+    &\leq n^{-3/2}\sum_{\tau=1}^{m_n}|w_{n\tau}|(n-\tau)\boldsymbol{\Delta} \\
+    &\leq n^{-3/2}m_n\Delta(n-\tau)\boldsymbol{\Delta} \\
+    &\leq n^{-1/2}m_n\Delta\boldsymbol{\Delta}.
+\end{align*}
+But $m_n = o(n^{1/4})$, so $n^{-1/2}m_n \to 0$, which implies
+\[
+  n^{-3/2}\sum_{\tau=1}^{m_n}w_{n\tau}\sum_{t=\tau+1}^{n}E(\bfZ_{t-\tau}\bfX_{t-\tau}'\otimes\bfZ_t\eps_t) = o(1)
+\]
+as we needed.
+
+The same argument works for all of the other terms under the conditions given, so the result follows.
+\end{proof}
+
+Comparing the conditions of this result to the asymptotic normality result, Theorem~5.23, we see that the memory conditions here are twice as strong as in Theorem~5.23. The moment conditions on $\bfZ_t\eps_t$ are roughly twice as strong as in Theorem~5.23, while those on $\bfZ_t\bfX_t'$ are roughly four times as strong.
+
+The rate $m_n = o(n^{1/4})$ is not necessarily the optimal rate, and other methods of proof can deliver faster rates for $m_n$. (See, e.g., Andrews, 1991.) For discussion on methods relevant for choosing $m_n$, see Den Haan and Levin (1997).
+
+Gallant and White (1988, Lemma~6.5) provide the following conditions on $w_{n\tau}$ guaranteeing the positive definiteness of $\tilde{\bfV}_n$.
+
+\begin{lemma}\label{lem:6.22}
+Let $\{\mathcal{Z}_{nt}\}$ be an arbitrary double array and let $\{a_{ni}\}$, $n = 1,2,\ldots$\,, $i = 1,\ldots,m_n+1$ be a triangular array of real numbers. Then for any triangular array of weights
+\[
+  w_{n\tau} = \sum_{i=\tau+1}^{m_n+1}a_{ni}a_{n,i-\tau}, \quad n = 1,2,\ldots\,, \quad \tau = 1,\ldots,m_n
+\]
+we have
+\[
+  \mathcal{Y}_n = w_{n0}\sum_{t=1}^{n}\mathcal{Z}_{nt}^2 + 2\sum_{\tau=1}^{m_n}w_{n\tau}\sum_{t=1}^{n}\mathcal{Z}_{nt}\mathcal{Z}_{n,t-\tau} > 0.
+\]
+\end{lemma}
+
+\begin{proof}
+See Gallant and White (1988, Lemma~6.5).
+\end{proof}
+
+For example, choosing $a_{ni} = (m_n+1)^{1/2}$ for all $i = 1,\ldots,m_n+1$ delivers
+\[
+  w_{n\tau} = 1 - \tau/(m_n+1), \quad \tau = 1,\ldots,m_n,
+\]
+which are the Bartlett (1950) weights given by Newey and West (1987). Other choices for $a_{ni}$ lead to other choices of weights that arise in the problem of estimating the \emph{spectrum of a time series at zero frequency}. (See Anderson (1971, Ch.~8) for further discussion.) This is quite natural, as $\bfV_n$ can be interpreted precisely as the value of the spectrum of $\bfZ_t\eps_t$ at zero frequency.
+
+\begin{corollary}\label{cor:6.23}
+Suppose the conditions of Theorem~\ref{thm:6.21} hold. Then
+\[
+  \bfD_n^{-1/2}\sqrt{n}(\tilde{\bfbeta}_n - \bfbeta_o) \xrightarrow{A} N(\bfzero,\bfI),
+\]
+where
+\[
+  \bfD_n \equiv (\bfQ_n'\bfP_n\bfQ_n)^{-1}\bfQ_n'\bfP_n\bfV_n\bfP_n\bfQ_n(\bfQ_n'\bfP_n\bfQ_n)^{-1}.
+\]
+Further, $\hat{\bfD}_n - \bfD_n \convp \bfzero$, where
+\[
+  \hat{\bfD}_n = (\bfX'\bfZ\hat{\bfP}_n\bfZ'\bfX/n^2)^{-1}(\bfX'\bfZ/n)\hat{\bfP}_n\tilde{\bfV}_n\hat{\bfP}_n(\bfZ'\bfX/n)(\bfX'\bfZ\hat{\bfP}_n\bfZ'\bfX/n^2)^{-1}.
+\]
+\end{corollary}
+
+\begin{proof}
+Immediate from Theorem~5.23 and Theorem~\ref{thm:6.21}.
+\end{proof}
+
+This result contains versions of all preceding asymptotic normality results as special cases while making minimal assumptions on the error covariance structure.
+
+Finally, we state a general result for the 2SIV estimator.
+
+\begin{corollary}\label{cor:6.24}
+Suppose
+\begin{enumerate}[label=(\roman*)]
+  \item $\bfY_t = \bfX_t'\bfbeta_o + \eps_t$, \quad $t = 1,2,\ldots$\,, \quad $\bfbeta_o \in \mathbb{R}^k$;
+  \item $\{(\bfZ_t',\bfX_t',\eps_t)\}$ is a mixing sequence with either $\phi$ of size $-r/(r-1)$ or $\alpha$ of size $-2r/(r-2)$, $r > 2$;
+  \item\begin{enumerate}[label=(\alph*)]
+    \item $E(\bfZ_t\eps_t) = \bfzero$, \quad $t = 1,2,\ldots$\,;
+    \item $E|Z_{thi}\eps_{th}|^{2(r+\delta)} < \Delta < \infty$ for some $\delta > 0$ and all $h = 1,\ldots,p$, $i = 1,\ldots,l$, and $t = 1,2,\ldots$\,;
+    \item $\bfV_n \equiv \var(n^{-1/2}\sum_{t=1}^{n}\bfZ_t\eps_t)$ is uniformly positive definite;
+  \end{enumerate}
+  \item\begin{enumerate}[label=(\alph*)]
+    \item $E|Z_{thi}X_{thj}|^{2(r+\delta)} < \Delta < \infty$ and $E|Z_{thi}|^{(r+\delta)} < \Delta < \infty$, for some $\delta > 0$ and all $h = 1,\ldots,p$, $i = 1,\ldots,l$, $j = 1,\ldots,k$, and $t = 1,2,\ldots$\,;
+    \item $\bfQ_n \equiv E(\bfZ'\bfX/n)$ has uniformly full column rank;
+    \item $\mathbf{L}_n \equiv E(\bfZ'\bfZ/n)$ is uniformly positive definite.
+  \end{enumerate}
+\end{enumerate}
+Define
+\begin{align*}
+  \tilde{\bfV}_n &\equiv w_{n0}\, n^{-1}\sum_{t=1}^{n}\bfZ_t\tilde{\eps}_t\tilde{\eps}_t'\bfZ_t' \\
+    &\quad + n^{-1}\sum_{\tau=1}^{m_n}w_{n\tau}\sum_{t=\tau+1}^{n}\bfZ_t\tilde{\eps}_t\tilde{\eps}_{t-\tau}'\bfZ_{t-\tau}' + \bfZ_{t-\tau}\tilde{\eps}_{t-\tau}\tilde{\eps}_t'\bfZ_t',
+\end{align*}
+where $\tilde{\eps}_t \equiv \bfY_t - \bfX_t'\tilde{\bfbeta}_n$, $\tilde{\bfbeta}_n \equiv (\bfX'\bfZ(\bfZ'\bfZ)^{-1}\bfZ'\bfX)^{-1}\bfX'\bfZ(\bfZ'\bfZ)^{-1}\bfZ'\bfY$, and define
+\[
+  \bfbeta_n^* \equiv (\bfX'\bfZ\tilde{\bfV}_n^{-1}\bfZ'\bfX)^{-1}\bfX'\bfZ\tilde{\bfV}_n^{-1}\bfZ'\bfY.
+\]
+If $m_n \to \infty$ as $n \to \infty$ such that $m_n = o(n^{1/4})$ and if $|w_{n\tau}| < \Delta$, $n = 1,2,\ldots$\,, $\tau = 1,\ldots,m_n$ such that $w_{n\tau} \to 1$ as $n \to \infty$ for each $\tau$, then
+$\bfD_n^{-1/2}\sqrt{n}(\bfbeta_n^* - \bfbeta_o) \xrightarrow{A} N(\bfzero,\bfI)$, where
+\[
+  \bfD_n = (\bfQ_n'\bfV_n^{-1}\bfQ_n)^{-1}.
+\]
+Further, $\tilde{\bfD}_n - \bfD_n \convp \bfzero$, where
+\[
+  \tilde{\bfD}_n = (\bfX'\bfZ\tilde{\bfV}_n^{-1}\bfZ'\bfX/n^2)^{-1}.
+\]
+\end{corollary}
+
+\begin{proof}
+Conditions $(i)$--$(iv)$ ensure that Theorem~\ref{thm:6.21} holds for $\tilde{\bfbeta}_n$. Set $\hat{\bfP}_n = \tilde{\bfV}_n^{-1}$ in Corollary~\ref{cor:6.23}. Then $\bfP_n = \bfV_n^{-1}$, and the result follows.
+\end{proof}
+
+\section*{References}
+
+\begin{description}[style=nextline,leftmargin=0pt,itemsep=4pt]
+
+\item[Anderson, T. W. (1971).] \textit{The Statistical Analysis of Time Series}. Wiley, New York.
+
+\item[Andrews, D. W. K. (1991).] ``Heteroskedasticity and autocorrelation consistent covariance matrix estimation.'' \textit{Econometrica}, 59, 817--858.
+
+\item[Bartlett, M. S. (1950).] ``Periodogram analysis and continuous spectra.'' \textit{Biometrika}, 37, 1--16.
+
+\item[Den Haan, W. J. and A. T. Levin (1997).] ``A practitioner's guide to robust covariance matrix estimation.'' In \textit{Handbook of Statistics}, vol.~15, G.~S.~Maddala and C.~R.~Rao, eds., pp.~309--327. Elsevier, Amsterdam.
+
+\item[Gallant, A. R. and H. White (1988).] \textit{A Unified Theory of Estimation and Inference for Nonlinear Dynamic Models}. Basil Blackwell, Oxford.
+
+\item[McLeish, D. L. (1975).] ``A maximal inequality and dependent strong laws.'' \textit{Annals of Probability}, 3, 826--836.
+
+\item[Newey, W. and K. West (1987).] ``A simple positive semi-definite, heteroskedasticity and autocorrelation consistent covariance matrix.'' \textit{Econometrica}, 55, 703--708.
+
+\item[Phillips, P. C. B. (1985).] Personal communication.
+
+\item[White, H. (1980).] ``A heteroskedasticity-consistent covariance matrix estimator and a direct test for heteroskedasticity.'' \textit{Econometrica}, 48, 817--838.
+
+\item[] \hspace{1em}(1982). ``Instrumental variables regression with independent observations.'' \textit{Econometrica}, 50, 483--500.
+
+\item[] \hspace{1em}(1984). \textit{Asymptotic Theory for Econometricians}. Academic Press, Orlando.
+
+\end{description}
