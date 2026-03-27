@@ -59,6 +59,8 @@ Apply fixes using **Python `re` module only**. Never use `sed` — it interprets
 | `\frac{partial}{partial x}` | Missing backslash | → `\frac{\partial}{\partial x}` |
 | Form feed bytes (0x0c) in .tex files | sed corruption artifact | Strip with `bytes.replace(b'\x0c', b'')` |
 | `\fbox{\parbox{...}{` with premature `}}` | Script split content outside box | Move content inside, fix closing braces |
+| Duplicate QED boxes (blacksquare) at end of proofs | Subagent used manual `\qed` or `\hfill$\blacksquare$` inside `\begin{proof}...\end{proof}` which auto-appends QED | Remove all `\qed`, `\hfill$\blacksquare$`, `$\blacksquare$` from inside proof environments. Keep `\qedhere` (correct amsthm usage for proofs ending with displayed equations). Use Python: `re.sub(r'\s*\\qed\b(?!here)', '', content)` and `re.sub(r'\s*\\hfill\s*\$\\blacksquare\$', '', content)` |
+| Wrong theorem numbering (Def 2.1, Thm 2.1 — separate counters) | Preamble used `\newtheorem{definition}{Definition}[chapter]` instead of sharing the `theorem` counter | Fix preamble: `\newtheorem{definition}[theorem]{Definition}` — all theorem-like envs share one counter |
 
 ---
 

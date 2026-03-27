@@ -46,7 +46,7 @@ You are setting up a LaTeX project from a scanned PDF textbook. Do the following
 
 4. Write these files:
    a. latex/book.conf — BOOK_NAME, TITLE, AUTHOR, EDITION, PUBLISHER, and a CHAPTERS variable mapping chapter numbers to PDF page ranges (e.g., CH01_PAGES="17-42")
-   b. latex/preamble.tex — geometry matching source dimensions, math packages (\E{}, \Var{}, \Cov{}, \plim, \dto, \pto, \pd{}{}), \exerciselabel configured from the exercise style found, and metadata macros (\booktitle, \bookauthor, \bookedition, \bookpublisher) with literal values from book.conf
+   b. latex/preamble.tex — geometry matching source dimensions, math packages (\E{}, \Var{}, \Cov{}, \plim, \dto, \pto, \pd{}{}), \exerciselabel configured from the exercise style found, metadata macros (\booktitle, \bookauthor, \bookedition, \bookpublisher) with literal values from book.conf. IMPORTANT: check whether the source uses a shared counter for all theorem-like environments (most math books do: Def 2.1, Ex 2.2, Prop 2.3 all sequential). If so, use `\newtheorem{definition}[theorem]{Definition}` etc. to share the `theorem` counter. Never create separate counters unless the source clearly uses them.
    c. latex/main.tex — \input{preamble}, \begin{document}, \include{} for frontmatter + all chapters + backmatter, \end{document}
    d. latex/frontmatter.tex — title page using \booktitle, \bookauthor, \bookedition macros
    e. docs/progress.md — section-level checklist with all chapters and sections. Use the BOOK_NAME slug as the heading, NOT the full title. Include PDF page ranges per chapter.
@@ -98,6 +98,7 @@ Typeset pages X–Y (Chapter N) from the attached scanned pages as LaTeX.
 - Conventions: \E{}, \Var{}, \Cov{}, \plim, \dto, \pto, \pd{}{}, \vec{x} for bold vectors
 - Figures: \begin{figure}[H] with % TODO: extract figure placeholder
 - Unclear content: % UNCLEAR: [description, page X] — never guess
+- QED: NEVER use \qed or \blacksquare or \hfill$\blacksquare$ inside \begin{proof}...\end{proof}. The proof environment auto-adds the QED symbol. Only use \qedhere when proof ends with a displayed equation or list.
 - Output only LaTeX source code. Match every word and equation exactly as shown on the scanned pages.
 - After done: update progress.md marking sections [x]
 ```
@@ -171,3 +172,5 @@ Invoke `/compile-fix`, then:
 | Figures from PDF screenshots, not TikZ | Faster, accurate, no recreation errors |
 | Build into `latex/build/`, PDFs to `latex/` root | Keep source directory clean |
 | Branch `output/<name>`, never commit content to `main` | Framework stays reusable |
+| Shared counter for ALL theorem-like environments | Most math textbooks use one sequential counter per chapter (Def 2.1, Ex 2.2, Prop 2.3, ...). Use `\newtheorem{definition}[theorem]{Definition}` etc. — never `\newtheorem{definition}{Definition}[chapter]` with a separate counter. Verify in Phase 0 by checking if the source numbers are sequential across environment types. |
+| Never use manual `\qed` or `\blacksquare` inside `\begin{proof}` | The `proof` environment auto-appends `\qedsymbol`. Manual `\qed` causes duplicate boxes. Use `\qedhere` only when the proof ends with a displayed equation or list. Instruct subagents explicitly. |
