@@ -1,87 +1,70 @@
-% preamble.tex — Shared LaTeX preamble for textbook conversion
-% Page geometry configured to match the source textbook
-
+% preamble.tex — Asymptotic Theory for Econometricians (White, Revised Edition)
 \documentclass[10pt,openright]{book}
 
 %% ── Page Geometry ──────────────────────────────────────────────
-% Original is approximately 6.5" x 9.5" Prentice Hall format
+% Academic Press format, approximately 6" x 9"
 \usepackage[
-  paperwidth=6.5in,
-  paperheight=9.5in,
-  top=1in,
-  bottom=1in,
-  left=0.85in,
-  right=0.85in,
+  paperwidth=6in,
+  paperheight=9in,
+  top=0.9in,
+  bottom=0.9in,
+  left=0.75in,
+  right=0.75in,
   headheight=14pt,
-  headsep=0.3in,
-  footskip=0.4in
+  headsep=0.25in,
+  footskip=0.35in
 ]{geometry}
 
 %% ── Encoding & Fonts ──────────────────────────────────────────
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
-\usepackage{lmodern}          % Latin Modern (close to Computer Modern)
-\usepackage{microtype}        % Improved typography
+\usepackage{lmodern}
+\usepackage{microtype}
 
 %% ── Math ───────────────────────────────────────────────────────
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{amsthm}
-\usepackage{mathtools}        % Extensions to amsmath
-\usepackage{bm}               % Bold math symbols
+\usepackage{mathtools}
+\usepackage{bm}
 
-% Equation numbering: (chapter.section.number)
-\numberwithin{equation}{section}
-
-% Figure/table numbering: chapter.section.number
-\usepackage{chngcntr}
-\counterwithin{figure}{section}
-\counterwithin{table}{section}
-
-%% ── Boxed Equations/Definitions ────────────────────────────────
-\usepackage[most]{tcolorbox}
-
-% Simple box style matching the book's thin-border boxes
-\newtcolorbox{defbox}{
-  colback=white,
-  colframe=black,
-  boxrule=0.5pt,
-  arc=0pt,
-  left=6pt, right=6pt, top=4pt, bottom=4pt,
-  boxsep=2pt
-}
+% Equation numbering: (chapter.number) — no section prefix
+\numberwithin{equation}{chapter}
 
 %% ── Theorem Environments ───────────────────────────────────────
+% White uses a single shared counter for ALL theorem-like environments:
+% Definition 2.1, Example 2.2, Proposition 2.3, ... all sequential within chapter
 \theoremstyle{plain}
-\newtheorem{theorem}{Theorem}[section]
+\newtheorem{theorem}{Theorem}[chapter]
 \newtheorem{lemma}[theorem]{Lemma}
 \newtheorem{corollary}[theorem]{Corollary}
 \newtheorem{proposition}[theorem]{Proposition}
 
 \theoremstyle{definition}
-\newtheorem{definition}{Definition}[section]
-\newtheorem{example}{Example}[section]
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{assumption}[theorem]{Assumption}
 
 \theoremstyle{remark}
-\newtheorem{remark}{Remark}[section]
+\newtheorem{remark}[theorem]{Remark}
+
+% QED symbol for proofs
+\renewcommand{\qedsymbol}{$\blacksquare$}
 
 %% ── Exercises ──────────────────────────────────────────────────
 \usepackage{enumitem}
 
-% Exercise label style — configure per book, then forget about it.
-%   \exercisestyle{prefix}{counter} is called for each item label.
-%   Default: "1.2.1." "1.2.2." (section-prefixed)
-%   Override examples:
-%     Plain numbers:       \renewcommand{\exerciselabel}[1]{\textbf{\arabic*.}}
-%     Parenthesized:       \renewcommand{\exerciselabel}[1]{\textbf{(\arabic*)}}
-%     Chapter-only prefix: \renewcommand{\exerciselabel}[1]{\textbf{\thechapter.\arabic*.}}
-\newcommand{\exerciselabel}[1]{\textbf{#1.\arabic*.}}
-\newcommand{\exerciseref}[1]{#1.\arabic*}
+% White's exercise style: numbered sequentially within chapter, no section prefix
+% e.g., Exercise 1, Exercise 2, ... within each chapter
+\newcounter{exercise}[chapter]
+\renewcommand{\theexercise}{\arabic{exercise}}
 
-\newenvironment{exercises}[1]{%
-  \subsection*{Exercises #1}%
-  \begin{enumerate}[label={\exerciselabel{#1}},ref={\exerciseref{#1}},leftmargin=*]%
+\newenvironment{exercises}{%
+  \subsection*{Exercises}%
+  \begin{enumerate}[label={\textbf{\arabic*.}},ref={\thechapter.\arabic*},leftmargin=*]%
+  \setcounter{enumi}{\value{exercise}}%
 }{%
+  \setcounter{exercise}{\value{enumi}}%
   \end{enumerate}%
 }
 
@@ -90,11 +73,8 @@
 
 %% ── Figures ────────────────────────────────────────────────────
 \usepackage{graphicx}
+\graphicspath{{figures/}{../figures/}}
 \usepackage{float}
-\usepackage{tikz}
-\usepackage{pgfplots}
-\pgfplotsset{compat=1.18}
-\usetikzlibrary{arrows.meta, patterns, decorations.markings, decorations.pathmorphing, calc}
 
 %% ── Tables ─────────────────────────────────────────────────────
 \usepackage{booktabs}
@@ -106,30 +86,31 @@
 \pagestyle{fancy}
 \fancyhf{}
 \fancyhead[LE]{\thepage}
-\fancyhead[RE]{\leftmark}
+\fancyhead[RE]{\footnotesize\itshape\leftmark}
 \fancyhead[RO]{\thepage}
-\fancyhead[LO]{\rightmark}
+\fancyhead[LO]{\footnotesize\itshape\rightmark}
 \renewcommand{\headrulewidth}{0pt}
 
-% Chapter/section mark formatting
-\renewcommand{\chaptermark}[1]{\markboth{Chapter \thechapter.\ #1}{}}
+\renewcommand{\chaptermark}[1]{\markboth{\thechapter.\ #1}{}}
 \renewcommand{\sectionmark}[1]{\markright{\thesection\ #1}}
 
-% Plain style for chapter opening pages
 \fancypagestyle{plain}{%
   \fancyhf{}%
   \fancyfoot[C]{\thepage}%
   \renewcommand{\headrulewidth}{0pt}%
 }
 
+%% ── TOC Depth ──────────────────────────────────────────────────
+% Source TOC shows chapters and sections (no subsections)
+\setcounter{tocdepth}{1}
+
 %% ── Cross-references ──────────────────────────────────────────
 \usepackage{hyperref}
 \hypersetup{
   colorlinks=false,
   pdfborder={0 0 0},
-  % PDF metadata — set per book
-  pdftitle={},
-  pdfauthor={}
+  pdftitle={Asymptotic Theory for Econometricians},
+  pdfauthor={Halbert White}
 }
 \usepackage{cleveref}
 
@@ -139,39 +120,69 @@
 
 %% ── Custom Commands ────────────────────────────────────────────
 
-% Partial derivatives
-\newcommand{\pd}[2]{\frac{\partial #1}{\partial #2}}
-\newcommand{\pdd}[2]{\frac{\partial^2 #1}{\partial #2^2}}
-\newcommand{\pddm}[3]{\frac{\partial^2 #1}{\partial #2 \partial #3}}
-
-% Ordinary derivatives
-\newcommand{\od}[2]{\frac{d #1}{d #2}}
-\newcommand{\odd}[2]{\frac{d^2 #1}{d #2^2}}
-
-% Evaluation bar
-\newcommand{\evalat}[2]{\left. #1 \right|_{#2}}
-
-% Common operators
-\DeclareMathOperator{\erfc}{erfc}
-\DeclareMathOperator{\sinc}{sinc}
-\DeclareMathOperator{\sgn}{sgn}
-\DeclareMathOperator{\Real}{Re}
-\DeclareMathOperator{\Imag}{Im}
-
-% Bold vectors
+% Bold vectors and matrices (White's convention)
 \renewcommand{\vec}[1]{\mathbf{#1}}
 
-% Laplacian
-\newcommand{\laplacian}{\nabla^2}
+% Common econometric operators
+\DeclareMathOperator{\plim}{plim}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\var}{var}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\E}{E}
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\diag}{diag}
+\DeclareMathOperator{\vect}{vec}
+\DeclareMathOperator{\sgn}{sgn}
+\DeclareMathOperator{\op}{o_p}
+\DeclareMathOperator{\Op}{O_p}
 
-% Double surface integral (not in all packages)
-\providecommand{\oiint}{\mathop{\oint\!\!\!\oint}\nolimits}
+% Convergence arrows
+\newcommand{\convp}{\xrightarrow{p}}        % convergence in probability
+\newcommand{\convd}{\xrightarrow{d}}        % convergence in distribution
+\newcommand{\convas}{\xrightarrow{a.s.}}    % almost sure convergence
+\newcommand{\convr}[1]{\xrightarrow{r.#1}}  % convergence in r-th mean
 
-% Common notations used in the book
-\newcommand{\dx}{\,dx}
-\newcommand{\dy}{\,dy}
-\newcommand{\dt}{\,dt}
-\newcommand{\ds}{\,ds}
-\newcommand{\dA}{\,dA}
-\newcommand{\dV}{\,dV}
-\newcommand{\dS}{\,dS}
+% Partial derivatives
+\newcommand{\pd}[2]{\frac{\partial #1}{\partial #2}}
+
+% Common notation — bold vectors/matrices
+\newcommand{\bfX}{\mathbf{X}}
+\newcommand{\bfY}{\mathbf{Y}}
+\newcommand{\bfZ}{\mathbf{Z}}
+\newcommand{\bfI}{\mathbf{I}}
+\newcommand{\bfC}{\mathbf{C}}
+\newcommand{\bfW}{\mathbf{W}}
+\newcommand{\bfV}{\mathbf{V}}
+\newcommand{\bfA}{\mathbf{A}}
+\newcommand{\bfB}{\mathbf{B}}
+\newcommand{\bfD}{\mathbf{D}}
+\newcommand{\bfH}{\mathbf{H}}
+\newcommand{\bfM}{\mathbf{M}}
+\newcommand{\bfP}{\mathbf{P}}
+\newcommand{\bfQ}{\mathbf{Q}}
+\newcommand{\bfR}{\mathbf{R}}
+\newcommand{\bfS}{\mathbf{S}}
+\newcommand{\bfT}{\mathbf{T}}
+\newcommand{\bfU}{\mathbf{U}}
+\newcommand{\bfbeta}{\boldsymbol{\beta}}
+\newcommand{\bfalpha}{\boldsymbol{\alpha}}
+\newcommand{\bfgamma}{\boldsymbol{\gamma}}
+\newcommand{\bfdelta}{\boldsymbol{\delta}}
+\newcommand{\bftheta}{\boldsymbol{\theta}}
+\newcommand{\bfmu}{\boldsymbol{\mu}}
+\newcommand{\bflambda}{\boldsymbol{\lambda}}
+\newcommand{\bfOmega}{\boldsymbol{\Omega}}
+\newcommand{\bfSigma}{\boldsymbol{\Sigma}}
+\newcommand{\bfPhi}{\boldsymbol{\Phi}}
+\newcommand{\bfPsi}{\boldsymbol{\Psi}}
+\newcommand{\bfeps}{\boldsymbol{\varepsilon}}
+\newcommand{\bfeta}{\boldsymbol{\eta}}
+\newcommand{\bfzero}{\mathbf{0}}
+\newcommand{\bfpi}{\boldsymbol{\pi}}
+\newcommand{\bfrho}{\boldsymbol{\rho}}
+\newcommand{\bfLambda}{\boldsymbol{\Lambda}}
+\newcommand{\bfv}{\mathbf{v}}
+
+% Epsilon shorthand
+\newcommand{\eps}{\varepsilon}
