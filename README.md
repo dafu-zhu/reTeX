@@ -56,8 +56,11 @@ cp your_textbook.pdf pdfs/scanned.pdf
 │   └── build/                   # Auxiliary files (not committed)
 ├── scripts/
 │   ├── build.sh                 # Build full book or single chapter
+│   ├── pipeline.py              # Python-first pipeline orchestrator
+│   ├── compile_fix.py           # Deterministic compile→fix→recompile loop
 │   ├── extract_figures.py       # Extract figures from scanned PDF
-│   └── inventory_check.py       # Count sections/equations/figures/exercises
+│   ├── inventory_check.py       # Count sections/equations/figures/exercises
+│   └── test_compile_fix.py      # Tests for compile_fix patterns
 ├── skills/                      # Claude Code skills (slash commands)
 │   ├── pdf-to-latex.md          # /pdf-to-latex — full pipeline
 │   ├── compile-fix.md           # /compile-fix — compile→fix loop
@@ -85,18 +88,49 @@ cp your_textbook.pdf pdfs/scanned.pdf
 | `/compile-fix` | Compile → diagnose → fix → recompile loop |
 | `/extract-figures` | Extract figures from PDF by caption index |
 
+## Python Pipeline
+
+Most pipeline tasks run as pure Python — no AI needed:
+
+```bash
+# Full pipeline (AI only for content conversion)
+python scripts/pipeline.py pdfs/scanned.pdf
+
+# Skip AI — setup, figures, compile-fix, inventory only
+python scripts/pipeline.py pdfs/scanned.pdf --skip-ai
+
+# Individual phases
+python scripts/pipeline.py pdfs/scanned.pdf --phase 0    # Setup
+python scripts/pipeline.py pdfs/scanned.pdf --phase 2    # Figures
+python scripts/pipeline.py pdfs/scanned.pdf --phase 4    # Verify
+
+# Standalone compile-fix loop
+python scripts/compile_fix.py                    # Full book
+python scripts/compile_fix.py --chapter 3        # Single chapter
+python scripts/compile_fix.py --fix-only         # Apply fixes without compiling
+python scripts/compile_fix.py --compile-only     # Compile without fixing
+```
+
+| Phase | Task | Requires AI? |
+|-------|------|-------------|
+| 0 | Parse TOC, create structure, write templates | No — PyMuPDF + templates |
+| 1 | Content conversion (scanned pages → LaTeX) | **Yes** — Claude sonnet |
+| 2 | Figure extraction | No — PyMuPDF crop |
+| 3 | Back matter skeleton | No — templates |
+| 4 | Compile-fix + inventory | No — regex patterns |
+
 ## Dependencies
 
 - **LaTeX**: pdflatex (amsmath, tikz, pgfplots, tcolorbox, enumitem, etc.)
-- **Python 3**: PyMuPDF (`pip install pymupdf`) for figure extraction
-- **Claude Code**: AI-powered content conversion
+- **Python 3**: PyMuPDF (`pip install pymupdf`) for figure extraction and TOC parsing
+- **Claude Code** or **Anthropic API** (`pip install anthropic`): content conversion only (Phase 1)
 
 ## Roadmap
 
 - [x] Claude Code pipeline
+- [x] Scripted Python pattern matching for compile fixes (`scripts/compile_fix.py`)
+- [x] Python-first pipeline — AI only for content conversion (`scripts/pipeline.py`)
 - [ ] **Resolve Claude copyright output filter** — Claude refuses to output content it recognizes as copyrighted; see [research](docs/research.md)
-- [ ] Move simple tasks (compile-fix, figure extraction) to [opencode](https://github.com/opencode-ai/opencode) with local/cheap models
-- [ ] Scripted Python pattern matching for compile fixes (no LLM needed)
 - [ ] Per-chapter compilation instead of per-batch
 
 ## License

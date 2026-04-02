@@ -7,6 +7,18 @@ description: "Automated LaTeX compile → diagnose → fix → recompile loop. I
 
 Compile a LaTeX project, diagnose errors, fix them programmatically, and recompile. Repeat until clean or max 10 iterations.
 
+## Prefer the Python script
+
+**For deterministic fixes, use the Python script directly — no AI needed:**
+
+```bash
+python scripts/compile_fix.py                    # Full compile-fix loop
+python scripts/compile_fix.py --chapter 3        # Single chapter
+python scripts/compile_fix.py --fix-only         # Apply fixes without compiling
+```
+
+The script handles all the patterns below automatically. Only invoke this skill via Claude Code when the Python script reports errors it can't fix (novel patterns requiring judgment).
+
 ## Input
 - Optional: path to latex directory (default: `latex/`)
 
