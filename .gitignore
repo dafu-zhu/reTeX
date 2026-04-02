@@ -31,3 +31,4 @@ Thumbs.db
 
 # Claude
 .claude/
+scripts/__pycache__/
