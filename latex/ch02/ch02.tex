@@ -1,0 +1,1398 @@
+\chapter{Surface Integrals and the Divergence}
+
+\begin{quote}
+\textit{Oh, could I flow like thee, and make\\
+\hspace*{1em}thy stream\\
+My great example\dots.}
+
+\hfill\textit{Sir John Denham}
+\end{quote}
+
+%% ==============================
+\section{Gauss' Law}
+%% ==============================
+
+Since the electrostatic field is so important a quantity in electrostatics, it follows that we need some convenient way to find it, given a set of charges. At first glance it might appear that we solved this problem before we even stated it, for, after all, do not Equations~(I-4) and~(I-7) provide us with a means of finding~$\bfE$? The answer is, in general, no. Unless there are very few charges in the system and/or they are arranged simply or very symmetrically, the sum in Equation~(I-4) and the integral in Equation~(I-7) are usually prohibitively difficult---and frequently impossible---to perform. Thus, these two equations provide what is usually only a ``formal''\footnote{The word ``formal'' in this context is a euphemism for ``useless.''} solution to the problem, not a practical one, and we must cast about for some other way to calculate the field~$\bfE$.
+
+In the course of this casting about, we come inevitably to that remarkable relation known as Gauss' law. We say ``inevitably'' because it is hard to think of any other expression in elementary electricity and magnetism containing the electric field [apart, of course, from Equations~(I-4) and~(I-7), which we have already rejected]. Gauss' law is
+\begin{equation}
+\iint_S \bfE \cdot \nhat \, \dS = \frac{q}{\epszero}.
+\label{eq:II-1}
+\end{equation}
+If you don't understand this equation, don't panic. The left-hand side of this equation is an example of what is called a surface integral, an important concept in vector calculus and one that is probably new to you. The integrand of this integral is the dot product of the electric field and the quantity~$\nhat$, which is called a ``unit normal vector'' and is probably also unfamiliar. We are about to discuss both surface integrals and unit normal vectors in excruciating detail, and one of our main reasons for quoting Gauss' law at this point in our narrative is to motivate this discussion.
+
+We won't stop here to derive Gauss' law, since the derivation wouldn't mean much to you until you have read the next few sections. Then you can consult almost any text on electricity and magnetism for the gory details. And if you can contain yourself, wait until we've discussed the divergence theorem (pages~45--52), after which you will be able to derive Gauss' law easily (see Problem~II-27).
+
+%% ==============================
+\section{The Unit Normal Vector}
+%% ==============================
+
+One of the factors in the integrand in Gauss' law [Equation~\eqref{eq:II-1}] is a quantity designated~$\nhat$ and called the unit normal vector. This quantity is part of the integrand in most if not all of the surface integrals we'll encounter; furthermore, as we'll see, it plays an important role in the evaluation of surface integrals even when it does not appear explicitly. Thus, before discussing surface integrals themselves, we'll dispose of the questions of how this vector function is defined and calculated.
+
+The word ``normal'' in the present context means, loosely speaking, ``perpendicular.'' Thus, a vector~$\mathbf{N}$ normal to the $xy$-plane is clearly one parallel to the $z$-axis (Figure~II-1), while a
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.6\textwidth]{figures/ch02/fig_II_1.png}
+\caption{}
+\label{fig:II-1}
+\end{figure}
+
+vector normal to a spherical surface must be in the radial direction (Figure~II-2). To give a precise definition of a vector normal to a
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.6\textwidth]{figures/ch02/fig_II_2.png}
+\caption{}
+\label{fig:II-2}
+\end{figure}
+
+surface, consider an arbitrary surface~$S$, as shown in Figure~II-3. Construct two noncollinear vectors~$\mathbf{u}$ and~$\mathbf{v}$ tangent to~$S$ at some point~$P$. A vector~$\mathbf{N}$ which is perpendicular to both~$\mathbf{u}$ and~$\mathbf{v}$ at~$P$ is, by definition, normal to~$S$ at~$P$. Now, as we know, the vector
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.6\textwidth]{figures/ch02/fig_II_3.png}
+\caption{}
+\label{fig:II-3}
+\end{figure}
+
+product of~$\mathbf{u}$ and~$\mathbf{v}$ has precisely this property; it is perpendicular to both~$\mathbf{u}$ and~$\mathbf{v}$. Thus, we may write $\mathbf{N} = \mathbf{u} \times \mathbf{v}$. To make this a \textit{unit} vector (that is, one whose length is~1) is simple: we just divide~$\mathbf{N}$ by its magnitude~$N$. Thus,
+\begin{equation}
+\nhat = \frac{\mathbf{N}}{N} = \frac{\mathbf{u} \times \mathbf{v}}{|\mathbf{u} \times \mathbf{v}|}
+\label{eq:II-nhat-def}
+\end{equation}
+is a unit vector normal to~$S$ at~$P$.
+
+To find an expression for~$\nhat$, we consider some surface~$S$ given by the equation $z = f(x, y)$; see Figure~II-4. Following the proce-
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.6\textwidth]{figures/ch02/fig_II_4.png}
+\caption{}
+\label{fig:II-4}
+\end{figure}
+
+dure suggested by the preceding discussion, we'll find two vectors~$\mathbf{u}$ and~$\mathbf{v}$ whose cross product will yield the required normal vector~$\nhat$. For this purpose let's construct a plane through a point~$P$ on~$S$ and parallel to the $xz$-plane, as shown in Figure~II-4. This plane intersects the surface~$S$ in a curve~$C$. We construct the vec-
+
+tor~$\mathbf{u}$ tangent to~$C$ at~$P$ and having an $x$-component of arbitrary length~$u_x$. The $z$-component of~$\mathbf{u}$ is $(\partial f/\partial x)u_x$; in this expression we use the fact that the slope of~$\mathbf{u}$ is, by construction, the same as
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.6\textwidth]{figures/ch02/fig_II_5.png}
+\caption{}
+\label{fig:II-5}
+\end{figure}
+
+that of the surface~$S$ in the $x$-direction (see Figure~II-5). Thus,
+\begin{equation}
+\mathbf{u} = \bfi u_x + \bfk \left(\frac{\partial f}{\partial x}\right) u_x = \left[\bfi + \bfk \left(\frac{\partial f}{\partial x}\right)\right] u_x.
+\label{eq:II-2}
+\end{equation}
+
+To find~$\mathbf{v}$, the second of our two vectors, we pass another plane through the point~$P$ on~$S$, but in this case parallel to the $yz$-plane (Figure~II-6). It intersects~$S$ in a curve~$C'$, and the vector~$\mathbf{v}$ can
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.6\textwidth]{figures/ch02/fig_II_6.png}
+\caption{}
+\label{fig:II-6}
+\end{figure}
+
+now be constructed tangent to~$C'$ at~$P$ with a $y$-component of arbitrary length~$v_y$. Arguing as above, we have
+\begin{equation}
+\mathbf{v} = \bfj v_y + \bfk \left(\frac{\partial f}{\partial y}\right) v_y = \left[\bfj + \bfk \left(\frac{\partial f}{\partial y}\right)\right] v_y.
+\label{eq:II-3}
+\end{equation}
+
+Using the two vectors~$\mathbf{u}$ and~$\mathbf{v}$ as given in Equations~\eqref{eq:II-2} and \eqref{eq:II-3}, we now construct their cross product. The result,
+\[
+\mathbf{u} \times \mathbf{v} = \left[-\bfi \left(\frac{\partial f}{\partial x}\right) - \bfj \left(\frac{\partial f}{\partial y}\right) + \bfk\right] u_x v_y,
+\]
+is a vector, which as we stated above, is normal to~$S$ at~$P$. To make a \textit{unit} vector of this, we divide it by its magnitude to get
+\begin{equation}
+\nhat(x, y, z) = \frac{\mathbf{u} \times \mathbf{v}}{|\mathbf{u} \times \mathbf{v}|} = \frac{-\bfi\,\dfrac{\partial f}{\partial x} - \bfj\,\dfrac{\partial f}{\partial y} + \bfk}{\sqrt{1 + \left(\dfrac{\partial f}{\partial x}\right)^2 + \left(\dfrac{\partial f}{\partial y}\right)^2}}.
+\label{eq:II-4}
+\end{equation}
+This, then, is the unit vector normal to the surface $z = f(x, y)$ at the point~$(x, y, z)$ on the surface.\footnote{The uniqueness of our result [Equation~\eqref{eq:II-4}] may be questioned on two counts. The first of these is a sign ambiguity: If~$\nhat$ is a unit normal vector, so is~$-\nhat$. The matter of which sign to use is discussed below. The second question arises from the fact that the two tangent vectors~$\mathbf{u}$ and~$\mathbf{v}$ used in determining~$\nhat$ are rather special, since each is parallel to one of the coordinate planes. Would we get the same result using two arbitrary tangent vectors? This issue is considered in Problem~IV-26, where it is shown that~$\nhat$ as given by Equation~\eqref{eq:II-4} is, apart from sign, indeed unique.} Note that it is independent of the two arbitrary quantities~$u_x$ and~$v_y$.
+
+A couple of examples may be in order here. First a trivial one: What is the unit vector normal to the $xy$-plane? The answer, of course, is~$\bfk$ (see Figure~II-1). Let's see how Equation~\eqref{eq:II-4} provides us with this answer. The equation of the $xy$-plane is
+\[
+z = f(x, y) = 0,
+\]
+whence we have the profound observations
+\[
+\partial f/\partial x = 0 \qquad \text{and} \qquad \partial f/\partial y = 0.
+\]
+Substituting these in Equation~\eqref{eq:II-4}, we get $\nhat = \bfk/\sqrt{1} = \bfk$, as advertised.
+
+As a second example, consider the sphere of radius~1 centered at the origin (Figure~II-2). Its upper hemisphere is given by
+\[
+z = f(x, y) = (1 - x^2 - y^2)^{1/2},
+\]
+whence
+\[
+\frac{\partial f}{\partial x} = -\frac{x}{z} \quad \text{and} \quad \frac{\partial f}{\partial y} = -\frac{y}{z}.
+\]
+Using these in Equation~\eqref{eq:II-4} leads to
+\[
+\nhat = \frac{\dfrac{\bfi x}{z} + \dfrac{\bfj y}{z} + \bfk}{\sqrt{\dfrac{x^2}{z^2} + \dfrac{y^2}{z^2} + 1}} = \frac{\bfi x + \bfj y + \bfk z}{\sqrt{x^2 + y^2 + z^2}} = \bfi x + \bfj y + \bfk z,
+\]
+where we have used the equation of the unit sphere $x^2 + y^2 + z^2 = 1$. This is, as expected, a vector in the radial direction (see Figure~II-2). To show that its length is~1, we observe that $\nhat \cdot \nhat = x^2 + y^2 + z^2 = 1$.
+
+With the matter of the unit normal vector now disposed of, we turn to our next task, a discussion of surface integrals.
+
+%% ==============================
+\section{Definition of Surface Integrals}
+%% ==============================
+
+We now define the surface integral of the normal component of a vector function~$\bfF(x, y, z)$. This quantity is denoted by
+\begin{equation}
+\iint_S \bfF \cdot \nhat \, \dS,
+\label{eq:II-5}
+\end{equation}
+and as you can see, Gauss' law [Equation~\eqref{eq:II-1}] is expressed in terms of just such an integral. Let $z = f(x, y)$ be the equation of some surface. We'll consider a limited portion of this surface, which we designate~$S$ (see Figure~II-7). Our first step in formulat-
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.6\textwidth]{figures/ch02/fig_II_7.png}
+\caption{}
+\label{fig:II-7}
+\end{figure}
+
+ing the definition of the surface integral~\eqref{eq:II-5} is to approximate~$S$ by a polyhedron consisting of~$N$ plane faces each of which is tangent to~$S$ at some point. Figure~II-8 shows how this approximat-
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.6\textwidth]{figures/ch02/fig_II_8.png}
+\caption{}
+\label{fig:II-8}
+\end{figure}
+
+ing polyhedron might look for an octant of a spherical shell. We concentrate our attention on one of these plane faces, say the $l$th one (Figure~II-9). Let its area be denoted~$\Delta S_l$ and let $(x_l, y_l, z_l)$ be
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.6\textwidth]{figures/ch02/fig_II_9.png}
+\caption{}
+\label{fig:II-9}
+\end{figure}
+
+the coordinates of the point at which the face is tangent to the surface~$S$. We evaluate the function~$\bfF$ at this point and then form its dot product with~$\nhat_l$, the unit vector normal to the $l$th face. The resulting quantity, $\bfF(x_l, y_l, z_l) \cdot \nhat_l$, is then multiplied by the area~$\Delta S_l$ of the face to give
+\[
+\bfF(x_l, y_l, z_l) \cdot \nhat_l \, \Delta S_l.
+\]
+We carry out this same process for each of the~$N$ faces of the approximating polyhedron and then form the sum over all~$N$ faces:
+\[
+\sum_{l=1}^{N} \bfF(x_l, y_l, z_l) \cdot \nhat_l \, \Delta S_l.
+\]
+
+The surface integral~\eqref{eq:II-5} is defined as the \textit{limit} of this sum as the number of faces,~$N$, approaches infinity and the area of \textit{each} face approaches zero.\footnote{The statement ``each $\Delta S_l \to 0$'' is not quite precise. The area of a rectangular patch, for example, might tend to zero because its width decreases while its length remains fixed. This would not be acceptable. Here and elsewhere we must interpret ``each $\Delta S_l \to 0$'' to mean that \textit{all} linear dimensions of the $l$th patch tend to zero.} Thus,
+\begin{equation}
+\iint_S \bfF \cdot \nhat \, \dS = \lim_{\substack{N \to \infty \\ \text{each } \Delta S_l \to 0}} \sum_{l=1}^{N} \bfF(x_l, y_l, z_l) \cdot \nhat_l \, \Delta S_l.
+\label{eq:II-6}
+\end{equation}
+
+If we want to cross all the $t$'s and dot all the $i$'s, this integral, strictly speaking, should be written
+\[
+\iint_S \bfF(x, y, z) \cdot \nhat(x, y, z) \, \dS
+\]
+since both~$\bfF$ and~$\nhat$ are, in general, functions of position. We prefer, and where possible will use, the less cluttered notation
+\[
+\iint_S \bfF \cdot \nhat \, \dS
+\]
+with the arguments of the functions understood.
+
+The surface~$S$ over which we integrate a surface integral can be one of two kinds: closed or open. A closed surface, such as a spherical shell, divides space into two parts, an inside and an outside, and to get from inside to outside, you must go \textit{through} the surface. An open surface, such as a flat piece of paper, does not have this property; it is possible to get from one side of the sheet to the other without going through it. The definition of surface integrals given in Equation~\eqref{eq:II-6} applies equally well to both closed and open surfaces. However, the surface integral is not well defined until we specify which of the two possible directions
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.6\textwidth]{figures/ch02/fig_II_10.png}
+\caption{}
+\label{fig:II-10}
+\end{figure}
+
+of the normal we are to use (see Figure~II-10). In the case of an open surface, the direction must be given as part of the statement of the problem. In the case of a closed surface, there is a gentlemen's agreement which specifies the direction once and for all: the normal is chosen so that it points \textit{outward} from the volume enclosed by the surface.
+
+The integral in Gauss' law [Equation~\eqref{eq:II-1}] is taken over a closed surface. Gauss' law, in fact, says that the surface integral of the normal component of the electric field over a closed surface is equal to the total (net) charge enclosed by the surface, divided by~$\epszero$. Below (pages~33--37 and Problems~II-11, II-12, and~II-13) we'll see how, when the charges are arranged neatly and symmetrically, Gauss' law can be used to determine the electric field. But the thrust of our whole discussion will be to subject Gauss' law to a series of harrowing adventures which will eventually transform it into an expression useful for finding~$\bfE$ even when we don't have symmetry to help us.
+
+Sometimes we encounter surface integrals which are a little simpler than the kind we've just defined, although basically they are almost the same. These are surface integrals of the form
+\begin{equation}
+\iint_S G(x, y, z) \, \dS,
+\label{eq:II-7}
+\end{equation}
+where the integrand~$G(x, y, z)$ is a \textit{given} scalar function rather than the dot product of two vector functions as in~\eqref{eq:II-5} and \eqref{eq:II-6}. We go about defining this kind of surface integral much as we did above: we approximate~$S$ by a polyhedron, form the product $G(x_l, y_l, z_l) \, \Delta S_l$, sum over all faces, and then take the limit:
+\begin{equation}
+\iint_S G(x, y, z) \, \dS = \lim_{\substack{N \to \infty \\ \text{each } \Delta S_l \to 0}} \sum_{l=1}^{N} G(x_l, y_l, z_l) \, \Delta S_l.
+\label{eq:II-8}
+\end{equation}
+
+As an example of this kind of surface integral, suppose we have a surface of negligible thickness with surface density (that is, mass per unit area)~$\sigma(x, y, z)$, and we wish to determine its total mass. Approximating this surface by a polyhedron as above, we recognize that $\sigma(x_l, y_l, z_l) \, \Delta S_l$ is approximately the mass of the $l$th face of the polyhedron and that
+\[
+\sum_{l=1}^{N} \sigma(x_l, y_l, z_l) \, \Delta S_l
+\]
+is approximately the mass of the entire surface. Taking the limit
+\[
+\lim_{\substack{N \to \infty \\ \text{each } \Delta S_l \to 0}} \sum_{l=1}^{N} \sigma(x_l, y_l, z_l) \, \Delta S_l = \iint_S \sigma(x, y, z) \, \dS,
+\]
+we get the total mass of the surface.
+
+An example of an even simpler surface integral of this kind is
+\[
+\iint_S \dS.
+\]
+This integral is taken as the definition of the surface area of~$S$.
+
+%% ==============================
+\section{Evaluating Surface Integrals}
+%% ==============================
+
+Now that we have defined surface integrals, we must develop methods to evaluate them, and that will be our task here. For simplicity we'll deal with surface integrals of the form~\eqref{eq:II-7}, where the integrand is a given scalar function, rather than the slightly more complicated form~\eqref{eq:II-5}. There will be no loss of generality in doing this for all our results can be made to apply to integrals of the form~\eqref{eq:II-5} just by replacing $G(x, y, z)$ everywhere by $\bfF(x, y, z) \cdot \nhat$.
+
+To evaluate the integral
+\[
+\iint_S G(x, y, z) \, \dS
+\]
+over a portion~$S$ of the surface $z = f(x, y)$ (see Figure~II-11), we go back to the definition of the surface integral [Equation~\eqref{eq:II-8}].
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.6\textwidth]{figures/ch02/fig_II_11.png}
+\caption{}
+\label{fig:II-11}
+\end{figure}
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.6\textwidth]{figures/ch02/fig_II_12.png}
+\caption{}
+\label{fig:II-12}
+\end{figure}
+
+Our strategy will be to relate~$\Delta S_l$ to the area~$\Delta R_l$ of its projection on the $xy$-plane, as shown in Figure~II-12. Doing so, as we'll see, will enable us to express the surface integral over~$S$ in terms of an ordinary double integral over~$R$, which is the projection of~$S$ on the $xy$-plane, as shown in Figure~II-11.
+
+Relating~$\Delta S_l$ to~$\Delta R_l$ is not difficult if we recall that~$\Delta S_l$ (like the area of any plane surface) can be approximated to any desired degree of accuracy by a set of rectangles as shown in Figure~II-13.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.6\textwidth]{figures/ch02/fig_II_13.png}
+\caption{}
+\label{fig:II-13}
+\end{figure}
+
+For this reason we need only find the relation between the area of a rectangle and its projection on the $xy$-plane. Thus, consider a rectangle so oriented that one pair of its sides is parallel to the $xy$-plane (Figure~II-14). If we call the lengths of these sides~$a$, it's clear that their projections on the $xy$-plane also have length~$a$. But the other pair of sides, of length~$b$, have projections of length~$b'$, and in general, $b$ and~$b'$ are \textit{not} equal. Thus, to relate the area of
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.6\textwidth]{figures/ch02/fig_II_14.png}
+\caption{}
+\label{fig:II-14}
+\end{figure}
+
+the rectangle~$ab$ to the area of its projection~$ab'$, we must express $b$ in terms of~$b'$. This is easy to do, for if~$\theta$ is the angle shown in Figure~II-14, we have $b = b'/\cos\theta$, and so
+\[
+ab = \frac{ab'}{\cos\theta}.
+\]
+If we let~$\nhat$ denote the unit vector normal to our rectangle, then we can readily convince ourselves that $\cos\theta = \nhat \cdot \bfk$ where~$\bfk$, as always, is the unit vector in the positive $z$-direction. Thus,
+\[
+ab = \frac{ab'}{\nhat \cdot \bfk}.
+\]
+Since the area~$\Delta S_l$ can be approximated with arbitrary accuracy by such rectangles, it follows that
+\[
+\Delta S_l = \frac{\Delta R_l}{\nhat_l \cdot \bfk},
+\]
+where, of course, $\nhat_l$ is the unit vector normal to the $l$th plane surface.
+
+We can now rewrite the definition of the surface integral [Equation~\eqref{eq:II-8}] as
+\begin{equation}
+\iint_S G(x, y, z) \, \dS = \lim_{\substack{N \to \infty \\ \text{each } \Delta R_l \to 0}} \sum_{l=1}^{N} G(x_l, y_l, z_l) \frac{\Delta R_l}{\nhat_l \cdot \bfk},
+\label{eq:II-9}
+\end{equation}
+where the statement ``each $\Delta S_l \to 0$'' has been replaced by the equivalent but now more appropriate ``each $\Delta R_l \to 0$.'' We are now obviously well on the road to rewriting the surface integral over~$S$ as a double integral over~$R$. In fact,
+\begin{equation}
+\lim_{\substack{N \to \infty \\ \text{each } \Delta R_l \to 0}} \sum_{l=1}^{N} \frac{G(x_l, y_l, z_l)}{\nhat_l \cdot \bfk} \, \Delta R_l \equiv \iint_R \frac{G(x, y, z)}{\nhat(x, y, z) \cdot \bfk} \, \dx \, \dy,
+\label{eq:II-10}
+\end{equation}
+where $\nhat(x, y, z)$ is the unit normal to the surface~$S$ at the point~$(x, y, z)$. This is a double integral over~$R$ even though it does not quite look like one. What appears to spoil it is that nasty~$z$ in~$G$ and~$\nhat$; a double integral over a region in the $xy$-plane clearly has no business containing any~$z$'s. But the $z$-dependence is spurious because $(x, y, z)$ are the coordinates of a point on~$S$, and so $z = f(x, y)$. Hence, at the expense of making the integral look even fiercer than it already does in Equation~\eqref{eq:II-10}, we can eliminate the apparent $z$-dependence of the integrand and write
+\begin{equation}
+\iint_R \frac{G[x, y, f(x, y)]}{\nhat[x, y, f(x, y)] \cdot \bfk} \, \dx \, \dy.
+\label{eq:II-11}
+\end{equation}
+
+The faint of heart can take courage; in most cases this integrand reduces quickly to something much simpler and pleasanter looking---a fact we will demonstrate by example below. At this point we introduce the expression for the unit normal vector [Equation~\eqref{eq:II-4}]. We find
+\[
+\nhat \cdot \bfk = \frac{1}{\sqrt{1 + (\partial f/\partial x)^2 + (\partial f/\partial y)^2}},
+\]
+and so Equation~\eqref{eq:II-11} becomes
+\begin{equation}
+\iint_S G(x, y, z) \, \dS = \iint_R G[x, y, f(x, y)] \sqrt{1 + \left(\frac{\partial f}{\partial x}\right)^2 + \left(\frac{\partial f}{\partial y}\right)^2} \, \dx \, \dy.
+\label{eq:II-12}
+\end{equation}
+
+Thus, the surface integral of $G(x, y, z)$ over the surface~$S$ has been expressed as a double integral of a messy-looking function over the region~$R$, the projection of~$S$ in the $xy$-plane. As we remarked above, in practice the integral is usually much less ghastly than it appears written out in Equations~\eqref{eq:II-11} or~\eqref{eq:II-12}. You will see this in the examples we now give.
+
+Let's first compute the surface integral
+\[
+\iint_S (x + z) \, \dS
+\]
+where~$S$ is the portion of the plane $x + y + z = 1$ in the first octant shown in Figure~II-15(a). The projection of~$S$ on the $xy$-plane
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.6\textwidth]{figures/ch02/fig_II_15a.png}
+\caption{}
+\label{fig:II-15a}
+\end{figure}
+
+is the triangle~$R$ shown in the figure. The equation of~$S$ can be written
+\[
+z = f(x, y) = 1 - x - y
+\]
+from which we get
+\[
+\frac{\partial f}{\partial x} = \frac{\partial f}{\partial y} = -1,
+\]
+so that
+\[
+\sqrt{1 + \left(\frac{\partial f}{\partial x}\right)^2 + \left(\frac{\partial f}{\partial y}\right)^2} = \sqrt{3}.
+\]
+Hence
+\begin{align*}
+\iint_S (x + z) \, \dS &= \sqrt{3} \iint_R (x + z) \, \dx \, \dy \\
+&= \sqrt{3} \iint_R (x + 1 - x - y) \, \dx \, \dy = \sqrt{3} \iint_R (1 - y) \, \dx \, \dy,
+\end{align*}
+where we have used $z = 1 - x - y$. This is a simple double integral with value~$1/\sqrt{3}$, as you should be able to verify.
+
+As a second example let's compute the surface integral
+\[
+\iint_S z^2 \, \dS,
+\]
+where~$S$ is the octant of the sphere of radius~1 centered at the origin as shown in Figure~II-15(b). The projection of~$S$ on the
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.6\textwidth]{figures/ch02/fig_II_15b.png}
+\caption{}
+\label{fig:II-15b}
+\end{figure}
+
+$xy$-plane (that is,~$R$) is the area enclosed by the quarter circle. The equation of~$S$ is $x^2 + y^2 + z^2 = 1$, or
+\[
+z = f(x, y) = +\sqrt{1 - x^2 - y^2}.
+\]
+It follows then that
+\[
+\frac{\partial f}{\partial x} = -\frac{x}{z} \quad \text{and} \quad \frac{\partial f}{\partial y} = -\frac{y}{z},
+\]
+so that
+\begin{align*}
+\sqrt{1 + \left(\frac{\partial f}{\partial x}\right)^2 + \left(\frac{\partial f}{\partial y}\right)^2} &= \sqrt{1 + \frac{x^2}{z^2} + \frac{y^2}{z^2}} \\
+&= \frac{1}{z}\sqrt{x^2 + y^2 + z^2} = \frac{1}{z},
+\end{align*}
+where we have used $x^2 + y^2 + z^2 = 1$. Hence,
+\[
+\iint_S z^2 \, \dS = \iint_R z^2 \frac{1}{z} \, \dx \, \dy = \iint_R z \, \dx \, \dy.
+\]
+Substituting for~$z$ in terms of~$x$ and~$y$, we get
+\[
+\iint_S z^2 \, \dS = \iint_R \sqrt{1 - x^2 - y^2} \, \dx \, \dy.
+\]
+This is an ordinary double integral, and you should verify that its value is~$\pi/6$. [\textit{Suggestion:} Convert to polar coordinates: $x = r\cos\theta$, and $y = r\sin\theta$. The integration is then trivial.]
+
+It should be emphasized that the foregoing discussion was based on the assumption that the surface~$S$ is described by an equation of the form $z = f(x, y)$; in such a situation a surface integral is converted into a double integral over a region in the $xy$-plane. But it may happen that a given surface is more conveniently described by an equation of the form $y = g(x, z)$ as in Figure~II-16(a). If this is so, then
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.6\textwidth]{figures/ch02/fig_II_16a.png}
+\caption{}
+\label{fig:II-16a}
+\end{figure}
+
+\[
+\iint_S G(x, y, z) \, \dS = \iint_R G[x, g(x, z), z] \sqrt{1 + \left(\frac{\partial g}{\partial x}\right)^2 + \left(\frac{\partial g}{\partial z}\right)^2} \, \dx \, \dz,
+\]
+where~$R$ is a region in the $xz$-plane. Similarly, if we have a surface described by $x = h(y, z)$, as in Figure~II-16(b), then we use
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.6\textwidth]{figures/ch02/fig_II_16b.png}
+\caption{}
+\label{fig:II-16b}
+\end{figure}
+
+\[
+\iint_S G(x, y, z) \, \dS = \iint_R G[h(y, z), y, z] \sqrt{1 + \left(\frac{\partial h}{\partial y}\right)^2 + \left(\frac{\partial h}{\partial z}\right)^2} \, \dy \, \dz,
+\]
+where~$R$ in this case is a region in the $yz$-plane. Finally, a surface may have several parts, and it may then be convenient to project different parts on different coordinate planes.
+
+To evaluate surface integrals of the form~\eqref{eq:II-5}, that is,
+\[
+\iint_S \bfF \cdot \nhat \, \dS,
+\]
+we merely replace~$G$ by $\bfF \cdot \nhat$ in Equation~\eqref{eq:II-12} to get
+\[
+\iint_S \bfF \cdot \nhat \, \dS = \iint_R \bfF \cdot \nhat \sqrt{1 + \left(\frac{\partial f}{\partial x}\right)^2 + \left(\frac{\partial f}{\partial y}\right)^2} \, \dx \, \dy.
+\]
+If we now use Equation~\eqref{eq:II-4} to write this out in detail, we find that the square root factor cancels and we get
+\begin{equation}
+\iint_S \bfF \cdot \nhat \, \dS = \iint_R \left\{-F_x[x, y, f(x, y)] \frac{\partial f}{\partial x} - F_y[x, y, f(x, y)] \frac{\partial f}{\partial y} + F_z[x, y, f(x, y)]\right\} \dx \, \dy.
+\label{eq:II-13}
+\end{equation}
+We leave it to the reader to write down the analogous formulas when the surface~$S$ is given by $y = g(x, z)$ or $x = h(y, z)$, which must be projected onto regions in the $xz$- and $yz$-planes, respectively.
+
+This last equation [Equation~\eqref{eq:II-13}] is enough to make strong men weep, but, as before, in most calculations it quickly reduces to something quite tame. For example, suppose we wish to calculate $\iint_S \bfF \cdot \nhat \, \dS$, where $\bfF(x, y, z) = \bfi z - \bfj y + \bfk x$ and~$S$ is the portion of the plane
+\[
+x + 2y + 2z = 2
+\]
+bounded by the coordinate planes, that is, the triangle reclining gracefully in Figure~II-17(a). The normal vector~$\nhat$ is chosen so that it points away from the origin as shown in Figure~II-17(a), and we'll project~$S$ onto the $xy$-plane. We have
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.6\textwidth]{figures/ch02/fig_II_17a.png}
+\caption{}
+\label{fig:II-17a}
+\end{figure}
+
+\[
+z = f(x, y) = 1 - \frac{x}{2} - y,
+\]
+and so
+\[
+\frac{\partial f}{\partial x} = -\tfrac{1}{2}, \qquad \frac{\partial f}{\partial y} = -1.
+\]
+We also have
+\[
+F_x = z = 1 - \frac{x}{2} - y, \qquad F_y = -y, \qquad F_z = x.
+\]
+Hence
+\begin{align*}
+\iint_S \bfF \cdot \nhat \, \dS &= \iint_R \left\{\left[-\left(1 - \frac{x}{2} - y\right)\right](-\tfrac{1}{2}) + y(-1) + x\right\} \dx \, \dy \\
+&= \iint_R \left(\frac{3x}{4} - \frac{3y}{2} + \frac{1}{2}\right) \dx \, \dy
+\end{align*}
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.6\textwidth]{figures/ch02/fig_II_17b.png}
+\caption{}
+\label{fig:II-17b}
+\end{figure}
+
+The region~$R$ over which the integral must be taken is shown in Figure~II-17(b). The problem has thus been reduced to the computation of a rather simple double integral, and you should carry out the integration yourself (the answer is~$\frac{1}{2}$).
+
+As a second example, suppose
+\[
+\bfF(x, y, z) = \bfi xz + \bfk z^2
+\]
+For~$S$ let's take the octant of the spherical surface shown in Figure~II-15. Then $z = f(x,y) = \sqrt{1 - x^2 - y^2}$, and we have already shown (see page~25) that
+\[
+\frac{\partial f}{\partial x} = -\frac{x}{z} \quad \text{and} \quad \frac{\partial f}{\partial y} = -\frac{y}{z}
+\]
+Thus
+\begin{align*}
+\iint_S \bfF \cdot \nhat \, \dS &= \iint_R \left[-xz\left(-\frac{x}{z}\right) + z^2\right] \dx \, \dy = \iint_R (x^2 + 1 - x^2 - y^2) \, \dx \, \dy \\
+&= \iint_R (1 - y^2) \, \dx \, \dy = \iint_R \dx \, \dy - \iint_R y^2 \, \dx \, \dy
+\end{align*}
+where~$R$, we recall, is the quarter-circle shown in Figure~II-15. The first integral in the last equality above is just the area of the quarter-circle of radius~1, and is therefore equal to~$\pi/4$. The second integral can be done by introducing polar coordinates. We get
+\begin{align*}
+\iint_R y^2 \, \dx \, \dy &= \int_0^{\pi/2} \int_0^1 r^2 \sin^2\theta \, r \, \dr \, d\theta \\
+&= \int_0^{\pi/2} \sin^2\theta \, d\theta \int_0^1 r^3 \, \dr
+\end{align*}
+
+Both the~$r$ and~$\theta$ integrals here are elementary, and you should have no trouble showing that this expression is equal to~$\pi/16$. Thus $\iint_S \bfF \cdot \nhat \, \dS = \pi/4 - \pi/16 = 3\pi/16$.
+
+%% ==============================
+\section{Flux}
+%% ==============================
+
+An integral of the type
+\begin{equation}
+\iint_S \bfF(x, y, z) \cdot \nhat \, \dS
+\label{eq:II-14}
+\end{equation}
+is sometimes called the ``flux of~$\bfF$.'' Thus Gauss' law [Equation~\eqref{eq:II-1}] states that the flux of the electrostatic field over some closed surface is the enclosed charge divided by~$\epszero$.
+
+It is useful in obtaining a geometrical feeling for some aspects of vector calculus to understand the significance of the word \textit{flux} (Latin for ``flow'') used in this context. For this purpose let us consider a fluid of density~$\rho$ moving with velocity~$\mathbf{v}$. We ask for the total mass of fluid that crosses an area~$\Delta S$ perpendicular to the direction of flow in a time~$\Delta t$. Clearly, all the fluid in the cylinder of length~$v \, \Delta t$ with the patch~$\Delta S$ as base will cross~$\Delta S$ in the interval~$\Delta t$ (Figure~II-18). The volume of this cylinder is $v \, \Delta t \, \Delta S$, and it
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.6\textwidth]{figures/ch02/fig_II_18.png}
+\caption{}
+\label{fig:II-18}
+\end{figure}
+
+contains a total mass $\rho v \, \Delta t \, \Delta S$. Dividing out the~$\Delta t$ will give the rate of flow. Thus,
+\[
+\binom{\text{Rate of flow}}{\text{through } \Delta S} = \rho v \, \Delta S.
+\]
+
+Now let us consider a somewhat more complicated case in which the area~$\Delta S$ is not perpendicular to the direction of flow (Figure~II-19). The volume containing the material that will flow
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.6\textwidth]{figures/ch02/fig_II_19.png}
+\caption{}
+\label{fig:II-19}
+\end{figure}
+
+through~$\Delta S$ in time~$\Delta t$ is now just the volume of the little skewed cylinder shown in the diagram. The volume is $v \, \Delta t \, \Delta S \cos\theta$, where $\theta$ is the angle between the velocity vector~$\mathbf{v}$ and~$\nhat$, the unit vector normal to~$\Delta S$ and pointing outward from the skewed cylinder. But $v \cos\theta = \mathbf{v} \cdot \nhat$. So, multiplying by~$\rho$ and dividing by~$\Delta t$, we get
+\[
+\binom{\text{Rate of flow}}{\text{through } \Delta S} = \rho \mathbf{v} \cdot \nhat \, \Delta S.
+\]
+
+Finally, consider a surface~$S$ in some region of space containing flowing matter (Figure~II-20). Approximate the surface by a poly-
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.6\textwidth]{figures/ch02/fig_II_20.png}
+\caption{}
+\label{fig:II-20}
+\end{figure}
+
+hedron. By the above argument, the rate at which matter flows through the $l$th face of this polyhedron is approximately
+\[
+\rho(x_l, y_l, z_l) \mathbf{v}(x_l, y_l, z_l) \cdot \nhat_l \, \Delta S_l.
+\]
+Here, of course, $(x_l, y_l, z_l)$ are the coordinates of the point on the $l$th face at which it is tangent to~$S$, and~$\nhat_l$ is the unit normal to the $l$th face. Summing over all the faces and taking the limit, we get
+\[
+\binom{\text{Rate of flow}}{\text{through } S} = \iint_S \rho(x, y, z) \mathbf{v}(x, y, z) \cdot \nhat \, \dS.
+\]
+If~$S$ happens to be a closed surface and there is a net rate of flow \textit{out} of the volume it encloses, then you can convince yourself that this integral will be positive, and if there is a net rate of flow \textit{in}, the integral will be negative.
+
+If in this last equation we put
+\[
+\bfF(x, y, z) = \rho(x, y, z) \mathbf{v}(x, y, z),
+\]
+the integral is seen to be formally identical with that in Equation~\eqref{eq:II-14}. For this reason any integral of the form~\eqref{eq:II-14} is called ``the flux of~$\bfF$ over the surface~$S$,'' even when the function~$\bfF$ is \textit{not} the product of a density and a velocity! The reason for stressing this point about flux is that, misnomer though it may be, it nonetheless gives a good geometric or physical picture of Gauss' law: The electric field ``flows'' out of a surface enclosing charge, and the ``amount'' of this ``flow'' is proportional to the net charge enclosed. \textit{Warning:} This is not to be taken literally; the electric field is not flowing in the sense in which fluid flows. It is merely picturesque language intended to aid us in understanding the physics in Gauss' law.
+
+%% ==============================
+\section{Using Gauss' Law to Find the Field}
+%% ==============================
+
+Having rejected the two expressions for~$\bfE$ [Equations~(I-4) and (I-7)], we find that the only candidate left for providing us with a good general method for calculating the field is Gauss' law. At first glance it does not appear to be a very likely candidate because, unlike Equations~(I-4) and~(I-7), it is not an \textit{explicit} expression for~$\bfE$. That is, it does not say ``$\bfE$ equals something.'' Rather, it says ``The flux of~$\bfE$ (the surface integral of the normal component of~$\bfE$) equals something.'' Thus, to use Gauss' law, we must ``disentangle''~$\bfE$ from its surroundings. Despite this, there are situations in which Gauss' law can be used to find the field, as an example will now show.
+
+Consider a point charge~$q$ placed at the origin of a coordinate system. Symmetry considerations tell us two things about its electric field: (1)~It must be in the radial direction (that is, it must point directly toward, or directly away from, the origin), and (2)~it must have the same magnitude at all points on the surface of a sphere centered at the origin. Stating this in symbols, we have $\bfE = \hat{\mathbf{e}}_r E(r)$, where $\hat{\mathbf{e}}_r = \bfr/r$ is a unit vector in the radial direction. Thus, Gauss' law becomes
+\[
+\iint_S E(r) \, \hat{\mathbf{e}}_r \cdot \nhat \, \dS = q/\epszero.
+\]
+If, for the surface~$S$, we now choose a spherical shell of radius~$r$ centered at the origin, a little thought will convince you that $\nhat = \hat{\mathbf{e}}_r$, so that $\nhat \cdot \hat{\mathbf{e}}_r = 1$ and we get
+\[
+\iint_S E(r) \, \dS = q/\epszero.
+\]
+This integral is trivial to perform if we recognize that~$r$ is a constant over the spherical surface~$S$. This means that~$E(r)$ is also a constant on~$S$ and we get\footnote{Shortcuts like this often make it possible to evaluate surface integrals without using all the paraphernalia we discussed above. Further examples are given in Problem~II-10.}
+\[
+\iint_S E(r) \, \dS = E(r) \iint_S \dS = 4\pi r^2 E(r) = q/\epszero,
+\]
+whence
+\[
+E(r) = \frac{1}{4\pi\epszero} \frac{q}{r^2}
+\]
+and
+\[
+\bfE(\bfr) = \hat{\mathbf{e}}_r \, E(r) = \frac{\hat{\mathbf{e}}_r}{4\pi\epszero} \frac{q}{r^2},
+\]
+in agreement with Equation~(I-2).
+
+We can see from this example how heavily we depend on symmetry when using Gauss' law to obtain the field. In fact, to use Gauss' law in the form given in Equation~\eqref{eq:II-1} requires even more symmetry and simplicity than Equations~(I-4) and~(I-7). The blunt truth is that this form of the law yields the electric field in a grand total of three situations (and combinations thereof): (1)~a spherically symmetric distribution of charge (of which the point charge considered above is a special case), (2)~an infinitely long cylindrically symmetric distribution (including the case of an infinitely long uniformly distributed line of charge), and (3)~an infinite slab of charge (including as a special case an infinite uniformly charged plane).\footnote{Examples of these are given in Problems~II-11, II-12, and~II-13.} The real value of Equation~\eqref{eq:II-1} is that it can be twisted and beaten into a more useful form.
+
+What is it about Equation~\eqref{eq:II-1} that makes it difficult to find~$\bfE$? To answer this question, suppose we are doing a numerical calculation on a computer and wish to evaluate $\oiint_S \bfE \cdot \nhat \, \dS$. The standard procedure for dealing with integrals numerically is to approximate them as sums, a rather obvious thing to do since an integral, after all, is the \textit{limit} of a sum. Thus, suppose we divide the surface~$S$ into, say, 10~patches. We then have as an approximation to Equation~\eqref{eq:II-1}
+\[
+\sum_{i=1}^{10} \bfE_l \cdot \nhat_l \, \Delta S_l \approx q/\epszero,
+\]
+where~$\bfE_l$ is the value of~$\bfE$, and~$\nhat_l$ is the unit normal, somewhere on the $l$th patch. There is little or no hope of finding~$\bfE$ from this: it is one equation in the 10~unknowns $\bfE_1$,~$\bfE_2$, \dots,~$\bfE_{10}$. Furthermore, it is probably not very accurate. To improve the accuracy, we might make 100~subdivisions rather than just~10 to get
+\[
+\sum_{l=1}^{100} \bfE_l \cdot \nhat_l \, \Delta S_l \approx q/\epszero.
+\]
+\textit{Much} more accurate! And much more hopeless too, because this is one equation in 100~unknowns. Even more accurate (and more hopeless) is
+\[
+\iint_S \bfE \cdot \nhat \, \dS = q/\epszero,
+\]
+which is one equation in \textit{infinitely many} unknowns. These unknowns are, of course, the values of $\bfE \cdot \nhat$ at every one of the infinitely many points of the surface~$S$.\footnote{The reason Gauss' law yields the expression for the field of a point charge examined above is that symmetry in that case shows that the infinitely many unknowns are all equal. This turns Gauss' law into one equation in \textit{one} unknown.}
+
+We have now isolated the trouble with Equation~\eqref{eq:II-1}: it involves an entire surface and therefore the value of $\bfE \cdot \nhat$ at infinitely many points. If, somehow, we could deal with the ``flux at a single point'' (whatever \textit{that} may mean!) rather than the flux through a surface, perhaps then Gauss' law might yield something tractable. How might we arrange this? For simplicity let us surround some point~$P$ by a set of concentric spherical shells $S_1$,~$S_2$,~$S_3$, and so on (Figure~II-21), and calculate the flux $\Phi_1$,~$\Phi_2$,~$\Phi_3$,
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.6\textwidth]{figures/ch02/fig_II_21.png}
+\caption{}
+\label{fig:II-21}
+\end{figure}
+
+and so on, through each shell. We might then attempt to define the ``flux at the point~$P$'' as the limiting value approached by the sequence of fluxes calculated this way over smaller and smaller shells centered at~$P$.
+
+This sounds good; it has a heartening ``mathematical'' ring to it. Unfortunately, it does not work because (assuming the charge density is finite everywhere) the sequence of fluxes, calculated as described above, approaches zero for \textit{any} point~$P$. This is fairly obvious since it is merely the statement that the flux through a surface tends to zero as the surface shrinks to a point. Since our objective was to find a way to determine the flux at a point, and thereby learn something about the field at that point, and since we get zero at \textit{any} point no matter what the field there may be, we have obviously not obtained what we want.
+
+It is useful to give a physicist's rough-and-ready proof of the fact that the flux goes to zero as the surface shrinks down to a point, for even though this fact may be obvious, the proof will suggest how to pull this chestnut out of the fire. For this purpose we note that if~$\bar{\rho}_{\Delta V}$ denotes the average density of electric charge [Equation~I-5] in some region of volume~$\Delta V$, then the total charge in~$\Delta V$ is $\bar{\rho}_{\Delta V} \, \Delta V$. Thus Gauss' law [Equation~\eqref{eq:II-1}] may be written
+\begin{equation}
+\iint_S \bfE \cdot \nhat \, \dS = \bar{\rho}_{\Delta V} \, \Delta V / \epszero,
+\label{eq:II-15}
+\end{equation}
+where, as indicated in Figure~II-22, the surface integral is taken over the surface~$S$ that encloses the volume~$\Delta V$. From this expres-
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.6\textwidth]{figures/ch02/fig_II_22.png}
+\caption{}
+\label{fig:II-22}
+\end{figure}
+
+sion [Equation~\eqref{eq:II-15}] we can see the validity of our assertion: As $S \to 0$, the enclosed volume~$\Delta V$ must, of course, also approach zero. Thus, the flux also tends to zero and the assertion is proved.\footnote{This line of reasoning and the conclusion must be altered if the system contains point charges.}
+
+Not only have we given a proof, but (and this is the point) we can now isolate a quantity that does \textit{not} vanish as $S \to 0$. Dividing Equation~\eqref{eq:II-15} by~$\Delta V$, we get
+\[
+\frac{1}{\Delta V} \iint_S \bfE \cdot \nhat \, \dS = \bar{\rho}_{\Delta V}/\epszero.
+\]
+This expression, awkward and unappealing though it may be, is nonetheless close to what we are after, even though it still involves an integral of~$\bfE$ over an entire surface. For if we \textit{now} take the limit as~$S$ shrinks to zero about some point~$(x, y, z)$, then, as we see from Equation~(I-6), the average density~$\bar{\rho}_{\Delta V}$ approaches $\rho(x, y, z)$, the density at~$(x, y, z)$, and we get
+\begin{equation}
+\lim_{\substack{\Delta V \to 0 \\ \text{about } (x,y,z)}} \frac{1}{\Delta V} \iint_S \bfE \cdot \nhat \, \dS = \rho(x, y, z)/\epszero.
+\label{eq:II-16}
+\end{equation}
+This expression is admittedly downright hideous, and whether it will be of any practical use whatever depends on our being able to pound the left-hand side into a form that looks and acts at least half-civilized. We turn to this task now.
+
+%% ==============================
+\section{The Divergence}
+%% ==============================
+
+Let us consider the surface integral of some arbitrary vector function~$\bfF(x, y, z)$:
+\[
+\iint_S \bfF \cdot \nhat \, \dS.
+\]
+We shall be interested in the ratio of this integral to the volume enclosed by the surface~$S$ as the volume shrinks to zero about some point, for that is exactly the type of quantity that appears in Equation~\eqref{eq:II-16}. This limit is important enough to warrant a special name and notation. It is called the \textit{divergence of}~$\bfF$ and is designated div~$\bfF$. Thus,
+\begin{equation}
+\operatorname{div} \bfF \equiv \lim_{\substack{\Delta V \to 0 \\ \text{about } (x,y,z)}} \frac{1}{\Delta V} \iint_S \bfF \cdot \nhat \, \dS.
+\label{eq:II-17}
+\end{equation}
+This quantity is clearly a scalar. Furthermore, it will, in general, have different values at different points~$(x, y, z)$. Thus the divergence of a vector function is a \textit{scalar function} of position.
+
+Equation~\eqref{eq:II-16} can now be written
+\begin{equation}
+\operatorname{div} \bfE = \rho/\epszero.
+\label{eq:II-18}
+\end{equation}
+
+At this stage, however, our fancy new notation has only a cosmetic value, helping to beautify an ugly equation. Whether it has any practical value as well is the matter taken up in the following discussion in which we actually calculate the limit of the ratio of flux to enclosed volume and find that it can be expressed reasonably simply in terms of certain partial derivatives. Before turning to this calculation, however, it's worth mentioning that if we take our new terminology literally, we can interpret Equation~\eqref{eq:II-18} to mean that the field ``diverges'' from a point, and how much it diverges, so to speak, depends on how much charge there is at that point as represented by the density there.
+
+Our next order of business is to find the reasonably simple expression for the divergence of a vector function promised above. Thus, consider a small rectangular parallelepiped\footnote{Henceforth we'll refer to this as a ``cuboid,'' a made-up term that takes less time and space than the sesquipedalian ``rectangular parallelepiped.''} with edges of length~$\Delta x$, $\Delta y$, and~$\Delta z$ parallel to the coordinate axes (Figure~II-23). Let the point at the center of the little cuboid have coordinates~$(x, y, z)$. We calculate the surface integral of~$\bfF$ over the surface of the cuboid by regarding the integral as a sum of six terms, one for each cuboid face. We begin by considering the face marked~$S_1$ in the figure. We want
+\[
+\iint_{S_1} \bfF \cdot \nhat \, \dS.
+\]
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.6\textwidth]{figures/ch02/fig_II_23.png}
+\caption{}
+\label{fig:II-23}
+\end{figure}
+
+Now it is clear the unit normal to this face and pointing outward from the enclosed volume is~$\bfi$. Thus, since $\bfF \cdot \bfi = F_x$, the preceding integral is
+\[
+\iint_{S_1} F_x(x, y, z) \, \dS.
+\]
+By assumption the cuboid is small (eventually we shall take the limit as it shrinks to zero). We can therefore calculate this integral approximately as~$F_x$ evaluated at the center of the face~$S_1$ multiplied by the area of the face.\footnote{The rationale behind this is as follows: There is a mean value theorem, which tells us that the integral of~$F_x$ over~$S_1$ is equal to the area of~$S_1$ multiplied by the function evaluated \textit{somewhere} on~$S_1$. Since~$S_1$ is small, the point where we \textit{should} evaluate~$F_x$ and the point where we \textit{do} evaluate it (that is, the center) must be close together, and~$F_x$ must have nearly the same value at the two points. Hence what our procedure gives us is a good approximation to the value of the integral. Furthermore, as the cuboid shrinks to zero, the two points get closer and closer so that in the limit our result [Equation~(II-22)] will be exact.} The coordinates of the center of~$S_1$ are $(x + \Delta x/2, y, z)$. Thus,
+\begin{equation}
+\iint_{S_1} F_x(x, y, z) \, \dS \approx F_x\!\left(x + \frac{\Delta x}{2}, y, z\right) \Delta y \, \Delta z.
+\label{eq:II-19}
+\end{equation}
+
+The same kind of reasoning applied to the opposite face~$S_2$ [whose outward normal is~$-\bfi$ and whose center is at $(x - \Delta x/2, y, z)$] leads to
+\begin{equation}
+\iint_{S_2} \bfF \cdot \nhat \, \dS = -\iint_{S_2} F_x \, \dS \approx -F_x\!\left(x - \frac{\Delta x}{2}, y, z\right) \Delta y \, \Delta z.
+\label{eq:II-20}
+\end{equation}
+
+Adding together the contributions of these two faces [Equations~\eqref{eq:II-19} and~\eqref{eq:II-20}], we get
+\begin{align*}
+\iint_{S_1 + S_2} \bfF \cdot \nhat \, \dS &\approx \left[F_x\!\left(x + \frac{\Delta x}{2}, y, z\right) - F_x\!\left(x - \frac{\Delta x}{2}, y, z\right)\right] \Delta y \, \Delta z \\
+&= \frac{F_x\!\left(x + \dfrac{\Delta x}{2}, y, z\right) - F_x\!\left(x - \dfrac{\Delta x}{2}, y, z\right)}{\Delta x} \Delta x \, \Delta y \, \Delta z.
+\end{align*}
+
+Recognizing that $\Delta x \, \Delta y \, \Delta z = \Delta V$, the volume of the cuboid, we have
+\begin{equation}
+\frac{1}{\Delta V} \iint_{S_1 + S_2} \bfF \cdot \nhat \, \dS \approx \frac{F_x\!\left(x + \dfrac{\Delta x}{2}, y, z\right) - F_x\!\left(x - \dfrac{\Delta x}{2}, y, z\right)}{\Delta x}.
+\label{eq:II-21}
+\end{equation}
+
+We now must take the limit of this as~$\Delta V$ approaches zero.\footnote{Note that we have postponed calculating the contributions from the other four faces of the cuboid.} But, of course, as~$\Delta V$ goes to zero, so do each of the sides of the cuboid. Thus, on the right-hand side of Equation~\eqref{eq:II-21} we can write $\lim_{\Delta x \to 0}$ in place of $\lim_{\Delta V \to 0}$, and we find
+\[
+\lim_{\Delta V \to 0} \frac{1}{\Delta V} \iint_{S_1 + S_2} \bfF \cdot \nhat \, \dS = \lim_{\Delta x \to 0} \frac{F_x\!\left(x + \dfrac{\Delta x}{2}, y, z\right) - F_x\!\left(x - \dfrac{\Delta x}{2}, y, z\right)}{\Delta x} = \frac{\partial F_x}{\partial x}
+\]
+evaluated at~$(x, y, z)$. This last equality follows from the definition of the partial derivative. It should come as no surprise that the other two pairs of faces of the cuboid contribute $\partial F_y/\partial y$ and $\partial F_z/\partial z$. Thus,
+\[
+\lim_{\Delta V \to 0} \frac{1}{\Delta V} \iint_S \bfF \cdot \nhat \, \dS = \frac{\partial F_x}{\partial x} + \frac{\partial F_y}{\partial y} + \frac{\partial F_z}{\partial z}.
+\]
+The limit on the left-hand side of this last equation, as we have already remarked, is the divergence of~$\bfF$ [Equation~\eqref{eq:II-17}]. Thus we have just demonstrated that
+\begin{equation}
+\operatorname{div} \bfF = \frac{\partial F_x}{\partial x} + \frac{\partial F_y}{\partial y} + \frac{\partial F_z}{\partial z}.
+\label{eq:II-22}
+\end{equation}
+It can be shown that this result is independent of the shape of the volume used to obtain it (see Problem~II-17).
+
+Using Equation~\eqref{eq:II-22} to find the divergence of a vector function is a straightforward matter, but we'll give an example just for the record. Consider the function
+\[
+\bfF(x, y, z) = \bfi x^2 + \bfj xy + \bfk yz.
+\]
+We have
+\[
+\frac{\partial F_x}{\partial x} = 2x, \qquad \frac{\partial F_y}{\partial y} = x, \qquad \text{and} \qquad \frac{\partial F_z}{\partial z} = y.
+\]
+Thus,
+\[
+\operatorname{div} \bfF = 2x + x + y = 3x + y.
+\]
+
+Returning now to the electrostatic field, we combine Equations~\eqref{eq:II-18} and~\eqref{eq:II-22} to get
+\begin{equation}
+\frac{\partial E_x}{\partial x} + \frac{\partial E_y}{\partial y} + \frac{\partial E_z}{\partial z} = \rho/\epszero.
+\label{eq:II-23}
+\end{equation}
+This equation, which is much more general than our derivation of it suggests, is one of Maxwell's equations and is completely equivalent to Gauss' law [Equation~\eqref{eq:II-1}]. It is sometimes called the ``differential form'' of Gauss' law.
+
+We have now arrived at our goal (almost!), for we have related a property of the electrostatic field at a point (that is, its divergence) to a known quantity (the charge density) at that point. In all fairness it should be said that Equation~\eqref{eq:II-23} can in a sense be regarded as a single (differential) equation in \textit{three} unknowns ($E_x$,~$E_y$,~$E_z$) and for this reason is not often used in this form to find the field. It turns out, however, that the three components of~$\bfE$ can be related to each other very elegantly; when we develop that relationship, we shall return to this question of finding a convenient means of calculating~$\bfE$.
+
+%% ==============================
+\section{The Divergence in Cylindrical and Spherical Coordinates}
+%% ==============================
+
+One often sees Equation~\eqref{eq:II-22} given as the definition of the divergence of the vector function~$\bfF$. While this is certainly acceptable, we much prefer to define the divergence as the limit of flux to volume as stated in Equation~\eqref{eq:II-17}. Equation~\eqref{eq:II-22} is then merely the form the divergence takes in Cartesian coordinates. In other coordinate systems it looks quite different. For example, in cylindrical coordinates the function~$\bfF$ has three components, which you will not be shocked to learn are designated~$F_r$, $F_\theta$, and~$F_z$ [see Figure~II-24(a)]. To obtain the divergence of~$\bfF$ in cylin-
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.6\textwidth]{figures/ch02/fig_II_24a.png}
+\caption{}
+\label{fig:II-24a}
+\end{figure}
+
+drical coordinates, we consider the ``cylindrical cuboid'' shown in Figure~II-24(b) with volume $\Delta V = r \, \Delta r \, \Delta\theta \, \Delta z$ and center at the point~$(r, \theta, z)$.\footnote{Note that in the Cartesian case (Figure~II-23) each face of the cuboid is given by an equation of the form $x = \text{constant}$, $y = \text{constant}$, or $z = \text{constant}$. In the same way each face of the surface in Figure~II-24(b) is given by an equation of the form $r = \text{constant}$, $\theta = \text{constant}$, or $z = \text{constant}$.} The flux of~$\bfF$ through the face marked~1 is
+\begin{align*}
+\iint_{S_1} \bfF \cdot \nhat \, \dS &= \iint_{S_1} F_r \, \dS \\
+&\approx F_r\!\left(r + \frac{\Delta r}{2}, \theta, z\right)\!\left(r + \frac{\Delta r}{2}\right) \Delta\theta \, \Delta z,
+\end{align*}
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.6\textwidth]{figures/ch02/fig_II_24b.png}
+\caption{}
+\label{fig:II-24b}
+\end{figure}
+
+while through the face marked~2 it is
+\begin{align*}
+\iint_{S_2} \bfF \cdot \nhat \, \dS &= -\iint_{S_2} F_r \, \dS \\
+&\approx -F_r\!\left(r - \frac{\Delta r}{2}, \theta, z\right)\!\left(r - \frac{\Delta r}{2}\right) \Delta\theta \, \Delta z.
+\end{align*}
+
+Adding these two results and dividing by the volume~$\Delta V$ of the cuboid, we find
+\begin{align*}
+\frac{1}{\Delta V} \iint_{S_1 + S_2} \bfF \cdot \nhat \, \dS &\approx \frac{1}{r \, \Delta r}\left[\left(r + \frac{\Delta r}{2}\right) F_r\!\left(r + \frac{\Delta r}{2}, \theta, z\right)\right. \\
+&\qquad \left.- \left(r - \frac{\Delta r}{2}\right) F_r\!\left(r - \frac{\Delta r}{2}, \theta, z\right)\right],
+\end{align*}
+which in the limit as~$\Delta r$ (and therefore~$\Delta V$) approaches zero becomes
+\[
+\frac{1}{r} \frac{\partial}{\partial r}(r F_r).
+\]
+Arguing in an analogous way for the other four faces (see Problem~II-18), we arrive finally at the expression for the divergence in cylindrical coordinates:
+\begin{equation}
+\operatorname{div} \bfF = \frac{1}{r} \frac{\partial}{\partial r}(r F_r) + \frac{1}{r} \frac{\partial F_\theta}{\partial \theta} + \frac{\partial F_z}{\partial z}.
+\label{eq:II-24}
+\end{equation}
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.6\textwidth]{figures/ch02/fig_II_25.png}
+\caption{}
+\label{fig:II-25}
+\end{figure}
+
+In spherical coordinates where the components of~$\bfF$ are~$F_r$, $F_\theta$, and~$F_\phi$ (see Figure~II-25), similar reasoning (see Problem~II-21) leads to the expression
+\begin{equation}
+\operatorname{div} \bfF = \frac{1}{r^2} \frac{\partial}{\partial r}(r^2 F_r) + \frac{1}{r \sin\phi} \frac{\partial}{\partial \phi}(\sin\phi \, F_\phi) + \frac{1}{r \sin\phi} \frac{\partial F_\theta}{\partial \theta}.
+\label{eq:II-25}
+\end{equation}
+
+%% ==============================
+\section{The Del Notation}
+%% ==============================
+
+There is a special notation in terms of which the divergence may be written. There would be little or no reason for introducing it if it served only to provide another way of writing ``div,'' but as we shall soon see, it has considerable usefulness in vector calculus.
+
+Let us define a quantity designated~$\nabla$ (read ``del'') by the following rather peculiar-looking equation:
+\[
+\nabla = \bfi \frac{\partial}{\partial x} + \bfj \frac{\partial}{\partial y} + \bfk \frac{\partial}{\partial z}.
+\]
+If we take the dot product of~$\nabla$ and some vector function $\bfF = \bfi F_x + \bfj F_y + \bfk F_z$, we get
+\begin{align*}
+\nabla \cdot \bfF &= \left(\bfi \frac{\partial}{\partial x} + \bfj \frac{\partial}{\partial y} + \bfk \frac{\partial}{\partial z}\right) \cdot (\bfi F_x + \bfj F_y + \bfk F_z) \\
+&= \frac{\partial}{\partial x} F_x + \frac{\partial}{\partial y} F_y + \frac{\partial}{\partial z} F_z.
+\end{align*}
+Now we interpret the ``product'' of $\partial/\partial x$ and~$F_x$ as a partial derivative; that is,
+\[
+\frac{\partial}{\partial x} F_x \equiv \frac{\partial F_x}{\partial x}.
+\]
+There are similar equations for the two other ``products'' $(\partial/\partial y)F_y$ and $(\partial/\partial z)F_z$. With this convention we recognize $\nabla \cdot \bfF$ (``del dot $\bfF$'') as the same as div~$\bfF$, and henceforth, to conform with modern notational practice, we shall always use $\nabla \cdot \bfF$ to indicate the divergence. Thus, Equations~\eqref{eq:II-18} and~\eqref{eq:II-23} will be written
+\[
+\nabla \cdot \bfE = \rho/\epszero.
+\]
+
+Mathematicians call a symbol like~$\nabla$ an operator. When we ``operate'' with~$\nabla$ by dotting it into a vector function, we get the divergence of that function, as we have just seen. In subsequent discussions we shall introduce three other quantities (gradient, curl, and Laplacian), all of which are operators and all of which can be written in terms of~$\nabla$.
+
+%% ==============================
+\section{The Divergence Theorem}
+%% ==============================
+
+For the remainder of this chapter we digress from the mainstream of our narrative to discuss a famous theorem that asserts a remarkable connection between surface integrals and volume integrals. Although this relation may be suggested by the work we have done in electrostatics, the theorem is a mathematical statement holding under quite general circumstances. It is independent of any physics and is applicable in many different places. It is called the divergence theorem and sometimes Gauss' theorem (not to be confused with Gauss' \textit{law}).
+
+We shall not give a mathematically rigorous proof of the divergence theorem; such a proof is given in many texts in advanced calculus. Instead we present here another physicist's rough-and-ready proof. Thus, consider a closed surface~$S$. Subdivide the volume~$V$ enclosed by~$S$ arbitrarily into~$N$ subvolumes, one of which is shown in Figure~II-26 (drawn as a cube for convenience). We
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.6\textwidth]{figures/ch02/fig_II_26.png}
+\caption{}
+\label{fig:II-26}
+\end{figure}
+
+begin our proof by asserting that the flux of an arbitrary vector function~$\bfF(x, y, z)$ through the surface~$S$ equals the sum of the fluxes through the surfaces of each of the subvolumes:
+\begin{equation}
+\iint_S \bfF \cdot \nhat \, \dS = \sum_{i=1}^{N} \iint_{S_i} \bfF \cdot \nhat \, \dS.
+\label{eq:II-26}
+\end{equation}
+Here~$S_i$ is the surface that encloses the subvolume~$\Delta V_i$. To establish Equation~\eqref{eq:II-26}, consider two adjacent subvolumes (Figure~II-27). Let their common face be denoted~$S_0$. The flux through the
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.6\textwidth]{figures/ch02/fig_II_27.png}
+\caption{}
+\label{fig:II-27}
+\end{figure}
+
+subvolume marked~1 in Figure~II-27 includes, of course, a contribution from~$S_0$, which is
+\[
+\iint_{S_0} \bfF \cdot \nhat_1 \, \dS.
+\]
+Here~$\nhat_1$ is a unit normal to the face~$S_0$, and by our usual convention, it points outward from subvolume~1. The flux through the subvolume marked~2 also includes a contribution from~$S_0$:
+\[
+\iint_{S_0} \bfF \cdot \nhat_2 \, \dS.
+\]
+The vector~$\nhat_2$ is a unit normal that points outward from subvolume~2. Clearly $\nhat_1 = -\nhat_2$. Thus, in forming the sum in Equation~\eqref{eq:II-26}, we shall include, among other things, the pair of terms
+\[
+\iint_{S_0} \bfF \cdot \nhat_1 \, \dS + \iint_{S_0} \bfF \cdot \nhat_2 \, \dS = \iint_{S_0} \bfF \cdot \nhat_1 \, \dS - \iint_{S_0} \bfF \cdot \nhat_1 \, \dS = 0.
+\]
+We see that these terms cancel each other and there is no net contribution to the sum in Equation~\eqref{eq:II-26} due to the face~$S_0$. In fact, this sort of cancellation will obviously occur for any subvolume surface that is common to two adjacent subvolumes. But \textit{all} subvolume surfaces are common to two adjacent subvolumes except those that are part of the original (``outer'') surface~$S$. Hence the only terms in the sum in Equation~\eqref{eq:II-26} that survive come from those subvolume surfaces that, taken together, constitute the surface~$S$. This establishes the validity of Equation~\eqref{eq:II-26}.
+
+We now rewrite Equation~\eqref{eq:II-26} in the following curious fashion:
+\begin{equation}
+\iint_S \bfF \cdot \nhat \, \dS = \sum_{i=1}^{N} \left[\frac{1}{\Delta V_i} \iint_{S_i} \bfF \cdot \nhat \, \dS\right] \Delta V_i.
+\label{eq:II-27}
+\end{equation}
+This clearly alters nothing since we have just multiplied and divided each term of the sum by~$\Delta V_i$, the subvolume enclosed by the surface~$S_i$. We can now imagine partitioning the original volume~$V$ into an ever larger number of smaller and smaller subvolumes. In other words, we take the limit of the sum in Equation~\eqref{eq:II-27} as the number of subdivisions tends to infinity and each~$\Delta V_i$ tends to zero. We recognize that the limit of the quantity in square brackets in Equation~\eqref{eq:II-27} is, by definition, $(\nabla \cdot \bfF)_i$, that is, the divergence of~$\bfF$ evaluated at the point about which~$\Delta V_i$ is shrinking. Thus, for each~$\Delta V_i$ very small, Equation~\eqref{eq:II-27} becomes
+\begin{equation}
+\iint_S \bfF \cdot \nhat \, \dS \approx \sum_{i=1}^{N} (\nabla \cdot \bfF)_i \, \Delta V_i.
+\label{eq:II-28}
+\end{equation}
+Further, in the limit, this sum is, again by definition, the triple integral of $\nabla \cdot \bfF$ over the volume enclosed by~$S$:
+\begin{equation}
+\lim_{\substack{N \to \infty \\ \text{each } \Delta V_i \to 0}} \sum_{i=1}^{N} (\nabla \cdot \bfF)_i \, \Delta V_i \equiv \iiint_V \nabla \cdot \bfF \, \dV.
+\label{eq:II-29}
+\end{equation}
+
+Putting together Equations~\eqref{eq:II-26} through~\eqref{eq:II-29}, we arrive at our result:
+\begin{equation}
+\iint_S \bfF \cdot \nhat \, \dS = \iiint_V \nabla \cdot \bfF \, \dV.
+\label{eq:II-30}
+\end{equation}
+This is the divergence theorem. In words, it says that the flux of a vector function through some closed surface equals the triple integral of the divergence of that function over the volume enclosed by the surface.
+
+The major reason the proof given above is not rigorous is that a triple integral is defined as the limit of a sum of the form
+\[
+\sum_i g(x_i, y_i, z_i) \, \Delta V_i,
+\]
+where the function~$g$ is well defined. In Equation~\eqref{eq:II-27}, however, the quantity multiplying the volume element~$\Delta V_i$ in each term of the sum is not a well-defined function in this sense. That is, as~$\Delta V_i$ tends to zero the quantity in the square brackets changes; it can be identified as the divergence of~$\bfF$ only in the limit. A careful, rigorous treatment would show that Equation~\eqref{eq:II-30} is valid if~$\bfF$ (that is, $F_x$,~$F_y$, and~$F_z$) is continuous and differentiable, and its first derivatives are continuous in~$V$ and on~$S$.
+
+Now let's illustrate the divergence theorem. Since endless pages of hideous integrals will not serve our purpose, we'll use a simple example. Let
+\[
+\bfF(x, y, z) = \bfi x + \bfj y + \bfk z
+\]
+and choose for~$S$ the surface shown in Figure~II-28, consisting of the hemispherical shell of radius~1 and the region~$R$ of the
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.6\textwidth]{figures/ch02/fig_II_28.png}
+\caption{}
+\label{fig:II-28}
+\end{figure}
+
+$xy$-plane enclosed by the unit circle. On the hemisphere we have $\nhat = \bfi x + \bfj y + \bfk z$, so that $\nhat \cdot \bfF = x^2 + y^2 + z^2 = 1$. Thus, on the hemisphere,
+\[
+\iint \bfF \cdot \nhat \, \dS = \iint \dS = 2\pi,
+\]
+where the last equality follows from the fact that the integral is merely the surface area of the unit hemisphere. On the region~$R$ we have $\nhat = -\bfk$ so that $\nhat \cdot \bfF = -z$. Hence, on~$R$,
+\[
+\iint \bfF \cdot \nhat \, \dS = -\iint z \, \dx \, \dy = 0
+\]
+because $z = 0$ everywhere on~$R$. Thus, there is no contribution to the surface integral from the circular region~$R$ and
+\[
+\iint_S \bfF \cdot \nhat \, \dS = 2\pi.
+\]
+
+Next we find by a trivial calculation that $\nabla \cdot \bfF = 3$. It follows then that
+\[
+\iiint_V \nabla \cdot \bfF \, \dV = 3 \iiint_V \dV = 3 \frac{2\pi}{3} = 2\pi,
+\]
+where we use the fact that the volume of the unit hemisphere is $2\pi/3$. Since the surface and volume integrals are equal, this illustrates Equation~\eqref{eq:II-30}.
+
+%% ==============================
+\section{Two Simple Applications of the Divergence Theorem}
+%% ==============================
+
+As one example of the use of the divergence theorem we give an alternative derivation of Equation~\eqref{eq:II-18}, the analysis of which led us to the divergence theorem itself. In other words, this is how easy it would have been if we had known the divergence theorem to begin with!
+
+We start with Gauss' law in the form
+\begin{equation}
+\iint_S \bfE \cdot \nhat \, \dS = \frac{1}{\epszero} \iiint_V \rho \, \dV.
+\label{eq:II-31}
+\end{equation}
+Next we apply the divergence theorem to the surface integral in the above equation to get
+\begin{equation}
+\iint_S \bfE \cdot \nhat \, \dS = \iiint_V \nabla \cdot \bfE \, \dV.
+\label{eq:II-32}
+\end{equation}
+Thus, combining Equations~\eqref{eq:II-31} and~\eqref{eq:II-32}, we find
+\[
+\iiint_V \nabla \cdot \bfE \, \dV = \frac{1}{\epszero} \iiint_V \rho \, \dV.
+\]
+
+In general, if two volume integrals are equal, it is not necessarily true that their integrands are equal. It might be that the integrals are equal only over the particular volume of integration~$V$, and by integrating over a different volume, we would wreck the equality. In the present case, however, this is not true because Gauss' law holds for any arbitrary volume~$V$, and we cannot upset the equality by changing the volume. But this can be so only if the integrands are equal. Hence,
+\[
+\nabla \cdot \bfE = \rho/\epszero,
+\]
+which should look familiar!
+
+Another example of the use of the divergence theorem is the following. Suppose that in some region of space ``stuff'' (matter, electric charge, anything) is moving (Figure~II-29). Let the den-
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.6\textwidth]{figures/ch02/fig_II_29.png}
+\caption{}
+\label{fig:II-29}
+\end{figure}
+
+sity of this stuff at any point~$(x, y, z)$ and any time~$t$ be $\rho(x, y, z, t)$ and let its velocity be $\mathbf{v}(x, y, z, t)$. Further, suppose this stuff is \textit{conserved}; that is, it is neither created nor destroyed. Concentrating on some arbitrary volume~$V$ in space, we ask: What is the rate at which the amount of stuff in this volume is changing? At any time~$t$ the amount of stuff in~$V$ is
+\[
+\iiint_V \rho(x, y, z, t) \, \dV
+\]
+and the rate at which it is changing is
+\[
+\frac{d}{dt} \iiint_V \rho(x, y, z, t) \, \dV = \iiint_V \frac{\partial \rho}{\partial t} \, \dV.
+\]
+(To be able to move the derivative under the integral sign this way requires that $\partial\rho/\partial t$ be continuous.)
+
+Next we recall from an earlier discussion that the rate at which stuff flows through a surface~$S$ is
+\[
+\iint_S \rho \mathbf{v} \cdot \nhat \, \dS.
+\]
+We then assert that the rate at which the amount of stuff in~$V$ is changing is equal to the rate at which it is flowing through the enclosing surface~$S$; in equation form this statement reads
+\[
+\iiint_V \frac{\partial \rho}{\partial t} \, \dV = -\iint_S \rho \mathbf{v} \cdot \nhat \, \dS.
+\]
+
+There are two features about this equation that require discussion:
+\begin{enumerate}
+\item The negative sign must be included because the surface integral as defined is positive for a net flow \textit{out} of the volume, but a net flow out means the amount of stuff in the volume is decreasing.
+
+\item This equation states that the amount of stuff in~$V$ can change only as a result of stuff flowing across the boundary~$S$. If stuff were being created or destroyed in~$V$, terms would have to be included in the equation to reflect that fact. The absence of any such terms is thus an expression of the conservation of the stuff.
+\end{enumerate}
+
+Now, finally, let us apply the divergence theorem. We find
+\[
+\iint_S \rho \mathbf{v} \cdot \nhat \, \dS = \iiint_V \nabla \cdot (\rho \mathbf{v}) \, \dV.
+\]
+Hence,
+\[
+\iiint_V \frac{\partial \rho}{\partial t} \, \dV = -\iiint_V \nabla \cdot (\rho \mathbf{v}) \, \dV.
+\]
+Arguing as we did above that~$V$ is an arbitrary volume, we can then say
+\begin{equation}
+\frac{\partial \rho}{\partial t} = -\nabla \cdot (\rho \mathbf{v}).
+\label{eq:II-33}
+\end{equation}
+
+Usually we define the \textit{current density} $\mathbf{J} = \rho \mathbf{v}$ and write Equation~\eqref{eq:II-31} as
+\[
+\frac{\partial \rho}{\partial t} + \nabla \cdot \mathbf{J} = 0.
+\]
+An equation of this type is referred to as a \textit{continuity equation} and is, as we have seen, an expression of a conservation law (see Problems~III-20, III-21, and~IV-21). Besides playing an important role in electromagnetic theory, it is a basic equation both in hydrodynamics and diffusion theory. Finally, considerations similar to those that led to the continuity equation are involved in the analysis of heat flow.
+
+%% ==============================
+\section*{Problems}
+\addcontentsline{toc}{section}{Problems}
+%% ==============================
+
+\begin{problems}
+
+\prob Find a unit vector~$\nhat$ normal to each of the following surfaces.
+\begin{enumerate}[label=(\alph*)]
+\item $z = 2 - x - y$. \quad (c) $z = (1 - x^2)^{1/2}$.
+\item $z = (x^2 + y^2)^{1/2}$. \quad (d) $z = x^2 + y^2$.
+\item[(e)] $z = (1 - x^2/a^2 - y^2/a^2)^{1/2}$.
+\end{enumerate}
+
+\prob
+\begin{enumerate}[label=(\alph*)]
+\item Show that the unit vector normal to the plane
+\[
+ax + by + cz = d
+\]
+is given by
+\[
+\nhat = \pm(\bfi a + \bfj b + \bfk c)/(a^2 + b^2 + c^2)^{1/2}.
+\]
+\item Explain in geometric terms why this expression for~$\nhat$ is independent of the constant~$d$.
+\end{enumerate}
+
+\prob Derive expressions for the unit normal vector for surfaces given by $y = g(x, z)$ and by $x = h(y, z)$. Use each to rederive the expression for the normal to the plane given in Problem~II-2.
+
+\prob In each of the following use Equation~II-12 to evaluate the surface integral $\iint_S G(x, y, z) \, \dS$.
+\begin{enumerate}[label=(\alph*)]
+\item $G(x, y, z) = z$,\\
+where~$S$ is the portion of the plane $x + y + z = 1$ in the first octant.
+\item $G(x, y, z) = \dfrac{1}{1 + 4(x^2 + y^2)}$,\\
+where~$S$ is the portion of the paraboloid $z = x^2 + y^2$ between $z = 0$ and $z = 1$.
+\item $G(x, y, z) = (1 - x^2 - y^2)^{3/2}$,\\
+where~$S$ is the hemisphere $z = (1 - x^2 - y^2)^{1/2}$.
+\end{enumerate}
+
+\prob In each of the following use Equation~II-13 to evaluate the surface integral $\iint_S \bfF \cdot \nhat \, \dS$.
+\begin{enumerate}[label=(\alph*)]
+\item $\bfF(x, y, z) = \bfi x - \bfk z$,\\
+where~$S$ is the portion of the plane $x + y + 2z = 2$ in the first octant.
+\item $\bfF(x, y, z) = \bfi x + \bfj y + \bfk z$,\\
+where~$S$ is the hemisphere $z = \sqrt{a^2 - x^2 - y^2}$.
+\item $\bfF(x, y, z) = \bfj y + \bfk$,\\
+where~$S$ is the portion of the paraboloid $z = 1 - x^2 - y^2$ above the $xy$-plane.
+\end{enumerate}
+
+\prob The distribution of mass on the hemispherical shell
+\[
+z = (R^2 - x^2 - y^2)^{1/2}
+\]
+is given by
+\[
+\sigma(x, y, z) = (\sigma_0/R^2)(x^2 + y^2)
+\]
+where~$\sigma_0$ is a constant. Find an expression in terms of~$\sigma_0$ and~$R$ for the total mass of the shell.
+
+\prob Find the moment of inertia about the $z$-axis of the hemispherical shell of Problem~II-6.
+
+\prob An electrostatic field is given by
+\[
+\bfE = \lambda(\bfi yz + \bfj xz + \bfk xy),
+\]
+where~$\lambda$ is a constant. Use Gauss' law to find the total charge enclosed by the surface shown in the figure consisting of~$S_1$, the hemisphere
+\[
+z = (R^2 - x^2 - y^2)^{1/2},
+\]
+and~$S_2$, its circular base in the $xy$-plane.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.6\textwidth]{figures/ch02/fig_prob_II_8.png}
+\caption{}
+\label{fig:prob-II-8}
+\end{figure}
+
+\prob An electrostatic field is given by $\bfE = \lambda(\bfi x + \bfj y)$, where~$\lambda$ is a constant. Use Gauss' law to find the total charge enclosed by the surface shown in the figure consisting of~$S_1$, the curved portion of the half-cylinder $z = (r^2 - y^2)^{1/2}$ of length~$h$; $S_2$ and~$S_3$, the two semicircular plane end pieces; and~$S_4$, the rectangular portion of the $xy$-plane. Express your results in terms of~$\lambda$, $r$, and~$h$.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.6\textwidth]{figures/ch02/fig_prob_II_9.png}
+\caption{}
+\label{fig:prob-II-9}
+\end{figure}
+
+\prob It sometimes happens that surface integrals can be evaluated without using the long-winded procedures outlined in the text. Try evaluating $\iint_S \bfF \cdot \nhat \, \dS$ for each of the following; think a bit and avoid a lot of work!
+\begin{enumerate}[label=(\alph*)]
+\item $\bfF = \bfi x + \bfj y + \bfk z$.\\
+$S$, the three squares each of side~$b$ as shown in the figure.
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.5\textwidth]{figures/ch02/fig_prob_II_10a.png}
+\caption{}
+\label{fig:prob-II-10a}
+\end{figure}
+
+\item $\bfF = (\bfi x + \bfj y) \ln(x^2 + y^2)$.\\
+$S$, the cylinder (including the top and bottom) of radius~$R$ and height~$h$ shown in the figure.
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.5\textwidth]{figures/ch02/fig_prob_II_10b.png}
+\caption{}
+\label{fig:prob-II-10b}
+\end{figure}
+
+\item $\bfF = (\bfi x + \bfj y + \bfk z)e^{-(x^2 + y^2 + z^2)}$.\\
+$S$, the surface of the sphere of radius~$R$ centered at the origin as shown in the figure.
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.5\textwidth]{figures/ch02/fig_prob_II_10c.png}
+\caption{}
+\label{fig:prob-II-10c}
+\end{figure}
+
+\item $\bfF = \bfi E(x)$, where~$E(x)$ is an arbitrary scalar function of~$x$.\\
+$S$, the surface of the cube of side~$b$ shown in the figure.
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.5\textwidth]{figures/ch02/fig_prob_II_10d.png}
+\caption{}
+\label{fig:prob-II-10d}
+\end{figure}
+\end{enumerate}
+
+\prob
+\begin{enumerate}[label=(\alph*)]
+\item Use Gauss' law and symmetry to find the electrostatic field as a function of position for an infinite uniform plane of charge. Let the charge lie in the $yz$-plane and denote the charge per unit area by~$\sigma$.
+\item Repeat part~(a) for an infinite slab of charge parallel to the $yz$-plane, whose density is given by
+\[
+\rho(x) = \begin{cases} \rho_0, & -b < x < b, \\ 0, & |x| \ge b, \end{cases}
+\]
+where~$\rho_0$ and~$b$ are constants.
+\item Repeat part~(b) with $\rho(x) = \rho_0 e^{-|x/b|}$.
+\end{enumerate}
+
+\prob
+\begin{enumerate}[label=(\alph*)]
+\item Use Gauss' law and symmetry to find the electrostatic field as a function of position for an infinite uniform line of charge. Let the charge lie along the $z$-axis and denote the charge per unit length by~$\lambda$.
+\item Repeat part~(a) for an infinite cylinder of charge whose axis coincides with the $z$-axis and whose density is given in cylindrical coordinates by
+\[
+\rho(r) = \begin{cases} \rho_0, & r < b, \\ 0, & r \ge b, \end{cases}
+\]
+where~$\rho_0$ and~$b$ are constants.
+\item Repeat part~(b) with $\rho(r) = \rho_0 e^{-r/b}$.
+\end{enumerate}
+
+\prob
+\begin{enumerate}[label=(\alph*)]
+\item Use Gauss' law and symmetry to find the electrostatic field as a function of position for the spherically symmetric charge distribution whose density is given in spherical coordinates by
+\[
+\rho(r) = \begin{cases} \rho_0, & r < b, \\ 0, & r \ge b, \end{cases}
+\]
+where~$\rho_0$ and~$b$ are constants.
+\item Repeat part~(a) for $\rho(r) = \rho_0 e^{-r/b}$.
+\item Repeat part~(a) for
+\[
+\rho(r) = \begin{cases} \rho_0, & r < b, \\ \rho_1, & b \le r < 2b, \\ 0, & r \ge 2b. \end{cases}
+\]
+How must~$\rho_0$ and~$\rho_1$ be related so that the field will be zero for $r > 2b$? What is the total charge of this distribution under these circumstances?
+\end{enumerate}
+
+\prob Calculate the divergence of each of the following functions using Equation~(II-22):
+\begin{enumerate}[label=(\alph*)]
+\item $\bfi x^2 + \bfj y^2 + \bfk z^2$.
+\item $\bfi yz + \bfj xz + \bfk xy$.
+\item $\bfi e^{-x} + \bfj e^{-y} + \bfk e^{-z}$.
+\item $\bfi - 3\bfj + \bfk z^2$.
+\item $(-\bfi xy + \bfj x^2)/(x^2 + y^2)$, \quad $(x, y) \ne (0, 0)$.
+\item $\bfk\sqrt{x^2 + y^2}$.
+\item $\bfi x + \bfj y + \bfk z$.
+\item $(-\bfi y + \bfj x)/\sqrt{x^2 + y^2}$, \quad $(x, y) \ne (0, 0)$.
+\end{enumerate}
+
+\prob
+\begin{enumerate}[label=(\alph*)]
+\item Calculate $\iint_S \bfF \cdot \nhat \, \dS$ for the function in Problem~II-14(a) over the surface of a cube of side~$s$ whose center is at~$(x_0, y_0, z_0)$ and whose faces are parallel to the coordinate planes.
+\item Divide the above result by the volume of the cube and calculate the limit of the quotient as $s \to 0$. Compare your result with the divergence found in Problem~II-14(a).
+\item Repeat parts~(a) and~(b) for the function of Problem~II-14(b) and~(c).
+\end{enumerate}
+
+\prob
+\begin{enumerate}[label=(\alph*)]
+\item Calculate the divergence of the function
+\[
+\bfF(x, y, z) = \bfi f(x) + \bfj f(y) + \bfk f(-2z)
+\]
+and show that it is zero at the point~$(c, c, -c/2)$.
+\item Calculate the divergence of
+\[
+\mathbf{G}(x, y, z) = \bfi f(y, z) + \bfj g(x, z) + \bfk h(x, y).
+\]
+\end{enumerate}
+
+\prob In the text we obtained the result
+\[
+\nabla \cdot \bfF = \frac{\partial F_x}{\partial x} + \frac{\partial F_y}{\partial y} + \frac{\partial F_z}{\partial z}
+\]
+by integrating over the surface of a small rectangular parallelepiped. As an example of the fact that this result is independent of the surface, rederive it using the wedge-shaped surface shown in the figure.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.5\textwidth]{figures/ch02/fig_prob_II_17.png}
+\caption{}
+\label{fig:prob-II-17}
+\end{figure}
+
+\prob
+\begin{enumerate}[label=(\alph*)]
+\item Let~$\bfi$, $\bfj$, and~$\bfk$ be unit vectors in Cartesian coordinates and $\hat{\mathbf{e}}_r$, $\hat{\mathbf{e}}_\theta$, and~$\hat{\mathbf{e}}_z$ be unit vectors in cylindrical coordinates. Show that
+\begin{align*}
+\bfi &= \hat{\mathbf{e}}_r \cos\theta - \hat{\mathbf{e}}_\theta \sin\theta, \\
+\bfj &= \hat{\mathbf{e}}_r \sin\theta + \hat{\mathbf{e}}_\theta \cos\theta, \\
+\bfk &= \hat{\mathbf{e}}_z.
+\end{align*}
+\item Rewrite the function in Problem~II-14(e) in cylindrical coordinates and compute its divergence, using Equation~\eqref{eq:II-24}. Convert your result back to Cartesian coordinates and compare with the answer obtained in Problem~II-14(e).
+\item Repeat part~(b) for the function of Problem~II-14(f).
+\end{enumerate}
+
+\prob
+\begin{enumerate}[label=(\alph*)]
+\item Let~$\bfi$, $\bfj$, and~$\bfk$ be unit vectors in Cartesian coordinates and $\hat{\mathbf{e}}_r$, $\hat{\mathbf{e}}_\theta$, and~$\hat{\mathbf{e}}_\phi$ be unit vectors in spherical coordinates. Show that
+\begin{align*}
+\bfi &= \hat{\mathbf{e}}_r \sin\phi \cos\theta + \hat{\mathbf{e}}_\phi \cos\phi \cos\theta - \hat{\mathbf{e}}_\theta \sin\theta \\
+\bfj &= \hat{\mathbf{e}}_r \sin\phi \sin\theta + \hat{\mathbf{e}}_\phi \cos\phi \sin\theta + \hat{\mathbf{e}}_\theta \cos\theta \\
+\bfk &= \hat{\mathbf{e}}_r \cos\phi - \hat{\mathbf{e}}_\phi \sin\phi
+\end{align*}
+[\textit{Hint:} It's easier to express $\hat{\mathbf{e}}_r$, $\hat{\mathbf{e}}_\theta$, and~$\hat{\mathbf{e}}_\phi$ in terms of~$\bfi$, $\bfj$, and~$\bfk$ and then solve algebraically for~$\bfi$, $\bfj$, and~$\bfk$. To do this, first use the fact that $\hat{\mathbf{e}}_r = \bfr/r = (\bfi x + \bfj y + \bfk z)/r$. Next, reasoning geometrically, show that $\hat{\mathbf{e}}_\theta = -\bfi \sin\theta + \bfj \cos\theta$. Finally, calculate $\hat{\mathbf{e}}_\phi = \hat{\mathbf{e}}_\theta \times \hat{\mathbf{e}}_r$.]
+\item Rewrite the function of Problem~II-14(g) in spherical coordinates and compute its divergence using Equation~\eqref{eq:II-25}. Convert your result back to Cartesian coordinates and compare with the answer obtained in Problem~II-14(g).
+\item Repeat part~(b) for the function of Problem~II-14(h).
+\end{enumerate}
+
+\prob In cylindrical coordinates the divergence of~$\bfF$ is given by
+\[
+\nabla \cdot \bfF = \frac{1}{r} \frac{\partial}{\partial r}(rF_r) + \frac{1}{r} \frac{\partial F_\theta}{\partial \theta} + \frac{\partial F_z}{\partial z}.
+\]
+In the text (pages~42--43) we derived the first term of this expression. Proceeding the same way, obtain the other two terms.
+
+\prob Repeat Problem~II-20 to obtain the divergence in spherical coordinates by carrying out the surface integral over the surface of the volume shown in the figure and thereby obtaining the expression
+\[
+\nabla \cdot \bfF = \frac{1}{r^2} \frac{\partial}{\partial r}(r^2 F_r) + \frac{1}{r \sin\phi} \frac{\partial}{\partial \phi}(\sin\phi \, F_\phi) + \frac{1}{r \sin\phi} \frac{\partial F_\theta}{\partial \theta}.
+\]
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.5\textwidth]{figures/ch02/fig_prob_II_21.png}
+\caption{}
+\label{fig:prob-II-21}
+\end{figure}
+
+\prob Consider a vector function of the form
+\[
+\bfF(r) = \hat{\mathbf{e}}_r f(r),
+\]
+where $\hat{\mathbf{e}}_r = (\bfi x + \bfj y + \bfk z)/r$ is the unit vector in the radial direction, $r = (x^2 + y^2 + z^2)^{1/2}$, and~$f(r)$ is a differentiable scalar function. Using the results of Problem~II-21, determine~$f(r)$ so that $\nabla \cdot \bfF = 0$. A vector function whose divergence is zero is said to be \textit{solenoidal}.
+
+\prob Verify the divergence theorem
+\[
+\iint_S \bfF \cdot \nhat \, \dS = \iiint_V \nabla \cdot \bfF \, \dV
+\]
+in each of the following cases:
+\begin{enumerate}[label=(\alph*)]
+\item $\bfF = \bfi x + \bfj y + \bfk z$.\\
+$S$, the surface of the cube of side~$b$ shown in the figure.
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.5\textwidth]{figures/ch02/fig_prob_II_23a.png}
+\caption{}
+\label{fig:prob-II-23a}
+\end{figure}
+
+\item $\bfF = \hat{\mathbf{e}}_r r + \hat{\mathbf{e}}_z z$,\\
+$\bfr = \bfi x + \bfj y$.\\
+$S$, the surface of the quarter cylinder (radius~$R$, height~$h$) shown in the figure.
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.5\textwidth]{figures/ch02/fig_prob_II_23b.png}
+\caption{}
+\label{fig:prob-II-23b}
+\end{figure}
+
+\item $\bfF = \hat{\mathbf{e}}_r r^2$,\\
+$\bfr = \bfi x + \bfj y + \bfk z$.\\
+$S$, the surface of the sphere of radius~$R$ centered at the origin as shown in the figure.
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.5\textwidth]{figures/ch02/fig_prob_II_23c.png}
+\caption{}
+\label{fig:prob-II-23c}
+\end{figure}
+\end{enumerate}
+
+\prob
+\begin{enumerate}[label=(\alph*)]
+\item One of Maxwell's equations states that $\nabla \cdot \mathbf{B} = 0$, where~$\mathbf{B}$ is any magnetic field. Show that
+\[
+\iint_S \nhat \cdot \mathbf{B} \, \dS = 0
+\]
+for any closed surface~$S$.
+\item Determine the flux of a uniform magnetic field~$\mathbf{B}$ through the curved surface of a right circular cone (radius~$R$, height~$h$) oriented so that~$\mathbf{B}$ is normal to the base of the cone as shown in the figure. (A uniform field is one that has the same magnitude and direction everywhere.)
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.5\textwidth]{figures/ch02/fig_prob_II_24.png}
+\caption{}
+\label{fig:prob-II-24}
+\end{figure}
+\end{enumerate}
+
+\prob Use the divergence theorem to show that
+\[
+\iint_S \nhat \, \dS = 0,
+\]
+where~$S$ is a closed surface and~$\nhat$ is the unit vector normal to the surface~$S$.
+
+\prob
+\begin{enumerate}[label=(\alph*)]
+\item Use the divergence theorem to show that
+\[
+\frac{1}{3} \iint_S \nhat \cdot \bfr \, \dS = V,
+\]
+where~$S$ is a closed surface enclosing a region of volume~$V$, $\nhat$ is a unit normal vector to the surface~$S$, and $\bfr = \bfi x + \bfj y + \bfk z$.
+\item Use the expression given in~(a) to find the volume of
+\begin{enumerate}[label=(\roman*)]
+\item a rectangular parallelepiped with sides~$a$, $b$,~$c$.
+\item a right circular cone with height~$h$ and base radius~$R$.\\
+{[\textit{Hint:} The calculation is very simple with the cone oriented as shown in the figure.]}
+\item a sphere of radius~$R$.
+\end{enumerate}
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.5\textwidth]{figures/ch02/fig_prob_II_26.png}
+\caption{}
+\label{fig:prob-II-26}
+\end{figure}
+\end{enumerate}
+
+\prob
+\begin{enumerate}[label=(\alph*)]
+\item Consider a vector function with the property $\nabla \cdot \bfF = 0$ everywhere on two closed surfaces~$S_1$ and~$S_2$ and in the volume~$V$ enclosed by them (see the figure). Show that the flux of~$\bfF$ through~$S_1$ equals the flux of~$\bfF$ through~$S_2$. In calculating the fluxes, choose the direction of the normals as indicated by the arrows in the figure.
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.5\textwidth]{figures/ch02/fig_prob_II_27.png}
+\caption{}
+\label{fig:prob-II-27}
+\end{figure}
+
+\item Given the electrostatic field of a point charge~$q$ situated at $r = 0$,
+\[
+\bfE = \frac{1}{4\pi\epszero} \frac{q}{r^2} \, \hat{\mathbf{e}}_r,
+\]
+where $r^2 = x^2 + y^2 + z^2$, show by direct calculation that
+\[
+\nabla \cdot \bfE = 0, \qquad \text{for all } r \ne 0.
+\]
+\item Prove Gauss' law for the field of a single point charge given in~(b). [\textit{Hint:} It is easy to calculate the flux of~$\bfE$ over a sphere centered at $r = 0$.]
+\item How would you extend this proof to cover the case of an arbitrary charge distribution?
+\end{enumerate}
+
+\prob
+\begin{enumerate}[label=(\alph*)]
+\item Show by direct calculation that the divergence theorem does not hold for
+\[
+\bfF(r, \theta, \phi) = \frac{\hat{\mathbf{e}}_r}{r^2},
+\]
+with~$S$ the surface of a sphere of radius~$R$ centered at the origin, and~$V$ the enclosed volume. Why does the theorem fail?
+\item Verify by direct calculation that the divergence theorem does hold for the function~$\bfF$ of part~(a) when~$S$ is the surface~$S_1$ of a sphere of radius~$R_1$ plus the surface~$S_2$ of a sphere of radius~$R_2$, both centered at the origin, and~$V$ is the volume enclosed by~$S_1$ and~$S_2$.
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.5\textwidth]{figures/ch02/fig_prob_II_28.png}
+\caption{}
+\label{fig:prob-II-28}
+\end{figure}
+\item In general, what restriction must be placed on a surface~$S$ so that the divergence theorem will hold for the function of part~(a)?
+\end{enumerate}
+
+\end{problems}
