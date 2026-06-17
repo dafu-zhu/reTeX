@@ -1,0 +1,110 @@
+%% sec7_4.tex — Section 7.4: Exercises
+%% Chapter 7 of "A First Course in Monte Carlo Methods"
+%% Sanz-Alonso & Al-Ghattas, University of Chicago
+
+\section{Exercises}
+\label{sec:7.4}
+
+\begin{enumerate}
+
+\item[7.1] Consider the function
+\[
+  V(x) = \Bigl(\cos(50x) + \sin(20x)\Bigr)^2
+\]
+defined for $0 < x < 1$.
+\begin{enumerate}
+  \item Use the command \texttt{scipy.optimize} to identify a maximum at $x^* = 0.379$ with a
+    value of $V(x^*) = 3.8325$.
+  \item Design a simulated annealing algorithm to optimize the function $h$. You may build on
+    the following sketch or write your code from scratch:
+\begin{verbatim}
+diff = iter = 1
+while diff > 10**(-4):
+    prop = x[iter-1] + random.uniform(-1, 1)*scale
+    u = random.uniform(0, 1)
+    if not (0 <= prop <= 1) or
+            (math.log(u)*temp[iter-1] > V(prop) - V(x[iter-1])):
+        prop = x[iter-1]
+    x.append(prop)
+    Vcur = V(prop)
+    Vval.append(Vcur)
+    if iter > 10 and len(set(x[(iter//2):iter])) > 1:
+        diff = max(Vval) - max(Vval[0:(iter//2)])
+    iter += 1
+\end{verbatim}
+    This algorithm suggests stopping when the observed maximum has not changed in the second
+    half of the sequence $\{x_t\}$. The constraint involving \texttt{unique} is canceling the
+    stopping rule when no perturbation has been accepted in the second half of the iterations,
+    meaning that the scale may be inappropriate. (Note: the updates of \texttt{temp} and
+    \texttt{scale} need to be included in the loop.)
+
+    Consider the following choices:\\
+    (i) A scale defined by $\sqrt{T_t}$ and a temperature $T_t$ decrease in $1/\log(1+t)$.\\
+    (ii) A scale defined by $5\sqrt{T_t}$ and a temperature decrease in $1/(1+t)^2$.\\
+    (iii) Decrease the scale in (i) and (ii) by a factor of 10. What do you observe?
+\end{enumerate}
+
+\item[7.2] In this exercise, you will implement and compare the MALA and parallel tempering for
+sampling from a double well potential $V(x) = 2(x^2 - 1)^2$.
+\begin{enumerate}
+  \item Implement MALA to sample from $V(x)$, generating $10^5$ samples with a fixed
+    step-size $\epsilon = 0.05$. Plot the trajectory of the samples.
+  \item Implement parallel tempering using 4 chains at temperatures $1, 1/2, 1/4, 1/8$ with a
+    fixed step-size $\epsilon = 0.05$, generating $10^5$ samples per chain. After every 10
+    samples, randomly select two chains and attempt a swap using the Metropolis criterion. Plot
+    the trajectories for all chains.
+\end{enumerate}
+\begin{enumerate}
+  \setcounter{enumii}{0}
+  \item[2.] \begin{enumerate}
+    \item For MALA, perform 10 runs to sample from $V(x)$, recording the number of steps
+      required for transitions from $x < 0$ to $x > 0$ and vice versa up to $10^5$ samples.
+      Assume the starting position is randomly chosen from the standard normal distribution.
+      Compute the average transition steps over the runs.
+    \item Repeat the above for parallel tempering.
+    \item Compare the average transition times for MALA and parallel tempering, discussing the
+      efficiency and computational cost of each method.
+  \end{enumerate}
+  \item[3.] An alternative method for state swapping in parallel tempering is to attempt to swap
+    between adjacent chains sequentially. Evaluate the impact of this method on the algorithm's
+    efficiency.
+\end{enumerate}
+
+\item[7.3] Consider the Rosenbrock function $f : \R^2 \to \R$ defined by
+\[
+  f(x, y) = 100(y - x^2)^2 + (1 - x)^2.
+\]
+In this question, you will implement and compare simulated annealing, gradient descent and
+Newton descent to minimize this function. Writing $z = (x, y)$, recall that in gradient
+descent, we iterate:
+\[
+  z^{(k)} = z^{(k-1)} - \eta \nabla f(z^{(k-1)}),
+\]
+and in Newton descent, we iterate:
+\[
+  z^{(k)} = z^{(k-1)} - \eta\bigl(\nabla^2 f(z^{(k-1)})\bigr)^{-1} \nabla f(z^{(k-1)}),
+\]
+where $\eta > 0$ is a step-size parameter. Using a starting point of $z^{(0)} = (-1.2, 1)$ and
+a step-size of your choosing, run each of the algorithms until you reach the termination
+condition $\|\nabla f(z^{(k)})\|_2 \leq 10^{-6}$. Report the obtained solution from each
+scheme, as well as the number of iterations required. Provide a plot of the iterates from the
+three schemes super-imposed on a plot of the function. You may use a 3d plot or a 2d contour
+plot.
+
+\item[7.4] Consider the function $V : \R \to \R$, defined by
+\[
+  V(x; c) = \frac{1}{2}(x^2 - c)^2,
+\]
+and where $c > 0$ is a parameter controlling the bi-modality of $V$. In this question, you will
+compare the efficiency of MALA and parallel tempering applied to $V$ for various choices of
+parameter $c \in \{0, 1, 5\}$.
+\begin{enumerate}
+  \item Implement MALA with $N = 10^4$ and $\epsilon = 0.1$.
+  \item Implement parallel tempering with $N = 10^4$, attempting swaps after every 10 samples
+    and using the following temperatures $T \in \{0.01, 0.1, 0.5, 1\}$.
+  \item Compare the two algorithms by plotting a histogram and path of the samples for each
+    value of $c$. Explain how (and why) increasing $c$ affects the relative performance of the
+    two algorithms.
+\end{enumerate}
+
+\end{enumerate}

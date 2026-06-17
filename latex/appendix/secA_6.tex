@@ -1,0 +1,128 @@
+\section{Sample Path Ergodicity}
+\label{sec:A.6}
+
+Why do we care about ergodicity of Markov chains in a Monte Carlo simulation course?  Markov chain
+Monte Carlo (MCMC) algorithms draw samples from a Markov chain which has as invariant a prescribed
+target distribution $\pi = f$.  Ultimately, we are interested in understanding the \emph{sample
+path ergodicity} of MCMC chains, that is, we want to determine if ergodic averages
+\[
+  \frac{1}{N} \sum_{n=1}^{N} h(X^{(n)})
+\]
+computed from MCMC samples accurately approximate expectations $\calI_f[h]$ with respect to the
+target.  These samples are \emph{not} independent, and consequently the efficiency of the ergodic
+average estimator will depend on the correlations between them.
+
+First, we have the following law of large numbers.
+
+\begin{theorem}[Law of Large Numbers]
+\label{thm:A.32}
+Let $h : E \to \R$ and let $\mathbb{X} = \{X_n\}_{n=0}^\infty$ be an ergodic Markov chain with
+stationary distribution $\pi$.  Then, $\pi$-almost surely,
+\[
+  \frac{1}{N} \sum_{n=1}^{N} h(X_n) \xrightarrow{N \to \infty} \int_E h(x)\, \pi(x)\, dx
+  \equiv \calI_\pi[h].
+\]
+\end{theorem}
+
+We also have a central limit theorem, which requires geometric ergodicity of the chain.
+
+\begin{definition}[Geometric and Uniform Ergodicity]
+\label{def:A.33}
+An ergodic Markov chain with invariant distribution $\pi$ is geometrically ergodic if there exist
+a non-negative function $M$ with $\Expect_\pi[M(X)] < \infty$ and $0 < r < 1$ such that
+\[
+  d_{\mathrm{TV}}(P^n(x, \cdot), \pi) \leq M(x)\, r^n
+\]
+for all $x$ and all $n$.  If the function $M$ is bounded above, then the chain is called
+uniformly ergodic.
+\end{definition}
+
+Note, as an example, that we have proved that any irreducible and aperiodic Markov chain on a
+finite state space is uniformly ergodic.  The following result shows that sample path ergodicity
+can be deduced from geometric ergodicity.  In Chapter~4, we discuss the uniform and geometric
+ergodicity of several MCMC algorithms, thus guaranteeing in particular their sample path
+ergodicity.
+
+\begin{theorem}[Central Limit Theorem]
+\label{thm:A.34}
+With the same notation as in the previous theorem, suppose further that $\mathbb{X}$ is
+geometrically ergodic and that, for some $\epsilon > 0$,
+\[
+  \Expect_{Y \sim \pi}[h(Y)^{2+\epsilon}] < \infty.
+\]
+Then,
+\[
+  \sqrt{N}\!\left(\frac{1}{N} \sum_{n=1}^{N} h(X_n) - \calI_\pi[h]\right)
+  \cvd \Normal(0, \tau^2),
+\]
+where $\tau^2$ is the integrated autocorrelation time, defined below in Lemma~\ref{lem:A.36}.
+\end{theorem}
+
+The rest of this appendix is devoted to defining and understanding the integrated autocorrelated
+time, which may be used to assess the relative efficiency of different MCMC algorithms.
+
+Unsurprisingly, the asymptotic variance $\tau^2$ in the above central limit theorem arises as the
+limiting variance of ergodic averages.  We define
+\[
+  \frac{\tau_N^2}{N} := \Var\!\left[\frac{1}{N} \sum_{n=1}^{N} h(X_n)\right]
+\]
+and note that $\tau_N^2$ (and similarly $\sigma^2$ and $\tau$ below) depends on $h$ but we omit
+said dependence from our notation.  The value $\tau_N^2$ quantifies the amount of correlation
+between the variables $X_n$'s.
+
+\begin{definition}[Autocovariance and Autocorrelation]
+\label{def:A.35}
+At stationarity, the autocovariance of lag~$k$ of the time series $\{h(X_n)\}_{n=0}^\infty$ is
+defined as
+\[
+  \gamma_k = \mathrm{Cov}(h(X_0), h(X_k)), \qquad k \geq 1.
+\]
+We also define $\sigma^2 = \mathrm{Cov}(h(X_0), h(X_0)) = \Var_{X_0 \sim \pi}[h(X_0)]$.  The
+autocorrelation of lag~$k$ is
+\[
+  \rho_k = \frac{\gamma_k}{\sigma^2}, \qquad k \geq 0.
+\]
+\end{definition}
+
+\begin{lemma}
+\label{lem:A.36}
+At stationarity,
+\[
+  \tau_N^2 = \sigma^2 \left[1 + 2\sum_{k=1}^{N-1} \frac{N-k}{N}\,\rho_k\right].
+\]
+As $N \to \infty$,
+\[
+  \tau_N^2 \to \tau^2 := \sigma^2 \left[1 + 2\sum_{k=1}^{\infty} \rho_k\right],
+\]
+where $\tau^2$ is called the integrated autocorrelation time.
+\end{lemma}
+
+\begin{proof}
+A calculation shows that
+\begin{align*}
+  \frac{\tau_N^2}{N}
+    &= \Var\!\left[\frac{1}{N}\sum_{n=1}^{N} h(X_n)\right] \\
+    &= \frac{1}{N^2}\left[\sum_{n=1}^{N} \Var[h(X_n)]
+       + 2\sum_{n=1}^{N-1}\sum_{k>n} \mathrm{Cov}(h(X_n), h(X_k))\right] \\
+    &= \frac{1}{N^2}\left[N\sigma^2
+       + 2\sum_{n=1}^{N-1}\sum_{k=1}^{N-n} \mathrm{Cov}(h(X_n), h(X_{n+k}))\right] \\
+    &= \frac{\sigma^2}{N}\left[1
+       + \frac{2}{N\sigma^2}\sum_{n=1}^{N-1}\sum_{k=1}^{N-n} \gamma_k\right] \\
+    &= \frac{\sigma^2}{N}\left[1
+       + \frac{2}{N}\sum_{n=1}^{N-1}\sum_{k=1}^{N-n} \rho_k\right] \\
+    &= \frac{\sigma^2}{N}\left[1
+       + \frac{2}{N}\sum_{k=1}^{N-1}\sum_{n=1}^{N-k} \rho_k\right] \\
+    &= \frac{\sigma^2}{N}\left[1
+       + 2\sum_{k=1}^{N-1} \frac{N-k}{N}\,\rho_k\right]. \qedhere
+\end{align*}
+\end{proof}
+
+Note that if $X_n \iid \pi$, then
+\[
+  \Var\!\left[\frac{1}{N}\sum_{n=1}^{N} h(X_n)\right] = \frac{\sigma^2}{N}.
+\]
+Therefore, computing an ergodic average with positively autocorrelated samples leads to higher
+variance than computing it with an i.i.d.\ sample.  An intuitive explanation is that positively
+correlated random variables have redundant information so are less informative than i.i.d.\ random
+variables.  On the other hand, if the correlations are negative, ergodic averages may be more
+accurate than a direct Monte Carlo estimator with i.i.d.\ samples.

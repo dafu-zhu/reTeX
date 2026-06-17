@@ -1,0 +1,75 @@
+\section{Guiding Applications}
+\label{sec:1.2}
+
+This textbook is primarily concerned with Monte Carlo methods for computing integrals of the form
+\begin{equation}
+  \calI_f[h] := \int_E h(x)\,f(x)\,dx = \Expect_{X \sim f}\!\left[h(X)\right],
+  \label{eq:1.1}
+\end{equation}
+where $f$ is a given \textit{target distribution} supported on a set $E \subset \R^d$ and
+$h : E \to \R$ is a given \textit{test function}. For instance, taking $h(x) = \mathbf{1}_A(x)$ to be
+the indicator function of a subset $A \subset E$, we can then compute the probability
+$\Prob_{X \sim f}(X \in A)$. In this section, we describe two application domains where computing
+integrals of the form~\eqref{eq:1.1} is important: Bayesian statistics and statistical mechanics.
+In both cases, the dimension $d$ can be exceedingly large and the target distribution $f$ is known
+only up to a normalizing constant, rendering deterministic quadrature methods infeasible and posing
+significant challenges for the design of Monte Carlo algorithms.
+
+\paragraph{Bayesian Statistics}
+Given a likelihood model $f(y|\theta)$ and a prior density $f(\theta)$, the posterior
+density of the parameter $\theta$ given the data $y$ is
+\begin{equation}
+  f(\theta|y) = \frac{1}{c}\,f(y|\theta)\,f(\theta),
+  \label{eq:1.2}
+\end{equation}
+where $c = \int f(y|\theta)\,f(\theta)\,d\theta$ is a normalizing constant ensuring that $f(\theta|y)$
+integrates to one. Bayesian inference often requires computing expectations of the form
+\[
+  \calI_f[h] = \int h(\theta)\,f(\theta|y)\,d\theta,
+\]
+where the posterior $f(\theta|y)$ is the target distribution and $h$ is a test function. The most
+important choice of test function is arguably $h(\theta) = \theta$, which gives the posterior mean
+estimator of $\theta$. Other choices of test function enable computation of credible intervals
+---regions of the parameter space with prescribed posterior probability--- as well as higher posterior
+moments used for uncertainty quantification.
+
+Before the advent of Monte Carlo methods, Bayesian inference was computationally feasible only in
+low-dimensional settings or under the restrictive model assumption of conjugate priors: given a
+likelihood, choosing a conjugate prior ensures that the posterior belongs to the same family of
+distributions as the prior, whereby point estimators and credible intervals may be computed in
+closed form. In modern applications, however, non-conjugate models are common and the parameter
+$\theta$ can be high-dimensional; think, for instance, that $\theta$ may represent a vectorized
+high-resolution image that we wish to denoise. Then, the normalizing constant $c$ in~\eqref{eq:1.2}
+---known as the \textit{marginal likelihood} of the data--- is typically unknown and hard to compute,
+as it is itself defined as an integral over a high-dimensional parameter space. This textbook therefore
+emphasizes the importance of designing Monte Carlo methods that scale well to high dimension and that
+are applicable when the normalizing constant of the target distribution is unknown.
+
+The development of Monte Carlo methods goes hand in hand with the popularization of large-scale
+Bayesian statistics. The Bayesian framework facilitates the formulation of hierarchical models and
+enables sequential inference through the updating of beliefs as new data arrive. Gibbs samplers and
+particle filters ---two classes of Monte Carlo methods studied in this textbook--- dovetail naturally
+with hierarchical and sequential inference, respectively.
+
+\paragraph{Statistical Mechanics}
+Another important source of challenging sampling problems arises in statistical mechanics,
+particularly in the simulation of molecular dynamics. Boltzmann postulated that the positions $q$
+and momenta $p$ of the atoms in a molecular system of constant size, occupying a constant volume,
+and in contact with a heat bath (at constant temperature), are distributed according to
+\[
+  f(q,p) = \frac{1}{c}\exp\!\left(-\beta\bigl(V(q) + K(p)\bigr)\right),
+\]
+where $c$ is a normalizing constant known as the \textit{partition function}, $\beta$ denotes the
+inverse temperature, $V$ is a potential energy describing interactions between the particles in the
+system, and $K$ represents the kinetic energy of the system. The potential $V$ is often a highly
+irregular function with many local minima. This feature, along with other characteristics typical of
+molecular systems, makes it difficult to compute averages with respect to $f(q,p)$. Nevertheless,
+many quantities of scientific interest are defined as expectations under the Boltzmann distribution,
+and computing integrals of the form
+\[
+  \calI_f[h] = \int h(q,p)\,f(q,p)\,dq\,dp.
+\]
+is therefore of central importance. As in Bayesian statistics, computing the normalizing constant $c$
+of the Boltzmann distribution (also known as the Gibbs distribution) is challenging, which motivates
+again the need to develop Monte Carlo methods for target densities that are only known up to a
+normalizing constant.

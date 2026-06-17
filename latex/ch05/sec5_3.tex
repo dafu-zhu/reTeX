@@ -1,0 +1,258 @@
+%% Chapter 5 — Section 5.3: Convergence of the Gibbs Sampler
+%% A First Course in Monte Carlo Methods
+%% D. Sanz-Alonso & O. Al-Ghattas
+
+\section{Convergence of the Gibbs Sampler}
+\label{sec:5.3}
+
+As we know, detailed balance implies that the Gibbs sampler has the desired invariant
+distribution. Therefore, if the chain is ergodic, then its distribution converges to the target.
+The following lemma gives a sufficient condition for irreducibility.
+
+\begin{lemma}
+\label{lem:5.7}
+Suppose that the target $f(x_1, \ldots, x_d)$ satisfies:
+\[
+  \underbrace{f_i(x_i)}_{\text{Marginal}} > 0
+  \quad \forall\, i \in \{1, \ldots, d\}
+  \implies f(x_1, \ldots, x_d) > 0.
+\]
+Then, the Gibbs sampler is $f$-irreducible.
+\end{lemma}
+
+\begin{example}[Reducible Gibbs Sampler]
+\label{ex:5.8}
+Consider the following distribution in $\R^2$:
+\[
+  f(x_1, x_2) = \frac{1}{2}\mathbf{1}_{\{0 \le x_1 \le 1,\, 0 \le x_2 \le 1\}}
+    + \frac{1}{2}\mathbf{1}_{\{-1 \le x_1 \le 0,\, -1 \le x_2 \le 0\}},
+\]
+which is depicted in Figure~\ref{fig:5.2}. The full conditionals are:
+\[
+  f(x_1|x_2) =
+  \begin{cases}
+    \mathbf{1}_{\{x_1 \in [0,1]\}} & x_2 \in (0,1),\\
+    \mathbf{1}_{\{x_1 \in [-1,0]\}} & x_2 \in (-1,0),
+  \end{cases}
+\]
+\[
+  f(x_2|x_1) =
+  \begin{cases}
+    \mathbf{1}_{\{x_2 \in (0,1)\}} & x_1 \in (0,1),\\
+    \mathbf{1}_{\{x_2 \in (-1,0)\}} & x_1 \in (-1,0).
+  \end{cases}
+\]
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.55\textwidth]{figures/fig_05_2}
+  \caption{\textit{Target density for which the Gibbs sampler is reducible.}}
+  \label{fig:5.2}
+\end{figure}
+
+If we used a Gibbs sampler, it would be reducible: if we start in one of the two squares, it
+would never reach the other square. Note that the condition of the previous lemma fails here:
+\begin{align*}
+  f_1(x_1) &= \frac{1}{2}\mathbf{1}_{\{-1 \le x_1 \le 1\}},\\
+  f_2(x_2) &= \frac{1}{2}\mathbf{1}_{\{-1 \le x_2 \le 1\}},\\
+  f(-0.5, 0.5) &= 0 \quad \text{but} \quad f_1(-0.5) > 0, \quad f_2(0.5) > 0.
+\end{align*}
+\end{example}
+
+\begin{remark}
+\label{rem:5.9}
+It can be shown that Harris recurrence holds if the transition kernel is absolutely continuous
+with respect to an appropriate dominating measure.
+\end{remark}
+
+\subsection{Convergence for Finite State Distributions}
+\label{sec:5.3.1}
+
+Convergence of the Gibbs sampler in a finite state space can be established using the results on
+ergodicity of Markov chains reviewed in Appendix~A. Proposition~5.5 ensures that the target is
+the invariant distribution of the chain; convergence to the target follows if we guarantee that
+the chain is irreducible and aperiodic.
+
+\begin{theorem}[Convergence of Gibbs Sampler in Finite State Space]
+\label{thm:5.10}
+Consider a target p.m.f.\ $f(x)$ on a finite state space $E = \{1, \ldots, d\}$, and assume
+that $f(x) > 0$ for all $x \in E$. Suppose we run a Gibbs sampler on $f$ by sampling each of
+the full conditionals $f_j$ in sequential order. Then, there is $\epsilon > 0$ such that, for
+any $x \in E$,
+\[
+  d_{\mathrm{TV}}\bigl(p_{\mathrm{GS}}^n(x, \cdot),\, f\bigr) \le (1 - \epsilon)^n,
+\]
+where $p_{\mathrm{GS}}$ denotes the Markov kernel defined by one swipe of sampling all full
+conditionals $f_j$, $1 \le j \le d$.
+\end{theorem}
+
+\begin{proof}
+The assumption that $f(x) > 0$ for all $x \in E$ implies that all full conditionals are
+positive. Thus, the Markov kernel $p_{\mathrm{GS}}$ is bounded below by a positive constant and
+the result follows from Theorem~A.25 on ergodicity of Markov chains in finite state space.
+\end{proof}
+
+\subsection{Convergence for Gaussian Distributions}
+\label{sec:5.3.2}
+
+Now we extend our objective to continuous distributions. Instead of investigating a general
+continuous distribution, we will focus on multivariate Gaussian targets
+$f = \Normal(\mu, \Sigma) = \Normal(\mu, H^{-1})$. Moreover, we restrict our analysis to the
+following vanilla Gibbs sampler that makes deterministic block updates:
+
+\begin{algorithm}[H]
+\caption{Deterministic Update Gibbs Sampler (DUGS)}
+\label{alg:5.2}
+\begin{algorithmic}[1]
+\Require target $f(x_1, \ldots, x_d)$, initialization
+  $X^{(0)} = (X_1^{(0)}, \ldots, X_d^{(0)})$, sample size $N$.
+\For{$n = 1, \ldots, N$}
+  \For{$j = 1, \ldots, d$}
+    \State Sample $X_j^{(n)} \sim f_j\!\bigl(X_j \mid X_1^{(n)}, \ldots, X_{j-1}^{(n)},
+      X_{j+1}^{(n-1)}, \ldots, X_d^{(n-1)}\bigr)$.
+    \State Update the $j$-th coordinate by setting
+      \[
+        X^{(n)} = \Bigl(X_1^{(n)}, \ldots, X_{j-1}^{(n)},\, X_j^{(n)},\,
+          X_{j+1}^{(n-1)}, \ldots, X_d^{(n-1)}\Bigr).
+      \]
+  \EndFor
+  \State \textbf{end for}
+  \State Record sample $X^{(n)}$.
+\EndFor
+\Ensure Sample $\{X^{(n)}\}_{n=1}^N$.
+\end{algorithmic}
+\end{algorithm}
+
+We first find a compact way to write the deterministic Gibbs updates. We decompose the precision
+matrix $H = H_L + H_D + H_U$ into its lower-triangular, diagonal, and upper-triangular
+components. We have the following lemma.
+
+\begin{lemma}
+\label{lem:5.11}
+Let $\{X^{(n)}\}_{n \ge 0}$ be the Gibbs output with target $f = \Normal(\mu, \Sigma) =
+\Normal(\mu, H^{-1})$ and initial state $X^{(0)}$. Then, $\{X^{(n)}\}_{n \ge 0}$ satisfies
+the following recurrence:
+\begin{equation}
+  X^{(n+1)} - \mu = -(H_L + H_D)^{-1} H_U (X^{(n)} - \mu) + (H_L + H_D)^{-1} U^{(n)},
+  \label{eq:5.3}
+\end{equation}
+where $U^{(n)} \sim \Normal(0, H_D)$.
+\end{lemma}
+
+\begin{proof}
+Denote the state at iteration $n$ by $x = (x_1, x_2, \ldots, x_d)$ and the state at iteration
+$n+1$, after a Gibbs update of all coordinates, by $x' = (x_1', x_2', \ldots, x_d')$. Using
+Example~\ref{ex:5.2} we can write the Gibbs update on block $j$ as
+\[
+  H_{jj}(x_j' - \nu_j) = u_j,
+\]
+where $u_j \sim \Normal(0, H_{jj})$ with
+\[
+  \nu_j = \mu_j - H_{jj}^{-1}\sum_{i < j} H_{ji}(x_i' - \mu_i)
+    - H_{jj}^{-1}\sum_{i > j} H_{ji}(x_i - \mu_i)
+\]
+since we are conditioning on $x_1', x_2', \ldots, x_{j-1}', x_{j+1}, \ldots, x_d$.
+Expanding out $\nu_j$ gives
+\[
+  H_{jj}(x_j' - \mu_j)
+    + [H_{j1};\ldots;H_{j,j-1}]^T(x_{1:j-1}' - \mu_{1:j-1})
+    + [H_{j,j+1};\ldots;H_{jd}]^T(x_{j+1:d} - \mu_{j+1:d})
+  = u_j.
+\]
+Therefore, a full Gibbs update can be written in vectorized form as
+\[
+  (H_L + H_D)(x' - \mu) + H_U(x - \mu) = u,
+\]
+where $u \sim \Normal(0, H_D)$ as desired.
+\end{proof}
+
+The matrix
+\[
+  B = -(H_L + H_D)^{-1} H_U
+\]
+is known as the Gauss--Seidel companion matrix. The Gauss--Seidel recurrence in~\eqref{eq:5.3}
+belongs to a larger family of iterative techniques to solve linear systems of equations via
+matrix splitting. It is clear that a sufficient condition for convergence is that $\rho(B) < 1$.
+You will show in Exercise~5.6 that this condition holds provided that the matrix $H$ is
+symmetric and positive definite.
+
+Recall from Exercise~3.7 in Chapter~3 that the $\chi^2$-divergence between Gaussian
+distributions $f = \Normal(\mu, \Sigma)$ and $\tilde{f} = \Normal(\tilde{\mu}, \tilde{\Sigma})$
+is given by
+\begin{equation}
+  d_{\chi^2}(f \| \tilde{f})
+  = \frac{|W|}{\sqrt{|2W - I|}}\,e^{u^T(2W-I)^{-1}\Sigma^{-1}u} - 1
+  \label{eq:5.4}
+\end{equation}
+with $W = \tilde{\Sigma}\Sigma^{-1}$ and $u = \mu - \tilde{\mu}$.
+
+\begin{theorem}[Convergence of Gibbs Sampler for Gaussian Targets]
+\label{thm:5.12}
+Let the target distribution of the Deterministic Update Gibbs Sampler (DUGS) be
+$f = \Normal(\mu, H^{-1}) = \Normal(\mu, \Sigma)$, and let $p_{\mathrm{DUGS}}$ denote the
+Markov kernel defined by one full swipe of the DUGS scheme. Then,
+\[
+  \Expect_f\!\Bigl[d_{\chi^2}\bigl(p_{\mathrm{DUGS}}^n(x^{(0)}, \cdot)\,\|\, f\bigr)\Bigr]
+  \sim o\bigl(\rho(B)^n\bigr),
+\]
+where $B = -(H_L + H_D)^{-1}H_U$.
+\end{theorem}
+
+\begin{proof}
+We rewrite the recurrence relation of Gibbs updates derived in~\eqref{eq:5.3} as
+\[
+  X^{(n)} - \mu = B(X^{(n-1)} - \mu) + z^{(n)},
+\]
+where $z^{(n)} \overset{\mathrm{i.i.d.}}{\sim} \Normal(0, \Sigma_z)$ for some $\Sigma_z$ that
+we will determine in what follows. Taking expectation on both sides gives
+\[
+  \Expect[X^{(n)} - \mu] = B\,\Expect[X^{(n-1)} - \mu].
+\]
+On the other hand, we know that $\Normal(\mu, \Sigma)$ is the invariant distribution, so
+$\mathbb{V}[x] = \mathbb{V}[Bx] + \mathbb{V}[z]$, where $x$ has the target distribution and
+$z$ is the noise in the recurrence equation. This implies that
+$\Sigma_z = \Sigma - B\Sigma B^T$. Taking the variance on both sides of the original recurrence
+relation yields
+\begin{align*}
+  \mathbb{V}[X^{(n)}]
+    &= \mathbb{V}[BX^{(n-1)}] + \Sigma_z\\
+    &= B\,\mathbb{V}[X^{(n-1)}]\,B^T + \Sigma - B\Sigma B^T\\
+    &= \Sigma + B\Bigl(\mathbb{V}[X^{(n-1)}] - \Sigma\Bigr)B^T.
+\end{align*}
+Let $\mu_n$ and $\Sigma_n$ be the mean and variance of the conditional distribution
+$X^{(n)} | x^{(0)}$. Then,
+\begin{align*}
+  \mu_n     &= \mu + B^n(x^{(0)} - \mu),\\
+  \Sigma_n  &= \Sigma + B^n(0 - \Sigma)(B^T)^n = \Sigma - B^n\Sigma(B^T)^n,
+\end{align*}
+because $\Sigma^{(0)} = 0$. Using Equation~\eqref{eq:5.4}, we have
+\[
+  d_{\chi^2}\bigl(p_{\mathrm{DUGS}}^n(x^{(0)}, \cdot)\,\|\, f\bigr)
+  = \frac{|W|}{\sqrt{|2W - I|}}\,e^{u^T(\Sigma^{(n)})^{-1}(2W-I)^{-1}u} - 1,
+\]
+with
+\begin{align*}
+  W &= \Sigma_n\Sigma^{-1} = I - B^n\Sigma(B^T)^n,\\
+  u &= B^n(x^{(0)} - \mu).
+\end{align*}
+Observe that the only $x^{(0)}$-dependence lies in the exponent. Integrating over
+$x^{(0)} \sim f$ gives
+\begin{align*}
+  \Expect_f\!\Bigl[d_{\chi^2}\bigl(p_{\mathrm{DUGS}}^n(x^{(0)}, \cdot)\,\|\, f\bigr)\Bigr] + 1
+  &= \frac{|W|}{\sqrt{|2W - I|}}\int e^{u^T(\Sigma^{(n)})^{-1}(2W-I)^{-1}u} f(x)\,dx\\
+  &= \frac{|W|}{\sqrt{|2W - I|}}\cdot\frac{1}{(2\pi)^{\frac{d}{2}}|\Sigma|^{\frac{1}{2}}}
+    \int e^{\frac{1}{2}(x-\mu)^T(2(B^T)^t\Sigma^{-1}W^{-1}(2W-I)^{-1}B^t - \Sigma^{-1})(x-\mu)}\\
+  &= \frac{|W|}{\sqrt{|2W - I|\,|U|}},
+\end{align*}
+where $U = I - 2(B^T)^n\Sigma^{-1}W^{-1}(2W-I)^{-1}B^n\Sigma$. From the definition of $W$,
+we obtain the desired rate $\rho(B)$.
+\end{proof}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=\textwidth]{figures/fig_05_3}
+  \caption{\textit{Gibbs samplers for a zero-mean bivariate Gaussian distribution with
+    covariance matrix $[1, \alpha;\, \alpha, 1]$. Top row: $\alpha = 0.01$.
+    Bottom row: $\alpha = 0.99$.}}
+  \label{fig:5.3}
+\end{figure}

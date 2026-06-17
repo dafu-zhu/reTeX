@@ -1,0 +1,142 @@
+%% Chapter 9, Section 9.3 — Optimal Particle Filter
+%% A First Course in Monte Carlo Methods
+%% Sanz-Alonso & Al-Ghattas
+
+\section{Optimal Particle Filter}
+\label{sec:9.3}
+
+The bootstrap particle filter propagates particles through the dynamics and then assigns
+them weights according to the likelihood defined by the observation model. In contrast,
+the optimal particle filter stems from a different conceptual decomposition of the
+filtering step, where we first apply Bayes' formula and then propagate particles through a
+Markov kernel which depends on the new observation.
+
+\subsection{Derivation of the Optimal Filter Decomposition}
+\label{sec:9.3.1}
+
+Let $\mathbb{P}(\cdot|\cdot)$ denote conditional density. The following calculation
+illustrates the decomposition of the filtering step that the optimal particle filter
+approximates via particles:
+\begin{align*}
+  \mathbb{P}(X_{j+1} | Y_{1:j+1})
+  &= \int_{\R^d} \mathbb{P}(X_j, X_{j+1} | Y_{1:j+1})\,dX_j \\
+  &= \int_{\R^d} \mathbb{P}(X_{j+1} | X_j, Y_{1:j+1})\,\mathbb{P}(X_j | Y_{1:j+1})\,dX_j \\
+  &= \int_{\R^d} \mathbb{P}(X_{j+1} | X_j, Y_{j+1})\,\mathbb{P}(X_j | Y_{1:j+1})\,dX_j \\
+  &= \int_{\R^d} \mathbb{P}(X_{j+1} | X_j, Y_{j+1})\,
+       \frac{\mathbb{P}(Y_{j+1} | X_j, Y_{1:j})}{\mathbb{P}(Y_{j+1} | Y_{1:j})}\,
+       \mathbb{P}(X_j | Y_{1:j})\,dX_j \\
+  &= \int_{\R^d} \mathbb{P}(X_{j+1} | X_j, Y_{j+1})\,
+       \frac{\mathbb{P}(Y_{j+1} | X_j)}{\mathbb{P}(Y_{j+1} | Y_{1:j})}\,
+       \mathbb{P}(X_j | Y_{1:j})\,dX_j \\
+  &= \mathcal{P}_j^{\mathrm{opt}} \mathcal{A}_j^{\mathrm{opt}} \mathbb{P}(X_j | Y_{1:j}),
+\end{align*}
+where
+\begin{align*}
+  \mathcal{P}_j^{\mathrm{opt}} \pi(x_{j+1})
+    &= \int_{\R^d} \mathbb{P}(x_{j+1} | X_j, Y_{j+1})\,\pi(X_j)\,dX_j, \\
+  \mathcal{A}_j^{\mathrm{opt}} \pi(x_j)
+    &\propto \mathbb{P}(Y_{j+1} | x_j)\,\pi(x_j).
+\end{align*}
+
+We have therefore derived the following decomposition of the filtering step:
+\begin{equation}
+  \label{eq:9.7}
+  f_{j+1} = \mathcal{P}_j^{\mathrm{opt}} \mathcal{A}_j^{\mathrm{opt}} f_j.
+\end{equation}
+
+\subsection{Implementation}
+\label{sec:9.3.2}
+
+In general, it is not possible to implement the optimal particle filter in the fully
+nonlinear setting due to two computational bottlenecks:
+
+\begin{itemize}
+  \item There may not be a closed formula for evaluating the likelihood
+    $\mathbb{P}(Y_{j+1} | X_j)$, making unfeasible the computation of the particle
+    weights.
+
+  \item It may not be possible to sample from the Markov kernel
+    $\mathbb{P}(X_{j+1} | X_j, Y_{j+1})$, making unfeasible the propagation of
+    particles.
+\end{itemize}
+
+However, when the observation function $b(\cdot)$ is linear, i.e.\ $b(\cdot) = H\cdot$
+for some matrix $H$, both bottlenecks may be overcome. We thus consider the following
+setting, which arises in many applications:
+\begin{alignat*}{3}
+  X_{j+1} &= a(X_j) + \xi_{j+1}, &\qquad \xi_{j+1} &\sim \Normal(0, \Sigma), \\
+  Y_{j+1} &= HX_{j+1} + \eta_{j+1}, &\qquad \eta_{j+1} &\sim \Normal(0, \Gamma),
+\end{alignat*}
+where $X_0$, $\{\xi_j\}$, and $\{\eta_j\}$ are all assumed to be independent. First,
+note that
+\[
+  Y_{j+1} = Ha(X_j) + H\xi_{j+1} + \eta_{j+1},
+\]
+which implies that $\mathbb{P}(Y_{j+1} | X_j) = \Normal\!\left(Ha(X_j),\,
+H\Sigma H^T + \Gamma\right)$. Second, note that
+\[
+  \mathbb{P}(X_{j+1} | X_j, Y_{j+1})
+  \propto \exp\!\left(
+    -\frac{1}{2}\bigl|Y_{j+1} - HX_{j+1}\bigr|_\Gamma^2
+    - \frac{1}{2}\bigl|X_{j+1} - a(X_j)\bigr|_\Sigma^2
+  \right),
+\]
+which implies via completion of the square that $\mathbb{P}(X_{j+1} | X_j, Y_{j+1}) =
+\Normal(m_{j+1}, C)$, with
+\begin{align*}
+  m_{j+1} &= (I - KH)a(X_j) + KY_{j+1}, \\
+  C &= (I - KH)\Sigma, \\
+  K &= \Sigma H^T S^{-1}, \\
+  S &= H\Sigma H^T + \Gamma.
+\end{align*}
+These formulas are similar to those arising in the Kalman filter algorithm, which you will
+derive in Exercise~9.2. We are now ready to present a practical implementation of the
+optimal particle filter with linear observations.
+
+\begin{algorithm}[H]
+  \caption{Optimal Particle Filter}
+  \label{alg:9.2}
+  \begin{algorithmic}[1]
+    \Require Initial distribution $f_0$, observations $Y_{1:J}$, sample size $N$.
+    \State \textbf{Initial sampling:} Sample $X_0^{(1)}, \ldots, X_0^{(N)} \iid f_0$
+      so that $f_0^N = S^N f_0$.
+    \State \textbf{Subsequent sampling:}
+    \State For $j = 0, \ldots, J-1$, do for $1 \leq n \leq N$:
+    \State Set
+      \[
+        \widehat{X}_{j+1}^{(n)} = (I - KH)a\!\left(X_j^{(n)}\right) + KY_{j+1}
+          + \zeta_{j+1}^{(n)},
+        \qquad
+        \zeta_{j+1}^{(n)} \iid \Normal(0, C).
+      \]
+    \State Set
+      \[
+        \tilde{w}_{j+1}^{(n)} = \exp\!\left(
+          -\frac{1}{2}\Bigl|Y_{j+1} - Ha\!\left(X_j^{(n)}\right)\Bigr|_S^2
+        \right).
+      \]
+    \State Normalize the weights:
+      \[
+        w_{j+1}^{(n)} = \frac{\tilde{w}_{j+1}^{(n)}}{\displaystyle\sum_{n=1}^{N}
+          \tilde{w}_{j+1}^{(n)}}.
+      \]
+    \State Draw $X_{j+1}^{(n)} \iid \sum_{n=1}^{N} w_{j+1}^{(n)}
+      \delta\!\left(x - \widehat{X}_{j+1}^{(n)}\right)$.
+    \State Set
+      \[
+        f_{j+1}^N(x) = \frac{1}{N} \sum_{n=1}^{N} \delta\!\left(x - X_{j+1}^{(n)}\right).
+      \]
+    \Ensure Approximation $f_J^N$ to the filtering distribution $f_J$.
+  \end{algorithmic}
+\end{algorithm}
+
+\medskip
+\noindent\fbox{\parbox{\dimexpr\textwidth-2\fboxsep-2\fboxrule\relax}{%
+\textbf{Pros and Cons}: Similar to the bootstrap particle filter, the optimal particle
+filter is convergent in the large $N$ limit, but also suffers from small effective sample
+size in high-dimensional settings. The variance of the weights is smaller, however, for
+the optimal particle filter than for the bootstrap particle filter. It is important to
+notice that, in contrast to the bootstrap filter, the optimal filter relies on Gaussian
+assumptions on the noise in the dynamics and observation models, and on linearity of the
+observations. Thus, it can only be deployed on a smaller class of problems.
+}}

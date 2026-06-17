@@ -1,0 +1,114 @@
+%% Chapter 3, Section 3.1: Classical Monte Carlo
+%% A First Course in Monte Carlo Methods — Sanz-Alonso & Al-Ghattas
+
+\section{Classical Monte Carlo}
+\label{sec:3.1}
+
+Classical Monte Carlo integration presupposes that we can obtain $N$ independent
+draws from the target distribution. Then, the integral of interest $\calI_f[h]$
+is approximated by the average of the values of $h$ at those draws. We refer to
+the method, summarized in Algorithm~\ref{alg:3.1} below, as \emph{classical}
+Monte Carlo to distinguish it from other Monte Carlo methods. In the literature
+it is often simply called Monte Carlo, standard Monte Carlo, or vanilla Monte
+Carlo.
+
+\begin{algorithm}[H]
+\caption{Classical Monte Carlo Integration}
+\label{alg:3.1}
+\begin{algorithmic}[1]
+\Require Target distribution $f$, test function $h$, sample size $N$.
+\State Sample $X^{(1)}, \ldots, X^{(N)} \iid f$.
+\Ensure Monte Carlo estimator
+  $\calI_f^{\mathrm{mc}}[h] := \dfrac{1}{N} \displaystyle\sum_{n=1}^{N}
+   h\!\left(X^{(n)}\right) \approx \calI_f[h]$.
+\end{algorithmic}
+\end{algorithm}
+
+The following result shows that the classical Monte Carlo estimator is unbiased
+and that its mean squared error, which agrees with its variance, is of order
+$1/N$.
+
+\begin{theorem}[Classical Monte Carlo Error]
+\label{thm:3.1}
+The following holds:
+\begin{enumerate}
+  \item $\Expect\!\left[\calI_f^{\mathrm{mc}}[h]\right] = \calI_f[h]$;
+  \item $\Var\!\left[\calI_f^{\mathrm{mc}}[h]\right]
+         = \dfrac{1}{N}\,\Var_{X \sim f}\!\left[h(X)\right]$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+For the first claim, linearity of expectation and the fact that $X^{(n)} \sim f$
+give
+\[
+  \Expect\!\left[\calI_f^{\mathrm{mc}}[h]\right]
+  = \Expect\!\left[\frac{1}{N}\sum_{n=1}^{N} h\!\left(X^{(n)}\right)\right]
+  = \frac{1}{N}\sum_{n=1}^{N} \Expect\!\left[h\!\left(X^{(n)}\right)\right]
+  = \Expect_{X \sim f}\!\left[h(X)\right]
+  = \calI_f[h].
+\]
+For the second claim, note that since $X^{(n)} \iid f$,
+\[
+  \Var\!\left[\calI_f^{\mathrm{mc}}[h]\right]
+  = \frac{1}{N^2}\sum_{n=1}^{N} \Var\!\left[h\!\left(X^{(n)}\right)\right]
+  = \frac{1}{N^2}\, N\, \Var_{X \sim f}\!\left[h(X)\right]
+  = \frac{1}{N}\,\Var_{X \sim f}\!\left[h(X)\right]. \qedhere
+\]
+\end{proof}
+
+Theorem~\ref{thm:3.1} can be used to construct confidence intervals for
+$\calI_f^{\mathrm{mc}}[h]$ as an estimator of $\calI_f[h]$. To do so, note
+that by the central limit theorem, as $N \to \infty$,
+\begin{equation}
+\label{eq:3.2}
+  \sqrt{N}\,\frac{\calI_f^{\mathrm{mc}}[h] - \calI_f[h]}%
+               {\sqrt{\Var_{X \sim f}[h(X)]}}
+  \cvd \Normal(0,1).
+\end{equation}
+For $\alpha \in (0,1)$ define the $z$-score $z_{\alpha/2}$ by the requirement
+that $\Prob(-z_{\alpha/2} < Z < z_{\alpha/2}) = 1 - \alpha$, where
+$Z \sim \Normal(0,1)$. Then, it follows from \eqref{eq:3.2} that
+\[
+  \left(
+    \calI_f^{\mathrm{mc}}[h] - z_{\alpha/2}\sqrt{\frac{\Var_{X \sim f}[h(X)]}{N}},\;
+    \calI_f^{\mathrm{mc}}[h] + z_{\alpha/2}\sqrt{\frac{\Var_{X \sim f}[h(X)]}{N}}
+  \right)
+\]
+is an approximate $1-\alpha$ confidence interval for $\calI_f[h]$. The variance
+term can also be approximated by Monte Carlo:
+\begin{equation}
+\label{eq:3.3}
+  \Var_{X \sim f}\!\left[h(X)\right]
+  = \Expect\!\left[\bigl(h(X) - \Expect_{X \sim f}[h(X)]\bigr)^2\right]
+  \approx
+  \frac{1}{N}\sum_{n=1}^{N}
+    \bigl(h(X^{(n)}) - \calI_f^{\mathrm{mc}}[h]\bigr)^2.
+\end{equation}
+
+The sample size $N$ is typically large in Monte Carlo simulations, and hence
+large $N$ asymptotics, needed to invoke the central limit theorem \eqref{eq:3.2}
+and to ensure the convergence of the variance approximation \eqref{eq:3.3}, are
+well justified.
+
+\medskip
+\noindent\textbf{Pros and Cons.}
+The standard error of the classical Monte Carlo estimator is of order
+$N^{-1/2}$, which implies a very slow rate of convergence compared to most
+deterministic quadrature methods: increasing by a factor of $100$ the number of
+samples only reduces the expected error by a factor of $10$. Another drawback of
+Monte Carlo methods is that the error can only be understood probabilistically,
+while for deterministic quadrature rules deterministic bounds can be derived.
+On the bright side, Theorem~\ref{thm:3.1} does not make any assumption on the
+state space $E$ (or its dimension) and the only implicit assumption on $h$ is
+that $\Expect_{X \sim f}[h(X)^2] < \infty$. In contrast, classical error
+bounds for deterministic quadrature rules in $\R^d$ need the number $N$ of
+function evaluations to scale as $N^d$ as $d \to \infty$. Moreover,
+differentiability conditions on $h$ often needed for deterministic methods play
+no role in Theorem~\ref{thm:3.1}. The insensitivity of classical Monte Carlo to
+dimension and roughness of $f$ and $h$ makes it appealing in cases where
+deterministic methods struggle. It is important to note, however, that the
+classical Monte Carlo method presupposes that sampling from $f$ (without
+sampling error) is possible. When this is not true (which is often the case in
+applications) the error of Monte Carlo methods that rely on approximate target
+samples may be sensitive to the dimension of the state space.

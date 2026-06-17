@@ -1,0 +1,24 @@
+%% Chapter 8 — Section 8.3: Discussion and Bibliography
+%% Source: PDF page 108 (book page 95)
+
+\section{Discussion and Bibliography}
+\label{sec:8.3}
+
+HMC was proposed in the physics literature under the name Hybrid Monte Carlo~\cite{60}. The
+method was introduced to the statistics community through the work~\cite{171}. An accessible
+introduction to HMC is~\cite{170}; see also~\cite{23}. Theorem~8.4, which shows that
+Hamiltonian flows are symplectic, was proved in~\cite{187}. Further background on Hamiltonian
+dynamics and their numerical solution can be found in~\cite{210,101}. Numerical integrators
+tailored to HMC are reviewed and compared in~\cite{31,42}.
+
+In this chapter, we have seen that the Metropolis Hastings framework can be generalized by
+means of an involution map, which we take as a momentum flip for HMC methods. The use of
+involutions within the Metropolis Hastings algorithm was proposed in~\cite{11,92}, and has been
+leveraged to establish mixing rates for Hamiltonian Monte Carlo in~\cite{92}. The theory
+in~\cite{92}, which relies on the weak Harris approach developed in~\cite{102}, also covers
+implementations of HMC in infinite-dimensional Hilbert spaces~\cite{22}. The paper~\cite{30}
+relies instead on a novel coupling technique to analyze the convergence of HMC algorithms.
+Further convergence results can be found in~\cite{148,65} and optimal scaling of HMC in high
+dimensions was studied in~\cite{21}. Tuning HMC algorithms can be challenging. The No-U-Turn
+Sampler (NUTS) algorithm~\cite{113} introduces a computational framework to automatically set
+the duration parameter $\lambda$ and the step-size $\epsilon$.

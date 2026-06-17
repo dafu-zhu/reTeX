@@ -1,0 +1,44 @@
+%% Chapter 10, Section 10.3 — Discussion and Bibliography
+%% Source: A First Course in Monte Carlo Methods, Sanz-Alonso & Al-Ghattas
+%% Book pages 122–123
+
+\section{Discussion and Bibliography}
+\label{sec:10.3}
+
+We refer to \cite{28,29} for accessible introductions to VI that have inspired the presentation in
+this chapter. For a more in-depth exploration of VI, see \cite{119,233}. The paper \cite{112}
+contains a modern approach to VI with applications to massive text data-sets. Applications to
+graphical models, and a generalization of the mean-field family to allow for interactions, are
+discussed in \cite{119}. While CAVI provides a simple framework for ELBO maximization under the
+mean-field family, computing the CAVI updates can be challenging for highly complex targets, in
+which case alternative optimization methods based on stochastic VI or autodifferentiation may be
+required \cite{112,131}. Beyond the mean-field family, other simple but practical choices of
+variational family include Gaussians \cite{208} and Gaussian mixtures \cite{133}.
+
+Our presentation has solely focused on VI techniques that seek to minimize the KL-divergence
+\cite{132}. The works \cite{141,110} consider VI using the broad family of Renyi-alpha divergences,
+which includes for instance the KL-divergence, the $\chi^2$-divergence, and the Hellinger distance
+\cite{86}. However, as emphasized in this chapter, the KL-divergence holds a special place in VI,
+since among a wide class of divergences it is the unique choice for which minimization of the
+objective does not require knowledge of the normalizing constant of the target \cite{47}. For
+sampling problems, the paper \cite{79} explores gradient flows arising from minimizing various
+objectives, and shows that the choice of KL-divergence also leads to fundamental practical
+advantages.
+
+An overarching idea behind VI, the EM algorithm, and other popular computational methods such as
+variational auto-encoders \cite{123}, is to minimize KL-divergence by maximizing the ELBO\@. The
+ELBO functional is typically non-convex, even for simple potentials; see for instance the discussion
+in \cite{4}. Due to this lack of convexity, it is often challenging to develop theory for VI outside
+restricted settings on the target distribution. For this reason, the study of statistical and
+optimization convergence guarantees for VI is still an active area of research, see e.g.\ \cite{242}
+for statistical convergence rates and \cite{133} for a theoretical framework that relies on gradient
+flows.
+
+The EM algorithm was introduced in \cite{55}, although particular instances had been previously
+considered on numerous occasions, see e.g.\ \cite{43,106}. Convergence of the EM algorithm was
+established in \cite{239}. We refer to \cite{158} for a textbook on the EM algorithm and to
+\cite{27,107,152,28} for gentle introductions. EM is an example of a minimization-maximization
+method \cite{115}, a broad family of algorithms with rich theoretical underpinnings. Several
+modifications to the original EM algorithm have been proposed to speed up its convergence. We refer
+to \cite{159,143,117,172} for some important methodological developments and to \cite{160} for a
+survey written on the 20th anniversary of the original paper \cite{55}.

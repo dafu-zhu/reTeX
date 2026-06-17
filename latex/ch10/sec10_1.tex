@@ -1,0 +1,308 @@
+%% Chapter 10, Section 10.1 — Variational Inference
+%% Source: A First Course in Monte Carlo Methods, Sanz-Alonso & Al-Ghattas
+%% Book pages 113–118
+
+\section{Variational Inference}
+\label{sec:10.1}
+
+The goal of Variational Inference (VI) is to find a tractable distribution $g^*$ that is close to a
+given target distribution $f$, so that quantities of interest with respect to the target can be cheaply
+computed using the variational distribution $g^*$. For instance, once $g^*$ is found, expected values
+with respect to the target can be approximated as follows:
+\[
+  \calI_f[h] = \int h(x) f(x)\,dx \approx \int h(x) g^*(x)\,dx = \calI_{g^*}[h],
+\]
+which is useful if computing $\calI_{g^*}[h]$ is cheaper than computing $\calI_f[h]$.
+
+The variational distribution $g^*$ is defined as the (numerical) solution to an optimization problem.
+Precisely, one specifies a family $\mathcal{D}$ of tractable distributions and sets
+\begin{equation}
+  g^* = \argmin_{g \in \mathcal{D}}\, d_{\mathrm{KL}}(g \| f),
+  \label{eq:10.1}
+\end{equation}
+where $d_{\mathrm{KL}}$ is the Kullback-Leibler (KL) divergence between p.d.f.s. Thus, $g^*$ is the p.d.f.\ in
+$\mathcal{D}$ which is closest to the target in KL-divergence, as represented in Figure~\ref{fig:10.1}.
+The family $\mathcal{D}$ of admissible distributions needs to be carefully chosen, since it determines
+the accuracy and computational cost of the methodology. We will introduce the KL-divergence in
+Subsection~\ref{sec:10.1.1}, and we will discuss in Subsection~\ref{sec:10.1.2} the choice of the
+family $\mathcal{D}$ along with a Coordinate Ascent Variational Inference (CAVI) algorithm to solve
+the optimization problem~\eqref{eq:10.1}.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.55\textwidth]{figures/fig_10_1}
+  \caption{\textit{Illustration of the variational distribution $g^*$.}}
+  \label{fig:10.1}
+\end{figure}
+
+%% -------------------------------------------------------
+\subsection{Kullback-Leibler Divergence and Evidence Lower-Bound}
+\label{sec:10.1.1}
+%% -------------------------------------------------------
+
+In this section, we motivate the choice of the KL-divergence to quantify closeness between p.d.f.s
+in~\eqref{eq:10.1}. Recall that the KL-divergence between p.d.f.s $g$ and $f$ is given by
+\[
+  d_{\mathrm{KL}}(g \| f) = \mathbb{E}_g\!\left[\log\!\left(\frac{g}{f}\right)\right],
+\]
+provided that $g$ is absolutely continuous with respect to $f$, and otherwise $d_{\mathrm{KL}}(g\|f) = \infty$.
+Note that the KL-divergence satisfies $d_{\mathrm{KL}}(g\|f) \geq 0$ with equality iff $g = f$. However,
+the KL-divergence is not symmetric, does not satisfy the triangle inequality, and may take value
+infinity. Therefore, it is not a distance in the space of p.d.f.s.
+
+An important motivation to work with the KL-divergence is that the optimization problem of finding
+the p.d.f.\ that minimizes the KL-divergence with the target can be reformulated into an equivalent
+optimization problem which does not require the target to be normalized. Indeed, we will show that
+minimizing KL-divergence is equivalent to maximizing the Evidence Lower-Bound (ELBO), which we now
+introduce.
+
+\begin{definition}[Evidence Lower-Bound]
+  \label{def:10.1}
+  \textit{The} ELBO \textit{of a p.d.f.\ $g$ with respect to an unnormalized p.d.f.\ $\tilde{f}$
+  is given by}
+  \[
+    \ELBO(g) \coloneqq \mathbb{E}_g[\log \tilde{f}] - \mathbb{E}_g[\log g]. \qquad \square
+  \]
+\end{definition}
+
+The next result shows that the KL-divergence is equal, up to an additive constant, to the negative
+ELBO\@. As a consequence, minimizing the KL-divergence is equivalent to maximizing the ELBO\@.
+
+\begin{theorem}[Relationship Between KL-Divergence and ELBO]
+  \label{thm:10.2}
+  \textit{Let $f(x) = \tilde{f}(x)/c$ be a p.d.f.\ and let $\ELBO(g)$ denote the ELBO of a p.d.f.\
+  $g$ with respect to the unnormalized p.d.f.\ $\tilde{f}$. Then,}
+  \[
+    d_{\mathrm{KL}}(g \| f) = -\ELBO(g) + \log c.
+  \]
+\end{theorem}
+
+\begin{proof}
+By direct calculation:
+\begin{align*}
+  d_{\mathrm{KL}}(g \| f)
+    &= \mathbb{E}_g\!\left[\log\!\left(\frac{g}{f}\right)\right] \\
+    &= \mathbb{E}_g[\log g] - \mathbb{E}_g[\log f] \\
+    &= \mathbb{E}_g[\log g] - \mathbb{E}_g\!\left[\log\!\left(\frac{\tilde{f}}{c}\right)\right] \\
+    &= \mathbb{E}_g[\log g] - \mathbb{E}_g\!\left[\log \tilde{f}\right] + \mathbb{E}_g[\log c] \\
+    &= -\ELBO(g) + \log c. \qedhere
+\end{align*}
+\end{proof}
+
+Theorem~\ref{thm:10.2} implies that the optimization problem~\eqref{eq:10.1} can be reformulated in
+terms of maximizing the ELBO\@. The following corollary shows that the ELBO provides a lower-bound on
+the (log-)evidence, which motivates its name. We will discuss the interpretation of the normalizing
+constant $c$ as model evidence in Example~\ref{ex:10.4} below.
+
+\begin{corollary}[Lower Bound Property of ELBO]
+  \label{cor:10.3}
+  \textit{In the setting of Theorem~\ref{thm:10.2}, it holds that}
+  \[
+    \ELBO(g) \leq \log c.
+  \]
+\end{corollary}
+
+\begin{proof}
+Since the KL-divergence is non-negative and $d_{\mathrm{KL}}(g\|f) + \ELBO(g) = \log c$, the result
+follows.
+\end{proof}
+
+\begin{example}[VI in Bayesian Statistics]
+  \label{ex:10.4}
+  In Bayesian statistics, inference over a parameter $\theta$ given data $y$ is based on the
+  posterior distribution
+  \[
+    f(\theta | y) = \frac{1}{f(y)}\, f(y|\theta)\, f(\theta),
+  \]
+  which combines the likelihood $f(y|\theta)$ with a prior distribution $f(\theta)$. Computing
+  posterior expectations can be expensive when the dimension of $\theta$ is large. In such a case,
+  computing the normalizing constant $f(y)$, called the evidence, can also be challenging, and it is
+  natural to view $\tilde{f}(\theta) \coloneqq f(y|\theta)\,f(\theta)$ as an unnormalized target
+  distribution with unknown normalizing constant $c \coloneqq f(y)$. Corollary~\ref{cor:10.3} then
+  shows that $\ELBO(g) \leq \log f(y)$. This inequality explains the name \textit{evidence
+  lower-bound}: $\ELBO(g)$ gives a lower bound on the log-evidence $\log f(y)$. In addition, this
+  inequality motivates a crude but cheap model selection criteria: since a large evidence suggests
+  good model fit, one may choose the model that gives the highest ELBO\@.
+
+  In this Bayesian context, it is insightful to rewrite the ELBO as follows
+  \begin{align*}
+    \ELBO(g)
+      &= \mathbb{E}_g[\log f(y|\theta)] + \mathbb{E}_g[\log f(\theta)] - \mathbb{E}_g[\log g(\theta)] \\
+      &= \mathbb{E}_g[\log f(y|\theta)] + \mathbb{E}_g\!\left[\log\!\left(\frac{f(\theta)}{g(\theta)}\right)\right] \\
+      &= \mathbb{E}_g[\log f(y|\theta)] - d_{\mathrm{KL}}(g(\theta)\|f(\theta)).
+  \end{align*}
+  The first term in the last displayed equation is the expected log-likelihood, whereas the second is
+  the negative KL-divergence between the prior and the variational density $g$. From the above
+  formulation, we obtain an intuition that the optimal $g$ should find a compromise between
+  maximizing the expected log-likelihood and being close to the prior distribution. The first term
+  promotes matching the data, and the second term promotes matching prior beliefs.
+\end{example}
+
+%% -------------------------------------------------------
+\subsection{Mean-Field Approximation and Coordinate Ascent Variational Inference}
+\label{sec:10.1.2}
+%% -------------------------------------------------------
+
+This section discusses the choice of the family $\mathcal{D}$ of admissible distributions in
+\eqref{eq:10.1}. Ideally, the family $\mathcal{D}$ should be chosen so that:
+\begin{enumerate}[(i)]
+  \item there is $q \in \mathcal{D}$ that accurately approximates the target;
+  \item expectations with the variational distribution $q^*$ can be computed efficiently. Thus,
+        $\mathcal{D}$ should contain tractable distributions;
+  \item the optimization problem~\eqref{eq:10.1} can be solved efficiently.
+\end{enumerate}
+
+In practice, a compromise needs to be made: enlarging the family $\mathcal{D}$ potentially helps in
+the approximation accuracy, but it typically leads to a harder optimization problem. A popular choice
+of $\mathcal{D}$ is the mean-field family, which sacrifices the ability to accurately represent target
+distributions with highly correlated coordinates, but leads to efficient optimization and inference
+algorithms.
+
+\begin{definition}[Mean-Field Family]
+  \label{def:10.5}
+  \textit{A p.d.f.\ $g(x)$ with $x = (x_1, \ldots, x_d) \in \R^d$ is said to belong to the
+  mean-field family if its marginals are independent, that is, if it can be written in the form}
+  \[
+    g(x) = \prod_{i=1}^{d} g_i(x_i),
+  \]
+  \textit{where $g_i$ is a one-dimensional p.d.f.\ over the $i$-th coordinate $x_i$.}
+\end{definition}
+
+In other words, the mean-field assumption requires that the variational density can be factorized as
+a product of distributions. We work with the case where $g$ factorizes as a product of
+one-dimensional distributions, but it is also possible to consider more general cases where it
+factorizes into a product of larger groups of coordinates.
+
+\medskip
+\noindent\fbox{\parbox{\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax}{%
+  \textbf{Pros and Cons}: As we shall see, solving the optimization problem~\eqref{eq:10.1} is
+  relatively straightforward when using the mean-field family. While restrictive, the mean-field
+  family still affords some flexibility as the marginals $g_i$ are left unconstrained. If required,
+  we can impose a specific parametric family on these marginals as well. The main caveat of the
+  mean-field family is that it cannot capture the dependence structure of the different variables,
+  and estimates computed with a mean-field distribution will be far off when the target has highly
+  correlated variables. In that case, marginal variances can be severely over or under-estimated.
+}}
+\medskip
+
+\begin{remark}
+  \label{rem:10.6}
+  \textit{The mean-field assumption has its roots in statistical physics, where `mean-field' refers
+  to simplifying difficult high-dimensional stochastic models by considering simpler ones which ignore
+  second-order effects. While we focus on the mean-field variational family due to its popularity and
+  relative simplicity, it is possible to go beyond this restrictive assumption by incorporating
+  dependencies between the marginals or by adding new latent variables. Both of these approaches
+  reduce the bias of VI, but can substantially increase the difficulty of the associated optimization
+  problem~\eqref{eq:10.1}.}
+\end{remark}
+
+Under the mean-field approximation, each $g_i$ can be optimized individually, and this approach is
+known as Coordinate Ascent Variational Inference (CAVI). We next prove a theorem that will lead to
+this technique. Let us set some notation. We denote by $x_i$ the $i$-th component of
+$x \in \R^d$. We denote by $x_{-i} \in \R^{d-1}$ the vector obtained by removing the $i$-th
+component of $x$. To highlight the dependence of $f(x)$ on $x_i$ and $x_{-i}$, we write
+$f(x_i, x_{-i})$ with abuse of notation. Finally, $g_{-i}$ will denote a p.d.f.\ over the variables
+$x_{-i}$.
+
+\begin{theorem}[Coordinate-Wise ELBO Maximization]
+  \label{thm:10.7}
+  \textit{Let $g(x) = \prod_{i=1}^d g_i(x_i)$ and let $g_{-i}(x_{-i}) = \prod_{j \neq i} g_j(x_j)$
+  for fixed $g_j$, $j \neq i$. Then, the $g_i$ that maximizes $\ELBO(g)$ is given by}
+  \begin{equation}
+    g_i^*(x_i) \propto \exp\!\Bigl(\mathbb{E}_{g_{-i}}\bigl[\log f(x_i, x_{-i})\bigr]\Bigr).
+    \label{eq:10.2}
+  \end{equation}
+\end{theorem}
+
+\begin{proof}
+Throughout this proof, we denote by $C$ a constant which does not depend on $g_i$ and may change
+from line to line. We will show that
+\[
+  \ELBO(g) = -d_{\mathrm{KL}}(g_i \| g_i^*) + C,
+\]
+where $g_i^*$ is given by~\eqref{eq:10.2}. This implies the desired result, since the $g_i$ that
+minimizes the KL-divergence in the right-hand side is clearly $g_i = g_i^*$.
+
+First, we show that
+\[
+  \ELBO(g) = \mathbb{E}_{g_i}\!\Bigl[\mathbb{E}_{g_{-i}}\bigl[\log f(x_i, x_{-i})\bigr]
+             - \log g_i(x_i)\Bigr] + C.
+\]
+Indeed,
+\begin{align*}
+  \ELBO(g)
+    &= \mathbb{E}_g[\log f(x)] - \mathbb{E}_g[\log g(x)] \\
+    &= \mathbb{E}_g[\log f(x_i, x_{-i})] - \sum_i \mathbb{E}_{g_i}[\log g_i(x_i)] \\
+    &= \mathbb{E}_{g_i}\!\Bigl[\mathbb{E}_{g_{-i}}\bigl[\log f(x_i, x_{-i}) \mid x_i\bigr]\Bigr]
+       - \mathbb{E}_{g_i}[\log g_i(x_i)] + C,
+\end{align*}
+and the first term in the right-hand side can be simplified using that
+\begin{align*}
+  \mathbb{E}_{g_{-i}}\bigl[\log f(x_i, x_{-i}) \mid x_i\bigr]
+    &= \int_{\R^{d-1}} \log f(x_i, x_{-i})\cdot g(x_{-i}|x_i)\,dx_{-i} \\
+    &= \int_{\R^{d-1}} \log f(x_i, x_{-i})\cdot g_{-i}(x_{-i})\,dx_{-i} \\
+    &= \mathbb{E}_{g_{-i}}\bigl[\log f(x_i, x_{-i})\bigr].
+\end{align*}
+Therefore,
+\begin{align*}
+  \ELBO(g)
+    &= \mathbb{E}_{g_i}\!\Bigl[\mathbb{E}_{g_{-i}}\bigl[\log f(x_i, x_{-i})\bigr] - \log g_i(x_i)\Bigr] + C \\
+    &= \mathbb{E}_{g_i}\!\Bigl[\log\!\Bigl(\exp\!\bigl(\mathbb{E}_{g_{-i}}\bigl[\log f(x_i, x_{-i})\bigr]\bigr)\Bigr)
+       - \log g_i(x_i)\Bigr] + C \\
+    &= -\mathbb{E}_{g_i}\!\left[\log\!\left(\frac{g_i(x_i)}{\exp\!\bigl(\mathbb{E}_{g_{-i}}[\log f(x_i,x_{-i})]\bigr)}\right)\right] + C \\
+    &= -d_{\mathrm{KL}}(g_i \| g_i^*) + C,
+\end{align*}
+and the proof is complete.
+\end{proof}
+
+Theorem~\ref{thm:10.7} gives us an expression for the optimizer of the ELBO with respect to $g_i$
+holding the other coordinates fixed. This procedure can be repeated iteratively, optimizing each
+coordinate and holding the others fixed. The resulting algorithm is known as Coordinate Ascent
+Variational Inference (CAVI):
+
+\begin{algorithm}[H]
+  \caption{Coordinate Ascent Variational Inference (CAVI)}
+  \label{alg:10.1}
+  \begin{algorithmic}[1]
+    \Require Unnormalized target density $\tilde{f}$.
+    \State \textbf{Initialization}: Choose initial variational densities $g_i$ for each $i = 1, \ldots, d$.
+    \While{the ELBO/KL-divergence has not converged}
+      \For{$i = 1, \ldots, d$}
+        \State Update
+        \[
+          g_i(x_i) \propto \exp\!\Bigl(\mathbb{E}_{g_{-i}}\bigl[\log \tilde{f}(x_i, x_{-i})\bigr]\Bigr).
+        \]
+      \EndFor
+    \EndWhile
+    \Ensure $g(x) = \prod_{i=1}^{d} g_i(x_i) \approx f(x)$.
+  \end{algorithmic}
+\end{algorithm}
+
+In each update, CAVI lowers the KL-divergence between $q^*$ and the target $f$, and hence one can
+expect convergence to a local minimizer under suitable assumptions. The ELBO is not necessarily
+concave and therefore there is in general no guarantee to reach a maximizer of the ELBO, or,
+equivalently, a minimizer of the KL-divergence.
+
+\medskip
+\noindent\fbox{\parbox{\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax}{%
+  \textbf{Pros and Cons}: Each CAVI update lowers the KL-divergence, which facilitates introducing
+  stopping criteria for the algorithm. If the factors $g_i$ are assumed to be in the exponential
+  family, computing each factor update is simplified significantly. However, since CAVI relies on the
+  mean-field assumption, it inherits all its disadvantages. In addition, for some target distributions
+  it may be computationally expensive to compute the updates of the variational factors. In such a
+  case, other optimization methods (e.g.\ stochastic optimization and natural gradient methods) rather
+  than CAVI can be used to maximize the ELBO\@.
+}}
+\medskip
+
+\begin{remark}
+  \label{rem:10.8}
+  \textit{CAVI shares a similar structure with the Gibbs sampler. To see why, notice that}
+  \[
+    g_i^*(x_i) \propto \exp\!\Bigl(\mathbb{E}_{g_{-i}}\bigl[\log f(x_i, x_{-i})\bigr]\Bigr)
+    \propto \exp\!\Bigl(\mathbb{E}_{g_{-i}}\bigl[\log f(x_i | x_{-i})\bigr]\Bigr).
+  \]
+  \textit{In Gibbs sampling, we update each coordinate by sampling the corresponding full
+  conditional. CAVI uses full conditionals as well, with each density $g_i$ set to be proportional
+  to the exponential of the expectation of the log of the full conditional.}
+\end{remark}

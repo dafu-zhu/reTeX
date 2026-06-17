@@ -1,177 +1,198 @@
-% preamble.tex — Shared LaTeX preamble for textbook conversion
-% Page geometry configured to match the source textbook
+%% Preamble — A First Course in Monte Carlo Methods
+%% D. Sanz-Alonso & O. Al-Ghattas, University of Chicago
 
-\documentclass[10pt,openright]{book}
+\documentclass[12pt,openany]{book}
 
-%% ── Page Geometry ──────────────────────────────────────────────
-% Original is approximately 6.5" x 9.5" Prentice Hall format
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+
+%% Page geometry — matches source
 \usepackage[
   paperwidth=6.5in,
   paperheight=9.5in,
   top=1in,
   bottom=1in,
-  left=0.85in,
-  right=0.85in,
+  inner=1in,
+  outer=0.85in,
   headheight=14pt,
-  headsep=0.3in,
-  footskip=0.4in
+  headsep=0.3in
 ]{geometry}
 
-%% ── Encoding & Fonts ──────────────────────────────────────────
-\usepackage[T1]{fontenc}
-\usepackage[utf8]{inputenc}
-\usepackage{lmodern}          % Latin Modern (close to Computer Modern)
-\usepackage{microtype}        % Improved typography
-
-%% ── Math ───────────────────────────────────────────────────────
+%% Math
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{amsthm}
-\usepackage{mathtools}        % Extensions to amsmath
-\usepackage{bm}               % Bold math symbols
+\usepackage{mathtools}
+\usepackage{bm}
+\usepackage{bbm}        % \mathbbm{1} for indicator function
 
-% Equation numbering: (chapter.section.number)
-\numberwithin{equation}{section}
-
-% Figure/table numbering: chapter.section.number
-\usepackage{chngcntr}
-\counterwithin{figure}{section}
-\counterwithin{table}{section}
-
-%% ── Boxed Equations/Definitions ────────────────────────────────
-\usepackage[most]{tcolorbox}
-
-% Simple box style matching the book's thin-border boxes
-\newtcolorbox{defbox}{
-  colback=white,
-  colframe=black,
-  boxrule=0.5pt,
-  arc=0pt,
-  left=6pt, right=6pt, top=4pt, bottom=4pt,
-  boxsep=2pt
-}
-
-%% ── Theorem Environments ───────────────────────────────────────
-\theoremstyle{plain}
-\newtheorem{theorem}{Theorem}[section]
-\newtheorem{lemma}[theorem]{Lemma}
-\newtheorem{corollary}[theorem]{Corollary}
-\newtheorem{proposition}[theorem]{Proposition}
-
-\theoremstyle{definition}
-\newtheorem{definition}{Definition}[section]
-\newtheorem{example}{Example}[section]
-
-\theoremstyle{remark}
-\newtheorem{remark}{Remark}[section]
-
-%% ── Exercises ──────────────────────────────────────────────────
-\usepackage{enumitem}
-
-% Exercise label style — configure per book, then forget about it.
-%   \exercisestyle{prefix}{counter} is called for each item label.
-%   Default: "1.2.1." "1.2.2." (section-prefixed)
-%   Override examples:
-%     Plain numbers:       \renewcommand{\exerciselabel}[1]{\textbf{\arabic*.}}
-%     Parenthesized:       \renewcommand{\exerciselabel}[1]{\textbf{(\arabic*)}}
-%     Chapter-only prefix: \renewcommand{\exerciselabel}[1]{\textbf{\thechapter.\arabic*.}}
-\newcommand{\exerciselabel}[1]{\textbf{#1.\arabic*.}}
-\newcommand{\exerciseref}[1]{#1.\arabic*}
-
-\newenvironment{exercises}[1]{%
-  \subsection*{Exercises #1}%
-  \begin{enumerate}[label={\exerciselabel{#1}},ref={\exerciseref{#1}},leftmargin=*]%
-}{%
-  \end{enumerate}%
-}
-
-% Starred exercise marker
-\newcommand{\starred}{\textsuperscript{*}}
-
-%% ── Figures ────────────────────────────────────────────────────
+%% Graphics
 \usepackage{graphicx}
-\usepackage{float}
-\usepackage{tikz}
-\usepackage{pgfplots}
-\pgfplotsset{compat=1.18}
-\usetikzlibrary{arrows.meta, patterns, decorations.markings, decorations.pathmorphing, calc}
+\graphicspath{{../figures/}{./figures/}}
 
-%% ── Tables ─────────────────────────────────────────────────────
+%% TikZ (for Markov chain diagrams)
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,automata}
+
+%% Algorithms
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\renewcommand{\algorithmicrequire}{\textbf{Input:}}
+\renewcommand{\algorithmicensure}{\textbf{Output:}}
+\algnewcommand{\LineComment}[1]{\State \(\triangleright\) #1}
+
+%% Lists and tables
+\usepackage[shortlabels]{enumitem}
+\usepackage{makeidx}
+\makeindex
 \usepackage{booktabs}
 \usepackage{array}
-\usepackage{multirow}
 
-%% ── Headers & Footers ──────────────────────────────────────────
+%% Colors and links
+\usepackage{xcolor}
+\usepackage[
+  colorlinks=true,
+  linkcolor={blue!60!black},
+  citecolor={blue!60!black},
+  urlcolor={blue!60!black}
+]{hyperref}
+
+%% Section heading style: "1.1 · Section Title"
+\usepackage{titlesec}
+\titleformat{\section}[block]
+  {\large\bfseries}
+  {\thesection\ $\cdot$\ }
+  {0pt}{}
+\titleformat{\subsection}[block]
+  {\normalsize\bfseries}
+  {\thesubsection\ $\cdot$\ }
+  {0pt}{}
+
+%% Suppress page numbers on blank pages inserted by \cleardoublepage
+\makeatletter
+\renewcommand\cleardoublepage{\clearpage\if@twoside\ifodd\c@page\else
+  \hbox{}\thispagestyle{empty}\newpage\if@twocolumn\hbox{}\newpage\fi\fi\fi}
+\makeatother
+
+%% Headers/footers
 \usepackage{fancyhdr}
 \pagestyle{fancy}
 \fancyhf{}
-\fancyhead[LE]{\thepage}
-\fancyhead[RE]{\leftmark}
-\fancyhead[RO]{\thepage}
-\fancyhead[LO]{\rightmark}
-\renewcommand{\headrulewidth}{0pt}
+\fancyhead[LE]{\small\thepage\quad\nouppercase{\leftmark}}
+\fancyhead[RO]{\small\nouppercase{\rightmark}\quad\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
 
-% Chapter/section mark formatting
-\renewcommand{\chaptermark}[1]{\markboth{Chapter \thechapter.\ #1}{}}
-\renewcommand{\sectionmark}[1]{\markright{\thesection\ #1}}
+%% Spacing
+\setlength{\parindent}{1.4em}
+\setlength{\parskip}{0pt}
+\linespread{1.05}
+\raggedbottom
+\emergencystretch=2em
 
-% Plain style for chapter opening pages
-\fancypagestyle{plain}{%
-  \fancyhf{}%
-  \fancyfoot[C]{\thepage}%
-  \renewcommand{\headrulewidth}{0pt}%
-}
+%% Equation / figure / algorithm numbering by chapter
+\numberwithin{equation}{chapter}
+\numberwithin{figure}{chapter}
+\numberwithin{table}{chapter}
+\numberwithin{algorithm}{chapter}
 
-%% ── Cross-references ──────────────────────────────────────────
-\usepackage{hyperref}
-\hypersetup{
-  colorlinks=false,
-  pdfborder={0 0 0},
-  % PDF metadata — set per book
-  pdftitle={},
-  pdfauthor={}
-}
-\usepackage{cleveref}
+%% -------------------------------------------------------
+%% Theorem environments — shared counter per chapter
+%% -------------------------------------------------------
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[chapter]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
 
-%% ── Index ──────────────────────────────────────────────────────
-\usepackage{makeidx}
-\makeindex
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{assumption}[theorem]{Assumption}
 
-%% ── Custom Commands ────────────────────────────────────────────
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
 
-% Partial derivatives
-\newcommand{\pd}[2]{\frac{\partial #1}{\partial #2}}
-\newcommand{\pdd}[2]{\frac{\partial^2 #1}{\partial #2^2}}
-\newcommand{\pddm}[3]{\frac{\partial^2 #1}{\partial #2 \partial #3}}
+%% -------------------------------------------------------
+%% Custom math commands
+%% -------------------------------------------------------
 
-% Ordinary derivatives
-\newcommand{\od}[2]{\frac{d #1}{d #2}}
-\newcommand{\odd}[2]{\frac{d^2 #1}{d #2^2}}
+% Probability, expectation, variance
+\newcommand{\Prob}{\mathbb{P}}
+\newcommand{\Expect}{\mathbb{E}}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\Cov}{\operatorname{Cov}}
 
-% Evaluation bar
-\newcommand{\evalat}[2]{\left. #1 \right|_{#2}}
+% Number fields
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
 
-% Common operators
-\DeclareMathOperator{\erfc}{erfc}
-\DeclareMathOperator{\sinc}{sinc}
-\DeclareMathOperator{\sgn}{sgn}
-\DeclareMathOperator{\Real}{Re}
-\DeclareMathOperator{\Imag}{Im}
+% Distributions
+\newcommand{\Normal}{\mathcal{N}}
+\newcommand{\Unif}{\operatorname{Unif}}
+\newcommand{\Exp}{\operatorname{Exponential}}
+\newcommand{\Beta}{\operatorname{Beta}}
+\newcommand{\Binom}{\operatorname{Binomial}}
+\newcommand{\Geom}{\operatorname{Geometric}}
+\newcommand{\GammaDist}{\operatorname{Gamma}}
+\newcommand{\Bern}{\operatorname{Bernoulli}}
 
-% Bold vectors
-\renewcommand{\vec}[1]{\mathbf{#1}}
+% Indicator function
+\newcommand{\Ind}[1]{\mathbbm{1}_{\{#1\}}}
+\newcommand{\ind}{\mathbbm{1}}
 
-% Laplacian
-\newcommand{\laplacian}{\nabla^2}
+% Integral functional notation from the book: \calI_f[h]
+\newcommand{\calI}{\mathcal{I}}
+\newcommand{\calF}{\mathcal{F}}
+\newcommand{\calG}{\mathcal{G}}
+\newcommand{\calB}{\mathcal{B}}
+\newcommand{\calX}{\mathcal{X}}
+\newcommand{\calY}{\mathcal{Y}}
+\newcommand{\calZ}{\mathcal{Z}}
+\newcommand{\calA}{\mathcal{A}}
+\newcommand{\calL}{\mathcal{L}}
+\newcommand{\calO}{\mathcal{O}}
+\newcommand{\calP}{\mathcal{P}}
+\newcommand{\calN}{\mathcal{N}}
 
-% Double surface integral (not in all packages)
-\providecommand{\oiint}{\mathop{\oint\!\!\!\oint}\nolimits}
+% Bold vectors / matrices
+\newcommand{\bfx}{\mathbf{x}}
+\newcommand{\bfy}{\mathbf{y}}
+\newcommand{\bfz}{\mathbf{z}}
+\newcommand{\bfq}{\mathbf{q}}
+\newcommand{\bfp}{\mathbf{p}}
+\newcommand{\bftheta}{\boldsymbol{\theta}}
+\newcommand{\bfmu}{\boldsymbol{\mu}}
+\newcommand{\bfSigma}{\boldsymbol{\Sigma}}
+\newcommand{\bfphi}{\boldsymbol{\phi}}
 
-% Common notations used in the book
-\newcommand{\dx}{\,dx}
-\newcommand{\dy}{\,dy}
-\newcommand{\dt}{\,dt}
-\newcommand{\ds}{\,ds}
-\newcommand{\dA}{\,dA}
-\newcommand{\dV}{\,dV}
-\newcommand{\dS}{\,dS}
+% KL divergence and variational inference
+\newcommand{\KL}[2]{D_{\mathrm{KL}}\!\left(#1\,\|\,#2\right)}
+\newcommand{\ELBO}{\mathrm{ELBO}}
+
+% Norms
+\newcommand{\abs}[1]{\left|#1\right|}
+\newcommand{\norm}[1]{\left\|#1\right\|}
+
+% Operators
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\newcommand{\iid}{\overset{\mathrm{iid}}{\sim}}
+\newcommand{\cvd}{\xrightarrow{d}}
+\newcommand{\cvp}{\xrightarrow{p}}
+\newcommand{\cvas}{\xrightarrow{\mathrm{a.s.}}}
+
+% Gradient / Laplacian
+\newcommand{\grad}{\nabla}
+\newcommand{\Laplacian}{\Delta}
+
+% Hamiltonian dynamics notation
+\newcommand{\Ham}{\mathcal{H}}
+
+% Acceptance probability
+\newcommand{\accprob}{\alpha}
+
+%% TOC depth: sections and subsections (matches source TOC)
+\setcounter{tocdepth}{2}
