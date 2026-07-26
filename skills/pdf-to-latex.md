@@ -127,7 +127,9 @@ Run this task on Sonnet's more capable sibling — launch ONE `general-purpose` 
 You are setting up a LaTeX project from a scanned PDF textbook. Do the following:
 
 1. Read pages 1–15 of the PDF at <PDF_PATH>. If those pages have no text layer,
-   read them as page images. Extract:
+   read them as page images. Note that the reader may return each page as a
+   two-page SPREAD — two printed pages side by side in one image. That is a
+   rendering artifact, not duplicate content. Read the correct half. Extract:
    - Title, author, edition
    - Do NOT extract publisher, imprint, ISBN, or Library of Congress number.
    - BOOK_NAME slug: title → lowercase, spaces to underscores, drop subtitle
@@ -367,6 +369,14 @@ content shown on those pages.
 
 Read pages X–Y of the PDF at <PDF_PATH>. These pages have no text layer — read them as
 page images. Typeset them (Chapter N) as LaTeX.
+
+⚠ The reader may render each requested page as a two-page SPREAD, so asking for page
+60 and page 61 can return the same image showing two printed pages side by side. That
+is a rendering artifact, not duplicate content: the PDF is single pages, 1:1. Read the
+correct half of each spread — the lower index is the left page, the next is the right.
+NEVER conclude that pages are duplicated, never "deduplicate", and never skip a page
+because it looks like one you have already seen. A page skipped this way is silently
+lost content that surfaces only at final verification, after ~50 agents have run.
 
 - Write ONLY section files: books/<BOOK_NAME>/latex/chNN/secNN_M.tex, one file per
   section your pages cover. Those are the only files you may create or edit.
@@ -888,6 +898,8 @@ Once clean:
 | One branch: `master`. Each book in `books/<name>/` | Per-book branches all claimed the same flat chapter paths under `latex/`, so they could never merge and the working tree mixed books together |
 | Sonnet transcribes, Opus cross-checks | Bulk transcription is tedious but specified; resolving a glyph by mathematical context is the judgment OCR cannot do. See Model Tiering |
 | Every subagent prompt says `Read pages X–Y of <PDF_PATH>` | Nothing is "attached" to an Agent call — it takes text. A prompt naming a page range without the PDF path leaves the agent no way to reach the pages |
+| Tell every page-reading subagent that the reader renders two-page SPREADS | Requesting page 60 and page 61 can return the same image showing both printed pages. Agents that are not warned conclude the PDF has duplicates and "deduplicate" them — silently dropping real pages. Observed on a live run: two independent agents did exactly this, and the loss was invisible until the pages were re-checked against the source. The PDF is single pages, 1:1; the lower index is the left half |
+| Page numbers in `% PAGES:` headers are PDF indices, never printed numbers | Phase 1b maps pages to files with these headers. One agent recording printed numbers while its siblings record PDF indices sends the cross-check to the wrong pages. State the convention in every chunk prompt |
 | `book.conf` is `source`d by `build.sh` under `set -e` | One `KEY="value"` per line, every value double-quoted. An unquoted title breaks every build of that book, with an error pointing nowhere near the cause |
 | Every page number is a PDF index, never a printed page number | Front matter offsets the two by 10–20 pages. Record `PAGE_OFFSET` in Phase 0 and spot-check it before launching subagents — a wrong offset transcribes the entire book off by a constant |
 | 5–8 pages per subagent call, not full chapters; cap 4 concurrent | Smaller outputs avoid volume-based copyright pattern matching; the cap keeps rate limits and filter retries from eating the gain |
