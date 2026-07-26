@@ -1,0 +1,123 @@
+% PAGES: 159-160
+% Theorem 5.6's proof opens here (page 160 / folio 144) and is left OPEN at
+% the end of this file: the last line is equation (5.22), immediately after
+% which the source continues "where Q is an orthogonal matrix; cf. Theorem
+% 5.4." at the top of page 161 -- that is the first line of sec05_c1_4.tex.
+% Do not print a second "\begin{proof}" there.
+
+\begin{lemma}
+Let $M$ be an $m \times n$ matrix.
+
+(i) The matrix $M\tp M$ is an $n \times n$ symmetric positive semidefinite matrix.
+
+(ii) The matrix $M\tp M$ is symmetric positive definite if and only if the columns of
+$M$ are linearly independent.\footnote{A necessary (but not sufficient) condition for
+the $m \times n$ matrix $M$ to have linearly independent columns is that it cannot
+have more columns than rows, i.e., $n \leq m$.}
+\end{lemma}
+
+\begin{proof}
+Note that the matrix $M\tp M$ is symmetric, since
+\[
+(M\tp M)\tp \;=\; M\tp(M\tp)\tp \;=\; M\tp M.
+\]
+
+(i) Let $x = (x_i)_{i=1:n}$ be a column vector in $\R^n$. Then,
+\begin{equation}
+x\tp M\tp Mx \;=\; (Mx)\tp Mx \;=\; (Mx,Mx) \;=\; \|Mx\|^2.
+\end{equation}
+Since $\|Mx\|^2 \geq 0$, it follows from (5.20) that
+\begin{equation}
+x\tp M\tp Mx \;\geq\; 0, \quad \forall\, x \in \R^n,
+\end{equation}
+and therefore that the matrix $M\tp M$ is symmetric positive semidefinite; cf.
+Definition 5.6.
+
+(ii) Let $M = \mathrm{col}\,(m_k)_{k=1:n}$. From (5.20), it follows that
+\[
+x\tp M\tp Mx = 0 \iff \|Mx\|^2 = 0 \iff Mx = 0 \iff \sum_{k=1}^{n} x_km_k = 0,
+\]
+where the matrix-vector multiplication formula (1.7) was used for the last
+equivalence.
+
+Thus, there exists a vector $x \neq 0$ such that $x\tp M\tp Mx = 0$ if and only if the
+columns of the matrix $M$ are not linearly independent. Since $x\tp M\tp Mx \geq 0$
+for all $x \in \R^n$, see (5.21), we conclude from Definition 5.6 that the matrix
+$M\tp M$ is symmetric positive definite if and only if the columns of $M$ are linearly
+independent.
+\end{proof}
+
+% "of the from" is the source's own wording (an apparent typo for "of the
+% form") -- reproduced as printed, per the never-correct-the-author rule.
+Note that symmetric positive semidefinite matrices of the from $M\tp M$ appear often
+in practical applications such as finding covariance matrices from time series data,
+solving least square problems, and doing linear regression; see Chapter 7 and
+Chapter 8.
+
+\par\medskip\noindent\textit{Example:}\ Show that the $N \times N$ matrix
+\[
+B_N \;=\; \begin{pmatrix}
+2 & -1 & \dots & 0\\
+-1 & \ddots & \ddots & \vdots\\
+\vdots & \ddots & \ddots & -1\\
+0 & \dots & -1 & 2
+\end{pmatrix}
+\]
+is symmetric positive definite.\footnote{Another proof of this fact can be given using
+the fact that a matrix is symmetric positive definite if and only if all its
+eigenvalues are positive; see Theorem 5.6 and the example thereafter.}
+
+\par\medskip\noindent\textit{Solution:}\ Recall from (10.20) that
+\[
+x\tp B_Nx \;=\; \sum_{1 \leq j,k \leq N} B_N(j,k)x_jx_k,
+\]
+and therefore
+\begin{align*}
+x\tp B_Nx &\;=\; \sum_{i=1}^{N} 2x_i^2 \;-\; \sum_{i=2}^{N} x_{i-1}x_i \;-\;
+\sum_{i=1}^{N-1} x_ix_{i+1}\\
+&\;=\; 2\sum_{i=1}^{N} x_i^2 \;-\; 2\sum_{i=1}^{N-1} x_ix_{i+1}\\
+&\;=\; x_1^2 \;+\; \sum_{i=1}^{N-1} x_{i+1}^2 \;+\; \sum_{i=1}^{N-1} x_i^2 \;+\; x_N^2
+\;-\; 2\sum_{i=1}^{N-1} x_ix_{i+1}\\
+&\;=\; x_1^2 \;+\; \sum_{i=1}^{N-1} \left(x_i^2 - 2x_ix_{i+1} + x_{i+1}^2\right) \;+\;
+x_N^2\\
+&\;=\; x_1^2 \;+\; \sum_{i=1}^{N-1} \left(x_i - x_{i+1}\right)^2 \;+\; x_N^2\\
+&\;\geq\; 0, \quad \forall\, x \in \R^N.
+\end{align*}
+
+Moreover,
+\begin{align*}
+x\tp B_Nx = 0 &\iff x_1^2 \;+\; \sum_{i=1}^{N-1} (x_i - x_{i+1})^2 \;+\; x_N^2 \;=\; 0\\
+&\iff x_1 = 0;\ x_N = 0;\ x_i = x_{i+1}, \quad \forall\, i = 1:(N-1)\\
+&\iff x_i = 0, \quad \forall\, i = 1:N\\
+&\iff x = 0.
+\end{align*}
+
+We conclude that $x\tp B_Nx > 0$ for all $x \in \R^N$, $x \neq 0$, and therefore that
+$B_N$ is a symmetric positive definite matrix; cf. (5.17).
+\hfill$\square$
+\par\medskip
+
+% Source wording: "symmetric positive matrices" -- reproduced as printed
+% (missing "definite"), likewise "Section 5.2.2" is exactly as printed.
+Several equivalent ways to characterize symmetric positive matrices are presented
+below. A summary of these conditions and comments on their practical applicability can
+be found in Section 5.2.2.
+
+\begin{theorem}
+(i) A symmetric matrix is symmetric positive semidefinite if and only if all the
+eigenvalues of the matrix are greater than or equal to zero.
+
+(ii) A symmetric matrix is symmetric positive definite if and only if all the
+eigenvalues of the matrix are strictly greater than zero.
+\end{theorem}
+
+\begin{proof}
+Let $A$ be a symmetric matrix of size $n$. Recall from Theorem 5.5 that any symmetric
+matrix of size $n$ has a full set of $n$ orthogonal eigenvectors. Let $v_1, v_2,
+\dots, v_n$ be $n$ orthogonal eigenvectors of $A$ of norm $1$, and let $\lambda_1,
+\lambda_2, \dots, \lambda_n$ be the corresponding eigenvalues. If
+$Q = \mathrm{col}\,(v_k)_{k=1:n}$ and $\Lambda = \diag(\lambda_k)_{k=1:n}$, the
+diagonal form of $A$ is
+\begin{equation}
+A \;=\; Q\Lambda Q\tp,
+\end{equation}

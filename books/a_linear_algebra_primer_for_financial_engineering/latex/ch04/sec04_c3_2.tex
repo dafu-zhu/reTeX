@@ -1,0 +1,144 @@
+% PAGES: 143-144
+% Continues sec04_c3_1.tex (pages 141-142), which closed cleanly (Lemma
+% 4.9's proof ends with the printed square at the bottom of page 142). No
+% environment is open at the start of this file.
+%
+% Page 143 (folio 127): Theorem 4.8 (with proof), then a manually-typeset
+% "Example:"/"Answer:" block (two nonsingular-matrix checks) -- same
+% convention as sec04_c2_1.tex: the "Example:" run-in label is written out
+% by hand (no closing mark after the statement), and \answerx is used for
+% "Answer:" with a manual "\hfill$\square$" added just before
+% \end{answerx}, matching the printed square at the bottom of page 143.
+% This closes section 4.3.
+%
+% Page 144 (folio 128): section 4.4 "Numerical computation of eigenvalues"
+% (complete, including footnote 5), then section 4.5 "Eigenvalues and
+% eigenvectors of tridiagonal symmetric matrices" begins: matrix $B_N$
+% (4.42), its entry definitions, and Lemma 4.10 opens with only its first
+% sentence (the eigenvalue formula (4.43)) -- the page ends there. The
+% source continues the SAME lemma statement with a second sentence (the
+% eigenvector formula) on the next page (folio 129 / PDF page 145), still
+% in italics, before "Proof." begins. The \begin{lemma}...\end{lemma}
+% environment is therefore LEFT OPEN at the end of this file; it is closed
+% at the top of sec04_c3_3.tex (pages 145-146), which completes the
+% statement with (4.44) before opening "Proof."
+
+\begin{theorem}
+Any strictly column diagonally dominant matrix is nonsingular.
+\end{theorem}
+
+\begin{proof}
+Let $A$ be a strictly column diagonally dominant matrix. From Lemma 4.9, it follows
+that the matrix $A^t$ is strictly diagonally dominant. Thus, the matrix $A^t$ is
+nonsingular, see Theorem 4.7, and therefore $0$ is not an eigenvalue of $A^t$. Since
+$A$ and $A^t$ have the same eigenvalues, see Lemma 4.5, we conclude that $0$ is not an
+eigenvalue of $A$, and therefore that $A$ is a nonsingular matrix.
+\end{proof}
+
+\par\medskip\noindent\textit{Example:}\ Show that the following matrices are
+nonsingular:
+\[
+A_1 \;=\; \begin{pmatrix}
+3 & 1 & -1 & 0\\
+2 & -4 & 1 & 0.5\\
+-2 & 1 & 5 & 0.5\\
+0 & 2 & 0 & -2.5
+\end{pmatrix};
+\]
+\[
+A_2 \;=\; \begin{pmatrix}
+-4 & 3 & -1 & 1\\
+-1 & -5 & 1 & 4\\
+1 & -1 & 3 & 0\\
+0.5 & 0 & 0.5 & -6
+\end{pmatrix}.
+\]
+
+\begin{answerx}
+(i) The matrix $A_1$ is strictly diagonally dominant, since, for every row of $A_1$,
+the absolute value of the main diagonal entry from the row is greater than the sum of
+the absolute values of all the other entries in that row:
+\begin{align*}
+3 \;&>\; 1 + |{-1}| \;=\; 2;\\
+|{-4}| = 4 \;&>\; 2 + 1 + 0.5 \;=\; 3.5;\\
+5 \;&>\; |{-2}| + 1 + 0.5 \;=\; 3.5;\\
+|{-2.5}| = 2.5 \;&>\; 2.
+\end{align*}
+Then, from Theorem 4.7, it follows that $A_1$ is a nonsingular matrix.
+
+(ii) The matrix $A_2$ is strictly column diagonally dominant, since, for every column
+of the matrix $A_2$, the absolute value of the main diagonal entry from the column is
+strictly greater than the sum of the absolute values of all the other entries in that
+column:
+\begin{align*}
+|{-4}| = 4 \;&>\; |{-1}| + 1 + 0.5 \;=\; 2.5;\\
+|{-5}| = 5 \;&>\; 3 + |{-1}| \;=\; 4;\\
+3 \;&>\; |{-1}| + 1 + 0.5 \;=\; 2.5;\\
+|{-6}| = 6 \;&>\; 1 + 4 \;=\; 5.
+\end{align*}
+
+Then, from Theorem 4.8, it follows that $A_2$ is a nonsingular matrix.
+Note that Theorem 4.7 cannot be used to show that the matrix $A_2$ is nonsingular,
+since $A_2$ is not strictly diagonally dominant: for the first row of $A_2$, we find
+that
+\[
+|{-4}| \;=\; 4 \;<\; 3 + |{-1}| + 1 \;=\; 5. \hfill\square
+\]
+\end{answerx}
+
+\section{Numerical computation of eigenvalues}
+
+Computing the eigenvalues of a matrix is a fundamental numerical linear algebra
+problem, which further highlights the difference between numerical linear algebra and
+classical linear algebra. For example, computing the roots of the characteristic
+polynomial of a matrix to obtain its eigenvalues would be inefficient and prone to
+large errors since polynomial root computation is an ill--conditioned problem.
+
+The methods used in practice for computing eigenvalues are iterative methods that find
+approximations of the eigenvalues of the matrix to desired tolerance. The simplest such
+method is the Power Method which works best for symmetric positive definite matrices
+whose largest eigenvalue has multiplicity 1, and the related Inverse Power Method and
+Inverse Power Method with shifts. These methods are generally slowly convergent.
+
+Efficient eigenvalue algorithms are variants of the QR Algorithm, which was named one
+of the top ten algorithms of the 20--th century.\footnote{See Cipra \cite{10} at
+\url{http://www.siam.org/pdf/news/637.pdf}} Based on the QR decomposition of a matrix
+as the product of an orthogonal matrix Q and an upper triangular matrix R, the matrix
+$A$ is iteratively transformed into $A_i = QR$ and then $A_{i+1} = RQ$, until
+convergence to an upper triangular matrix (or to a diagonal matrix, if the matrix $A$
+is symmetric) is achieved. More details on QR algorithms and their implementations can
+be found, e.g., in Demmel \cite{13} and in Trefethen and Bau \cite{43}.
+
+\section{Eigenvalues and eigenvectors of tridiagonal symmetric matrices}
+
+Let
+\begin{equation}
+B_N \;=\; \begin{pmatrix}
+2 & -1 & \dots & 0\\
+-1 & \ddots & \ddots & \vdots\\
+\vdots & \ddots & \ddots & -1\\
+0 & \dots & -1 & 2
+\end{pmatrix}
+\end{equation}
+be the $N \times N$ tridiagonal symmetric matrix whose only nonzero entries are
+\begin{align*}
+B_N(i,i) &= 2, \quad \forall\, i = 1:N;\\
+B_N(i,i-1) &= -1, \quad \forall\, i = 2:N;\\
+B_N(i,i+1) &= -1, \quad \forall\, i = 1:(N-1).
+\end{align*}
+The matrix $B_N$ appears often in practical applications, e.g., in the finite
+difference solution of second order differential equations.
+
+In this section, we find the eigenvalues and eigenvectors of the matrix $B_N$, and
+then use them to compute the eigenvalues and eigenvectors of tridiagonal symmetric
+matrices having the more general form (4.49). Note that, since the matrix $B_N$ is
+symmetric, all its eigenvalues are real numbers; cf. Theorem 5.1.
+
+\begin{lemma}
+The matrix $B_N$ has the following $N$ different eigenvalues:
+\begin{equation}
+\mu_j \;=\; 2\left(1 - \cos\left(\frac{j\pi}{N+1}\right)\right), \quad \text{for}\ j = 1:N.
+\end{equation}
+% \begin{lemma} intentionally left open here (statement continues with the
+% eigenvector formula on the next page); closed at the top of
+% sec04_c3_3.tex.

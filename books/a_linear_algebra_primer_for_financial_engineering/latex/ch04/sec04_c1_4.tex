@@ -1,0 +1,70 @@
+% PAGES: 133
+
+% Continuation of sec04_c1_3.tex (page 132 / folio 116): part (iii) below
+% continues the manual "Examples:" block opened there (diagonal / lower
+% triangular / upper triangular matrices). Do not print a new "Examples:"
+% label.
+(iii) Let $U$ be an upper triangular matrix of size $n$. The characteristic polynomial
+of $U$ is
+\begin{equation}
+P_U(t) \;=\; \det(tI-U) \;=\; \prod_{i=1}^n (t-U(i,i));
+\end{equation}
+cf. (10.4). Since the roots of $P_U(t)$ are $U(i,i)$, $i = 1:n$, we conclude that the
+eigenvalues of $U$ are its diagonal entries $U(i,i)$, $i = 1:n$. Note that the
+eigenvector corresponding to the eigenvalue $U(1,1)$ is $e_1$, the first column of the
+identity matrix. However, the eigenvector corresponding to the eigenvalue $U(i,i)$, with
+$2 \le i \le n$, is not necessarily $e_i$, the $i$-th column of the identity matrix.
+\hfill$\square$\par\medskip
+
+\begin{definition}
+If $\lambda$ is a root of multiplicity $m_\lambda$ of the characteristic polynomial
+$P_A(t)$ corresponding to matrix $A$, then, by definition, $m_\lambda$ is the
+multiplicity of the eigenvalue $\lambda$ of $A$.
+\end{definition}
+
+\begin{theorem}
+A square matrix of size $n$ has $n$ eigenvalues, counted with their multiplicities;
+some of these eigenvalues may be complex numbers.
+
+In other words, if $A$ is a square matrix of size $n$, then
+\[
+\sum_{\lambda \in \lambda(A)} m_\lambda \;=\; n,
+\]
+where $\lambda(A)$ is the set of all the eigenvalues\footnote{The set of all the
+eigenvalues of a matrix is also called the spectrum of the matrix.} of $A$.
+\end{theorem}
+
+As a direct consequence of Theorem 4.2, note that a square matrix of size $n$ has at
+most $n$ distinct eigenvalues.
+
+\begin{proof}
+If $A$ is a square matrix of size $n$, then its characteristic polynomial $P_A(t)$ has
+degree $n$. The roots of $P_A(t)$ are the eigenvalues of $A$; cf. Theorem 4.1. Recall
+from the Fundamental Theorem of Algebra that a polynomial of degree $n$ with real
+coefficients has exactly $n$ roots when counted with their multiplicities. Note that the
+roots of the polynomial may be complex numbers.
+
+From Definition 4.3 of the multiplicity of an eigenvalue, and since the sum of the
+multiplicities of the roots of a polynomial of degree $n$ is equal to $n$, we conclude
+that the number of the eigenvalues of $A$, counted with their multiplicities, is $n$.
+\end{proof}
+
+\begin{definition}
+The number of different eigenvectors corresponding to an eigenvalue $\lambda$ is equal
+to the largest number of linearly independent eigenvectors corresponding to $\lambda$.
+In other words, if $V_\lambda = \{v \ \text{such that} \ Av = \lambda v\}$ is the space
+of the eigenvectors of the matrix $A$ corresponding to $\lambda$, then the number of
+different eigenvectors corresponding to an eigenvalue $\lambda$ is equal to
+$\dim(V_\lambda)$, where $V_\lambda$ denotes the dimension of the space $V_\lambda$; see
+Definition 1.11.
+\end{definition}
+
+Every eigenvalue has at least one corresponding eigenvector. If an eigenvalue $\lambda$
+has multiplicity $m_\lambda$, then there could exist at most $m_\lambda$ linearly
+independent eigenvectors corresponding to $\lambda$. However, it might also happen that
+there are less than $m_\lambda$ eigenvectors corresponding to $\lambda$, and therefore a
+matrix might have less than $n$ linearly independent eigenvectors; see the example at
+the beginning of this section, as well as the example below:
+% PDF page 134 (not part of this assignment) continues here with an
+% unnumbered worked example -- no environment is opened for it in this
+% file; the sentence above ends in a colon leading into that example.

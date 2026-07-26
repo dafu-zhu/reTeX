@@ -1,0 +1,143 @@
+% PAGES: 161-162
+% Continues the Theorem 5.6 proof opened in sec05_c1_3.tex (page 160 / folio
+% 144); the line below picks up immediately after that file's equation
+% (5.22). No new "\begin{proof}" is opened here.
+%
+% This file ends mid-derivation, inside a manual "\textit{Solution:}" block
+% (the 2x2 spd/spsd characterization example) that is NOT closed on page 162
+% -- the source page ends blank after equation (5.27) with no closing
+% square, and the derivation continues on PDF page 163. No \begin{...}
+% environment is left open (the "Example:"/"Solution:" labels are plain
+% manual text, not the \examplex/\answerx environments, matching the
+% convention used elsewhere in this book when the label word is not
+% "Answer:"), so scripts/check_env_balance.py has nothing to flag here --
+% but the next chunk agent must NOT print a fresh "\textit{Solution:}"
+% label; it should continue the sentence right after (5.27) and supply the
+% closing "\hfill$\square$\par\medskip" once the source's square is found.
+
+where $Q$ is an orthogonal matrix; cf. Theorem 5.4. Let $x \in \R^n$. From (5.22), it
+follows that
+\begin{equation}
+x\tp Ax \;=\; x\tp Q\Lambda Q\tp x \;=\; (Q\tp x)\tp \Lambda (Q\tp x) \;=\; y\tp
+\Lambda y,
+\end{equation}
+where $y = Q\tp x$. If $y = (y_i)_{i=1:n}$, we find from (5.23) that
+\begin{equation}
+x\tp Ax \;=\; y\tp \Lambda y \;=\; \sum_{i=1}^{n} \lambda_i y_i^2.
+\end{equation}
+
+We now prove each part of the theorem by double implication.
+
+(i) ``If $A$ is a symmetric positive semidefinite matrix, then all the eigenvalues of
+$A$ are greater than or equal to zero.''
+
+Assume that there exists an eigenvalue $\lambda_j$ of $A$ such that $\lambda_j < 0$,
+and let $w_j \neq 0$ be an eigenvector corresponding to $\lambda_j$. Then,
+$Aw_j = \lambda_jw_j$ and
+\[
+w_j\tp Aw_j \;=\; w_j\tp(\lambda_jw_j) \;=\; \lambda_j \cdot w_j\tp w_j \;=\;
+\lambda_j\|w_j\|^2 \;<\; 0,
+\]
+since $\lambda_j < 0$ and $w_j \neq 0$. This contradicts the property (5.19) of a
+positive semidefinite matrix.
+
+We conclude that, if $A$ is symmetric positive semidefinite, then all its eigenvalues
+must be greater than or equal to zero.
+
+(i) ``If all the eigenvalues of $A$ are greater than or equal to zero, then $A$ is a
+symmetric positive semidefinite matrix.''
+
+Assume that $\lambda_i \geq 0$, for all $i = 1:n$. Let $x \in \R^n$ and let
+$y = Q\tp x$. If $y = (y_i)_{i=1:n}$, it follows from (5.24) that
+\begin{equation}
+x\tp Ax \;=\; y\tp \Lambda y \;=\; \sum_{i=1}^{n} \lambda_i y_i^2.
+\end{equation}
+Since $\lambda_i \geq 0$ for all $i = 1:n$, it follows from (5.25) that $x\tp Ax \geq
+0$ for any $x \in \R^n$, and, from Definition 5.7, we conclude that $A$ is a symmetric
+positive semidefinite matrix.
+
+(ii) ``If $A$ is a symmetric positive definite matrix, then all the eigenvalues of $A$
+are strictly greater than zero.''
+
+Assume that there exists an eigenvalue $\lambda_j$ of $A$ such that $\lambda_j \leq
+0$, and let $w_j \neq 0$ be an eigenvector corresponding to $\lambda_j$. Then,
+$Aw_j = \lambda_jw_j$ and
+\[
+w_j\tp Aw_j \;=\; w_j\tp(\lambda_jw_j) \;=\; \lambda_j \cdot w_j\tp w_j \;=\;
+\lambda_j\|w_j\|^2 \;\leq\; 0,
+\]
+since $\lambda_j \leq 0$. This contradicts the property (5.17) of a positive definite
+matrix, since $w_j \neq 0$.
+
+We conclude that, if the matrix $A$ is symmetric positive definite, then all its
+eigenvalues must be strictly greater than zero.
+
+(ii) ``If all the eigenvalues of $A$ are strictly greater than zero, then $A$ is a
+symmetric positive definite matrix.''
+
+Assume that $\lambda_i > 0$, for all $i = 1:n$. Let $x \in \R^n$ and let $y = Q\tp x$.
+If $y = (y_i)_{i=1:n}$, it follows from (5.24) that
+\begin{equation}
+x\tp Ax \;=\; y\tp \Lambda y \;=\; \sum_{i=1}^{n} \lambda_i y_i^2 \;\geq\; 0.
+\end{equation}
+Since $\lambda_i > 0$ for all $i = 1:n$, it follows from (5.26) that $x\tp Ax = 0$ if
+and only if $y_i = 0$ for all $i = 1:n$, i.e., if and only if $y = 0$. Recall that
+$y = Q\tp x$, where $Q$ is an orthogonal matrix. Thus,
+\[
+x\tp Ax = 0 \iff y = 0 \iff Q\tp x = 0 \iff Q(Q\tp x) = 0 \iff x = 0,
+\]
+since $Q$ is a nonsingular matrix and $QQ\tp = I$; see (5.11).
+
+We conclude that $x\tp Ax > 0$ for any $x \neq 0$, and, from (5.17) of Definition 5.6,
+it follows that $A$ is a symmetric positive definite matrix.
+\end{proof}
+
+The following result is a simple consequence of Theorem 5.6:
+
+\begin{lemma}
+Any symmetric positive definite matrix is nonsingular.
+\end{lemma}
+
+\begin{proof}
+Let $A$ be a symmetric positive definite matrix. From Theorem 5.6, we obtain that all
+the eigenvalues of $A$ are strictly greater than zero. Thus, $0$ is not an eigenvalue
+of the matrix $A$, and, from Theorem 4.3, we conclude that the matrix $A$ is
+nonsingular.
+\end{proof}
+
+\begin{lemma}
+The inverse of a symmetric positive definite matrix is also symmetric positive
+definite.
+\end{lemma}
+
+\begin{proof}
+Let $A$ be a symmetric positive definite matrix. Recall from Lemma 5.3 that the
+matrix $A$ is nonsingular, and let $A^{-1}$ be the inverse matrix of $A$. From
+Lemma 4.3, it follows that, if $\mu$ is an eigenvalue of $A$, then $\frac{1}{\mu}$ is
+an eigenvalue of $A^{-1}$. Note that all the eigenvalues of $A$ are strictly greater
+than zero, since $A$ is symmetric positive definite; cf. Theorem 5.6. Then, $\mu > 0$,
+and therefore $\frac{1}{\mu} > 0$.
+
+In other words, all the eigenvalues of the symmetric matrix $A^{-1}$ are positive,
+and, from Theorem 5.6, we conclude that $A^{-1}$ is a symmetric positive definite
+matrix.
+\end{proof}
+
+In the example below, we find necessary and sufficient conditions for a $2 \times 2$
+symmetric matrix to be symmetric positive definite and symmetric positive
+semidefinite, by using the eigenvalue related criterion from Theorem 5.6. A proof of
+the same results using Sylvester's criterion is given in Lemma 5.5, and is extended to
+$3 \times 3$ matrices in Lemma 5.6.
+
+\par\medskip\noindent\textit{Example:}\ (i) The matrix
+$\begin{pmatrix} a & b\\ b & d \end{pmatrix}$ is symmetric positive definite if and
+only if $a > 0$ and $ad > b^2$.
+
+(ii) The matrix $\begin{pmatrix} a & b\\ b & d \end{pmatrix}$ is symmetric positive
+semidefinite if and only if $a \geq 0$, $d \geq 0$, and $ad \geq b^2$.
+
+\par\medskip\noindent\textit{Solution:}\ Let $A = \begin{pmatrix} a & b\\ b & d
+\end{pmatrix}$ The characteristic polynomial of the matrix $A$ is
+\begin{equation}
+P_A(t) \;=\; \det(tI-A) \;=\; t^2 - (a+d)t + ad - b^2.
+\end{equation}

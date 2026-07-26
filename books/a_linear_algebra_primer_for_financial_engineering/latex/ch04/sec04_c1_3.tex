@@ -1,0 +1,158 @@
+% PAGES: 131-132
+
+% Continuation of sec04_c1_2.tex (page 130 / folio 114): this text concludes
+% the \item ("If lambda = 1, any corresponding eigenvector...") for matrix A,
+% inside the \begin{itemize} and the manual "Examples:" block opened there.
+% Do not reopen either.
+Thus, any eigenvector corresponding to the eigenvalue $\lambda = 1$ is of the form
+\[
+v \;=\; \begin{pmatrix}v_1\\ -0.5v_1\\ 3v_1\end{pmatrix} \;=\;
+0.5v_1\begin{pmatrix}2\\-1\\6\end{pmatrix}.
+\]
+We conclude that the eigenvalue $\lambda = 1$ has one eigenvector, e.g.,
+$\begin{pmatrix}2\\-1\\6\end{pmatrix}$.
+\end{itemize}
+
+(ii) Let
+\[
+B \;=\; \begin{pmatrix} 2 & 2 & -1\\ -7 & -4 & 2.5\\ 2 & 4 & -1\end{pmatrix}.
+\]
+The characteristic polynomial of $B$ is
+\[
+P_B(t) \;=\; \det(tI-B) \;=\;
+\begin{vmatrix} t-2 & -2 & 1\\ 7 & t+4 & -2.5\\ -2 & -4 & t+1\end{vmatrix}.
+\]
+Using formula (10.8), we find that
+\[
+P_B(t) \;=\; t^3 + 3t^2 - 4 \;=\; (t-1)(t+2)^2.
+\]
+The roots of the characteristic polynomial $P_B(t)$ are $\lambda_1 = \lambda_2 = -2$ and
+$\lambda_3 = 1$.
+
+\begin{itemize}
+\item If $\lambda = -2$, any corresponding eigenvector $v \neq 0$ is a solution to
+$Bv = -2v$, which can be written as
+\[
+\begin{cases}
+2v_1+2v_2-v_3 = -2v_1\\
+-7v_1-4v_2+2.5v_3 = -2v_2\\
+2v_1+4v_2-v_3 = -2v_3
+\end{cases}
+\quad\Longleftrightarrow\quad
+\begin{cases}
+v_3 = 4v_1+2v_2\\
+2.5v_3 = 7v_1+2v_2\\
+v_3 = -2v_1-4v_2
+\end{cases}
+\]
+\[
+\Longleftrightarrow\quad
+\begin{cases}
+v_3 = 4v_1+2v_2\\
+5v_3 = 14v_1+4v_2\\
+0 = 6v_1+6v_2
+\end{cases}
+\quad\Longleftrightarrow\quad
+\begin{cases}
+v_3 = 2v_1\\
+v_3 = 2v_1\\
+v_2 = -v_1
+\end{cases}
+\]
+Thus, any eigenvector corresponding to the eigenvalue $\lambda = -2$ is of the form
+\[
+v \;=\; \begin{pmatrix}v_1\\ -v_1\\ 2v_1\end{pmatrix} \;=\;
+v_1\begin{pmatrix}1\\-1\\2\end{pmatrix}
+\]
+and we conclude that the eigenvalue $\lambda = -2$ has one eigenvector, e.g.,
+$\begin{pmatrix}1\\-1\\2\end{pmatrix}$.
+\item If $\lambda = 1$, any corresponding eigenvector $v \neq 0$ is a solution to
+$Bv = v$, which can be written as
+\[
+\begin{cases}
+2v_1+2v_2-v_3 = v_1\\
+-7v_1-4v_2+2.5v_3 = v_2\\
+2v_1+4v_2-v_3 = v_3
+\end{cases}
+\quad\Longleftrightarrow\quad
+\begin{cases}
+v_3 = v_1+2v_2\\
+5v_3 = 14v_1+10v_2\\
+v_3 = v_1+2v_2
+\end{cases}
+\]
+\[
+\Longleftrightarrow\quad
+\begin{cases}
+v_3 = v_1+2v_2\\
+0 = 9v_1\\
+v_3 = v_1+2v_2
+\end{cases}
+\quad\Longleftrightarrow\quad
+\begin{cases}
+v_3 = 2v_2\\
+v_1 = 0\\
+v_3 = 2v_2
+\end{cases}
+\]
+Thus, any eigenvector corresponding to the eigenvalue $\lambda = 1$ is of the form
+\[
+v \;=\; \begin{pmatrix}0\\ v_2\\ 2v_2\end{pmatrix} \;=\; v_2\begin{pmatrix}0\\1\\2\end{pmatrix}.
+\]
+We conclude that the eigenvalue $\lambda = 1$ has one eigenvector, e.g.,
+$\begin{pmatrix}0\\1\\2\end{pmatrix}$.
+\end{itemize}
+\hfill$\square$\par\medskip
+
+\begin{examplex}
+The characteristic polynomial of the $2 \times 2$ matrix $A = \begin{pmatrix} a & b\\ c &
+d\end{pmatrix}$ is\footnote{Note that (4.7) corresponds to (4.19), since the trace and
+determinant of the $2 \times 2$ matrix $A$ are $\tr(A) = a+d$ and $\det(A) = ad-bc$,
+respectively.}
+\begin{equation}
+P_A(t) \;=\; t^2 - (a+d)t + ad - bc,
+\end{equation}
+since, from definition (4.5) and the formula (10.6) for the determinant of a
+$2 \times 2$ matrix, it follows that
+\begin{align*}
+P_A(t) \;=\; \det(tI-A) \;=\; \det\begin{pmatrix} t-a & -b\\ -c & t-d\end{pmatrix}
+&\;=\; (t-a)(t-d) - (-b)(-c)\\
+&\;=\; t^2 - (a+d)t + ad - bc.
+\end{align*}
+\end{examplex}
+
+% The "Examples:" (plural) discussion below -- diagonal, lower triangular, and
+% upper triangular matrices -- is written manually for the same reason as the
+% previous "Examples:" block (the source label is plural; \examplex hard-codes
+% the singular label). It is NOT closed in this file: part (iii), the upper
+% triangular matrix $U$, and the closing "\hfill$\square$\par\medskip" are in
+% sec04_c1_4.tex (page 133 / folio 117). sec04_c1_4.tex must not print a
+% second "Examples:" label for this block.
+\par\medskip\noindent\textit{Examples:}\ (i) Let $D = \diag(d_i)_{i=1:n}$ be a diagonal
+matrix of size $n$. The characteristic polynomial of $D$ is
+\[
+P_D(t) \;=\; \det(tI-D) \;=\; \prod_{i=1}^n (t-d_i);
+\]
+cf. (10.1). The roots of the polynomial $P_D(t)$, i.e., the solutions to $P_D(t) = 0$,
+are $d_i$, $i = 1:n$. We conclude that the eigenvalues of $D$ are its diagonal entries.
+Note that the corresponding eigenvector for the eigenvalue $d_i$ is $e_i$, the $i$-th
+column of the identity matrix, i.e.,
+\[
+De_i \;=\; d_ie_i, \quad \forall\, i = 1:n.
+\]
+Thus, a diagonal matrix of size $n$ has $n$ eigenvectors.
+
+(ii) Let $L$ be a lower triangular matrix of size $n$. The characteristic polynomial of
+$L$ is
+\[
+P_L(t) \;=\; \det(tI-L) \;=\; \prod_{i=1}^n (t-L(i,i));
+\]
+cf. (10.3). The roots of $P_L(t)$, i.e., the solutions to $P_L(t) = 0$, are $L(i,i)$,
+$i = 1:n$. We conclude that the eigenvalues of $L$ are its diagonal entries $L(i,i)$,
+$i = 1:n$. Note that the eigenvector corresponding to the eigenvalue $L(n,n)$ is $e_n$,
+the $n$-th column of the identity matrix. However, the eigenvector corresponding to the
+eigenvalue $L(i,i)$, with $1 \le i \le (n-1)$, is not necessarily $e_i$, the $i$-th
+column of the identity matrix.
+% CONTINUES in sec04_c1_4.tex (page 133 / folio 117): part (iii), the upper
+% triangular matrix U, picks up here. The manual "Examples:" block above is
+% left OPEN and is closed there with "\hfill$\square$\par\medskip".

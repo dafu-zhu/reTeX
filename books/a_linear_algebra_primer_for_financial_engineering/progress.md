@@ -70,13 +70,13 @@ offset.
 
 ## Chapter 4 — Eigenvalues and eigenvectors (PDF 127–154)
 
-- [ ] 4.1 Definitions and properties
-- [ ] 4.2 Diagonal forms
-- [ ] 4.3 Diagonally dominant matrices
-- [ ] 4.4 Numerical computation of eigenvalues
-- [ ] 4.5 Eigenvalues and eigenvectors of tridiagonal symmetric matrices
-- [ ] 4.6 References
-- [ ] 4.7 Exercises
+- [x] 4.1 Definitions and properties
+- [x] 4.2 Diagonal forms
+- [x] 4.3 Diagonally dominant matrices
+- [x] 4.4 Numerical computation of eigenvalues
+- [x] 4.5 Eigenvalues and eigenvectors of tridiagonal symmetric matrices
+- [x] 4.6 References
+- [x] 4.7 Exercises
 
 ## Chapter 5 — Symmetric matrices and symmetric positive definite matrices (PDF 155–176)
 

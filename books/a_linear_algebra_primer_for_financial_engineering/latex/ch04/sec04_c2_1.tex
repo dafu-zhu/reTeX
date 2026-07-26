@@ -1,0 +1,150 @@
+% PAGES: 134-135
+% Continues Chapter 4, section 4.1 "Definitions and properties" after the
+% c1 agent's assignment (pages 127-133). Page 134 (folio 118) opens with a
+% fresh "Example:" (the Jordan block matrix, footnoted "A matrix of the
+% form (4.9) is called a Jordan block."). This is a new, self-contained
+% example -- NOT a continuation of the "Examples:" (plural) block c1 was
+% transcribing (matrices A and B revisited via characteristic polynomials),
+% which c1's own sec04_c1_2.tex notes closes within c1's page range with a
+% manual "\hfill$\square$\par\medskip" after the matrix-B case analysis.
+% No environment is left open across the c1/c2 boundary; nothing needed to
+% be closed here.
+%
+% The source prints this example as two separate italic run-in labels,
+% "Example:" (statement -- no closing mark) immediately followed by
+% "Answer:" (solution -- closes with a small square). Since \examplex
+% (preamble.tex) always appends a closing square at \end{examplex}, and no
+% square appears after the "Example:" statement on the page, the
+% "Example:" label is written out manually here (the same convention c1
+% used for the plural "Examples:" label in sec04_c1_2.tex) instead of
+% \begin{examplex}. The \answerx environment (preamble.tex) is used for
+% "Answer:"; \answerx does NOT auto-append a closing square, so one is
+% added manually just before \end{answerx}, matching the square printed on
+% the page. This is unrelated to the \begin{proof} auto-qed rule, which
+% applies only to the amsthm "proof" environment.
+
+\par\medskip\noindent\textit{Example:}\ The $n \times n$ matrix\footnote{A matrix of
+the form (4.9) is called a Jordan block.}
+\begin{equation}
+A \;=\; \begin{pmatrix}
+d & 1 & 0 & \dots & 0\\
+0 & d & 1 & \ddots & \vdots\\
+\vdots & \ddots & \ddots & \ddots & 0\\
+\vdots & \ddots & \ddots & \ddots & 1\\
+0 & \dots & \dots & 0 & d
+\end{pmatrix}
+\end{equation}
+has eigenvalue $d$ of multiplicity $n$, and $\begin{pmatrix}1\\0\\\vdots\\0\end{pmatrix}$
+is the only eigenvector corresponding to $d$.
+
+\begin{answerx}
+From (4.8) and (10.5), it follows that the characteristic polynomial of the upper
+triangular matrix $A$ is
+\[
+P_A(t) \;=\; \det(tI-A) \;=\; (t-d)^n.
+\]
+Thus, the polynomial $P_A(t)$ has root $d$ with multiplicity $n$, and we conclude that
+the matrix $A$ has eigenvalue $d$ with multiplicity $n$.
+
+Let $v = (v_i)_{i=1:n}$ be an eigenvector of the matrix $A$ corresponding to the
+eigenvalue $d$. Then, $Av = dv$, i.e.,
+\[
+\begin{cases}
+dv_i + v_{i+1} \;=\; dv_i, & \forall\, i = 1:(n-1);\\
+v_n \;=\; 0
+\end{cases}
+\]
+\[
+\Longleftrightarrow\quad
+\begin{cases}
+v_{i+1} \;=\; 0, & \forall\, i = 1:(n-1);\\
+v_n \;=\; 0
+\end{cases}
+\]
+Thus, $v = \begin{pmatrix}v_1\\0\\\vdots\\0\end{pmatrix} =
+v_1\begin{pmatrix}1\\0\\\vdots\\0\end{pmatrix}$, and we conclude that
+$\begin{pmatrix}1\\0\\\vdots\\0\end{pmatrix}$ is the only eigenvector corresponding to
+the eigenvalue $d$ of the matrix $A$. \hfill$\square$
+\end{answerx}
+
+The number of eigenvectors of a matrix is, by definition, equal to the number of
+linearly independent eigenvectors of the matrix. It is important to note that
+eigenvectors corresponding to different eigenvalues are linearly independent; see
+Lemma 4.2 below:
+
+\begin{lemma}
+The eigenvectors corresponding to different eigenvalues of a matrix are linearly
+independent.
+\end{lemma}
+
+\begin{proof}
+We give a proof by contradiction. Let $A$ be a square matrix of size $n$, and assume
+that there exist eigenvectors of $A$, each one corresponding to a different eigenvalue
+of $A$, which are not linearly independent. Since the matrix $A$ has a finite number
+(not larger than $n$) of different eigenvalues, there must exist a \emph{minimal}
+number of linearly dependent eigenvectors of $A$ with each vector corresponding to a
+different eigenvalue. Denote this minimal number by $p$.
+
+Let $v_1, v_2, \dots, v_p$ be $p$ linearly dependent eigenvectors of $A$ corresponding
+to $p$ distinct eigenvalues of $A$ denoted be $\lambda_1, \lambda_2, \dots, \lambda_p$,
+i.e., such that
+\begin{equation}
+c_1 v_1 \;+\; c_2 v_2 \;+\; \dots \;+\; c_p v_p \;=\; 0,
+\end{equation}
+with $c_1, c_2, \dots, c_p$ constants such that $c_i \neq 0$, for all $i = 1:p$. By
+multiplying (4.10) by the matrix $A$ to the left, we obtain that
+\begin{equation}
+c_1 A v_1 \;+\; c_2 A v_2 \;+\; \dots \;+\; c_p A v_p \;=\; 0.
+\end{equation}
+Note that
+\begin{equation}
+A v_i \;=\; \lambda_i v_i, \quad \forall\, i = 1:p,
+\end{equation}
+since $v_i$ is an eigenvector corresponding to the eigenvalue $\lambda_i$ of $A$.
+
+From (4.11) and (4.12), it follows that
+\begin{equation}
+c_1 \lambda_1 v_1 \;+\; c_2 \lambda_2 v_2 \;+\; \dots \;+\; c_p \lambda_p v_p \;=\; 0.
+\end{equation}
+
+By multiplying (4.10) by $\lambda_1$, we find that
+\begin{equation}
+c_1 \lambda_1 v_1 \;+\; c_2 \lambda_1 v_2 \;+\; \dots \;+\; c_p \lambda_1 v_p \;=\; 0,
+\end{equation}
+and, by subtracting (4.14) from (4.13), we obtain that
+\begin{equation}
+c_2(\lambda_2-\lambda_1) v_2 \;+\; \dots \;+\; c_p(\lambda_p-\lambda_1) v_p \;=\; 0.
+\end{equation}
+
+The coefficients of the vectors $v_2, \dots, v_p$ from (4.15) are nonzero, since
+$c_i \neq 0$, for all $i = 2:p$, and $\lambda_i \neq \lambda_1$, for all $i = 2:p$,
+since the eigenvalues $\lambda_1, \lambda_2, \dots, \lambda_p$ are distinct.
+
+Thus, we found $p-1$ eigenvectors of the matrix $A$, i.e., $v_2, \dots, v_p$, each one
+corresponding to a different eigenvalue of $A$, which are linearly dependent. This
+contradicts the fact that $p$ denotes the \emph{minimal number} of linearly dependent
+eigenvectors of $A$.
+
+We conclude that eigenvectors corresponding to different eigenvalues of a matrix must
+be linearly independent.
+\end{proof}
+
+\par\medskip\noindent\textit{Summary: General properties of eigenvalues and
+eigenvectors}\par\medskip
+
+\begin{itemize}
+\item A square matrix of size $n$ has exactly $n$ eigenvalues (possibly complex
+numbers), if the eigenvalues are counted with their multiplicities.
+
+\item A square matrix of size $n$ has at most $n$ linearly independent eigenvectors,
+but may have less than $n$ linearly independent eigenvectors.
+
+\item There is at least one eigenvector and there are at most $m_\lambda$ linearly
+independent eigenvectors (and possibly fewer) corresponding to an eigenvalue $\lambda$
+with multiplicity $m_\lambda$.
+\end{itemize}
+
+Note that, while the eigenvalues of a matrix with real entries may be complex numbers,
+all the eigenvalues of a symmetric matrix with real entries are real numbers.
+Moreover, symmetric matrices have a full set of eigenvectors; see section 5.1 for
+details.

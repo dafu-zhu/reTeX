@@ -1,0 +1,156 @@
+% PAGES: 129-130
+
+% Continuation of sec04_c1_1.tex (page 128 / folio 112): the \item below
+% ("If lambda = -2, then (4.2) and (4.4)...") and the enclosing
+% \begin{examplex} are the ones opened in that file. Do not reopen either.
+We conclude that the eigenvalue $\lambda = -2$ has two linearly independent
+eigenvectors, $\begin{pmatrix}1\\0\\2\end{pmatrix}$, and
+$\begin{pmatrix}0\\1\\0\end{pmatrix}$.
+\item If $\lambda = 1$, then (4.2) and (4.4) are both equivalent to $v_3 = 3v_1$, and
+(4.3) is equivalent to $v_2 = -0.5v_1$. Thus, any eigenvector corresponding to
+$\lambda = 1$ is of the form
+\[
+\begin{pmatrix}v_1\\ -0.5v_1\\ 3v_1\end{pmatrix} \;=\; 0.5v_1\begin{pmatrix}2\\-1\\6\end{pmatrix},
+\]
+and we conclude that the eigenvalue $\lambda = 1$ has one eigenvector, e.g.,
+$\begin{pmatrix}2\\-1\\6\end{pmatrix}$.
+\end{itemize}
+
+(ii) Similarly, it can be shown that the matrix
+\[
+B \;=\; \begin{pmatrix} 2 & 2 & -1\\ -7 & -4 & 2.5\\ 2 & 4 & -1\end{pmatrix}
+\]
+has eigenvalues $1$ and $-2$, and has only one linearly independent eigenvector
+corresponding to each eigenvalue, e.g., the eigenvector
+$\begin{pmatrix}1\\-1\\2\end{pmatrix}$ corresponding to $-2$ and the eigenvector
+$\begin{pmatrix}0\\1\\2\end{pmatrix}$ corresponding to $1$.
+\end{examplex}
+
+\begin{definition}
+Let $A$ be a square matrix of size $n$. The characteristic polynomial $P_A(t)$ of the
+matrix $A$ is the polynomial of degree $n$ given by
+\begin{equation}
+P_A(t) \;=\; \det(tI-A),
+\end{equation}
+where $I$ is the identity matrix of size $n$.
+\end{definition}
+
+\begin{theorem}
+If $A$ is a square matrix, then $\lambda$ is an eigenvalue of $A$ if and only if
+$\lambda$ is a root of the characteristic polynomial $P_A(t)$ of $A$. i.e., if and only
+if
+\[
+\det(\lambda I - A) \;=\; 0.
+\]
+\end{theorem}
+
+\begin{proof}
+If $\lambda$ is an eigenvalue of $A$ with $v \neq 0$ a corresponding eigenvector, then
+$Av = \lambda v$, which can be written as $(\lambda I - A)v = 0$. From (1.78) and
+(1.81), it follows that
+\begin{align*}
+Av = \lambda v &\iff (\lambda I - A)v = 0 \iff v \in \Null(\lambda I - A)\\
+&\iff \Null(\lambda I - A) \neq \{0\} \iff \lambda I - A \ \text{singular matrix}\\
+&\iff \det(\lambda I - A) = 0.
+\end{align*}
+We conclude that $\lambda$ is an eigenvalue of $A$ if and only if
+$P_A(\lambda) = \det(\lambda I - A) = 0$.
+\end{proof}
+
+The result below is a direct consequence of Theorem 4.1:
+
+\begin{lemma}
+Let $A$ be a square matrix of size $n$ and let $\lambda_i$, $i = 1:n$, be the
+eigenvalues of $A$. The characteristic polynomial $P_A(t) = \det(tI-A)$ of $A$ can be
+written as
+\begin{equation}
+P_A(t) \;=\; \prod_{i=1}^n (t-\lambda_i).
+\end{equation}
+\end{lemma}
+
+% The "Examples:" (plural) discussion below revisits the two examples from the
+% start of section 4.1 using characteristic polynomials. The source labels it
+% "Examples:" (not "Example:"), so it is written out manually rather than via
+% the \examplex environment (whose hard-coded label is singular) -- see the
+% same convention used in ch02/sec02_c4_2.tex. This block is NOT closed in
+% this file: it continues into sec04_c1_3.tex (page 131 / folio 115) and is
+% closed there with a manual "\hfill$\square$\par\medskip" once part (ii)
+% (matrix $B$) concludes. sec04_c1_3.tex must not print a second
+% "Examples:" label for this block.
+\par\medskip\noindent\textit{Examples:}\ We revisit the examples from the beginning of
+this section, and identify the eigenvalues of the matrices by using characteristic
+polynomials.
+
+(i) Let
+\[
+A \;=\; \begin{pmatrix} -8 & 0 & 3\\ 3 & -2 & -1.5\\ -18 & 0 & 7\end{pmatrix}.
+\]
+Using formula (10.8) for computing the determinant of a $3 \times 3$ matrix, we find
+that the characteristic polynomial of $A$ is
+\begin{align*}
+P_A(t) \;=\; \det(tI-A) \;=\;
+\begin{vmatrix} t+8 & 0 & -3\\ -3 & t+2 & 1.5\\ 18 & 0 & t-7\end{vmatrix}
+&\;=\; (t+8)(t+2)(t-7) - (-3)(t+2)(18) \;=\; (t+2)(t^2+t-2)\\
+&\;=\; (t+2)^2(t-1).
+\end{align*}
+
+The roots of $P_A(t)$ are $\lambda_1 = \lambda_2 = -2$ and $\lambda_3 = 1$. We identify
+the eigenvectors corresponding to each eigenvalue separately:
+
+\begin{itemize}
+\item If $\lambda = -2$, any corresponding eigenvector $v \neq 0$ is a solution to
+$Av = -2v$, which can be written as
+\[
+\begin{cases}
+-8v_1+3v_3 = -2v_1\\
+3v_1-2v_2-1.5v_3 = -2v_2\\
+-18v_1+7v_3 = -2v_3
+\end{cases}
+\quad\Longleftrightarrow\quad
+\begin{cases}
+v_3 = 2v_1\\
+v_3 = 2v_1\\
+v_3 = 2v_1
+\end{cases}
+\]
+Thus, any eigenvector corresponding to the eigenvalue $\lambda = -2$ is of the form
+\[
+v \;=\; \begin{pmatrix}v_1\\ v_2\\ 2v_1\end{pmatrix} \;=\;
+v_1\begin{pmatrix}1\\0\\2\end{pmatrix} + v_2\begin{pmatrix}0\\1\\0\end{pmatrix},
+\]
+and we conclude that the eigenvalue $\lambda = -2$ has two linearly independent
+eigenvectors, e.g., $\begin{pmatrix}1\\0\\2\end{pmatrix}$ and
+$\begin{pmatrix}0\\1\\0\end{pmatrix}$.
+\item If $\lambda = 1$, any corresponding eigenvector $v \neq 0$ is a solution to
+$Av = v$, which can be written as
+\[
+\begin{cases}
+-8v_1+3v_3 = v_1\\
+3v_1-2v_2-1.5v_3 = v_2\\
+-18v_1+7v_3 = v_3
+\end{cases}
+\quad\Longleftrightarrow\quad
+\begin{cases}
+v_3 = 3v_1\\
+3v_2 = 3v_1 - 1.5v_3\\
+v_3 = 3v_1
+\end{cases}
+\]
+\[
+\Longleftrightarrow\quad
+\begin{cases}
+v_3 = 3v_1\\
+v_2 = -0.5v_1\\
+v_3 = 3v_1
+\end{cases}
+\]
+% All display math above is complete (no \[ or \begin{cases} left open).
+% CONTINUES in sec04_c1_3.tex (page 131 / folio 115): this \item, the
+% enclosing \begin{itemize} (case analysis for matrix A revisited via the
+% characteristic polynomial), and the manual "Examples:" block opened above
+% are all left OPEN at the end of this file. sec04_c1_3.tex picks up
+% directly with the conclusion of the lambda = 1 case for matrix A ("Thus,
+% any eigenvector corresponding to the eigenvalue lambda = 1 is of the
+% form..."), then closes this \itemize, gives part (ii) (matrix B), and
+% closes the manual "Examples:" block with "\hfill$\square$\par\medskip"
+% once matrix B's case analysis concludes (page 132 / folio 116).
