@@ -9,6 +9,11 @@
 # is the repo-root progress.md.
 #
 # Imports into the working tree without staging. Caller commits.
+#
+# If the import fails partway through, any books/<name>/ directory created
+# by this run is removed automatically so the command can simply be
+# retried. A books/<name>/ that already existed before this run is never
+# touched, even on failure.
 
 set -euo pipefail
 
@@ -20,6 +25,18 @@ SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 ROOT="$SCRIPT_DIR/.."
 DEST="$ROOT/books/$NAME"
 
+CREATED_DEST=0
+
+cleanup() {
+    local status=$?
+    if [ "$status" -ne 0 ] && [ "$CREATED_DEST" = "1" ] && [ -e "$DEST" ]; then
+        rm -rf "$DEST"
+        echo "Removed partial import at $DEST — fix the issue above and retry the command." >&2
+    fi
+    exit "$status"
+}
+trap cleanup EXIT
+
 if ! git -C "$ROOT" rev-parse --verify "$BRANCH" >/dev/null 2>&1; then
     echo "Error: branch $BRANCH not found" >&2
     exit 1
@@ -30,6 +47,7 @@ if [ -e "$DEST" ]; then
     exit 1
 fi
 
+CREATED_DEST=1
 mkdir -p "$DEST/latex"
 
 # Book content
