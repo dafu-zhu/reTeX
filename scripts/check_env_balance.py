@@ -33,6 +33,15 @@ import re
 import sys
 
 BEGIN_END = re.compile(r"\\(begin|end)\{(\w+\*?)\}")
+# One scanner for both environments and display-math delimiters, so their
+# relative order is preserved across the whole chapter.
+#
+# The display-math alternatives use a negative lookbehind for a backslash.
+# Without it, LaTeX's line-break-with-spacing form `\\[0.5em]` matches as an
+# opening `\[` — its second backslash and bracket are adjacent — and this
+# book's title pages and matrix displays use that form constantly, so every
+# chapter reported phantom unclosed display math.
+TOKEN = re.compile(r"\\(begin|end)\{(\w+\*?)\}|(?<!\\)\\\[|(?<!\\)\\\]")
 PAGES = re.compile(r"% PAGES:\s*(\d+)")
 
 
@@ -57,11 +66,33 @@ def check_chapter(ch_dir):
 
     stack = []
     violations = []
+    # Display-math delimiters are tracked separately from \begin/\end: a chunk
+    # can end mid-display with an open \[ for the next file to close, and that
+    # is invisible to environment tracking. Observed live at the ch06 c1/c2
+    # boundary, where it was caught only by hand.
+    display_depth = 0
+    display_owner = None
+
     for _, name, text in rows:
         body = "\n".join(
             l for l in text.split("\n") if not l.lstrip().startswith("%")
         )
-        for m in BEGIN_END.finditer(body):
+        for m in TOKEN.finditer(body):
+            tok = m.group(0)
+            if tok == r"\[":
+                display_depth += 1
+                if display_depth == 1:
+                    display_owner = name
+                continue
+            if tok == r"\]":
+                display_depth -= 1
+                if display_depth < 0:
+                    violations.append(
+                        f"{ch_dir.name}/{name}: \\] with no matching \\[ "
+                        f"in this chapter"
+                    )
+                    display_depth = 0
+                continue
             kind, env = m.group(1), m.group(2)
             if kind == "begin":
                 stack.append((env, name))
@@ -78,6 +109,11 @@ def check_chapter(ch_dir):
         violations.append(
             f"{ch_dir.name}/{name}: \\begin{{{env}}} is never closed by any "
             f"later section file in this chapter"
+        )
+    if display_depth:
+        violations.append(
+            f"{ch_dir.name}/{display_owner}: \\[ display math is never closed "
+            f"by any later section file in this chapter ({display_depth} open)"
         )
     return violations, rows
 
