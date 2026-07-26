@@ -90,15 +90,15 @@ offset.
 
 ## Chapter 6 — Cholesky decomposition. Efficient cubic spline interpolation. (PDF 177–208)
 
-- [ ] 6.1 Cholesky decomposition
-- [ ] 6.1.1 Pseudocode and operation count for Cholesky decomposition
-- [ ] 6.2 Linear solvers for symmetric positive definite matrices
-- [ ] 6.2.1 Solving linear systems corresponding to the same spd matrix
-- [ ] 6.3 Optimal linear solvers for tridiagonal spd matrices
-- [ ] 6.4 Efficient implementation of the cubic spline interpolation
-- [ ] 6.4.1 Efficient cubic spline interpolation for zero rate curves
-- [ ] 6.5 References
-- [ ] 6.6 Exercises
+- [x] 6.1 Cholesky decomposition
+- [x] 6.1.1 Pseudocode and operation count for Cholesky decomposition
+- [x] 6.2 Linear solvers for symmetric positive definite matrices
+- [x] 6.2.1 Solving linear systems corresponding to the same spd matrix
+- [x] 6.3 Optimal linear solvers for tridiagonal spd matrices
+- [x] 6.4 Efficient implementation of the cubic spline interpolation
+- [x] 6.4.1 Efficient cubic spline interpolation for zero rate curves
+- [x] 6.5 References
+- [x] 6.6 Exercises
 
 ## Chapter 7 — Covariance matrices. Multivariate normals. (PDF 209–242)
 

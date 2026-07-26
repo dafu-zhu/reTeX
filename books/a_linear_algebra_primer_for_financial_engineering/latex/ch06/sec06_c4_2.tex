@@ -1,0 +1,212 @@
+% PAGES: 204-207
+% Continues after sec06_c4_1.tex (PDF pages 201-203), which ended section
+% 6.5 "References" cleanly with no environment left open. PDF page 204
+% (folio 188) opens fresh with the "6.6 Exercises" section heading at the
+% top of the page.
+%
+% This is the whole of Chapter 6's exercise list (items 1-13, PDF pages
+% 204-207 / folios 188-191), kept in a single \exercises environment so the
+% shared enumerate counter is never reset mid-list. PDF page 207 (folio
+% 191) ends with the note to exercise 13; the remainder of that page is
+% blank. PDF page 208 (folio 192) was rendered and inspected directly and
+% contains no printed text at all (genuinely blank), confirming the end of
+% Chapter 6. No environment is left open at the end of this file, and
+% nothing further follows in this chapter.
+
+\section{Exercises}
+
+\begin{exercises}
+
+\item Let
+\[
+A \;=\; \begin{pmatrix} 2 & -2 \\ -2 & 5 \end{pmatrix}.
+\]
+\begin{subparts}
+\item Find a $2 \times 2$ matrix $M$ such that $A = M^2$;
+\item Find a $2 \times 2$ matrix $M$ such that $A = MM\tp$.
+\end{subparts}
+
+\item Let $A = \begin{pmatrix} 41 & 12 \\ 12 & 34 \end{pmatrix}$.
+\begin{subparts}
+\item Show that the matrix $A$ is symmetric positive definite.
+\item Find a $2 \times 2$ matrix $B$ such that $A = B^2$.
+\item Find a $2 \times 2$ upper triangular matrix $U$ such that $A = U\tp U$.
+\end{subparts}
+
+\item Let $A = \begin{pmatrix} 1 & -0.2 & 0.8 \\ -0.2 & 2 & 0.3 \\ 0.8 & 0.3 & 1.1
+\end{pmatrix}$.
+\begin{subparts}
+\item Show that the matrix $A$ is weakly diagonally dominated, and therefore symmetric
+positive semidefinite.
+\item Use Sylvester's criterion to show that the matrix $A$ is symmetric positive
+definite.
+\end{subparts}
+
+\item Let $A$ be a symmetric positive definite matrix, and let $U$ be the Cholesky
+factor of $A$. If $V$ is an upper triangular matrix such that $A = V\tp V$, show that
+there exists a diagonal matrix $D$ whose entries on the main diagonal are either $-1$
+or $1$ such that $V = DU$.
+
+\item Let $B_N$ be the following $N \times N$ symmetric positive definite matrix:
+\begin{equation}
+B_N \;=\;
+\begin{pmatrix}
+2 & -1 & \dots & 0 \\
+-1 & \ddots & \ddots & \vdots \\
+\vdots & \ddots & \ddots & -1 \\
+0 & \dots & -1 & 2
+\end{pmatrix}.
+\end{equation}
+
+Let $C_N$ be an $N \times (N+1)$ matrix with
+\begin{align*}
+C_N(i,i) &= 1, \quad \forall\, i = 1:N; \\
+C_N(i,i+1) &= -1, \quad \forall\, i = 1:N,
+\end{align*}
+and with all the other entries equal to 0.
+
+Show that $B_N = C_N C_N\tp$. Why is this not the Cholesky decomposition of the matrix
+$B_N$?
+
+\item Let $B_N$ be the $N \times N$ tridiagonal symmetric positive definite matrix
+given by (6.88). Show that the Cholesky factor $U_N$ of the matrix $B_N$ is the upper
+triangular bidiagonal matrix given by
+\begin{equation}
+U_N(i,i) \;=\; \sqrt{\frac{i+1}{i}}, \quad \forall\, i = 1:N;
+\end{equation}
+\begin{equation}
+U_N(i,i+1) \;=\; -\sqrt{\frac{i}{i+1}}, \quad \forall\, i = 1:(N-1).
+\end{equation}
+
+\item Let $B_N$ be the $N \times N$ tridiagonal symmetric positive definite matrix
+given by (6.88), and let $U_N$ be the Cholesky factor of $B_N$ given by (6.89--6.90).
+
+\begin{subparts}
+\item Show that the solution to a linear system $B_N x = b$, where $b$ and $x$ are
+$N \times 1$ column vectors can be obtained by using the explicit pseudocode below:
+
+\begin{center}
+\fbox{%
+\begin{minipage}{0.85\linewidth}
+Function Call: \\
+$x = \text{linear\_solve\_cholesky\_B\_N}(b)$
+\\[0.8em]
+Input: \\
+$b = N \times 1$ column vector
+\\[0.8em]
+Output: \\
+$x =$ solution to $B_N x = b$
+\\[0.8em]
+$y(1) = \dfrac{b(1)}{\sqrt{2}}$ \\
+for $i = 2:N$ \\
+\hspace*{1.5em}$y(i) = \dfrac{b(i) + y(i-1)\sqrt{(i-1)/i}}{\sqrt{(i+1)/i}}$ \\
+end \\
+$x(N) = \dfrac{y(N)\sqrt{N}}{\sqrt{N+1}}$ \\
+for $i = (N-1):1$ \\
+\hspace*{1.5em}$x(i) = \dfrac{y(i) + x(i+1)\sqrt{i/(i+1)}}{\sqrt{(i+1)/i}}$ \\
+end
+\end{minipage}%
+}
+\end{center}
+
+\item What is the operation count for the pseudocode above, and how does it compare to
+$8n + O(1)$, the operation count for the optimal linear solver for tridiagonal
+symmetric positive definite matrices?
+\end{subparts}
+
+\item Let $B_N$ be the $N \times N$ tridiagonal symmetric positive definite matrix
+given by (6.88). Show that the LU factors $L$ and $U$ of the matrix $B_N$ are the
+lower triangular bidiagonal matrix and the upper triangular bidiagonal matrix given by
+\begin{equation}
+L(i,i) = 1, \quad \forall\, i = 1:N; \quad L(i+1,i) = -\frac{i}{i+1}, \quad \forall\, i
+= 1:(N-1);
+\end{equation}
+\begin{equation}
+U(i,i) = \frac{i+1}{i}, \quad \forall\, i = 1:N; \quad U(i,i+1) = -1, \quad \forall\, i
+= 1:(N-1).
+\end{equation}
+
+\item Let $B_N$ be the $N \times N$ tridiagonal symmetric positive definite matrix
+given by (6.88), and let $L$ and $U$ be the LU factors of $B_N$ given by (6.91--6.92).
+
+\begin{subparts}
+\item Show that the solution to a linear system $B_N x = b$, where $b$ and $x$ are
+$N \times 1$ column vectors can be obtained by using the explicit pseudocode below:
+
+\begin{center}
+\fbox{%
+\begin{minipage}{0.85\linewidth}
+Function Call: \\
+$x = \text{linear\_solve\_lu\_B\_N}(b)$
+\\[0.8em]
+Input: \\
+$b = N \times 1$ column vector
+\\[0.8em]
+Output: \\
+$x =$ solution to $B_N x = b$
+\\[0.8em]
+$y(1) = b(1)$ \\
+for $i = 2:N$ \\
+\hspace*{1.5em}$y(i) = b(i) + \dfrac{(i-1)y(i-1)}{i}$ \\
+end \\
+$x(N) = \dfrac{Ny(N)}{N+1}$ \\
+for $i = (N-1):1$ \\
+\hspace*{1.5em}$x(i) = \dfrac{i(y(i)+x(i+1))}{i+1}$ \\
+end
+\end{minipage}%
+}
+\end{center}
+
+\item What is the operation count for the pseudocode above, and how does it compare to
+$8n + O(1)$, the operation count for the optimal linear solver for tridiagonal
+symmetric positive definite matrices?
+\end{subparts}
+
+\item Write an explicit optimal pseudocode for solving linear systems corresponding to
+the same tridiagonal symmetric positive definite matrix. In other words, write a
+pseudocode for solving $p$ linear systems $Ax_i = b_i$, for $i = 1:p$, where $A$ is an
+$n \times n$ tridiagonal symmetric positive definite matrix, by using the explicit
+solver linear\_solve\_LU\_tridiag\_spd from Table 6.6 and the method from Table 6.3.
+What is the operation count for solving the $p$ linear systems?
+
+\item Write the pseudocode for the Cholesky decomposition of symmetric positive
+definite banded matrices of band $m$. What is the corresponding operation count?
+
+\noindent Hint: Use (without proving) the fact that the Cholesky factor of a symmetric
+positive definite banded matrix of band $m$ is a banded upper triangular matrix of band
+$m$.
+
+\item What is the operation count for solving a linear system corresponding to a
+symmetric positive definite banded matrix of band $m$ using a Cholesky linear solver?
+
+\item The following discount factors were obtained from market data:
+\begin{center}
+\begin{tabular}{cc}
+Date & Discount Factor \\[0.4em]
+2 months & 0.9980 \\
+5 months & 0.9935 \\
+11 months & 0.9820 \\
+15 months & 0.9775
+\end{tabular}
+\end{center}
+
+The overnight rate is $0.75\%$.
+
+\begin{subparts}
+\item What are the corresponding 2 months, 5 months, 11 months and 15 months zero
+rates?
+\item What is the tridiagonal system that must be solved in the efficient
+implementation of the natural cubic spline interpolation for finding the zero rate
+curve for all times less than 15 months?
+\item Use the efficient implementation of the natural cubic spline interpolation to
+find a zero rate curve for all times less than 15 months matching the discount factors
+above.
+\item Find the value of a 14 months quarterly coupon bond with $2.5\%$ coupon rate.
+\end{subparts}
+
+\noindent Note: A quarterly coupon bond with face value \$100, coupon rate $C$, and
+maturity $T$ pays the holder of the bond a coupon payment equal to $\frac{C}{4} \cdot
+100$ every three months, except at maturity. The final payment at maturity $T$ is equal
+to the face value of the bond plus one coupon payment, i.e., $100 + \frac{C}{4}100$.
+
+\end{exercises}

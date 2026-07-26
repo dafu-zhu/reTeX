@@ -1,0 +1,121 @@
+% PAGES: 209-210
+
+\chapter{Covariance and correlation matrices. Linear Transformation Property. Multivariate normal random variables.}
+
+\noindent Covariance and correlation matrices. Positive definiteness of covariance and correlation matrices.
+\medskip
+
+\noindent Covariance and correlation matrix estimation from time series data.
+\medskip
+
+\noindent Linear Transformation Property.
+\medskip
+
+\noindent Necessary and sufficient conditions for covariance and correlation matrices.
+\medskip
+
+\noindent Finding normal random variables with a given covariance or correlation matrix.
+\medskip
+
+\noindent Monte Carlo simulation for basket option pricing.
+\medskip
+
+\noindent Multivariate normal random variables.
+\medskip
+
+\noindent Multivariate random variables formulation for covariance and correlation matrices.
+\medskip
+
+\section{Covariance and correlation matrices}
+
+Let $X_1, X_2, \ldots, X_n$ be $n$ nonconstant random variables on the same probability
+space. Denote by $\mu_i$ and $\sigma_i \neq 0$ the mean and the standard deviation of
+$X_i$, respectively, for $i = 1:n$. The variance of $X_i$ is
+\[
+\sigma_i^2 \;=\; \var(X_i) \;=\; \E{(X_i-\mu_i)^2}, \quad \forall\, i = 1:n.
+\]
+
+The covariance and the correlation of the random variables $X_j$ and $X_k$ are
+\begin{align}
+\cov(X_j,X_k) &= \E{(X_j-\mu_j)(X_k-\mu_k)}, \quad \forall\, 1\le j,k\le n; \\
+\corr(X_j,X_k) &= \frac{\cov(X_j,X_k)}{\sigma_j\sigma_k}, \quad \forall\, 1\le j,k\le n.
+\end{align}
+
+Note that
+\begin{align}
+\cov(X_i,X_i) &= \var(X_i), \quad \forall\, 1\le i\le n; \\
+\cov(X_j,X_k) &= \cov(X_k,X_j), \quad \forall\, 1\le j,k\le n;
+\end{align}
+
+\begin{align}
+\corr(X_i,X_i) &= 1, \quad \forall\, 1\le i\le n; \\
+\corr(X_j,X_k) &= \corr(X_k,X_j), \quad \forall\, 1\le j,k\le n;
+\end{align}
+\begin{equation}
+-1 \;\le\; \corr(X_j,X_k) \;\le\; 1, \quad \forall\, 1\le j,k\le n.
+\end{equation}
+For a proof of (7.7), see an exercise at the end of this chapter.
+
+\begin{definition}
+The covariance matrix $\Sigma_{\bfX}$ of the random variables $X_1, X_2, \ldots, X_n$
+is the $n \times n$ matrix given by
+\[
+\Sigma_{\bfX}(j,k) \;=\; \cov(X_j,X_k), \quad \forall\, 1\le j,k\le n,
+\]
+where $\cov(X_j,X_k)$ denotes the covariance of the random variables $X_j$ and $X_k$.
+\end{definition}
+
+The covariance matrix $\Sigma_{\bfX}$ is symmetric, since
+\begin{equation}
+\Sigma_{\bfX}(j,k) \;=\; \cov(X_j,X_k) \;=\; \cov(X_k,X_j) \;=\; \Sigma_{\bfX}(k,j), \quad \forall\, 1\le j,k\le n;
+\end{equation}
+cf. (7.4). Also,
+\begin{equation}
+\Sigma_{\bfX}(i,i) \;=\; \var(X_i), \quad \forall\, i = 1:n,
+\end{equation}
+since $\cov(X_i,X_i) = \var(X_i)$ for all $i = 1:n$; cf. (7.3).
+
+\begin{definition}
+The correlation matrix $\Omega_{\bfX}$ of the random variables $X_1, X_2, \ldots,
+X_n$ is the $n \times n$ matrix given by
+\[
+\Omega_{\bfX}(j,k) \;=\; \corr(X_j,X_k), \quad \forall\, 1\le j,k\le n,
+\]
+where $\corr(X_j,X_k)$ denotes the correlation between the random variables $X_j$ and
+$X_k$.
+\end{definition}
+
+The correlation matrix $\Omega_{\bfX}$ is symmetric, since
+\begin{equation}
+\Omega_{\bfX}(j,k) \;=\; \corr(X_j,X_k) \;=\; \corr(X_k,X_j) \;=\; \Omega_{\bfX}(k,j), \quad \forall\, 1\le j,k\le n;
+\end{equation}
+cf. (7.6). Also,
+\begin{equation}
+\Omega_{\bfX}(i,i) \;=\; 1, \quad \forall\, i = 1:n,
+\end{equation}
+since $\corr(X_i,X_i) = 1$ for all $i = 1:n$; cf. (7.5).
+
+For example, the covariance matrix and the correlation matrix of two random variables
+$X_1$ and $X_2$ with mean and standard deviation $\mu_1, \sigma_1$, and $\mu_2,
+\sigma_2$, respectively, and with correlation $\rho_{1,2}$, are
+\begin{align}
+\Sigma_{\bfX} &= \begin{pmatrix} \sigma_1^2 & \sigma_1\sigma_2\rho_{1,2} \\ \sigma_1\sigma_2\rho_{1,2} & \sigma_2^2 \end{pmatrix}; \\
+\Omega_{\bfX} &= \begin{pmatrix} 1 & \rho_{1,2} \\ \rho_{1,2} & 1 \end{pmatrix}.
+\end{align}
+
+The covariance matrix and the correlation matrix of three random variables $X_1$,
+$X_2$, $X_3$ with mean and variance $\mu_1, \sigma_1$; $\mu_2, \sigma_2$; and $\mu_3,
+\sigma_3$, respectively, and with correlations $\corr(X_1,X_2) = \rho_{1,2}$,
+$\corr(X_1,X_3) = \rho_{1,3}$, and $\corr(X_2,X_3) = \rho_{2,3}$ are
+\begin{align}
+\Sigma_{\bfX} &= \begin{pmatrix}
+\sigma_1^2 & \sigma_1\sigma_2\rho_{1,2} & \sigma_1\sigma_3\rho_{1,3} \\
+\sigma_1\sigma_2\rho_{1,2} & \sigma_2^2 & \sigma_2\sigma_3\rho_{2,3} \\
+\sigma_1\sigma_3\rho_{1,3} & \sigma_2\sigma_3\rho_{2,3} & \sigma_3^2
+\end{pmatrix}; \\
+\Omega_{\bfX} &= \begin{pmatrix}
+1 & \rho_{1,2} & \rho_{1,3} \\
+\rho_{1,2} & 1 & \rho_{2,3} \\
+\rho_{1,3} & \rho_{2,3} & 1
+\end{pmatrix}.
+\end{align}

@@ -1,0 +1,121 @@
+% PAGES: 197-198
+% Continues directly after sec06_c3_2.tex (folio 180), which ends cleanly
+% after equation (6.55) with no environment open.
+
+\begin{table}[H]
+\centering
+\caption{Explicit tridiagonal spd linear solver with LU decomposition}
+\fbox{\begin{minipage}{0.85\linewidth}
+\textbf{Function Call:}\\
+$x = \text{linear\_solve\_LU\_tridiag\_spd}(A,b)$
+\bigskip
+
+\textbf{Input:}\\
+$A = $ tridiagonal symmetric positive definite matrix of size $n$\\
+$b = $ column vector of size $n$
+\bigskip
+
+\textbf{Output:}\\
+$x = $ solution to $Ax = b$
+\bigskip
+
+\noindent
+for $i = 1 : (n-1)$\\
+\hspace*{1.5em}$L(i,i) = 1;\ L(i+1,i) = A(i+1,i)/A(i,i);$\\
+\hspace*{1.5em}$U(i,i) = A(i,i);\ U(i,i+1) = A(i,i+1);$\\
+\hspace*{1.5em}$A(i+1,i+1) = A(i+1,i+1) - L(i+1,i)U(i,i+1);$\\
+end\\
+$L(n,n) = 1;\ U(n,n) = A(n,n);$ \hfill\textit{// LU decomposition of $A$}\\
+$x(1) = b(1);$\\
+for $j = 2 : n$\\
+\hspace*{1.5em}$x(j) = b(j) - L(j,j-1)x(j-1);$\\
+end \hfill\textit{// forward substitution for $Ly = b$}\\
+$x(n) = \dfrac{y(n)}{U(n,n)};$\\
+for $j = (n-1) : 1$\\
+\hspace*{1.5em}$x(j) = \dfrac{y(j) - U(j,j+1)x(j+1)}{U(j,j)};$\\
+end \hfill\textit{// backward substitution for $Ux = y$}
+\end{minipage}}
+\end{table}
+
+\section{Efficient implementation of the cubic spline interpolation}
+
+Recall from section 2.8 that the natural cubic spline interpolation requires finding a
+function $f : [x_0,x_n] \to \R$ such that
+\begin{enumerate}[label=(\roman*)]
+\item $f(x_i) = v_i$, for $i = 0:n$, where $x_0 < x_1 < \ldots < x_n$;
+\item $f(x)$ is a cubic polynomial on each interval $[x_{i-1},x_i]$, for $i = 1:n$;
+\item $f''(x)$ exists and is continuous on $[x_0,x_n]$;
+\item $f_1''(x_0) = f_n''(x_n) = 0$.
+\end{enumerate}
+
+In other words, the natural cubic spline interpolation requires finding a function
+$f(x)$ of the form
+\begin{equation}
+f(x) \;=\; f_i(x) \;=\; a_i + b_ix + c_ix^2 + d_ix^3, \qquad \forall\, x_{i-1} \le x \le
+x_i, \quad \forall\, i = 1:n,
+\end{equation}
+such that
+\begin{align}
+f_i(x_{i-1}) &= v_{i-1}, \qquad \forall\, i = 1:n; \\
+f_i(x_i) &= v_i, \qquad \forall\, i = 1:n; \\
+f_i'(x_i) &= f_{i+1}'(x_i), \qquad \forall\, i = 1:(n-1); \\
+f_i''(x_i) &= f_{i+1}''(x_i), \qquad \forall\, i = 1:(n-1); \\
+f_1''(x_0) &= f_n''(x_n) \;=\; 0.
+\end{align}
+
+In section 2.8, we found the unique values of $a_i, b_i, c_i, d_i$, $i = 1:n$,
+satisfying the constraints (6.57--6.61) by solving a linear system corresponding to a
+$4n \times 4n$ banded matrix of band 4, see (2.82), using an LU decomposition based
+linear solver.
+
+The efficient solution of the natural cubic spline interpolation only requires solving
+a linear system corresponding to an $(n-1) \times (n-1)$ tridiagonal symmetric
+positive definite matrix. This can be done using an LU linear solver for tridiagonal
+symmetric positive definite matrices, with a computational cost of $8n + O(1)$
+operations; see section 6.3.
+
+For every node $x_i$, denote by $w_i$ the value of the second derivative of $f$ at
+$x_i$, i.e., $f''(x_i) = w_i$, for $i = 0:n$. While it follows from (6.61) that $w_0 =
+w_n = 0$, the values of $w_i$ are not known a priori for $i = 1:n-1$. The conditions
+(6.57--6.61) are equivalent to
+\begin{align}
+f_i(x_{i-1}) &= v_{i-1}, \qquad \forall\, i = 1:n; \\
+f_i(x_i) &= v_i, \qquad \forall\, i = 1:n; \\
+f_i''(x_{i-1}) &= w_{i-1}, \qquad \forall\, i = 1:n; \\
+f_i''(x_i) &= w_i, \qquad \forall\, i = 1:n; \\
+w_0 &= w_n = 0; \\
+f_i'(x_i) &= f_{i+1}'(x_i), \qquad \forall\, i = 1:(n-1).
+\end{align}
+
+The efficient implementation of the natural cubic spline interpolation is based on
+solving for the $4n$ coefficients $a_i, b_i, c_i, d_i$, $i = 1:n$, in terms of $w_i$,
+$i = 1:(n-1)$, by using the $4n$ conditions (6.62--6.65), and then use the $n-1$
+conditions given by (6.67) to solve for the $n-1$ unknowns $w_i$, $i = 1:(n-1)$.
+
+Note that (6.62--6.65) can be written as follows:
+\begin{align}
+a_i + b_ix_{i-1} + c_ix_{i-1}^2 + d_ix_{i-1}^3 &= v_{i-1}, \qquad \forall\, i = 1:n; \\
+a_i + b_ix_i + c_ix_i^2 + d_ix_i^3 &= v_i, \qquad \forall\, i = 1:n; \\
+2c_i + 6d_ix_{i-1} &= w_{i-1}, \qquad \forall\, i = 1:n; \\
+2c_i + 6d_ix_i &= w_i, \qquad \forall\, i = 1:n.
+\end{align}
+
+From (6.70) and (6.71), we obtain that
+\begin{align}
+c_i &= \frac{w_{i-1}x_i - w_ix_{i-1}}{2(x_i-x_{i-1})}, \qquad \forall\, i = 1:n; \\
+d_i &= \frac{w_i - w_{i-1}}{6(x_i-x_{i-1})}, \qquad \forall\, i = 1:n.
+\end{align}
+
+Let
+\begin{align}
+q_{i-1} &= v_{i-1} - c_ix_{i-1}^2 - d_ix_{i-1}^3, \qquad \forall\, i = 1:n; \\
+r_i &= v_i - c_ix_i^2 - d_ix_i^3, \qquad \forall\, i = 1:n.
+\end{align}
+
+Then, (6.68) and (6.69) can be written as
+\[
+a_i + b_ix_{i-1} \;=\; q_{i-1}, \qquad \forall\, i = 1:n; \qquad a_i + b_ix_i \;=\; r_i,
+\qquad \forall\, i = 1:n,
+\]
+% Sentence continues in sec06_c3_4.tex (folio 183) with "and therefore" leading
+% into equations (6.76)-(6.77). No environment is left open here.
