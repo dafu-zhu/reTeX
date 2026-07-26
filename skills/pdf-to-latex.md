@@ -436,6 +436,9 @@ In this order, and do not start the next batch until both pass:
 # 1. Every chunk's work is actually referenced (per chapter in the batch)
 python scripts/check_chapter_wrapper.py --book <BOOK_NAME> --chapter N
 
+# 1b. Environments balance across the chunk boundaries
+python scripts/check_env_balance.py --book <BOOK_NAME> --chapter N
+
 # 2. It compiles
 python scripts/compile_fix.py --book <BOOK_NAME> 2>&1 | tee /tmp/cf.log
 grep -q "Compilation successful (0 errors)" /tmp/cf.log && echo CLEAN || echo DIRTY
