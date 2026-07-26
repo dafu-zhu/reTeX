@@ -33,41 +33,38 @@ d_{i+1}(x_{i+1}^2+x_{i+1}x_i+x_i^2),
 \end{align*}
 for all $i = 1:(n-1)$, and therefore
 \begin{align*}
-b_i + 2c_ix_i + 3d_ix_i^2
-&= \frac{v_i-v_{i-1}}{x_i-x_{i-1}} + c_i(x_i-x_{i-1}) + d_i(2x_i^2-x_ix_{i-1}-x_{i-1}^2) \\
-&= \frac{v_i-v_{i-1}}{x_i-x_{i-1}} + c_i(x_i-x_{i-1}) + d_i(x_i-x_{i-1})(2x_i+x_{i-1}); \\
-b_{i+1}+2c_{i+1}x_i+3d_{i+1}x_i^2
-&= \frac{v_{i+1}-v_i}{x_{i+1}-x_i} - c_{i+1}(x_{i+1}-x_i) -
-d_{i+1}(x_{i+1}^2+x_{i+1}x_i-2x_i^2) \\
-&= \frac{v_{i+1}-v_i}{x_{i+1}-x_i} - c_{i+1}(x_{i+1}-x_i) - d_{i+1}(x_{i+1}-x_i)(x_{i+1}+2x_i),
+& b_i + 2c_ix_i + 3d_ix_i^2 \\
+&\quad= \frac{v_i-v_{i-1}}{x_i-x_{i-1}} + c_i(x_i-x_{i-1}) + d_i(2x_i^2-x_ix_{i-1}-x_{i-1}^2) \\
+&\quad= \frac{v_i-v_{i-1}}{x_i-x_{i-1}} + c_i(x_i-x_{i-1}) + d_i(x_i-x_{i-1})(2x_i+x_{i-1}); \\
+& b_{i+1}+2c_{i+1}x_i+3d_{i+1}x_i^2 \\
+&\quad= \frac{v_{i+1}-v_i}{x_{i+1}-x_i} - c_{i+1}(x_{i+1}-x_i) - d_{i+1}(x_{i+1}^2+x_{i+1}x_i-2x_i^2) \\
+&\quad= \frac{v_{i+1}-v_i}{x_{i+1}-x_i} - c_{i+1}(x_{i+1}-x_i) - d_{i+1}(x_{i+1}-x_i)(x_{i+1}+2x_i),
 \end{align*}
 for all $i = 1:(n-1)$, which can be written using (6.72) and (6.73) in terms of $w_i$,
 $i = 0:n$, as follows:
 \begin{align}
-b_i+2c_ix_i+3d_ix_i^2
-&= \frac{v_i-v_{i-1}}{x_i-x_{i-1}} + \frac{w_{i-1}x_i-w_ix_{i-1}}{2} +
+& b_i+2c_ix_i+3d_ix_i^2 \notag \\
+&\quad= \frac{v_i-v_{i-1}}{x_i-x_{i-1}} + \frac{w_{i-1}x_i-w_ix_{i-1}}{2} +
 \frac{(w_i-w_{i-1})(2x_i+x_{i-1})}{6} \notag \\
-&= \frac{v_i-v_{i-1}}{x_i-x_{i-1}} + w_{i-1}\frac{x_i-x_{i-1}}{6} +
+&\quad= \frac{v_i-v_{i-1}}{x_i-x_{i-1}} + w_{i-1}\frac{x_i-x_{i-1}}{6} +
 w_i\frac{x_i-x_{i-1}}{3}; \\
-b_{i+1}+2c_{i+1}x_i+3d_{i+1}x_i^2
-&= \frac{v_{i+1}-v_i}{x_{i+1}-x_i} - \frac{w_ix_{i+1}-w_{i+1}x_i}{2} -
+& b_{i+1}+2c_{i+1}x_i+3d_{i+1}x_i^2 \notag \\
+&\quad= \frac{v_{i+1}-v_i}{x_{i+1}-x_i} - \frac{w_ix_{i+1}-w_{i+1}x_i}{2} -
 \frac{(w_{i+1}-w_i)(2x_{i+1}+x_i)}{6} \notag \\
-&= \frac{v_{i+1}-v_i}{x_{i+1}-x_i} - w_i\frac{x_{i+1}-x_i}{3} -
+&\quad= \frac{v_{i+1}-v_i}{x_{i+1}-x_i} - w_i\frac{x_{i+1}-x_i}{3} -
 w_{i+1}\frac{x_{i+1}-x_i}{6},
 \end{align}
 for all $i = 1:(n-1)$.
 
 From (6.79) and (6.80), we obtain that the constraints (6.78) are equivalent to
-\[
-\frac{v_i-v_{i-1}}{x_i-x_{i-1}} + w_{i-1}\frac{x_i-x_{i-1}}{6} + w_i\frac{x_i-x_{i-1}}{3}
-\;=\;
-\frac{v_{i+1}-v_i}{x_{i+1}-x_i} - w_i\frac{x_{i+1}-x_i}{3} - w_{i+1}\frac{x_{i+1}-x_i}{6},
-\]
+\begin{align*}
+& \frac{v_i-v_{i-1}}{x_i-x_{i-1}} + w_{i-1}\frac{x_i-x_{i-1}}{6} + w_i\frac{x_i-x_{i-1}}{3} \\
+&\quad= \frac{v_{i+1}-v_i}{x_{i+1}-x_i} - w_i\frac{x_{i+1}-x_i}{3} - w_{i+1}\frac{x_{i+1}-x_i}{6},
+\end{align*}
 which can be written as
 \begin{equation}
 w_{i-1}\frac{x_i-x_{i-1}}{6} + w_i\frac{x_{i+1}-x_{i-1}}{3} + w_{i+1}\frac{x_{i+1}-x_i}{6}
-\;=\;
-\frac{v_{i+1}-v_i}{x_{i+1}-x_i} - \frac{v_i-v_{i-1}}{x_i-x_{i-1}},
+= \frac{v_{i+1}-v_i}{x_{i+1}-x_i} - \frac{v_i-v_{i-1}}{x_i-x_{i-1}},
 \end{equation}
 for all $i = 1:(n-1)$.
 

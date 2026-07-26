@@ -76,15 +76,15 @@ matrices using LU decomposition without pivoting can be found in Table 2.8.
 \caption{LU decomposition without pivoting for tridiagonal matrices}
 \fbox{\begin{minipage}{0.88\textwidth}
 \raggedright
-\textbf{Function Call:}\\
+Function Call:\\
 $[L,U] = lu\_no\_pivoting\_tridiag(A)$
 
 \medskip
-\textbf{Input:}\\
+Input:\\
 $A = $ nonsingular tridiagonal matrix of size $n$ with LU decomposition
 
 \medskip
-\textbf{Output:}\\
+Output:\\
 $L = $ lower triangular bidiagonal matrix with entries $1$ on main diagonal\\
 $U = $ upper triangular bidiagonal matrix\\
 such that $A = LU$
@@ -104,16 +104,16 @@ $L(n,n) = 1;\ U(n,n) = A(n,n)$
 \caption{Tridiagonal linear solver using LU decomposition without pivoting}
 \fbox{\begin{minipage}{0.88\textwidth}
 \raggedright
-\textbf{Function Call:}\\
+Function Call:\\
 $x = linear\_solve\_LU\_no\_pivoting\_tridiag(A,b)$
 
 \medskip
-\textbf{Input:}\\
+Input:\\
 $A = $ nonsingular tridiagonal matrix of size $n$ with LU decomposition\\
 $b = $ column vector of size $n$
 
 \medskip
-\textbf{Output:}\\
+Output:\\
 $x = $ solution to $Ax=b$
 
 \medskip
@@ -137,16 +137,16 @@ Note that, in the pseudocode from Table 2.9, the following further simplificatio
 \caption{Explicit tridiagonal linear solver using LU decomposition without pivoting}
 \fbox{\begin{minipage}{0.88\textwidth}
 \raggedright
-\textbf{Function Call:}\\
+Function Call:\\
 $x = linear\_solve\_LU\_no\_pivoting\_tridiag(A,b)$
 
 \medskip
-\textbf{Input:}\\
+Input:\\
 $A = $ nonsingular tridiagonal matrix of size $n$ with LU decomposition\\
 $b = $ column vector of size $n$
 
 \medskip
-\textbf{Output:}\\
+Output:\\
 $x = $ solution to $Ax=b$
 
 \medskip

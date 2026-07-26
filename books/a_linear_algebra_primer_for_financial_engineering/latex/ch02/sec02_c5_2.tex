@@ -9,15 +9,15 @@
 \centering
 \caption{Pseudocode for LU decomposition with row pivoting}
 \fbox{\begin{minipage}{0.9\linewidth}
-\textbf{Function Call:}\\
+Function Call:\\
 $[P,L,U] = \text{lu\_row\_pivoting}(A)$
 \bigskip
 
-\textbf{Input:}\\
+Input:\\
 $A$ = nonsingular matrix of size $n$
 \bigskip
 
-\textbf{Output:}\\
+Output:\\
 $P$ = permutation matrix, stored as vector of its diagonal entries\\
 $L$ = lower triangular matrix with entries $1$ on main diagonal\\
 $U$ = upper triangular matrix\\
@@ -73,16 +73,16 @@ difference solution of the Black--Scholes PDE.
 \centering
 \caption{Linear solver using LU decomposition with row pivoting}
 \fbox{\begin{minipage}{0.9\linewidth}
-\textbf{Function Call:}\\
+Function Call:\\
 $x = \text{linear\_solve\_lu\_row\_pivoting}(A,b)$
 \bigskip
 
-\textbf{Input:}\\
+Input:\\
 $A$ = nonsingular square matrix of size $n$ with LU decomposition\\
 $b$ = column vector of size $n$
 \bigskip
 
-\textbf{Output:}\\
+Output:\\
 $x$ = solution to $Ax = b$
 \bigskip
 

@@ -27,12 +27,12 @@ U \;=\; \begin{pmatrix} 1 & a & b \\ 0 & U(2,2) & U(2,3) \\ 0 & 0 & U(3,3) \end{
 \end{equation}
 Then, from (6.15), we find that the matrix $\begin{pmatrix} U(2,2) & U(2,3) \\ 0 &
 U(3,3) \end{pmatrix}$ is the Cholesky factor of the following matrix:
-\begin{align*}
+\begin{align}
 \begin{pmatrix} 1 & c \\ c & 1 \end{pmatrix} \;-\; \begin{pmatrix} a \\ b \end{pmatrix}
 \begin{pmatrix} a & b \end{pmatrix}
-&= \begin{pmatrix} 1 & c \\ c & 1 \end{pmatrix} \;-\; \begin{pmatrix} a^2 & ab \\ ab & b^2 \end{pmatrix} \\
+&= \begin{pmatrix} 1 & c \\ c & 1 \end{pmatrix} \;-\; \begin{pmatrix} a^2 & ab \\ ab & b^2 \end{pmatrix} \notag \\
 &= \begin{pmatrix} 1-a^2 & c-ab \\ c-ab & 1-b^2 \end{pmatrix}.
-\end{align*}
+\end{align}
 Note that the matrix $\begin{pmatrix} 1-a^2 & c-ab \\ c-ab & 1-b^2 \end{pmatrix}$ from
 (6.47) satisfies the conditions (5.49) and is therefore symmetric positive definite:
 from (6.45), it follows that $1-a^2 > 0$, since $-1 < a < 1$, and that
@@ -42,13 +42,13 @@ from (6.45), it follows that $1-a^2 > 0$, since $-1 < a < 1$, and that
 Since $\begin{pmatrix} U(2,2) & U(2,3) \\ 0 & U(3,3) \end{pmatrix}$ is the Cholesky
 factor of $\begin{pmatrix} 1-a^2 & c-ab \\ c-ab & 1-b^2 \end{pmatrix}$, we obtain from
 (6.41) that
-\begin{align*}
+\begin{align}
 \begin{pmatrix} U(2,2) & U(2,3) \\ 0 & U(3,3) \end{pmatrix}
 &= \begin{pmatrix} \sqrt{1-a^2} & \dfrac{c-ab}{\sqrt{1-a^2}} \\[0.6em]
-0 & \sqrt{\dfrac{(1-a^2)(1-b^2)-(c-ab)^2}{1-a^2}} \end{pmatrix} \\
+0 & \sqrt{\dfrac{(1-a^2)(1-b^2)-(c-ab)^2}{1-a^2}} \end{pmatrix} \notag \\
 &= \begin{pmatrix} \sqrt{1-a^2} & (c-ab)/\sqrt{1-a^2} \\[0.6em]
 0 & \sqrt{\dfrac{1+2abc-a^2-b^2-c^2}{1-a^2}} \end{pmatrix}.
-\end{align*}
+\end{align}
 From (6.46) and (6.48), we conclude that the Cholesky factor of the matrix $A$ is
 \begin{equation}
 U \;=\; \begin{pmatrix} 1 & a & b \\ 0 & \sqrt{1-a^2} & (c-ab)/\sqrt{1-a^2} \\[0.6em]
@@ -88,16 +88,16 @@ definite matrix using the Cholesky decomposition can be found in Table 6.2.
 \centering
 \caption{Linear solver using Cholesky decomposition}
 \fbox{\begin{minipage}{0.85\linewidth}
-\textbf{Function Call:}\\
+Function Call:\\
 $x = \text{linear\_solve\_cholesky}(A,b)$
 \bigskip
 
-\textbf{Input:}\\
+Input:\\
 $A = $ symmetric positive definite matrix of size $n$\\
 $b = $ column vector of size $n$
 \bigskip
 
-\textbf{Output:}\\
+Output:\\
 $x = $ solution to $Ax = b$
 \bigskip
 
