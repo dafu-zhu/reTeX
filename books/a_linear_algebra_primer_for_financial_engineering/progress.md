@@ -59,14 +59,14 @@ offset.
 
 ## Chapter 3 — The Arrow--Debreu one period market model (PDF 103–126)
 
-- [ ] 3.1 One period market models
-- [ ] 3.2 Arbitrage--free markets
-- [ ] 3.3 Complete markets
-- [ ] 3.4 Risk--neutral pricing in arb--free complete markets
-- [ ] 3.4.1 State prices
-- [ ] 3.5 A one period index options market model
-- [ ] 3.6 References
-- [ ] 3.7 Exercises
+- [x] 3.1 One period market models
+- [x] 3.2 Arbitrage--free markets
+- [x] 3.3 Complete markets
+- [x] 3.4 Risk--neutral pricing in arb--free complete markets
+- [x] 3.4.1 State prices
+- [x] 3.5 A one period index options market model
+- [x] 3.6 References
+- [x] 3.7 Exercises
 
 ## Chapter 4 — Eigenvalues and eigenvectors (PDF 127–154)
 

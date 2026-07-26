@@ -1,0 +1,247 @@
+% PAGES: 121-126
+% Section 3.6 "References" ends before page 121 (owned by a different
+% agent's file); the "3.7 Exercises" heading opens directly at the top of
+% page 121, so this file begins fresh with that section. All ten exercises
+% (pages 121-125) are the whole of Chapter 3's exercise list and are kept
+% together in a single \exercises environment so the shared enumerate
+% counter is never reset mid-list. Page 126 (PDF page 126, the last page of
+% this assignment and of the chapter) is blank -- a transitional verso
+% before Chapter 4; see the note at the very end of this file.
+
+\section{Exercises}
+
+\begin{exercises}
+
+\item In three months, the value of an asset with spot price \$50 will be
+either \$60 or \$40, with probability one half. What is the value of a
+three months at--the--money put on this asset? Assume the risk--free
+interest rate is zero.
+
+\item A one period market with four securities and four states at time
+$\tau > t_0$ has the following price vector of spot prices at the initial
+time $t_0$:
+\[
+S_{t_0} \;=\; \begin{pmatrix} 4\\ 100\\ 1\\ -2\end{pmatrix},
+\]
+and the following payoff matrix at time $\tau$:
+\[
+M_\tau \;=\; \begin{pmatrix} 1 & 1 & 1 & 1\\ 20 & 22 & 24 & 26\\ -5 & -3 & -1 & 2\\ 4 & 2 & 0 & 0\end{pmatrix}.
+\]
+Find an arbitrage opportunity.
+
+\item A one period market model is made of four securities and has four
+states at time $\tau > t_0$. Assume that the market model is complete and
+that the state prices are $-1$, $1$, $2$, and $4$, respectively. Find an
+arbitrage opportunity.
+
+\item At time $\tau > t_0$, an asset with spot price $S_0$ at time $t_0$
+will be worth either $uS_0$, in which case the value of \$1 today would be
+$FV_1$, or $dS_0$, in which case the value of \$1 today would be $FV_2$,
+with $d < u$. Consider the one period market model with two securities,
+i.e., cash and the asset, and two states, i.e., asset value at time $\tau$
+equal to $uS_0$ and asset value at time $\tau$ equal to $dS_0$.
+\begin{subparts}
+\item Show that the payoff matrix at time $\tau$ of this one period market
+model is
+\[
+\begin{pmatrix} FV_1 & FV_2\\ uS_0 & dS_0\end{pmatrix}
+\]
+\item Find necessary and sufficient conditions for the model to be
+complete.
+\item Show that this model is arbitrage--free if and only if
+\begin{equation}
+\min\left(\frac{u}{FV_1}, \frac{d}{FV_2}\right) \;<\; 1 \;<\;
+\max\left(\frac{u}{FV_1}, \frac{d}{FV_2}\right).
+\end{equation}
+\item Show that, if $FV_1 = FV_2 = e^{r\delta t}$, the condition (3.50) is
+equivalent to the no--arbitrage condition $d < e^{r\delta t} < u$ for the
+classical one period binomial model.
+\end{subparts}
+
+\item In a one period trinomial model, it is assumed that the price at
+time $\tau > t_0$ of an asset with price $S_0$ at time $t_0$ will be
+either $dS_0$, $mS_0$, or $uS_0$, where $d < m < u$.
+
+Consider a one period market model with two securities, i.e., the asset
+described above and cash, and three states, i.e., state $\omega^1$, when
+the price of the asset at time $\tau$ is $dS_0$, state $\omega^2$, when the
+price of the asset at time $\tau$ is $mS_0$, and state $\omega^3$, when the
+price of the asset at time $\tau$ is $uS_0$.
+\begin{subparts}
+\item Show that the one period trinomial model is incomplete.
+\item Show that the one period trinomial model is arbitrage--free if and
+only if
+\[
+d \;<\; e^{r\delta t} \;<\; u,
+\]
+where $\delta t = \tau - t_0$.
+\end{subparts}
+
+\item In three months, the value of an asset with spot price \$40 will be
+either \$32, \$38, \$42, or \$44. The value of a three months European
+call option with strike \$36 on this asset is \$8 and the value of a three
+months European put option with strike \$40 on this asset is \$5. For
+simplicity, assume zero risk free rates. Consider the one period market
+model with the following four securities and the following four states in
+three months:
+
+\noindent Securities:
+\begin{itemize}
+\item cash;
+\item asset;
+\item three months call with strike \$36;
+\item three months put with strike \$40;
+\end{itemize}
+
+\noindent Market states:
+\begin{itemize}
+\item asset price \$32;
+\item asset price \$38;
+\item asset price \$42;
+\item asset price \$44.
+\end{itemize}
+\begin{subparts}
+\item Find the payoff matrix of this model, and show that the four
+securities are non--redundant.
+\item Show that the one period market model is complete.
+\item How do you replicate a bull spread made of a long position in a
+three months call with strike \$34 and a short position in a three months
+call with strike \$40 in this one period market?
+\item Show that this model is not arbitrage--free, and find an arbitrage
+opportunity.
+\end{subparts}
+
+\item Two assets have spot prices \$20 and \$30, respectively. Assume
+that, in five months, the first asset will be worth either \$18 or \$22,
+and the second asset will be worth either \$28 or \$32. Also, assume that
+the risk--free rate for five months cash deposits is $0$. Consider the one
+period market model with the following three securities and the following
+four states in five months:
+
+\noindent Securities:
+\begin{itemize}
+\item cash;
+\item first asset;
+\item second asset.
+\end{itemize}
+
+\noindent Market states:
+\begin{itemize}
+\item first asset at \$22 and second asset at \$32;
+\item first asset at \$22 and second asset at \$28;
+\item first asset at \$18 and second asset at \$32;
+\item first asset at \$18 and second asset at \$28.
+\end{itemize}
+\begin{subparts}
+\item Show that this one period market model is arbitrage--free.
+\item Show that, in this one period market model, it is not possible to
+replicate a derivative security that pays \$1 if the first state occurs
+(i.e., if, in five months, the first asset is worth \$22 and the second
+asset is worth \$32), and does not pay anything if any other state occurs.
+Conclude that the model is not complete.
+\end{subparts}
+\noindent Hint: For (i), consider the case when all state prices are equal
+to $\frac{1}{4}$.
+
+\item This exercise is related to the example from Chapter 1.
+
+Consider two assets with spot prices \$30 and \$50, respectively. Assume
+that, in three months, the first asset will be worth either \$34 or \$24,
+and the second asset will be worth either \$56, \$51, or \$46. The value
+of a three months at--the--money European call option with strike \$30 on
+the first asset is \$2.5, the value of a three months at--the--money
+European call option with strike \$50 on the second asset is \$2.7, and
+the value of a three months European put option with strike \$52 on the
+second asset is \$4.1. Assume that the future value in three months of \$1
+today is \$1.01. Consider the one period market model with the following
+six securities and the following six states in three months:
+
+\noindent Securities:
+\begin{itemize}
+\item cash;
+\item first asset;
+\item second asset;
+\item three months ATM call on the first asset;
+\item three months ATM call on the second asset;
+\item three months put with strike \$52 on the second asset;
+\end{itemize}
+
+\noindent Market states:
+\begin{itemize}
+\item first asset at \$34 and second asset at \$56;
+\item first asset at \$34 and second asset at \$51;
+\item first asset at \$34 and second asset at \$46;
+\item first asset at \$24 and second asset at \$56;
+\item first asset at \$24 and second asset at \$51;
+\item first asset at \$24 and second asset at \$46.
+\end{itemize}
+\begin{subparts}
+\item Show that the payoff matrix for this market model is nonsingular,
+and conclude that the market is complete.
+\item Compute the state prices for this model, and show that the market
+is arbitrage--free.
+\item Use risk--neutral pricing to find the value of a three months call
+option with strike \$52 on the second asset.
+\item Use Put--Call parity to find the value of a three months call
+option with strike \$52 on the second asset, and compare it to the value
+computed at (iii).
+\item What is the value of a bear spread made of a long position in a
+three months put option with strike \$35 on the first asset and a short
+position in a three months put option with strike \$28 on the first
+asset?
+\end{subparts}
+
+\item This exercise refers to the S\&P 500 options prices from Table 3.1.
+
+Consider a one period market model with the following nine securities:
+\begin{center}
+P1200; P1275; P1350; P1375; C1375; C1400; C1450; C1550; C1600.
+\end{center}
+The nine states of the index price at maturity are as follows: seven
+states correspond to the midpoints between the strikes of the options
+above, i.e.,
+\begin{align*}
+\omega^2 &: \{S(\tau) = 1237.50\}; & \omega^6 &: \{S(\tau) = 1425\}; \\
+\omega^3 &: \{S(\tau) = 1312.50\}; & \omega^7 &: \{S(\tau) = 1500\}; \\
+\omega^4 &: \{S(\tau) = 1362.50\}; & \omega^8 &: \{S(\tau) = 1575\}; \\
+\omega^5 &: \{S(\tau) = 1387.50\}; & &
+\end{align*}
+the first and last state are
+\[
+\omega^1 \;:\; \{S(\tau) = 950\}; \qquad \omega^9 \;:\; \{S(\tau) = 1675\}.
+\]
+\begin{subparts}
+\item Find the payoff matrix $M_\tau$ of this one period market model, and
+show that the model is complete.
+\item Find the state prices vector $Q$ and show that the model is
+arbitrage--free.
+\item Compute the root--mean--squared error (RMSE) of this model. Comment
+on the precision of this nine securities model compared to the seven
+securities model from section 3.5.
+\end{subparts}
+
+\item This problem refers to the S\&P 500 options prices from Table 3.1.
+
+Consider a one period market model with the same seven securities as in
+section 3.5, i.e.,
+\begin{center}
+P1200; P1300; P1400; C1400; C1450; C1550; C1600.
+\end{center}
+The states of this market are the midpoints of the strike, i.e.,
+\begin{align*}
+\omega^2 &: \{S(\tau) = 1250\}; & \omega^5 &: \{S(\tau) = 1500\}; \\
+\omega^3 &: \{S(\tau) = 1350\}; & \omega^6 &: \{S(\tau) = 1575\}; \\
+\omega^4 &: \{S(\tau) = 1425\}; & &
+\end{align*}
+and the first and last state are
+\[
+\omega^1 \;:\; \{S(\tau) = 1100\}; \qquad \omega^7 \;:\; \{S(\tau) = 1700\}.
+\]
+Show that this market model is not arbitrage--free.
+
+\end{exercises}
+
+% PDF page 126 (the last page of this assignment) is blank -- a
+% transitional blank verso before Chapter 4, which begins on the next
+% recto page. Nothing to transcribe on that page. This is also the end of
+% Chapter 3 "The Arrow--Debreu one period market model."

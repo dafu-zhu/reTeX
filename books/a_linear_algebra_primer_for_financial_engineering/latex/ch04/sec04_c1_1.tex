@@ -1,0 +1,114 @@
+% PAGES: 127-128
+
+\noindent Eigenvalues and corresponding eigenvectors of a matrix.
+\medskip
+
+\noindent The characteristic polynomial of a matrix. Eigenvalues and the roots of the
+characteristic polynomial. Multiplicity of eigenvalues.
+\medskip
+
+\noindent Linear independent eigenvectors. The number of eigenvalues and eigenvectors of a
+matrix.
+\medskip
+
+\noindent Diagonal forms. Diagonalizable matrices. Matrices with a full set of linearly
+independent eigenvectors.
+\medskip
+
+\noindent Diagonally dominant matrices. Gershgorin's Theorem. Nonsingularity of strictly
+diagonally dominant matrices.
+\medskip
+
+\noindent Eigenvalues and eigenvectors of tridiagonal symmetric matrices.
+\medskip
+
+\section{Properties and identifying eigenvalues and eigenvectors}
+
+\begin{definition}
+If $A$ is a square matrix, then $\lambda$ is an eigenvalue of $A$ if and only if there
+exists a column vector $v \neq 0$ such that
+\begin{equation}
+Av \;=\; \lambda v.
+\end{equation}
+The vector $v$ is called an eigenvector corresponding to $\lambda$.
+\end{definition}
+
+Note that, even if all the entries of the matrix $A$ are real numbers, an eigenvalue of
+$A$ may be a complex number, and the corresponding eigenvector may have complex entries.
+
+If $v$ is an eigenvector corresponding to the eigenvalue $\lambda$ of $A$, then, for any
+constant $c$, the vector $cv$ is also an eigenvector of $A$ corresponding to $\lambda$,
+since
+\[
+A(cv) \;=\; c(Av) \;=\; c(\lambda v) \;=\; \lambda(cv).
+\]
+However, $cv$ is not considered to be an eigenvector different than $v$. Only linearly
+independent eigenvectors count as different eigenvectors. As seen in the example below,
+it is possible for one eigenvalue to have more than one linearly independent eigenvector.
+
+\begin{examplex}
+This example is \textit{for illustration purposes only}; in practice, the eigenvalues
+and the corresponding eigenvectors of a matrix are computed using numerical methods; see
+section 4.4 for more details.
+
+(i) Let
+\[
+A \;=\; \begin{pmatrix} -8 & 0 & 3\\ 3 & -2 & -1.5\\ -18 & 0 & 7\end{pmatrix}.
+\]
+We will show that\footnote{A simpler way to compute the eigenvalues and the corresponding
+eigenvectors of the matrix $A$, using the characteristic polynomial of $A$, will be given
+subsequently.} the matrix $A$ has eigenvalues $1$ and $-2$, with
+
+\[
+\text{eigenvectors} \quad \begin{pmatrix}0\\1\\0\end{pmatrix} \ \ \text{and} \ \
+\begin{pmatrix}1\\0\\2\end{pmatrix} \quad \text{corresponding to} \quad -2
+\]
+\[
+\text{eigenvector} \quad \begin{pmatrix}2\\-1\\6\end{pmatrix} \quad
+\text{corresponding to} \quad 1.
+\]
+
+Denote by $\lambda$ an eigenvalue of $A$ and by $v = (v_i)_{i=1:3}$ a corresponding
+eigenvector of $\lambda$. Then, $Av = \lambda v$, which can be written as the following
+linear system:
+\begin{align}
+-8v_1 + 3v_3 &= \lambda v_1;\\
+3v_1 - 2v_2 - 1.5v_3 &= \lambda v_2;\\
+-18v_1 + 7v_3 &= \lambda v_3.
+\end{align}
+
+By eliminating $v_3$ from (4.2) and (4.4), we obtain that
+\[
+(\lambda^2 + \lambda - 2)v_1 \;=\; (\lambda+2)(\lambda-1)v_1 \;=\; 0.
+\]
+Thus, either $v_1 = 0$, or $\lambda = -2$, or $\lambda = 1$.
+
+\begin{itemize}
+\item If $v_1 = 0$, it follows from (4.2) that $v_3 = 0$. From (4.3), we find that
+$-2v_2 = \lambda v_2$. Recall that $v \neq 0$, since $v$ is an eigenvector. Thus,
+$v_2 \neq 0$, and therefore $\lambda = -2$. We conclude that $\lambda = -2$ is an
+eigenvalue of $A$ with corresponding eigenvector
+\[
+\begin{pmatrix}0\\ v_2\\ 0\end{pmatrix} \;=\; v_2\begin{pmatrix}0\\1\\0\end{pmatrix}.
+\]
+Since multiplying of an eigenvector by a constant does not change the eigenvector, we
+choose $v_2 = 1$ and conclude that $\begin{pmatrix}0\\1\\0\end{pmatrix}$ is an
+eigenvector corresponding to the eigenvalue $\lambda = -2$.
+\item If $\lambda = -2$, then (4.2) and (4.4) are both equivalent to $v_3 = 2v_1$, and
+(4.3) holds true with no further constraint on $v_1$, $v_2$, or $v_3$. Thus, any
+eigenvector corresponding to $\lambda = -2$ is of the form
+\[
+\begin{pmatrix}v_1\\ v_2\\ 2v_1\end{pmatrix} \;=\; v_1\begin{pmatrix}1\\0\\2\end{pmatrix}
++ v_2\begin{pmatrix}0\\1\\0\end{pmatrix}.
+\]
+% CONTINUES in sec04_c1_2.tex (page 129 / folio 113): this \item and the
+% surrounding \begin{itemize} (the bulleted case analysis for the
+% eigenvalue lambda = -2 of matrix A) are left OPEN here, and so is the
+% enclosing \begin{examplex} opened above ("This example is for
+% illustration purposes only..."). sec04_c1_2.tex must NOT reopen either
+% environment -- it continues this item's prose directly ("We conclude
+% that the eigenvalue lambda = -2 has two linearly independent
+% eigenvectors..."), closes this \itemize once the lambda = 1 case for
+% matrix A is done, then gives part (ii) (matrix B) and closes the
+% \examplex with \end{examplex} at the printed square (page 129 / folio
+% 113), immediately before Definition 4.2.

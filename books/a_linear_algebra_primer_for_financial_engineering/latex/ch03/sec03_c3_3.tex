@@ -1,0 +1,71 @@
+% PAGES: 119-120
+
+We obtain that
+\begin{equation}
+Q \ = \ \begin{pmatrix} 0.2578 \\ 0.0075 \\ 0.2465 \\ 0.1700 \\ 0.1550 \\ 0.1580 \\ 0.0790 \end{pmatrix}.
+\end{equation}
+Since all the entries of $Q$ are positive, we conclude from Theorem 3.1
+that the one period market model is arbitrage--free.
+
+We conclude that the one period options market model above is both
+arbitrage--free and complete.
+
+Thus, all the other options can be priced using risk--neutral pricing;
+cf. Theorem 3.4. For example, the no--arbitrage value of C1300 can be
+obtained as follows:
+
+The payoff vector $C1300_\tau$ of the call option with strike 1300 at
+maturity 12/22/2012 is
+\begin{equation}
+C1300_\tau \ = \ \begin{pmatrix} 0 & 0 & 50 & 125 & 200 & 275 & 400 \end{pmatrix},
+\end{equation}
+since, e.g., $C1300_\tau(5)$ is the payoff of a call option with strike
+1300 if state $\omega^5$ occurs, i.e., if $S(\tau) = 1500$, and from
+(3.45) we find that
+\[
+C1300_\tau(5) \ = \ \max(S(\tau)-1300,0) \ = \ \max(1500-1300,0) \ = \ 200.
+\]
+
+Then, from (3.30), we find that the no--arbitrage value $C1300_{model}$
+of C1300 given by this one period market model is
+\begin{align*}
+C1300_{model} &= C1300_\tau \, Q \ = \ \sum_{i=1}^7 Q(i) C1300_\tau(i) \\
+              &= \ 139.6250,
+\end{align*}
+where $C1300_\tau$ is given by (3.49) and $Q$ is given by (3.48). The
+corresponding percentage error is $\frac{139.6250-131.70}{131.70} =
+0.0602$, i.e., $6.02\%$ over the mid value $131.70$ of C1300.
+
+To estimate the accuracy of this one period market model, we use
+formula (3.30) to find the risk--neutral value of each of the $32-7=25$
+options from Table 3.1 which were not chosen as securities in the
+model. These values are denoted by $V_{model}(i)$, for $i = 1:25$, and
+are compared to the mid prices $V_{mid}(i)$ corresponding to the same
+option, for $i = 1:25$. The percentage root--mean--squared error (RMSE)
+of the model is then calculated as follows:
+\begin{align*}
+\text{RMSE} &= \sqrt{\frac{1}{25}\sum_{i=1}^{25} \frac{(V_{model}(i)-V_{mid}(i))^2}{V_{mid}(i)^2}} \\
+            &= \ 0.0506 \ = \ 5.06\%;
+\end{align*}
+
+In other words, the options that were not chosen to be securities in
+the model are priced, on average, within 5\% of their mid price by
+using the seven options from this one period market model.
+
+\section{References}
+
+The Arrow--Debreu model was introduced in the seminal paper
+\cite{5}; a modern exposition can be found in Avellaneda and Laurence
+\cite{7}.
+
+Neftci \cite{31} covers the one period market model as a general
+pricing framework for derivative securities, and presents its uses by
+financial engineering practitioners.
+
+The one period binomial tree risk--neutral pricing formula (3.41) can
+also be obtained by using either a hedged portfolio or payoff
+replication; see Blyth \cite{8} for more details. Binomial and trinomial
+trees are used in practice as numerical methods for pricing derivative
+securities, and they are implemented on many time steps. The
+calibration of tree models and numerical implementation details can be
+found in Clewlow and Strickland \cite{11} and Wilmott \cite{45}.

@@ -3,7 +3,7 @@
 % sec02_c6_1.tex (this agent's own file, ends there with eq. (2.79)).
 
 The unknowns are the coefficients $a_i,b_i,c_i,d_i$, $i=1:n$. Thus, there are $4n$
-unknowns. There are $n$ constraints corresponding to (2.76), $n-1$ constraints
+unknowns. There are $n$ constraints corresponding to (2.76), $n$ constraints
 corresponding to (2.77), $n-1$ constraints corresponding to (2.78), and $n-1$
 constraints corresponding to (2.79), for a total of $4n-2$ constraints. Two more
 constraints are therefore needed for a unique solution. The most common choice for
@@ -43,6 +43,7 @@ and $\bar M$ is the $4n\times4n$ matrix given by
 \bar M(4i-1,4i-1)&=x_i^2; \quad \bar M(4i-1,4i)=x_i^3, \quad \forall i=1:n; \\
 \bar M(4i,4i-2)&=1; \quad \bar M(4i,4i-1)=2x_i, \quad \forall i=1:(n-1); \\
 \bar M(4i,4i)&=3x_i^2; \quad \bar M(4i,4i+2)=-1, \quad \forall i=1:(n-1); \\
+\bar M(4i,4i+3)&=-2x_i; \quad \bar M(4i,4i+4)=-3x_i^2, \quad \forall i=1:(n-1); \\
 \bar M(4i+1,4i-1)&=2; \quad \bar M(4i+1,4i)=6x_i, \quad \forall i=1:(n-1); \\
 \bar M(4i+1,4i+3)&=-2; \quad \bar M(4i+1,4i+4)=-6x_i, \quad \forall i=1:(n-1).
 \end{align}
@@ -52,9 +53,9 @@ nonsingular for any values of the nodes $x_i$, $i=0:n$.\footnote{While it is
 difficult to see that the matrix $\bar M$ is nonsingular by inspecting its
 entries, note that the solution to the cubic spline interpolation, which is given
 by the solution to the linear system $\bar M\bar x=\bar b$ from (2.82), is
-equivalent to finding a solution to the tridiagonal system $Mz=b$ shown in section
-6.4. As the matrix $M$ is symmetric positive definite, and therefore nonsingular,
-for any values of the nodes $x_i$, $i=0:n$, we conclude that the cubic spline
+equivalent to finding a solution to the tridiagonal system $Mz=b$ from (6.82). As
+shown in section 6.4, the matrix $M$ is symmetric positive definite, and therefore
+nonsingular, for any values of the nodes $x_i$, $i=0:n$. We conclude that the cubic spline
 interpolation has a unique solution for any nodes $x_i$, $i=0:n$. Thus, the linear
 system $\bar M\bar x=\bar b$ must have a unique solution, and we can therefore
 conclude that the matrix $\bar M$ is nonsingular.}
@@ -79,7 +80,7 @@ $a_i,b_i,c_i,d_i = $ cubic polynomials coefficients, $i=1:n$
 
 \medskip
 compute vector $\bar b$ from (2.83--2.85)\\
-compute matrix $\bar M$ from (2.86--2.95)\\
+compute matrix $\bar M$ from (2.86--2.96)\\
 $\bar x = \text{linear\_solve\_lu\_row\_pivoting}(\bar M,\bar b)$\\
 for $i = 1:n$\\
 \hspace*{1.5em}$a_i=\bar x(4i-3);\ b_i=\bar x(4i-2);\ c_i=\bar x(4i-1);\
@@ -136,7 +137,7 @@ corresponding to the $16\times16$ banded matrix $\bar M$ given by (2.97--2.98):
 0&0&2&0&0&0&0&0\\
 1&0&0&0&0&0&0&0\\
 1&\frac16&\frac1{36}&0.0046&0&0&0&0\\
-0&1&\frac13&\frac1{12}&0&-1&0&0\\
+0&1&\frac13&\frac1{12}&0&-1&-\frac13&-\frac1{12}\\
 0&0&2&1&0&0&-2&-1\\
 0&0&0&0&1&\frac16&\frac1{36}&0.0046\\
 0&0&0&0&1&0.5&\frac14&\frac18\\
@@ -163,11 +164,11 @@ corresponding to the $16\times16$ banded matrix $\bar M$ given by (2.97--2.98):
 0&0&0&0&0&0&0&0\\
 0&0&0&0&0&0&0&0\\
 0&0&0&0&0&0&0&0\\
-0&-1&0&0&0&0&0&0\\
+0&-1&-1&-\frac34&0&0&0&0\\
 0&0&-2&-3&0&0&0&0\\
-1&0.5&0.25&0.125&0&0&0&0\\
+1&\frac12&\frac14&\frac18&0&0&0&0\\
 1&1&1&1&0&0&0&0\\
-0&1&2&3&0&-1&0&0\\
+0&1&2&3&0&-1&-2&-3\\
 0&0&2&6&0&0&-2&-6\\
 0&0&0&0&1&1&1&1\\
 0&0&0&0&1&\frac53&\frac{25}9&4.6296\\
@@ -175,7 +176,7 @@ corresponding to the $16\times16$ banded matrix $\bar M$ given by (2.97--2.98):
 \end{array}\right)}
 \end{equation}
 
-The resulting zero rate curve
+The resulting zero rate curve is
 \begin{equation}
 r(0,t) \;=\;
 \begin{cases}
