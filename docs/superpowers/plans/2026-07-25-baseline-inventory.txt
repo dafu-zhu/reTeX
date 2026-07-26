@@ -1,0 +1,7 @@
+# Baseline inventory captured before consolidation
+
+econometrics_hayashi: chapters=10 tex=99 png=30
+applied_partial_differential_equations: chapters=14 tex=117 png=391
+asymptotic_theory_white: chapters=8 tex=13 png=0
+div_grad_curl_and_all_that: chapters=4 tex=8 png=205
+a_first_course_in_monte_carlo_methods: chapters=10 tex=72 png=0
