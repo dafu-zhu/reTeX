@@ -1,0 +1,70 @@
+% PAGES: 290-290
+% Last file of chunk c2 (assigned 279-290). Section 9.5 closes with (9.82);
+% section 9.6 (Value at Risk) opens and runs to the end of this file. The
+% file ends cleanly at a paragraph boundary ("...is $1-C$.") with no open
+% \begin{...}, no open \[, and no open non-environment example block --
+% chunk c3 (assigned 291-302) does not need to close anything from me.
+% Rendered and read every page 279-290 individually via CropBox at 300 dpi
+% (with additional 1200 dpi spot-checks where noted in earlier files in this
+% chunk); confirmed check_env_balance.py result in my final report.
+
+Thus, the asset allocation for the minimum variance portfolio fully invested in two
+assets is
+\begin{align}
+w_1 &= \frac{\sigma_2^2-\sigma_1\sigma_2\rho_{1,2}}{\sigma_1^2-2\sigma_1\sigma_2
+\rho_{1,2}+\sigma_2^2}; \\
+w_2 &= \frac{\sigma_1^2-\sigma_1\sigma_2\rho_{1,2}}{\sigma_1^2-2\sigma_1\sigma_2
+\rho_{1,2}+\sigma_2^2} \;=\; 1-w_1.
+\end{align}
+
+From (9.77) and (9.79), we obtain that the standard deviation of the return of this
+portfolio is
+\begin{equation}
+\sigma_m \;=\; \frac{1}{\sqrt{\bfone^t\Sigma_R^{-1}\bfone}} \;=\;
+\frac{\sigma_1\sigma_2\sqrt{1-\rho_{1,2}^2}}{\sqrt{\sigma_1^2-2\sigma_1\sigma_2
+\rho_{1,2}+\sigma_2^2}}.
+\end{equation}
+
+\section{Value at Risk (VaR). Portfolio VaR.}
+
+The Value at Risk (VaR) of a portfolio provides one number estimating, at a given
+level of confidence, how much of the portfolio value could be lost over a given time
+horizon. Thus, VaR depends on two parameters:
+\begin{itemize}
+\item $N$, the number of days in the time horizon;
+\item $C$, the confidence level.
+\end{itemize}
+
+Denote by $\VaR(N,C)$ the $N$ day $C\%$ VaR of a portfolio. Then, by definition,
+$\VaR(N,C)$ is the largest value (dollar amount) such that the probability that the
+portfolio loss over the next $N$ days is smaller than $\VaR(N,C)$ is $C$. In other
+words, if $V(0)$ and $V(N)$ denote the current value of the portfolio and the value of
+the portfolio in $N$ days, respectively, then
+\begin{equation}
+\VaR(N,C) \;=\; \sup\{x \text{ such that } P(V(N)-V(0)\ge -x)=C\}.
+\end{equation}
+
+\begin{examplex}
+If a portfolio has a five--day 98\% VaR of \$10 million, then there is a 98\%
+probability that the portfolio will not lose more that \$10 million within five days
+% "more that" is printed exactly that way in the source (should read "more
+% than") -- transcribed as printed, not corrected.
+or, equivalently, the probability of the portfolio suffering losses bigger than \$10
+million within five days is 2\%.
+\end{examplex}
+
+If the portfolio value $V(N)$, or, equivalently, the portfolio return
+$\frac{V(N)-V(0)}{V(0)}$, is assumed to have a continuous probability distribution
+with strictly increasing probability density function, then (9.83) simplifies to:
+
+$\VaR(N,C)$ is the number given by
+\begin{equation}
+P\big(V(N)-V(0) \ge -\VaR(N,C)\big) \;=\; C.
+\end{equation}
+
+Note that (9.84) is equivalent to
+\begin{equation}
+P\big(V(N)-V(0) \le -\VaR(N,C)\big) \;=\; 1-C,
+\end{equation}
+which can be interpreted as follows: the probability that the loss of the portfolio
+over the next $N$ days is greater than $\VaR(N,C)$ is $1-C$.

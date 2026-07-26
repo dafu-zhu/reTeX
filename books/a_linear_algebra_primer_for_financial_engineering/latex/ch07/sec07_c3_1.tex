@@ -1,0 +1,95 @@
+% PAGES: 227
+% COORDINATION (chunk c3, opening file):
+% (1) chunk c1's file sec07_c1_5.tex (PAGES 217) left equation (7.48)
+%     deliberately open, expecting its continuation on PDF page 218. Chunk c2
+%     resolved this at the top of sec07_c2_1.tex (PAGES 218-219) -- already
+%     closed before this chunk started; nothing to do here.
+% (2) chunk c2's last file, sec07_c2_5.tex (PAGES 226), ends with a
+%     deliberately UNCLOSED "\begin{examplex}" (the rho-correlation-matrix
+%     example), with an explicit comment asking the next chunk to supply the
+%     missing "Solution:" text and "\end{examplex}". This file opens by doing
+%     exactly that -- do NOT open a new \begin{examplex} here.
+%
+% NOTATION FLAG (verified at 600 dpi, affects the whole chapter, not just this
+% chunk): the subscript on Sigma/mu/Omega for the "of the vector X/Z/Y" mean
+% and (co)variance notation is printed as a LOWERCASE bold letter -- Sigma_x,
+% mu_x, Sigma_z, mu_z -- confirmed independently against PDF pages 210 (folio
+% 194, Definition 7.1: "$\Sigma_\mathbf{x}$"), 227, 228, 231, 232, 233 and 234.
+% This is distinct from the bold CAPITAL vector symbols themselves (bfX, bfZ,
+% bfY are genuinely capital-bold where they denote the vector, e.g. in
+% "X = U^tZ"). Chunks c1, c2 and c4 originally used a bold CAPITAL subscript
+% throughout, which made ch07 inconsistent across chunks.
+% RESOLVED by the chapter-wide proofreading pass: the source reading was
+% re-confirmed at 1200-2000 dpi on PDF pages 210 (Definition 7.1 and eq 7.8-
+% 7.15), 213 (".. since \Omega_x = \Omega_y .. since \Sigma_x \neq \Sigma_y",
+% where the subscript y carries a clear descender, so it cannot be a capital)
+% and 235 (".. let \mathbf{X} be the n-dimensional .. The expected value
+% \mu_x of \mathbf{X}", capital vector and lowercase subscript side by side).
+% "_{\bfX}" -> "_{\bfx}", "_{\bfZ}" -> "_{\bfz}", "_{\bfY}" -> "_{\bfy}" has
+% since been applied throughout sec07_c1_*, sec07_c2_* and sec07_c4_*
+% (303 substitutions); standalone \bfX/\bfZ/\bfY, i.e. the vector symbols
+% themselves, were left untouched. Chapter 7 is now internally consistent.
+% This convention is chapter-specific: ch09 sets the same subscripts plain
+% (unbolded), so it must NOT be propagated outward.
+
+\par\medskip\noindent\textit{Solution:}\ From (7.93), it follows that the matrix $\Omega$ is a
+correlation matrix if and only if $-1 \le \rho \le 1$ and
+\[
+\det(\Omega) \;=\; 1 + 2\cdot(0.8)\cdot(0.3)\cdot\rho - \rho^2 - (0.8)^2 - (0.3)^2 \;\ge\; 0,
+\]
+which is equivalent to
+\begin{equation}
+\rho^2 - 0.48\rho - 0.27 \;\le\; 0.
+\end{equation}
+Thus, $\rho$ must be between the roots $-0.332364$ and $0.812364$ of the quadratic equation
+$\rho^2 - 0.48\rho - 0.27 = 0$ corresponding to (7.95), which is equivalent to $-0.332364 \le
+\rho \le 0.812364$; note that the condition $-1 \le \rho \le 1$ is satisfied for all such values
+of $\rho$.
+
+We conclude that the matrix $\Omega$ is a correlation matrix if and only if
+\[
+-0.332364 \;\le\; \rho \;\le\; 0.812364.
+\]
+\end{examplex}
+
+\medskip
+\noindent\textit{Example:}\ Show that it is not possible to find three random variables on the
+same probability space with correlations $0.75$, $0.75$, and $-0.75$. In other words, show that
+it is not possible to find random variables $X_1$, $X_2$, $X_3$ such that
+\begin{equation}
+\corr(X_1,X_2) = 0.75; \quad \corr(X_1,X_3) = 0.75; \quad \corr(X_2,X_3) = -0.75.
+\end{equation}
+
+\par\medskip\noindent\textit{Solution:}\ We give a proof by contradiction. Assume that random
+variables $X_1$, $X_2$, $X_3$ with correlations given by (7.96) exist. Then, the correlation
+matrix of $X_1$, $X_2$, $X_3$ is
+\[
+\Sigma_{\bfx} \;=\; \begin{pmatrix} 1 & 0.75 & 0.75 \\ 0.75 & 1 & -0.75 \\ -0.75 & -0.75 & 1 \end{pmatrix},
+\]
+which is the same as the matrix from (7.92) with $a = 0.75$, $b = 0.75$, and $c = -0.75$.
+
+However, the condition (7.93) for the matrix $\Sigma_{\bfx}$ to be a correlation matrix is not
+satisfied since, for $a = 0.75$, $b = 0.75$, and $c = -0.75$, we obtain that
+\begin{align*}
+1 + 2abc - a^2 - b^2 - c^2 &= 1 + 2(0.75)(0.75)(-0.75) \\
+&\qquad - (0.75)^2 - (0.75)^2 - (-0.75)^2 \\
+&= 1 - 0.84375 - 1.6875 \\
+&= -1.53125 \\
+&< 0.
+\end{align*}
+
+We conclude that random variables $X_1$, $X_2$, $X_3$ with correlations given by (7.96) do not
+exist.
+% NOTE: this Example/Solution block is deliberately NOT wrapped in
+% \begin{examplex}...\end{examplex} because the source does not print a
+% closing square here (verified at 600 dpi against PDF page 227, folio 211)
+% -- unlike the block above it on the same page, which does close with one
+% and is therefore closed via \end{examplex}. Using examplex here would
+% auto-append a square that is not actually printed, so this block is left
+% as manual italic run-in text with no closing mark, per the fidelity rule.
+
+\section{Finding normal variables with a given covariance or correlation matrix}
+
+Finding normal random variables with a given correlation matrix is often needed in practice,
+e.g., for Monte Carlo simulations; see section 7.5.1. A way to do so based on the Cholesky
+decomposition and the Linear Transformation Property is presented below.

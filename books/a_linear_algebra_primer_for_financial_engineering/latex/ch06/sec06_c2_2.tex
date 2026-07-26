@@ -1,0 +1,129 @@
+% PAGES: 187-188
+% Continues the sentence ending in a colon at the bottom of sec06_c2_1.tex
+% (folio 170): "...decomposition is approximately half of the operation
+% count for the LU decomposition:" is immediately followed here by the
+% "\begin{lemma}" statement (Lemma 6.2) that supplies the promised formula
+% (folio 171). No new colon-introducing text is needed.
+
+\begin{lemma}
+The operation count for the Cholesky decomposition of an $n \times n$ symmetric
+positive definite matrix is
+\begin{equation}
+\frac{1}{3}n^3 \;+\; O(n^2).
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+At step $i$, computing $U(i,i) = \sqrt{A(i,i)}$ and going through the ``for'' loop
+\begin{center}
+\fbox{\begin{minipage}{0.4\linewidth}
+for $k = (i+1):n$\\
+\hspace*{1.5em}$U(i,k) \;=\; A(i,k)/U(i,i)$\\
+end
+\end{minipage}}
+\end{center}
+to compute the $i$-th row of $U$ requires
+\begin{equation}
+n - i + 1
+\end{equation}
+operations.
+
+Also at step $i$, the double ``for'' loop
+\begin{center}
+\fbox{\begin{minipage}{0.55\linewidth}
+for $j = (i+1):n$\\
+\hspace*{1.5em}for $k = j:n$\\
+\hspace*{3em}$A(j,k) = A(j,k) - U(i,j)U(i,k)$;\\
+\hspace*{1.5em}end\\
+end
+\end{minipage}}
+\end{center}
+to update $A(i+1:n,i+1:n)$ requires
+\begin{equation}
+\sum_{j=i+1}^{n}\sum_{k=j}^{n} 2 \;=\; \sum_{j=i+1}^{n} 2(n-j+1) \;=\; 2\sum_{j=i+1}^{n}(n-j+1)
+\end{equation}
+operations. By letting $l = n-j+1$ in (6.38), and using the fact that
+$\sum_{l=1}^{p} l = \frac{p(p+1)}{2}$, see (2.46), we obtain that
+\begin{equation}
+2\sum_{j=i+1}^{n}(n-j+1) \;=\; 2\sum_{l=1}^{n-i} l \;=\; 2\cdot\frac{(n-i)(n-i+1)}{2}
+\;=\; (n-i)(n-i+1).
+\end{equation}
+When accounting for the outside ``for'' loop ``for $i = 1:(n-1)$'', see Table 6.1, and
+for the one extra operation required for $U(n,n) = \sqrt{A(n,n)}$, we obtain using
+(6.37) and (6.39) that the operation count for the Cholesky decomposition is
+\begin{equation}
+1 \;+\; \sum_{i=1}^{n-1}(n-i+1) \;+\; (n-i)(n-i+1) \;=\; 1 \;+\; \sum_{i=1}^{n-1}(n-i+1)^2
+\end{equation}
+Recall from (2.46) that $\sum_{l=1}^{p} l^2 = \frac{p(p+1)(2p+1)}{6}$. Then, by letting
+$l = n-i+1$ in (6.40), we obtain that
+\begin{align*}
+1 + \sum_{i=1}^{n-1}(n-i+1)^2 &= 1 + \sum_{l=2}^{n} l^2 \;=\; \sum_{l=1}^{n} l^2
+\;=\; \frac{n(n+1)(2n+1)}{6} \\
+&= \frac{2n^3+3n^2+n}{6} \;=\; \frac{n^3}{3}+\frac{n^2}{2}+\frac{n}{6} \\
+&= \frac{1}{3}n^3 \;+\; O(n^2);
+\end{align*}
+see (10.80) in Section 10.2.3 for a proof of the last equality.
+
+Thus, the operation count for the Cholesky decomposition is $\frac{1}{3}n^3 + O(n^2)$.
+\end{proof}
+
+We conclude this section by computing the Cholesky factors of $2 \times 2$ and
+$3 \times 3$ symmetric positive definite matrices.
+
+\begin{lemma}
+The Cholesky factor of the $2 \times 2$ symmetric positive definite matrix
+$\begin{pmatrix} a & b \\ b & d \end{pmatrix}$ i.e., with $a > 0$ and $ad > b^2$, see
+(5.49), is
+\begin{equation}
+U \;=\; \begin{pmatrix} \sqrt{a} & \dfrac{b}{\sqrt{a}} \\[0.6em] 0 & \sqrt{\dfrac{ad-b^2}{a}} \end{pmatrix}.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+We compute the Cholesky factor $U = \begin{pmatrix} U(1,1) & U(1,2) \\ 0 & U(2,2)
+\end{pmatrix}$ of the matrix $A = \begin{pmatrix} a & b \\ b & d \end{pmatrix}$ by using
+the Cholesky decomposition algorithm from Table 6.1. From (6.6) and (6.8), we find that
+$U(1,1) = \sqrt{A(1,1)} = \sqrt{a}$ and $U(1,2) = \frac{A(1,2)}{U(1,1)} = \frac{b}{\sqrt{a}}$.
+Then, from (6.15) it follows that
+\[
+(U(2,2))^2 \;=\; A(2,2) - U(1,2) \cdot U(1,2) \;=\; d - \frac{b^2}{a} \;=\; \frac{ad-b^2}{a}.
+\]
+Note that $\frac{ad-b^2}{a} > 0$ since $b^2 < ad$. Then, $U(2,2) = \sqrt{\frac{ad-b^2}{a}}$,
+since the diagonal entries of a Cholesky factor must be positive. We conclude that the
+Cholesky factor of the matrix $A$ is
+\[
+U \;=\; \begin{pmatrix} \sqrt{a} & \dfrac{b}{\sqrt{a}} \\[0.6em] 0 & \sqrt{\dfrac{ad-b^2}{a}} \end{pmatrix}.
+\]
+\end{proof}
+
+Note that, by letting $a = d = 1$ and $b = \rho$ in (6.41), where $|\rho| < 1$, we
+obtain that the Cholesky factor of the matrix $\begin{pmatrix} 1 & \rho \\ \rho & 1
+\end{pmatrix}$ with $-1 < \rho < 1$ is
+\begin{equation}
+\begin{pmatrix} 1 & \rho \\ 0 & \sqrt{1-\rho^2} \end{pmatrix}.
+\end{equation}
+
+\begin{lemma}
+The Cholesky factor of a $3 \times 3$ symmetric positive definite matrix
+$\begin{pmatrix} d_1 & a & b \\ a & d_2 & c \\ b & c & d_3 \end{pmatrix}$, i.e., with
+$d_1, d_2, d_3, a, b, c$ satisfying the inequalities (5.53), is
+\begin{equation}
+U \;=\; \begin{pmatrix}
+\sqrt{d_1} & a/\sqrt{d_1} & b/\sqrt{d_1} \\[0.4em]
+0 & \sqrt{d_1d_2-a^2}/\sqrt{d_1} & (d_1c-ab)/\sqrt{d_1(d_1d_2-a^2)} \\[0.6em]
+0 & 0 & \sqrt{\dfrac{d_1d_2d_3+2abc-d_3a^2-d_2b^2-d_1c^2}{d_1d_2-a^2}}
+\end{pmatrix}.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+For simplicity, we only prove (6.43) for $d_1 = d_2 = d_3 = 1$, i.e., we show that the
+Cholesky factor of the $3 \times 3$ symmetric positive definite matrix
+$\begin{pmatrix} 1 & a & b \\ a & 1 & c \\ b & c & 1 \end{pmatrix}$ is
+\begin{equation}
+U \;=\; \begin{pmatrix}
+1 & a & b \\
+0 & \sqrt{1-a^2} & (c-ab)/\sqrt{1-a^2} \\[0.6em]
+0 & 0 & \sqrt{\dfrac{1+2abc-a^2-b^2-c^2}{1-a^2}}
+\end{pmatrix}.
+\end{equation}

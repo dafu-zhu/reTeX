@@ -1,0 +1,193 @@
+% PAGES: 232-234
+% Continues by proving the Lemma 7.7 stated at the end of sec07_c3_3.tex
+% (PAGES 230-231). Opens directly with "\begin{proof}" -- do not re-open the
+% \begin{lemma} for Lemma 7.7, which already closed in the previous file.
+
+\begin{proof}
+Since $\bfX \sim N(\mu_{\bfx},\Sigma_{\bfx})$, we need to show that
+\begin{equation}
+\mu_{\bfx} + U^t\bfZ \;\sim\; N(\mu_{\bfx},\Sigma_{\bfx}),
+\end{equation}
+in order to conclude that $\bfX = \mu_{\bfx} + U^t\bfZ$.
+
+From Definition 7.4, it follows that $\mu_{\bfx} + U^t\bfZ$ is a multivariate normal random
+variable. Recall from Definition 6.1 that, if $U$ is the Cholesky factor of the symmetric
+positive definite matrix $\Sigma_{\bfx}$, then
+\begin{equation}
+\Sigma_{\bfx} \;=\; U^tU.
+\end{equation}
+Since $\mu_{\bfz}=\bfzero$ and $\Sigma_{\bfz}=I$, it follows from (7.84) and (7.115) that
+\begin{align*}
+\E{\mu_{\bfx}+U^t\bfZ} &= \mu_{\bfx}; \\
+\Sigma_{\mu_{\bfx}+U^t\bfZ} &= U^t\Sigma_{\bfz}(U^t)^t \;=\; U^tU \;=\; \Sigma_{\bfx},
+\end{align*}
+which is what we wanted to show; cf. (7.114).
+\end{proof}
+
+\medskip
+\noindent\textit{Example:}\ A two dimensional multivariate normal random variable is called a
+\textit{bivariate normal random variable}. We use formula (7.113) to find the probability
+density function of a nondegenerate bivariate normal random variable; see (7.118).
+
+Let $\bfX = \begin{pmatrix} X_1 \\ X_2 \end{pmatrix}$ be a nondegenerate bivariate normal
+variable, where $X_1$ and $X_2$ are normal random variable with correlation $\rho$ with $\rho
+\neq 1$ and $\rho \neq -1$, and with mean and standard deviation $\mu_1, \sigma_1$, and $\mu_2,
+\sigma_2$, respectively. Recall from (7.12) that the covariance matrix of $X_1$ and $X_2$ is
+\[
+\Sigma_{\bfx} \;=\; \begin{pmatrix} \sigma_1^2 & \sigma_1\sigma_2\rho \\ \sigma_1\sigma_2\rho & \sigma_2^2 \end{pmatrix}.
+\]
+Then,
+\begin{equation}
+\det(\Sigma_{\bfx}) \;=\; \sigma_1^2\sigma_2^2(1-\rho^2),
+\end{equation}
+see (10.6), and, since $\rho \neq 1$ and $\rho \neq -1$, we find from (10.7) that
+\[
+(\Sigma_{\bfx})^{-1} \;=\; \frac{1}{\sigma_1^2\sigma_2^2(1-\rho^2)}
+\begin{pmatrix} \sigma_2^2 & -\sigma_1\sigma_2\rho \\ -\sigma_1\sigma_2\rho & \sigma_1^2 \end{pmatrix}.
+\]
+Let $x-\mu_{\bfx} = \begin{pmatrix} x_1-\mu_1 \\ x_2-\mu_2 \end{pmatrix}$. From (10.20), it
+follows that
+\begin{align}
+(x-\mu_{\bfx})^t(\Sigma_{\bfx})^{-1}(x-\mu_{\bfx})
+&= \frac{\sigma_2^2(x_1-\mu_1)^2 - 2\sigma_1\sigma_2\rho(x_1-\mu_1)(x_2-\mu_2) + \sigma_1^2(x_2-\mu_2)^2}{\sigma_1^2\sigma_2^2(1-\rho^2)} \notag \\
+% NOTE: source prints a raised "-1" as the numerator of this fraction (verified
+% at 600 dpi against PDF page 232, folio 216), which conflicts with the plain
+% "-1/2" already applied to this same quantity in the exponent of (7.118) --
+% the two negative signs together would make the exponent positive. Reproduced
+% exactly as printed; not corrected.
+&= \frac{-1}{1-\rho^2}\left(\frac{(x_1-\mu_1)^2}{\sigma_1^2} - \frac{2\rho(x_1-\mu_1)(x_2-\mu_2)}{\sigma_1\sigma_2} + \frac{(x_2-\mu_2)^2}{\sigma_2^2}\right).
+\end{align}
+
+Using (7.116) and (7.117), we obtain that the probability density function of the bivariate
+normal random variable given by (7.113) can be written as follows:
+\begin{equation}
+f(x_1,x_2) \;=\; \frac{1}{2\pi\sigma_1\sigma_2\sqrt{1-\rho^2}}\cdot
+\exp\!\left(-\frac{1}{2(1-\rho^2)}\left(\frac{(x_1-\mu_1)^2}{\sigma_1^2} - \frac{2\rho(x_1-\mu_1)(x_2-\mu_2)}{\sigma_1\sigma_2} + \frac{(x_2-\mu_2)^2}{\sigma_2^2}\right)\right)
+\end{equation}
+% NOTE: source does not print a closing square after this Example (verified at
+% 600 dpi: PDF page 232, folio 216, ends here; PDF page 233, folio 217, opens
+% directly with "Lemma 7.8." and no stray square at its top). Reproduced as
+% printed; no square added.
+
+\begin{lemma}
+If every two components of a nondegenerate multivariate normal random variable are
+uncorrelated, then all the components of the multivariate normal random variable are
+independent.
+
+In other words, if $\bfX = (X_i)_{i=1:n}$ is a multivariate normal random variable and if
+$\cov(X_j,X_k) = 0$ for all $1 \le j \neq k \le n$, then $X_1, X_2, \ldots, X_n$ are independent
+normal random variables.
+\end{lemma}
+
+\begin{proof}
+Since $\Sigma_{\bfx}(X_j,X_k) = \cov(X_j,X_k) = 0$ for all $1 \le j \neq k \le n$, it follows
+that $\Sigma_{\bfx}$ is a diagonal matrix with $\Sigma_{\bfx}(i,i) = \var(X_i) = \sigma_i^2$ for
+all $i = 1:n$. Thus, $\Sigma_{\bfx} = \diag\!\left(\sigma_i^2\right)_{i=1:n}$ and
+$\Sigma_{\bfx}^{-1} = \diag\!\left(\frac{1}{\sigma_i^2}\right)_{i=1:n}$; see (1.94). From
+(10.25), we obtain that
+\begin{equation}
+(x-\mu_{\bfx})^t(\Sigma_{\bfx})^{-1}(x-\mu_{\bfx}) \;=\; \sum_{i=1}^n \frac{1}{\sigma_i^2}(x_i-\mu_i)^2.
+\end{equation}
+
+Also, from (10.1), we find that
+\begin{equation}
+\det(\Sigma_{\bfx}) \;=\; \prod_{i=1}^n \sigma_i^2.
+\end{equation}
+
+From (7.113), and using (7.119) and (7.120), it follows that the probability density function
+of the nondegenerate multivariate normal variable $\bfX$ is
+\begin{align*}
+f(x) &= \frac{1}{(2\pi)^{n/2}\sqrt{\prod_{i=1}^n\sigma_i^2}}\exp\!\left(-\frac12\sum_{i=1}^n\frac{(x_i-\mu_i)^2}{\sigma_i^2}\right) \\
+&= \prod_{i=1}^n \frac{1}{\sqrt{2\pi\sigma_i^2}}\exp\!\left(-\frac{(x_i-\mu_i)^2}{2\sigma_i^2}\right) \\
+&= \prod_{i=1}^n f_i(x_i),
+\end{align*}
+where
+\begin{equation}
+f_i(x_i) \;=\; \frac{1}{\sqrt{2\pi\sigma_i^2}}\exp\!\left(-\frac{(x_i-\mu_i)^2}{2\sigma_i^2}\right).
+\end{equation}
+
+Since $f(x)$ can be written as a product of functions of the underlying variables $x_1, x_2,
+\ldots, x_n$, we conclude that the random variables $X_1, X_2, \ldots, X_n$ are independent.
+Also, since the function $f_i$ given by (7.121) is the probability density function of a normal
+variable with mean $\mu_i$ and variance $\sigma_i^2$, see (7.110), it follows that $X_i$ is a
+normal random variable, i.e., $X_i \sim N(\mu_i,\sigma_i^2)$, for all $i = 1:n$.
+\end{proof}
+
+\begin{theorem}
+A random variable $\bfX = (X_i)_{i=1:n}$ is a multivariate normal random variable if and only if
+any linear combination of the components $X_1, X_2, \ldots, X_n$ of $\bfX$ is a normal random
+variable, i.e., if and only if $\sum_{i=1}^n c_iX_i$ is normal for any $c_i \in \R$, $i = 1:n$.
+\end{theorem}
+
+This result is very important for practical applications, e.g., for modeling portfolio returns,
+and can be regarded as an alternative definition for multivariate normal variables. Its proof is
+beyond our purpose here and can be found, e.g., in \cite{24}.
+
+\begin{theorem}
+Let $\bfX \sim N(\mu_{\bfx},\Sigma_{\bfx})$ be an $n$-dimensional multivariate normal random
+variable. Let $\bfY$ be the multivariate random variable given by
+\begin{equation}
+\bfY \;=\; b + M\bfX,
+\end{equation}
+where $M$ is an $m \times n$ matrix and $b$ is an $m \times 1$ column vector. Then, $\bfY$ is an
+$m$-dimensional multivariate normal variable with mean $b + M\mu_{\bfx}$ and covariance matrix
+$M\Sigma_{\bfx}M^t$, i.e.,
+\begin{equation}
+\bfY \;\sim\; N(b+M\mu_{\bfx}, M\Sigma_{\bfx}M^t).
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Recall from (7.84) that if $\bfY = b+M\bfX$, then
+\[
+\mu_{\bfY} \;=\; b + M\mu_{\bfx} \qquad \text{and} \qquad \Sigma_{\bfY} \;=\; M\Sigma_{\bfx}M^t.
+\]
+Thus, in order to establish (7.123), it is enough to show that $\bfY$ is multivariate normal.
+We do so by showing that any linear combination of the components $Y_1, Y_2, \ldots, Y_m$ of
+$\bfY$ is a normal random variable; see Theorem 7.7.
+
+Let $\sum_{j=1}^m c_jY_j$ be a linear combination of $Y_1, Y_2, \ldots, Y_m$, where $c_j$, $j =
+1:m$, are arbitrary constants. Let $C = (c_j)_{j=1:m}$ be the corresponding $m \times 1$ column
+vector. From (1.6), we find that
+\begin{equation}
+\sum_{j=1}^m c_jY_j \;=\; C^t\bfY,
+\end{equation}
+and therefore, from (7.122) and (7.124), we obtain that
+\begin{align}
+\sum_{j=1}^m c_jY_j &= C^t\bfY \;=\; C^t(b+M\bfX) \;=\; C^tb+C^tM\bfX \notag \\
+&= C^tb+(M^tC)^t\bfX \notag \\
+&= \widetilde{c}+\widetilde{C}^t\bfX \notag \\
+&= \widetilde{c}+\sum_{i=1}^n \widetilde{c}_iX_i,
+\end{align}
+where $\widetilde{c} = C^tb$ and $\widetilde{C} = M^tC = (\widetilde{c}_i)_{i=1:n}$.
+
+% NOTE: source reads "any linear combination of Y1, Y2, . . . , Yn" here
+% (verified at 600 dpi against PDF page 234, folio 218), even though Y was
+% introduced above as m-dimensional with components Y1,...,Ym. Reproduced
+% verbatim.
+Since $\bfX$ is a multivariate normal random variable, any linear combination of $X_1, X_2,
+\ldots, X_n$ is a normal random variable; cf. Theorem 7.7. Thus, from (7.125), it follows that
+any linear combination of $Y_1, Y_2, \ldots, Y_n$ is also a normal random variable, and we
+conclude, using Theorem 7.7, that $\bfY$ is a multivariate normal random variable.
+\end{proof}
+
+\begin{lemma}
+Let $\bfZ \sim N(\bfzero,I)$ be an $n$-dimensional multivariate standard normal variable, and
+let $Q$ be an $n \times n$ orthogonal matrix. Then, $Q\bfZ$ is also an $n$-dimensional
+multivariate standard normal variable, i.e., $Q\bfZ \sim N(\bfzero,I)$.
+\end{lemma}
+
+\begin{proof}
+Note that, if $\bfZ \sim N(\bfzero,I)$, then $\mu_{\bfz} = \bfzero$ and $\Sigma_{\bfz} = I$. From
+(7.123), it follows that
+\[
+Q\bfZ \;\sim\; N(\bfzero,Q\Sigma_{\bfz}Q^t) \;=\; N(\bfzero,QQ^t) \;=\; N(\bfzero,I),
+\]
+since $QQ^t = I$ for any orthogonal matrix $Q$; cf. (10.14).
+\end{proof}
+
+% END OF CHUNK c3 (PAGES 227-234). PDF page 234 (folio 218) ends cleanly here,
+% immediately after the proof of Lemma 7.9 closes -- no environment and no
+% non-environment example/solution block is left open. Section 7.6
+% "Multivariate normal random variables" itself continues past this point
+% (chunk c4 owns PDF pages 235-242); do not re-open its \section{} heading.

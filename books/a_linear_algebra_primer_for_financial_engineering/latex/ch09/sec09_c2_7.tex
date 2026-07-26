@@ -1,0 +1,64 @@
+% PAGES: 285-285
+% Opens subsection 9.4.1. Ends mid-derivation: the align block for (9.66)
+% closes with a trailing comma, continuing on PDF page 286 (folio 270) with
+% "since, from (9.60), it follows that". Footnote 7 (referenced by
+% "(9.63),$^7$" below) is attached here since its marker appears on this
+% page; its text is transcribed at the point where it is anchored.
+
+\subsection{Maximum return portfolios and the tangency portfolio}
+
+As was the case for the minimum variance portfolio, see section 9.3.1, any maximum
+return portfolio consists of a cash position that is determined to match the required
+variance of the portfolio return, with the rest of the portfolio invested in the
+tangency portfolio.
+
+Recall from (9.36) that the asset weights vector in the tangency portfolio can be
+written as
+\begin{equation}
+w_T \;=\; \frac{1}{\bfone^t\Sigma_R^{-1}\bar\mu}\Sigma_R^{-1}\bar\mu,
+\end{equation}
+where $\frac{1}{\bfone^t\Sigma_R^{-1}\bar\mu}$ is a constant and $\Sigma_R^{-1}\bar\mu$
+is a vector. Then,
+\begin{align}
+w_T^t\Sigma_Rw_T &= \frac{1}{\left(\bfone^t\Sigma_R^{-1}\bar\mu\right)^2}
+\left(\Sigma_R^{-1}\bar\mu\right)^t\Sigma_R\left(\Sigma_R^{-1}\bar\mu\right) \notag\\
+&= \frac{1}{\left(\bfone^t\Sigma_R^{-1}\bar\mu\right)^2}
+\bar\mu^t\left(\Sigma_R^{-1}\right)^t\left(\Sigma_R\Sigma_R^{-1}\right)\bar\mu \notag\\
+&= \frac{1}{\left(\bfone^t\Sigma_R^{-1}\bar\mu\right)^2}\bar\mu^t\Sigma_R^{-1}\bar\mu,
+\end{align}
+where for (9.63) we used the facts that $\left(\Sigma_R^{-1}\right)^t=\Sigma_R^{-1}$
+since $\Sigma_R^{-1}$ is a symmetric matrix, see Lemma 5.4, and that
+$\Sigma_R\Sigma_R^{-1}=I$.
+
+By taking the square root on both sides of (9.63),\footnote{Note that
+$\bar\mu^t\Sigma_R^{-1}\bar\mu > 0$ since $\Sigma_R$ is a symmetric positive definite
+matrix, and therefore $\Sigma_R^{-1}$ is also symmetric positive definite; cf. Lemma
+5.4.} we find that
+\[
+\sqrt{w_T^t\Sigma_Rw_T} \;=\; \frac{1}{\bfone^t\Sigma_R^{-1}\bar\mu}
+\sqrt{\bar\mu^t\Sigma_R^{-1}\bar\mu}\cdot
+\operatorname{sign}\!\left(\bfone^t\Sigma_R^{-1}\bar\mu\right),
+\]
+and therefore
+\begin{equation}
+\frac{\bfone^t\Sigma_R^{-1}\bar\mu}{\sqrt{\bar\mu^t\Sigma_R^{-1}\bar\mu}} \;=\;
+\frac{1}{\sqrt{w_T^t\Sigma_Rw_T}}\cdot
+\operatorname{sign}\!\left(\bfone^t\Sigma_R^{-1}\bar\mu\right).
+\end{equation}
+
+Then, from (9.60) and (9.64), it follows that
+\begin{equation}
+w_{max,cash} \;=\; 1-\frac{\sigma_P}{\sqrt{w_T^t\Sigma_Rw_T}}\cdot
+\operatorname{sign}\!\left(\bfone^t\Sigma_R^{-1}\bar\mu\right).
+\end{equation}
+
+Moreover, from (9.59) and (9.62), we find that
+\begin{align}
+w_{max} &= \frac{\sigma_P}{\sqrt{\bar\mu^t\Sigma_R^{-1}\bar\mu}}\Sigma_R^{-1}\bar\mu
+\notag\\
+&= \sigma_P\frac{\bfone^t\Sigma_R^{-1}\bar\mu}{\sqrt{\bar\mu^t\Sigma_R^{-1}\bar\mu}}
+\cdot\frac{1}{\bfone^t\Sigma_R^{-1}\bar\mu}\Sigma_R^{-1}\bar\mu \notag\\
+&= \sigma_P\frac{\bfone^t\Sigma_R^{-1}\bar\mu}{\sqrt{\bar\mu^t\Sigma_R^{-1}\bar\mu}}\,w_T
+\notag\\
+&= (1-w_{max,cash})\,w_T,
+\end{align}

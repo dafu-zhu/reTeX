@@ -1,0 +1,64 @@
+% PAGES: 271-271
+% Section 9.1 closed cleanly at the end of sec09_c1_4.tex. This file opens
+% section 9.2 fresh.
+% "Minimum variance portfolio" below is a bold run-in header set at ordinary
+% body-text size (verified at 600 dpi against the same-size bold "Minimum
+% variance portfolio:" problem-statement header on folio 253/sec09_c1_3.tex),
+% not an enlarged \subsection-style heading -- the numbered "9.3.1" subsection
+% later in this chapter is visibly larger. Reproduced as \textbf{} on its own
+% line, not \subsection*{}.
+
+\section{Blueprints for finding efficient portfolios}
+
+\noindent\textbf{Minimum variance portfolio}
+
+The asset allocation for a portfolio invested in $n$ assets and with a cash position,
+with given expected return $\mu_P$ and smallest variance of its return can be found
+below:
+\begin{itemize}
+\item asset weights vector:
+\begin{equation}
+w_{min} \;=\; \frac{\mu_P-r_f}{\bar\mu^t\Sigma_R^{-1}\bar\mu}\Sigma_R^{-1}\bar\mu;
+\end{equation}
+\item weight of the cash position:
+\begin{equation}
+w_{min,cash} \;=\; 1-\bfone^tw_{min} \;=\;
+1-(\mu_P-r_f)\frac{\bfone^t\Sigma_R^{-1}\bar\mu}{\bar\mu^t\Sigma_R^{-1}\bar\mu}.
+\end{equation}
+\end{itemize}
+
+The standard deviation of the return of the minimum variance portfolio is $\sigma_{min}
+= \dfrac{\mu_P-r_f}{\sqrt{\bar\mu^t\Sigma_R^{-1}\bar\mu}}$, and can be computed
+numerically as
+\[
+\sigma_{min} \;=\; \sqrt{w_{min}^t\Sigma_Rw_{min}}.
+\]
+
+The asset allocation for the minimum variance portfolio can be computed using the
+pseudocode from Table 9.1.
+
+\begin{table}[H]
+\centering
+\caption{Pseudocode for asset allocation of minimum variance portfolio}
+\fbox{\begin{minipage}{0.85\linewidth}
+Input:\\
+$\Sigma_R = n\times n$ covariance matrix of the returns of $n$ assets\\
+$\mu = n\times 1$ vector of expected values of the returns of $n$ assets\\
+$r_f = $ risk--free rate\\
+$\mu_P = $ required expected return of the portfolio
+\bigskip
+
+Output:\\
+$w_{min} = $ asset weights vector for the minimum variance portfolio\\
+$w_{min,cash} = $ weight of cash position for the minimum variance portfolio\\
+$\sigma_{min} = $ standard deviation of the return of the minimum variance portfolio
+\bigskip
+
+$\bar\mu = \mu - r_f\bfone$\\
+$x = \text{linear\_solve\_cholesky}(\Sigma_R,\bar\mu)$ \hfill\textit{// compute $x =
+\Sigma_R^{-1}\bar\mu$}\\
+$w_{min} = \dfrac{\mu_P-r_f}{\bar\mu^tx}x$\\
+$w_{min,cash} = 1 - \bfone^tw_{min}$\\
+$\sigma_{min} = \sqrt{w_{min}^t\Sigma_Rw_{min}}$
+\end{minipage}}
+\end{table}

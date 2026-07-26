@@ -1,0 +1,305 @@
+%% Preamble — a_linear_algebra_primer_for_financial_engineering
+%% Generated in Phase 0 from the scanned source.
+
+\documentclass[11pt,openany]{book}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+
+%% -------------------------------------------------------
+%% Page geometry — measured from the scan
+%% Trim size 438.48 x 648.99 pt = 6.09in x 9.01in
+%% Text block  ~4.69in wide, ~7.41in tall
+%% -------------------------------------------------------
+\usepackage[
+  paperwidth=6.09in,
+  paperheight=9.01in,
+  left=0.70in,
+  right=0.70in,
+  top=0.75in,
+  bottom=0.85in,
+  headheight=14pt,
+  headsep=18pt,
+  footskip=24pt
+]{geometry}
+
+%% -------------------------------------------------------
+%% Math
+%% -------------------------------------------------------
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{bm}
+
+%% -------------------------------------------------------
+%% Graphics and floats
+%% -------------------------------------------------------
+\usepackage{graphicx}
+\usepackage{float}          % provides the [H] float specifier
+\graphicspath{{./figures/}{../figures/}}
+
+%% -------------------------------------------------------
+%% Lists, tables, index
+%% -------------------------------------------------------
+\usepackage[shortlabels]{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{makeidx}
+\makeindex
+
+%% -------------------------------------------------------
+%% Links
+%% -------------------------------------------------------
+\usepackage{xcolor}
+\usepackage[
+  colorlinks=true,
+  linkcolor={blue!60!black},
+  citecolor={blue!60!black},
+  urlcolor={blue!60!black}
+]{hyperref}
+
+%% -------------------------------------------------------
+%% Headers / footers — running heads match the source:
+%% verso "N.M. SECTION TITLE", recto "CHAPTER N. CHAPTER TITLE"
+%% -------------------------------------------------------
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[LE]{\small\thepage\quad\nouppercase{\leftmark}}
+\fancyhead[RO]{\small\nouppercase{\rightmark}\quad\thepage}
+\renewcommand{\headrulewidth}{0pt}
+
+%% -------------------------------------------------------
+%% Spacing
+%% -------------------------------------------------------
+\setlength{\parindent}{1.2em}
+\setlength{\parskip}{0pt}
+\raggedbottom
+\emergencystretch=2em
+
+%% -------------------------------------------------------
+%% Numbering — equations, figures and tables run per chapter
+%% -------------------------------------------------------
+\numberwithin{equation}{chapter}
+\numberwithin{figure}{chapter}
+\numberwithin{table}{chapter}
+\setcounter{tocdepth}{2}
+\setcounter{secnumdepth}{3}
+
+%% -------------------------------------------------------
+%% Theorem environments
+%%
+%% IMPORTANT — this source uses SEPARATE counters per environment type,
+%% each reset per chapter. This is the documented exception to the usual
+%% shared-counter rule, and it is verified on the scanned pages:
+%%   p.124  Definition 4.7, Definition 4.8, Theorem 4.6  (same page)
+%%   p.113  Definition 4.2 immediately followed by Theorem 4.1
+%%   p.140  Theorem 5.1 immediately followed by Lemma 5.1
+%% Do NOT convert these to a shared counter — it would renumber the book.
+%% -------------------------------------------------------
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[chapter]
+\newtheorem{lemma}{Lemma}[chapter]
+\newtheorem{corollary}{Corollary}[chapter]
+\newtheorem{proposition}{Proposition}[chapter]
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[chapter]
+
+%% The source sets "Example:", "Answer:" and "Remark:" as unnumbered runin
+%% italic labels, and closes them with the same open square as a proof.
+\newenvironment{examplex}%
+  {\par\medskip\noindent\textit{Example:}\ }%
+  {\hfill$\square$\par\medskip}
+\newenvironment{answerx}%
+  {\par\medskip\noindent\textit{Answer:}\ }%
+  {\par\medskip}
+\newenvironment{remarkx}%
+  {\par\medskip\noindent\textit{Remark:}\ }%
+  {\par\medskip}
+
+%% The proof environment auto-appends \qedsymbol.
+%% NEVER write \qed, \blacksquare or \hfill$\blacksquare$ inside a proof.
+%% Use \qedhere only when a proof ends with a displayed equation or list.
+\renewcommand{\qedsymbol}{$\square$}
+
+%% -------------------------------------------------------
+%% Exercises — plain arabic list, restarting at 1 in each chapter's
+%% "N.M Exercises" section. Sub-parts are lowercase roman in parentheses.
+%% -------------------------------------------------------
+\newcommand{\exerciselabel}{\arabic*.}
+\newenvironment{exercises}%
+  {\begin{enumerate}[leftmargin=*,itemsep=0.9em,label=\exerciselabel,ref=\arabic*]}%
+  {\end{enumerate}}
+\newenvironment{subparts}%
+  {\begin{enumerate}[leftmargin=*,itemsep=0.4em,label=(\roman*),ref=(\roman*)]}%
+  {\end{enumerate}}
+
+%% -------------------------------------------------------
+%% Metadata macros (title / author / edition only — never a publisher)
+%% -------------------------------------------------------
+\newcommand{\booktitle}{A Linear Algebra Primer for Financial Engineering}
+\newcommand{\booksubtitle}{Covariance Matrices, Eigenvectors, OLS, and more}
+\newcommand{\bookauthor}{Dan Stefanica}
+\newcommand{\bookedition}{1}
+
+%% -------------------------------------------------------
+%% Number fields and script letters
+%% -------------------------------------------------------
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Prob}{\mathbb{P}}
+\newcommand{\Expect}{\mathbb{E}}
+
+\newcommand{\calA}{\mathcal{A}}
+\newcommand{\calB}{\mathcal{B}}
+\newcommand{\calD}{\mathcal{D}}
+\newcommand{\calF}{\mathcal{F}}
+\newcommand{\calG}{\mathcal{G}}
+\newcommand{\calL}{\mathcal{L}}
+\newcommand{\calN}{\mathcal{N}}
+\newcommand{\calO}{\mathcal{O}}
+\newcommand{\calP}{\mathcal{P}}
+\newcommand{\calQ}{\mathcal{Q}}
+\newcommand{\calS}{\mathcal{S}}
+\newcommand{\calV}{\mathcal{V}}
+\newcommand{\calX}{\mathcal{X}}
+
+%% -------------------------------------------------------
+%% Probability / statistics operators
+%% The source prints var, cov and corr in lowercase upright type and the
+%% expectation as an italic capital E; both cases are provided so that
+%% either spelling an agent reaches for resolves.
+%% -------------------------------------------------------
+\newcommand{\E}[1]{E\!\left[#1\right]}
+\newcommand{\Var}{\operatorname{var}}
+\newcommand{\var}{\operatorname{var}}
+\newcommand{\Cov}{\operatorname{cov}}
+\newcommand{\cov}{\operatorname{cov}}
+\newcommand{\Corr}{\operatorname{corr}}
+\newcommand{\corr}{\operatorname{corr}}
+\newcommand{\Std}{\operatorname{std}}
+\newcommand{\std}{\operatorname{std}}
+\DeclareMathOperator*{\plim}{plim}
+\newcommand{\dto}{\xrightarrow{d}}
+\newcommand{\pto}{\xrightarrow{p}}
+\newcommand{\asto}{\xrightarrow{\mathrm{a.s.}}}
+\newcommand{\iid}{\overset{\mathrm{iid}}{\sim}}
+\newcommand{\Normal}{\mathcal{N}}
+\newcommand{\VaR}{\operatorname{VaR}}
+
+%% -------------------------------------------------------
+%% Linear algebra operators used by this book
+%% -------------------------------------------------------
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\Null}{Null}
+\DeclareMathOperator{\Range}{Range}
+\DeclareMathOperator{\Span}{span}
+\DeclareMathOperator{\diag}{diag}
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\dete}{det}
+\DeclareMathOperator{\sgn}{sgn}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+
+%% The source writes the transpose as a lowercase superscript t: A^t
+\newcommand{\tp}{^{t}}
+\newcommand{\transpose}{^{t}}
+\newcommand{\inv}{^{-1}}
+
+%% Calculus
+\newcommand{\pd}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand{\pdd}[2]{\frac{\partial^{2} #1}{\partial #2^{2}}}
+\newcommand{\dd}[2]{\frac{d #1}{d #2}}
+\newcommand{\grad}{\nabla}
+
+%% Delimiters
+\newcommand{\abs}[1]{\left|#1\right|}
+\newcommand{\norm}[1]{\left\|#1\right\|}
+\newcommand{\inner}[2]{\left(#1,#2\right)}
+\newcommand{\set}[1]{\left\{#1\right\}}
+
+%% -------------------------------------------------------
+%% Bold vector and matrix macros.
+%%
+%% The only symbol this book actually sets in bold is the vector of ones
+%% (\bfone), e.g. $\bfone^{t} w_{min}$ in Chapter 9. The remaining macros
+%% are defined anyway: an undefined \bf<Name> is a fatal error that
+%% cascades through an entire chapter, so the whole alphabet plus the
+%% Greek letters are provided up front. Never use \vec{} or a raw
+%% \mathbf{} in the chapter sources — always a \bf<Name> macro.
+%% -------------------------------------------------------
+\newcommand{\bfzero}{\mathbf{0}}
+\newcommand{\bfone}{\mathbf{1}}
+
+\newcommand{\bfa}{\mathbf{a}}   \newcommand{\bfb}{\mathbf{b}}
+\newcommand{\bfc}{\mathbf{c}}   \newcommand{\bfd}{\mathbf{d}}
+\newcommand{\bfe}{\mathbf{e}}   \newcommand{\bff}{\mathbf{f}}
+\newcommand{\bfg}{\mathbf{g}}   \newcommand{\bfh}{\mathbf{h}}
+\newcommand{\bfi}{\mathbf{i}}   \newcommand{\bfj}{\mathbf{j}}
+\newcommand{\bfk}{\mathbf{k}}   \newcommand{\bfl}{\mathbf{l}}
+\newcommand{\bfm}{\mathbf{m}}   \newcommand{\bfn}{\mathbf{n}}
+\newcommand{\bfo}{\mathbf{o}}   \newcommand{\bfp}{\mathbf{p}}
+\newcommand{\bfq}{\mathbf{q}}   \newcommand{\bfr}{\mathbf{r}}
+\newcommand{\bfs}{\mathbf{s}}   \newcommand{\bft}{\mathbf{t}}
+\newcommand{\bfu}{\mathbf{u}}   \newcommand{\bfv}{\mathbf{v}}
+\newcommand{\bfw}{\mathbf{w}}   \newcommand{\bfx}{\mathbf{x}}
+\newcommand{\bfy}{\mathbf{y}}   \newcommand{\bfz}{\mathbf{z}}
+
+\newcommand{\bfA}{\mathbf{A}}   \newcommand{\bfB}{\mathbf{B}}
+\newcommand{\bfC}{\mathbf{C}}   \newcommand{\bfD}{\mathbf{D}}
+\newcommand{\bfE}{\mathbf{E}}   \newcommand{\bfF}{\mathbf{F}}
+\newcommand{\bfG}{\mathbf{G}}   \newcommand{\bfH}{\mathbf{H}}
+\newcommand{\bfI}{\mathbf{I}}   \newcommand{\bfJ}{\mathbf{J}}
+\newcommand{\bfK}{\mathbf{K}}   \newcommand{\bfL}{\mathbf{L}}
+\newcommand{\bfM}{\mathbf{M}}   \newcommand{\bfN}{\mathbf{N}}
+\newcommand{\bfO}{\mathbf{O}}   \newcommand{\bfP}{\mathbf{P}}
+\newcommand{\bfQ}{\mathbf{Q}}   \newcommand{\bfR}{\mathbf{R}}
+\newcommand{\bfS}{\mathbf{S}}   \newcommand{\bfT}{\mathbf{T}}
+\newcommand{\bfU}{\mathbf{U}}   \newcommand{\bfV}{\mathbf{V}}
+\newcommand{\bfW}{\mathbf{W}}   \newcommand{\bfX}{\mathbf{X}}
+\newcommand{\bfY}{\mathbf{Y}}   \newcommand{\bfZ}{\mathbf{Z}}
+
+\newcommand{\bfalpha}{\boldsymbol{\alpha}}
+\newcommand{\bfbeta}{\boldsymbol{\beta}}
+\newcommand{\bfgamma}{\boldsymbol{\gamma}}
+\newcommand{\bfdelta}{\boldsymbol{\delta}}
+\newcommand{\bfepsilon}{\boldsymbol{\epsilon}}
+\newcommand{\bfvarepsilon}{\boldsymbol{\varepsilon}}
+\newcommand{\bfzeta}{\boldsymbol{\zeta}}
+\newcommand{\bfeta}{\boldsymbol{\eta}}
+\newcommand{\bftheta}{\boldsymbol{\theta}}
+\newcommand{\bfiota}{\boldsymbol{\iota}}
+\newcommand{\bfkappa}{\boldsymbol{\kappa}}
+\newcommand{\bflambda}{\boldsymbol{\lambda}}
+\newcommand{\bfmu}{\boldsymbol{\mu}}
+\newcommand{\bfnu}{\boldsymbol{\nu}}
+\newcommand{\bfxi}{\boldsymbol{\xi}}
+\newcommand{\bfpi}{\boldsymbol{\pi}}
+\newcommand{\bfrho}{\boldsymbol{\rho}}
+\newcommand{\bfsigma}{\boldsymbol{\sigma}}
+\newcommand{\bftau}{\boldsymbol{\tau}}
+\newcommand{\bfupsilon}{\boldsymbol{\upsilon}}
+\newcommand{\bfphi}{\boldsymbol{\phi}}
+\newcommand{\bfvarphi}{\boldsymbol{\varphi}}
+\newcommand{\bfchi}{\boldsymbol{\chi}}
+\newcommand{\bfpsi}{\boldsymbol{\psi}}
+\newcommand{\bfomega}{\boldsymbol{\omega}}
+
+\newcommand{\bfGamma}{\boldsymbol{\Gamma}}
+\newcommand{\bfDelta}{\boldsymbol{\Delta}}
+\newcommand{\bfTheta}{\boldsymbol{\Theta}}
+\newcommand{\bfLambda}{\boldsymbol{\Lambda}}
+\newcommand{\bfXi}{\boldsymbol{\Xi}}
+\newcommand{\bfPi}{\boldsymbol{\Pi}}
+\newcommand{\bfSigma}{\boldsymbol{\Sigma}}
+\newcommand{\bfUpsilon}{\boldsymbol{\Upsilon}}
+\newcommand{\bfPhi}{\boldsymbol{\Phi}}
+\newcommand{\bfPsi}{\boldsymbol{\Psi}}
+\newcommand{\bfOmega}{\boldsymbol{\Omega}}

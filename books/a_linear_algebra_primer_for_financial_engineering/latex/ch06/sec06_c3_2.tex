@@ -1,0 +1,127 @@
+% PAGES: 195-196
+% Continues directly after sec06_c3_1.tex (folio 178), which ends cleanly
+% after equation (6.54) with no environment open.
+
+\begin{table}[H]
+\centering
+\caption{Cholesky decomposition for tridiagonal spd matrices}
+\fbox{\begin{minipage}{0.85\linewidth}
+Function Call:\\
+$U = \text{cholesky\_tridiag\_spd}(A)$
+\bigskip
+
+Input:\\
+$A = $ tridiagonal symmetric positive definite matrix of size $n$
+\bigskip
+
+Output:\\
+$U = $ upper triangular bidiagonal matrix such that $U\tp U = A$
+\bigskip
+
+\noindent
+for $i = 1 : (n-1)$\\
+\hspace*{1.5em}$U(i,i) = \sqrt{A(i,i)};\ U(i,i+1) = A(i,i+1)/U(i,i);$\\
+\hspace*{1.5em}$A(i+1,i+1) = A(i+1,i+1) - U(i,i+1)^2;$\\
+end\\
+$U(n,n) = \sqrt{A(n,n)}$
+\end{minipage}}
+\end{table}
+
+Thus, if $A$ is a tridiagonal symmetric positive definite matrix, the Cholesky
+decomposition $U = \text{cholesky}(A)$ from the linear solver routine from Table 6.2
+can be replaced by the tridiagonal solver $U = \text{cholesky\_tridiag\_spd}(A)$ from
+Table 6.4.
+
+Moreover, since the matrix $U\tp$ is lower triangular bidiagonal, the forward
+substitution $y = \text{forward\_subst}(U\tp,b)$ from Table 6.2 can be replaced by the
+forward substitution $y = \text{forward\_subst\_bidiag}(U\tp,b)$, see Table 2.2, and,
+since the matrix $U$ is upper triangular bidiagonal, the backward substitution $x =
+\text{backward\_subst}(U,y)$ from Table 6.2 can be replaced by $x =
+\text{backward\_subst\_bidiag}(U,y)$, see Table 2.4.
+
+The resulting routine for solving linear systems corresponding to tridiagonal
+symmetric positive definite matrices using the Cholesky decomposition can be found in
+Table 6.5.
+
+\begin{table}[H]
+\centering
+\caption{Tridiagonal spd linear solver using Cholesky decomposition}
+\fbox{\begin{minipage}{0.85\linewidth}
+Function Call:\\
+$x = \text{linear\_solve\_cholesky\_tridiag\_spd}(A,b)$
+\bigskip
+
+Input:\\
+$A = $ tridiagonal symmetric positive definite matrix of size $n$\\
+$b = $ column vector of size $n$
+\bigskip
+
+Output:\\
+$x = $ solution to $Ax = b$
+\bigskip
+
+\noindent
+$U = \text{cholesky\_tridiag\_spd}(A)$; \hfill\textit{// Cholesky decomposition of $A$}\\
+$y = \text{forward\_subst\_bidiag}(U\tp,b)$; \hfill\textit{// solve $U\tp y = b$}\\
+$x = \text{backward\_subst\_bidiag}(U,y)$; \hfill\textit{// solve $Ux = y$}
+\end{minipage}}
+\end{table}
+
+The operation count for the pseudocode from Table 6.5 is as follows:
+\begin{itemize}
+\item $4n-3$ for the Cholesky decomposition of $A$; cf. (6.54);
+\item $3n-2$ for the forward substitution for solving $U\tp y = b$; cf. (2.10);
+\item $3n-2$ for the backward substitution for solving $Ux = y$; cf. (2.20),
+\end{itemize}
+for a total operation count of
+\[
+(4n-3) + (3n-2) + (3n-2) \;=\; 10n-7 \;=\; 10n + O(1);
+\]
+see (10.77) from Section 10.2.3 for a proof of the last equality.
+
+\medskip
+\noindent\textbf{LU linear solvers for tridiagonal spd matrices.}\\
+Recall from Sylvester's Criterion (Theorem 5.8) that all the principal minors of a
+symmetric positive definite matrix are positive. Then, it follows from Theorem 2.1
+that the tridiagonal symmetric positive definite matrix $A$ has an LU decomposition
+without pivoting, and therefore the linear system $Ax = b$ can be solved using the
+solver $\text{linear\_solve\_LU\_no\_pivoting\_tridiag}$ from Table 2.8; see also the
+explicit form from Table 2.9. The corresponding routines can be found\footnote{Note
+that the matrix $U$ from the pseudocodes from Tables 6.6 and 6.7 is not the Cholesky
+factor of the matrix $A$, but the $U$ factor from the LU decomposition without
+pivoting of $A$.} in Table 6.6, and, in explicit form, in Table 6.7.
+
+\begin{table}[H]
+\centering
+\caption{Tridiagonal spd linear solver using LU decomposition}
+\fbox{\begin{minipage}{0.85\linewidth}
+Function Call:\\
+$x = \text{linear\_solve\_LU\_tridiag\_spd}(A,b)$
+\bigskip
+
+Input:\\
+$A = $ tridiagonal symmetric positive definite matrix of size $n$\\
+$b = $ column vector of size $n$
+\bigskip
+
+Output:\\
+$x = $ solution to $Ax = b$
+\bigskip
+
+\noindent
+$[L,U] = \text{lu\_no\_pivoting\_tridiag}(A)$; \hfill\textit{// LU decomposition of $A$}\\
+$y = \text{forward\_subst\_bidiag}(L,b)$; \hfill\textit{// solve $Ly = b$}\\
+$x = \text{backward\_subst\_bidiag}(U,y)$; \hfill\textit{// solve $Ux = y$}
+\end{minipage}}
+\end{table}
+
+As shown in section 2.5.1, the operation count for the LU linear solver from Table 6.7
+is $8n + O(1)$, which is an improvement over the $10n + O(1)$ operation count for the
+Cholesky linear solver from Table 6.5.
+
+We conclude that the efficient way to solve a linear system corresponding to a
+tridiagonal symmetric positive definite matrix is by using the LU decomposition solver
+from Table 6.6 or Table 6.7, with an operation count of
+\begin{equation}
+8n \;+\; O(1).
+\end{equation}

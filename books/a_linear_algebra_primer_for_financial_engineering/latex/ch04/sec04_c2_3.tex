@@ -1,0 +1,152 @@
+% PAGES: 139-140
+% Continues sec04_c2_2.tex (pages 136-138), whose final \end{proof} (proof
+% of Theorem 4.4) closes cleanly at the bottom of page 138 -- confirmed by
+% page 139 opening with plain narrative text ("The result below is an
+% equivalent characterization...") rather than a "Proof." continuation.
+% No environment is left open across that boundary.
+%
+% Still section 4.2 "Diagonal forms" through Lemma 4.8; section 4.3
+% "Diagonally dominant matrices" begins near the bottom of page 139 (folio
+% 123) with the R_j definition (4.28).
+%
+% This is the last file of the c2 chunk (PDF pages 134-140 / folios
+% 118-124). Theorem 4.6 (Gershgorin's Theorem) is stated in full at the
+% end of page 140 (folio 124), followed by a complete explanatory remark
+% ("Note that Gershgorin's Theorem can also be stated as follows: ...in
+% the complex space."). That remark sentence is grammatically complete and
+% is the last thing on page 140 -- no \[ \], \begin{...}, or sentence is
+% left open. The theorem's "Proof." itself has not yet appeared on the
+% page (it begins on the next page, folio 125, PDF page 141, outside this
+% assignment); the next chunk's agent should open it with a plain
+% \begin{proof}...\end{proof} following this file's content, not as a
+% continuation of anything opened here.
+
+The result below is an equivalent characterization of diagonalizable matrices and
+follows immediately from the proof of Theorem 4.4 above:
+
+\begin{theorem}
+A square matrix of size $n$ has a diagonal form if and only if the matrix has $n$
+linearly independent eigenvectors.
+\end{theorem}
+
+\begin{lemma}
+Let $A$ be a diagonalizable matrix, and let $A = V\Lambda V^{-1}$ be its diagonal
+form. For every positive integer $p$, the matrix $A^p$ is diagonalizable and has the
+following diagonal form:
+\begin{equation}
+A^p \;=\; V\Lambda^p V^{-1}.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+If $p$ is a positive integer, then
+\begin{equation}
+\begin{split}
+A^p &= (V\Lambda V^{-1})^p \;=\; (V\Lambda V^{-1})(V\Lambda V^{-1}) \dots (V\Lambda
+V^{-1})(V\Lambda V^{-1})\\
+&= V\Lambda (V^{-1}V) \Lambda (V^{-1}V) \dots (V^{-1}V) \Lambda V^{-1}\\
+&= V\Lambda^p V^{-1},
+\end{split}
+\end{equation}
+since $V^{-1}V = I$.
+\end{proof}
+
+\begin{lemma}
+Let $A$ be a nonsingular diagonalizable matrix, and let $A = V\Lambda V^{-1}$ be its
+diagonal form. Then, the inverse matrix $A^{-1}$ is also diagonalizable and has the
+diagonal form $A^{-1} = V\Lambda^{-1}V^{-1}$. Moreover, for every positive integer
+$p$, the matrix $A^{-p}$ is diagonalizable and has the following diagonal form:
+\[
+A^{-p} \;=\; V\Lambda^{-p} V^{-1}.
+\]
+\end{lemma}
+
+\begin{proof}
+From Lemma 1.7, it follows that
+\[
+A^{-1} \;=\; (V\Lambda V^{-1})^{-1} \;=\; (V^{-1})^{-1}\Lambda^{-1}V^{-1} \;=\;
+V\Lambda^{-1}V^{-1}.
+\]
+By definition, if $p$ is a positive integer, then $A^{-p} = (A^p)^{-1}$. Using
+(4.26), we obtain that
+\begin{align*}
+A^{-p} &= (A^p)^{-1} \;=\; (V\Lambda^p V^{-1})^{-1} \;=\; (V^{-1})^{-1}(\Lambda^p)^{-1}
+V^{-1}\\
+&= V\Lambda^{-p}V^{-1}.
+\end{align*}
+\end{proof}
+
+\section{Diagonally dominant matrices}
+
+Let $A$ be an $n \times n$ matrix, and denote by
+\begin{equation}
+R_j \;=\; \sum_{k=1:n,\, k \neq j} |A(j,k)|
+\end{equation}
+the sum of the absolute values of all the entries on the $j$-th row of the matrix $A$
+except for the main diagonal entry $A(j,j)$.
+
+\begin{definition}
+The $n \times n$ matrix $A$ is weakly diagonally dominant if and only if
+\begin{equation}
+|A(j,j)| \;\geq\; R_j, \quad \forall\, j = 1:n,
+\end{equation}
+where $R_j$ is given by (4.28), i.e., if and only if, for every row, the absolute
+value of the main diagonal entry from the row is greater than the sum of the absolute
+values of all the other entries in that row.
+\end{definition}
+
+\begin{definition}
+The $n \times n$ matrix $A$ is strictly diagonally dominant if and only if
+\begin{equation}
+|A(j,j)| \;>\; R_j, \quad \forall\, j = 1:n,
+\end{equation}
+where $R_j$ is given by (4.28).
+\end{definition}
+
+\begin{examplex}
+The $N \times N$ matrix
+\[
+B_N \;=\; \begin{pmatrix}
+2 & -1 & \dots & 0\\
+-1 & \ddots & \ddots & \vdots\\
+\vdots & \ddots & \ddots & -1\\
+0 & \dots & -1 & 2
+\end{pmatrix}
+\]
+is a weakly diagonally dominant matrix, since the only nonzero entries of $B_N$ are
+\begin{align*}
+B_N(j,j) &= 2, \quad \forall\, j = 1:N;\\
+B_N(j,j-1) &= -1, \quad \forall\, j = 2:N;\\
+B_N(j,j+1) &= -1, \quad \forall\, j = 1:(N-1),
+\end{align*}
+and therefore
+\begin{align*}
+\sum_{k=2:N} |B_N(1,k)| &= |B_N(1,2)| = 1 < 2 = |B_N(1,1)|;\\
+\sum_{k=1:(N-1)} |B_N(N,k)| &= |B_N(N,N-1)| = 1 < 2 = |B_N(N,N)|;\\
+\sum_{k=1:N,\, k \neq j} |B_N(j,k)| &= |B_N(j,j-1)| + |B_N(j,j+1)| = 2 = |B_N(j,j)|,
+\end{align*}
+% UNCLEAR: p.140 prints the range as $j = 2:(N-2)$; the interior rows of
+% $B_N$ run $j = 2:(N-1)$. Author error, reproduced verbatim.
+for all $j = 2:(N-2)$.
+
+Then, from definition 4.7, it follows that $B_N$ is a weakly diagonally dominant
+matrix.
+\end{examplex}
+
+\begin{theorem}
+(Gershgorin's Theorem.) Let $A$ be a square matrix of size $n$. For any eigenvalue
+$\lambda$ of $A$, there
+exists an index $j$, with $1 \leq j \leq n$, such that
+\begin{equation}
+|\lambda - A(j,j)| \;\leq\; R_j,
+\end{equation}
+where $R_j$ is given by (4.28).
+\end{theorem}
+
+Note that Gershgorin's Theorem can also be stated as follows:
+\[
+\lambda(A) \;\subset\; \bigcup_{j=1}^n D\bigl(A(j,j), R_j\bigr),
+\]
+where $\lambda(A)$ is the set of all the eigenvalues of $A$ and $D(a,R) = \{z \in \C
+\ \text{such that} \ |z-a| \leq R\}$ is the disc of center $a \in \C$ and radius
+$R > 0$ in the complex space.

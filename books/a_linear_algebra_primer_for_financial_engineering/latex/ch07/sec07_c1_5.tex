@@ -1,0 +1,65 @@
+% PAGES: 217
+
+\section{Covariance and correlation matrix estimation from time series data}
+
+Let $X_1, X_2, \ldots, X_n$ be random variables given by time series data at $N$
+data points $t_i$, $i = 1:N$, with $N > n$. Denote by $T_{X_k}$ the column vector of
+the time series data for the random variable $X_k$, for $k = 1:n$, i.e.,
+\begin{equation}
+T_{X_k} \;=\; (X_k(t_i))_{i=1:N}, \quad \forall\, k = 1:n,
+\end{equation}
+and denote by
+\begin{equation}
+T_{\bfx} \;=\; \mathrm{col}\,(T_{X_k})_{k=1:n}
+\end{equation}
+the $N \times n$ matrix of time series data for the $n$ random variables.
+
+The sample mean $\widehat{\mu}_{X_k}$ of $X_k$, the unbiased sample variance
+$\widehat{\sigma}_k^2$ of $X_k$, and the unbiased sample covariance
+$\widehat{\cov}(X_j,X_k)$ and sample correlation $\widehat{\corr}(X_j,X_k)$ of $X_j$
+and $X_k$ are given, respectively, by
+\begin{align}
+\widehat{\mu}_{X_k} &= \frac{1}{N}\sum_{i=1}^N X_k(t_i), \quad \forall\, k = 1:n; \\
+\widehat{\sigma}_k^2 &= \frac{1}{N-1}\sum_{i=1}^N \left(X_k(t_i)-\widehat{\mu}_{X_k}\right)^2, \quad \forall\, k = 1:n; \\
+\widehat{\cov}(X_j,X_k) &= \frac{1}{N-1}\sum_{i=1}^N \left(X_j(t_i)-\widehat{\mu}_{X_j}\right)\left(X_k(t_i)-\widehat{\mu}_{X_k}\right), \quad \forall\, 1\le j,k\le n; \\
+\widehat{\corr}(X_j,X_k) &= \frac{\widehat{\cov}(X_j,X_k)}{\widehat{\sigma}_j\widehat{\sigma}_k}, \quad \forall\, 1\le j,k\le n.
+\end{align}
+
+The sample covariance matrix $\widehat{\Sigma}_{\bfx}$ and the sample correlation
+matrix $\widehat{\Omega}_{\bfx}$ of the random variables $X_1, X_2, \ldots, X_n$ are
+the $n \times n$ matrices given by
+\begin{align}
+\widehat{\Sigma}_{\bfx}(j,k) &= \widehat{\cov}(X_j,X_k), \quad \forall\, 1\le j,k\le n; \\
+\widehat{\Omega}_{\bfx}(j,k) &= \widehat{\corr}(X_j,X_k), \quad \forall\, 1\le j,k\le n.
+\end{align}
+
+The following connections between the sample covariance matrix
+$\widehat{\Sigma}_{\bfx}$ and the sample correlation matrix $\widehat{\Omega}_{\bfx}$
+can be established as in Lemma 7.1:
+\begin{align}
+\widehat{\Sigma}_{\bfx} &= \widehat{D}_{\sigma_{\bfx}}\widehat{\Omega}_{\bfx}\widehat{D}_{\sigma_{\bfx}}; \\
+\widehat{\Omega}_{\bfx} &= (\widehat{D}_{\sigma_{\bfx}})^{-1}\widehat{\Sigma}_{\bfx}(\widehat{D}_{\sigma_{\bfx}})^{-1},
+\end{align}
+where $\widehat{D}_{\sigma_{\bfx}} = \diag(\widehat{\sigma}_k)_{k=1:n}$ and
+$(\widehat{D}_{\sigma_{\bfx}})^{-1} =
+\diag\!\left(\frac{1}{\widehat{\sigma}_k}\right)_{k=1:n}$. Note that (7.44) and
+(7.45) can also be written as follows:
+\begin{align}
+\widehat{\Sigma}_{\bfx} &= \diag(\widehat{\sigma}_k)_{k=1:n}\ \widehat{\Omega}_{\bfx}\ \diag(\widehat{\sigma}_k)_{k=1:n}; \\
+\widehat{\Omega}_{\bfx} &= \diag\!\left(\frac{1}{\widehat{\sigma}_k}\right)_{k=1:n} \widehat{\Sigma}_{\bfx} \diag\!\left(\frac{1}{\widehat{\sigma}_k}\right)_{k=1:n}.
+\end{align}
+
+Let $\overline{T}_{X_k}$ be the column vector of the time series data for the random
+variable $X_k$ normalized to mean equal to $0$, i.e.,
+\begin{equation}
+\overline{T}_{X_k} \;=\; \left(X_k(t_i)-\widehat{\mu}_{X_k}\right)_{i=1:N},
+% OPEN AT END OF THIS FILE / CHAPTER CHUNK (PDF page 217, folio 201): equation
+% (7.48) is cut off by the page boundary right after this trailing comma. This
+% book's pattern for an identically-shaped definition, eq. (7.36) two pages
+% earlier, ends "..., \forall\, k = 1:n," inside the SAME \begin{equation}, so the
+% qualifier clause (and the \end{equation}) almost certainly continues on PDF page
+% 218, which this agent did not read. Left the environment open rather than guess
+% or fabricate the missing clause. The next chunk must supply the rest of eq.
+% (7.48) and close with \end{equation} -- do not open a new \begin{equation} here.
+% Section 7.2 "Covariance and correlation matrix estimation from time series data"
+% itself also continues past PDF page 217 -- do not re-open its \section{} heading.

@@ -1,0 +1,247 @@
+% PAGES: 92-95
+% Continues section 2.8 "Cubic spline interpolation", begun in
+% sec02_c6_1.tex (this agent's own file, ends there with eq. (2.79)).
+
+The unknowns are the coefficients $a_i,b_i,c_i,d_i$, $i=1:n$. Thus, there are $4n$
+unknowns. There are $n$ constraints corresponding to (2.76), $n$ constraints
+corresponding to (2.77), $n-1$ constraints corresponding to (2.78), and $n-1$
+constraints corresponding to (2.79), for a total of $4n-2$ constraints. Two more
+constraints are therefore needed for a unique solution. The most common choice for
+these two constraints is to require that $f_1''(x_0)=0$ and $f_n''(x_n)=0$, i.e.,
+\begin{align}
+2c_1+6d_1x_0 &= 0; \\
+2c_n+6d_nx_n &= 0.
+\end{align}
+
+The resulting method is called the \textit{natural cubic spline interpolation}.
+
+Let $\bar x$ be the $4n\times1$ vector of the unknowns $a_i,b_i,c_i,d_i$, $i=1:n$,
+given by
+\[
+\bar x(4i-3)=a_i; \quad \bar x(4i-2)=b_i; \quad \bar x(4i-1)=c_i; \quad
+\bar x(4i)=d_i; \quad \forall i=1:n.
+\]
+
+Note that (2.76--2.81) is a linear system with $4n$ equations and $4n$ unknowns
+which can be expressed in matrix notation as
+\begin{equation}
+\bar M\bar x \;=\; \bar b,
+\end{equation}
+where $\bar b$ is an $4n\times1$ vector given by
+\begin{align}
+\bar b(1)&=0; \quad \bar b(4n)=0; \\
+\bar b(4i-2)&=v_{i-1}; \quad \bar b(4i-1)=v_i, \quad \forall i=1:n; \\
+\bar b(4i)&=0; \quad \bar b(4i+1)=0, \quad \forall i=1:(n-1),
+\end{align}
+and $\bar M$ is the $4n\times4n$ matrix given by
+\begin{align}
+\bar M(1,3)&=2; \quad \bar M(1,4)=6x_0; \\
+\bar M(4n,4n-1)&=2; \quad \bar M(4n,4n)=6x_n; \\
+\bar M(4i-2,4i-3)&=1; \quad \bar M(4i-2,4i-2)=x_{i-1}, \quad \forall i=1:n; \\
+\bar M(4i-2,4i-1)&=x_{i-1}^2; \quad \bar M(4i-2,4i)=x_{i-1}^3, \quad \forall i=1:n; \\
+\bar M(4i-1,4i-3)&=1; \quad \bar M(4i-1,4i-2)=x_i, \quad \forall i=1:n; \\
+\bar M(4i-1,4i-1)&=x_i^2; \quad \bar M(4i-1,4i)=x_i^3, \quad \forall i=1:n; \\
+\bar M(4i,4i-2)&=1; \quad \bar M(4i,4i-1)=2x_i, \quad \forall i=1:(n-1); \\
+\bar M(4i,4i)&=3x_i^2; \quad \bar M(4i,4i+2)=-1, \quad \forall i=1:(n-1); \\
+\bar M(4i,4i+3)&=-2x_i; \quad \bar M(4i,4i+4)=-3x_i^2, \quad \forall i=1:(n-1); \\
+\bar M(4i+1,4i-1)&=2; \quad \bar M(4i+1,4i)=6x_i, \quad \forall i=1:(n-1); \\
+\bar M(4i+1,4i+3)&=-2; \quad \bar M(4i+1,4i+4)=-6x_i, \quad \forall i=1:(n-1).
+\end{align}
+
+The matrix $\bar M$ is a banded matrix of band 4. Moreover, the matrix $\bar M$ is
+nonsingular for any values of the nodes $x_i$, $i=0:n$.\footnote{While it is
+difficult to see that the matrix $\bar M$ is nonsingular by inspecting its
+entries, note that the solution to the cubic spline interpolation, which is given
+by the solution to the linear system $\bar M\bar x=\bar b$ from (2.82), is
+equivalent to finding a solution to the tridiagonal system $Mz=b$ from (6.82). As
+shown in section 6.4, the matrix $M$ is symmetric positive definite, and therefore
+nonsingular, for any values of the nodes $x_i$, $i=0:n$. We conclude that the cubic spline
+interpolation has a unique solution for any nodes $x_i$, $i=0:n$. Thus, the linear
+system $\bar M\bar x=\bar b$ must have a unique solution, and we can therefore
+conclude that the matrix $\bar M$ is nonsingular.}
+
+The linear system $\bar M\bar x=\bar b$ from (2.82) can be solved using the LU with
+row pivoting solver from Table 2.11, i.e., $\bar x =
+\text{linear\_solve\_lu\_row\_pivoting}(\bar M,\bar b)$.
+
+The cubic spline interpolation pseudocode can be found in Table 2.13.
+
+\begin{table}[H]
+\centering
+\caption{Pseudocode for the natural cubic spline interpolation}
+\fbox{\begin{minipage}{0.85\textwidth}
+Input:\\
+$x_i = $ interpolation nodes, $i=0:n$\\
+$v_i = $ interpolation values, $i=0:n$
+
+\medskip
+Output:\\
+$a_i,b_i,c_i,d_i = $ cubic polynomials coefficients, $i=1:n$
+
+\medskip
+compute vector $\bar b$ from (2.83--2.85)\\
+compute matrix $\bar M$ from (2.86--2.96)\\
+$\bar x = \text{linear\_solve\_lu\_row\_pivoting}(\bar M,\bar b)$\\
+for $i = 1:n$\\
+\hspace*{1.5em}$a_i=\bar x(4i-3);\ b_i=\bar x(4i-2);\ c_i=\bar x(4i-1);\
+d_i=\bar x(4i);$\\
+end
+\end{minipage}}
+\end{table}
+
+\subsection{Cubic spline interpolation for zero rate curves}
+
+Cubic spline interpolation is often used to obtain a continuous zero rate curve
+from values of the zero rate for discrete times which price correctly a set of
+interest rate instruments such as bonds and swaps. The zero rate curve thus
+obtained can then be used to price interest rate instruments with any cash flow
+dates.
+
+For example, assume that the following zero rates have been determined:
+
+\begin{center}
+\begin{tabular}{|l|l|}
+\hline
+Time & Zero Rate \\
+\hline
+overnight & 0.50\% \\
+\hline
+2 months & 0.65\% \\
+\hline
+6 months & 0.85\% \\
+\hline
+12 months & 1.05\% \\
+\hline
+20 months & 1.20\% \\
+\hline
+\end{tabular}
+\end{center}
+
+In other words, $r(0,0) = 0.0050$; $r\left(0,\frac2{12}\right) = 0.0065$;
+$r\left(0,\frac6{12}\right) = 0.0085$; $r(0,1) = 0.0105$; and
+$r\left(0,\frac{20}{12}\right) = 0.0120$, where $r(0,t)$ is the zero rate
+corresponding to time $t$.
+
+We use cubic spline interpolation to find the zero rate curve $r(0,t)$ for all
+maturities up to 20 months, i.e., for all $0\le t\le\frac{20}{12}$. Thus, $r(0,t)$
+is assumed to be a cubic polynomial on each of the intervals
+$\left[0,\frac2{12}\right]$, $\left[\frac2{12},\frac6{12}\right]$,
+$\left[\frac6{12},1\right]$, and $\left[1,\frac{20}{12}\right]$. The coefficients
+of these cubic polynomials are obtained by solving the linear system (2.82)
+corresponding to the $16\times16$ banded matrix $\bar M$ given by (2.97--2.98):
+
+\begin{equation}
+\bar M \;=\;
+{\footnotesize
+\left(\begin{array}{cccccccc}
+0&0&2&0&0&0&0&0\\
+1&0&0&0&0&0&0&0\\
+1&\frac16&\frac1{36}&0.0046&0&0&0&0\\
+0&1&\frac13&\frac1{12}&0&-1&-\frac13&-\frac1{12}\\
+0&0&2&1&0&0&-2&-1\\
+0&0&0&0&1&\frac16&\frac1{36}&0.0046\\
+0&0&0&0&1&0.5&\frac14&\frac18\\
+0&0&0&0&0&1&1&\frac34\\
+0&0&0&0&0&0&2&3\\
+0&0&0&0&0&0&0&0\\
+0&0&0&0&0&0&0&0\\
+0&0&0&0&0&0&0&0\\
+0&0&0&0&0&0&0&0\\
+0&0&0&0&0&0&0&0\\
+0&0&0&0&0&0&0&0\\
+0&0&0&0&0&0&0&0
+\end{array}\right.}
+\quad\cdots
+\end{equation}
+\begin{equation}
+\cdots\quad
+{\footnotesize
+\left.\begin{array}{cccccccc}
+0&0&0&0&0&0&0&0\\
+0&0&0&0&0&0&0&0\\
+0&0&0&0&0&0&0&0\\
+0&0&0&0&0&0&0&0\\
+0&0&0&0&0&0&0&0\\
+0&0&0&0&0&0&0&0\\
+0&0&0&0&0&0&0&0\\
+0&-1&-1&-\frac34&0&0&0&0\\
+0&0&-2&-3&0&0&0&0\\
+1&\frac12&\frac14&\frac18&0&0&0&0\\
+1&1&1&1&0&0&0&0\\
+0&1&2&3&0&-1&-2&-3\\
+0&0&2&6&0&0&-2&-6\\
+0&0&0&0&1&1&1&1\\
+0&0&0&0&1&\frac53&\frac{25}9&4.6296\\
+0&0&0&0&0&0&2&10
+\end{array}\right)}
+\end{equation}
+
+The resulting zero rate curve is
+\begin{equation}
+r(0,t) \;=\;
+\begin{cases}
+0.005+0.0095t-0.0171t^3, & \text{if } 0\le t\le\frac2{12};\\
+0.0049+0.0115t-0.0122t^2+0.0073t^3, & \text{if } \frac2{12}\le t\le\frac6{12};\\
+0.0059+0.0057t-0.0006t^2-0.0005t^3, & \text{if } \frac6{12}\le t\le1;\\
+0.0044+0.01t-0.0049t^2+0.001t^3, & \text{if } 1\le t\le\frac{20}{12}.
+\end{cases}
+\end{equation}
+
+The zero rate curve $r(0,t)$ can be used, e.g., to find the value of a 13 months
+3\% quarterly bond with face value \$100. This bond has the following cash flows:
+
+\begin{center}
+\begin{tabular}{|l|l|}
+\hline
+Date & Cash flow \\
+\hline
+1 month & \$0.75 \\
+\hline
+4 months & \$0.75 \\
+\hline
+7 months & \$0.75 \\
+\hline
+10 months & \$0.75 \\
+\hline
+13 months & \$100.75 \\
+\hline
+\end{tabular}
+\end{center}
+
+The value of the bond, denoted by $B$, is obtained by adding the present value of
+all the future cash flows of the bond. Assuming that the zero rate $r(0,t)$
+corresponds to continuous compounding, we obtain that
+\[
+B \;=\; 0.75\exp\left(-\frac1{12}r\left(0,\frac1{12}\right)\right) \;+\;
+0.75\exp\left(-\frac4{12}r\left(0,\frac4{12}\right)\right)
+\]
+\[
++\; 0.75\exp\left(-\frac7{12}r\left(0,\frac7{12}\right)\right) \;+\;
+0.75\exp\left(-\frac{10}{12}r\left(0,\frac{10}{12}\right)\right)
+\]
+\[
++\; 100.75\exp\left(-\frac{13}{12}r\left(0,\frac{13}{12}\right)\right).
+\]
+
+From (2.99), we find that $r\left(0,\frac1{12}\right)=0.005782$;
+$r\left(0,\frac4{12}\right)=0.007648$; $r\left(0,\frac7{12}\right)=0.008922$;
+$r\left(0,\frac{10}{12}\right)=0.009944$; and
+$r\left(0,\frac{13}{12}\right)=0.010754$.
+
+Thus, $B=102.5707$, i.e., the value of the bond is \$102.57.
+
+\section{References}
+
+Detailed proofs for the existence of the LU decomposition can be found in Golub
+and Van Loan \cite{18}. Trefethen and Bau \cite{43} give an implicit constructive
+proof for the existence of the LU decomposition with row pivoting of a
+nonsingular matrix, presenting the intuition behind switching the rows of the
+lower triangular factor $L$ in the LU with row pivoting algorithm. A discussion of
+the stability of the LU decomposition, both from a theoretical and from a
+practical standpoint, can be found in Higham \cite{20}.
+
+The numerical solution of the Black--Scholes PDE using finite differences requires
+solving linear systems corresponding to the same tridiagonal matrix. For a
+classical treatment of the finite difference solution of the Black--Scholes PDE,
+see Wilmott \cite{46}; further implementation details can be found in Hirsa
+\cite{21}.

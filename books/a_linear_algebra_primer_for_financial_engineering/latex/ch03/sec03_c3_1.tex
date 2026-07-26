@@ -1,0 +1,140 @@
+% PAGES: 115-116
+% NOTE: p.115 opens with the tail of the "One Period Binomial Model Example
+% (Continued)" block begun at the end of sec03_c2_3.tex (PDF p.114). That
+% block is typeset manually (bold-italic title + \rule), not as a LaTeX
+% environment. The small square printed before the (3.41) tag closes the
+% EXAMPLE, not a proof -- the preceding proof was already closed in
+% sec03_c2_3.tex. Closed here with \hfill$\square$ + rule, matching the
+% convention used by every other example block in this chapter
+% (cf. sec03_c1_2.tex).
+
+From (3.39) and (3.40), we find that the risk--neutral probabilities
+associated to each of the two states of the market at time $\tau$ are
+\begin{align*}
+p_{RN}(1) &= e^{r\delta t} Q^1 = \frac{e^{r\delta t}-d}{u-d}; \\
+p_{RN}(2) &= e^{r\delta t} Q^2 = \frac{u-e^{r\delta t}}{u-d}.
+\end{align*}
+
+Then, we obtain from (3.31) that the value at time $t_0$ of a derivative
+security with payoffs at time $\tau$ equal to $V_\tau(1)$, if the ``up''
+state occurs, and equal to $V_\tau(2)$, if the ``down'' state occurs, is
+\begin{align}
+V_{t_0} &= e^{-r\delta t}\left(p_{RN}(1)V_\tau(1) \ + \ p_{RN}(2)V_\tau(2)\right) \notag \\
+        &= e^{-r\delta t}\left(\frac{e^{r\delta t}-d}{u-d}V_\tau(1) \ + \ \frac{u-e^{r\delta t}}{u-d}V_\tau(2)\right).
+\end{align}
+\hfill$\square$
+
+\medskip
+\noindent\rule{\linewidth}{0.4pt}
+\medskip
+
+We conclude this section by providing further intuition on the
+no--arbitrage condition (3.11) for a one period market model, if the
+market is also complete. From the definition (3.32) of the discrete
+risk--neutral state probabilities at time $\tau$, we find that
+\[
+Q_k \ = \ \left(\sum_{i=1}^n Q_i\right) p_{RN}(k).
+\]
+
+% UNCLEAR: in (3.42) below, p.115 prints $\sum Q_i$ (subscript) on the first
+% line but $\sum Q^i$ (superscript) on the second, and the last line sums over
+% $i$ while the summand is indexed by $k$. Both are author inconsistencies,
+% reproduced verbatim -- do not normalise the scripts or the bound.
+Then, the no--arbitrage condition (3.11) can be written as
+\begin{align}
+S_{t_0} &= \sum_{k=1}^n Q_k S_\tau^{\omega^k} \ = \ \sum_{k=1}^n \left(\sum_{i=1}^n Q_i\right) p_{RN}(k) S_\tau^{\omega^k} \notag \\
+        &= \left(\sum_{i=1}^n Q^i\right) \sum_{k=1}^n p_{RN}(k) S_\tau^{\omega^k} \notag \\
+        &= e^{-r\delta t} \sum_{i=1}^n p_{RN}(k) S_\tau^{\omega^k},
+\end{align}
+where the last equality follows from (3.38).
+
+Thus, in a complete market, the no--arbitrage condition (3.11) states that
+the initial values at time $t_0$ of the $m$ securities are equal to the
+present values of the risk--neutral expected values of the securities at
+time $\tau$.
+
+\subsection{State prices}
+
+We can now explain why the values $Q^i > 0$, $i = 1:n$, which appeared in
+the arbitrage--free condition (3.10) for a one period market model are
+called state prices.
+
+Consider a derivative security paying \$1 if state $\omega^p$ occurs at
+time $\tau$ and 0 otherwise; this derivative security is also called an
+insurance contract on the state $\omega^p$. In other words, if $C_\tau$
+is the $n \times 1$ price vector of the insurance contract at time
+$\tau$, then
+\[
+C_\tau^{\omega^k} = 0, \ \ \forall\, 1 \le k \neq p \le n; \qquad C_\tau^{\omega^p} = 1.
+\]
+
+If the market is complete and arbitrage--free, it follows from (3.30)
+that the value $C_{t_0}$ of the insurance contract at time $t_0$ is
+\[
+C_{t_0} \ = \ \sum_{k=1}^n C_\tau^{\omega^k} Q_k \ = \ Q_p.
+\]
+
+We conclude that, for any $p = 1:n$, $Q_p$ is the price of the insurance
+contract paying \$1 if state $p$ occurs, which can also be regarded as
+the price at time $t_0$ of state $\omega^p$ occurring at time $\tau$.
+
+\section{A one period index options market model}
+
+A snapshot taken on March 9, 2012, of the mid prices (i.e., the average
+of the bid and ask prices) and trading volumes of S\&P 500 options
+maturing on December 22, 2012, (i.e., 12/22/2012), corresponding to a
+spot price of the index of $1,370$, can be found in Table 3.1.
+
+\begin{table}[H]
+\centering
+\caption{Dec 2012 SPX option prices on 3/9/2012}
+\begin{tabular}{|c|c|c||c|c|c|}
+\hline
+Call Strike & Price & Volume & Put Strike & Price & Volume \\
+\hline
+C1175 & 225.40 & 250  & P1175 & 46.60  & 1     \\
+\hline
+C1200 & 205.55 & 215  & P1200 & 51.55  & 3204  \\
+\hline
+C1225 & 186.20 & 1    & P1225 & 57.15  & 1401  \\
+\hline
+C1250 & 167.50 & 650  & P1250 & 63.30  & 104   \\
+\hline
+C1275 & 149.15 & 163  & P1275 & 70.15  & 56    \\
+\hline
+C1300 & 131.70 & 1    & P1300 & 77.70  & 150   \\
+\hline
+C1325 & 115.25 & 40   & P1325 & 86.20  & 200   \\
+\hline
+C1350 & 99.55  & 320  & P1350 & 95.30  & 10118 \\
+\hline
+C1375 & 84.90  & 1002 & P1375 & 105.30 & 1250  \\
+\hline
+C1400 & 71.10  & 5300 & P1400 & 116.55 & 1250  \\
+\hline
+C1425 & 58.70  & 4    & P1425 & 129.00 & 200   \\
+\hline
+C1450 & 47.25  & 9050 & P1450 & 143.20 & 1     \\
+\hline
+C1500 & 29.25  & 1000 & P1500 & 173.95 & 6     \\
+\hline
+C1550 & 15.80  & 1000 & P1550 & 210.80 & 9     \\
+\hline
+C1575 & 11.10  & 200  & P1575 & 230.90 & 0     \\
+\hline
+C1600 & 7.90   & 546  & P1600 & 252.40 & 9     \\
+\hline
+\end{tabular}
+\end{table}
+
+We use a small number of these options to construct an arbitrage--free
+complete one period market model for the 12/22/2012 S\&P options as
+follows:\footnote{The author first learned of this type of one period
+market models for options from the regretted Salih Neftci; see also
+Chapter 11 from the monograph Neftci \cite{31}.} We choose one call
+option and one put option with the same strike, with all the other
+options having different strikes. The strikes of the options will cover
+the majority of the range of strikes, and are best not to be close to
+each other; e.g., the strikes of the options from (3.43) are at least 50
+apart. We will subsequently show that the rest of the options from
+Table 3.1 are accurately priced in this model.

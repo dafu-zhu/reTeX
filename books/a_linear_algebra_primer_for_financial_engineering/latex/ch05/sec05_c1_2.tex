@@ -1,0 +1,139 @@
+% PAGES: 157-158
+
+\begin{definition}
+Two vectors of the same size are orthogonal if and only if their inner product is
+equal to $0$. In other words, the vectors $u$ and $v$ are orthogonal if and only if
+\[
+(u,v) \;=\; v\tp u \;=\; 0,
+\]
+or, equivalently, if and only if
+\[
+(v,u) \;=\; u\tp v \;=\; 0;
+\]
+see (5.4).
+\end{definition}
+
+\begin{definition}
+A square matrix is orthogonal if and only if any two different columns of the matrix
+are orthogonal and the norm of every column is equal to $1$.
+\end{definition}
+
+\begin{theorem}
+A square matrix is orthogonal if and only if its transpose matrix is also its inverse
+matrix. In other words, the matrix $Q$ is orthogonal if and only if
+\begin{equation}
+Q\tp Q \;=\; QQ\tp \;=\; I,
+\end{equation}
+i.e., if and only if $Q\tp = Q^{-1}$.
+\end{theorem}
+
+\begin{proof}
+The proof of Theorem 5.2 can be found in section 10.1.3; see Theorem 10.2.
+\end{proof}
+
+\begin{theorem}
+Eigenvectors corresponding to different eigenvalues of a symmetric matrix are
+orthogonal.
+\end{theorem}
+
+\begin{proof}
+Let $A$ be a symmetric matrix, and let $\lambda_1 \neq \lambda_2$ be two different
+eigenvalues of $A$ with corresponding eigenvectors $v_1$ and $v_2$. Then,
+\begin{equation}
+Av_1 \;=\; \lambda_1v_1 \quad \text{and} \quad Av_2 \;=\; \lambda_2v_2,
+\end{equation}
+and, using (5.7), we obtain that
+\begin{align}
+(Av_1,v_2) &\;=\; (\lambda_1v_1,v_2) \;=\; \lambda_1(v_1,v_2)\\
+(v_1,Av_2) &\;=\; (v_1,\lambda_2v_2) \;=\; \lambda_2(v_1,v_2).
+\end{align}
+Note that, since the matrix $A$ is symmetric and therefore $A\tp = A$, it follows from
+(5.9) that
+\begin{equation}
+(Av_1,v_2) \;=\; (v_1,A\tp v_2) \;=\; (v_1,Av_2).
+\end{equation}
+Then, from (5.15) and using (5.13) and (5.14), we obtain that
+\[
+\lambda_1(v_1,v_2) \;=\; \lambda_2(v_1,v_2).
+\]
+Thus, $(\lambda_1 - \lambda_2)(v_1,v_2) = 0$, and, since $\lambda_1 \neq \lambda_2$, we
+conclude that $(v_1,v_2) = 0$, i.e., the eigenvectors $v_1$ and $v_2$ are orthogonal.
+\end{proof}
+
+\begin{theorem}
+Any symmetric matrix is diagonalizable.
+
+More precisely, if $A$ is a symmetric matrix, then there exists an orthogonal matrix
+$Q$ and a diagonal matrix $\Lambda$ such that\footnote{The transpose of an orthogonal
+matrix is also the inverse of the orthogonal matrix, i.e., $Q\tp = Q^{-1}$; see
+Theorem 5.2. Then, from (5.16), it follows that $A = Q\Lambda Q\tp = Q\Lambda Q^{-1}$,
+which is the diagonal form of $A$.}
+\begin{equation}
+A \;=\; Q\Lambda Q\tp.
+\end{equation}
+\end{theorem}
+
+\textit{Note that, from Theorem 4.4, it follows that the diagonal entries of the
+matrix $\Lambda$ are the eigenvalues of the matrix $A$ and the columns of the matrix
+$Q$ are the corresponding eigenvectors of $A$.}
+
+\begin{proof}
+A proof of this result can be found in Section 5.3; see Theorem 5.9.
+\end{proof}
+
+\begin{theorem}
+Any symmetric matrix of size $n$ has a full set of $n$ orthogonal eigenvectors.
+\end{theorem}
+
+\begin{proof}
+Let $A$ be a symmetric matrix of size $n$. From Theorem 5.4, it follows that the
+matrix $A$ has a diagonal form $A = Q\Lambda Q\tp$, where $Q = \mathrm{col}\,(v_k)_{k=1:n}$
+is an $n \times n$ orthogonal matrix and $\Lambda = \diag(\lambda_k)_{k=1:n}$ is a
+diagonal matrix of size $n$. Then, from Theorem 4.4, we obtain that $v_k$, $k = 1:n$,
+are $n$ orthogonal eigenvectors of $A$ corresponding to the eigenvalues $\lambda_k$,
+$k = 1:n$, of $A$, respectively.
+\end{proof}
+
+\section{Symmetric positive definite matrices}
+
+Many matrices occurring in practical applications, e.g., when computing covariance and
+correlation matrices or for least squares solutions are symmetric positive definite or
+symmetric positive semidefinite; cf. Chapter 7 and Chapter 8. In this section, we
+present several equivalent properties of such matrices.
+
+\begin{definition}
+Let $A$ be a symmetric matrix of size $n$. The matrix $A$ is symmetric positive
+definite (spd) if and only if\footnote{Note that $x\tp Ax$ is the quadratic form
+corresponding to matrix $A$; see section 10.1.4 for properties of quadratic forms.}
+\begin{equation}
+x\tp Ax \;>\; 0, \quad \forall\, x \in \R^n,\ x \neq 0.
+\end{equation}
+An equivalent way to state condition (5.17) is as follows:
+\begin{equation}
+x\tp Ax \;\geq\; 0, \quad \forall\, x \in \R^n \quad \text{and} \quad x\tp Ax = 0
+\iff x = 0.
+\end{equation}
+Note that $x\tp Ax$ is a number, since it is the product of a row vector, a matrix, and
+a column vector; see also Section 10.1.4.
+\end{definition}
+
+\begin{definition}
+Let $A$ be a symmetric matrix of size $n$. The matrix $A$ is symmetric positive
+semidefinite (spsd) if and only if
+\begin{equation}
+x\tp Ax \;\geq\; 0, \quad \forall\, x \in \R^n.
+\end{equation}
+\end{definition}
+
+\begin{definition}
+Let $A$ be a symmetric matrix of size $n$. The matrix $A$ is negative definite if and
+only if the matrix $-A$ is symmetric positive definite, i.e.,
+\[
+x\tp Ax \;<\; 0, \quad \forall\, x \in \R^n,\ x \neq 0.
+\]
+The matrix $A$ is negative semidefinite if and only if the matrix $-A$ is symmetric
+positive semidefinite, i.e.,
+\[
+x\tp Ax \;\leq\; 0, \quad \forall\, x \in \R^n.
+\]
+\end{definition}

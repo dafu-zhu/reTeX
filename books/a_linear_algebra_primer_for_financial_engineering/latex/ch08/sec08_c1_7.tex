@@ -1,0 +1,62 @@
+% PAGES: 249-249
+
+For call options, we look at (8.38) as a function of only one variable, $\sigma$. Then,
+finding the implied volatility for a call option requires solving the nonlinear
+problem
+\begin{equation}
+f_C(x) \;=\; 0,
+\end{equation}
+using Newton's method, where $x = \sigma$ and
+\begin{equation}
+f_C(x) \;=\; PVF \cdot N(d_1(x)) - K \cdot disc \cdot N(d_2(x)) - C_m,
+\end{equation}
+with $d_1(x)$ and $d_2(x)$ given by (8.37), i.e.,
+\[
+d_1(x) \;=\; \frac{\ln\left(\frac{PVF}{K\cdot disc}\right)}{x\sqrt{T}} +
+\frac{x\sqrt{T}}{2}; \quad
+d_2(x) \;=\; \frac{\ln\left(\frac{PVF}{K\cdot disc}\right)}{x\sqrt{T}} -
+\frac{x\sqrt{T}}{2}.
+\]
+The value of $x$ thus computed is the implied volatility $\sigma_{imp}$.
+
+Note that differentiating the function $f_C(x)$ with respect to $x$ is the same as
+computing the vega of the call option, which is equal to
+\begin{equation}
+vega_C \;=\; Se^{-qT}\sqrt{\frac{T}{2\pi}}\,\exp\!\left(-\frac{(d_1(x))^2}{2}\right);
+\end{equation}
+see (10.101). Then, since $Se^{-qT} = PVF$, we obtain that
+\begin{equation}
+f_C'(x) \;=\; PVF\sqrt{\frac{T}{2\pi}}\,\exp\!\left(-\frac{(d_1(x))^2}{2}\right).
+\end{equation}
+
+The Newton's method recursion for solving (8.40) is
+\begin{equation}
+x_{k+1} \;=\; x_k \;-\; \frac{f_C(x_k)}{f_C'(x_k)},
+\end{equation}
+where the functions $f_C(x)$ and $f_C'(x)$ are given by (8.41) and (8.43),
+respectively.
+
+Similarly, for put options we look at (8.39) as a function of only one variable,
+$\sigma$. Then, finding the implied volatility for a put option requires solving the
+nonlinear problem
+\begin{equation}
+f_P(x) \;=\; 0,
+\end{equation}
+where $x = \sigma$ and
+\begin{equation}
+f_P(x) \;=\; K \cdot disc \cdot N(-d_2(x)) - PVF \cdot N(-d_1(x)) - P_m,
+\end{equation}
+with $d_1(x)$ and $d_2(x)$ given by (8.37), i.e.,
+\[
+d_1(x) \;=\; \frac{\ln\left(\frac{PVF}{K\cdot disc}\right)}{x\sqrt{T}} +
+\frac{x\sqrt{T}}{2}; \quad
+d_2(x) \;=\; \frac{\ln\left(\frac{PVF}{K\cdot disc}\right)}{x\sqrt{T}} -
+\frac{x\sqrt{T}}{2}.
+\]
+
+Differentiating the function $f_P(x)$ with respect to $x$ is the same as computing the
+vega of the put option, which is equal to
+\begin{equation}
+vega_P \;=\; Se^{-qT}\sqrt{\frac{T}{2\pi}}\,\exp\!\left(-\frac{(d_1(x))^2}{2}\right);
+\end{equation}
+see (10.102).

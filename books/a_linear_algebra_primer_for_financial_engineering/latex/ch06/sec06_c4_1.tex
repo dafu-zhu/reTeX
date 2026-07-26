@@ -1,0 +1,140 @@
+% PAGES: 201-203
+% PDF page 201 (folio 185) opens at the very top of the page with the
+% caption "Table 6.8: ..." for a fresh captioned pseudocode table -- no
+% environment carries over onto this page from the previous chunk (c3,
+% PDF 193-200 / folios 177-184); the running head confirms section 6.4
+% "Efficient cubic spline interpolation" is already open, so this file
+% starts directly with the \begin{table} float for Table 6.8, followed by
+% subsection 6.4.1. (Verified directly against the source scan: the
+% "Input:"/"Output:" pseudocode-box labels in this book's tables are set in
+% REGULAR weight, not bold -- confirmed both on this page's Table 6.8 and,
+% for cross-check, on Table 2.1 in Chapter 2 of the same source PDF -- so
+% no \textbf is used on those labels below.)
+
+\begin{table}[H]
+\centering
+\caption{Efficient implementation of the natural cubic spline interpolation}
+\fbox{%
+\begin{minipage}{0.85\linewidth}
+Input: \\
+$x_i =$ interpolation nodes, $i = 0:n$ \\
+$v_i =$ interpolation values, $i = 0:n$
+\\[0.8em]
+Output: \\
+$a_i, b_i, c_i, d_i =$ cubic polynomials coefficients, $i = 1:n$
+\\[0.8em]
+for $i = 1:(n-1)$, $\displaystyle z(i) = 6\left(\frac{v_{i+1}-v_i}{x_{i+1}-x_i} -
+\frac{v_i-v_{i-1}}{x_i-x_{i-1}}\right)$; \quad end \\
+\hspace*{3em} // compute vector $z$ \\
+for $i = 1:(n-1)$, $M(i,i) = 2(x_{i+1}-x_{i-1})$; \quad end \\
+for $i = 1:(n-2)$, $M(i,i+1) = x_{i+1}-x_i$; \quad end \\
+for $i = 2:(n-1)$, $M(i,i-1) = x_i - x_{i-1}$; \quad end \\
+\hspace*{3em} // compute tridiagonal matrix $M$ \\
+$w = \text{linear\_solve\_LU\_tridiag\_spd}(M,z)$; \quad $w_0 = 0$; $w_n = 0$ \\
+for $i = 1:n$ \\
+\hspace*{1.5em}$c_i = \dfrac{w_{i-1}x_i - w_i x_{i-1}}{2(x_i - x_{i-1})}$; \quad
+$d_i = \dfrac{w_i - w_{i-1}}{6(x_i - x_{i-1})}$;\\
+end \\
+for $i = 1:n$ \\
+\hspace*{1.5em}$q_{i-1} = v_{i-1} - c_i x_{i-1}^2 - d_i x_{i-1}^3$; \quad
+$r_i = v_i - c_i x_i^2 - d_i x_i^3$;\\
+end \\
+for $i = 1:n$ \\
+\hspace*{1.5em}$a_i = \dfrac{q_{i-1}x_i - r_i x_{i-1}}{x_i - x_{i-1}}$; \quad
+$b_i = \dfrac{r_i - q_{i-1}}{x_i - x_{i-1}}$;\\
+end
+\end{minipage}%
+}
+\end{table}
+
+\subsection{Efficient cubic spline interpolation for zero rate curves}
+
+To illustrate the efficiency of the natural cubic spline interpolation compared to
+regular cubic spline interpolation, we revisit the example from section 2.8.1 of
+finding a continuous zero rate curve from values of the zero rate for discrete times.
+
+Denote by $r(0,t)$ the zero rate corresponding to time $t$, and assume that the
+following zero rates are known:
+\[
+r(0,0) = 0.0050; \quad r\left(0,\frac{2}{12}\right) = 0.0065; \quad
+r\left(0,\frac{6}{12}\right) = 0.0085;
+\]
+\[
+r(0,1) = 0.0105; \quad r\left(0,\frac{20}{12}\right) = 0.0120.
+\]
+
+Assume that $r(0,t)$ is a cubic polynomial on each of the intervals
+$\left[0,\frac{2}{12}\right]$, $\left[\frac{2}{12},\frac{6}{12}\right]$,
+$\left[\frac{6}{12},1\right]$, and $\left[1,\frac{20}{12}\right]$. Following the
+pseudocode from Table 6.8, we solve the linear system (6.82) corresponding to the
+$3 \times 3$ matrix
+\begin{equation}
+M \;=\; \begin{pmatrix} 1 & 0.3333 & 0 \\ 0.3333 & 1.6667 & 0.5 \\ 0 & 0.5 & 2.3333
+\end{pmatrix}
+\end{equation}
+to obtain the values\footnote{Note that the first and last values of $w$ come from the
+natural cubic spline interpolation assumption, while the other three values of $w$ from
+(6.87) come from solving the linear system (6.82).}
+\begin{equation}
+w \;=\; \begin{pmatrix} 0 \\ -0.0171 \\ -0.0026 \\ -0.0039 \\ 0 \end{pmatrix}
+\end{equation}
+for the second order derivatives of $r(0,t)$ with respect to $t$ at the times $0$,
+$\frac{2}{12}$, $\frac{6}{12}$, $1$, and $\frac{20}{12}$. We then use the formulas
+(6.72), (6.73), (6.76), and (6.77) to compute the coefficients $a_i, b_i, c_i, d_i$,
+$i = 1:4$, of the cubic polynomials that are equal to the zero rate curve $r(0,t)$ on
+the four intervals above; see the ``for'' loops at the end of the pseudocode from
+Table 6.8.
+
+The resulting zero rate curve is the same as the zero rate curve from (2.99), i.e.,
+\[
+r(0,t) \;=\;
+\begin{cases}
+0.005 + 0.0095t - 0.0171t^3, & \text{if} \ \ 0 \leq t \leq \dfrac{2}{12}; \\[6pt]
+0.0049 + 0.0115t - 0.0122t^2 + 0.0073t^3, & \text{if} \ \ \dfrac{2}{12} \leq t \leq
+\dfrac{6}{12}; \\[6pt]
+0.0059 + 0.0057t - 0.0006t^2 - 0.0005t^3, & \text{if} \ \ \dfrac{6}{12} \leq t \leq 1; \\[6pt]
+0.0044 + 0.01t - 0.0049t^2 + 0.001t^3, & \text{if} \ \ 1 \leq t \leq \dfrac{20}{12},
+\end{cases}
+\]
+and can then be used to value other interest rate instruments with maturity less than
+20 months.
+
+Note that using the natural cubic spline interpolation required solving a $3 \times 3$
+linear system, while the regular cubic spline interpolation required solving a
+$16 \times 16$ linear system; see (6.86) and (2.97--2.98), respectively.
+
+\section{References}
+
+A comprehensive analysis of the stability of the Cholesky decomposition algorithm can
+be found in Higham \cite{20}.
+
+A Cholesky--type decomposition of less practical importance also exists for symmetric
+positive semidefinite matrices; see Higham \cite{19} for more details:
+
+Let $A$ be an $n \times n$ symmetric positive semidefinite matrix of rank $r$ (i.e.,
+with eigenvalue 0 of multiplicity $n - r$). Then, there exists a permutation matrix $P$
+such that
+\[
+PAP\tp \;=\; \begin{bmatrix} U & B \\ \bfzero & \bfzero \end{bmatrix},
+\]
+where $U$ is an $r \times r$ upper triangular matrix with positive elements on the main
+diagonal, $B$ is an $r \times (n-r)$ matrix, and $\bfzero$ and $\bfzero$ on the second
+row above denote matrices with all entries equal to 0 and of sizes $(n-r) \times r$ and
+$(n-r) \times (n-r)$, respectively.
+
+Different tridiagonal linear systems solvers can be found in Hirsa \cite{21}. Detailed
+presentations of the finite difference solution to the heat equation corresponding to
+the Black--Scholes PDE and the solution of tridiagonal symmetric positive linear
+systems can be found in Andersen and Piterbarg \cite{3} and Wilmott \cite{45}.
+
+The efficient implementation of the cubic spline interpolation, complete with
+pseudocodes can be found in the ``Numerical Recipes'' compendium by Press et al.
+\cite{32}. Other spline interpolation methods are surveyed in Andersen and Piterbarg
+\cite{3}. Examples of cubic splines for financial applications are presented in
+Alexander \cite{1} and Neftci \cite{30}.
+
+% PDF page 203 (folio 187) ends the References section here -- the last
+% sentence ("...Alexander [1] and Neftci [30].") is complete, and the rest
+% of the page is blank. No environment is left open. PDF page 204 (folio
+% 188) opens fresh with the "6.6 Exercises" section heading at the top of
+% the page, continued in sec06_c4_2.tex.

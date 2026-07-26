@@ -1,0 +1,235 @@
+% PAGES: 47-52
+% Page 52 (book p.36) is blank in the source -- transitional blank verso
+% before Chapter 2, which begins on the next page. Nothing to transcribe
+% on that page.
+
+\section{Exercises}
+
+\begin{exercises}
+
+\item Let
+\[
+A \;=\; \begin{pmatrix} 1 & -1 & 2 & 5 & 4 \\ 3 & -2 & 1 & 4 & 2 \\ 0 & 1 & 2 & -1 & 3 \\ -5 & 4 & 2 & -4 & 3 \end{pmatrix}.
+\]
+Show that the column rank and the row rank of $A$ are both equal to $3$.
+
+\item Let $x$ and $y$ be column vectors of size $n$, and let $I$ be the
+identity matrix of size $n$.
+\begin{subparts}
+\item If $y^{t}x \ne -1$, show that
+\[
+(I+xy^{t})^{-1} \;=\; I \;-\; \frac{1}{1+y^{t}x}\,xy^{t}.
+\]
+In other words, show that
+\[
+\left(I - \frac{1}{1+y^{t}x}\,xy^{t}\right)(I+xy^{t}) \;=\; I.
+\]
+\item Show that the matrix $I+xy^{t}$ is nonsingular if and only if
+$y^{t}x\ne -1$.
+\end{subparts}
+
+\item
+\begin{subparts}
+\item Use induction to show that
+\[
+\left(\prod_{i=1}^n A_i\right)^{t} \;=\; \prod_{i=1}^n A_{n+1-i}^{t}
+\]
+for any $m_i\times n_i$ matrices $A_i$, $i=1:n$, with $n_i=m_{i+1}$ for
+$i=1:(n-1)$.
+\item Show that
+\[
+\left(\prod_{i=1}^n A_i\right)^{-1} \;=\; \prod_{i=1}^n A_{n+1-i}^{-1}
+\]
+for any nonsingular square matrices $A_i$ of the same size.
+\end{subparts}
+
+\item Let $D=\diag(d_i)_{i=1:n}$ be a diagonal matrix of size $n$ with
+distinct diagonal entries, i.e., such that $d_j\ne d_k$, for any
+$1\le j\ne k\le n$. If $A$ is a square matrix of size $n$, show that
+$AD=DA$ if and only if the matrix $A$ is diagonal.
+
+\item Use the fact that $D_1D_2=D_2D_1$ for any two diagonal matrices
+$D_1$ and $D_2$ of the same size to show that
+\[
+\prod_{i=1}^n D_i \;=\; \prod_{i=1}^n D_{p(i)},
+\]
+for any one-to-one function $p:\{1,2,\ldots n\}\to\{1,2,\ldots n\}$,
+where $D_i$, $i=1:n$, are diagonal matrices of the same size.
+
+\item
+\begin{subparts}
+\item Let $A$ be an $n\times n$ matrix and let $L$ be an $n\times n$
+nonsingular lower triangular matrix. Show that, if $LA$ is a lower
+triangular matrix, then $A$ is lower triangular. Show that, if $AL$ is a
+lower triangular matrix, then $A$ is lower triangular.
+\item Let $A$ be an $n\times n$ matrix and let $U$ be an $n\times n$
+nonsingular upper triangular matrix. Show that, if $UA$ is an upper
+triangular matrix, then $A$ is upper triangular. Show that, if $AU$ is an
+upper triangular matrix, then $A$ is upper triangular.
+\end{subparts}
+
+\item Let $A$ be a nonsingular matrix, and let $k$ be a positive integer.
+Define $A^{-k}$ as the $k$--th power of the inverse matrix of $A$, i.e.,
+let $A^{-k}=\left(A^{-1}\right)^{k}$. Show that this definition is
+consistent, i.e., show that
+\[
+A^{k}\cdot A^{-k} \;=\; A^{-k}\cdot A^{k} \;=\; I.
+\]
+
+\item
+\begin{subparts}
+\item Let
+\[
+M \;=\; \begin{pmatrix} 0&0&0&0\\ 3&0&0&0\\ 1&-1&0&0\\ -1&2&1&0 \end{pmatrix}.
+\]
+Compute $M^2$, $M^3$, $M^4$.
+\item Let
+\[
+C \;=\; I+M \;=\; \begin{pmatrix} 1&0&0&0\\ 3&1&0&0\\ 1&-1&1&0\\ -1&2&1&1 \end{pmatrix}.
+\]
+Compute $C^m$, where $m\ge 2$ is a positive integer.
+\end{subparts}
+\noindent Hint: Recall that, if $A$ and $B$ are square matrices
+of the same size such that $AB=BA$, then the following version of the
+binomial formula holds true:
+\begin{equation}
+(A+B)^m \;=\; \sum_{j=0}^m \binom{m}{j} A^{j}B^{m-j},
+\end{equation}
+where $m$ is a positive integer and the binomial coefficient
+$\binom{m}{j}$ is given by
+\[
+\binom{m}{j} \;=\; \frac{m!}{j!\,(m-j)!},
+\]
+where $k!=1\cdot 2\cdot\ldots\cdot k$. Also, note that $A^0=B^0=I$.
+
+\item Let $L$ be an $n\times n$ lower triangular matrix with entries equal
+to $0$ on the main diagonal, i.e., with $L(i,i)=0$ for $i=1:n$.
+\begin{subparts}
+\item Show that $L^n = 0$;
+\item Compute $(I+L)^m$ in terms of $L, L^2, \ldots, L^{n-1}$, where
+$m\ge n$ is a positive integer.
+\end{subparts}
+\noindent Hint: Use the binomial formula (1.115).
+
+\item Let $A$ and $B$ be square matrices of the same size with
+nonnegative entries and such that the sum of the entries in each row is
+equal to $1$. Show that the matrix $AB$ has the same properties, i.e.,
+show that all the entries of the matrix $AB$ are nonnegative and the sum
+of the entries in each row of $AB$ is equal to $1$.
+
+\noindent Note: A matrix with nonnegative entries such that the
+sum of the entries in each row is equal to $1$ is called a probability
+matrix.
+
+\item The covariance matrix of five random variables is
+\[
+\Sigma \;=\; \begin{pmatrix}
+1 & -0.525 & 1.375 & -0.075 & -0.75 \\
+-0.525 & 2.25 & 0.1875 & 0.1875 & -0.675 \\
+1.375 & 0.1875 & 6.25 & 0.4375 & -1.875 \\
+-0.075 & 0.1875 & 0.4375 & 0.25 & 0.3 \\
+-0.75 & -0.675 & -1.875 & 0.3 & 9
+\end{pmatrix}.
+\]
+Find the correlation matrix of these random variables.
+
+\item The correlation matrix of five random variables is
+\[
+\Omega \;=\; \begin{pmatrix}
+1 & -0.25 & 0.15 & -0.05 & -0.30 \\
+-0.25 & 1 & -0.10 & -0.25 & 0.10 \\
+0.15 & -0.10 & 1 & 0.20 & 0.05 \\
+-0.05 & -0.25 & 0.20 & 1 & 0.10 \\
+-0.30 & 0.10 & 0.05 & 0.10 & 1
+\end{pmatrix}.
+\]
+\begin{subparts}
+\item Compute the covariance matrix of these random variables if their
+standard deviations are $0.25$, $0.5$, $1$, $2$, and $4$, in this order.
+\item Compute the covariance matrix of these random variables if their
+standard deviations are $4$, $2$, $1$, $0.5$, and $0.25$, in this order.
+\end{subparts}
+
+\item The file \textit{indeces-jul26-aug9-2012.xlsx} from
+fepress.org/nla-primer contains the July 26, 2012 -- August 9, 2012 end of
+day values of Dow Jones, Nasdaq, and S\&P 500.
+\begin{subparts}
+\item Compute the daily percentage returns of the three indices over the
+given time period.
+\item Compute the covariance matrix of the daily percentage returns of the
+three indices.
+\item Compute the daily log returns of the three indices over the given
+time period.
+\item Compute the covariance matrix of the daily log returns of the three
+indices.
+\end{subparts}
+
+\noindent Note: The percentage return and the log return between
+times $t_1$ and $t_2$ of an asset with price $S(t)$ at time $t$ are given
+by
+\[
+\frac{S(t_2)-S(t_1)}{S(t_1)} \qquad \text{and} \qquad
+\ln\!\left(\frac{S(t_2)}{S(t_1)}\right),
+\]
+respectively.
+
+\item The file \textit{indices-july2011.xlsx} from fepress.org/nla-primer
+contains the January 2011 -- July 2011 end of day values of nine major US
+indeces.
+\begin{subparts}
+\item Compute the sample covariance matrix of the daily percentage
+returns of the indeces, and the corresponding sample corelation matrix.
+
+Compute the sample covariance and correlation matrices for daily log
+returns, and compare them with the corresponding matrices for daily
+percentage returns.
+\item Compute the sample covariance matrix of the weekly percentage
+returns of the indeces, and the corresponding sample corelation matrix.
+
+Compute the sample covariance and correlation matrices for weekly log
+returns, and compare them with the corresponding matrices for weekly
+percentage returns.
+\item Compute the sample covariance matrix of the monthly percentage
+returns of the indeces, and the corresponding sample corelation matrix.
+
+Compute the sample covariance and correlation matrices for monthly log
+returns, and compare them with the corresponding matrices for monthly
+percentage returns.
+\item Comment on the differences between the sample covariance and
+correlation matrices for daily, weekly, and monthly returns.
+\end{subparts}
+
+\item In three months, the value of an asset with spot price \$50 will be
+either \$60 or \$45. The continuously compounded risk--free rate is
+$6\%$. Consider the one period market model with two securities, i.e.,
+cash and the asset, and two states, i.e., asset value equal to \$60 and
+asset value equal to \$45, in three months.
+\begin{subparts}
+\item Find the payoff matrix of this model.
+\item Is this one period market complete, i.e., is the payoff matrix
+nonsingular?
+\item How do you replicate a three months at-the-money put option on
+this asset, using the cash and the underlying asset?
+\end{subparts}
+
+\item In six months, the price of an asset with spot price \$40 will be
+either \$30, \$35, \$40, \$42, \$45, or \$50. Consider a one period
+market model with six states in six months corresponding to the six
+possible values of the asset in six months, and with the following four
+securities:
+\begin{itemize}
+\item cash;
+\item asset;
+\item six months at-the-money call option with strike \$40 on the
+asset;
+\item six months at-the-money put option with strike \$40 on the asset.
+\end{itemize}
+The continuously compounded risk--free interest rate is constant and
+equal to $6\%$.
+\begin{subparts}
+\item Find the payoff matrix of this model.
+\item Is this one period market model complete?
+\item Are the four securities non--redundant?
+\end{subparts}
+
+\end{exercises}

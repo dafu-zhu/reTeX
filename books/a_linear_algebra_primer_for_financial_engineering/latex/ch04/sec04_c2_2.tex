@@ -1,0 +1,191 @@
+% PAGES: 136-138
+% Continues sec04_c2_1.tex (pages 134-135). No environment was left open at
+% the end of that file (the Summary bullet list and closing remark both
+% close cleanly); this file opens fresh with Theorem 4.3, still under
+% section 4.1 "Definitions and properties". Section 4.2 "Diagonal forms"
+% begins partway down page 138 (folio 122).
+
+\begin{theorem}
+(i) The matrix $A$ is singular if and only if $0$ is an eigenvalue of $A$.
+
+(ii) The matrix $A$ is nonsingular if and only if $0$ is not an eigenvalue of $A$.
+\end{theorem}
+
+\begin{proof}
+(i) From (1.75), we find that the matrix $A$ is singular if and only if
+\[
+\Null(A) \;=\; \{v \in \R^n \ \text{such that} \ Av = 0\} \;\neq\; \{0\},
+\]
+i.e., if and only if there exists a vector $v_0 \neq 0$ such that $Av_0 = 0$, which is
+equivalent to saying that $0$ is an eigenvalue of $A$; see (4.1).
+
+(ii) Since a matrix is nonsingular if and only if the matrix is not singular, it
+follows from (i) that a matrix is nonsingular if and only if $0$ is not an eigenvalue
+of $A$.
+\end{proof}
+
+\begin{lemma}
+Let $A$ be a nonsingular matrix, and let $A^{-1}$ be the inverse matrix of $A$. If
+$(\lambda, v)$ are an eigenvalue and a corresponding eigenvector of $A$, then
+$(\frac{1}{\lambda}, v)$ are an eigenvalue and a corresponding eigenvector of
+$A^{-1}$.
+\end{lemma}
+
+\begin{proof}
+If $v \neq 0$ is the eigenvector corresponding to the eigenvalue $\lambda$ of $A$,
+then $Av = \lambda v$. Multiplying to the left by $A^{-1}$, we obtain that
+$A^{-1}Av = \lambda(A^{-1}v)$, and, using the fact that $A^{-1}Av = v$ since
+$A^{-1}A = I$, it follows that
+\begin{equation}
+v \;=\; \lambda\,(A^{-1}v).
+\end{equation}
+Note that $\lambda \neq 0$, since $A$ is a nonsingular matrix; cf.\ Theorem 4.3. Then,
+from (4.16), we find that
+\[
+A^{-1}v \;=\; \frac{1}{\lambda}v.
+\]
+Since $v \neq 0$, it follows that $\frac{1}{\lambda}$ is an eigenvalue of $A^{-1}$
+with corresponding eigenvector $v$.
+\end{proof}
+
+\begin{lemma}
+Let $A$ be a square matrix, and let $\lambda$ and $v$ be an eigenvalue and a
+corresponding eigenvector of $A$.
+
+(i) Let $k$ be a positive integer. Then, $\lambda^k$ is an eigenvalue of the matrix
+$A^k$ and $v$ is a corresponding eigenvector.
+
+(ii) Let $P(x)$ be an arbitrary polynomial. Then, $P(\lambda)$ is an eigenvalue of the
+matrix $P(A)$ and $v$ is a corresponding eigenvector.
+\end{lemma}
+
+\begin{proof}
+(i) We show by induction over the positive integer $k \geq 1$ that
+\begin{equation}
+A^k v \;=\; \lambda^k v, \quad \forall\, k \geq 1.
+\end{equation}
+Formula (4.17) holds for $k=1$, since $\lambda$ and $v$ are an eigenvalue of $A$ and a
+corresponding eigenvector, and therefore $Av = \lambda v$. Assume that (4.17) holds
+for $k$, i.e., assume that $A^k v = \lambda^k v$. Then,
+\[
+A^{k+1}v \;=\; A(A^k v) \;=\; A(\lambda^k v) \;=\; \lambda^k \cdot Av \;=\;
+\lambda^k \cdot \lambda v \;=\; \lambda^{k+1}v.
+\]
+Thus, formula (4.17) is established for $k+1$ and the proof by induction of (4.17) is
+complete.
+
+(ii) Let $P(x) = \sum_{k=0}^p c_k x^k$, with $c_p \neq 0$, where $p = \deg(P)$ is the
+degree of the polynomial $P(x)$. Using (4.17), we obtain that
+\begin{align*}
+P(A)v &= \left( \sum_{k=0}^p c_k A^k \right) v \;=\; \sum_{k=0}^p c_k \left( A^k v
+\right)\\
+&= \sum_{k=0}^p c_k \left( \lambda^k v \right) \;=\; \left( \sum_{k=0}^p c_k
+\lambda^k \right) \cdot v\\
+&= P(\lambda) v.
+\end{align*}
+Thus, $P(A)v = P(\lambda)v$, and we conclude that $P(\lambda)$ is an eigenvalue of the
+matrix $P(A)$ and $v$ is a corresponding eigenvector.
+\end{proof}
+
+\begin{lemma}
+If $A$ is a square matrix, then the matrices $A$ and $A^t$ have the same eigenvalues.
+\end{lemma}
+
+\begin{proof}
+Recall from Theorem 4.1 that the eigenvalues of a matrix are the roots of its
+characteristic polynomial. Thus, the eigenvalues of the matrix $A$ are the roots of
+$P_A(x) = \det(xI-A)$, and the eigenvalues of the matrix $A^t$ are the roots of
+$P_{A^t}(x) = \det(xI-A^t)$.
+
+Since $(xI-A)^t = xI-A^t$, and using the fact that $\det((xI-A)^t) = \det(xI-A)$, see
+Lemma 10.2, we obtain that
+\begin{align*}
+P_A(x) &= \det(xI-A) \;=\; \det((xI-A)^t) \;=\; \det(xI-A^t)\\
+&= P_{A^t}(x).
+\end{align*}
+Thus, the polynomials $P_A(t)$ and $P_{A^t}(t)$ have the same roots, and we conclude
+that the matrices $A$ and $A^t$ have the same eigenvalues.
+\end{proof}
+
+\begin{definition}
+Let $A$ be a square matrix of size $n$. The trace of the matrix $A$ is the sum of its
+main diagonal entries, i.e.,
+\begin{equation}
+tr(A) \;=\; \sum_{i=1}^n A(i,i).
+\end{equation}
+\end{definition}
+
+\begin{lemma}
+Let $A$ be a square matrix of size $n$, let $P_A(t)$ be the characteristic polynomial
+of $A$, and let $\lambda_i$, $i = 1:n$, be the eigenvalues of $A$. Then,
+\begin{equation}
+P_A(t) \;=\; t^n \;-\; tr(A)t^{n-1} \;+\; \dots \;+\; (-1)^n \det(A),
+\end{equation}
+and
+\begin{equation}
+\sum_{i=1}^n \lambda_i \;=\; tr(A);
+\end{equation}
+\begin{equation}
+\prod_{i=1}^n \lambda_i \;=\; \det(A).
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Recall from Lemma 4.1 that
+\begin{align}
+\det(tI-A) &= \prod_{i=1}^n (t-\lambda_i)\\
+&= t^n \;-\; \left( \sum_{i=1}^n \lambda_i \right) t^{n-1} \;+\; \dots \;+\;
+(-1)^n \prod_{i=1}^n \lambda_i.
+\end{align}
+Let $t=0$ in (4.22--4.23). Then,
+\[
+\det(-A) \;=\; (-1)^n \det(A) \;=\; (-1)^n \prod_{i=1}^n \lambda_i,
+\]
+and therefore (4.21) is established.
+
+Note that the only terms of order $n-1$ from $\det(tI-A)$ are obtained by multiplying
+the main diagonal entries of $tI-A$. In other words, the coefficient of the term
+$t^{n-1}$ in $\det(tI-A)$ is the same as the coefficient of the term $t^{n-1}$ in
+$\prod_{i=1}^n (t-A(i,i))$, which is equal to $-\sum_{i=1}^n A(i,i) = -tr(A)$; see
+Definition 4.5. Then, we conclude from (4.23) that $tr(A) = \sum_{i=1}^n \lambda_i$.
+\end{proof}
+
+\section{Diagonal forms}
+
+\begin{definition}
+Let $A$ be a square matrix of size $n$. The matrix $A$ has a diagonal form if and only
+if there exists an $n \times n$ nonsingular matrix $V$ and an $n \times n$ diagonal
+matrix $\Lambda$ such that
+\begin{equation}
+A \;=\; V\Lambda V^{-1}.
+\end{equation}
+A matrix that has a diagonal form is called a diagonalizable matrix.
+\end{definition}
+
+\begin{theorem}
+Let $A$ be a diagonalizable matrix, and let $A = V\Lambda V^{-1}$ be the diagonal form
+of $A$. Then, the diagonal entries of the matrix $\Lambda$ are the eigenvalues of $A$
+and the columns of the matrix $V$ are the corresponding eigenvectors of $A$.
+
+More precisely, if $\Lambda = diag(\lambda_k)_{k=1:n}$ and $V = col(v_k)_{k=1:n}$,
+then $\lambda_k$, $k = 1:n$, are the eigenvalues of $A$, and $v_k$ is an eigenvector
+corresponding to $\lambda_k$, for $k = 1:n$, respectively.
+\end{theorem}
+
+\begin{proof}
+By multiplying $A = V\Lambda V^{-1}$ to the right by $V$, we obtain that
+\begin{equation}
+A = V\Lambda V^{-1} \iff AV = (V\Lambda V^{-1})V \iff AV = V\Lambda,
+\end{equation}
+since $V^{-1}V = I$. Recall from (1.11) and (1.88) that $AV = col(Av_k)_{k=1:n}$ and
+$V\Lambda = col(\lambda_k v_k)_{k=1:n}$. Then, from (4.25), we find that
+\begin{align*}
+A = V\Lambda V^{-1} &\iff col(Av_k)_{k=1:n} = col(\lambda_k v_k)_{k=1:n}\\
+&\iff Av_k = \lambda_k v_k, \quad \forall\, k = 1:n,
+\end{align*}
+i.e., $\lambda_k$ is an eigenvalue of $A$ and $v_k$ is a corresponding eigenvector,
+for $k = 1:n$.
+
+The vectors $v_k$, $k = 1:n$, are linearly independent vectors since they are the
+columns of the nonsingular matrix $V$.
+\end{proof}

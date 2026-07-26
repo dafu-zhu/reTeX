@@ -1,0 +1,133 @@
+% PAGES: 165-166
+% Continues the manual "\textit{Solution:}" block for the T_N tridiagonal
+% example (sec05_c2_1.tex, page 164 / folio 148, which ends right after
+% equation (5.43), the $a \geq 0$ case). Page 165 (folio 149) opens with the
+% $a < 0$ case of the same derivation -- no fresh "\textit{Solution:}" label
+% is printed; the closing "\hfill$\square$" appears after (5.44) once the
+% two cases are combined. No \begin{...} environment was left open by
+% sec05_c2_1.tex.
+
+If $a < 0$, we find from (5.41) and (5.42) that
+\[
+\lambda_1 \;>\; \lambda_2 \;>\; \dots \;>\; \lambda_N.
+\]
+
+From Theorem 5.6, it follows that $T_N$ is a symmetric positive definite matrix if and
+only if $\lambda_N > 0$.
+
+Recall that $\cos(\pi - x) = -\cos(x)$ for all $x \in \R$ and therefore
+\[
+\cos\left(\frac{N\pi}{N+1}\right) \;=\; \cos\left(\pi - \frac{\pi}{N+1}\right) \;=\; -\cos\left(\frac{\pi}{N+1}\right).
+\]
+Then,
+\[
+\lambda_N \;=\; d - 2a\cos\left(\frac{N\pi}{N+1}\right) \;=\; d + 2a\cos\left(\frac{\pi}{N+1}\right),
+\]
+and $\lambda_N > 0$ is equivalent to
+\begin{equation}
+d \;>\; -2a\cos\left(\frac{\pi}{N+1}\right) \;=\; 2|a|\cos\left(\frac{\pi}{N+1}\right);
+\end{equation}
+the last equality comes from the fact that $a < 0$ and therefore $|a| = -a$.
+
+The conditions (5.43) and (5.44) for the matrix $T_N$ to be symmetric positive definite
+can be written together as
+\[
+d \;>\; 2|a|\cos\left(\frac{\pi}{N+1}\right),
+\]
+which is what we wanted to show; see (5.40).
+\hfill$\square$
+\par\medskip
+
+Although the solutions above are elegant, they use the fact that the eigenvalues of the
+matrices $B_N$ and $T_N$ are known in advance. In practice, deciding whether a matrix
+is symmetric positive definite is not done by computing matrix eigenvalues
+numerically, which could be computationally expensive. Instead, the Cholesky
+decomposition algorithm is applied to the matrix: if the algorithm does not break down,
+then the matrix is symmetric positive definite, else it is not. The cost of applying
+the Cholesky algorithm to an $n \times n$ matrix, and therefore of deciding whether the
+matrix is symmetric positive definite, is $\frac{1}{3}n^3 + O(n^2)$; see section 6.1
+for details.
+
+Many matrices arising in practice are symmetric and weakly or strictly diagonally
+dominant. The results below are thus important in practical applications.
+
+\begin{theorem}
+(i) Any strictly diagonally dominant symmetric matrix with positive entries on the main
+diagonal is symmetric positive definite.
+
+Equivalently, all the eigenvalues of a strictly diagonally dominant symmetric matrix
+are strictly greater than $0$.
+
+(ii) Any weakly diagonally dominant symmetric matrix with positive entries on the main
+diagonal is symmetric positive semidefinite.
+
+% Source wording: "are greater than or equal 0" -- missing "to" -- reproduced
+% as printed, per the never-correct-the-author rule.
+Equivalently, all the eigenvalues of a weakly diagonally dominant symmetric matrix are
+greater than or equal $0$.
+\end{theorem}
+
+\begin{proof}
+Let $\lambda$ be an eigenvalue of $A$. Note that $\lambda$ is a real number, since $A$
+is a symmetric matrix; cf. Theorem 5.1.
+% Page break folio 149/150 falls here; the \begin{proof} above stays open
+% across it within this same file.
+From Gershgorin's Theorem, see Theorem 4.6, it follows that there exists $j$, with
+$1 \leq j \leq n$, such that
+\begin{equation}
+|A(j,j) - \lambda| \;\leq\; R_j,
+\end{equation}
+where $R_j$ is given by (4.28), since $|\lambda - A(j,j)| = |A(j,j) - \lambda|$.
+
+Since $a \leq |a|$ for any $a \in \R$, we find from (5.45) that
+\[
+A(j,j) - \lambda \;\leq\; |A(j,j) - \lambda| \;\leq\; R_j,
+\]
+and therefore
+\begin{equation}
+\lambda \;\geq\; A(j,j) - R_j.
+\end{equation}
+
+(i) If $A$ is a strictly diagonally dominant matrix with positive entries on the main
+diagonal, then $A(j,j) = |A(j,j)|$, and, from (4.30), it follows that
+\begin{equation}
+A(j,j) \;>\; R_j.
+\end{equation}
+From (5.46) and (5.47) we conclude that $\lambda > 0$ for any eigenvalue $\lambda$ of
+$A$, and therefore that the matrix $A$ is symmetric positive definite; cf. Theorem 5.6.
+
+(ii) If $A$ is a weakly diagonally dominant symmetric matrix with positive entries on
+the main diagonal, then $A(j,j) = |A(j,j)|$, and, from (4.29), it follows that
+\begin{equation}
+A(j,j) \;\geq\; R_j.
+\end{equation}
+From (5.46) and (5.48), we conclude that $\lambda \geq 0$ for any eigenvalue $\lambda$
+of $A$, and therefore the matrix $A$ is symmetric positive semidefinite; cf. Theorem
+5.6.
+\end{proof}
+
+\par\medskip\noindent\textit{Example:}\ Show that the matrix
+\[
+A_1 \;=\; \begin{pmatrix}
+3 & -0.2 & 1.25 & -0.35\\
+-0.2 & 1.5 & 0.25 & 1\\
+1.25 & 0.25 & 2.5 & 0.5\\
+-0.35 & 1 & 0.5 & 4
+\end{pmatrix}
+\]
+is symmetric positive definite.
+
+\begin{answerx}
+The matrix $A_1$ is symmetric and all its main diagonal entries are positive. It is
+also strictly diagonally dominant, since, for every row of $A_1$, the absolute value of
+the main diagonal entry from the row is greater than the sum of the absolute values of
+all the other entries in that row:
+\begin{align*}
+3 \;&>\; |-0.2| + 1.25 + |-0.35| \;=\; 1.8;\\
+1.5 \;&>\; |-0.2| + 0.25 + 1 \;=\; 1.45;\\
+2.5 \;&>\; 1.25 + 0.25 + 0.5 \;=\; 2;\\
+4 \;&>\; |-0.35| + 1 + 0.5 \;=\; 1.85.
+\end{align*}
+Then, from Theorem 5.7, we conclude that the matrix $A_1$ is symmetric positive
+definite. \hfill$\square$
+\end{answerx}

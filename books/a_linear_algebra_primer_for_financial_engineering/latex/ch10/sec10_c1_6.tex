@@ -1,0 +1,132 @@
+% PAGES: 317-318
+% Last file of chunk c1. Page 318 (folio 302) ends mid-sentence after equation
+% (10.73), which closes with a semicolon, not a period -- the sentence
+% ("Let D^2F_0(x_0) be the Hessian of F_0(x) evaluated at the point x_0,
+% i.e., ... ; and ...") continues onto PDF page 319, the first page of chunk
+% c2. No LaTeX environment or "\[ \]" is left open, however -- (10.73)'s
+% "\end{pmatrix}" and the surrounding "\[...\]" both close cleanly on this
+% page, so c2 simply continues the prose after it; nothing needs to be
+% reopened or closed there. check_env_balance.py should therefore report
+% clean (nothing left open) at the end of this chunk.
+
+We note that the result of Lemma 10.11 can be used to prove (10.50). Recall from
+(10.42) that $D^2f(x) = D((Df(x))^t)$. Then, using (10.49) and (10.60), we find that
+\[
+D^2(x^tAx) \;=\; D\left((D(x^tAx))^t\right) \;=\; D\left((A+A^t)x\right)
+\]
+\[
+=\; (A+A^t).
+\]
+
+\subsection{Lagrange multipliers}
+
+Expanded coverage of the Lagrange multipliers method can be found in Chapter 9 of
+Stefanica \cite{36}.
+
+The Lagrange multipliers method is used to find extrema of multivariable functions
+subject to various constraints.
+
+Let $U \subset \R^n$ be an open set, and let $f : U \to \R$ be a smooth function,
+e.g., infinitely many times differentiable. We want to find the extrema of $f(x)$
+subject to $m$ constraints given by $g(x) = 0$, where $g : U \to \R^m$ is a smooth
+function, i.e.,
+
+Find $x_0 \in U$ such that
+\begin{equation}
+\max_{\substack{g(x)=0 \\ x\in U}} f(x) \;=\; f(x_0) \qquad \text{or} \qquad
+\min_{\substack{g(x)=0 \\ x\in U}} f(x) \;=\; f(x_0).
+\end{equation}
+
+A point $x_0 \in U$ satisfying (10.64) is called a constrained extremum point of the
+function $f(x)$ with respect to the constraint function $g(x)$. For problem (10.64)
+to be well posed, we assume the number of constraints is smaller than the number of
+the degrees of freedom, i.e., $m < n$.
+
+To solve the constrained optimization problem (10.64), let $\lambda =
+(\lambda_i)_{i=1:m}$ be a column vector of the same size, $m$, as the number of
+constraints; $\lambda$ is called the Lagrange multipliers vector.
+
+The Lagrangian associated to problem (10.64) is the function $F : U \times \R^m \to
+\R$ given by
+\begin{equation}
+F(x,\lambda) \;=\; f(x) \;+\; \lambda^t g(x).
+\end{equation}
+
+If $g(x) = \begin{pmatrix} g_1(x) \\ \vdots \\ g_m(x) \end{pmatrix}$, then
+$F(x,\lambda)$ can be written explicitly as
+\[
+F(x,\lambda) \;=\; f(x) \;+\; \sum_{i=1}^m \lambda_ig_i(x).
+\]
+
+In the Lagrange multipliers method, the constrained extremum point $x_0$ is found by
+identifying the critical points of $F(x,\lambda)$. A necessary condition for using
+the Lagrange multipliers method is that the gradient $Dg(x)$ must have
+% UNCLEAR (typo, reproduced as printed): the source reads "must have has full
+% rank," an apparent editing artifact -- probably intended as either "must
+% have full rank" or "has full rank." Transcribed verbatim per fidelity rule.
+has full rank at any point $x$ where the constraint $g(x) = 0$ is satisfied, i.e.,
+\begin{equation}
+\rank(Dg(x)) \;=\; m, \quad \forall\, x \in U \text{ such that } g(x) = 0.
+\end{equation}
+
+Denote by $D_{(x,\lambda)}F(x,\lambda)$ the gradient of $F(x,\lambda)$ with respect to
+both $x$ and $\lambda$. In other words, $D_{(x,\lambda)}F(x,\lambda)$ is the
+following (row) vector:
+\begin{equation}
+D_{(x,\lambda)}F(x,\lambda) \;=\; \left(D_xF(x,\lambda) \quad D_\lambda F(x,\lambda)\right)
+\;=\; \begin{pmatrix} (D_xF(x,\lambda))^t \\ (D_\lambda F(x,\lambda))^t \end{pmatrix}^{\!t}.
+\end{equation}
+
+Recall from (10.39) that
+\begin{align}
+D_xF(x,\lambda) &= \left(\pd{F}{x_1}(x,\lambda) \quad \ldots \quad \pd{F}{x_n}(x,\lambda)\right); \\
+D_\lambda F(x,\lambda) &= \left(\pd{F}{\lambda_1}(x,\lambda) \quad \ldots \quad \pd{F}{\lambda_m}(x,\lambda)\right),
+\end{align}
+and note that
+\begin{align}
+\pd{F}{x_j}(x,\lambda) &= \pd{f}{x_j}(x) \;+\; \sum_{i=1}^m \lambda_i\pd{g_i}{x_j}(x), \quad \forall\, j = 1:n; \\
+\pd{F}{\lambda_i}(x,\lambda) &= g_i(x), \quad \forall\, i = 1:m.
+\end{align}
+
+Then, from (10.67--10.71), it follows that
+\[
+D_{(x,\lambda)}F(x,\lambda) \;=\;
+\begin{pmatrix} \pd{F}{x_1}(x,\lambda) \\ \vdots \\ \pd{F}{x_n}(x,\lambda) \\ \pd{F}{\lambda_1}(x,\lambda) \\ \vdots \\ \pd{F}{\lambda_m}(x,\lambda) \end{pmatrix}^{\!t}
+\;=\;
+\begin{pmatrix} \pd{f}{x_1}(x)+\sum_{i=1}^m \lambda_i\pd{g_i}{x_1}(x) \\ \vdots \\ \pd{f}{x_n}(x)+\sum_{i=1}^m \lambda_i\pd{g_i}{x_n}(x) \\ g_1(x) \\ \vdots \\ g_m(x) \end{pmatrix}^{\!t}.
+\]
+
+The following theorem gives necessary conditions for a point $x_0 \in U$ to be a
+constrained extremum point for $f(x)$:
+
+\begin{theorem}
+Assume that the function $g(x)$ satisfies condition (10.66). If $x_0 \in U$ is a
+constrained extremum point of $f(x)$ with respect to the constraint $g(x) = 0$, then
+there exists a Lagrange multiplier $\lambda_0 \in \R^m$ such that the point
+$(x_0,\lambda_0)$ is a critical point for the Lagrangian function $F(x,\lambda)$,
+i.e.,
+\begin{equation}
+D_{(x,\lambda)}F(x_0,\lambda_0) \;=\; 0.
+\end{equation}
+\end{theorem}
+
+To find sufficient conditions for a critical point $(x_0,\lambda_0)$ of the
+Lagrangian $F(x,\lambda)$ to correspond to a constrained extremum point $x_0$ for
+$f(x)$, consider the function $F_0 : U \to \R$ given by
+\[
+F_0(x) \;=\; F(x,\lambda_0) \;=\; f(x) \;+\; \lambda_0^tg(x).
+\]
+
+Let $D^2F_0(x_0)$ be the Hessian of $F_0(x)$ evaluated at the point $x_0$, i.e.,
+\begin{equation}
+D^2F_0(x_0) \;=\; \begin{pmatrix}
+\dfrac{\partial^2 F_0}{\partial x_1^2}(x_0) & \dfrac{\partial^2 F_0}{\partial x_2\partial x_1}(x_0) & \ldots & \dfrac{\partial^2 F_0}{\partial x_n\partial x_1}(x_0) \\[1.2ex]
+\dfrac{\partial^2 F_0}{\partial x_1\partial x_2}(x_0) & \dfrac{\partial^2 F_0}{\partial x_2^2}(x_0) & \ldots & \dfrac{\partial^2 F_0}{\partial x_n\partial x_2}(x_0) \\[1.2ex]
+\vdots & \vdots & \ddots & \vdots \\[0.6ex]
+\dfrac{\partial^2 F_0}{\partial x_1\partial x_n}(x_0) & \dfrac{\partial^2 F_0}{\partial x_2\partial x_n}(x_0) & \ldots & \dfrac{\partial^2 F_0}{\partial x_n^2}(x_0)
+\end{pmatrix};
+\end{equation}
+% Page (folio 302 / PDF 318) ends here, mid-sentence -- the prose sentence
+% continuing after the semicolon in (10.73) resumes on PDF page 319 (chunk
+% c2). The equation environment itself closes cleanly on this page; no
+% environment or "\[ \]" is left open for c2 to close.

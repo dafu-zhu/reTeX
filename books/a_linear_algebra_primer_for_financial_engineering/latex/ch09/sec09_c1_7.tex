@@ -1,0 +1,53 @@
+% PAGES: 273-273
+
+\noindent\textbf{Maximum return portfolio}
+
+The asset allocation for a portfolio invested in $n$ assets and cash, given a variance
+of the return $\sigma_P^2 \ne 0$ and largest expected return can be found below:
+\begin{itemize}
+\item asset weights vector:
+\begin{equation}
+w_{max} \;=\; \frac{\sigma_P}{\sqrt{\bar\mu^t\Sigma_R^{-1}\bar\mu}}\Sigma_R^{-1}\bar\mu;
+\end{equation}
+\item weight of the cash position:
+\begin{equation}
+w_{max,cash} \;=\; 1-\bfone^tw_{max} \;=\;
+1-\sigma_P\frac{\bfone^t\Sigma_R^{-1}\bar\mu}{\sqrt{\bar\mu^t\Sigma_R^{-1}\bar\mu}}.
+\end{equation}
+\end{itemize}
+
+The expected return of the maximum return portfolio with variance of return equal to
+$\sigma_P^2$ is $\mu_{max} = r_f+\sigma_P\sqrt{\bar\mu^t\Sigma_R^{-1}\bar\mu}$, and can
+be computed numerically as
+\[
+\mu_{max} \;=\; r_f+\bar\mu^tw_{max}.
+\]
+
+The asset allocation for the maximum return portfolio can be computed using the
+pseudocode from Table 9.3.
+
+\begin{table}[H]
+\centering
+\caption{Pseudocode for asset allocation of maximum return portfolio}
+\fbox{\begin{minipage}{0.85\linewidth}
+Input:\\
+$\Sigma_R = n\times n$ covariance matrix of the returns of $n$ assets\\
+$\mu = n\times 1$ vector of expected values of the returns of $n$ assets\\
+$r_f = $ risk--free rate\\
+$\sigma_P = $ required standard deviation of the return of the portfolio
+\bigskip
+
+Output:\\
+$w_{max} = $ asset weights vector for the maximum return portfolio\\
+$w_{max,cash} = $ weight of cash position for the maximum return portfolio\\
+$\mu_{max} = $ expected return of the maximum return portfolio
+\bigskip
+
+$\bar\mu = \mu - r_f\bfone$\\
+$x = \text{linear\_solve\_cholesky}(\Sigma_R,\bar\mu)$ \hfill\textit{// compute $x =
+\Sigma_R^{-1}\bar\mu$}\\
+$w_{max} = \dfrac{\sigma_P}{\sqrt{\bar\mu^tx}}x$\\
+$w_{max,cash} = 1 - \bfone^tw_{max}$\\
+$\mu_{max} = r_f + \bar\mu^tw_{max}$
+\end{minipage}}
+\end{table}

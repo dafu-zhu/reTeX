@@ -1,0 +1,142 @@
+% PAGES: 293-294
+% Continues the sentence left open at the end of sec09_c3_1.tex (page 292 /
+% folio 276 ends mid-word: "...invested in the"). No environment was open
+% across that boundary, so this file simply resumes the same sentence.
+second asset, or invested in the minimum variance portfolio fully invested in
+the two assets.
+
+(iii) What is the percentage difference between the VaRs obtained by using
+the formulas (9.93) and (9.92)?
+
+\begin{answerx}
+(i) Let $\VaR_1(10\text{ days},98\%)$, $\VaR_2(10\text{ days},98\%)$,
+$\VaR_m(10\text{ days},98\%)$ be the 10--day 98\% VaR of the \$100 million
+portfolio fully invested in the first asset, fully invested in the second
+asset, and invested in the minimum variance portfolio fully invested in the
+two assets, respectively.
+
+Let $\sigma_1 = 0.25$, $\sigma_2 = 0.35$, and $\rho_{1,2} = -0.25$ be the
+standard deviations and the correlation of the returns of the two assets,
+respectively. From (9.82), we find that the standard deviation of the return
+of the minimum variance portfolio fully invested in the two assets is
+$\sigma_m = 0.177139$.
+
+From the approximate VaR formula (9.93), we obtain that
+\[
+\begin{aligned}
+\VaR_1(10\text{ days},98\%) &\approx \sqrt{\frac{10}{252}}\,\sigma_1 z_{98}\cdot\$100\text{mil} \;=\; \$10.228\text{mil};\\
+\VaR_2(10\text{ days},98\%) &\approx \sqrt{\frac{10}{252}}\,\sigma_2 z_{98}\cdot\$100\text{mil} \;=\; \$14.319\text{mil};\\
+\VaR_m(10\text{ days},98\%) &\approx \sqrt{\frac{10}{252}}\,\sigma_m z_{98}\cdot\$100\text{mil} \;=\; \$7.247\text{mil};
+\end{aligned}
+\]
+recall that $z_{98}=2.0537$.
+
+The VaR of the minimum variance portfolio is significantly smaller that the
+VaR of both the portfolio invested in the first asset, and of the portfolio
+invested in the second asset, which shows that portfolio diversification can
+be used to reduce the risk of the portfolio.
+% NOTE: "significantly smaller that the VaR" -- source prints "that", not
+% "than" (folio 277); reproduced as printed.
+
+(ii) Let $\mu_1 = 0.03$ and $\mu_2 = 0.06$ be the expected values of the
+returns of the two assets, respectively.
+
+Since $z_{98} = 2.0537$, we obtain from (9.92) that
+\[
+\begin{aligned}
+\VaR_1(10\text{ days},98\%) &= \sqrt{\frac{10}{252}}\,\sigma_1 z_{98}\cdot\$100\text{mil} \;-\; \frac{10}{252}\mu_1\,\$100\text{mil} \;=\; \$10.109\text{mil};\\
+\VaR_2(10\text{ days},98\%) &= \sqrt{\frac{10}{252}}\,\sigma_2 z_{98}\cdot\$100\text{mil} \;-\; \frac{10}{252}\mu_2\,\$100\text{mil} \;=\; \$14.081\text{mil}.
+\end{aligned}
+\]
+
+The expected value of the return of the minimum variance portfolio fully
+invested in the two assets is $\mu_m = w_1\mu_1 + w_2\mu_1$,
+% NOTE: source prints $w_2\mu_1$ here (folio 277); the second term should
+% read $w_2\mu_2$ on definitional grounds ($\mu_m$ is the weighted average
+% $w_1\mu_1+w_2\mu_2$), but this is reproduced exactly as printed and not
+% corrected, per the fidelity rule.
+where $w_1$ and $w_2$ are given by (9.80--9.81). We obtain that $\mu_m =
+0.04107$, and, from (9.92), it follows that
+\[
+\VaR_m(10\text{ days},98\%) \;=\; \sqrt{\frac{10}{252}}\,\sigma_m z_{98}\,\$100\text{mil} \;-\; \frac{10}{252}\mu_m\,\$100\text{mil} \;=\; \$7.084\text{mil}.
+\]
+
+(iii) The percentage differences between the VaRs obtained by using the
+formulas (9.93) and (9.92) are all smaller than 2.5\%, as follows:
+
+for the portfolio fully invested in the first asset:
+\[
+\frac{\lvert 10.228-10.109\rvert}{10.228} \;=\; 0.0116 \;=\; 1.16\%.
+\]
+
+for the portfolio fully invested in the second asset:
+\[
+\frac{\lvert 14.319-14.081\rvert}{14.319} \;=\; 0.0166 \;=\; 1.66\%.
+\]
+
+for the minimum variance portfolio fully invested in the two assets:
+\[
+\frac{\lvert 7.247-7.084\rvert}{7.247} \;=\; 0.0225 \;=\; 2.25\%.
+\]
+
+In other words, the VaRs obtained using the expected values of the returns of
+the two assets and the VaRs obtained using only the standard deviations of
+the returns are very similar. Thus, in order to estimate Value at Risk, there
+is no need to find the expected values of the returns of assets or
+portfolios, which is very difficult to do with any accuracy in practice. This
+is similar to option pricing in the Black--Scholes framework, where the drift
+of the asset (i.e., the expected value of the instantaneous return of the
+asset) is not needed in order to compute the Black--Scholes values of the
+options.
+\hfill$\square$
+\end{answerx}
+
+The usefulness of Value at Risk comes from its simplicity: it is a single
+number that makes comparing VaRs at different times easy, and makes
+deteriorating trends easy to spot. However, its simplicity is also its main
+drawback, since VaR does not distinguish between possible sizes of the losses
+beyond the $1-C$ percentile.
+
+A coherent risk measure that distinguishes between different sizes of losses
+under tail events is expected shortfall, also called conditional Value at
+Risk (cVaR). The $N$ days expected shortfall of a portfolio at confidence
+level $C$ is the expected loss of the portfolio over the next $N$ days
+conditional on the loss being greater than $\VaR(N,C)$. Expected shortfall is
+subadditive, unlike VaR; see section 9.6.1 for details on the subadditivity
+of VaR.
+
+\subsection{VaR of combined portfolios and subadditivity}
+
+An intuitive requirement for a risk measure is that it would decrease with
+portfolio diversification. Formally, this is called the subadditivity
+requirement for a coherent risk measure: If $\mathrm{rm}(V)$ denotes the risk
+measure of portfolio $V$, then this risk measure is subadditive if and only
+if $\mathrm{rm}(V_1 + V_2) \le \mathrm{rm}(V_1) + \mathrm{rm}(V_2)$ for any two
+portfolios $V_1$ and $V_2$.
+
+Value at Risk is not a coherent risk measure, as first pointed out by Artzner
+et al. \cite{6}; see the example below. This has potentially very detrimental
+consequences for using VaR in practice. For example, it may not be true that
+the overall Value at Risk of a financial institution is smaller than the sum
+of the VaRs for different groups within the firm. Note that expected
+shortfall (cVar) is subadditive, and it has the further advantage of better
+estimating tail risk exposure.
+% NOTE: this same page (folio 278) prints "conditional Value at Risk (cVaR)"
+% a few lines above and "expected shortfall (cVar)" here -- the
+% capitalization of the final letter is inconsistent in the source; both
+% spellings are reproduced exactly as printed.
+
+The example below of an instance when VaR is not subadditive is adapted from
+Artzner et al. \cite{6}.
+
+Assume that the changes $V_1(N)-V_1(0)$ and $V_2(N)-V_2(0)$ in the values of
+two given portfolios over an $N$ day time horizon are independent and
+identically distributed, with probability density functions given by
+\begin{equation}
+f_1(x) \;=\; f_2(x) \;=\;
+\begin{cases}
+0.05, & \text{if} \ \ -2 \le x \le 0;\\
+0.90, & \text{if} \ \ 0 < x \le 1;\\
+0, & \text{if} \ \ 1 < x.
+\end{cases}
+\end{equation}

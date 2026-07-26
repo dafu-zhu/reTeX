@@ -1,0 +1,115 @@
+% PAGES: 155-156
+
+\noindent Symmetric matrices. Real eigenvalues of symmetric matrices. Orthogonality of the
+eigenvectors of symmetric matrices.
+\medskip
+
+\noindent Symmetric positive definite matrices and symmetric positive semidefinite matrices.
+\medskip
+
+\noindent Positive definiteness criteria for symmetric matrices. Sylvester's criterion.
+\medskip
+
+\noindent Diagonal dominant symmetric positive definite matrices.
+\medskip
+
+\noindent The diagonal form of symmetric matrices.
+\medskip
+
+\section{Symmetric matrices}
+
+\begin{definition}
+A symmetric matrix is a matrix with real entries that is equal to its transpose matrix.
+In other words, an $n \times n$ matrix $A$ is symmetric if and only if $A = A\tp$, i.e.,
+\begin{equation}
+A(j,k) \;=\; A(k,j), \quad \forall\, 1 \leq j \neq k \leq n.
+\end{equation}
+\end{definition}
+
+\par\medskip\noindent\textit{Examples:}\ (i) Let $M$ be an $n \times n$ square matrix. The
+matrix $A = M + M\tp$ is a symmetric matrix, since $(M\tp)\tp = M$, see (1.19), and
+therefore
+\[
+A\tp \;=\; (M+M\tp)\tp \;=\; M\tp+(M\tp)\tp \;=\; M\tp+M \;=\; A.
+\]
+
+(ii) Let $M$ be an $m \times n$ matrix. The matrix $A = M\tp M$ is a symmetric
+matrix,\footnote{Moreover, $M\tp M$ is a symmetric positive semidefinite matrix; cf.
+Lemma 5.2.} since
+\[
+A\tp \;=\; (M\tp M)\tp \;=\; M\tp(M\tp)\tp \;=\; M\tp M \;=\; A.
+\]
+\hfill$\square$
+\par\medskip
+
+Recall from Theorem 4.2 that an $n \times n$ matrix with real entries has $n$
+eigenvalues, counted with their multiplicities, but these eigenvalues may be complex
+numbers. However, \textit{all the eigenvalues of a symmetric matrix with real entries
+are real numbers}; see Theorem 5.1.
+
+Moreover, recall from Lemma 4.2 that eigenvectors corresponding to different
+eigenvalues are linearly independent. For symmetric matrices, such eigenvectors are
+orthogonal; see Theorem 5.3. To state these results formally and prove them, we begin
+by introducing the concepts of inner product and orthogonality.
+
+\begin{definition}
+Let $u = (u_i)_{i=1:n}$ and $v = (v_i)_{i=1:n}$ be column vectors of size $n$, with
+$u_i, v_i \in \R$, for $i = 1:n$. The inner product of $u$ and $v$ is
+\begin{equation}
+(u,v) \;=\; v\tp u,
+\end{equation}
+which can be written explicitly as
+\begin{equation}
+(u,v) \;=\; u_1v_1 + u_2v_2 + \dots + u_nv_n \;=\; \sum_{i=1}^{n} u_iv_i.
+\end{equation}
+\end{definition}
+
+Note that $v\tp u = \sum_{i=1}^{n} u_iv_i = u\tp v$, see (1.5), and therefore
+\begin{equation}
+(u,v) \;=\; v\tp u \;=\; u\tp v \;=\; (v,u), \quad \forall\, u,v \in \R^n.
+\end{equation}
+
+The inner product $(\cdot,\cdot)$ from (5.2) is bilinear; in particular, note that
+\begin{align}
+(u_1+u_2,v) &\;=\; (u_1,v)+(u_2,v), \quad \forall\, u_1,u_2,v \in \R^n;\\
+(u,v_1+v_2) &\;=\; (u,v_1)+(u,v_2), \quad \forall\, u,v_1,v_2 \in \R^n;\\
+(cu,v) &\;=\; (u,cv) \;=\; c(u,v), \quad \forall\, u,v \in \R^n,\ c \in \R.
+\end{align}
+
+\begin{definition}
+The norm of a vector $v \in \R^n$ is defined as $\|v\| = \sqrt{(v,v)} = \sqrt{v\tp v}$.
+If $v = (v_i)_{i=1:n}$, then
+\begin{equation}
+\|v\|^2 \;=\; (v,v) \;=\; v\tp v \;=\; \sum_{i=1}^{n} v_i^2.
+\end{equation}
+\end{definition}
+
+The inner product from (5.2) and the norm from (5.8) are also called the Euclidean
+inner product and the Euclidean norm of a vector, respectively.
+
+\begin{theorem}
+Any eigenvalue of a symmetric matrix is a real number.
+\end{theorem}
+
+\begin{proof}
+An elegant proof of Theorem 5.1 involves an extension of the Euclidean inner product
+(5.2) to complex numbers and can be found in section 10.4.
+\end{proof}
+
+\begin{lemma}
+Let $A$ be an $m \times n$ matrix, and let $B$ be an $n \times m$ matrix. Let $u$ and
+$v$ be column vectors of size $n$ and $m$, respectively. Then,
+\begin{align}
+(Au,v) &\;=\; (u,A\tp v);\\
+(u,Bv) &\;=\; (B\tp u,v).
+\end{align}
+\end{lemma}
+
+\begin{proof}
+Recall from (1.21) that $(Bv)\tp = v\tp B\tp$ and $(A\tp v)\tp = v\tp(A\tp)\tp = v\tp A$,
+since $(A\tp)\tp = A$; cf. (1.19). Then, using (5.2), we find that
+\begin{align*}
+(Au,v) &\;=\; v\tp Au \;=\; (v\tp A)u \;=\; (A\tp v)\tp u \;=\; (u,A\tp v);\\
+(u,Bv) &\;=\; (Bv)\tp u \;=\; v\tp B\tp u \;=\; v\tp(B\tp u) \;=\; (B\tp u,v).
+\end{align*}
+\end{proof}

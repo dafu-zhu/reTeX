@@ -1,0 +1,158 @@
+% PAGES: 314-316
+% Continues Theorem 10.5, opened in sec10_c1_4.tex (part (i) statement only,
+% eq (10.47)-(10.48)). Supplies part (ii) of the statement below, then the
+% proof, then "\end{theorem}" -- no "\begin{theorem}" or "Theorem 10.5" label
+% is reprinted here.
+
+(ii) Let $A$ be a square matrix. The gradient and Hessian of $x^tAx$ are
+\begin{align}
+D(x^tAx) &= \left((A+A^t)x\right)^t; \\
+D^2(x^tAx) &= A+A^t.
+\end{align}
+\end{theorem}
+
+\begin{proof}
+(i) Let $A$ be an $n \times n$ symmetric matrix, and let $f : \R^n \to \R$ given by
+\[
+f(x) \;=\; x^tAx.
+\]
+
+Let $i$ fixed, with $1 \le i \le n$. From (10.20), we find that
+\begin{align}
+f(x) \;&=\; \sum_{1\le l,p\le n} A(l,p)x_lx_p \notag \\
+&=\; A(i,i)x_i^2 \;+\; \sum_{p=1:n,p\ne i} A(i,p)x_ix_p \;+\; \sum_{l=1:n,l\ne i} A(l,i)x_lx_i \\
+&\quad +\; \sum_{1\le l,p\le n,l\ne i,p\ne i} A(l,p)x_lx_p,
+\end{align}
+
+By differentiating (10.51--10.52) with respect to $x_i$, and noting that $A(i,p) =
+A(p,i)$ since $A$ is a symmetric matrix, we find that
+\begin{align}
+\pd{f}{x_i}(x) \;&=\; 2A(i,i)x_i \;+\; \sum_{p=1:n,p\ne i} A(i,p)x_p \;+\; \sum_{l=1:n,l\ne i} A(l,i)x_l \notag \\
+&=\; 2A(i,i)x_i \;+\; \sum_{p=1:n,p\ne i} A(i,p)x_p \;+\; \sum_{p=1:n,p\ne i} A(p,i)x_p \notag \\
+&=\; 2A(i,i)x_i \;+\; \sum_{p=1:n,p\ne i} (A(i,p)+A(p,i))x_p \notag \\
+&=\; 2A(i,i)x_i \;+\; 2\sum_{p=1:n,p\ne i} A(i,p)x_p \notag \\
+&=\; 2\sum_{p=1}^n A(i,p)x_p.
+\end{align}
+
+From (1.8), it follows that the $i$-th entry of the vector $2Ax$, where $1 \le i \le
+n$, is given by
+\begin{equation}
+(2Ax)(i) \;=\; 2\sum_{p=1}^n A(i,p)x_p.
+\end{equation}
+
+From (10.53) and (10.54), we conclude that
+\[
+\pd{f}{x_i}(x) \;=\; (2Ax)(i), \quad \forall\, i = 1:n,
+\]
+and therefore, from (10.39), we obtain that
+\begin{align*}
+Df(x) \;&=\; \left(\pd{f}{x_1}(x) \quad \pd{f}{x_2}(x) \quad \ldots \quad \pd{f}{x_n}(x)\right) \\
+&=\; \left((2Ax)(1) \quad (2Ax)(2) \quad \ldots \quad (2Ax)(n)\right) \\
+&=\; 2(Ax)^t.
+\end{align*}
+
+To compute the Hessian of $f(x) = x^tAx$, let $j$ and $k$ fixed, with $1 \le j,k \le
+n$. From (10.20), we find that
+\begin{align*}
+f(x) \;&=\; \sum_{1\le l,p\le n} A(l,p)x_lx_p \\
+&=\; (A(j,k)+A(k,j))x_jx_k \;+\!\!\sum_{1\le l,p\le n;(l,p)\ne(j,k);(l,p)\ne(k,j)}\!\! A(j,k)x_lx_p \\
+&=\; 2A(j,k)x_jx_k \;+\!\!\sum_{1\le l,p\le n;(l,p)\ne(j,k);(l,p)\ne(k,j)}\!\! A(j,k)x_lx_p,
+\end{align*}
+since $A$ is a symmetric matrix and therefore $A(j,k) = A(k,j)$. Then,
+\[
+\frac{\partial^2 f}{\partial x_k\partial x_j}(x) \;=\; 2A(j,k),
+\]
+and, from (10.41), it follows that
+\[
+D^2f(x) \;=\; \left(\frac{\partial^2 f}{\partial x_k\partial x_j}(x)\right)_{1\le j,k\le n}
+\;=\; (2A(j,k))_{1\le j,k\le n} \;=\; 2A.
+\]
+
+(ii) Let $A$ be an $n \times n$ matrix. Recall from (10.28) that
+\begin{equation}
+q_A(x) \;=\; x^tAx \;=\; \frac12 x^t(A+A^t)x.
+\end{equation}
+
+Note that $A+A^t$ is a symmetric matrix, since
+\[
+(A+A^t)^t \;=\; A^t+(A^t)^t \;=\; A^t+A.
+\]
+
+Then, from (10.47) and (10.48), we find that
+\begin{align}
+D\left(x^t(A+A^t)x\right) &= 2\left((A+A^t)x\right)^t; \\
+D^2\left(x^t(A+A^t)x\right) &= 2(A+A^t).
+\end{align}
+
+From (10.55), (10.56), and (10.57), we conclude that
+\[
+D(x^tAx) \;=\; \frac12 D\left(x^t(A+A^t)x\right) \;=\; \left((A+A^t)x\right)^t;
+\]
+\[
+D^2(x^tAx) \;=\; \frac12 D^2\left(x^t(A+A^t)x\right) \;=\; A+A^t.
+\qedhere
+\]
+\end{proof}
+
+\textit{Vector Valued Functions}
+
+Let $F : \R^n \to \R^m$ be a vector valued function given by
+\[
+F(x) \;=\; \begin{pmatrix} f_1(x) \\ f_2(x) \\ \vdots \\ f_m(x) \end{pmatrix},
+\]
+where $x = (x_1,x_2,\ldots,x_n)$.
+
+If the functions $f_j(x)$, $j = 1:m$, are differentiable with respect to all
+variables $x_i$, $i = 1:n$, then the gradient $DF(x)$ of the function $F(x)$ is the
+following matrix of size $m \times n$:
+\begin{equation}
+DF(x) \;=\; \begin{pmatrix}
+\dfrac{\partial f_1}{\partial x_1}(x) & \dfrac{\partial f_1}{\partial x_2}(x) & \ldots & \dfrac{\partial f_1}{\partial x_n}(x) \\[1.2ex]
+\dfrac{\partial f_2}{\partial x_1}(x) & \dfrac{\partial f_2}{\partial x_2}(x) & \ldots & \dfrac{\partial f_2}{\partial x_n}(x) \\[1.2ex]
+\vdots & \vdots & \ddots & \vdots \\[0.6ex]
+\dfrac{\partial f_m}{\partial x_1}(x) & \dfrac{\partial f_m}{\partial x_2}(x) & \ldots & \dfrac{\partial f_m}{\partial x_n}(x)
+\end{pmatrix}.
+\end{equation}
+
+If $F : \R^n \to \R^n$, then the gradient $DF(x)$ is an $n \times n$ square matrix.
+
+Note that the $j$-th row of the gradient matrix $DF(x)$ is equal to the gradient
+$Df_j(x)$ of the function $f_j(x)$, $j = 1:m$; cf. (10.39) and (10.58). Therefore,
+\begin{equation}
+DF(x) \;=\; \begin{pmatrix} Df_1(x) \\ Df_2(x) \\ \vdots \\ Df_m(x) \end{pmatrix}.
+\end{equation}
+
+\begin{lemma}
+Let $M$ be an $m \times n$ matrix. The gradient of the vector valued function $Mx$,
+taking $x \in \R^n$ into $Mx \in \R^m$ is
+\begin{equation}
+D(Mx) \;=\; M.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Let $M = \mathrm{row}(r_j)_{j=1:m}$ be the row form of $M$. From (1.8), it follows
+that the $Mx$ can be written as\footnote{Note that $r_jx$ is the result of the
+multiplication of the row vector $r_j$ by the column vector $x$, and therefore a
+real number, for every $j = 1:m$; see also (1.5).}
+\begin{equation}
+Mx \;=\; \begin{pmatrix} r_1x \\ r_2x \\ \vdots \\ r_mx \end{pmatrix}.
+\end{equation}
+
+From (10.59) and (10.61), it follows that
+\begin{equation}
+D(Mx) \;=\; \begin{pmatrix} D(r_1x) \\ D(r_2x) \\ \vdots \\ D(r_mx) \end{pmatrix}.
+\end{equation}
+
+From (10.43), we find that
+\begin{equation}
+D(r_jx) \;=\; r_j, \quad \forall\, j = 1:m.
+\end{equation}
+
+Then, from (10.62) and (10.63), we conclude that
+\[
+D(Mx) \;=\; \begin{pmatrix} r_1 \\ r_2 \\ \vdots \\ r_m \end{pmatrix}
+\;=\; \mathrm{row}(r_j)_{j=1:m} \;=\; M.
+\qedhere
+\]
+\end{proof}

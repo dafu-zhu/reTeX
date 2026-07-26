@@ -1,0 +1,73 @@
+% PAGES: 284-284
+% Self-contained Example:/Answer: pair opens and closes within this single
+% page (folio 268); the closing square is printed at the very end of this
+% file, after "...largest expected return of any of the four assets."
+
+The maximum expected return of a portfolio with variance of return equal to
+$\sigma_P^2$ is
+\begin{align}
+\mu_{max} &= r_f+\bar\mu^tw_{max} \;=\;
+r_f+\sigma_P\frac{\bar\mu^t\Sigma_R^{-1}\bar\mu}{\sqrt{\bar\mu^t\Sigma_R^{-1}\bar\mu}}
+\notag\\
+&= r_f+\sigma_P\sqrt{\bar\mu^t\Sigma_R^{-1}\bar\mu}.
+\end{align}
+
+The pseudocode for the asset allocation for the maximum return portfolio computed
+using the formulas (9.59--9.61) can be found in Table 9.3.
+
+\par\medskip\noindent\textit{Example:}\ Find the \$100 million maximum return
+portfolio with 27\% standard deviation of return invested in cash and four assets
+with expected returns equal to 2\%, 1.75\%, 2.5\%, and 1.5\%, and with the following
+covariance matrix of their returns:
+\[
+\begin{pmatrix}
+0.09 & 0.01 & 0.03 & -0.015 \\
+0.01 & 0.0625 & -0.02 & -0.01 \\
+0.03 & -0.02 & 0.1225 & 0.02 \\
+-0.015 & -0.01 & 0.02 & 0.0576
+\end{pmatrix}.
+\]
+
+Assume that the risk free rate is 1\%.
+
+\begin{answerx}
+We know that $\mu_1=0.02$, $\mu_2=0.0175$, $\mu_3=0.025$, $\mu_4=0.015$, and $r_f=
+0.01$. We look for the asset and cash allocation corresponding to the maximum return
+portfolio with standard deviation of return equal to $\sigma_P = 0.27$.
+
+Note that $\bar\mu=\mu-r_f\bfone$ and $\Sigma_R$ are given by
+\[
+\bar\mu \;=\; \mu-r_f\bfone \;=\; \begin{pmatrix} 0.01 \\ 0.0075 \\ 0.015 \\ 0.005 \end{pmatrix}; \quad
+\Sigma_R \;=\; \begin{pmatrix}
+0.09 & 0.01 & 0.03 & -0.015 \\
+0.01 & 0.0625 & -0.02 & -0.01 \\
+0.03 & -0.02 & 0.1225 & 0.02 \\
+-0.015 & -0.01 & 0.02 & 0.0576
+\end{pmatrix}.
+\]
+
+The vector $\Sigma_R^{-1}\bar\mu$ is computed by using the Cholesky decomposition to
+solve the linear system corresponding to the matrix $\Sigma_R$ and to the right hand
+side $\bar\mu$, i.e., $\Sigma_R^{-1}\bar\mu =
+\text{linear\_solve\_cholesky}(\Sigma_R,\bar\mu)$; see Table 6.2 and also the
+pseudocode from Table 9.3. From (9.59) and (9.60), we find that the asset weights
+vector corresponding to the maximum return portfolio is
+\[
+w_{max} \;=\;
+\frac{\sigma_P}{\sqrt{\bar\mu^t\Sigma_R^{-1}\bar\mu}}\Sigma_R^{-1}\bar\mu \;=\;
+\begin{pmatrix} 0.2938 \\ 0.6773 \\ 0.4905 \\ 0.3891 \end{pmatrix},
+\]
+and the weight of the cash position is
+\[
+w_{max,cash} \;=\; 1-\bfone^tw_{max} \;=\; -0.8507.
+\]
+
+Thus, the \$100 million maximum return portfolio with 27\% standard deviation of
+return is obtained by borrowing \$85.07 million and investing \$29.38 million in
+asset 1, \$67.73 million in asset 2, \$49.05 million in asset 3, and \$38.91 million
+in asset 4.
+
+From (9.61), we find that the maximum expected return of this portfolio is
+$\mu_{max} = 0.0273$, i.e., 2.73\%, which is more than 2.5\%, the largest expected
+return of any of the four assets. \hfill$\square$
+\end{answerx}

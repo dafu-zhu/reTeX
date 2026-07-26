@@ -1,0 +1,119 @@
+% PAGES: 179-180
+% Continues the "Proof of Theorem 6.1" opened in sec06_c1_1.tex (page 178 /
+% folio 162); the proof remains open across this entire file and is not
+% closed here -- it closes partway through sec06_c1_3.tex (page 181 /
+% folio 165). No new "\begin{proof}" is opened in this file.
+
+$x = e_1 = (1 \; 0 \; \ldots \; 0)\tp$, we obtain, either by direct computation or by
+using (10.20), that $x\tp Ax = e_1\tp Ae_1 = A(1,1) > 0$.
+
+Note that (6.5) has two possible solutions: $U(1,1) = \sqrt{A(1,1)}$ and $U(1,1) =
+-\sqrt{A(1,1)}$. Since the matrix $U$ must have positive entries on the main diagonal,
+see Definition 6.1, we conclude that
+\begin{equation}
+U(1,1) \;=\; \sqrt{A(1,1)}.
+\end{equation}
+
+Moreover, if $U\tp U = A$, then, by multiplying the first row of $U\tp$ by the column
+$k$ of $U$, we find that
+\begin{equation}
+U(1,1)U(1,k) \;=\; A(1,k), \quad \forall\, k = 2:n.
+\end{equation}
+From (6.7), and using (6.6), we obtain that
+\begin{equation}
+U(1,k) \;=\; \frac{A(1,k)}{U(1,1)}, \quad \forall\, k = 2:n.
+\end{equation}
+
+Thus, the first row of $U$ is computed using (6.8). The other rows of the matrix $U$
+are computed recursively as follows:
+
+Write the matrix $U$ as
+\begin{equation}
+U \;=\; \begin{pmatrix} U(1,1) & U(1,2:n) \\ 0 & U(2:n,2:n) \end{pmatrix},
+\end{equation}
+where $U(1,2:n) = (U(1,k))_{k=2:n}$ is an $1 \times (n-1)$ row vector and $U(2:n,2:n) =
+(U(j,k))_{2 \leq j,k \leq n}$ is the $(n-1) \times (n-1)$ upper triangular matrix with
+positive entries on the main diagonal made of the entries from the rows $2, 3,
+\ldots, n$ and the columns $2, 3, \ldots, n$ of $U$.
+
+Since $A$ is a symmetric matrix, it follows that $A(2:n,1) = (A(1,2:n))\tp$, the matrix
+$A$ can be written as follows:
+\begin{equation}
+A \;=\; \begin{pmatrix} A(1,1) & A(1,2:n) \\ A(2:n,1) & A(2:n,2:n) \end{pmatrix} \;=\;
+\begin{pmatrix} A(1,1) & A(1,2:n) \\ (A(1,2:n))\tp & A(2:n,2:n) \end{pmatrix},
+\end{equation}
+where
+\begin{align*}
+A(1,2:n) &= (A(1,k))_{k=2:n} \quad \text{is an} \quad 1 \times (n-1) \text{ row
+vector;} \\
+A(2:n,2:n) &= (A(j,k))_{2 \leq j,k \leq n} \quad \text{is an} \quad (n-1) \times (n-1)
+\text{ matrix.}
+\end{align*}
+
+From (6.9) and (6.10), it follows that $A = U\tp U$ is equivalent to
+\begin{align}
+& \begin{pmatrix} A(1,1) & A(1,2:n) \\ A(2:n,1) & A(2:n,2:n) \end{pmatrix} \\
+= \;& \begin{pmatrix} A(1,1) & A(1,2:n) \\ (A(1,2:n))\tp & A(2:n,2:n) \end{pmatrix} \\
+= \;& \begin{pmatrix} U(1,1) & U(1,2:n) \\ 0 & U(2:n,2:n) \end{pmatrix}\tp
+\begin{pmatrix} U(1,1) & U(1,2:n) \\ 0 & U(2:n,2:n) \end{pmatrix} \notag \\
+= \;& \begin{pmatrix} U(1,1) & 0 \\ (U(1,2:n))\tp & (U(2:n,2:n))\tp \end{pmatrix}
+\begin{pmatrix} U(1,1) & U(1,2:n) \\ 0 & U(2:n,2:n) \end{pmatrix}.
+\end{align}
+
+By using block matrix multiplication to multiply the rows $2:n$ of $U\tp$ by the
+columns $2:n$ of $U$, we obtain from (6.11) and (6.13) that\footnote{Since
+$U(1,2:n)$ is an $1 \times (n-1)$ row vector, it follows that $(U(1,2:n))\tp$ is an
+$(n-1) \times 1$ column vector, and therefore the result of the column vector -- row
+vector multiplication $(U(1,2:n))\tp U(1,2:n)$ is an $(n-1) \times (n-1)$ matrix, see
+(1.6), which is the same size as the matrices $A(2:n,2:n)$ and $U(2:n,2:n)$. Thus, the
+matrix dimensions in (6.14) are consistent.}
+\begin{equation}
+A(2:n,2:n) \;=\; (U(1,2:n))\tp U(1,2:n) \;+\; (U(2:n,2:n))\tp U(2:n,2:n),
+\end{equation}
+and therefore
+\begin{equation}
+(U(2:n,2:n))\tp U(2:n,2:n) \;=\; A(2:n,2:n) \;-\; (U(1,2:n))\tp U(1,2:n).
+\end{equation}
+
+\medskip
+\noindent\rule{\linewidth}{0.4pt}
+
+\noindent\textit{Example: $4 \times 4$ matrix}
+
+\noindent For $n = 4$, we obtain that $A(1,2:n)$, $A(2:n,2:n)$, $U(1,2:n)$, and
+$U(2:n,2:n)$ are given by
+\begin{align*}
+A(1,2:n) &= A(1,2:4) \;=\; \begin{pmatrix} A(1,2) & A(1,3) & A(1,4) \end{pmatrix}; \\
+A(2:n,2:n) &= A(2:4,2:4) \;=\; \begin{pmatrix} A(2,2) & A(2,3) & A(2,4) \\ A(3,2) &
+A(3,3) & A(3,4) \\ A(4,2) & A(4,3) & A(4,4) \end{pmatrix}; \\
+U(1,2:n) &= U(1,2:4) \;=\; \begin{pmatrix} U(1,2) & U(1,3) & U(1,4) \end{pmatrix}; \\
+U(2:n,2:n) &= U(2:4,2:4) \;=\; \begin{pmatrix} U(2,2) & U(2,3) & U(2,4) \\ 0 & U(3,3) &
+U(3,4) \\ 0 & 0 & U(4,4) \end{pmatrix},
+\end{align*}
+and therefore (6.12--6.13) is written as follows if $A$ and $U$ are $4 \times 4$
+matrices:
+\begin{equation}
+\begin{pmatrix} A(1,1) & A(1,2:4) \\ (A(1,2:4))\tp & A(2:4,2:4) \end{pmatrix} \;=\;
+\begin{pmatrix} U(1,1) & 0 \\ (U(1,2:4))\tp & (U(2:4,2:4))\tp \end{pmatrix}
+\begin{pmatrix} U(1,1) & U(1,2:4) \\ 0 & U(2:4,2:4) \end{pmatrix}.
+\end{equation}
+From (6.16), we find the following explicit form of (6.14) for $4 \times 4$ matrices:
+\[
+A(2:4,2:4) \;=\; (U(1,2:4))\tp U(1,2:4) \;+\; (U(2:4,2:4))\tp U(2:4,2:4),
+\]
+and therefore
+\begin{equation}
+(U(2:4,2:4))\tp U(2:4,2:4) \;=\; A(2:4,2:4) \;-\; (U(1,2:4))\tp U(1,2:4).
+\end{equation}
+
+\noindent\rule{\linewidth}{0.4pt}
+\medskip
+
+From (6.8), it follows that
+\[
+U(1,2:n) \;=\; \frac{A(1,2:n)}{\sqrt{A(1,1)}},
+\]
+and therefore
+\begin{equation}
+(U(1,2:n))\tp U(1,2:n) \;=\; \frac{(A(1,2:n))\tp A(1,2:n)}{A(1,1)}.
+\end{equation}

@@ -1,0 +1,63 @@
+% PAGES: 147
+% Continues sec04_c3_3.tex (pages 145-146), which left the \begin{proof}
+% of Lemma 4.11 open right after equation (4.52). This file completes
+% that same proof (no re-opening) -- it concludes with the printed square
+% near the top of page 147 (folio 131), which also closes section 4.5.
+%
+% Section 4.6 "References" then opens and runs to the bottom of page 147
+% (four reference paragraphs, the last one ending "...Lax and Zalcman
+% \cite{27}."). No environment is left open at the end of this file, and
+% no sentence, \[ \], or begin{...} is left unclosed. This is the last
+% page of the c3 chunk (PDF pages 141-147 / folios 125-131); the next
+% chunk (c4, pages 148-154) should open fresh, not as a continuation of
+% anything in this file.
+
+Recall from (4.43) that the matrix $B_N$ has the following $N$ eigenvalues:
+\[
+\mu_j \;=\; 2 - 2\cos\left(\frac{j\pi}{N+1}\right), \quad \text{for}\ j = 1:N.
+\]
+Then, from (4.52), it follows that
+\begin{equation}
+\begin{split}
+\lambda_j &\;=\; d - 2a + a\mu_j \;=\; d - a(2-\mu_j)\\
+&\;=\; d - 2a\cos\left(\frac{\pi j}{N+1}\right).
+\end{split}
+\end{equation}
+We conclude that, for $j = 1:N$, $\lambda_j$ given by (4.53) are eigenvalues of the
+matrix $T_N$ with corresponding eigenvectors $v_j$ given by (4.44).
+
+The $N \times N$ matrix has exactly $N$ eigenvalues, counted with their
+multiplicities; cf. Theorem 4.2. We conclude that $\lambda_j$, $j = 1:N$, are all the
+eigenvalues of $T_N$.
+\end{proof}
+
+\section{References}
+
+For an overview of numerical eigenvalue methods, see the monograph by Saad
+\cite{34}. The QR algorithm and practical implementation details, including the
+Hessenberg reduction and tridiagonal and bidiagonal reduction, can be found in Demmel
+\cite{13} and in Trefethen and Bau \cite{43}.
+
+The general form of Gershgorin's theorem states that, if the union of $k$ Gershgorin
+disks are disjoint from the other Gershgorin disks, then exactly $k$ of the
+eigenvalues of the matrix are in the union of those $k$ Gershgorin disks. This
+version of Gershgorin's theorem and extensions of it can be found in Varga \cite{44}.
+
+The matrix
+\[
+B_N \;=\; \begin{pmatrix}
+2 & -1 & \dots & 0\\
+-1 & \ddots & \ddots & \vdots\\
+\vdots & \ddots & \ddots & -1\\
+0 & \dots & -1 & 2
+\end{pmatrix}
+\]
+appears in the finite difference discretization of the one dimensional Poisson
+equation. It has many interesting properties, which have a special symmetry about
+them; details can be found in the section ``My Favorite Matrix'' from Gil Strang's
+``Essays in Linear Algebra'' \cite{42}.
+
+An elegant complex analysis proof of the Fundamental Theorem of Algebra (which was
+used to show that an $n \times n$ matrix has exactly $n$ eigenvalues, when counted
+with their multiplicities) is included, with detailed historical notes, Lax and
+Zalcman \cite{27}.

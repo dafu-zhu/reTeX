@@ -1,0 +1,115 @@
+% PAGES: 199-200
+% Continues directly after sec06_c3_3.tex (folio 182), which ends mid-sentence
+% on the unnumbered display "a_i + b_i x_{i-1} = q_{i-1}, ...; a_i + b_i x_i =
+% r_i, ..." -- the sentence resumes here with "and therefore" leading into
+% (6.76)-(6.77). No environment was left open.
+
+and therefore
+\begin{align}
+a_i &= \frac{q_{i-1}x_i - r_ix_{i-1}}{x_i-x_{i-1}}, \qquad \forall\, i = 1:n; \\
+b_i &= \frac{r_i-q_{i-1}}{x_i-x_{i-1}}, \qquad \forall\, i = 1:n.
+\end{align}
+
+Summarizing, given $v_i$ and $w_i$, $i = 0:n$, we obtain $c_i$ and $d_i$, $i = 1:n$,
+from (6.72) and (6.73), and use them to compute $r_i$ and $q_{i-1}$, $i = 1:n$, from
+(6.74) and (6.75). In turn, $r_i$ and $q_{i-1}$, $i = 1:n$, are used to obtain $a_i$
+and $b_i$, $i = 1:n$, from (6.76) and (6.77).
+
+Since $w_0 = w_n = 0$, see (6.66), we are left with finding the values of $w_i$, for
+$i = 1:(n-1)$. To do so, we use the condition (6.67) for the continuity of the first
+derivative, i.e., $f_i'(x_i) = f_{i+1}'(x_i)$, for all $i = 1:(n-1)$, which can be
+written as
+\begin{equation}
+b_i + 2c_ix_i + 3d_ix_i^2 \;=\; b_{i+1} + 2c_{i+1}x_i + 3d_{i+1}x_i^2, \qquad \forall\,
+i = 1:(n-1);
+\end{equation}
+
+From (6.77) and using (6.74) and (6.75), we obtain that
+\begin{align*}
+b_i &= \frac{v_i-v_{i-1}}{x_i-x_{i-1}} - c_i(x_i+x_{i-1}) -
+d_i(x_i^2+x_ix_{i-1}+x_{i-1}^2); \\
+b_{i+1} &= \frac{v_{i+1}-v_i}{x_{i+1}-x_i} - c_{i+1}(x_{i+1}+x_i) -
+d_{i+1}(x_{i+1}^2+x_{i+1}x_i+x_i^2),
+\end{align*}
+for all $i = 1:(n-1)$, and therefore
+\begin{align*}
+& b_i + 2c_ix_i + 3d_ix_i^2 \\
+&\quad= \frac{v_i-v_{i-1}}{x_i-x_{i-1}} + c_i(x_i-x_{i-1}) + d_i(2x_i^2-x_ix_{i-1}-x_{i-1}^2) \\
+&\quad= \frac{v_i-v_{i-1}}{x_i-x_{i-1}} + c_i(x_i-x_{i-1}) + d_i(x_i-x_{i-1})(2x_i+x_{i-1}); \\
+& b_{i+1}+2c_{i+1}x_i+3d_{i+1}x_i^2 \\
+&\quad= \frac{v_{i+1}-v_i}{x_{i+1}-x_i} - c_{i+1}(x_{i+1}-x_i) - d_{i+1}(x_{i+1}^2+x_{i+1}x_i-2x_i^2) \\
+&\quad= \frac{v_{i+1}-v_i}{x_{i+1}-x_i} - c_{i+1}(x_{i+1}-x_i) - d_{i+1}(x_{i+1}-x_i)(x_{i+1}+2x_i),
+\end{align*}
+for all $i = 1:(n-1)$, which can be written using (6.72) and (6.73) in terms of $w_i$,
+$i = 0:n$, as follows:
+\begin{align}
+& b_i+2c_ix_i+3d_ix_i^2 \notag \\
+&\quad= \frac{v_i-v_{i-1}}{x_i-x_{i-1}} + \frac{w_{i-1}x_i-w_ix_{i-1}}{2} +
+\frac{(w_i-w_{i-1})(2x_i+x_{i-1})}{6} \notag \\
+&\quad= \frac{v_i-v_{i-1}}{x_i-x_{i-1}} + w_{i-1}\frac{x_i-x_{i-1}}{6} +
+w_i\frac{x_i-x_{i-1}}{3}; \\
+& b_{i+1}+2c_{i+1}x_i+3d_{i+1}x_i^2 \notag \\
+&\quad= \frac{v_{i+1}-v_i}{x_{i+1}-x_i} - \frac{w_ix_{i+1}-w_{i+1}x_i}{2} -
+\frac{(w_{i+1}-w_i)(2x_{i+1}+x_i)}{6} \notag \\
+&\quad= \frac{v_{i+1}-v_i}{x_{i+1}-x_i} - w_i\frac{x_{i+1}-x_i}{3} -
+w_{i+1}\frac{x_{i+1}-x_i}{6},
+\end{align}
+for all $i = 1:(n-1)$.
+
+From (6.79) and (6.80), we obtain that the constraints (6.78) are equivalent to
+\begin{align*}
+& \frac{v_i-v_{i-1}}{x_i-x_{i-1}} + w_{i-1}\frac{x_i-x_{i-1}}{6} + w_i\frac{x_i-x_{i-1}}{3} \\
+&\quad= \frac{v_{i+1}-v_i}{x_{i+1}-x_i} - w_i\frac{x_{i+1}-x_i}{3} - w_{i+1}\frac{x_{i+1}-x_i}{6},
+\end{align*}
+which can be written as
+\begin{equation}
+w_{i-1}\frac{x_i-x_{i-1}}{6} + w_i\frac{x_{i+1}-x_{i-1}}{3} + w_{i+1}\frac{x_{i+1}-x_i}{6}
+= \frac{v_{i+1}-v_i}{x_{i+1}-x_i} - \frac{v_i-v_{i-1}}{x_i-x_{i-1}},
+\end{equation}
+for all $i = 1:(n-1)$.
+
+After multiplication by 6, the equations (6.81) can be expressed as the linear system
+\begin{equation}
+Mw \;=\; z,
+\end{equation}
+where $w = (w_i)_{i=1:n-1}$ is the vector of unknowns, $z$ is the $(n-1) \times 1$
+vector given by
+\[
+z(i) \;=\; 6\left(\frac{v_{i+1}-v_i}{x_{i+1}-x_i} - \frac{v_i-v_{i-1}}{x_i-x_{i-1}}\right),
+\qquad \forall\, i = 1:(n-1),
+\]
+and $M$ is the $(n-1) \times (n-1)$ matrix given by
+\begin{align}
+M(i,i) &= 2(x_{i+1}-x_{i-1}), \qquad \forall\, i = 1:(n-1); \\
+M(i,i+1) &= x_{i+1}-x_i, \qquad \forall\, i = 1:(n-2); \\
+M(i,i-1) &= x_i - x_{i-1}, \qquad \forall\, i = 2:(n-1).
+\end{align}
+
+The matrix $M$ is tridiagonal. Note that $M$ is also symmetric, since, from (6.84) and
+(6.85), we find that
+\[
+M(i,i+1) \;=\; x_{i+1}-x_i \;=\; M(i+1,i), \qquad \forall\, i = 1:(n-2).
+\]
+
+Moreover, the matrix $M$ is strictly diagonally dominant, since
+\begin{align*}
+M(1,1) &= 2(x_2-x_0) \;>\; x_2-x_1 \;=\; M(1,2); \\
+M(n-1,n-1) &= 2(x_n-x_{n-2}) \;>\; x_{n-1}-x_{n-2} \;=\; M(n-1,n-2);
+\end{align*}
+\[
+|M(i,i-1)| + |M(i,i+1)| \;=\; x_{i+1}-x_{i-1} \;<\; 2(x_{i+1}-x_{i-1}) \;=\; M(i,i),
+\]
+for all $i = 2:(n-2)$; cf. (6.83--6.85).
+
+From Theorem 5.7, we conclude that the matrix $M$ is a tridiagonal symmetric positive
+definite matrix. Thus, the linear system $Mw = z$ from (6.82) can be solved
+efficiently using the LU tridiagonal spd solver from Table 6.6, i.e.,
+\[
+w \;=\; \text{linear\_solve\_LU\_tridiag\_spd}(M,z).
+\]
+
+The pseudocode for the efficient implementation of the natural cubic spline
+interpolation can be found in Table 6.8.
+% This file ends here (end of PDF page 200 / folio 184), right before Table 6.8,
+% which appears on PDF page 201 (out of range for this agent, owned by c4). No
+% environment is left open at this point.

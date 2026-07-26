@@ -1,0 +1,139 @@
+% PAGES: 86-87
+% Continues section 2.7 "Linear solvers using the LU decomposition with row
+% pivoting", begun in sec02_c5_1.tex (pages 81-85). Table 2.10 is the
+% pseudocode float referenced by name near the bottom of page 85/PDF
+% (printed page 69, in the previous file); as in the source, the actual
+% floated table appears at the top of the following page.
+
+\begin{table}[H]
+\centering
+\caption{Pseudocode for LU decomposition with row pivoting}
+\fbox{\begin{minipage}{0.9\linewidth}
+Function Call:\\
+$[P,L,U] = \text{lu\_row\_pivoting}(A)$
+\bigskip
+
+Input:\\
+$A$ = nonsingular matrix of size $n$
+\bigskip
+
+Output:\\
+$P$ = permutation matrix, stored as vector of its diagonal entries\\
+$L$ = lower triangular matrix with entries $1$ on main diagonal\\
+$U$ = upper triangular matrix\\
+such that $PA = LU$
+\bigskip
+
+\noindent
+$P = 1:n$; $L = I$; \hfill\textit{// initialize $P$ and $L$ as identity matrices}\\
+for $i = 1:(n-1)$\\
+\hspace*{1.5em}find $i\_max$, index of largest entry in absolute value from vector $A(i:n,i)$\\
+\hspace*{1.5em}$vv = A(i,i:n)$; $A(i,i:n) = A(i\_max,i:n)$; $A(i\_max,i:n) = vv$;\\
+\hfill\textit{// switch rows $i$ and $i\_max$ of $A$}\\
+\hspace*{1.5em}$cc = P(i)$; $P(i) = P(i\_max)$; $P(i\_max) = cc$; \hfill\textit{// update matrix $P$}\\
+\hspace*{1.5em}if $i>1$\\
+\hspace*{3em}$ww = L(i,1:(i-1))$;\\
+\hspace*{3em}$L(i,1:(i-1)) = L(i\_max,1:(i-1))$; $L(i\_max,1:(i-1)) = ww$;\\
+\hfill\textit{// switch rows $i$ and $i\_max$ of $L$}\\
+\hspace*{1.5em}end\\
+\hspace*{1.5em}for $j = i:n$\\
+\hspace*{3em}$L(j,i) = A(j,i)/A(i,i)$; \hfill\textit{// compute column $i$ of $L$}\\
+\hspace*{3em}$U(i,j) = A(i,j)$; \hfill\textit{// compute row $i$ of $U$}\\
+\hspace*{1.5em}end\\
+\hspace*{1.5em}for $j = (i+1):n$\\
+\hspace*{3em}for $k = (i+1):n$\\
+\hspace*{4.5em}$A(j,k) = A(j,k) - L(j,i)U(i,k)$;\\
+\hspace*{3em}end\\
+\hspace*{1.5em}end\\
+\hspace*{1.5em}clear $vv$ $ww$ $cc$\\
+end\\
+$L(n,n) = 1$; $U(n,n) = A(n,n)$;
+\end{minipage}}
+\end{table}
+
+The pseudocode for solving a linear system using the LU decomposition with
+row pivoting of a matrix can be found in Table~2.11.
+
+The operation count for the linear solver from Table~2.11 is
+\[
+\frac{2}{3}n^3 \;+\; O(n^2),
+\]
+the same as for the linear solver using the LU decomposition without
+pivoting of a matrix; see section 2.5.
+
+\subsection{Solving linear systems corresponding to the same matrix}
+
+In this section, we show how the LU decomposition with row pivoting of a
+matrix can be used to solve multiple linear systems corresponding to the
+same nonsingular
+matrix efficiently, which is often needed in practice, e.g., for the finite
+difference solution of the Black--Scholes PDE.
+
+\begin{table}[H]
+\centering
+\caption{Linear solver using LU decomposition with row pivoting}
+\fbox{\begin{minipage}{0.9\linewidth}
+Function Call:\\
+$x = \text{linear\_solve\_lu\_row\_pivoting}(A,b)$
+\bigskip
+
+Input:\\
+$A$ = nonsingular square matrix of size $n$ with LU decomposition\\
+$b$ = column vector of size $n$
+\bigskip
+
+Output:\\
+$x$ = solution to $Ax = b$
+\bigskip
+
+\noindent
+$[P,L,U] = \text{lu\_row\_pivoting}(A)$; \hfill\textit{// LU decomposition of $A$}\\
+$y = \text{forward\_subst}(L,Pb)$; \hfill\textit{// solve $Ly = Pb$}\\
+$x = \text{backward\_subst}(U,y)$; \hfill\textit{// solve $Ux = y$}
+\end{minipage}}
+\end{table}
+
+Assume that we want to solve $p$ linear systems corresponding to an
+$n\times n$ nonsingular matrix $A$. In other words, we want to find
+$n\times 1$ vectors $x_i$, $i=1:p$, such that
+\begin{equation}
+Ax_i \;=\; b_i, \quad \forall\, i=1:p,
+\end{equation}
+where $b_i$ is a column vector of size $n$, for $i=1:p$.
+
+Note that the matrix $A$ has an LU decomposition with row pivoting, since it
+is nonsingular; see Theorem 2.3. One way to solve the linear systems from
+(2.68) would be to use the routine linear\_solve\_lu\_row\_pivoting from
+Table~2.11 to solve each one of the $p$ linear systems inside a ``for''
+loop as follows:
+
+\begin{center}
+\fbox{\begin{minipage}{0.6\textwidth}
+\raggedright
+for $i = 1:p$\\
+\hspace*{1.5em}$x_i = \text{linear\_solve\_lu\_row\_pivoting}(A,b_i)$\\
+end
+\end{minipage}}
+\end{center}
+
+This would require
+\begin{equation}
+p\left(\frac{2}{3}n^3 + O(n^2)\right) \;=\; \frac{2}{3}pn^3 + pO(n^2)
+\end{equation}
+operations, since each linear solver requires $\frac{2}{3}n^3+O(n^2)$
+operations; cf. Lemma 2.3.
+
+However, the most expensive part of
+$x_i = \text{linear\_solve\_lu\_row\_pivoting}(A,b_i)$ is computing the LU
+decomposition with row pivoting of the matrix $A$, which dominates the cost
+of the subsequent forward substitution and backward substitution. Thus, an
+efficient way of solving the linear systems (2.68) is to compute the
+permutation matrix $P$ and the $L$ and $U$ factors of $A$ only once,
+outside the ``for'' loop, and then do the forward and backward
+substitutions corresponding to
+$x_i = \text{linear\_solve\_lu\_row\_pivoting}(A,b_i)$ inside the ``for''
+loop; see the pseudocode from Table 2.12 for details.
+
+Recall that the forward substitution $\text{forward\_subst}(L,b_i)$ and the
+backward substitution $\text{backward\_subst}(U,y)$ require $n^2+O(n)$
+operations each; cf. (2.8) and (2.19).

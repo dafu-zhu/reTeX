@@ -1,0 +1,199 @@
+% PAGES: 325-327
+
+Since the matrix $A$ has real entries, it follows from Lemma 10.12 that $A^* = A^t$.
+Note that $A^t = A$, since $A$ is a symmetric matrix. Therefore, we obtain that
+$A^* = A$. Then, from (10.113) and using (10.107), we find that
+\begin{align}
+(Av,v)_{\C} &= (v,A^*v)_{\C} \;=\; (v,Av)_{\C} \;=\; (v,\lambda v)_{\C} \;=\;
+\overline{\lambda}(v,v)_{\C} \notag \\
+&= \overline{\lambda}||v||_{\C}^2.
+\end{align}
+From (10.115) and (10.116), it follows that
+\begin{equation}
+\lambda||v||_{\C}^2 \;=\; \overline{\lambda}||v||_{\C}^2,
+\end{equation}
+Note that $||v|| \ne 0$, since $v$ is an eigenvector of the matrix $A$, and therefore
+$v \ne 0$. Then, from (10.117), we obtain that $\lambda = \overline{\lambda}$, which
+happens if and only if $\lambda \in \R$.
+
+We conclude that any eigenvalue of the symmetric matrix $A$ with real entries is a
+real number.
+\end{proof}
+
+\section{Row rank equal to column rank}
+
+The column rank and the row rank of a matrix $A$ are defined as the largest number
+of linearly independent columns of $A$, and the largest number of linearly
+independent rows of $A$, respectively. It is important to note that the column rank
+and the row rank of a matrix are always the same, not only for square matrices, but
+also for rectangular matrices; see Lemma 10.14.
+
+The author is indebted to Professor Gilbert Strang for the elegant proof below.
+
+\begin{lemma}
+For any matrix $A$,
+\[
+\mathrm{colrank}(A) \;=\; \mathrm{rowrank}(A),
+\]
+where $\mathrm{colrank}(A)$ and $\mathrm{rowrank}(A)$ are the column rank and the
+row rank of a matrix $A$, respectively.
+\end{lemma}
+
+\begin{proof}
+Let $A$ be an $m \times n$ matrix with column form $A = \mathrm{col}(a_k)_{k=1:n}$.
+Let $p$ be the column rank of $A$. By definition, there exist $p$ columns of $A$
+which are linearly independent vectors and such that every column of $A$ is a
+linear combination of these $p$ columns. Assume, without any loss of generality,
+that these $p$ columns are the first $p$ columns of $A$, i.e., $a_1, a_2, \ldots,
+a_p$. Then, for every $k$ with $1 \le k \le n$, there exist constants $c_{ik}$,
+with $1 \le i \le p$, such that\footnote{For $1 \le k \le p$, note that $c_{kk}=1$
+and $c_{ik}=0$ for all $1 \le i \ne k \le p$.}
+\begin{equation}
+a_k \;=\; \sum_{i=1}^p c_{ik}a_i, \quad \forall\, k = 1:n.
+\end{equation}
+
+Let $A_p = \mathrm{col}(a_i)_{i=1:p}$ be the $m \times p$ matrix with columns $a_1,
+a_2, \ldots, a_p$, and let $C$ be the $p \times n$ matrix given by
+\[
+C \;=\; \begin{pmatrix} c_{11} & c_{12} & \ldots & c_{1n} \\
+c_{21} & c_{22} & \ldots & c_{2n} \\ \vdots & \vdots & \ddots & \vdots \\
+c_{p1} & c_{p2} & \ldots & c_{pn} \end{pmatrix}.
+\]
+
+Let $C = \mathrm{col}(w_k)_{k=1:n}$ be the column form of the matrix $C$, where
+$w_k = \begin{pmatrix} c_{1k} \\ \vdots \\ c_{pk} \end{pmatrix}$, for all $k = 1:n$.
+Since $A_p = \mathrm{col}(a_i)_{i=1:p}$, we obtain using the matrix--column vector
+multiplication formula (1.7) that (10.118) can be written as
+\begin{align}
+a_k &= \sum_{i=1}^p c_{ik}a_i \;=\; (a_1 \mid \ldots \mid a_p)
+\begin{pmatrix} c_{1k} \\ \vdots \\ c_{pk} \end{pmatrix} \;=\;
+\mathrm{col}(a_i)_{i=1:p}\begin{pmatrix} c_{1k} \\ \vdots \\ c_{pk} \end{pmatrix}
+\notag \\
+&= A_pw_k, \quad \forall\, k = 1:n.
+\end{align}
+
+Then, from the matrix--matrix multiplication formula (1.11) and (10.119), we obtain
+that
+\begin{align}
+A &= \mathrm{col}(a_k)_{k=1:n} \;=\; \mathrm{col}(A_pw_k)_{k=1:n} \;=\;
+A_p\,\mathrm{col}(w_k)_{k=1:n} \notag \\
+&= A_pC.
+\end{align}
+
+Let $A = \mathrm{row}(r_i)_{i=1:p}$ be the row form of $A$, and let $C =
+\mathrm{row}(c_j)_{j=1:p}$ be the row form of $C$. From (10.120) and using the
+matrix--matrix multiplication formula (1.12), it follows that
+\[
+r_i \;=\; \sum_{j=1}^p A_p(i,j)c_j, \quad \forall\, i = 1:p.
+\]
+
+In other words, every row of the matrix $A$ is a linear combination of the $p$
+vectors $c_1, c_2, \ldots, c_p$. Then, by definition, the row rank of the matrix $A$
+is less than or equal to $p$, the column rank of $A$.
+
+% Folio 310 at 1400 dpi prints a semicolon here, not a comma. Author typo,
+% preserved as printed.
+We therefore showed that; for any matrix $A$,
+\begin{equation}
+\mathrm{rowrank}(A) \;\le\; \mathrm{colrank}(A).
+\end{equation}
+
+In particular, the inequality (10.121) also holds for the matrix $A^t$, i.e.,
+\begin{equation}
+\mathrm{rowrank}(A^t) \;\le\; \mathrm{colrank}(A^t).
+\end{equation}
+
+Note that
+\begin{align}
+\mathrm{rowrank}(A^t) &= \mathrm{colrank}(A); \\
+\mathrm{colrank}(A^t) &= \mathrm{rowrank}(A),
+\end{align}
+since the rows of $A^t$ are the columns of $A$, and the columns of $A$ are the rows
+of $A^t$. Then, from (10.122--10.124), we find that
+\begin{equation}
+\mathrm{colrank}(A) \;\le\; \mathrm{rowrank}(A).
+\end{equation}
+
+From (10.121) and (10.125) we conclude that
+\[
+\mathrm{rowrank}(A) \;=\; \mathrm{colrank}(A).
+\]
+\end{proof}
+
+\section{Technical results for the Cholesky and LU decompositions}
+
+This section contains the proofs of several technical results related to the
+existence and uniqueness of the Cholesky decomposition for symmetric positive
+definite matrices and of the LU decomposition; see section 2.4 and section 6.1 for
+details.
+
+\begin{lemma}
+Let $A$ be an $n \times n$ matrix with $A(1,1) > 0$, and let $A_{n-1} =
+A(2:n,2:n)$. Then,
+% Textstyle fractions (as printed) bring this to ~365pt against a 338pt measure,
+% so it still needs a light \resizebox -- now ~0.93 rather than the 0.78 it used
+% with \dfrac. The source keeps all three matrices on one line.
+\[
+\resizebox{\linewidth}{!}{$\displaystyle
+A \;=\; \begin{pmatrix} \sqrt{A(1,1)} & \bfzero^t \\[0.6em]
+\frac{A(2:n,1)}{\sqrt{A(1,1)}} & I_{n-1} \end{pmatrix}
+\begin{pmatrix} 1 & \bfzero^t \\[0.6em]
+\bfzero & A_{n-1} - \frac{A(2:n,1)A(1,2:n)}{A(1,1)} \end{pmatrix}
+\begin{pmatrix} \sqrt{A(1,1)} & \frac{A(1,2:n)}{\sqrt{A(1,1)}} \\[0.6em]
+\bfzero & I_{n-1} \end{pmatrix}$}, \]
+where $I_{n-1}$ is the $(n-1)\times(n-1)$ identity matrix, and $\mathbf{0}$ is the
+column vector of size $n-1$ with all entries equal to $0$.
+\end{lemma}
+
+\begin{proof}
+By using block matrix multiplication, we find that
+\begin{align*}
+&\begin{pmatrix} 1 & \bfzero^t \\[0.6em]
+\bfzero & A_{n-1} - \frac{A(2:n,1)A(1,2:n)}{A(1,1)} \end{pmatrix}
+\begin{pmatrix} \sqrt{A(1,1)} & \frac{A(1,2:n)}{\sqrt{A(1,1)}} \\[0.6em]
+\bfzero & I_{n-1} \end{pmatrix} \\
+&= \begin{pmatrix} \sqrt{A(1,1)} & \frac{A(1,2:n)}{\sqrt{A(1,1)}} \\[0.6em]
+\bfzero & A_{n-1} - \frac{A(2:n,1)A(1,2:n)}{A(1,1)} \end{pmatrix}.
+\end{align*}
+
+Then, using block matrix multiplication once again, we obtain that
+\[
+\begin{aligned}
+&\begin{pmatrix} \sqrt{A(1,1)} & \bfzero^t \\[0.6em]
+\frac{A(2:n,1)}{\sqrt{A(1,1)}} & I_{n-1} \end{pmatrix}
+\begin{pmatrix} 1 & \bfzero^t \\[0.6em]
+\bfzero & A_{n-1} - \frac{A(2:n,1)A(1,2:n)}{A(1,1)} \end{pmatrix}
+\begin{pmatrix} \sqrt{A(1,1)} & \frac{A(1,2:n)}{\sqrt{A(1,1)}} \\[0.6em]
+\bfzero & I_{n-1} \end{pmatrix} \\
+&= \begin{pmatrix} \sqrt{A(1,1)} & \bfzero^t \\[0.6em]
+\frac{A(2:n,1)}{\sqrt{A(1,1)}} & I_{n-1} \end{pmatrix}
+\begin{pmatrix} \sqrt{A(1,1)} & \frac{A(1,2:n)}{\sqrt{A(1,1)}} \\[0.6em]
+\bfzero & A_{n-1} - \frac{A(2:n,1)A(1,2:n)}{A(1,1)} \end{pmatrix} \\
+&= \begin{pmatrix} A(1,1) & A(1,2:n) \\[0.4em]
+A(2:n,1) & \frac{A(2:n,1)A(1,2:n)}{A(1,1)} + A_{n-1} -
+\frac{A(2:n,1)A(1,2:n)}{A(1,1)} \end{pmatrix} \\
+% Folio 311: these rows continue the same aligned chain and each opens with "=".
+% They had been split off into a separate display, which dropped the leading "=".
+&= \begin{pmatrix} A(1,1) & A(1,2:n) \\ A(2:n,1) & A_{n-1} \end{pmatrix}
+\;=\; \begin{pmatrix} A(1,1) & A(1,2:n) \\ A(2:n,1) & A(2:n,2:n) \end{pmatrix} \\
+&= A,
+\end{aligned}
+\]
+which is what we wanted to prove.
+\end{proof}
+
+\begin{lemma}
+Let $A$ be a symmetric positive definite matrix, and let $B$ be a nonsingular
+matrix of the same size as $A$. Then, the matrix $B^tAB$ is also symmetric
+positive definite.
+\end{lemma}
+
+\begin{proof}
+The matrix $B^tAB$ is symmetric, since $(B^tAB)^t = B^tA^t(B^t)^t = B^tAB$.
+
+Let $x \in \R^n$, where $n$ is the size of the square matrix $A$. Then,
+\begin{equation}
+x^tB^tABx \;=\; (Bx)^tABx \;=\; y^tAy,
+\end{equation}
+% Proof continues onto PDF page 328 (folio 312), the first page of the next file
+% in this chunk -- the \begin{proof} above is intentionally left open here.

@@ -1,0 +1,55 @@
+% PAGES: 268-268
+
+We assume that it is possible to take arbitrarily large long or short positions in any
+of the assets, and therefore the weights $w_i$ are not required to be positive or to be
+smaller than 1.
+
+Let $R$ be the return of the portfolio over a fixed period of time, and let $\mu_R =
+E[R]$ be the expected value\footnote{Throughout this book, we also refer to the
+expected value of the return of a portfolio as the ``expected return'' of the
+portfolio.} of $R$. Let $R_i$ be the return (over the same period of time) of asset
+$i$, and let $\mu_i = E[R_i]$ be the expected value of $R_i$, for $i = 1:n$. Let $r_f$
+be the risk--free return of the cash position in the portfolio over the same period of
+time.
+
+The return of the portfolio is equal to the weighted average of the returns of the
+assets and of the cash position, i.e.,
+\begin{equation}
+R \;=\; \sum_{i=1}^n w_iR_i \;+\; w_{cash}r_f;
+\end{equation}
+for completeness, a proof of (9.2) is given at the end of this section.
+
+By taking expected values in (9.2) and using (9.1), we find that
+\begin{align}
+\mu_R &= \sum_{i=1}^n w_i\mu_i \;+\; w_{cash}r_f \notag\\
+&= \sum_{i=1}^n w_i\mu_i \;+\; \left(1-\sum_{i=1}^n w_i\right)r_f \notag\\
+&= r_f \;+\; \sum_{i=1}^n w_i(\mu_i-r_f).
+\end{align}
+
+Let $w = (w_i)_{i=1:n}$ be the vector of the asset weights in the portfolio, and let
+$\mu = (\mu_i)_{i=1:n}$ be the vector of the expected values of the returns of the $n$
+assets. Denote by $\bfone$ the $n\times 1$ column vector whose entries are all
+equal to 1, and let
+\begin{equation}
+\bar\mu \;=\; (\bar\mu_i)_{i=1:n} \;=\; (\mu_i-r_f)_{i=1:n} \;=\; \mu-r_f\bfone
+\end{equation}
+be the $n\times1$ column vector of the excess expected returns of the $n$ assets over
+the risk--free rate. Then,
+\begin{equation}
+\sum_{i=1}^n w_i\bar\mu_i \;=\; \bar\mu^tw,
+\end{equation}
+see (1.5), and (9.3) can be written in vector form using (9.5) as follows:
+\begin{align}
+\mu_R &= r_f \;+\; \sum_{i=1}^n w_i(\mu_i-r_f) \;=\; r_f \;+\; \sum_{i=1}^n
+w_i\bar\mu_i \notag\\
+&= r_f \;+\; \bar\mu^tw.
+\end{align}
+
+Also, note that (9.1) can be written in vector form using (1.5) as
+\begin{equation}
+w_{cash} \;=\; 1 - \bfone^tw.
+\end{equation}
+
+Let $\sigma_R$ be the standard deviation of the return $R$ of the portfolio, and let
+$\sigma_i$ be the standard deviation of $R_i$, for $i = 1:n$. Let $\rho_{j,k}$ be the
+correlation between the

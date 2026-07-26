@@ -1,0 +1,153 @@
+% PAGES: 145-146
+% Continues sec04_c3_2.tex (pages 143-144), which left a \begin{lemma}
+% (Lemma 4.10) open: only the eigenvalue formula (4.43) had been stated.
+% The source continues the SAME italic lemma statement here with a second
+% sentence -- the eigenvector formula (4.44) -- before "Proof." begins (in
+% roman type). This file closes that \end{lemma} at the very top, as a
+% continuation of the statement, NOT as a new environment.
+%
+% Page 145 (folio 129): completes the Lemma 4.10 statement, then its
+% "Proof." (equations 4.45-4.48) runs to the bottom of the page and
+% finishes at the top of page 146 with the printed square.
+%
+% Page 146 (folio 130): after Lemma 4.10's proof closes, the matrix $T_N$
+% is introduced (4.49), followed by Lemma 4.11 (eigenvalue formula (4.50)
+% and eigenvector formula (4.51)) and the start of its "Proof." The proof
+% is NOT finished on this page -- it ends mid-derivation, right after
+% equation (4.52), with the sentence "is an eigenvalue of $T_N$ with
+% corresponding eigenvector $v_j$." (grammatically complete, but the proof
+% itself is not yet concluded -- no printed square on this page). The
+% \begin{proof} environment is therefore LEFT OPEN at the end of this file;
+% it is closed at the top of sec04_c3_4.tex (page 147), where the proof
+% concludes with the printed square before section 4.6 "References" opens.
+
+For every $j = 1:N$, the eigenvalue $\mu_j$ has a corresponding $N \times 1$
+eigenvector $v_j$ with the following entries:
+\begin{equation}
+v_j(i) \;=\; \sin\left(\frac{ij\pi}{N+1}\right), \quad \forall\, i = 1:N.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+We will show that
+\begin{equation}
+B_N v_j \;=\; \mu_j v_j, \quad \forall\, j = 1:N.
+\end{equation}
+Since the $N \times N$ matrix $B_N$ has exactly $N$ eigenvalues, counted with their
+multiplicities, see Theorem 4.2, we can then conclude from (4.45) that $\mu_j$,
+$j = 1:N$, are all the eigenvalues of $B_N$, and $v_j$, $j = 1:N$, are all the
+eigenvectors of $B_N$.
+
+Let $2 \leq i \leq N-1$. Note that
+\[
+(B_N v_j)(i) \;=\; 2v_j(i) - v_j(i-1) - v_j(i+1),
+\]
+which, using (4.44), can be written as
+\begin{equation}
+(B_N v_j)(i) \;=\; 2\sin\left(\frac{ij\pi}{N+1}\right) - \sin\left(\frac{(i-1)j\pi}{N+1}\right)
+- \sin\left(\frac{(i+1)j\pi}{N+1}\right),
+\end{equation}
+for all $i = 2:(N-1)$.
+
+If we let $i = 1$ in the right hand side of (4.46), we find that
+\begin{equation}
+\begin{split}
+2\sin\left(\frac{j\pi}{N+1}\right) - \sin\left(\frac{2j\pi}{N+1}\right) - \sin(0)
+&\;=\; 2v_j(1) - v_j(2)\\
+&\;=\; (B_N v_j)(1),
+\end{split}
+\end{equation}
+since $\sin(0) = 0$.
+
+For $i = N$ in the right hand side of (4.46), we find that
+\begin{equation}
+\begin{split}
+2\sin\left(\frac{Nj\pi}{N+1}\right) - \sin\left(\frac{(N-1)j\pi}{N+1}\right) - \sin(j\pi)
+&\;=\; 2v_j(N) - v_j(N-1)\\
+&\;=\; (B_N v_j)(N),
+\end{split}
+\end{equation}
+since $\sin(j\pi) = 0$ for any integer $j$.
+
+From (4.47) and (4.48), we conclude that formula (4.46) also holds for $i = 1$ and
+$i = N$, and therefore
+\[
+(B_N v_j)(i) \;=\; 2\sin\left(\frac{ij\pi}{N+1}\right) - \sin\left(\frac{(i-1)j\pi}{N+1}\right)
+- \sin\left(\frac{(i+1)j\pi}{N+1}\right), \quad \forall\, i = 1:N.
+\]
+Then,
+\begin{align*}
+(B_N v_j)(i) &\;=\; 2\sin\left(\frac{ij\pi}{N+1}\right)\\
+&\quad -\; \left(\sin\left(\frac{ij\pi}{N+1} - \frac{j\pi}{N+1}\right)
++ \sin\left(\frac{ij\pi}{N+1} + \frac{j\pi}{N+1}\right)\right)\\
+&\;=\; 2\sin\left(\frac{ij\pi}{N+1}\right) - 2\sin\left(\frac{ij\pi}{N+1}\right)\cos\left(\frac{j\pi}{N+1}\right)\\
+&\;=\; 2\sin\left(\frac{ij\pi}{N+1}\right)\left(1 - \cos\left(\frac{j\pi}{N+1}\right)\right)\\
+&\;=\; 2v_j(i)\left(1 - \cos\left(\frac{j\pi}{N+1}\right)\right)\\
+&\;=\; \mu_j v_j(i), \quad \forall\, i = 1:N;
+\end{align*}
+for the second equality above we used the fact that
+\[
+\sin(x-y) + \sin(x+y) \;=\; 2\sin(x)\cos(y)
+\]
+with $x = \frac{ij\pi}{N+1}$ and $y = \frac{j\pi}{N+1}$.
+
+We conclude that
+\[
+B_N v_j \;=\; \mu_j v_j, \quad \forall\, j = 1:n,
+\]
+which is what we wanted to show; cf. (4.45).
+\end{proof}
+
+Let $T_N$ be the $N \times N$ tridiagonal symmetric matrix given by
+\begin{equation}
+T_N \;=\; \begin{pmatrix}
+d & -a & \dots & 0\\
+-a & \ddots & \ddots & \vdots\\
+\vdots & \ddots & \ddots & -a\\
+0 & \dots & -a & d
+\end{pmatrix}.
+\end{equation}
+Note that, for $d=2$ and $a=1$, it follows that $T_N = B_N$; cf. (4.42).
+
+\begin{lemma}
+The matrix $T_N$ has the following $N$ different eigenvalues:
+\begin{equation}
+\lambda_j \;=\; d - 2a\cos\left(\frac{\pi j}{N+1}\right), \quad \text{for}\ j = 1:N.
+\end{equation}
+For every $j = 1:N$, the eigenvalue $\lambda_j$ has a corresponding $N \times 1$
+eigenvector $v_j$ with the following entries:
+\begin{equation}
+v_j(i) \;=\; \sin\left(\frac{ij\pi}{N+1}\right), \quad \forall\, i = 1:N.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Note that
+\begin{align*}
+T_N &\;=\; \begin{pmatrix}
+d-2a & 0 & \dots & 0\\
+0 & \ddots & \ddots & \vdots\\
+\vdots & \ddots & \ddots & 0\\
+0 & \dots & 0 & d-2a
+\end{pmatrix}
+\;+\;
+\begin{pmatrix}
+2a & -a & \dots & 0\\
+-a & \ddots & \ddots & \vdots\\
+\vdots & \ddots & \ddots & -a\\
+0 & \dots & -a & 2a
+\end{pmatrix}\\
+&\;=\; (d-2a)I + aB_N.
+\end{align*}
+Let $\mu_j$ and $v_j$ be an eigenvalue and a corresponding eigenvector of $B_N$ given
+by (4.43) and by (4.44), respectively. Then, $B_N v_j = \mu_j v_j$, and therefore
+\begin{align*}
+T_N v_j &\;=\; ((d-2a)I + aB_N)v_j\\
+&\;=\; (d-2a)v_j + a\mu_j v_j\\
+&\;=\; (d - 2a + a\mu_j)v_j.
+\end{align*}
+In other words,
+\begin{equation}
+\lambda_j \;=\; d - 2a + a\mu_j
+\end{equation}
+is an eigenvalue of $T_N$ with corresponding eigenvector $v_j$.

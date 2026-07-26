@@ -1,0 +1,64 @@
+% PAGES: 269-269
+% Continues the sentence ending at the bottom of sec09_c1_2.tex (folio 252):
+% "Let $\rho_{j,k}$ be the correlation between the" is immediately followed
+% here by "returns $R_j$ and $R_k$..." (folio 253). No LaTeX construct was
+% left open across the boundary.
+
+returns $R_j$ and $R_k$, for $1 \le j \ne k \le n$, and let $\Sigma_R$ be the $n \times
+n$ covariance matrix of the returns of the $n$ assets given by
+\begin{align*}
+\Sigma_R(j,k) &= \cov(R_j,R_k) \;=\; \sigma_j\sigma_k\rho_{j,k}, \quad \forall\, 1\le
+j\ne k\le n; \\
+\Sigma_R(i,i) &= \var(R_i) \;=\; \sigma_i^2, \quad \forall\, i = 1:n.
+\end{align*}
+
+Since the risk--free rate $r_f$ is a constant, we obtain from (9.2) that
+\[
+\sigma_R^2 \;=\; \var(R) \;=\; \var\!\left(\sum_{i=1}^n w_iR_i\right),
+\]
+and, using (7.25), we find that the variance of the return of the portfolio can be
+written in matrix formulation as follows:
+\begin{equation}
+\sigma_R^2 \;=\; w^t\Sigma_Rw.
+\end{equation}
+
+A natural assumption we make throughout this chapter is that the return of none of the
+assets can be replicated by using the other $n-1$ assets and cash.\footnote{Note the
+similarity with the non--redundancy of the securities from a one period market model;
+see Chapter 3.} In other words, we assume that there is no asset whose return is a
+linear combination of the returns of the other $n-1$ assets and the risk--free return.
+Note that, from Lemma 7.5, it follows that this assumption is equivalent to assuming
+that the covariance matrix $\Sigma_R$ is nonsingular.
+
+An important question is how should an efficient portfolio be set up?\footnote{Finding
+efficient portfolios is one of the fundamental problems given a theoretical answer by
+the modern portfolio theory of Markowitz and Sharpe; see Markowitz [28] and Sharpe [35]
+for seminal papers.} In other words, what should the weights $w_i$, $i = 1:n$, of the
+assets and the weight $w_{cash}$ of the cash position be in order to obtain a portfolio
+(called a minimum variance portfolio) with the smallest variance of return, given a
+fixed expected return, or to obtain a portfolio (called a maximum return portfolio)
+with the highest expected return, given a fixed variance of the return?
+
+\noindent\textbf{Minimum variance portfolio:}\\
+\textit{Given $\mu_P$, find $w_{cash}$ and $w_i$, $i = 1:n$, with $\mu_R = \mu_P$, such
+that $\sigma_R^2$ is minimal.}
+
+\noindent\textbf{Maximum return portfolio:}\\
+\textit{Given $\sigma_P$, find $w_{cash}$ and $w_i$, $i = 1:n$, with $\sigma_R^2 =
+\sigma_P^2$, such that $\mu_R$ is maximal.}
+
+In section 9.2, we include the solutions to the minimum variance portfolio problem and
+to the maximum return portfolio problem, which will be derived in sections 9.3 and 9.4,
+as well as the tangency portfolio formulation of these solutions. The pseudocodes for
+finding the efficient portfolio allocation for both the minimum variance portfolio
+problem and the maximum return portfolio are also included in section 9.2.
+
+Note that the variances of asset returns and the covariance matrix for asset returns
+can be estimated from historical data. However, estimated expected returns accurately
+from historical is not feasible; see, e.g., Fabozzi and Markowitz [14] for alternative
+approaches to finding asset allocations for efficient portfolios.
+
+We conclude this section by proving formula (9.2).
+
+Let $V(0)$ be the value at time 0 of a portfolio invested in $n$ assets and with a cash
+position. Let $V_i(0)$ be the value of the portfolio position in asset $i$ at time 0, for

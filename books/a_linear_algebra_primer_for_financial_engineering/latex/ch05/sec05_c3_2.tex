@@ -1,0 +1,164 @@
+% PAGES: 174-176
+% Continues after sec05_c3_1.tex (PDF pages 170-173), which ended Section
+% 5.4 "References" cleanly with no environment left open. Page 174
+% (folio 158) opens fresh with the "5.5 Exercises" heading at the top of
+% the page.
+%
+% This is the whole of Chapter 5's exercise list (items 1-16, PDF pages
+% 174-176 / folios 158-160), kept in a single \exercises environment so
+% the shared enumerate counter is never reset mid-list -- this is also the
+% last chunk of Chapter 5. PDF page 176 (folio 160) ends with exercise 16;
+% the remainder of that page is blank, and PDF page 177 (folio 161) opens
+% Chapter 6 ("Cholesky decomposition. Efficient cubic spline
+% interpolation."), confirmed by direct inspection. No environment is left
+% open at the end of this file.
+
+\section{Exercises}
+
+\begin{exercises}
+
+\item Show that the matrix $\begin{pmatrix} 1 & 1\\ 1 & 1 \end{pmatrix}$ is symmetric
+positive semidefinite but is not symmetric positive definite.
+
+\item Show that a $2 \times 2$ matrix $A$ is symmetric positive definite if and only
+if $A$ is symmetric, trace$(A) > 0$, and $\det(A) > 0$.
+
+\item Let $A$ be a symmetric positive definite matrix. Use the diagonal form of the
+matrix $A$ to find a matrix $B$ such that $B^2 = A$.
+
+\item Show that a matrix $A$ is symmetric positive semidefinite if and only if there
+exists a symmetric matrix $B$ such that $B^2 = A$.
+
+\item Show that the inner product of two vectors is bounded from above by the
+product of the norms of the vectors, i.e., show that
+\begin{equation}
+(u,v) \;\leq\; ||u||\, ||v||, \quad \forall\, u,v \in \R^n.
+\end{equation}
+
+\noindent Hint: Use the facts that
+\[
+||tu+v||^2 \;=\; t^2||u||^2 + 2t(u,v) + ||v||^2 \;\geq\; 0, \quad \forall\, t \in \R,
+\]
+and that a quadratic polynomial is nonnegative if and only if its discriminant
+is less than ot equal to 0 , i.e.,
+\[
+at^2 + bt + c \;\geq\; 0, \ \forall\, t \in \R \quad \iff \quad b^2 - 4ac \;\leq\; 0,
+\]
+where $a$, $b$, and $c$ are fixed real numbers.
+
+\noindent Note: The inequality (5.73) is the Cauchy--Schwarz inequality for innner
+products. For the Euclidean inner product and Euclidean vector norm, the inequality
+(5.73) becomes
+\[
+\left(\sum_{i=1}^{n} u_iv_i\right)^2 \;\leq\; \left(\sum_{i=1}^{n} u_i^2\right)
+\left(\sum_{i=1}^{n} v_i^2\right), \quad \forall\, u_i,v_i \in \R, \ i = 1:n,
+\]
+which is the classical version of the Cauchy--Schwarz inequality for real numbers.
+
+\item Let $A$ be a symmetric positive semidefinite matrix, and let $B$ be a symmetric
+matrix such that $B^2 = A$.
+\begin{subparts}
+\item Show that
+\begin{equation}
+(Ax,y) \;=\; (Bx,By), \quad \forall\, x,y \in \R^n,
+\end{equation}
+where $(\cdot,\cdot)$ denotes the Euclidean inner product.
+
+\item Show that
+\begin{equation}
+(Ax,y)^2 \;\leq\; (Ax,x)\,(Ay,y), \quad \forall\, x,y \in \R^n.
+\end{equation}
+
+\noindent Hint: Note that, from the Cauchy--Schwartz inequality (5.73), it follows
+that $(Bx,By) \leq ||Bx||\, ||By||$.
+\end{subparts}
+
+\item Let $\lambda$ and $v$ be an eigenvalue and the corresponding eigenvector of the
+square matrix $A$ of size $n$. Let $Q$ be an orthogonal matrix of size $n$. Show that
+$\lambda$ is also an eigenvalue of the matrix $Q\tp AQ$. What is a corresponding
+eigenvector?
+
+\item Let $Q$ be an orthogonal matrix of size $n$, and let $A$ be a square matrix of
+size $n$. Show that the matrix $Q\tp AQ$ has the same characteristic polynomial as
+$A$, i.e., show that
+\[
+P_{Q\tp AQ}(x) \;=\; P_A(x), \quad \forall\, x \in \R.
+\]
+
+\item Let $A$ be a symmetric positive definite matrix with diagonal form
+$A = Q\Lambda Q\tp$, where $Q$ is an orthogonal matrix and
+$\Lambda = \diag(\lambda_k)_{k=1:n}$ is a diagonal matrix. Recall that $\lambda_k$,
+$k = 1:n$, are the eigenvalues of $A$, and that $\lambda_k > 0$ for all $k = 1:n$,
+since $A$ is symmetric positive definite.
+
+Let
+\[
+\Lambda^{1/2} \;=\; \diag\left(\sqrt{\lambda_k}\right)_{k=1:n} \quad \text{and} \quad
+\Lambda^{-1/2} \;=\; \diag\left(\frac{1}{\sqrt{\lambda_k}}\right)_{k=1:n},
+\]
+and let $A^{1/2}$ and $A^{-1/2}$ be the matrices given by
+\[
+A^{1/2} \;=\; Q\Lambda^{1/2}Q\tp \quad \text{and} \quad
+A^{-1/2} \;=\; Q\Lambda^{-1/2}Q\tp.
+\]
+
+Show that
+\begin{align*}
+\left(A^{1/2}\right)^2 &\;=\; A;\\
+\left(A^{-1/2}\right)^2 &\;=\; A^{-1};\\
+\left(A^{1/2}\right)^{-1} &\;=\; A^{-1/2}.
+\end{align*}
+
+\item Show that an $n \times n$ matrix has $2^n - 1$ principal minors.
+
+\item Show that the matrix
+\[
+A \;=\;
+\begin{pmatrix}
+1 & 0.2 & -0.2 & 0.1\\
+0.2 & 1 & -0.25 & 0.05\\
+-0.2 & -0.25 & 1 & -0.15\\
+0.1 & 0.05 & -0.15 & 1
+\end{pmatrix}
+\]
+is symmetric positive definite.
+
+\item Let
+\[
+A \;=\;
+\begin{pmatrix}
+1 & 0.05 & 0.25 & 0.55\\
+0.05 & 2 & 1 & 1.25\\
+0.25 & 1 & 4 & 2.5\\
+0.55 & 1.25 & 2.5 & 6
+\end{pmatrix}.
+\]
+\begin{subparts}
+\item Show that the matrix $A$ is not strictly diagonally dominant.
+\item Show that the matrix $A$ is symmetric positive definite.
+\end{subparts}
+
+\item Let $A$ be a symmetric positive semidefinite matrix. Show that the matrix
+$A^k$ is also symmetric positive semidefinite for any positive integer $k$.
+
+\item Recall that any symmetric positive definite matrix is nonsingular. Let $A$ be
+a symmetric positive definite matrix. Show that $A^{-1}$ is a symmetric positive
+definite matrix.
+
+\item Let $A$ be a square matrix such that $A^2 = A$. Show that the matrix $A$
+cannot be strictly diagonally dominated unless $A$ is the identity matrix.
+
+\item Let $A$ be an $n \times n$ symmetric positive definite matrix, and let $M$ be
+an $n \times m$ matrix.
+\begin{subparts}
+\item Show that the matrix $M\tp AM$ is symmetric positive semidefinite.
+\item Show that the matrix $M\tp AM$ is symmetric positive definite if and only if
+the columns of the matrix $M$ are linearly independent.
+\end{subparts}
+
+\end{exercises}
+
+% PDF page 176 (folio 160) ends here -- exercise 16, part (ii), is the last
+% content on the page; the remainder of the page is blank. This is the end
+% of Chapter 5 "Symmetric Matrices. SPD Matrices." No environment is left
+% open. Nothing further follows in this chunk or this chapter.

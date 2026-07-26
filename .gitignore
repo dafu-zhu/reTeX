@@ -11,8 +11,9 @@ books/*/build/
 *.fdb_latexmk
 *.synctex.gz
 
-# Compiled book PDFs
+# Compiled book PDFs — compile_fix.py writes into latex/, build.sh into the book root
 books/*/*.pdf
+books/*/latex/*.pdf
 
 # Source PDFs (user provides)
 pdfs/*.pdf

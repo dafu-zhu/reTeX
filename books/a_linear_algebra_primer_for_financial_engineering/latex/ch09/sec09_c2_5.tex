@@ -1,0 +1,64 @@
+% PAGES: 283-283
+% Continues the sentence "Then, the Hessian" left at the end of
+% sec09_c2_4.tex with "of $F_{0,1}(w)$ is" below.
+
+of $F_{0,1}(w)$ is
+\begin{align*}
+D^2F_{0,1}(w) &= D^2(\bar\mu^tw) -
+\frac{1}{2\sigma_P}\sqrt{\bar\mu^t\Sigma_R^{-1}\bar\mu}\,D^2(w^t\Sigma_Rw) \\
+&= -\frac{1}{2\sigma_P}\sqrt{\bar\mu^t\Sigma_R^{-1}\bar\mu}\,2\Sigma_R \\
+&= -\frac{1}{\sigma_P}\sqrt{\bar\mu^t\Sigma_R^{-1}\bar\mu}\,\Sigma_R.
+\end{align*}
+
+Since $\Sigma_R$ is a symmetric positive definite matrix, it follows that $-\Sigma_R$
+is a negative definite matrix, see Definition 5.8, and therefore $D^2F_{0,1}(w_0)$ is
+also negative definite. From Theorem 10.7, we conclude that $w_{0,1}$ is a constrained
+maximum point.
+
+To classify the critical point $(w_{0,2},\lambda_{0,2})$, let $F_{0,2}:\R^n\to\R$
+given by $F_{0,2}(w)=F(w,\lambda_{0,2})$, where $\lambda_{0,2}$ is given by (9.54),
+i.e.,
+\begin{align*}
+F_{0,2}(w) &= r_f+\bar\mu^tw+\lambda_{0,2}(w^t\Sigma_Rw-\sigma_P^2) \\
+&= r_f+\bar\mu^tw+\frac{1}{2\sigma_P}\sqrt{\bar\mu^t\Sigma_R^{-1}\bar\mu}\,
+(w^t\Sigma_Rw-\sigma_P^2).
+\end{align*}
+
+The Hessian of $F_{0,2}(w)$ is
+\begin{align*}
+D^2F_{0,2}(w) &= D^2(\bar\mu^tw) +
+\frac{1}{2\sigma_P}\sqrt{\bar\mu^t\Sigma_R^{-1}\bar\mu}\,D^2(w^t\Sigma_Rw) \\
+&= \frac{1}{\sigma_P}\sqrt{\bar\mu^t\Sigma_R^{-1}\bar\mu}\,\Sigma_R.
+\end{align*}
+
+Since $\Sigma_R$ is a symmetric positive definite matrix, it follows that
+$D^2F_{0,2}(w_0)$ is positive definite. Then, $w_{0,2}$ is a constrained minimum point
+for the function $f(w)$; see Theorem 10.7.
+
+Thus, we conclude that the maximum return portfolio problem (9.44) has one solution,
+$w_{max} = w_{0,1}$ given by (9.55), i.e.,
+\begin{equation}
+w_{max} \;=\; \frac{\sigma_P}{\sqrt{\bar\mu^t\Sigma_R^{-1}\bar\mu}}\Sigma_R^{-1}\bar\mu.
+\end{equation}
+
+Moreover, recall from (9.7) that the cash position $w_{max,cash}$ in a portfolio with
+asset weights vector $w_{max}$ is
+\begin{equation}
+w_{max,cash} \;=\; 1-\bfone^tw_{max}.
+\end{equation}
+
+We conclude from (9.57) and (9.58) that the maximum expected return of a portfolio
+with variance of return equal to $\sigma_P^2$ is obtained for the following asset
+allocation:
+\begin{itemize}
+\item asset weights vector $w_{max}$ given by
+\begin{equation}
+w_{max} \;=\;
+\frac{\sigma_P}{\sqrt{\bar\mu^t\Sigma_R^{-1}\bar\mu}}\Sigma_R^{-1}\bar\mu;
+\end{equation}
+\item weight $w_{max,cash}$ of the cash position given by
+\begin{equation}
+w_{max,cash} \;=\; 1-\bfone^tw_{max} \;=\;
+1-\sigma_P\frac{\bfone^t\Sigma_R^{-1}\bar\mu}{\sqrt{\bar\mu^t\Sigma_R^{-1}\bar\mu}}.
+\end{equation}
+\end{itemize}

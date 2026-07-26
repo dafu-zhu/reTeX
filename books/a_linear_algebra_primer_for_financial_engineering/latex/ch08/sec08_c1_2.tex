@@ -1,0 +1,66 @@
+% PAGES: 244-244
+
+Note that
+\begin{equation}
+y^tAx \;=\; x^tA^ty
+\end{equation}
+since $(u,v) = (v,u)$ for any $u$ and $v$ and therefore
+\[
+y^tAx \;=\; (Ax,y) \;=\; (y,Ax) \;=\; (Ax)^ty \;=\; x^tA^ty.
+\]
+
+From (8.4) and (8.5), it follows that
+\begin{equation}
+||y-Ax||^2 \;=\; y^ty \;-\; 2x^tA^ty \;+\; x^tA^tAx.
+\end{equation}
+
+From (8.3) and (8.6), and since $y^ty = ||y||^2$, we conclude that
+\begin{equation}
+f(x) \;=\; ||y||^2 \;-\; 2x^tA^ty \;+\; x^tA^tAx.
+\end{equation}
+
+Recall that any minimum point $x_0$ of $f(x)$ must be a critical point of $f(x)$, i.e.,
+a solution to $Df(x_0) = 0$. From (8.7), it follows that the gradient $Df(x)$ of $f(x)$
+is
+\begin{equation}
+Df(x) \;=\; -2D(x^tA^ty) \;+\; D(x^tA^tAx),
+\end{equation}
+since $||y||^2$ is not a function of $x$ and therefore $D(||y||^2) = 0$.
+
+Recall from (10.44) and (10.47) the following gradient formulas:
+\begin{align}
+D(x^tC) &= C^t \\
+D(x^tMx) &= 2(Mx)^t,
+\end{align}
+for any constant column vector $C$ and for any symmetric matrix $M$. Since $A^tA$ is a
+symmetric matrix, see Lemma 5.2, we obtain from (8.9) and (8.10) that
+\begin{align}
+D(x^tA^ty) &= (A^ty)^t; \\
+D(x^tA^tAx) &= 2(A^tAx)^t.
+\end{align}
+
+From (8.8), (8.11), and (8.12), it follows that
+\begin{align}
+Df(x) \;&=\; -2(A^ty)^t + 2(A^tAx)^t \notag\\
+&=\; 2(A^tAx - A^ty)^t.
+\end{align}
+
+From (8.13), we find that $Df(x_0) = 0$ if and only if
+\begin{equation}
+A^tAx_0 \;=\; A^ty.
+\end{equation}
+
+Since the columns of $A$ are linearly independent, it follows from Lemma 5.2 that the
+matrix $A^tA$ is symmetric positive definite. Then, $A^tA$ is a nonsingular matrix, see
+Lemma 5.3, and therefore the unique solution of (8.14) is
+\begin{equation}
+x_0 \;=\; (A^tA)^{-1}A^ty.
+\end{equation}
+
+To classify the critical point $x_0$ given by (8.15), we compute the Hessian of
+$f(x)$. From (10.46) and (10.48), we obtain that $D^2(x^tA^ty) = 0$ and
+$D^2(x^tA^tAx) = 2(A^tA)$. Then, from (8.7), it follows that $D^2f(x) = 2(A^tA)$, and
+therefore
+\[
+D^2f(x_0) \;=\; 2(A^tA).
+\]

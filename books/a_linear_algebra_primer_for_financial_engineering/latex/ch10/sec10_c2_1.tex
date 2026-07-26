@@ -1,0 +1,185 @@
+% PAGES: 319-321
+
+see (10.40). Note that $D^2F_0(x_0)$ is an $n \times n$ symmetric matrix.
+
+We restrict our attention to the case when the matrix $D^2F_0(x_0)$ is either
+symmetric positive definite, or symmetric negative definite, which suffices for the
+purpose of this book. The general theory of Lagrange multipliers can be found in
+section 9.1 from Stefanica \cite{36}; see Theorem 9.2 therein.
+
+\begin{theorem}
+Assume that the function $g(x)$ satisfies condition (10.66). Let $x_0 \in U \subset
+\R^n$ and $\lambda_0 \in \R^m$ such that the point $(x_0,\lambda_0)$ is a critical
+point for the Lagrangian function $F(x,\lambda) = f(x) + \lambda^tg(x)$. Let
+$F_0(x) = f(x) + \lambda_0^tg(x)$, and let $D^2F_0(x_0)$ be the Hessian of $F_0$
+evaluated at the point $x_0$.
+
+If the matrix $D^2F_0(x_0)$ is positive definite, i.e., if all the eigenvalues of the
+matrix $D^2F_0(x_0)$ are strictly greater than $0$, then $x_0$ is a constrained
+minimum for $f(x)$ with respect to the constraint $g(x) = 0$.
+
+If the matrix $D^2F_0(x_0)$ is negative definite, i.e., if all the eigenvalues of the
+matrix $D^2F_0(x_0)$ are strictly less than $0$, then $x_0$ is a constrained maximum
+for $f(x)$ with respect to the constraint $g(x) = 0$.
+\end{theorem}
+
+Summarizing, the steps for solving the simplified version of a constrained
+optimization problem using Lagrange multipliers are:
+
+\medskip
+\noindent\underline{Step 1:} Check that $\rank(Dg(x)) = m$ for all $x$ such that
+$g(x) = 0$.
+
+\medskip
+\noindent\underline{Step 2:} Find $(x_0,\lambda_0) \in U \times \R^m$ such that
+$D_{(x,\lambda)}F(x_0,\lambda_0) = 0$.
+
+\medskip
+\noindent\underline{Step 3:} Check whether the matrix $D^2F_0(x_0)$ is positive
+semidefinite or negative semidefinite.
+
+\medskip
+\noindent\underline{Step 4:} Use Theorem 10.7 to decide whether $x_0$ is a
+constrained minimum point or a constrained maximum point.
+
+\medskip
+The Lagrange multipliers method is used, for example, for portfolio optimization
+problems; see sections 9.3, 9.4, and 9.5 for details.
+
+\subsection{The ``Big O'' notation}
+
+In this book, the ``Big O'' notation is primarily used for polynomials; a formal
+definition can be found below. More details on the general form of the ``Big O''
+notation can be found in Section 10.5 of Stefanica \cite{36}.
+
+\begin{definition}
+Let $f : \R \to \R$, and let $k$ be a positive integer. We write that
+$f(n) = O(n^k)$, as $n \to \infty$, if and only if there exist constants
+$C_1,C_2 > 0$ and $M > 0$ such that
+\[
+C_1 \;\le\; \left|\frac{f(n)}{n^k}\right| \;\le\; C_2, \qquad \forall\, n \ge M.
+\]
+\end{definition}
+
+In particular, note that
+\begin{equation}
+\text{if} \quad 0 \;<\; \lim_{n\to\infty}\left|\frac{f(n)}{n^k}\right| \;<\; \infty,
+\quad \text{then} \quad f(n) = O(n^k), \quad \text{as } n \to \infty.
+\end{equation}
+
+Let
+\[
+P(x) \;=\; \sum_{i=0}^p a_ix^i \;=\; a_px^p + a_{p-1}x^{p-1} + \ldots + a_1x + a_0,
+\]
+with $a_p \ne 0$, be a polynomial of degree $p$. Then, from (10.74), it follows that
+\[
+P(n) \;=\; O(n^p), \quad \text{as } n \to \infty.
+\]
+
+More precisely, if $a_{p-1} \ne 0$, then,
+\begin{equation}
+P(n) \;=\; a_px^p \;+\; O(n^{p-1}), \quad \text{as } n \to \infty.
+\end{equation}
+
+To prove, e.g., (10.75), note that
+\begin{align*}
+\lim_{n\to\infty}\left|\frac{P(n)-a_px^p}{n^{p-1}}\right|
+&= \lim_{n\to\infty}\left|\frac{a_{p-1}n^{p-1}+a_{p-2}n^{p-2}+\ldots+a_1n+a_0}
+{n^{p-1}}\right| \\
+&= \lim_{n\to\infty}\left|a_{p-1} \;+\; \frac{a_{p-2}}{n} \;+\; \ldots \;+\;
+\frac{a_1}{n^{p-2}} \;+\; \frac{a_0}{n^{p-1}}\right| \\
+&= |a_{p-1}| \;>\; 0,
+\end{align*}
+and therefore $P(n) - a_px^p = O(n^{p-1})$; cf. (10.74)
+
+The results below follow from (10.75) and are used in the book:
+\begin{align}
+8n - 7 &= 8n \;+\; O(1), \quad \text{as } n \to \infty; \\
+10n - 7 &= 10n \;+\; O(1), \quad \text{as } n \to \infty; \\
+n^2 + n - 1 &= n^2 \;+\; O(n), \quad \text{as } n \to \infty; \\
+\frac{2n^3}{3} - \frac{n^2}{2} + \frac{5n}{6} - 1 &= \frac{2}{3}n^3 \;+\; O(n^2),
+\quad \text{as } n \to \infty; \\
+\frac{n^3}{3} + \frac{n^2}{2} + \frac{n}{6} &= \frac{1}{3}n^3 \;+\; O(n^2), \quad
+\text{as } n \to \infty.
+\end{align}
+
+Rules for operations with the ``Big O'' notations can be derived from Definition
+10.5 and are as follows:
+
+If $k$ and $j$ are positive integers and $c \ne 0$ is a constant, then
+\begin{align}
+c\,n^jO(n^k) &= O(n^{j+k}), \quad \text{as } n \to \infty; \\
+c\,O(n^k) &= O(n^k), \quad \text{as } n \to \infty; \\
+O(n^k) + cn^k &= O(n^k), \quad \text{as } n \to \infty; \\
+O(n^k) + O(n^k) &= O(n^k), \quad \text{as } n \to \infty; \\
+O(n^k) + O(n^j) &= O(n^k), \quad \text{if } j < k, \quad \text{as } n \to \infty.
+\end{align}
+
+The following results can be proved using (10.81--10.84):
+
+As $n \to \infty$,
+\begin{align}
+\left(\frac{2}{3}n^3+O(n^2)\right) + 2\left(n^2+O(n)\right)
+&= \frac{2}{3}n^3+O(n^2)+2n^2+2O(n) \notag \\
+&= \frac{2}{3}n^3+O(n^2)+O(n) \notag \\
+&= \frac{2}{3}n^3 \;+\; O(n^2); \\
+\left(\frac{1}{3}n^3+O(n^2)\right) + 2\left(n^2+O(n)\right)
+&= \frac{1}{3}n^3 \;+\; O(n^2);
+\end{align}
+\begin{align}
+\frac{2}{3}n^3+O(n^2) + n\left(2n^2+2O(n)\right)
+&= \frac{8}{3}n^3+O(n^2)+2nO(n) \notag \\
+&= \frac{8}{3}n^3+O(n^2)+O(n^2) \notag \\
+&= \frac{8}{3}n^3 \;+\; O(n^2); \\
+\frac{1}{3}n^3+O(n^2) + n\left(2n^2+2O(n)\right)
+&= \frac{7}{3}n^3 \;+\; O(n^2).
+\end{align}
+
+\section{European options overview}
+
+The material in this section is adapted from Stefanica \cite{36}; see sections
+1.7--1.10 and 3.7 therein for more details.
+
+A \textbf{Call Option} on an underlying asset (e.g., on one share of a stock, for an
+equity option\footnote{The underlying asset for equity options is usually 100
+shares, not one share. For clarity and simplicity reasons, we will be consistent
+throughout the book in our assumption that options are written on just one unit of
+the underlying asset.}) is a contract between two parties which gives the buyer of
+the option the right, but not the obligation, to \textbf{buy} from the seller of the
+option one unit of the asset (e.g., one share of the stock) at a predetermined time
+$T$ in the future, called the \textbf{maturity} of the option, for a predetermined
+price $K$, called the \textbf{strike} of the option. For this right, the buyer of
+the option pays $C(t)$ at time $t < T$ to the seller of the option.
+
+A \textbf{Put Option} on an underlying asset is a contract between two parties which
+gives the buyer of the option the right, but not the obligation, to \textbf{sell} to
+the seller of the option one unit of the asset at a predetermined time $T$ in the
+future, called the \textbf{maturity} of the option, for a predetermined price $K$,
+called the \textbf{strike} of the option. For this right, the buyer of the option
+pays $P(t)$ at time $t < T$ to the seller of the option.
+
+The options described above are plain vanilla European options. An option which can
+be exercised at any time prior to maturity is called an American option.
+
+Let $S(t)$ be the price of the underlying asset at time $t$. A call option is
+at--the--money (ATM) if its strike is equal to the spot price, i.e., if $K = S(t)$.
+Similarly, a put option is at--the--money (ATM) if its strike is equal to the spot
+price, i.e., if $K = S(t)$. A call option is in--the--money (ITM) or
+out--of--the--money (OTM) at time $t$ if $S(t) > K$ or $S(t) < K$, respectively. A
+put option is in--the--money or out--of--the--money at time $t$ if $S(t) < K$ or
+$S(t) > K$, respectively.
+
+The payoff of a call option at maturity is
+\begin{equation}
+C(T) \;=\; \max(S(T)-K,0) \;=\; \begin{cases} S(T)-K, & \text{if} \;\; S(T) > K; \\
+0, & \text{if} \;\; S(T) \le K. \end{cases}
+\end{equation}
+
+The payoff of a put option at maturity is
+\begin{equation}
+P(T) \;=\; \max(K-S(T),0) \;=\; \begin{cases} 0, & \text{if} \;\; S(T) \ge K; \\
+K-S(T), & \text{if} \;\; S(T) < K. \end{cases}
+\end{equation}
+
+\medskip
+\noindent\textbf{The Put--Call parity}

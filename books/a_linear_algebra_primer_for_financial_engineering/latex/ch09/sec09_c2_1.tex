@@ -1,0 +1,91 @@
+% PAGES: 279-279
+% Chunk c2 (assigned 279-290) begins here. ch09/ was empty when I started (c1,
+% assigned 267-278, had not yet delivered any files), so I could not read a
+% c1 file directly; I instead rendered PDF page 278 (folio 262, c1's last
+% assigned page) myself via CropBox at 300 dpi to check the boundary. Page 278
+% ends with the three-line derivation of $w_{min}$ closing at "$=
+% (1-w_{min,cash})w_T,$" tagged (9.39) -- a numbered multi-line display that is
+% fully closed on that page, not carried over. Page 279 (this file) opens a
+% fresh sentence, "since, from (9.34), it follows that", with its own
+% self-contained unnumbered display. Nothing is left open across the c1/c2
+% boundary; no \begin{...} needs to be closed at the top of this file.
+%
+% Notation check (folio 263, 600+ dpi): subscripts on $\Sigma$ and $\mu$ here
+% are plain (unbolded) -- $\Sigma_R$, $\bar\mu$ -- since these pages never
+% subscript by the bold-lowercase asset-vector $\bfx$; the vector of ones is
+% consistently bold ($\bfone$), matching the preamble's note that \bfone is
+% the only symbol this book actually bolds in Chapter 9.
+
+since, from (9.34), it follows that
+\[
+(\mu_P-r_f)\frac{\bfone^t\Sigma_R^{-1}\bar\mu}{\bar\mu^t\Sigma_R^{-1}\bar\mu} \;=\;
+1-w_{min,cash}.
+\]
+
+From (9.38) and (9.39), we conclude that the minimum variance portfolio with expected
+return $\mu_P$ is obtained for the following asset allocation:
+\begin{itemize}
+\item weight $w_{min,cash}$ of the cash position given by
+\begin{equation}
+w_{min,cash} \;=\; 1-\frac{\mu_P-r_f}{\bar\mu^tw_T};
+\end{equation}
+\item asset weights vector $w_{min}$ given by
+\begin{equation}
+w_{min} \;=\; (1-w_{min,cash})\,w_T.
+\end{equation}
+\end{itemize}
+
+The pseudocode for the asset allocation for the minimum variance portfolio computed
+using the formulas (9.40) and (9.41) can be found in Table 9.2.
+
+We revisit below the example from section 9.3 and find the minimum variance portfolio
+by using the tangency portfolio.
+
+\par\medskip\noindent\textit{Example:}\ Find the \$100 million minimum variance
+portfolio with expected return equal to 2.25\% and invested in cash and four assets
+with expected returns equal to 2\%, 1.75\%, 2.5\%, and 1.5\%, and with the following
+covariance matrix of their returns:
+\[
+\begin{pmatrix}
+0.09 & 0.01 & 0.03 & -0.015 \\
+0.01 & 0.0625 & -0.02 & -0.01 \\
+0.03 & -0.02 & 0.1225 & 0.02 \\
+-0.015 & -0.01 & 0.02 & 0.0576
+\end{pmatrix}.
+\]
+
+Assume that the risk free rate is 1\%.
+
+\begin{answerx}
+% Left OPEN at the end of this file: the derivation continues onto PDF page
+% 280 (folio 264), which closes it with "$w_{min} = ... $" followed by the
+% square. sec09_c2_2.tex must NOT reopen \begin{answerx}.
+Let $\mu_1 = 0.02$, $\mu_2 = 0.0175$, $\mu_3 = 0.025$, $\mu_4 = 0.015$, and $r_f =
+0.01$. We look for the assets and cash allocation corresponding to the minimum
+variance portfolio with expected return $\mu_P = 0.0225$.
+
+Note that $\bar\mu = \mu - r_f\bfone$ and $\Sigma_R$ are given by
+\[
+\bar\mu \;=\; \begin{pmatrix} 0.01 \\ 0.0075 \\ 0.015 \\ 0.005 \end{pmatrix}; \quad
+\Sigma_R \;=\; \begin{pmatrix}
+0.09 & 0.01 & 0.03 & -0.015 \\
+0.01 & 0.0625 & -0.02 & -0.01 \\
+0.03 & -0.02 & 0.1225 & 0.02 \\
+-0.015 & -0.01 & 0.02 & 0.0576
+\end{pmatrix}.
+\]
+
+The vector $\Sigma_R^{-1}\bar\mu = \text{linear\_solve\_cholesky}(\Sigma_R,\bar\mu)$ is
+computed by using the Cholesky decomposition to solve the linear system corresponding
+to the matrix $\Sigma_R$ and to the right hand side $\bar\mu$. From (9.36), we find
+that the asset weights vector of the tangency portfolio is
+\[
+w_T \;=\; \frac{1}{\bfone^t\Sigma_R^{-1}\bar\mu}\Sigma_R^{-1}\bar\mu \;=\;
+\begin{pmatrix} 0.1587 \\ 0.3660 \\ 0.2650 \\ 0.2103 \end{pmatrix}.
+\]
+
+From (9.40), we find that the weight of the cash position in the minimum variance
+portfolio is
+\[
+w_{min,cash} \;=\; 1-\frac{\mu_P-r_f}{\bar\mu^tw_T} \;=\; -0.3356,
+\]

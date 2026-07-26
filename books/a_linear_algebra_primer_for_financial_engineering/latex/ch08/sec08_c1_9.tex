@@ -1,0 +1,79 @@
+% PAGES: 251-251
+
+% "Implied volatiles" (missing "-it-") is printed as shown in the caption on
+% the source page (folio 235) -- transcribed as printed, not corrected to
+% "Implied volatilities".
+\begin{table}[H]
+\centering
+\caption{Implied volatiles for SPX options}
+\begin{tabular}{|c|c|c||c|c|c|}
+\hline
+Strike & \shortstack{Implied Vol\\Call} & \shortstack{Implied Vol\\Put} & Strike &
+\shortstack{Implied Vol\\Call} & \shortstack{Implied Vol\\Put} \\
+\hline
+1175 & 25.73\% & 25.72\% & 1375 & 19.69\% & 19.66\% \\
+\hline
+1200 & 24.96\% & 24.92\% & 1400 & 18.94\% & 18.94\% \\
+\hline
+1225 & 24.19\% & 24.16\% & 1425 & 18.26\% & 18.25\% \\
+\hline
+1250 & 23.44\% & 23.40\% & 1450 & 17.53\% & 17.68\% \\
+\hline
+1275 & 22.63\% & 22.65\% & 1500 & 16.34\% & 16.24\% \\
+\hline
+1300 & 21.86\% & 21.91\% & 1550 & 15.05\% & 15.08\% \\
+\hline
+1325 & 21.15\% & 21.20\% & 1575 & 14.48\% & 14.47\% \\
+\hline
+1350 & 20.41\% & 20.43\% & 1600 & 14.13\% & 14.02\% \\
+\hline
+\end{tabular}
+\end{table}
+
+\section{Linear regression: ordinary least squares for time series data}
+
+Linear regression for time series data (also called ordinary least squares for time
+series data) requires finding the best approximation of the time series data of a
+random variable by a linear combination of the time series data of other random
+variables and a constant vector.
+
+Let $Y$ and $X_1, X_2, \ldots, X_n$ be random variables given by time series data at
+$N$ data points $t_i$, $i = 1:N$. Assume that the sample covariance matrix
+corresponding to the time series data for $X_1, X_2, \ldots, X_n$ is nonsingular, or,
+equivalently, that the column vectors of the time series data for $X_1, X_2, \ldots,
+X_n$ and the $N \times 1$ column vector with all entries equal to 1 are linearly
+independent; cf. Theorem 7.2.
+
+We look for the best linear approximation of the time series data for $Y$ by a linear
+combination of the time series data for $X_1, X_2, \ldots, X_n$ plus a constant
+vector, i.e., we look for constants $a, b_1, b_2, \ldots, b_n$ such that
+\begin{equation}
+\begin{aligned}
+&\begin{pmatrix} Y(t_1) \\ Y(t_2) \\ \vdots \\ Y(t_N) \end{pmatrix}
+\;\approx\;
+\begin{pmatrix} a + \sum_{k=1}^n b_kX_k(t_1) \\ a + \sum_{k=1}^n b_kX_k(t_2) \\ \vdots
+\\ a + \sum_{k=1}^n b_kX_k(t_N) \end{pmatrix} \\
+\Longleftrightarrow \quad
+&\begin{pmatrix} Y(t_1) \\ Y(t_2) \\ \vdots \\ Y(t_N) \end{pmatrix}
+\;\approx\;
+\begin{pmatrix} a \\ a \\ \vdots \\ a \end{pmatrix}
+\;+\; \sum_{k=1}^n b_k
+\begin{pmatrix} X_k(t_1) \\ X_k(t_2) \\ \vdots \\ X_k(t_N) \end{pmatrix} \\
+\Longleftrightarrow \quad
+&\begin{pmatrix} Y(t_1) \\ Y(t_2) \\ \vdots \\ Y(t_N) \end{pmatrix}
+\;\approx\;
+\begin{pmatrix}
+1 & X_1(t_1) & \dots & X_n(t_1) \\
+1 & X_1(t_2) & \dots & X_n(t_2) \\
+\vdots & \vdots & \vdots & \vdots \\
+1 & X_1(t_N) & \dots & X_n(t_N)
+\end{pmatrix}
+\begin{pmatrix} a \\ b_1 \\ \vdots \\ b_n \end{pmatrix}.
+\end{aligned}
+\end{equation}
+
+Denote by $T_Y$ and $T_{X_k}$ the column vectors of the time series data for the random
+variables $Y$ and $X_k$, for $k = 1:n$, respectively, i.e.,
+\begin{equation}
+T_Y \;=\; (Y(t_i))_{i=1:N};
+\end{equation}

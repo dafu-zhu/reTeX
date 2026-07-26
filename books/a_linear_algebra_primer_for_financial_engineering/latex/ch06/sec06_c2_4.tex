@@ -1,0 +1,130 @@
+% PAGES: 191-192
+% Continues the OPEN "\begin{itemize}" left unclosed at the end of
+% sec06_c2_3.tex (folio 174), whose last item ends "...cf. (2.19),". This
+% file supplies the final item and "\end{itemize}" below on folio 175. Do
+% not open a new "\begin{itemize}".
+
+\item for a total operation count of
+\[
+\left(\frac{1}{3}n^3 + O(n^2)\right) \;+\; (n^2+O(n)) \;+\; (n^2+O(n))
+\;=\; \frac{1}{3}n^3 + O(n^2);
+\]
+see (10.87) from Section 10.2.3 for a proof of the last equality.
+\end{itemize}
+
+\subsection{Solving linear systems corresponding to the same spd matrix}
+
+In this section, we show how the Cholesky decomposition of a matrix can be used to
+solve multiple linear systems corresponding to the same symmetric positive definite
+matrix efficiently.
+
+Assume that we want to solve $p$ linear systems corresponding to an $n \times n$
+symmetric positive definite matrix $A$. In other words, we want to find $n \times 1$
+vectors $x_i$, $i = 1:p$, such that
+\begin{equation}
+Ax_i \;=\; b_i, \quad \forall\, i = 1:p,
+\end{equation}
+where $b_i$ is a column vector of size $n$, for $i = 1:p$.
+
+One way to solve the linear systems from (6.50) would be to use the routine
+linear\_solve\_cholesky from Table 6.2 to solve each one of the $p$ linear systems
+inside a ``for'' loop as follows:
+\begin{center}
+\fbox{\begin{minipage}{0.6\linewidth}
+for $i = 1:p$\\
+\hspace*{1.5em}$x_i = \text{linear\_solve\_cholesky}(A,b_i)$\\
+end
+\end{minipage}}
+\end{center}
+
+This would require
+\begin{equation}
+p\left(\frac{1}{3}n^3 + O(n^2)\right) \;=\; \frac{1}{3}pn^3 + pO(n^2)
+\end{equation}
+operations, since each linear solver requires $\frac{1}{3}n^3 + O(n^2)$ operations; cf.
+Lemma 6.2.
+
+However, the most expensive part of $x_i = \text{linear\_solve\_cholesky}(A,b_i)$ is
+computing the Cholesky decomposition of the matrix $A$, which dominates the cost of the
+subsequent forward substitution and backward substitution. Thus, an efficient way of
+solving the linear systems (6.50) is to compute the Cholesky factor $U$ of $A$ only
+once, outside the ``for'' loop, and then do the forward and backward substitutions for
+solving each linear system inside the ``for'' loop; see the pseudocode from Table 6.3
+for details.
+
+Recall that both the forward substitution $\text{forward\_subst}(U\tp,b_i)$ and the
+backward substitution $\text{backward\_subst}(U,y)$ require $n^2 + O(n)$ operations;
+cf. (2.8) and (2.19). Thus, the operation count for solving the $p$ linear systems
+using the method from Table 6.3 is
+\[
+\frac{1}{3}n^3 + O(n^2) \;+\; p\left(n^2+O(n) + n^2+O(n)\right)
+\;=\; \frac{1}{3}n^3 + 2pn^2 + O(n^2) + pO(n),
+\]
+which is smaller than $\frac{1}{3}pn^3 + pO(n^2)$, the operation count required by
+solving the $p$ linear systems sequentially; see (6.51).
+
+As an example of solving multiple systems corresponding to the same matrix, we show
+how to efficiently compute the inverse of a symmetric positive definite matrix.
+
+\begin{table}[H]
+\centering
+\caption{Solution of multiple linear systems corresponding to the same spd matrix}
+\fbox{\begin{minipage}{0.85\linewidth}
+Input:\\
+$A = $ symmetric positive definite matrix of size $n$\\
+$b_i = $ column vectors of size $n$, $i = 1:p$
+\bigskip
+
+Output:\\
+$x_i = $ solution to $Ax_i = b_i$, $i = 1:p$
+\bigskip
+
+\noindent
+$U = \text{cholesky}(A)$\\
+for $i = 1:p$\\
+\hspace*{1.5em}$y = \text{forward\_subst}(U\tp,b_i)$;\\
+\hspace*{1.5em}$x_i = \text{backward\_subst}(U,y)$;\\
+end
+\end{minipage}}
+\end{table}
+
+Let $A$ be a symmetric positive definite matrix of size $n$, and let
+$A^{-1} = \text{col}(c_k)_{k=1:n}$ be the column form of the inverse matrix of $A$.
+Then, $AA^{-1} = I$, where $I = \text{col}(e_k)_{k=1:n}$ is the identity matrix of size
+$n$. Using (1.11), we find that $AA^{-1} = \text{col}(Ac_k)_{k=1:n}$, and therefore
+$AA^{-1} = I$ is equivalent to
+\[
+Ac_k \;=\; e_k, \quad \forall\, k = 1:n,
+\]
+which can be solved using the method from Table 6.3 as follows:
+\begin{center}
+\fbox{\begin{minipage}{0.55\linewidth}
+$U = \text{cholesky}(A)$\\
+for $k = 1:n$\\
+\hspace*{1.5em}$y = \text{forward\_subst}(U\tp,e_k)$\\
+\hspace*{1.5em}$c_k = \text{backward\_subst}(U,y)$\\
+end\\
+$A^{-1} = \text{col}(c_k)_{k=1:n}$
+\end{minipage}}
+\end{center}
+
+The operation count for computing the inverse matrix using this method is
+\begin{equation}
+\frac{1}{3}n^3 + O(n^2) \;+\; n\left(n^2+O(n) + n^2+O(n)\right) \;=\; \frac{7}{3}n^3 + O(n^2);
+\end{equation}
+see (10.89) from Section 10.2.3 for a proof of the last equality.
+
+
+\section{Optimal linear solvers for tridiagonal symmetric positive definite matrices}
+
+Solving linear systems corresponding to tridiagonal symmetric positive definite
+matrices is often required in financial applications, e.g., for the efficient
+implementation of the cubic spline interpolation and for the finite difference
+solution of the Black--Scholes PDE; see section 6.4 and the references from section
+6.5. Note that a linear system $Ax = b$ corresponding to a tridiagonal symmetric
+positive definite matrix $A$ can be solved by using a linear solver based on the
+Cholesky decomposition of $A$, or by using a linear solver based on the LU
+decomposition of the matrix $A$.
+% This file ends here (end of PDF page 192 / folio 176), mid-section 6.3,
+% right before the section continues onto PDF page 193 (out of range for
+% this agent). No environment is left open at this point.

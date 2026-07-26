@@ -1,0 +1,182 @@
+% PAGES: 303-305
+% First chunk of Chapter 10 (the book's final chapter). Nothing open from
+% Chapter 9 -- this chunk starts a fresh chapter, and the orchestrator writes
+% ch10.tex with the \chapter{} and \label{} commands itself (matching the
+% ch01-ch06/ch08 pattern), so this file does not repeat them.
+
+\noindent Determinants, permutation matrices, orthogonal vectors and orthogonal matrices,
+quadratic forms.
+\medskip
+
+\noindent Multivariable functions.
+\medskip
+
+\noindent Lagrange multipliers.
+\medskip
+
+\noindent The ``Big O'' notation.
+\medskip
+
+\noindent European options overview.
+\medskip
+
+\noindent Eigenvalues of symmetric matrices.
+\medskip
+
+\noindent Row rank equal to column rank.
+\medskip
+
+\noindent Technical results for Cholesky and LU decompositions.
+\medskip
+
+\section{Numerical linear algebra tools.}
+
+In this section, we give a brief overview to determinants, permutation matrices,
+orthogonal vectors and orthogonal matrices, and quadratic forms.
+
+\subsection{Determinants}
+
+The concept of the determinant of a square matrix is of little relevance for numerical
+linear algebra purposes.\footnote{The condition number of a matrix is much more relevant,
+since, it indicates not only whether a matrix is nonsingular, as does the determinant of
+the matrix, but also how far from being nonsingular (i.e., ill--conditioned or
+well--conditioned) a matrix is; see Demmel \cite{13} for more details.} However, if
+needed, the determinant of the matrix can be computed efficiently using the LU
+decomposition of the matrix, which requires $\frac23 n^3 + O(n^2)$ operations. Using the
+classical definition of the determinant to compute it would require a huge number of
+operations, on the order of $n \cdot n! \approx \frac{n^{n+1}}{e^n}$.
+
+A very important use of the concept of the determinant of a matrix is as an equivalent
+characterization of a matrix being nonsingular if and only if the determinant of the
+matrix is nonzero; see Theorem 1.2.
+
+The determinant of a diagonal matrix $D$ is equal to the product of all the main
+diagonal entries of the matrix, i.e.,
+\begin{equation}
+\det(D) \;=\; \prod_{i=1}^n D(i,i).
+\end{equation}
+
+In particular, the determinant of the identity matrix is 1, i.e.,
+\begin{equation}
+\det(I) \;=\; 1.
+\end{equation}
+
+The determinant of a lower triangular matrix $L$ is equal to the product of all the
+main diagonal entries of the matrix, i.e.,
+\begin{equation}
+\det(L) \;=\; \prod_{i=1}^n L(i,i).
+\end{equation}
+
+The determinant of an upper triangular matrix $U$ is equal to the product of all the
+main diagonal entries of the matrix, i.e.,
+\begin{equation}
+\det(U) \;=\; \prod_{i=1}^n U(i,i).
+\end{equation}
+
+Since the transpose of an upper triangular matrix is lower triangular, it follows from
+(10.3) and (10.4)
+\begin{equation}
+\det(U^t) \;=\; \prod_{i=1}^n U(i,i) \;=\; \det(U).
+\end{equation}
+
+The determinant of the $2\times2$ matrix $A = \begin{pmatrix} a & b \\ c & d
+\end{pmatrix}$ is
+\begin{equation}
+\det(A) \;=\; ad \;-\; bc.
+\end{equation}
+
+Note that the inverse of the $2\times2$ matrix $A$ is
+\begin{equation}
+A^{-1} \;=\; \frac{1}{\det(A)}\begin{pmatrix} d & -b \\ -c & a \end{pmatrix}
+\;=\; \frac{1}{ad-bc}\begin{pmatrix} d & -b \\ -c & a \end{pmatrix}.
+\end{equation}
+
+The determinant of the $3\times3$ matrix $A = \begin{pmatrix} a_{1,1} & a_{1,2} &
+a_{1,3} \\ a_{2,1} & a_{2,2} & a_{2,3} \\ a_{3,1} & a_{3,2} & a_{3,3} \end{pmatrix}$ is
+\begin{align}
+\det(A) \;&=\; a_{1,1}a_{2,2}a_{3,3} \;+\; a_{1,2}a_{2,3}a_{3,1} \;+\; a_{1,3}a_{2,1}a_{3,2} \notag \\
+&\quad -\; a_{1,3}a_{2,2}a_{3,1} \;-\; a_{1,1}a_{2,3}a_{3,2} \;-\; a_{1,2}a_{2,1}a_{3,3}.
+\end{align}
+
+\begin{lemma}
+Let $A$ and $B$ be square matrices of the same size. Then,
+\begin{equation}
+\det(AB) \;=\; \det(A)\,\det(B).
+\end{equation}
+\end{lemma}
+
+\begin{lemma}
+Let $A$ be a square matrix. Then,
+\[
+\det(A^t) \;=\; \det(A).
+\]
+\end{lemma}
+
+\subsection{Permutation matrices}
+
+\begin{definition}
+A permutation matrix is a matrix obtained by permuting the columns (or, equivalently,
+the rows) of the identity matrix.
+\end{definition}
+
+For every permutation matrix $P$ of size $n$ there exists a permutation\footnote{A
+permutation of the numbers $1,2,\ldots,n$ is a function $\tau : \{1,2,\ldots,n\} \to
+\{1,2,\ldots,n\}$ which is one--to--one and onto, i.e., a function that assigns to every
+number $i$ between $1$ and $n$ a unique number $\tau(i)$ between $1$ and $n$ such that,
+if $1 \le i \ne j \le n$, then $\tau(i) \ne \tau(j)$.} $\tau_c$ of the numbers $1,2,
+\ldots,n$ such that
+\[
+P \;=\; \mathrm{col}\,\!\left(e_{\tau_c(k)}\right)_{k=1:n}.
+\]
+
+Similarly, for every permutation matrix $P$ of size $n$ there exists a permutation
+function $\tau_r$ of the numbers $1:n$ such that
+\[
+P \;=\; \mathrm{row}\,\!\left(e_{\tau_r(j)}^t\right)_{j=1:n}.
+\]
+
+However, the column and row permutation functions corresponding to the same
+permutation matrix need not be the same, as seen in the example below:
+
+\begin{examplex}
+The matrix
+\[
+P \;=\; \begin{pmatrix}
+0 & 0 & 1 & 0 & 0 \\
+1 & 0 & 0 & 0 & 0 \\
+0 & 0 & 0 & 0 & 1 \\
+0 & 1 & 0 & 0 & 0 \\
+0 & 0 & 0 & 1 & 0
+\end{pmatrix}
+\]
+is a permutation matrix.
+
+The row form of $P$ is
+\[
+P \;=\; \begin{pmatrix} e_3^t \\ e_1^t \\ e_5^t \\ e_2^t \\ e_4^t \end{pmatrix}
+\;=\; \begin{pmatrix} 3 \\ 1 \\ 5 \\ 2 \\ 4 \end{pmatrix},
+\]
+and can be expressed as
+\[
+P \;=\; \mathrm{row}\,\!\left(e_{\tau_r(j)}^t\right)_{j=1:5},
+\]
+where $\tau_r : \{1,2,3,4,5\} \to \{1,2,3,4,5\}$ is given by
+\[
+\tau_r(1) = 3; \quad \tau_r(2) = 1; \quad \tau_r(3) = 5; \quad \tau_r(4) = 2; \quad
+\tau_r(5) = 4.
+\]
+
+The column form of $P$ is
+\[
+P \;=\; (e_2 \mid e_4 \mid e_1 \mid e_5 \mid e_3) \;=\; (2\ 4\ 1\ 5\ 3),
+\]
+and can be expressed as
+\[
+P \;=\; \mathrm{col}\,\!\left(e_{\tau_c(k)}\right)_{k=1:5},
+\]
+where $\tau_c : \{1,2,3,4,5\} \to \{1,2,3,4,5\}$ is given by
+\[
+\tau_c(1) = 2; \quad \tau_c(2) = 4; \quad \tau_c(3) = 1; \quad \tau_c(4) = 5; \quad
+\tau_c(5) = 3.
+\]
+\end{examplex}

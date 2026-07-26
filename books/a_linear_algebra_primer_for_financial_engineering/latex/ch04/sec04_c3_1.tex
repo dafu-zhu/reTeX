@@ -1,0 +1,128 @@
+% PAGES: 141-142
+% Continues sec04_c2_3.tex (pages 134-140 / folios 118-124), whose last
+% line was the completed statement of Theorem 4.6 (Gershgorin's Theorem)
+% followed by a grammatically complete explanatory remark -- no environment
+% was left open across that boundary. Per c2's own note, the "Proof." of
+% Theorem 4.6 begins here, on page 141 (folio 125), as a fresh
+% \begin{proof}...\end{proof} -- it is NOT a continuation of anything
+% opened in sec04_c2_3.tex.
+%
+% Section 4.3 "Diagonally dominant matrices" continues: proof of Theorem
+% 4.6, then Theorem 4.7 (with proof), Definition 4.9, and Lemma 4.9 (with
+% proof). Both pages close cleanly -- Lemma 4.9's proof ends with the
+% printed square at the bottom of page 142 (folio 126). No environment is
+% left open at the end of this file.
+
+\begin{proof}
+Let $\lambda$ be an eigenvalue of $A$, and let $v$ be a corresponding eigenvector. Let
+$j$ be the index of the largest entry of $v$ in absolute value, i.e., such that
+\begin{equation}
+|v_j| \;=\; \max_{k=1:n} |v_k|.
+\end{equation}
+Then,
+\begin{equation}
+|v_k| \;\leq\; |v_j|, \quad \forall\, k = 1:n.
+\end{equation}
+Since $Av = \lambda v$, it follows that
+\begin{equation}
+\sum_{k=1}^n A(i,k) v_k \;=\; \lambda v_i, \quad \forall\, i = 1:n.
+\end{equation}
+By letting $i = j$ in (4.34), where $j$ is the index of the largest entry of $v$ in
+absolute value, see (4.32), we find that
+\[
+\lambda v_j \;=\; \sum_{k=1}^n A(j,k)v_k \;=\; A(j,j)v_j \;+\; \sum_{k=1:n,\, k \neq j}
+A(j,k)v_k,
+\]
+and therefore
+\begin{equation}
+(\lambda - A(j,j))v_j \;=\; \sum_{k=1:n,\, k \neq j} A(j,k)v_k.
+\end{equation}
+By taking absolute values in (4.35) and dividing by $|v_j|$, we obtain, using the
+notation from (4.28), that
+\begin{align*}
+|\lambda - A(j,j)| \;=\; \frac{\left|\sum_{k=1:n,\, k \neq j} A(j,k)v_k\right|}{|v_j|}
+&\;\leq\; \frac{\sum_{k=1:n,\, k \neq j} |A(j,k)||v_k|}{|v_j|}\\
+&\;=\; \sum_{k=1:n,\, k \neq j} |A(j,k)| \frac{|v_k|}{|v_j|}\\
+&\;\leq\; \sum_{k=1:n,\, k \neq j} |A(j,k)|\\
+&\;=\; R_j,
+\end{align*}
+since $\frac{|v_k|}{|v_j|} \leq 1$; cf. (4.33).
+\end{proof}
+
+Gershgorin's Theorem can be used to derive useful properties of diagonally dominant
+matrices, see Theorem 4.7 and Theorem 5.7.
+
+\begin{theorem}
+Any strictly diagonally dominant matrix is nonsingular.
+\end{theorem}
+
+\begin{proof}
+Let $\lambda$ be an eigenvalue of $A$. From Gershgorin's Theorem, it follows that there
+exists $j$, with $1 \leq j \leq n$, such that
+\begin{equation}
+|A(j,j) - \lambda| \;\leq\; R_j;
+\end{equation}
+cf. (4.31), and using the fact that $|\lambda - A(j,j)| = |A(j,j) - \lambda|$. Note that
+$|a| - |b| \leq |a-b|$, for any $a, b \in \C$. Then,
+\begin{equation}
+|A(j,j)| - |\lambda| \;\leq\; |A(j,j) - \lambda|.
+\end{equation}
+From (4.36) and (4.37), it follows that
+\[
+|A(j,j)| - |\lambda| \;\leq\; R_j,
+\]
+and therefore
+\[
+|\lambda| \;\geq\; |A(j,j)| - R_j \;>\; 0,
+\]
+since $A$ is a strictly diagonally dominant matrix; cf. (4.30).
+Thus, $|\lambda| > 0$, and therefore $\lambda \neq 0$. We conclude that any eigenvalue
+of the matrix $A$ is nonzero, and therefore that the matrix $A$ is nonsingular; cf.
+Theorem 4.3.
+\end{proof}
+
+Note that, although less frequently used in practice, column--based versions of
+Gershgorin's Theorem and of Theorem 4.7 also hold, and are based on the fact that a
+square matrix and its transpose have the same eigenvalues; see Lemma 4.5. We only
+provide a version of Theorem 4.7 here; see Theorem 4.8.
+
+\begin{definition}
+The $n \times n$ matrix $A$ is strictly column diagonally dominant if and only if
+\begin{equation}
+|A(k,k)| \;>\; \sum_{j=1:n,\, j \neq k} |A(j,k)|, \quad \forall\, k = 1:n,
+\end{equation}
+i.e., if and only if, for every column, the absolute value of the main diagonal entry
+from the column is strictly greater than the sum of the absolute values of all the
+other entries in that column.
+\end{definition}
+
+Note that, unless otherwise specified, diagonal dominance will refer to the ``row''
+diagonal dominance introduced in Definitions 4.7 and 4.8.
+
+\begin{lemma}
+If $A$ is a strictly column diagonally dominant matrix, then its transpose $A^t$ is a
+strictly diagonally dominant matrix.
+\end{lemma}
+
+\begin{proof}
+Let $A$ be a strictly column diagonally dominant matrix. From (4.38), it follows that
+\begin{equation}
+|A(k,k)| \;>\; \sum_{j=1:n,\, j \neq k} |A(j,k)|,
+\end{equation}
+for all $k = 1:n$. By switching the indices $j$ and $k$ in the inequality (4.38), we
+find that
+\begin{equation}
+|A(j,j)| \;>\; \sum_{k=1:n,\, k \neq j} |A(k,j)|,
+\end{equation}
+for all $j = 1:n$. Note that
+\begin{equation}
+\sum_{k=1:n,\, k \neq j} |A(k,j)| \;=\; \sum_{k=1:n,\, k \neq j} |A^t(j,k)|,
+\end{equation}
+since, by definition, $A^t(j,k) = A(k,j)$ for all $1 \leq j,k \leq n$. Since
+$A(j,j) = A^t(j,j)$, it follows from (4.40) and (4.41) that
+\[
+|A^t(j,j)| \;>\; \sum_{k=1:n,\, k \neq j} |A^t(j,k)|.
+\]
+Then, from Definition 4.8, we find that the matrix $A^t$ is strictly diagonally
+dominant.
+\end{proof}

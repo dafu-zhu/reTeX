@@ -1,0 +1,347 @@
+% PAGES: 81-85
+% This file continues the worked "Example" of LU decomposition with row
+% pivoting for a 5x5 matrix, begun in sec02_c4_2.tex (pages 77-80, owned by
+% a different agent). That file's last line is an unfinished align* block
+% ending with "A(2:5,2:5) - L(2:5,1)U(1,2:5)"; the equation (2.56) below
+% picks up immediately with the substituted matrices. No "\textit{Example:}"
+% label is printed here (it was already opened in sec02_c4_2.tex). The
+% example concludes partway down page 85/PDF (printed page 69), where the
+% closing \hfill$\square$\par\medskip is supplied below.
+
+\begin{align}
+&= \begin{pmatrix} 2 & -7 & -1.5 & 2\\ -1 & 2 & 6 & 2.5\\ -2 & 2 & -4 & 1\\ 1 & 13 & -5 & 3.5 \end{pmatrix}
+\;-\;
+\begin{pmatrix} 0.25\\ -0.5\\ 0\\ 0.5 \end{pmatrix}
+\begin{pmatrix} 4 & 0 & -6 & -2 \end{pmatrix} \notag\\
+&= \begin{pmatrix} 2 & -7 & -1.5 & 2\\ -1 & 2 & 6 & 2.5\\ -2 & 2 & -4 & 1\\ 1 & 13 & -5 & 3.5 \end{pmatrix}
+\;-\;
+\begin{pmatrix} 1 & 0 & -1.5 & -0.5\\ -2 & 0 & 3 & 1\\ 0 & 0 & 0 & 0\\ 2 & 0 & -3 & -1 \end{pmatrix} \notag\\
+&= \begin{pmatrix} 1 & -7 & 0 & 2.5\\ 1 & 2 & 3 & 1.5\\ -2 & 2 & -4 & 1\\ -1 & 13 & -2 & 4.5 \end{pmatrix}.
+\end{align}
+
+To compute the second row of $U$ and the second row of $L$, we identify the
+largest entry, in absolute value, from the first column
+$\begin{pmatrix} 1\\ 1\\ -2\\ -1 \end{pmatrix}$
+of the matrix $A(2:5,2:5)$ from (2.56). That entry is $-2$, corresponding to
+the third row of $A(2:5,2:5)$. We switch the first row and the third row of
+$A(2:5,2:5)$ from (2.56), and obtain that
+\begin{equation}
+A(2:5,2:5) \;=\;
+\begin{pmatrix} -2 & 2 & -4 & 1\\ 1 & 2 & 3 & 1.5\\ 1 & -7 & 0 & 2.5\\ -1 & 13 & -2 & 4.5 \end{pmatrix}.
+\end{equation}
+
+Note that the first row and the third row of $A(2:5,2:5)$ correspond to the
+second row and the fourth row of the matrix $A$. We record the switch by
+permuting the second row and the fourth row of the matrix $P$ given by
+(2.54) as follows:
+\begin{equation}
+P \;=\; \begin{pmatrix} 2\\ 1\\ 3\\ 4\\ 5 \end{pmatrix}
+\quad \text{becomes} \quad
+P \;=\; \begin{pmatrix} 2\\ \mathbf{4}\\ 3\\ 1\\ 5 \end{pmatrix}
+\;=\;
+\begin{pmatrix} e_2^t\\ e_4^t\\ e_3^t\\ e_1^t\\ e_5^t \end{pmatrix}.
+\end{equation}
+
+Furthermore, the second row and the fourth row from the current form of $L$
+from (2.55) are also switched. The matrix $L$ has now the following current
+form:
+\begin{equation}
+L \;=\; \begin{pmatrix} 1\\ 0.25\\ -0.5\\ 0\\ 0.5 \end{pmatrix}
+\quad \text{becomes} \quad
+L \;=\; \begin{pmatrix} 1\\ \mathbf{0}\\ -0.5\\ \mathbf{0.25}\\ 0.5 \end{pmatrix}.
+\end{equation}
+
+After the row permutations are done, the second row of $U$ and the second
+column of $L$ are computed as in the algorithm for LU decomposition without
+row pivoting. Note that
+\[
+L(2:5,2:5)\, U(2:5,2:5) \;=\;
+\begin{pmatrix} -2 & 2 & -4 & 1\\ 1 & 2 & 3 & 1.5\\ 1 & -7 & 0 & 2.5\\ -1 & 13 & -2 & 4.5 \end{pmatrix},
+\]
+see (2.57), which can be written as
+\[
+\begin{pmatrix}
+1 & 0 & 0 & 0\\
+L(3,2) & 1 & 0 & 0\\
+L(4,2) & L(4,3) & 1 & 0\\
+L(5,2) & L(5,3) & L(5,4) & 1
+\end{pmatrix}
+\begin{pmatrix}
+U(2,2) & U(2,3) & U(2,4) & U(2,5)\\
+0 & U(3,3) & U(3,4) & U(3,5)\\
+0 & 0 & U(4,4) & U(4,5)\\
+0 & 0 & 0 & U(5,5)
+\end{pmatrix}
+\;=\;
+\begin{pmatrix}
+-2 & 2 & -4 & 1\\
+1 & 2 & 3 & 1.5\\
+1 & -7 & 0 & 2.5\\
+-1 & 13 & -2 & 4.5
+\end{pmatrix}.
+\]
+
+Thus, the unknown entries from the second row of $U$ and from the second
+column of $L$ can now be computed from the $4\times 4$ matrix above as
+follows:
+\[
+U(2,2)=-2;\quad U(2,3)=2;\quad U(2,4)=-4;\quad U(2,5)=1;
+\]
+\[
+L(2,2)=1;\quad L(3,2)=\dfrac{1}{U(2,2)}=-0.5;\quad L(4,2)=\dfrac{1}{U(2,2)}=-0.5;
+\]
+\[
+L(5,2)=\dfrac{-1}{U(2,2)}=0.5.
+\]
+
+Then, the current forms of $L$ and $U$ are
+\begin{equation}
+L \;=\;
+\begin{pmatrix} 1 & 0\\ 0.25 & 1\\ -0.5 & -0.5\\ 0 & -0.5\\ 0.5 & 0.5 \end{pmatrix}
+;\qquad
+U \;=\;
+\begin{pmatrix}
+4 & 4 & 0 & -6 & -2\\
+0 & -2 & 2 & -4 & 1\\
+0 & 0 & U(3,3) & U(3,4) & U(3,5)\\
+0 & 0 & 0 & U(4,4) & U(4,5)\\
+0 & 0 & 0 & 0 & U(5,5)
+\end{pmatrix}.
+\end{equation}
+
+The updated form of the $3\times 3$ matrix $A(3:5,3:5)$ is computed using
+(2.52), from $A(3:5,3:5)$ obtained from (2.57) and with $L$ and $U$ given by
+(2.60), as follows:
+\begin{align}
+A(3:5,3:5)
+&= A(3:5,3:5) \;-\; L(3:5,2)\, U(2,3:5) \notag\\
+&= \begin{pmatrix} 2 & 3 & 1.5\\ -7 & 0 & 2.5\\ 13 & -2 & 4.5 \end{pmatrix}
+\;-\;
+\begin{pmatrix} -0.5\\ -0.5\\ 0.5 \end{pmatrix}
+\begin{pmatrix} 2 & -4 & 1 \end{pmatrix} \notag\\
+&= \begin{pmatrix} 2 & 3 & 1.5\\ -7 & 0 & 2.5\\ 13 & -2 & 4.5 \end{pmatrix}
+\;-\;
+\begin{pmatrix} -1 & 2 & -0.5\\ -1 & 2 & -0.5\\ 1 & -2 & 0.5 \end{pmatrix} \notag\\
+&= \begin{pmatrix} 3 & 1 & 2\\ -6 & -2 & 3\\ 12 & 0 & 4 \end{pmatrix}.
+\end{align}
+
+To compute the third row of $U$ and the third column of $L$, we identify the
+largest entry, in absolute value, from the first column
+$\begin{pmatrix} 3\\ -6\\ 12 \end{pmatrix}$ of the matrix $A(3:5,3:5)$
+from (2.61). That entry is $12$, corresponding to the third row of
+$A(3:5,3:5)$. We switch the first row and the third row of $A(3:5,3:5)$ from
+(2.61), and obtain that
+\begin{equation}
+A(3:5,3:5) \;=\; \begin{pmatrix} 12 & 0 & 4\\ -6 & -2 & 3\\ 3 & 1 & 2 \end{pmatrix}.
+\end{equation}
+
+Note that the first row and the third row of $A(3:5,3:5)$ correspond to the
+third row and the fifth row of the matrix $A$. We record the switch by
+permuting the third row and the fifth row of the matrix $P$ given by (2.58)
+as follows:
+\begin{equation}
+P \;=\; \begin{pmatrix} 2\\ 4\\ 3\\ 1\\ 5 \end{pmatrix}
+\quad \text{becomes} \quad
+P \;=\; \begin{pmatrix} 2\\ 4\\ \mathbf{5}\\ 1\\ \mathbf{3} \end{pmatrix}
+\;=\;
+\begin{pmatrix} e_2^t\\ e_4^t\\ e_5^t\\ e_1^t\\ e_3^t \end{pmatrix}.
+\end{equation}
+
+Furthermore, the third row and the fifth row from the current form of $L$
+from (2.60) are also switched. The matrix $L$ has now the following current
+form:
+\begin{equation}
+L \;=\; \begin{pmatrix} 1 & 0\\ 0.25 & 1\\ -0.5 & -0.5\\ 0 & -0.5\\ 0.5 & 0.5 \end{pmatrix}
+\quad \text{becomes} \quad
+L \;=\; \begin{pmatrix} 1 & 0\\ 0.25 & 1\\ \mathbf{0.5} & \mathbf{0.5}\\ 0 & -0.5\\ \mathbf{-0.5} & \mathbf{-0.5} \end{pmatrix}.
+\end{equation}
+
+After the row permutations are done, the third row of $U$ and the third
+column of $L$ are now computed as it was done in the algorithm for LU
+decomposition without row pivoting. Note that
+\[
+L(3:5,3:5)\, U(3:5,3:5) \;=\;
+\begin{pmatrix} 12 & 0 & 4\\ -6 & -2 & 3\\ 3 & 1 & 2 \end{pmatrix},
+\]
+see (2.62), which can be written as
+\[
+\begin{pmatrix} 1 & 0 & 0\\ L(4,3) & 1 & 0\\ L(5,3) & L(5,4) & 1 \end{pmatrix}
+\begin{pmatrix} U(3,3) & U(3,4) & U(3,5)\\ 0 & U(4,4) & U(4,5)\\ 0 & 0 & U(5,5) \end{pmatrix}
+\;=\;
+\begin{pmatrix} 12 & 0 & 4\\ -6 & -2 & 3\\ 3 & 1 & 2 \end{pmatrix}.
+\]
+
+Thus, the unknown entries from the third row of $U$ and from the third
+column of $L$ can now be computed from the $3\times 3$ matrix above as
+follows:
+\[
+U(3,3)=12;\quad U(3,4)=0;\quad U(3,5)=4;
+\]
+\[
+L(3,3)=1;\quad L(4,3)=\dfrac{-6}{U(3,3)}=\dfrac{-6}{12}=-0.5;\quad
+L(5,3)=\dfrac{3}{U(3,3)}=\dfrac{3}{12}=0.25.
+\]
+
+Then, the current forms of $L$ and $U$ are
+\begin{equation}
+L \;=\;
+\begin{pmatrix} 1 & 0 & 0\\ 0.25 & 1 & 0\\ -0.5 & -0.5 & 1\\ 0 & -0.5 & -0.5\\ 0.5 & 0.5 & 0.25 \end{pmatrix}
+;\qquad
+U \;=\;
+\begin{pmatrix}
+4 & 4 & 0 & -6 & -2\\
+0 & -2 & 2 & -4 & 1\\
+0 & 0 & 12 & 0 & 4\\
+0 & 0 & 0 & U(4,4) & U(4,5)\\
+0 & 0 & 0 & 0 & U(5,5)
+\end{pmatrix}.
+\end{equation}
+
+The updated form of the $2\times 2$ matrix $A(4:5,4:5)$ is computed using
+(2.52), from $A(4:5,4:5)$ obtained from (2.62) and with $L$ and $U$ given by
+(2.65), as follows:
+\begin{align*}
+A(4:5,4:5)
+&= A(4:5,4:5) \;-\; L(4:5,3)\, U(3,4:5)\\
+&= \begin{pmatrix} -2 & 3\\ 1 & 2 \end{pmatrix}
+\;-\;
+\begin{pmatrix} -0.5\\ 0.25 \end{pmatrix}
+\begin{pmatrix} 0 & 4 \end{pmatrix}\\
+&= \begin{pmatrix} -2 & 3\\ 1 & 2 \end{pmatrix}
+\;-\;
+\begin{pmatrix} 0 & -2\\ 0 & 1 \end{pmatrix}\\
+&= \begin{pmatrix} -2 & 5\\ 1 & 1 \end{pmatrix}.
+\end{align*}
+
+To compute the fourth row of $U$ and the fourth column of $L$, note that the
+largest entry, in absolute value, from the first column
+$\begin{pmatrix} -2\\ 1 \end{pmatrix}$ of the matrix $A(4:5,4:5)$ from
+(2.66) is $-2$, which is already on the first row of $A(4:5,4:5)$.
+
+Thus, no row pivoting is necessary, and the updated form of the $2\times 2$
+matrix $A(4:5,4:5)$ is
+\begin{equation}
+A(4:5,4:5) \;=\; \begin{pmatrix} -2 & 5\\ 1 & 1 \end{pmatrix}.
+\end{equation}
+
+The fourth row of $U$ and the fourth column of $L$ are computed as it was
+done in the algorithm for LU decomposition without row pivoting. Note that
+\[
+L(4:5,4:5)\, U(4:5,4:5) \;=\; \begin{pmatrix} -2 & 5\\ 1 & 1 \end{pmatrix},
+\]
+see (2.66), which can be written as
+\[
+\begin{pmatrix} 1 & 0\\ L(5,4) & 1 \end{pmatrix}
+\begin{pmatrix} U(4,4) & U(4,5)\\ 0 & U(5,5) \end{pmatrix}
+\;=\;
+\begin{pmatrix} -2 & 5\\ 1 & 1 \end{pmatrix}.
+\]
+
+Thus, the unknown entries from the fourth row of $U$ and from the fourth
+column of $L$ can be computed from the $2\times 2$ matrix above as follows:
+\[
+U(4,4)=-2;\quad U(3,4)=5;
+\]
+\[
+L(5,4)=\dfrac{1}{U(4,4)}=\dfrac{1}{-2}=-0.5.
+\]
+
+Then, the current forms of $L$ and $U$ are
+\begin{equation}
+L \;=\;
+\begin{pmatrix} 1 & 0 & 0 & 0\\ 0.25 & 1 & 0 & 0\\ -0.5 & -0.5 & 1 & 0\\ 0 & -0.5 & -0.5 & 1\\ 0.5 & 0.5 & 0.25 & -0.5 \end{pmatrix}
+;\qquad
+U \;=\;
+\begin{pmatrix}
+4 & 4 & 0 & -6 & -2\\
+0 & -2 & 2 & -4 & 1\\
+0 & 0 & 12 & 0 & 4\\
+0 & 0 & 0 & -2 & 5\\
+0 & 0 & 0 & 0 & U(5,5)
+\end{pmatrix}.
+\end{equation}
+
+The updated form of $A(5,5)$, which is a number, is computed using (2.52),
+from $A(5,5)$ obtained from (2.66) and with $L$ and $U$ given by (2.67), as
+follows:
+\[
+A(5,5) \;=\; A(5,5) - L(5,4)U(4,5) \;=\; 1 - (-0.5)\cdot 5 \;=\; 3.5,
+\]
+which corresponds to
+\[
+L(5,5)=1;\quad U(5,5)=3.5.
+\]
+
+We conclude that the matrix $A$ has an LU decomposition with row pivoting
+with permutation matrix
+\[
+P \;=\; \begin{pmatrix} 2\\ 4\\ 5\\ 1\\ 3 \end{pmatrix}
+\;=\;
+\begin{pmatrix} e_2^t\\ e_4^t\\ e_5^t\\ e_1^t\\ e_3^t \end{pmatrix}
+\;=\;
+\begin{pmatrix}
+0 & 1 & 0 & 0 & 0\\
+0 & 0 & 0 & 1 & 0\\
+0 & 0 & 0 & 0 & 1\\
+1 & 0 & 0 & 0 & 0\\
+0 & 0 & 1 & 0 & 0
+\end{pmatrix},
+\]
+see (2.63), and with the following $L$ and $U$ factors:
+\[
+L \;=\;
+\begin{pmatrix}
+1 & 0 & 0 & 0 & 0\\
+0.25 & 1 & 0 & 0 & 0\\
+-0.5 & -0.5 & 1 & 0 & 0\\
+0 & -0.5 & -0.5 & 1 & 0\\
+0.5 & 0.5 & 0.25 & -0.5 & 1
+\end{pmatrix}
+;\qquad
+U \;=\;
+\begin{pmatrix}
+4 & 4 & 0 & -6 & -2\\
+0 & -2 & 2 & -4 & 1\\
+0 & 0 & 12 & 0 & 4\\
+0 & 0 & 0 & -2 & 5\\
+0 & 0 & 0 & 0 & 3.5
+\end{pmatrix}.
+\]
+\hfill$\square$\par\medskip
+
+The pseudocode for the LU decomposition with row pivoting, given as a
+function call $[P,L,U]=\text{lu\_row\_pivoting}(A)$, can be found in
+Table~2.10.
+
+The operation count for the LU decomposition with row pivoting is
+\[
+\frac{2}{3}n^3 \;+\; O(n^2),
+\]
+the same as for the LU decomposition without pivoting.
+
+\section{Linear solvers using the LU decomposition with row pivoting}
+
+The LU decomposition with row pivoting of a matrix can be used to solve
+linear systems efficiently as follows: Let $A$ be a nonsingular square
+matrix of size $n$, and let $b$ be a column vector of size $n$. If $PA=LU$
+is the LU decomposition with row pivoting of $A$, then, solving a linear
+system $Ax=b$ is equivalent to solving
+\[
+PAx \;=\; Pb,
+\]
+since the permutation matrix $P$ is nonsingular. Since $PA=LU$, this is
+equivalent to
+\[
+LUx \;=\; Pb.
+\]
+This is the same as solving
+\[
+Ly \;=\; Pb
+\]
+for $y$, which can be done using forward substitution since the matrix $L$
+is lower triangular, and then solving
+\[
+Ux \;=\; y
+\]
+for $x$, which can be done using backward substitution since the matrix $U$
+is upper triangular.

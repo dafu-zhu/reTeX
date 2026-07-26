@@ -1,0 +1,185 @@
+% PAGES: 54-57
+
+\section{Forward substitution}
+
+Let $L$ be a nonsingular lower triangular matrix of size $n$, i.e., assume that
+\begin{equation}
+L(j,k) \;=\; 0, \quad \forall\, 1\le j<k\le n; \qquad L(i,i) \;\neq\; 0, \quad
+\forall\, 1\le i\le n;
+\end{equation}
+see Lemma 1.16. Let $b$ be an $n\times 1$ column vector, and let $x$ be the $n\times 1$
+vector which is the unique solution to the linear system $Lx = b$.
+
+Forward Substitution is a numerical algorithm designed to compute the entries of $x$
+efficiently, and is detailed below.
+
+By multiplying the first row of $L$ by $x$, and using the fact that $L(1,k)=0$ for all
+$k=2:n$, since $L$ is lower triangular, see (2.2), we obtain that
+\[
+\sum_{k=1}^n L(1,k)x(k) \;=\; L(1,1)x(1) \;=\; b(1),
+\]
+and therefore
+\begin{equation}
+x(1) \;=\; \frac{b(1)}{L(1,1)};
+\end{equation}
+note that $L(1,1)\neq 0$, since $L$ is nonsingular.
+
+Moving forward to computing $x(2)$, multiply the second row of $L$ by $x$, and use the
+fact that $L(2,k)=0$ for all $k=3:n$, since $L$ is lower triangular, see (2.2), to
+obtain that
+\begin{equation}
+\sum_{k=1}^n L(2,k)x(k) \;=\; L(2,1)x(1) + L(2,2)x(2) \;=\; b(2).
+\end{equation}
+
+By solving (2.4) for $x(2)$, we find that
+\begin{equation}
+x(2) \;=\; \frac{b(2) - L(2,1)x(1)}{L(2,2)};
+\end{equation}
+note that $L(2,2)\neq 0$, since $L$ is nonsingular. Since the value of $x(1)$ is known
+from (2.3), the value of $x(2)$ can be computed from (2.5).
+
+It is important to note that formula (2.3) for $x(1)$ is never substituted into the
+formula (2.5) for $x(2)$ in order to obtain a closed formula for $x(2)$ in terms of the
+entries of the matrix $L$. The numerical value of $x(2)$ is computed directly by
+substituting into (2.5) the numerical value for $x(1)$ already determined from (2.3).
+
+We continue to move forward until all the entries of $x$ are computed, as follows:
+Assume that the values of $x(1), x(2), \ldots, x(j-1)$ have been computed, where
+$2\le j\le n$. To compute $x(j)$, multiply the $j$-th row of $L$ by $x$, and use the
+fact that $L(j,k)=0$ for all $k=(j+1):n$, since $L$ is lower triangular, to obtain that
+\[
+\sum_{k=1}^n L(j,k)x(k) \;=\; \sum_{k=1}^j L(j,k)x(k) \;=\; b(j).
+\]
+
+Thus,
+\begin{equation}
+L(j,j)x(j) \;+\; \sum_{k=1}^{j-1} L(j,k)x(k) \;=\; b(j).
+\end{equation}
+
+By solving (2.6) for $x(j)$, we find that
+\begin{equation}
+x(j) \;=\; \frac{b(j) - \sum_{k=1}^{j-1} L(j,k)x(k)}{L(j,j)};
+\end{equation}
+note that $L(j,j)\neq 0$, since $L$ is nonsingular. Thus, given $x(1), x(2), \ldots,
+x(j-1)$, the value for $x(j)$ can be computed using (2.7).
+
+The pseudocode for Forward Substitution can be found in Table 2.1.
+
+The efficiency and running time of algorithms can be estimated by computing the
+operation count of the algorithm. Throughout this book, we will count each arithmetic
+operation, e.g., addition, multiplication, to obtain the operation count.
+
+\begin{lemma}
+The operation count for the Forward Substitution algorithm applied to a lower
+triangular matrix of size $n$ is
+\begin{equation}
+n^2 \;+\; O(n).
+\end{equation}
+\end{lemma}
+
+\begin{table}[H]
+\centering
+\caption{Pseudocode for Forward Substitution}
+\fbox{%
+\begin{minipage}{0.82\linewidth}
+Function Call: \\
+$x = \text{forward\_subst}(L,b)$
+\\[0.8em]
+Input: \\
+$L =$ nonsingular lower triangular matrix of size $n$ \\
+$b =$ column vector of size $n$
+\\[0.8em]
+Output: \\
+$x =$ solution to $Lx = b$
+\\[0.8em]
+$x(1) = \dfrac{b(1)}{L(1,1)}$; \\
+for $j = 2:n$ \\
+\hspace*{1.5em} sum $= 0$; \\
+\hspace*{1.5em} for $k = 1:(j-1)$ \\
+\hspace*{3em} sum $=$ sum $+ L(j,k)x(k)$; \\
+\hspace*{1.5em} end \\
+\hspace*{1.5em} $x(j) = \dfrac{b(j) - \text{sum}}{L(j,j)}$; \\
+end
+\end{minipage}%
+}
+\end{table}
+
+\begin{proof}
+Computing $x(1)$ requires 1 operation. At step $j$, the ``for'' loop
+\begin{center}
+\fbox{%
+\begin{minipage}{0.45\linewidth}
+for $k = 1:(j-1)$ \\
+\hspace*{1.5em} sum $=$ sum $+ L(j,k)x(k)$; \\
+end
+\end{minipage}%
+}
+\end{center}
+to compute the term sum requires $2(j-1)$ operations. Thus, the ``for'' loop
+\begin{center}
+\fbox{%
+\begin{minipage}{0.55\linewidth}
+for $j = 2:n$ \\
+\hspace*{1.5em} sum $= 0$; \\
+\hspace*{1.5em} for $k = 1:(j-1)$ \\
+\hspace*{3em} sum $=$ sum $+ L(j,k)x(k)$; \\
+\hspace*{1.5em} end \\
+\hspace*{1.5em} $x(j) = \dfrac{b(j) - \text{sum}}{L(j,j)}$; \\
+end
+\end{minipage}%
+}
+\end{center}
+to compute $x(j)$ requires $2(j-1)+2 = 2j$ operations.
+
+Then, the total number of operations required by the Forward Substitution is
+\begin{equation}
+1 + \sum_{j=2}^n 2j \;=\; \sum_{j=1}^n 2j - 1 \;=\; 2\frac{n(n+1)}{2} - n \;=\;
+n^2+n-1 \;=\; n^2 + O(n),
+\end{equation}
+see (10.78), since $\sum_{j=1}^n j = \frac{n(n+1)}{2}$; see, e.g., section 10.3.1 from
+Stefanica [36].
+\end{proof}
+
+We conclude this section with the Forward Substitution pseudocode corresponding to a
+lower triangular bidiagonal matrix, see Table 2.2, which will be used for solving
+linear systems corresponding to tridiagonal matrices; cf. section 2.5.1 and section
+6.3.
+
+Let $L$ be an $n\times n$ lower triangular bidiagonal matrix, i.e., a matrix whose only
+nonzero entries could be the main diagonal entries $L(j,j)$, for $j=1:n$, and the lower
+diagonal entries $L(j,j-1)$, for $j=2:n$. Then, the recursion formula (2.7) simplifies
+to
+\[
+x(j) \;=\; \frac{b(j) - L(j,j-1)x(j-1)}{L(j,j)},
+\]
+which corresponds to the reduced version of the Forward Substitution pseudocode from
+Table 2.1 included in Table 2.2.
+
+\begin{table}[H]
+\centering
+\caption{Forward Substitution for lower triangular bidiagonal matrices}
+\fbox{%
+\begin{minipage}{0.82\linewidth}
+Function Call: \\
+$x = \text{forward\_subst\_bidiag}(L,b)$
+\\[0.8em]
+Input: \\
+$L =$ nonsingular lower triangular bidiagonal matrix of size $n$ \\
+$b =$ column vector of size $n$
+\\[0.8em]
+Output: \\
+$x =$ solution to $Lx = b$
+\\[0.8em]
+$x(1) = \dfrac{b(1)}{L(1,1)}$; \\
+for $j = 2:n$ \\
+\hspace*{1.5em} $x(j) = \dfrac{b(j) - L(j,j-1)x(j-1)}{L(j,j)}$; \\
+end
+\end{minipage}%
+}
+\end{table}
+
+The operation count for the Forward Substitution for lower triangular bidiagonal
+matrices is
+\begin{equation}
+1 + 3(n-1) \;=\; 3n-2.
+\end{equation}

@@ -1,0 +1,127 @@
+% PAGES: 113-114
+
+\section{Risk--neutral pricing in arbitrage--free complete markets}
+
+\begin{theorem}
+Consider an arbitrage--free complete one period market model with $m$
+securities and $n$ market states at time $\tau > t_0$, and let $Q =
+(Q_k)_{k=1:n}$ be the vector of state prices.
+
+(i) The value $V_{t_0}$ at time $t_0$ of a derivative security with payoff
+vector $V_\tau$ at time $\tau$ is
+\begin{equation}
+V_{t_0} \;=\; V_\tau Q \;=\; \sum_{k=1}^n Q_k V_\tau^{\omega^k}.
+\end{equation}
+
+(ii) Assume one of the securities is cash. Assume that the risk--free rate
+is constant between times $t_0$ and $\tau$, and denote it by $r$.
+
+The value $V_{t_0}$ at time $t_0$ of a derivative security is the
+discounted expected value of its payoff $V_\tau$ at time $\tau$ with
+respect to the discrete risk--neutral probability $p_{RN}$ associated to
+each state of the market at time $\tau$ given by $p_{RN}(k) =
+e^{r\delta t}Q_k$, for all $k = 1:n$, where $\delta t = \tau - t_0$, i.e.,
+\begin{equation}
+V_{t_0} \;=\; e^{-r\delta t}\sum_{k=1}^n p_{RN}(k)V_\tau^{\omega^k} \;=\;
+e^{-r\delta t}E_{RN}\left[V_\tau\right].
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+(i) Recall from Lemma 3.3 that the value $V_{t_0}$ at time $t_0$ of any
+replicable security in an arbitrage--free one period market model is given
+by $V_{t_0} = V_\tau Q$, where $V_\tau$ is the price vector at time $\tau$
+of the replicable security. Since any derivative security is replicable in
+a complete market, we conclude that $V_{t_0} = V_\tau Q$ for every
+derivative security in a complete and arbitrage--free one period market
+model.
+
+(ii) Since $Q_k > 0$ for all $k = 1:n$, a discrete probability (called the
+risk--neutral probability) $p_{RN}(k)$ associated to each state $\omega^k$
+of the market at time $\tau$ can be obtained as follows:
+\begin{equation}
+p_{RN}(k) \;=\; \frac{Q_k}{\sum_{i=1}^n Q_i}, \quad \forall\, k = 1:n.
+\end{equation}
+Note that
+% UNCLEAR: p.113 prints the summation index as $i$ while the summand is
+% $p_{RN}(k)$ -- an author index mismatch, reproduced verbatim. Do not
+% "correct" the bound to $k$.
+\[
+p_{RN}(k) > 0, \ \forall\, k = 1:n; \qquad \sum_{i=1}^n p_{RN}(k) = 1.
+\]
+Since
+\begin{equation}
+Q_k \;=\; \left( \sum_{i=1}^n Q_i \right) p_{RN}(k),
+\end{equation}
+see (3.32), it follows from (3.30) and (3.33) that
+\begin{equation}
+\begin{split}
+V_{t_0} &= \sum_{k=1}^n Q_k V_\tau^{\omega^k} \;=\; \sum_{k=1}^n \left(
+\sum_{i=1}^n Q_i \right) p_{RN}(k) V_\tau^{\omega^k} \\
+&= \left( \sum_{i=1}^n Q_i \right) \sum_{k=1}^n p_{RN}(k) V_\tau^{\omega^k}.
+\end{split}
+\end{equation}
+
+Assume without restricting the generality that the first security is a \$1
+cash position at time $t_0$. Since the continuously compounded risk free
+rate $r$ is constant between the times $t_0$ and $\tau$, it follows that
+\begin{equation}
+S_{1t_0} \;=\; 1 \quad \text{and} \quad S_{1\tau}^{\omega^i} \;=\;
+e^{r\delta t}, \quad \forall\, i = 1:n.
+\end{equation}
+
+Recall the no--arbitrage condition $S_{t_0} = M_\tau Q$, see (3.10), and,
+from (3.3), that $M_\tau = \mathrm{row}(S_{j\tau})_{j=1:m}$. From (1.8), it
+follows that the first entry of $M_\tau Q$ is $S_{1\tau}Q$, and therefore,
+since $S_{t_0} = M_\tau Q$, we find that
+\begin{equation}
+S_{1t_0} \;=\; S_{1\tau}Q.
+\end{equation}
+Since $S_{1\tau} = (S_{1\tau}^{\omega^1} \ldots S_{1\tau}^{\omega^n})$ and
+$Q = (Q_i)_{i=1:n}$, we obtain from (3.36) and (1.5) that
+\begin{equation}
+S_{1t_0} \;=\; \sum_{i=1}^n S_{1\tau}^{\omega^i} Q_i,
+\end{equation}
+Then, from (3.37) and (3.35), it follows that
+\[
+1 \;=\; \sum_{i=1}^n e^{r\delta t}Q_i \;=\; e^{r\delta t}\sum_{i=1}^n Q_i,
+\]
+and therefore we obtain that
+\begin{equation}
+\sum_{i=1}^n Q_i \;=\; e^{-r\delta t}.
+\end{equation}
+Then, the discrete risk--neutral probability given by (3.32) becomes
+% UNCLEAR: p.114 prints the numerator as $Q^k$ (superscript) even though
+% (3.32) defines it as $Q_k$ and the right-hand side here uses $Q_k$.
+% Author inconsistency, reproduced verbatim -- do not lower it to $Q_k$.
+\begin{equation}
+p_{RN}(k) \;=\; \frac{Q^k}{\sum_{i=1}^n Q_i} \;=\; e^{r\delta t}Q_k, \quad
+\forall\, k = 1:n,
+\end{equation}
+and, from (3.34) and (3.38), we find that
+\[
+V_{t_0} \;=\; e^{-r\delta t}\sum_{k=1}^n p_{RN}(k)V_\tau^{\omega^k} \;=\;
+e^{-r\delta t}E_{RN}\left[V_\tau\right],
+\]
+where $E_{RN}\left[V_\tau\right] = \sum_{k=1}^n p_{RN}(k)V_\tau^{\omega^k}$
+denotes the expected value of the payoff $V_\tau$ of the derivative
+security with respect to the risk--neutral distribution $p_{RN}$.
+\end{proof}
+
+\medskip
+\noindent\rule{\linewidth}{0.4pt}
+\medskip
+
+\noindent\textbf{\textit{One Period Binomial Model Example (Continued):}}\\
+In section 3.3, we showed that the one period binomial model is complete.
+Also, recall from (3.17), (3.21), and (3.22) that the one period binomial
+model is arbitrage--free if and only if $d < e^{r\delta t} < u$ and the
+state prices are
+\begin{equation}
+Q_1 \;=\; e^{-r\delta t}\,\frac{e^{r\delta t} - d}{u - d}; \qquad
+Q_2 \;=\; e^{-r\delta t}\,\frac{u - e^{r\delta t}}{u - d}.
+\end{equation}
+
+% Example continues past the bottom of PDF page 114 onto page 115, owned by
+% a different agent. Do NOT close with \hfill$\square$ or the closing rule
+% here -- the continuation file must supply both once the example ends.

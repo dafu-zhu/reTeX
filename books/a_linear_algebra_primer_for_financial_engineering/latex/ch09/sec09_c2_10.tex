@@ -1,0 +1,69 @@
+% PAGES: 288-288
+% Straightforward continuation of the section 9.5 Lagrangian derivation; no
+% environments open or close on this page. "we assumes" (below) is the same
+% subject/verb typo already noted in sec09_c2_3.tex, printed again here.
+
+Recall from (10.43) and (9.22) that $D(\bfone^tw)=\bfone^t$ and
+$D(w^t\Sigma_Rw)=2(\Sigma_Rw)^t$. Then,
+\begin{align}
+D_wF(w,\lambda) &= D(w^t\Sigma_Rw)+\lambda D(1-\bfone^tw) \notag\\
+&= 2(\Sigma_Rw)^t-\lambda\bfone^t \notag\\
+&= (2\Sigma_Rw-\lambda\bfone)^t.
+\end{align}
+
+Also, note that
+\begin{equation}
+D_\lambda F(w,\lambda) \;=\; \pd{F}{\lambda}(w,\lambda) \;=\; 1-\bfone^tw.
+\end{equation}
+
+From (10.67), (9.69), and (9.70) we conclude that the gradient of the Lagrangian
+function is
+\[
+D_{(w,\lambda)}F(w,\lambda) \;=\;
+\begin{pmatrix} (D_wF(w,\lambda))^t \\ (D_\lambda F(w,\lambda))^t \end{pmatrix}^t
+\;=\;
+\begin{pmatrix} 2\Sigma_Rw-\lambda\bfone \\ 1-\bfone^tw \end{pmatrix}^t.
+\]
+
+To find the critical point of the Lagrangian, we solve $D_{(w,\lambda)}F(w_0,\lambda_0)
+= 0$, which is equivalent to solving
+\begin{align}
+2\Sigma_Rw_0 &= \lambda_0\bfone; \\
+\bfone^tw_0 &= 1.
+\end{align}
+
+Recall that $\Sigma_R$ is a nonsingular matrix, since we assumes that the return of
+none of the assets can be replicated by using the other $n-1$ assets and cash; see
+section 9.1. From (9.71), we find that
+\begin{equation}
+w_0 \;=\; \frac{\lambda_0}{2}\Sigma_R^{-1}\bfone.
+\end{equation}
+
+By substituting formula (9.73) for $w_0$ in (9.72), we obtain that
+\[
+\frac{\lambda_0}{2}\bfone^t\Sigma_R^{-1}\bfone \;=\; 1,
+\]
+and therefore
+\begin{equation}
+\lambda_0 \;=\; \frac{2}{\bfone^t\Sigma_R^{-1}\bfone}.
+\end{equation}
+
+From (9.73) and (9.74), we find that
+\begin{equation}
+w_0 \;=\; \frac{1}{\bfone^t\Sigma_R^{-1}\bfone}\Sigma_R^{-1}\bfone.
+\end{equation}
+
+Let $F_0:\R^n\to\R$ given by $F_0(w)=F(w,\lambda_0)$, where $\lambda_0$ is given by
+(9.74), i.e.,
+\begin{align*}
+F_0(w) &= w^t\Sigma_Rw+\lambda_0(1-\bfone^tw) \\
+&= w^t\Sigma_Rw+\frac{2}{\bfone^t\Sigma_R^{-1}\bfone}(1-\bfone^tw).
+\end{align*}
+
+Note that $D^2(w^t\Sigma_Rw)=2\Sigma_R$ and $D^2(\bfone^tw)=0$; cf. (10.48) and
+(10.45), respectively. Then, the Hessian of $F_0(w)$ is
+\begin{align*}
+D^2F_0(w) &= D^2(w^t\Sigma_Rw)+\frac{2}{\bfone^t\Sigma_R^{-1}\bfone}
+D^2(1-\bfone^tw) \\
+&= 2\Sigma_R.
+\end{align*}

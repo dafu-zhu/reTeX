@@ -1,0 +1,696 @@
+% PAGES: 17-23, 24-30
+
+\noindent Column vectors and row vectors. Column form and row form of a matrix.
+\medskip
+
+\noindent Column-based and row-based matrix--vector and matrix--matrix multiplication.
+\medskip
+
+\noindent Covariance matrix computation from time series data.
+\medskip
+
+\noindent Matrix rank. Nullspace and range of a matrix. Linear independence.
+\medskip
+
+\noindent A one period market model example.
+\medskip
+
+\noindent Nonsingular matrices and the inverse of a matrix.
+\medskip
+
+\noindent Diagonal matrices. Matrix multiplication by diagonal matrices.
+\medskip
+
+\noindent Converting between covariance and correlation matrices.
+\medskip
+
+\noindent Correlation matrix computation from time series data.
+\medskip
+
+\noindent Lower and upper triangular matrices. Tridiagonal matrices.
+\medskip
+
+\section{Column and row vectors. Column form and row form of a matrix.}
+
+An $n$-dimensional vector $v \in \R^n$ is denoted by $v=(v_i)_{i=1:n}$ and has $n$
+components $v_i \in \R$, for $i=1:n$.\footnote{The vectors and matrices considered
+here have entries which are real numbers. While complex numbers will occur
+naturally (for example, eigenvalues of a matrices with real entries may be
+complex numbers), the presentation and the notations in this book will be
+specific to vectors and matrices with real entries.}
+
+The vector $v=(v_i)_{i=1:n}$ is a \textbf{column vector} of size $n$ if
+
+\begin{equation}
+v \;=\; \begin{pmatrix} v_1 \\ v_2 \\ \vdots \\ v_n \end{pmatrix}.
+\end{equation}
+
+A column vector is also called an $n\times 1$ vector.
+
+The vector $v^t$ is a \textbf{row vector}\footnote{The notation $v^t$ emphasizes
+the fact that a row vector is the transpose of a column vector; see also
+Definition 1.1.} of size $n$ if
+
+\begin{equation}
+v^t \;=\; (v_1\ v_2\ \ldots\ v_n).
+\end{equation}
+
+A row vector is also called an $1\times n$ vector.
+
+Unless otherwise specified, a vector $v$ denoted by $v=(v_i)_{i=1:n}$ is a
+column vector.
+
+An $m\times n$ matrix $A=(A(j,k))_{j=1:m,k=1:n}$ has $m$ rows and $n$ columns.
+Rather than using the entry by entry notation above for the matrix $A$, we
+will use either a column-based notation (more often), or a row-based
+notation, both being better suited for numerical computations.
+
+The \textbf{column form} of the matrix $A$ is
+
+\begin{equation}
+A \;=\; (a_1\ |\ a_2\ |\ \ldots\ |\ a_n) \;=\; \mathrm{col}\,(a_k)_{k=1:n}\,,
+\end{equation}
+
+where $a_k$ is the $k$-th column\footnote{For every $k=1:n$, the column
+vector $a_k$ is given by $a_k=(A(j,k))_{j=1:m}$.} of $A$, $k=1:n$.
+
+The \textbf{row form} of the matrix $A$ is
+
+\begin{equation}
+A \;=\; \begin{pmatrix} r_1 \\ \text{--} \\ r_2 \\ \text{--} \\ \vdots \\ \text{--} \\ r_m \end{pmatrix}
+\;=\; \mathrm{row}\,(r_j)_{j=1:m}\,,
+\end{equation}
+
+where $r_j$ is the $j$-th row\footnote{For every $j=1:m$, the row vector
+$r_j$ is given by $r_j=(A(j,k))_{k=1:n}$.} of $A$, $j=1:m$.
+
+\medskip\noindent\textbf{Row Vector -- Column Vector multiplication:}\footnote{Formula
+(1.5) is the same as formula (5.2) for the Euclidean inner product of two
+vectors.}\par
+Let $v=(v_i)_{i=1:n}$ be a column vector of size $n$, and let
+$w^t=(w_1\ w_2\ \ldots\ w_n)$ be a row vector of size $n$. Then,
+
+\begin{equation}
+w^t v \;=\; \sum_{i=1}^n w_i v_i.
+\end{equation}
+
+\medskip\noindent\textbf{Column Vector -- Row Vector multiplication:}\par
+Let $v=(v_j)_{j=1:m}$ be a column vector of size $m$, and let
+$w^t=(w_1\ w_2\ \ldots\ w_n)$ be a row vector of size $n$. Then, $vw^t$ is an
+$m\times n$ matrix with the following entries:
+
+\begin{equation}
+(vw^t)(j,k) \;=\; v_j w_k, \quad \forall\, j=1:m,\ k=1:n.
+\end{equation}
+
+\medskip\noindent\textbf{Matrix -- Column Vector multiplication:}\par
+Let $A=\mathrm{col}\,(a_k)_{k=1:n}$ be an $m\times n$ matrix given by the
+column form (1.3), and let $v=(v_k)_{k=1:n}$ be a column vector of size $n$
+given by (1.1). Then,
+
+\begin{equation}
+Av \;=\; \sum_{k=1}^n v_k a_k.
+\end{equation}
+
+In other words, the result of the multiplication of the column vector $v$ by
+the matrix $A$ is a column vector $Av$ which is the linear
+combination\footnote{A linear combination of the vectors
+$w_1,w_2,\ldots,w_n$ is any sum of these vectors multiplied by real
+coefficients, i.e., $c_1w_1+c_2w_2+\ldots+c_nw_n$, where $c_i\in\R$,
+$i=1:n$; see also Definition 1.5.} of the columns of $A$ with coefficients
+equal to the corresponding entries of $v$.
+
+If $A=\mathrm{row}\,(r_j)_{j=1:m}$ is the row form of $A$, then the $j$-th
+entry of the $m\times 1$ column vector $Av$ is
+
+\begin{equation}
+(Av)(j) \;=\; r_j v, \quad \forall\, 1\le j \le m.
+\end{equation}
+
+Note that, since $r_j$ is a $1\times n$ row vector and $v$ is a $n\times 1$
+column vector, it follows from (1.5) that the multiplication from (1.8) can
+be performed.
+
+\medskip\noindent\textbf{Row Vector -- Matrix multiplication:}\par
+Let $A=\mathrm{row}\,(r_j)_{j=1:m}$ be an $m\times n$ matrix given by the
+row form (1.4), and let $w^t=(w_1\ w_2\ \ldots\ w_m)$ be a row vector of
+size $m$. Then,
+
+\begin{equation}
+w^t A \;=\; \sum_{j=1}^m w_j r_j.
+\end{equation}
+
+In other words, the result of the multiplication of the row vector $w^t$ by
+the matrix $A$ (from the right) is a row vector $w^tA$ which is the linear
+combination of the rows of $A$ with coefficients equal to the corresponding
+entries of $w^t$.
+
+If $A=\mathrm{col}\,(a_k)_{k=1:n}$ is the column form of $A$, then the
+$k$-th entry of the $1\times n$ row vector $w^tA$ is
+
+\begin{equation}
+(w^tA)(k) \;=\; w^t a_k, \quad \forall\, 1\le k\le n.
+\end{equation}
+
+\medskip\noindent\textbf{Matrix -- Matrix multiplication:}\par
+(i) Let $A$ be an $m\times n$ matrix, and let $B$ be an $n\times p$ matrix
+given by $B=\mathrm{col}\,(b_k)_{k=1:p}$. Then, $AB$ is the $m\times p$
+matrix given by
+
+\begin{equation}
+AB \;=\; \mathrm{col}\,(Ab_k)_{k=1:p} \;=\; (Ab_1\ |\ Ab_2\ |\ \ldots\ |\ Ab_p).
+\end{equation}
+
+The result of multiplying the matrices $A$ and $B$ is a matrix whose
+columns are the columns of $B$ multiplied by the matrix $A$.
+
+(ii) Let $A$ be an $m\times n$ matrix given by $A=\mathrm{row}\,(r_j)_{j=1:m}$,
+and let $B$ be an $n\times p$ matrix. Then, $AB$ is the $m\times p$ matrix
+given by
+
+\begin{equation}
+AB \;=\; \mathrm{row}\,(r_jB)_{j=1:m} \;=\;
+\begin{pmatrix} r_1B \\ \text{--} \\ r_2B \\ \text{--} \\ \vdots \\ \text{--} \\ r_mB \end{pmatrix}.
+\end{equation}
+
+The result of multiplying the matrices $A$ and $B$ is a matrix whose rows
+are the rows of $A$ multiplied by the matrix $B$.
+
+(iii) Let $A$ be an $m\times n$ matrix given by $A=\mathrm{row}\,(r_j)_{j=1:m}$,
+and let $B$ be a $n\times p$ matrix given by $B=\mathrm{col}\,(b_k)_{k=1:p}$.
+Then, $AB$ is the $m\times p$ matrix whose entries are given
+by\footnote{Note that the multiplication from (1.13) can be performed since
+$r_j$ is a $1\times n$ row vector and $b_k$ is a $n\times 1$ column vector;
+see (1.5).}
+
+\begin{equation}
+(AB)(j,k) \;=\; r_j b_k, \quad \forall\, j=1:m,\ k=1:p.
+\end{equation}
+
+\medskip\noindent\textbf{Matrix -- Matrix -- Matrix multiplication:}\par
+Let $A$ be an $m\times n$ matrix given by $A=\mathrm{row}\,(r_j)_{j=1:m}$,
+let $B$ be an $n\times p$ matrix, and let $C$ be a $p\times l$ matrix given
+by $C=\mathrm{col}\,(c_k)_{k=1:l}$. Then, $ABC$ is the $m\times l$ matrix
+whose entries are given by
+
+\begin{equation}
+(ABC)(j,k) \;=\; r_j B c_k, \quad \forall\, j=1:m,\ k=1:l.
+\end{equation}
+
+Note that (1.14) follows from (1.13), since $BC=\mathrm{col}\,(Bc_k)_{k=1:l}$;
+cf. (1.11).
+
+Note that matrix multiplication is associative, i.e., $ABC=(AB)C=A(BC)$.
+
+We emphasize again that we almost exclusively think of a matrix as either a
+collection of column vectors, or as a collection of row vectors, rather
+than as a collection of individual entries. For numerical purposes, this is
+an efficient way to implement matrices. Also, linear algebra proofs using
+the column form or the row form of a matrix are more insightful and more
+compact than proofs using individual entries of a matrix. Most of the
+proofs from this book use a vector-based approach.
+
+\begin{definition}
+The transpose of an $n\times 1$ column vector $v=(v_i)_{i=1:n}$ is the
+$1\times n$ row vector $v^t=(v_1\ v_2\ \ldots\ v_n)$. The transpose of an
+$1\times n$ row vector $r=(r_1\ r_2\ \ldots\ r_n)$ is the $n\times 1$ column
+vector $r^t=(r_i)_{i=1:n}$.
+\end{definition}
+
+Note that
+
+\begin{equation}
+(cv)^t \;=\; cv^t, \quad \forall\, v\in\R^n,\ c\in\R.
+\end{equation}
+
+\begin{definition}
+The transpose matrix $A^t$ of an $m\times n$ matrix $A$ is an $n\times m$
+matrix given by
+\end{definition}
+
+\begin{equation}
+A^t(k,j) \;=\; A(j,k), \quad \forall\, k=1:n,\ j=1:m.
+\end{equation}
+
+Transposing a matrix switches the column form of the matrix to a row form,
+and the row form of the matrix to a column form as follows:
+
+\begin{align}
+A=\mathrm{col}\,(a_k)_{k=1:n} &\iff A^t=\mathrm{row}\,(a_k^t)_{k=1:n}; \\
+A=\mathrm{row}\,(r_j)_{j=1:m} &\iff A^t=\mathrm{col}\,(r_j^t)_{j=1:m}.
+\end{align}
+
+From (1.16), we find that, for any matrix $A$,
+
+\begin{equation}
+(A^t)^t \;=\; A,
+\end{equation}
+
+and, for any matrices $A$ and $B$ of the same size,
+
+\begin{equation}
+(A+B)^t \;=\; A^t+B^t.
+\end{equation}
+
+\begin{lemma}
+Let $A$ be an $m\times n$ matrix and let $v$ be a column vector of size
+$n$. Then,
+\begin{equation}
+(Av)^t \;=\; v^tA^t.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Let $A=\mathrm{col}\,(a_k)_{k=1:n}$ and $v=(v_i)_{i=1:n}$. Then,
+$Av=\sum_{i=1}^n v_ia_i$, and
+
+\begin{equation}
+(Av)^t \;=\; \left(\sum_{i=1}^n v_ia_i\right)^t \;=\; \sum_{i=1}^n (v_ia_i)^t
+\;=\; \sum_{i=1}^n v_ia_i^t,
+\end{equation}
+
+since $v_i\in\R$; see (1.15).
+
+Note that $A^t=\mathrm{row}\,(a_k^t)_{k=1:n}$; cf. (1.17). Then, from (1.9),
+it follows that
+
+\begin{equation}
+v^tA^t \;=\; \sum_{i=1}^n v_ia_i^t.
+\end{equation}
+
+From (1.22) and (1.23), we conclude that $(Av)^t = v^tA^t$.
+\end{proof}
+
+It is very important to note that the transpose of the product of two
+matrices is \textit{not} the product of the transposes of the two
+matrices,\footnote{A similar property holds for inverses of matrices, i.e.,
+$(AB)^{-1}\ne A^{-1}B^{-1}$. Moreover, $(AB)^{-1}=B^{-1}A^{-1}$; see Lemma
+1.7 for details.} i.e., $(AB)^t\ne A^tB^t$. Instead, the following result
+holds:\footnote{The result of Lemma 1.2 extends as follows:
+$\left(\prod_{i=1}^{p} A_i\right)^t = \prod_{i=1}^{p} A_{p+1-i}^t$. A proof
+can be given by induction; see an exercise at the end of this chapter.}
+
+\begin{lemma}
+Let $A$ be an $m\times n$ matrix and let $B$ be an $n\times p$ matrix.
+Then,
+\begin{equation}
+(AB)^t \;=\; B^tA^t.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Recall from (1.11) that, if $B=\mathrm{col}\,(b_k)_{k=1:p}$, then
+$AB=\mathrm{col}\,(Ab_k)_{k=1:p}$. Thus, from (1.17), we obtain that
+
+\[
+(AB)^t \;=\; \left(\mathrm{col}\,(Ab_k)_{k=1:p}\right)^t \;=\;
+\mathrm{row}\,\left((Ab_k)^t\right)_{k=1:p}.
+\]
+
+Using (1.21), (1.12), and the fact that $B^t=\mathrm{row}\,(b_k^t)_{k=1:p}$,
+see (1.17) we conclude that
+
+\begin{equation*}
+(AB)^t \;=\; \mathrm{row}\,\left(b_k^tA^t\right)_{k=1:p} \;=\;
+\left(\mathrm{row}\,(b_k^t)_{k=1:p}\right)A^t \;=\; B^tA^t. \qedhere
+\end{equation*}
+\end{proof}
+
+\begin{definition}
+A matrix with the same number of rows and columns is called a
+\textbf{square matrix}.
+\end{definition}
+
+Note that an $n\times n$ square matrix is also called a square matrix of
+size $n$.
+
+\begin{definition}
+A square matrix is \textbf{symmetric} if and only if the matrix and its
+transpose are the same. In other words, a square matrix $A$ of size $n$ is
+symmetric if and only if $A=A^t$, i.e.,
+\[
+A(j,k) \;=\; A(k,j), \quad \forall\, 1\le j<k\le n;
+\]
+\end{definition}
+
+The product of two symmetric matrices is not necessarily a symmetric
+matrix, as seen in the example below.
+
+\begin{examplex}
+Let $A=\begin{pmatrix}1&2\\2&1\end{pmatrix}$ and
+$B=\begin{pmatrix}2&1\\1&0\end{pmatrix}$ be two symmetric matrices. Then,
+\[
+AB \;=\; \begin{pmatrix}4&1\\5&2\end{pmatrix} \;\ne\; (AB)^t \;=\;
+\begin{pmatrix}4&5\\1&2\end{pmatrix}
+\]
+\end{examplex}
+
+The identity matrix,\footnote{The $n\times n$ identity matrix is sometimes
+denoted by $I_n$. We do not use this notation, but denote by $I$ identity
+matrices of any size.} denoted by $I$, is a square matrix with entries
+equal to 1 on the main diagonal and equal to 0 everywhere else, i.e.,
+
+\[
+I \;=\; \begin{pmatrix} 1 & 0 & \ldots & 0 \\ 0 & 1 & \ldots & 0 \\
+\vdots & \vdots & \ddots & \vdots \\ 0 & 0 & \ldots & 1 \end{pmatrix}.
+\]
+
+The $k$-th column of the identity matrix is denoted by $e_k$. Thus,
+
+\begin{equation}
+e_k(i) = 0, \text{ for } 1\le i\ne k\le n \text{ and } e_k(k)=1.
+\end{equation}
+
+The column form and row form of the identity matrix $I$ are, respectively,
+
+\[
+I \;=\; \mathrm{col}\,(e_k)_{k=1:n}; \quad I \;=\; \mathrm{row}\,(e_k^t)_{k=1:n};
+\]
+
+cf. (1.17), since $I=I^t$.
+
+\begin{lemma}
+(i) Let $A=\mathrm{col}\,(a_k)_{k=1:n}$ be an $m\times n$ matrix. If $e_k$
+is the $k$-th column of the $n\times n$ identity matrix, then
+
+\begin{equation}
+Ae_k \;=\; a_k, \quad \forall\, k=1:n,
+\end{equation}
+
+and therefore $AI=A$.
+
+(ii) Let $A=\mathrm{row}\,(r_j)_{j=1:m}$ be an $m\times n$ matrix. If $e_j$
+is the $j$-th column of the $m\times m$ identity matrix, then
+
+\begin{equation}
+e_j^tA \;=\; r_j, \quad \forall\, j=1:m,
+\end{equation}
+
+and therefore $IA=A$.
+\end{lemma}
+
+\begin{proof}
+(i) Let $A=\mathrm{col}\,(a_k)_{k=1:n}$. Recall from (1.25) that
+$e_k(k)=1$ and $e_k(i)=0$, for $i\ne k$. From (1.7), we obtain that
+
+\begin{equation}
+Ae_k \;=\; \sum_{i=1}^n e_k(i)a_i \;=\; a_k.
+\end{equation}
+
+If $I=\mathrm{col}\,(e_k)_{k=1:n}$, it follows from (1.11) and (1.28) that
+
+\[
+AI \;=\; \mathrm{col}\,(Ae_k)_{k=1:n} \;=\; \mathrm{col}\,(a_k)_{k=1:n} \;=\; A.
+\]
+
+(ii) Let $A=\mathrm{row}\,(r_j)_{j=1:m}$. Recall from (1.25) that
+$e_j(j)=1$ and $e_j(i)=0$, for $i\ne j$. From (1.9), we find that
+
+\begin{equation}
+e_j^tA \;=\; \sum_{i=1}^m e_j(i)r_i \;=\; r_j.
+\end{equation}
+
+If $I=\mathrm{row}\,(e_j^t)_{j=1:m}$, it follows from (1.12) and (1.29)
+that
+
+\begin{equation*}
+IA \;=\; \mathrm{row}\,(e_j^tA)_{j=1:m} \;=\; \mathrm{row}\,(r_j)_{j=1:m} \;=\; A. \qedhere
+\end{equation*}
+\end{proof}
+
+\subsection{Covariance matrix computation from time series data}
+
+Let $X_1, X_2, \ldots, X_n$ be random variables given by time series data
+at $N$ data points $t_i$, $i=1:N$. In other words, the values of $X_k(t_i)$
+are given for all $k=1:n$ and $i=1:N$.
+
+Denote by $\widehat{\mu}_{X_k}$ the sample mean of the random variable
+$X_k$, for $k=1:n$, i.e.,
+
+\[
+\widehat{\mu}_{X_k} \;=\; \frac{1}{N}\sum_{i=1}^N X_k(t_i).
+\]
+
+The sample covariance matrix $\widehat{\Sigma}_{\bfX}$ of the $n$ random
+variables $X_1, X_2, \ldots, X_n$ is the $n\times n$ square matrix with
+entries
+
+\begin{equation}
+\widehat{\Sigma}_{\bfX}(j,k) \;=\; \widehat{\cov}(X_j,X_k), \quad \forall\, 1\le j,k\le n,
+\end{equation}
+
+where $\widehat{\cov}(X_j,X_k)$ is the unbiased sample covariance of the
+random variables $X_j$ and $X_k$ given by
+
+\begin{equation}
+\widehat{\cov}(X_j,X_k) \;=\; \frac{1}{N-1}\sum_{i=1}^N
+(X_j(t_i)-\widehat{\mu}_{X_j})(X_k(t_i)-\widehat{\mu}_{X_k}).
+\end{equation}
+
+From (1.30) and (1.31), we find that
+
+\begin{equation}
+\widehat{\Sigma}_{\bfX}(j,k) \;=\; \frac{1}{N-1}\sum_{i=1}^N
+(X_j(t_i)-\widehat{\mu}_{X_j})(X_k(t_i)-\widehat{\mu}_{X_k}).
+\end{equation}
+
+The sample covariance matrix $\widehat{\Sigma}_{\bfX}$ is symmetric since,
+from (1.32), it follows that
+
+\begin{align*}
+\widehat{\Sigma}_{\bfX}(j,k)
+&= \frac{1}{N-1}\sum_{i=1}^N (X_j(t_i)-\widehat{\mu}_{X_j})(X_k(t_i)-\widehat{\mu}_{X_k}) \\
+&= \frac{1}{N-1}\sum_{i=1}^N (X_k(t_i)-\widehat{\mu}_{X_k})(X_j(t_i)-\widehat{\mu}_{X_j}) \\
+&= \widehat{\Sigma}_{\bfX}(k,j), \quad \forall\, 1\le j,k\le n.
+\end{align*}
+
+The sample covariance matrix can be computed efficiently by using matrix
+formulation for the time series data $X_k(t_i)$, $i=1:N$, $k=1:n$, as shown
+below.
+
+Let $T_{\bfX}$ be the corresponding $N\times n$ matrix of time series
+data, i.e., let $T_{\bfX}=(T_{\bfX}(i,k))_{i=1:N,k=1:n}$ with
+
+\begin{equation}
+T_{\bfX}(i,k) \;=\; X_k(t_i), \quad \forall\, 1\le k\le n,\ 1\le i\le N.
+\end{equation}
+
+Let $\overline{T}_{\bfX}$ be the $N\times n$ matrix of time series data where
+the sample mean of each random variable is subtracted from the
+corresponding time series data, i.e., let $\overline{T}_{\bfX} =
+(\overline{T}_{\bfX}(i,k))_{i=1:N,k=1:n}$ with
+
+\begin{equation}
+\overline{T}_{\bfX}(i,k) \;=\; X_k(t_i) - \widehat{\mu}_{X_k}, \quad
+\forall\, 1\le k\le n,\ 1\le i\le N.
+\end{equation}
+
+Then, the sample covariance matrix $\widehat{\Sigma}_{\bfX}$ can be computed
+from $\overline{T}_{\bfX}$ as follows:
+
+\begin{equation}
+\widehat{\Sigma}_{\bfX} \;=\; \frac{1}{N-1}\,\overline{T}_{\bfX}^t\overline{T}_{\bfX}.
+\end{equation}
+
+For clarity, we include an example below and the proof of (1.35).
+
+\medskip
+\noindent\rule{\linewidth}{0.4pt}
+\medskip
+
+\noindent\textit{Example:}\ The end of day adjusted close prices for Apple,
+Facebook, Google, Microsoft, and Yahoo between 1/10/2013 and 1/29/2013 were:
+
+\begin{center}
+\begin{tabular}{cccccc}
+Date & AAPL & FB & GOOG & MSFT & YHOO \\[2pt]
+1/10/2013 & 523.51 & 31.30 & 741.48 & 26.46 & 18.99 \\
+1/11/2013 & 520.30 & 31.72 & 739.99 & 26.83 & 19.29 \\
+1/14/2013 & 501.75 & 30.95 & 723.25 & 26.89 & 19.43 \\
+1/15/2013 & 485.92 & 30.10 & 724.93 & 27.21 & 19.52 \\
+1/16/2013 & 506.09 & 29.85 & 715.19 & 27.04 & 20.07 \\
+1/17/2013 & 502.68 & 30.14 & 711.32 & 27.25 & 20.13 \\
+1/18/2013 & 500.00 & 29.66 & 704.51 & 27.25 & 20.02 \\
+1/22/2013 & 504.77 & 30.73 & 702.87 & 27.15 & 19.90 \\
+1/23/2013 & 514.01 & 30.82 & 741.50 & 27.61 & 20.11 \\
+1/24/2013 & 450.50 & 31.08 & 754.21 & 27.63 & 20.44 \\
+1/25/2013 & 439.88 & 31.54 & 753.67 & 27.88 & 20.37 \\
+1/28/2013 & 449.83 & 32.47 & 750.73 & 27.91 & 20.31 \\
+1/29/2013 & 458.27 & 30.79 & 753.68 & 28.01 & 19.70 \\
+\end{tabular}
+\end{center}
+
+The time series matrix of the daily returns\footnote{Unless specified
+otherwise, the return between times $\tau_1$ and $\tau_2$ of an asset with
+spot prices $S(\tau_1)$ and $S(\tau_2)$ will mean the percentage return,
+which is $\frac{S(\tau_2)-S(\tau_1)}{S(\tau_1)}$.} of the five stocks above
+between 1/11/2013 and 1/29/2013 is
+
+\[
+T_{\bfX} \;=\;
+\begin{pmatrix}
+-0.0061 & 0.0134 & -0.0020 & 0.0140 & 0.0158 \\
+-0.0357 & -0.0243 & -0.0226 & 0.0022 & 0.0073 \\
+-0.0315 & -0.0275 & 0.0023 & 0.0119 & 0.0046 \\
+0.0415 & -0.0083 & -0.0134 & -0.0062 & 0.0282 \\
+-0.0067 & 0.0097 & -0.0054 & 0.0078 & 0.0030 \\
+-0.0053 & -0.0159 & -0.0096 & 0.0000 & -0.0055 \\
+0.0095 & 0.0361 & -0.0023 & -0.0037 & -0.0060 \\
+0.0183 & 0.0029 & 0.0550 & 0.0169 & 0.0106 \\
+-0.1236 & 0.0084 & 0.0171 & 0.0007 & 0.0164 \\
+-0.0236 & 0.0148 & -0.0007 & 0.0090 & -0.0034 \\
+0.0226 & 0.0295 & -0.0039 & 0.0011 & -0.0029 \\
+0.0188 & -0.0517 & 0.0039 & 0.0036 & -0.0300
+\end{pmatrix},
+\]
+
+where, e.g., the daily return of GOOG on 1/24/2013 is
+
+\[
+\frac{754.21-741.50}{741.50} \;=\; 0.0171 \;=\; T_{\bfX}(9,3),
+\]
+
+and the daily return of GOOG on 1/28/2013 is
+
+\[
+\frac{750.73-753.67}{753.67} \;=\; -0.0039 \;=\; T_{\bfX}(11,3).
+\]
+
+The sample means of the returns of the five stocks are $-0.0101$ (AAPL),
+$-0.0011$ (FB), $0.0015$ (GOOG), $0.0048$ (MSFT), and $0.0032$ (YHOO). By
+subtracting the sample mean of each column of $T_{\bfX}$ we obtain from
+(1.34) that
+
+\begin{equation}
+\overline{T}_{\bfX} \;=\;
+\begin{pmatrix}
+0.0040 & 0.0145 & -0.0035 & 0.0092 & 0.0126 \\
+-0.0255 & -0.0232 & -0.0242 & -0.0025 & 0.0041 \\
+-0.0214 & -0.0264 & 0.0008 & 0.0071 & 0.0015 \\
+0.0517 & -0.0072 & -0.0150 & -0.0110 & 0.0250 \\
+0.0034 & 0.0108 & -0.0069 & 0.0030 & -0.0002 \\
+0.0048 & -0.0149 & -0.0111 & -0.0048 & -0.0086 \\
+0.0197 & 0.0371 & -0.0039 & -0.0084 & -0.0092 \\
+0.0285 & 0.0040 & 0.0534 & 0.0122 & 0.0074 \\
+-0.1134 & 0.0095 & 0.0156 & -0.0041 & 0.0132 \\
+-0.0134 & 0.0159 & -0.0022 & 0.0043 & -0.0066 \\
+0.0328 & 0.0306 & -0.0054 & -0.0037 & -0.0061 \\
+0.0289 & -0.0507 & 0.0024 & -0.0012 & -0.0332
+\end{pmatrix}.
+\end{equation}
+
+\medskip
+\noindent\rule{\linewidth}{0.4pt}
+\medskip
+
+We now show that the formula (1.35) holds, i.e.,
+
+\begin{equation}
+\widehat{\Sigma}_{\bfX} \;=\; \frac{1}{N-1}\,\overline{T}_{\bfX}^t\overline{T}_{\bfX};
+\end{equation}
+
+see also Theorem 7.1 and the proof therein.
+
+From (1.34), we find that, for any $1\le j,k\le n$,
+
+\begin{equation}
+\overline{T}_{\bfX}(i,k) \;=\; X_k(t_i) - \widehat{\mu}_{X_k} \quad
+\text{and} \quad \overline{T}_{\bfX}(i,j) \;=\; X_j(t_i) - \widehat{\mu}_{X_j},
+\quad \forall\, i=1:N.
+\end{equation}
+
+Then, from (1.32) and (1.38), it follows that
+
+\begin{align}
+\widehat{\Sigma}_{\bfX}(j,k) &= \frac{1}{N-1}\sum_{i=1}^N
+(X_j(t_i)-\widehat{\mu}_{X_j})(X_k(t_i)-\widehat{\mu}_{X_k}) \\
+&= \frac{1}{N-1}\sum_{i=1}^N \overline{T}_{\bfX}(i,j)\overline{T}_{\bfX}(i,k),
+\quad \forall\, 1\le j,k\le n.
+\end{align}
+
+Let $\overline{T}_{X_k}$ be the $N\times 1$ column vector of the time series
+data for the random variable $X_k$ with $\widehat{\mu}_{X_k}$ subtracted
+from each data value, i.e.,
+
+\[
+\overline{T}_{X_k} \;=\; \left(X_k(t_i) - \widehat{\mu}_{X_k}\right)_{i=1:N}.
+\]
+
+The time series matrix $\overline{T}_{\bfX} =
+(\overline{T}_{\bfX}(i,k))_{i=1:N,k=1:n}$ has the following column form:
+
+\[
+\overline{T}_{\bfX} \;=\; \mathrm{col}\,\left(\overline{T}_{X_k}\right)_{k=1:n}.
+\]
+
+Moreover,
+
+\[
+\overline{T}_{\bfX}(i,j) \;=\; \overline{T}_{X_j}(i) \quad \text{and} \quad
+\overline{T}_{\bfX}(i,k) \;=\; \overline{T}_{X_k}(i), \quad \forall\,
+1\le j,k\le n,\ 1\le i\le N,
+\]
+
+and, from (1.40), we obtain that
+
+\begin{align}
+\widehat{\Sigma}_{\bfX}(j,k) &= \frac{1}{N-1}\sum_{i=1}^N
+\overline{T}_{X_j}(i)\overline{T}_{X_k}(i) \\
+&= \frac{1}{N-1}\,\overline{T}_{X_j}^t\overline{T}_{X_k}, \quad \forall\,
+1\le j,k\le n,
+\end{align}
+
+where the last equality follows from the row vector--column vector
+multiplication formula (1.5).
+
+Since $\overline{T}_{\bfX} = \mathrm{col}\,(\overline{T}_{X_k})_{k=1:n}$, it
+follows that $\overline{T}_{\bfX}^t = \mathrm{row}\,(\overline{T}_{X_j}^t)_{j=1:n}$;
+see (1.17). From (1.13), we obtain that the $(j,k)$ entry of the matrix
+$\overline{T}_{\bfX}^t\overline{T}_{\bfX}$ is
+
+\begin{equation}
+(\overline{T}_{\bfX}^t\overline{T}_{\bfX})(j,k) \;=\;
+\overline{T}_{X_j}^t\overline{T}_{X_k}, \quad \forall\, 1\le j,k\le n.
+\end{equation}
+
+Then, from (1.42) and (1.43), we conclude that
+
+\[
+\widehat{\Sigma}_{\bfX}(j,k) \;=\; \frac{1}{N-1}\,
+(\overline{T}_{\bfX}^t\overline{T}_{\bfX})(j,k), \quad \forall\, 1\le j,k\le n,
+\]
+
+and therefore
+
+\[
+\widehat{\Sigma}_{\bfX} \;=\; \frac{1}{N-1}\,\overline{T}_{\bfX}^t\overline{T}_{\bfX},
+\]
+
+which is what we wanted to prove; see (1.37).
+
+\medskip
+\noindent\rule{\linewidth}{0.4pt}
+\medskip
+
+\noindent\textit{Example (continued):}\ The sample covariance matrix
+$\widehat{\Sigma}_{\bfX}$ of the daily returns of AAPL, FB, GOOG, MSFT, YHOO
+between 1/11/2013 and 1/29/2013 can be computed using formula (1.35) with
+$N=12$ and $\overline{T}_{\bfX}$ given by (1.36). We find that
+
+\begin{equation}
+\widehat{\Sigma}_{\bfX} \;=\;
+\begin{pmatrix}
+0.0018 & 0.0000 & -0.0001 & 0.0000 & -0.0001 \\
+0.0000 & 0.0006 & 0.0001 & 0.0000 & 0.0001 \\
+-0.0001 & 0.0001 & 0.0004 & 0.0001 & 0.0000 \\
+0.0000 & 0.0000 & 0.0001 & 0.0001 & 0.0000 \\
+-0.0001 & 0.0001 & 0.0000 & 0.0000 & 0.0002
+\end{pmatrix}. \qquad \square
+\end{equation}
+
+\medskip
+\noindent\rule{\linewidth}{0.4pt}
+\medskip
+
+More properties of covariance matrices obtained from time series data can
+be found in section 7.2.

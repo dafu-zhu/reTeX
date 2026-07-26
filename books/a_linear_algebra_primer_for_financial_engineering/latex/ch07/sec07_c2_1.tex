@@ -1,0 +1,130 @@
+% PAGES: 218-219
+% (no blank line here: this file opens INSIDE the equation environment
+%  left open by sec07_c1_5.tex, and a blank line in math mode is \par.)
+% CONTINUES: closes the \begin{equation} for (7.48) left open at the end of
+% sec07_c1_5.tex (PDF page 217, folio 201). The top of PDF page 218 (folio 202)
+% shows no leftover qualifier text before "and let" -- the sentence is "Let
+% $\overline{T}_{X_k}$ be ..., i.e., [eq. (7.48)], and let $\overline{T}_{\bfx} =
+% ...$ [eq. (7.49)] be the matrix ...", so (7.48) genuinely ends at the trailing
+% comma c1 transcribed. No fabricated "\forall k=1:n" clause added.
+\end{equation}
+
+and let
+\begin{equation}
+\overline{T}_{\bfx} \;=\; \mathrm{col}\left(\overline{T}_{X_k}\right)_{k=1:n}
+\end{equation}
+be the mean--normalized $N \times n$ matrix of time series data for the $n$ random
+variables.
+
+\begin{lemma}
+Let $X_1$, $X_2$, \ldots, $X_n$ be $n$ random variables given by the $N \times n$
+time series data matrix $T_{\bfx}$. The sample covariance $\widehat{\cov}(X_j,X_k)$
+and the sample correlation $\widehat{\corr}(X_j,X_k)$ of $X_j$ and $X_k$, and the
+sample variance $\widehat{\sigma}_k^2$ of $X_k$, are given by:
+\begin{align}
+\widehat{\cov}(X_j,X_k) &= \frac{1}{N-1}\,\overline{T}^t_{X_k}\overline{T}_{X_j}
+\;=\; \frac{1}{N-1}\,\overline{T}^t_{X_j}\overline{T}_{X_k}, \quad \forall\, 1\le j,k\le n; \\
+\widehat{\sigma}_k^2 &= \frac{1}{N-1}\,\|\overline{T}_{X_k}\|^2 \;=\; \frac{1}{N-1}\,\overline{T}^t_{X_k}\overline{T}_{X_k}, \quad \forall\, k=1:n; \\
+\widehat{\corr}(X_j,X_k) &= \frac{\overline{T}^t_{X_k}\overline{T}_{X_j}}{\|\overline{T}_{X_j}\|\,\|\overline{T}_{X_k}\|}, \quad \forall\, 1\le j,k\le n,
+\end{align}
+where $\overline{T}_{X_j}$ and $\overline{T}_{X_k}$ are given by (7.48).
+\end{lemma}
+
+\begin{proof}
+From (7.48), we find that
+\begin{align}
+\overline{T}_{X_k}(i) &= X_k(t_i) - \widehat{\mu}_{X_k}, \quad \forall\, i=1:N; \\
+\overline{T}_{X_j}(i) &= X_j(t_i) - \widehat{\mu}_{X_j}, \quad \forall\, i=1:N.
+\end{align}
+Then, from (7.40), (7.53), and (7.54), it follows that
+\begin{equation}
+\widehat{\cov}(X_j,X_k) \;=\; \frac{1}{N-1}\sum_{i=1}^N \overline{T}_{X_j}(i)\overline{T}_{X_k}(i), \quad \forall\, 1\le j,k\le n.
+\end{equation}
+Note that
+\begin{equation}
+\sum_{i=1}^N \overline{T}_{X_j}(i)\overline{T}_{X_k}(i) \;=\; \overline{T}^t_{X_j}\overline{T}_{X_k} \;=\; \overline{T}^t_{X_k}\overline{T}_{X_j};
+\end{equation}
+see, e.g., the row vector--column vector multiplication formula (1.5).
+
+Then, from (7.55) and (7.56), we conclude that
+\begin{equation}
+\widehat{\cov}(X_j,X_k) \;=\; \frac{1}{N-1}\,\overline{T}^t_{X_j}\overline{T}_{X_k} \;=\; \frac{1}{N-1}\,\overline{T}^t_{X_k}\overline{T}_{X_j}, \quad \forall\, 1\le j,k\le n.
+\end{equation}
+Moreover, from (7.39) and (7.57), it follows that
+\begin{equation}
+\widehat{\sigma}_k^2 \;=\; \widehat{\cov}(X_k,X_k) \;=\; \frac{1}{N-1}\,\overline{T}^t_{X_k}\overline{T}_{X_k} \;=\; \frac{1}{N-1}\,\|\overline{T}_{X_k}\|^2, \quad \forall\, k=1:n,
+\end{equation}
+where the last equality comes from the fact that $v^tv = \|v\|^2$; see (5.8).
+
+From (7.58), we obtain that
+\begin{equation}
+\widehat{\sigma}_k \;=\; \frac{1}{\sqrt{N-1}}\,\|\overline{T}_{X_k}\|, \quad \forall\, k=1:n,
+\end{equation}
+and, from (7.41), (7.57), and (7.59), we conclude that
+\[
+\widehat{\corr}(X_j,X_k) \;=\; \frac{\widehat{\cov}(X_j,X_k)}{\widehat{\sigma}_k\widehat{\sigma}_j}
+\;=\; \frac{\frac{1}{N-1}\,\overline{T}^t_{X_k}\overline{T}_{X_j}}{\frac{1}{\sqrt{N-1}}\|\overline{T}_{X_j}\|\ \frac{1}{\sqrt{N-1}}\|\overline{T}_{X_k}\|}
+\;=\; \frac{\overline{T}^t_{X_k}\overline{T}_{X_j}}{\|\overline{T}_{X_j}\|\,\|\overline{T}_{X_k}\|}, \quad \forall\, 1\le j,k\le n.
+\]
+\end{proof}
+
+\begin{theorem}
+Consider $n$ random variables $X_1$, $X_2$, \ldots, $X_n$ given by the $N \times n$
+time series data matrix $T_{\bfx}$.
+
+(i) The sample covariance matrix $\widehat{\Sigma}_{\bfx}$ of the $n$ random
+variables can be obtained from the mean--normalized matrix of time series data
+$\overline{T}_{\bfx}$ as follows:
+\begin{equation}
+\widehat{\Sigma}_{\bfx} \;=\; \frac{1}{N-1}\,\overline{T}^t_{\bfx}\overline{T}_{\bfx}.
+\end{equation}
+
+(ii) The sample correlation matrix $\widehat{\Omega}_{\bfx}$ of the $n$ random
+variables can be obtained from $\overline{T}_{\bfx}$ as follows:
+\begin{equation}
+\widehat{\Omega}_{\bfx} \;=\; \diag\!\left(\frac{1}{\|\overline{T}_{X_k}\|}\right)_{k=1:n} \overline{T}^t_{\bfx}\overline{T}_{\bfx} \diag\!\left(\frac{1}{\|\overline{T}_{X_k}\|}\right)_{k=1:n}.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+(i) From (7.57), we find that
+\begin{equation}
+\widehat{\Sigma}_{\bfx}(j,k) \;=\; \widehat{\cov}(X_j,X_k) \;=\; \frac{1}{N-1}\,\overline{T}^t_{X_j}\overline{T}_{X_k}, \quad \forall\, 1\le j,k\le n,
+\end{equation}
+and, from (1.13), we obtain that the entry $(j,k)$ of the matrix
+$\overline{T}^t_{\bfx}\overline{T}_{\bfx}$ is
+\begin{equation}
+\left(\overline{T}^t_{\bfx}\overline{T}_{\bfx}\right)(j,k) \;=\; \overline{T}^t_{X_j}\overline{T}_{X_k}, \quad \forall\, 1\le j,k\le n,
+\end{equation}
+since $\overline{T}_{\bfx} = \mathrm{col}\left(\overline{T}_{X_k}\right)_{k=1:n}$, see
+(7.49), and $\overline{T}^t_{\bfx} = \mathrm{row}\left(\overline{T}^t_{X_j}\right)_{j=1:n}$.
+
+Then, from (7.62) and (7.63), we conclude that
+\[
+\widehat{\Sigma}_{\bfx}(j,k) \;=\; \frac{1}{N-1}\left(\overline{T}^t_{\bfx}\overline{T}_{\bfx}\right)(j,k), \quad \forall\, 1\le j,k\le n,
+\]
+and therefore that
+\[
+\widehat{\Sigma}_{\bfx} \;=\; \frac{1}{N-1}\,\overline{T}^t_{\bfx}\overline{T}_{\bfx}.
+\]
+
+(ii) Recall from (7.47) that
+\begin{equation}
+\widehat{\Omega}_{\bfx} \;=\; \diag\!\left(\frac{1}{\widehat{\sigma}_k}\right)_{k=1:n} \widehat{\Sigma}_{\bfx} \diag\!\left(\frac{1}{\widehat{\sigma}_k}\right)_{k=1:n},
+\end{equation}
+where $\widehat{\sigma}_k$ is the unbiased sample variance of $X_k$ given by (7.59),
+i.e.,
+\[
+\widehat{\sigma}_k \;=\; \frac{1}{\sqrt{N-1}}\,\|\overline{T}_{X_k}\|, \quad \forall\, k=1:n.
+\]
+Note that
+\begin{equation}
+\diag\!\left(\frac{1}{\widehat{\sigma}_k}\right)_{k=1:n} \;=\; \sqrt{N-1}\,\diag\!\left(\frac{1}{\|\overline{T}_{X_k}\|}\right)_{k=1:n}.
+\end{equation}
+From (7.64), and using (7.60) and (7.65), we find that
+\begin{align*}
+\widehat{\Omega}_{\bfx}
+&= \sqrt{N-1}\,\diag\!\left(\frac{1}{\|\overline{T}_{X_k}\|}\right)_{k=1:n} \left(\frac{1}{N-1}\,\overline{T}^t_{\bfx}\overline{T}_{\bfx}\right) \sqrt{N-1}\,\diag\!\left(\frac{1}{\|\overline{T}_{X_k}\|}\right)_{k=1:n} \\
+&= \diag\!\left(\frac{1}{\|\overline{T}_{X_k}\|}\right)_{k=1:n} \overline{T}^t_{\bfx}\overline{T}_{\bfx} \diag\!\left(\frac{1}{\|\overline{T}_{X_k}\|}\right)_{k=1:n}.
+\end{align*}
+\end{proof}

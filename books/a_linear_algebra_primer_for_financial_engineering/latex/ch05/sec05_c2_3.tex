@@ -1,0 +1,141 @@
+% PAGES: 167-168
+% Page 167 (folio 151) opens a fresh subsection, "5.2.1 Sylvester's
+% Criterion" -- the \begin{answerx} closed at the end of sec05_c2_2.tex
+% (page 166 / folio 150), so no environment is left open across that
+% boundary and nothing needs to be closed here.
+
+\subsection{Sylvester's Criterion}
+
+An elegant and practical way to check whether a matrix of small size is symmetric
+positive definite or symmetric positive semidefinite is provided by Sylvester's
+Criterion; see Theorem 5.8.
+
+\begin{definition}
+Let $A$ be an $n \times n$ matrix. The leading principal minors of $A$ are the
+determinants of the $i \times i$ matrices $A_i = A(1:i,1:i)$ made of the $i^2$ upper
+left entries of $A$, for $1 \leq i \leq n$.
+\end{definition}
+
+\begin{definition}
+Let $A$ be an $n \times n$ matrix. The principal minors of $A$ are the determinants of
+all the square matrices obtained by eliminating the same rows and columns from the
+matrix $A$.
+\end{definition}
+
+Note that an $n \times n$ matrix has $n$ leading principal minors and $2^n-1$ principal
+minors; see also an exercise at the end of this chapter.
+
+\begin{examplex}
+The matrix $\begin{pmatrix} 2 & -3 & 0\\ 1 & 1 & 1\\ -1 & 5 & -3 \end{pmatrix}$ has the
+following three leading principal minors:
+\[
+\det(2) = 2; \quad \det\begin{pmatrix} 2 & -3\\ 1 & 1 \end{pmatrix} = 5; \quad
+\det\begin{pmatrix} 2 & -3 & 0\\ 1 & 1 & 1\\ -1 & 5 & -3 \end{pmatrix} = -22,
+\]
+and the following seven principal minors:
+\begin{align*}
+&\det(2) = 2; \quad \det(1) = 1; \quad \det(-3) = -3;\\
+&\det\begin{pmatrix} 2 & -3\\ 1 & 1 \end{pmatrix} = 5; \quad
+\det\begin{pmatrix} 2 & 0\\ -1 & -3 \end{pmatrix} = -6; \quad
+\det\begin{pmatrix} 1 & 1\\ 5 & -3 \end{pmatrix} = -8;\\
+&\det\begin{pmatrix} 2 & -3 & 0\\ 1 & 1 & 1\\ -1 & 5 & -3 \end{pmatrix} = -22.
+\end{align*}
+\end{examplex}
+
+\begin{theorem}
+(Sylvester's Criterion.) (i) A symmetric matrix is symmetric positive definite if and
+only if all its leading principal minors are positive.
+
+(ii) A symmetric matrix is symmetric positive semidefinite if and only if all its
+principal minors\footnote{Note that a symmetric matrix whose \textit{leading} principal
+minors are greater than or equal to $0$ is not necessarily symmetric positive
+semidefinite. For example, the matrix $\begin{pmatrix} 0 & 0 & 0\\ 0 & -1 & 0\\ 0 & 0 &
+1 \end{pmatrix}$ has all leading principal minors equal to $0$, but has a negative
+eigenvalue, $-1$, and therefore is not symmetric positive semidefinite.} are greater
+than or equal to $0$.
+\end{theorem}
+
+The proof of Sylvester's Criterion is technical and of no further relevance herein.
+We will use Sylvester's Criterion to establish necessary and sufficient conditions for
+$2 \times 2$ and $3 \times 3$ matrices to be symmetric positive definite. These
+conditions will be further used in Section 7.4 to identify whether a given symmetric
+matrix can be a covariance or correlation matrix.
+
+\begin{lemma}
+Let $A = \begin{pmatrix} a & b\\ b & d \end{pmatrix}$ be a $2 \times 2$ symmetric
+matrix.
+
+(i) The matrix $A$ is symmetric positive definite if and only if
+\begin{equation}
+a > 0 \quad \text{and} \quad \det(A) = ad-b^2 > 0.
+\end{equation}
+
+(ii) The matrix $A$ is symmetric positive semidefinite if and only if
+\begin{equation}
+a \geq 0; \quad d \geq 0; \quad \det(A) = ad-b^2 \geq 0.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+(i) The leading principal minors of the matrix $A$ are
+\[
+\det(a) = a \quad \text{and} \quad \det(A) = ad-b^2.
+\]
+From Sylvester's Criterion (Theorem 5.8), it follows that $A$ is symmetric positive
+definite if and only if $a > 0$ and $ad-b^2 > 0$, which is the same as (5.49).
+
+(ii) The principal minors of the matrix $A$ are
+\[
+\det(a) = a; \quad \det(d) = d; \quad \det(A) = ad-b^2.
+\]
+From Sylvester's Criterion (Theorem 5.8), it follows that $A$ is symmetric positive
+semidefinite if and only if $a \geq 0$, $d \geq 0$, and $ad-b^2 \geq 0$, which is the
+same as (5.50).
+\end{proof}
+
+Note that, by letting $a = d = 1$ and $b = \rho$ it follows from (5.49) and (5.50)
+that\footnote{The matrix $\begin{pmatrix} 1 & \rho\\ \rho & 1 \end{pmatrix}$ is the
+correlation matrix of two random variables $X_1$ and $X_2$ with correlation
+$\corr(X_1,X_2) = \rho$, with $|\rho| < 1$.}
+\begin{equation}
+\begin{pmatrix} 1 & \rho\\ \rho & 1 \end{pmatrix} \ \text{spd} \quad \Longleftrightarrow \quad -1 < \rho < 1;
+\end{equation}
+\begin{equation}
+\begin{pmatrix} 1 & \rho\\ \rho & 1 \end{pmatrix} \ \text{spsd} \quad \Longleftrightarrow \quad -1 \leq \rho \leq 1.
+\end{equation}
+
+\begin{lemma}
+Let $A = \begin{pmatrix} d_1 & a & b\\ a & d_2 & c\\ b & c & d_3 \end{pmatrix}$ be a
+$3 \times 3$ symmetric matrix.
+
+(i) The matrix $A$ is symmetric positive definite if and only if
+\begin{equation}
+d_1 > 0; \quad d_1d_2 > a^2; \quad \det(A) = d_1d_2d_3 + 2abc - d_3a^2 - d_2b^2 - d_1c^2 > 0.
+\end{equation}
+
+(ii) The matrix $A$ is symmetric positive semidefinite if and only if
+\begin{equation}
+d_1, d_2, d_3 \geq 0; \quad d_1d_2 \geq a^2; \quad d_1d_3 \geq b^2; \quad d_2d_3 \geq c^2;
+\end{equation}
+\begin{equation}
+\det(A) = d_1d_2d_3 + 2abc - d_3a^2 - d_2b^2 - d_1c^2 \geq 0.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+(i) The leading principal minors of the matrix $A$ are
+\begin{equation}
+\det(d_1) \;=\; d_1;
+\end{equation}
+\begin{equation}
+\det\begin{pmatrix} d_1 & a\\ a & d_2 \end{pmatrix} \;=\; d_1d_2 - a^2;
+\end{equation}
+\begin{equation}
+\det\begin{pmatrix} d_1 & a & b\\ a & d_2 & c\\ b & c & d_3 \end{pmatrix} \;=\; d_1d_2d_3 + 2abc - d_3a^2 - d_2b^2 - d_1c^2;
+\end{equation}
+% LEFT OPEN for sec05_c2_4.tex (page 169 / folio 153): this \begin{proof} of
+% Lemma 5.6 (opened just above) is NOT closed in this file -- the source
+% continues "see (10.6) and (10.8) for deriving (5.57) and (5.58)." at the
+% very top of page 169. sec05_c2_4.tex must NOT print a fresh
+% "\begin{proof}"; it continues this proof's part (ii) and closes with
+% \end{proof} where the printed square appears after equation (5.62).

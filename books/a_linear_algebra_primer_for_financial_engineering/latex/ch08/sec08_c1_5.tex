@@ -1,0 +1,90 @@
+% PAGES: 247-247
+
+relationship between the values $C$ and $P$ of the call and put options must hold for
+no--arbitrage:
+\begin{equation}
+C - P \;=\; Se^{-qT} - Ke^{-rT}.
+\end{equation}
+
+Let $F = Se^{(r-q)T}$ be the forward price of the asset at time $T$. Then,
+$Se^{-qT} = Fe^{-rT}$ and the Put--Call parity (8.22) can be written as
+\begin{equation}
+C - P \;=\; Fe^{-rT} - Ke^{-rT}.
+\end{equation}
+
+Denote the discount factor by
+\begin{equation}
+disc \;=\; e^{-rT},
+\end{equation}
+and the present value of the forward price by
+\begin{equation}
+PVF \;=\; Fe^{-rT}.
+\end{equation}
+
+Then, (8.23) is the same as
+\begin{equation}
+C - P \;=\; PVF - K \cdot disc.
+\end{equation}
+
+The data from Table 8.2 provides call and put options values for 16 different strikes.
+From (8.26), it follows that the values of $PVF$ and $disc$ can be obtained by solving
+a least squares problem $y \approx Ax$, see (8.2), with
+$x = \begin{pmatrix} PVF \\ disc \end{pmatrix}$ and with the following $16 \times 2$
+matrix $A$ and the following $16 \times 1$ column vector $y$ corresponding to $C - P$
+for each strike:
+\[
+A \;=\;
+\begin{pmatrix}
+1 & -1175 \\
+1 & -1200 \\
+1 & -1225 \\
+1 & -1250 \\
+1 & -1275 \\
+1 & -1300 \\
+1 & -1325 \\
+1 & -1350 \\
+1 & -1375 \\
+1 & -1400 \\
+1 & -1425 \\
+1 & -1450 \\
+1 & -1500 \\
+1 & -1550 \\
+1 & -1575 \\
+1 & -1600
+\end{pmatrix}
+\;;
+\quad
+y \;=\;
+\begin{pmatrix}
+178.80 \\
+154.00 \\
+129.05 \\
+104.20 \\
+79.00 \\
+54.00 \\
+29.05 \\
+4.25 \\
+-20.40 \\
+-45.45 \\
+-70.30 \\
+-95.95 \\
+-144.70 \\
+-195.00 \\
+-219.80 \\
+-244.50
+\end{pmatrix}
+\;.
+\]
+
+The solution $x = (A^tA)^{-1}A^ty$ to this least squares problem, see (8.16), is
+computed as $x = \text{least\_squares}(A,y)$ by using the routine from Table 8.1. We
+find that
+\begin{equation}
+x \;=\; \begin{pmatrix} PVF \\ disc \end{pmatrix} \;=\; \begin{pmatrix} 1349.54 \\
+0.9964 \end{pmatrix}.
+\end{equation}
+
+In order to use the values $PVF = 1349.54$ and $disc = 0.9964$ obtained above to
+compute implied volatilities, we first show that the Black--Scholes formulas
+(8.19--8.21) can be written in terms of $PVF$ and $disc$ without any dependence on $r$,
+$q$, or the spot price $S$; see (8.35--8.37).

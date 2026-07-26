@@ -1,0 +1,189 @@
+% PAGES: 322-324
+
+The no--arbitrage values of European call and put options with the same strike and
+maturity satisfy a model--independent relationship called the Put--Call parity. The
+intuition behind the Put--Call parity is that a long call and a short put position
+in options with the same strike and maturity is the same as a long position in a
+forward contract on the underlying asset of the options with the same expiration
+date as the maturity of the options and with delivery price equal to the strike of
+the options.
+
+More formally, if $C(t)$ and $P(t)$ are the values at time $t$ of a European call
+and put option, respectively, with maturity $T$ and strike $K$, on the same
+underlying asset with spot price $S(t)$, paying dividends continuously at the rate
+$q$, the Put--Call parity states that
+\begin{equation}
+C(t) \;-\; P(t) \;=\; S(t)e^{-q(T-t)} \;-\; Ke^{-r(T-t)}.
+\end{equation}
+A proof of (10.92) based on the Law of One Price can be found in section 1.9 of
+Stefanica \cite{36}.
+
+\medskip
+\noindent\textbf{The Black--Scholes formulas}
+
+The Black--Scholes formulas give the price of plain vanilla European call and put
+options under the assumptions that the price of the underlying asset has lognormal
+distribution with volatility $\sigma$, the asset pays dividends continuously at the
+rate $q$, and the risk--free interest rate is constant and equal to $r$. The
+Black--Scholes values $C_{BS}(S,t)$ and $P_{BS}(S,t)$ of a call option and of a put
+option, respectively, with strike $K$ and maturity $T$ are given by
+\begin{align}
+C(S,t) &= Se^{-q(T-t)}N(d_1) \;-\; Ke^{-r(T-t)}N(d_2); \\
+P(S,t) &= Ke^{-r(T-t)}N(-d_2) \;-\; Se^{-q(T-t)}N(-d_1),
+\end{align}
+where
+\begin{align}
+d_1 &= \frac{\ln\left(\frac{S}{K}\right) +
+\left(r-q+\frac{\sigma^2}{2}\right)(T-t)}{\sigma\sqrt{T-t}}; \\
+d_2 &= d_1 - \sigma\sqrt{T-t} \;=\; \frac{\ln\left(\frac{S}{K}\right) +
+\left(r-q-\frac{\sigma^2}{2}\right)(T-t)}{\sigma\sqrt{T-t}},
+\end{align}
+and $N(z)$ denotes the cumulative distribution of the standard normal variable,
+i.e.,
+\[
+N(z) \;=\; \frac{1}{\sqrt{2\pi}}\int_{-\infty}^z e^{-\frac{x^2}{2}}\,dx.
+\]
+
+\medskip
+\noindent\textbf{Options Greeks}
+
+The Greeks are the sensitivities of the options prices with respect to various
+parameters, e.g., with respect to the price of the underlying asset or with respect
+to the volatility of the underlying asset, and are important for hedging purposes.
+
+From the Black--Scholes formulas (10.93) and (10.94) for options on assets paying
+continuous dividends, the following closed formulas for the Greeks of European plain
+vanilla call and put options can be derived:
+\begin{align}
+\Delta(C) &= \pd{C}{S} \;=\; e^{-q(T-t)}N(d_1); \\
+\Delta(P) &= \pd{P}{S} \;=\; -e^{-q(T-t)}N(-d_1); \\
+\Gamma(C) &= \pdd{C}{S} \;=\; \frac{e^{-q(T-t)}}{S\sigma\sqrt{2\pi(T-t)}}
+e^{-\frac{d_1^2}{2}}; \\
+\Gamma(P) &= \pdd{P}{S} \;=\; \Gamma(C); \\
+\text{vega}(C) &= \pd{C}{\sigma} \;=\; Se^{-q(T-t)}\sqrt{\frac{T-t}{2\pi}}
+e^{-\frac{d_1^2}{2}}; \\
+\text{vega}(P) &= \pd{P}{\sigma} \;=\; \text{vega}(C).
+\end{align}
+
+\section{Eigenvalues of symmetric matrices}
+
+In this section, we provide an elegant proof of the fact that any eigenvalue of a
+symmetric matrix with real entries is a real number; cf. Theorem 5.1 and Theorem
+10.8.
+
+To do so, we introduce an extension of the inner product (5.3), also called the
+Euclidean inner product, to vectors with complex entries.
+
+\begin{definition}
+Let $u = (u_i)_{i=1:n}$ and $v = (v_i)_{i=1:n}$ be column vectors of size $n$ with
+entries complex numbers, i.e., with $u_i,v_i \in \C$, for $i = 1:n$. The complex
+Euclidean inner product of $u$ and $v$ is\footnote{Note that, if the entries of $u$
+and $v$ are real numbers, i.e., if $u_i,v_i \in \R$ for all $i = 1:n$, then the
+complex Euclidean inner product is equal to the inner product given by (5.3):
+\[
+(u,v)_{\C} \;=\; \sum_{i=1}^n u_i\overline{v_i} \;=\; \sum_{i=1}^n u_iv_i \;=\;
+(u,v).
+\]}
+\begin{equation}
+(u,v)_{\C} \;=\; u_1\overline{v_1} + u_2\overline{v_2} + \ldots + u_n\overline{v_n}
+\;=\; \sum_{i=1}^n u_i\overline{v_i},
+\end{equation}
+where $\overline{v_i}$ denotes the complex conjugate of $v_i$, for $i = 1:n$.
+\end{definition}
+
+Note that
+\begin{equation}
+(u,v)_{\C} \;=\; v^*u,
+\end{equation}
+where, by definition, $v^* = (\overline{v_1} \ \overline{v_2} \ \ldots \
+\overline{v_n}) = (\overline{v_i})_{i=1:n}$ is the row vector whose entries are the
+complex conjugates of the entries of the vector $v = (v_i)_{i=1:n}$.
+
+The following properties of the Euclidean complex inner product follow from
+definition (10.103):
+\begin{align}
+(u,v)_{\C} &= \overline{(v,u)_{\C}}, \quad \forall\, u,v \in \C^n; \\
+(cu,v)_{\C} &= c(u,v)_{\C}, \quad \forall\, u,v \in \C^n,\ c \in \C; \\
+(u,cv)_{\C} &= \overline{c}(u,v)_{\C}, \quad \forall\, u,v \in \C^n,\ c \in \C.
+\end{align}
+
+\begin{definition}
+The Euclidean norm of a vector $v = (v_i)_{i=1:n} \in \C^n$ is
+\begin{equation}
+||v||_{\C} \;=\; \sqrt{\sum_{i=1}^n ||v_i||^2} \;=\; \sqrt{(v,v)_{\C}} \;=\;
+\sqrt{v^*v}.
+\end{equation}
+\end{definition}
+
+\begin{definition}
+Let $A$ be an $m \times n$ matrix with complex entries. The hermitian of the matrix
+$A$ is the $n \times m$ matrix $A^*$ given by
+\[
+A^*(j,k) \;=\; \overline{A(k,j)}, \quad \forall\, k = 1:n,\ j = 1:m.
+\]
+\end{definition}
+
+\begin{lemma}
+The hermitian of a matrix with real entries is the transpose of the matrix.
+\end{lemma}
+
+\begin{proof}
+Let $A$ be an $m \times n$ matrix with real entries. Then, $\overline{A(j,k)} =
+A(j,k)$, and therefore
+\begin{equation}
+A^*(k,j) \;=\; \overline{A(j,k)} \;=\; A(j,k) \;=\; A^t(k,j), \quad \forall\, j =
+1:m,\ k = 1:n.
+\end{equation}
+From (10.109), we conclude that $A^* = A^t$.
+\end{proof}
+
+The properties below are similar to those from Lemma 1.1 and Lemma 1.2 for the
+transpose of a matrix, and can be proved similarly:
+
+For any $m \times n$ matrix $A$,
+\begin{equation}
+(A^*)^* \;=\; A.
+\end{equation}
+
+For any $m \times n$ matrix $A$, $n \times p$ matrix $B$, and column vector $v$ of
+size $n$,
+\begin{align}
+(Av)^* &= v^*A^*; \\
+(AB)^* &= B^*A^*.
+\end{align}
+
+\begin{lemma}
+Let $A$ be a square matrix of size $n$ with complex entries, and let $u$ and $v$ be
+column vectors of size $n$ with complex entries. Then,
+\begin{align}
+(Au,v)_{\C} &= (u,A^*v)_{\C}; \\
+(u,Av)_{\C} &= (A^*u,v)_{\C}.
+\end{align}
+\end{lemma}
+
+\begin{proof}
+Recall from (10.111) that $(Av)^* = v^*A^*$. Since $(A^*)^* = A$, see (10.110), we
+find that $(A^*v)^* = v^*(A^*)^* = v^*A$. Then, using (10.104), we obtain that
+\begin{align*}
+(Au,v)_{\C} &= v^*Au \;=\; (v^*A)u \;=\; (A^*v)^*u \;=\; (u,A^*v)_{\C}; \\
+(u,Av)_{\C} &= (Av)^*u \;=\; v^*A^*u \;=\; v^*(A^*u) \;=\; (A^*u,v)_{\C}.
+\end{align*}
+\end{proof}
+
+We can now prove Theorem 5.1 from Section 5.1:
+
+\begin{theorem}
+Any eigenvalue of a symmetric matrix with real entries is a real number.
+\end{theorem}
+
+\begin{proof}
+Let $A$ be a square matrix of size $n$ with real entries, and assume that $A$ is
+symmetric, i.e., $A^t = A$. Let $\lambda \in \C$ and $v \in \C^n$ be an eigenvalue
+and a corresponding eigenvector of $A$. Then, $Av = \lambda v$, and, using (10.106)
+and (10.108), we find that
+\begin{equation}
+(Av,v)_{\C} \;=\; (\lambda v,v)_{\C} \;=\; \lambda(v,v)_{\C} \;=\;
+\lambda||v||_{\C}^2.
+\end{equation}
+% Proof continues onto PDF page 325 (folio 309), the first page of the next file
+% in this chunk -- the \begin{proof} above is intentionally left open here.

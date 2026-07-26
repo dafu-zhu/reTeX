@@ -1,0 +1,132 @@
+% PAGES: 117-118
+
+Consider the following seven securities:\footnote{More choices of
+securities are discussed in exercises at the end of the chapter.}
+\begin{equation}
+\begin{aligned}
+&\text{P1200;} \\
+&\text{P1300;} \\
+&\text{P1400;} \\
+&\text{C1400;} \\
+&\text{C1450;} \\
+&\text{C1550;} \\
+&\text{C1600.}
+\end{aligned}
+\end{equation}
+
+Note that the options from (3.43) are out--of--the--money puts and
+out--of--the--money calls,\footnote{The choice of out--of--the--money
+options is driven by the fact that options market makers only trade
+out--of--the--money options, which have the same implied volatilities as
+corresponding in--the--money options. For example, the trading volume of
+the out--of--the--money options (C1400 through C1600 and P1175 through
+P1350) from Table 3.1 is $32,359$, while the trading volume of the
+in--the--money options (C1175 through C1350 and P1400 through P1600 is
+$3,134$, about 10 times smaller.} plus a put option (P1400) and a call
+option (C1400) struck around at--the--money; recall that the spot price
+of the index was $1,370$. For details on at--the--money,
+out--of--the--money, and in--the--money options, see Section 10.3.
+
+The price vector of the securities from (3.43) at time $t_0$ is the
+vector of their mid prices from Table 3.1, i.e.,
+\begin{equation}
+S_{t_0} \ = \ \begin{pmatrix} 51.55 \\ 77.70 \\ 116.55 \\ 71.10 \\ 47.25 \\ 15.80 \\ 7.90 \end{pmatrix}.
+\end{equation}
+
+Seven possible states of the index price on 12/22/2012 are obtained as
+follows: There are six option strikes corresponding to the securities
+above, i.e.,
+\[
+1200, 1300, 1400, 1450, 1550, 1600.
+\]
+
+The five midpoints
+\[
+1250, 1350, 1425, 1500, 1575
+\]
+between the strikes above will give the following five states:
+\begin{alignat*}{4}
+\omega^2 &: \{S(\tau) = 1250\}; &\qquad \omega^5 &: \{S(\tau) = 1500\}; \\
+\omega^3 &: \{S(\tau) = 1350\}; &\qquad \omega^6 &: \{S(\tau) = 1575\}; \\
+\omega^4 &: \{S(\tau) = 1425\}, & &
+\end{alignat*}
+where $S(\tau)$ denotes the value of the S\&P 500 index on 12/22/2012.
+Below the lowest strike and above the highest strike we choose the
+following two states:\footnote{The choice of the two states below the
+smallest option strike and above the largest strike could influence
+whether the one period market model is arbitrage--free, and the overall
+performance of the risk--neutral pricing of the other derivative
+securities.}
+\[
+\omega^1 : \{S(\tau) = 1000\}; \qquad \omega^7 : \{S(\tau) = 1700\}.
+\]
+
+Recall from (10.90) and (10.91) that the payoffs at maturity of call and
+put options are, respectively,
+\begin{align}
+C(T) &= \max(S(T)-K,0) = \begin{cases} S(T)-K, & \text{if } S(T) > K; \\ 0, & \text{if } S(T) \le K. \end{cases} \\
+P(T) &= \max(K-S(T),0) = \begin{cases} 0, & \text{if } S(T) \ge K; \\ K-S(T), & \text{if } S(T) < K. \end{cases}
+\end{align}
+
+Then, the payoff matrix of this one period market model is
+\begin{equation}
+M_\tau \ = \
+\begin{pmatrix}
+200 & 0   & 0  & 0  & 0   & 0   & 0   \\
+300 & 50  & 0  & 0  & 0   & 0   & 0   \\
+400 & 150 & 50 & 0  & 0   & 0   & 0   \\
+0   & 0   & 0  & 25 & 100 & 175 & 300 \\
+0   & 0   & 0  & 0  & 50  & 125 & 250 \\
+0   & 0   & 0  & 0  & 0   & 25  & 150 \\
+0   & 0   & 0  & 0  & 0   & 0   & 100
+\end{pmatrix}.
+\end{equation}
+
+For example, $M_\tau(3,3)$ is the payoff of the third security P1400,
+i.e., of the put option with strike 1400, if state $\omega^3$ occurs,
+i.e., if $S(\tau) = 1350$, and from (3.46) we find that
+\[
+M_\tau(3,3) \ = \ \max(1400-S(\tau),0) \ = \ \max(1400-1350,0) \ = \ 50.
+\]
+
+Similarly, $M_\tau(5,6)$ is the payoff of the fifth security C1450,
+i.e., of the call option with strike 1450, if state $\omega^6$ occurs,
+i.e., if $S(\tau) = 1575$, and from (3.45) we find that
+\[
+M_\tau(5,6) \ = \ \max(S(\tau)-1450,0) \ = \ \max(1575-1450,0) \ = \ 125.
+\]
+
+We now show that this model is complete and arbitrage--free.
+
+Note that the matrix $M_\tau$ is made of a $3 \times 3$ lower triangular
+block and a $4 \times 4$ upper triangular block. Thus, its determinant
+$\det(M_\tau)$ is the product of the diagonal entries of $M_\tau$, and
+therefore nonzero; see Section 10.1.1. It follows that the matrix
+$M_\tau$ is nonsingular, see Theorem 1.2, and, from Lemma 3.4, we
+conclude that this market model is complete.
+
+To decide whether this market model is arbitrage--free, we must solve
+the linear system $M_\tau Q = S_{t_0}$, where $M_\tau$ and $S_{t_0}$ are
+given by (3.47) and (3.44), respectively, and check whether all the
+entries of the vector $Q$ are positive.
+
+Note that, due to the block structure of the payoff matrix $M_\tau$,
+solving the linear system $M_\tau Q = S_{t_0}$ amounts to a forward
+substitution corresponding to the $3 \times 3$ lower triangular block of
+the matrix $M_\tau$ for computing the first 3 entries of $Q$, and a
+backward substitution corresponding to the $4 \times 4$ upper triangular
+block of $M_\tau$ for computing the last 4 entries of $Q$, i.e.,
+\[
+Q \ = \ \left(
+\begin{array}{l}
+\text{forward\_subst}\!\left(
+\begin{pmatrix} 200 & 0 & 0 \\ 300 & 50 & 0 \\ 400 & 150 & 50 \end{pmatrix},
+\begin{pmatrix} 51.55 \\ 77.70 \\ 116.55 \end{pmatrix}
+\right) \\[3em]
+\text{backward\_subst}\!\left(
+\begin{pmatrix} 25 & 100 & 175 & 300 \\ 0 & 50 & 125 & 250 \\ 0 & 0 & 25 & 150 \\ 0 & 0 & 0 & 100 \end{pmatrix},
+\begin{pmatrix} 71.10 \\ 47.25 \\ 15.80 \\ 7.90 \end{pmatrix}
+\right)
+\end{array}
+\right).
+\]

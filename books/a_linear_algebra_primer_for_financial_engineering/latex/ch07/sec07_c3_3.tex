@@ -1,0 +1,113 @@
+% PAGES: 230-231
+
+The average sample value
+\[
+\widehat{V}(N) \;=\; \frac{1}{N}\sum_{j=1}^N V_j
+\]
+has $O\!\left(\frac{1}{\sqrt{N}}\right)$ convergence to the value of the basket option; see,
+e.g., Glasserman \cite{17}.
+
+\section{Multivariate normal random variables}
+
+We begin this section with a brief review of one dimensional normal random variables.
+
+The standard normal variable $Z$ is the random variable with probability density function
+\begin{equation}
+f(x) \;=\; \frac{1}{\sqrt{2\pi}}\,e^{-\frac{x^2}{2}},
+\end{equation}
+and has mean $0$ and variance $1$, i.e., $\E{Z}=0$ and $\var(Z)=1$.
+
+The random variable $X$ is a normal variable if it is of the form $X=\mu+\sigma Z$, where $Z$ is
+a standard normal variable and $\mu$ and $\sigma$ are real constants. Note that $X$ has mean
+$\mu$ and variance $\sigma^2$, i.e., $\E{X}=\mu$ and $\var(X)=\sigma^2$, and is often denoted by
+$X\sim N(\mu,\sigma^2)$. If $\sigma\neq0$, the probability density function of $X$ is given by
+\begin{equation}
+f(x) \;=\; \frac{1}{\sqrt{2\pi\sigma^2}}\exp\!\left(-\frac{(x-\mu)^2}{2\sigma^2}\right),
+\end{equation}
+where $\exp(t)$ is a notation for $e^t$.
+
+\begin{definition}
+The random variable $\bfZ = \begin{pmatrix} Z_1 \\ \vdots \\ Z_n \end{pmatrix}$ is a
+multivariate standard normal variable if it has a probability density function\footnote{Recall
+that $f:\R^n\to\R$ is the probability density function of a multivariate random variable
+$\bfX=(X_i)_{i=1:n}$ if and only if, for any $a_i\in\R$, $i=1:n$,
+\[
+P\left(X_1\le a_1,X_2\le a_2,\ldots,X_n\le a_n\right) \;=\;
+\int_{-\infty}^{a_1}\int_{-\infty}^{a_2}\cdots\int_{-\infty}^{a_n}
+f(s_1,s_2,\ldots,s_n)\,ds_n\cdots ds_2\,ds_1.
+\]}
+$f:\R^n\to\R$ given by
+\begin{equation}
+f(x) \;=\; \frac{1}{(2\pi)^{n/2}}\exp\!\left(-\frac12\sum_{i=1}^n x_i^2\right),
+\end{equation}
+where $x=(x_1,x_2,\ldots,x_n)$.
+\end{definition}
+
+The mean of $\bfZ$ is $\mu_{\bfz} = \bfzero$, where $\bfzero$ denotes the column vector of size
+$n$ with all entries equal to $0$, and the covariance matrix of $\bfZ$ is the identity matrix,
+i.e., $\Sigma_{\bfz} = I$.
+
+Equivalently, the random variable $\bfZ=(Z_i)_{i=1:n}$ is multivariate standard normal if and
+only if its components $Z_1, Z_2, \ldots, Z_n$ are independent standard normal variables, since,
+from (7.111), we find that the probability density function of the multivariate standard normal
+variable can be written as a product of functions of the underlying variables $x_i$, $1\le i\le
+n$:
+\begin{align*}
+f(x) &= \frac{1}{(2\pi)^{n/2}}\exp\!\left(-\frac12\sum_{i=1}^n x_i^2\right)
+\;=\; \frac{1}{(2\pi)^{n/2}}\prod_{i=1}^n\exp\!\left(-\frac12 x_i^2\right) \\
+&= \prod_{i=1}^n\left(\frac{1}{\sqrt{2\pi}}\,e^{-\frac{x_i^2}{2}}\right).
+\end{align*}
+
+\begin{definition}
+The random variable $\bfX = \begin{pmatrix} X_1 \\ \vdots \\ X_n \end{pmatrix}$ is a
+multivariate normal random variable if and only if there exists an $n\times1$ vector $b$ and an
+$n\times n$ matrix $A$ such that
+\begin{equation}
+\bfX \;=\; b + A\bfZ,
+\end{equation}
+where $\bfZ=(Z_i)_{i=1:n}$ is a multivariate standard normal variable.
+\end{definition}
+
+Denote by $\mu_{\bfx}$ and $\Sigma_{\bfx}$ the mean vector and the covariance matrix of the
+multivariate normal variable $\bfX = b+A\bfZ$. From (7.84) and since $\mu_{\bfz}=\bfzero$ and
+$\Sigma_{\bfz}=I$, it follows that
+\begin{align*}
+\mu_{\bfx} &= b + A\E{\bfZ} \;=\; b; \\
+\Sigma_{\bfx} &= A\Sigma_{\bfz}A^t \;=\; AA^t.
+\end{align*}
+
+A multivariate normal random variable $\bfX$ with mean $\mu_{\bfx}$ and covariance matrix
+$\Sigma_{\bfx}$ is denoted by $\bfX\sim N(\mu_{\bfx},\Sigma_{\bfx})$. For example, $\bfZ\sim
+N(\bfzero,I)$.
+
+Note that a multivariate normal variable $\bfX$ can be written in the form (7.112) in
+infinitely many different ways. However, if
+\[
+\bfX \;=\; b_1 + A_1\bfZ_1 \;=\; b_2 + A_2\bfZ_2,
+\]
+then $b_1$ and $b_2$ must be equal since $\mu_{\bfx} = b_1 = b_2$, and $A_1A_1^t = A_2A_2^t$
+since $\Sigma_{\bfx} = A_1A_1^t = A_2A_2^t$. It is important to also note that, while both
+$\bfZ_1$ and $\bfZ_2$ are multivariate standard normals, $\bfZ_1$ and $\bfZ_2$ are different
+random variables.
+
+\begin{definition}
+If the covariance matrix $\Sigma_{\bfx}$ of a multivariate normal variable $\bfX$ is
+nonsingular, then $\bfX$ is called a nondegenerate multivariate normal variable.
+\end{definition}
+
+The probability density function $f:\R^n\to\R$ of a nondegenerate multivariate normal variable
+$\bfX\sim N(\mu_{\bfx},\Sigma_{\bfx})$ is given by
+\begin{equation}
+f(x) \;=\; \frac{1}{(2\pi)^{n/2}\sqrt{\det(\Sigma_{\bfx})}}
+\exp\!\left(-\frac12(x-\mu_{\bfx})^t(\Sigma_{\bfx})^{-1}(x-\mu_{\bfx})\right).
+\end{equation}
+
+\begin{lemma}
+Let $\bfX$ be a nondegenerate $n$-dimensional multivariate normal random variable with mean
+vector $\mu_{\bfx}$ and nonsingular covariance matrix $\Sigma_{\bfx}$. Then,
+\[
+\bfX \;=\; \mu_{\bfx} + U^t\bfZ,
+\]
+where $U$ is the Cholesky factor of the covariance matrix $\Sigma_{\bfx}$ and $\bfZ$ is a
+multivariate standard normal variable.
+\end{lemma}

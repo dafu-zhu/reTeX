@@ -1,0 +1,126 @@
+% PAGES: 228-229
+
+\begin{theorem}
+(i) Let $A$ be a symmetric positive definite matrix, and let $U$ be the Cholesky factor of $A$.
+Let $Z_1, Z_2, \ldots, Z_n$ be independent standard normal variables, and let $X_1, X_2, \ldots,
+X_n$ be random variables given by
+\begin{equation}
+\bfX \;=\; U^t\bfZ,
+\end{equation}
+where $\bfX = (X_i)_{i=1:n}$ and $\bfZ = (Z_i)_{i=1:n}$. Then, $X_1, X_2, \ldots, X_n$ are normal
+random variables with covariance matrix $\Sigma_{\bfx}$ equal to the given matrix $A$, i.e.,
+\begin{equation}
+\Sigma_{\bfx} \;=\; A.
+\end{equation}
+
+(ii) If $A$ is a symmetric positive definite matrix with main diagonal entries equal to $1$,
+then the correlation matrix $\Omega_{\bfx}$ of the random variables $X_1, X_2, \ldots, X_n$
+given by (7.97) is equal to $A$, i.e.,
+\begin{equation}
+\Omega_{\bfx} \;=\; A.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Since $\bfX = (X_i)_{i=1:n} = U^t\bfZ$, it follows that
+\[
+X_i \;=\; \sum_{k=1}^n U^t(i,k)Z_k.
+\]
+Thus, $X_i$ is a linear combination of the independent standard normal variables $Z_1, Z_2,
+\ldots, Z_n$, and therefore $X_i$ is a normal random variable, for all $i = 1:n$.
+
+% NOTE: source reads "If U the Cholesky factor of A" (missing "is") -- reproduced verbatim.
+If $U$ the Cholesky factor of $A$, then $U^tU = A$. From the Linear Transformation Property
+(Theorem 7.3), we find that
+\[
+\Sigma_{\bfx} \;=\; U^t\Sigma_{\bfz}U \;=\; U^tU \;=\; A;
+\]
+here, we use the fact that $\Sigma_{\bfz} = I$, since $Z_1, Z_2, \ldots, Z_n$ are independent
+standard normal variables.
+
+(ii) If the main diagonal entries of the matrix $A$ are equal to $1$, it follows from (7.98)
+that all the entries on the main diagonal of the covariance matrix $\Sigma_{\bfx}$ are equal to
+$1$. From Lemma 7.2, we obtain that $\Omega_{\bfx} = \Sigma_{\bfx}$, and, from (7.98), we
+conclude that $\Omega_{\bfx} = \Sigma_{\bfx} = A$.
+\end{proof}
+
+\medskip
+\noindent\textit{Example:}\ Given $Z_1$ and $Z_2$ independent standard normal variables, find
+two normal random variables $X_1$ and $X_2$ with variance $1$ and correlation $\rho$, where
+$-1 < \rho < 1$.
+
+\noindent\textit{Solution:}\ Recall from (6.42) that the Cholesky factor of the matrix
+$\begin{pmatrix} 1 & \rho \\ \rho & 1 \end{pmatrix}$ with $-1 < \rho < 1$ is $U =
+\begin{pmatrix} 1 & \rho \\ 0 & \sqrt{1-\rho^2} \end{pmatrix}$. Then, it follows from Theorem 7.6
+that two normal random variables $X_1$ and $X_2$ given by
+\begin{align}
+\begin{pmatrix} X_1 \\ X_2 \end{pmatrix}
+&= U^t\begin{pmatrix} Z_1 \\ Z_2 \end{pmatrix}
+= \begin{pmatrix} 1 & 0 \\ \rho & \sqrt{1-\rho^2} \end{pmatrix}\begin{pmatrix} Z_1 \\ Z_2 \end{pmatrix} \notag \\
+&= \begin{pmatrix} Z_1 \\ \rho Z_1 + \sqrt{1-\rho^2}Z_2 \end{pmatrix}
+\end{align}
+have correlation matrix
+\[
+\Omega_{\bfx} \;=\; \begin{pmatrix} 1 & \rho \\ \rho & 1 \end{pmatrix}.
+\]
+We conclude that the normal random variables $X_1$ and $X_2$ have variance $1$ and correlation
+$\rho$.
+
+Also, note from (7.100) that $X_1$ and $X_2$ can be written as
+\begin{align}
+X_1 &= Z_1; \\
+X_2 &= \rho Z_1 + \sqrt{1-\rho^2}Z_2. \quad\square
+\end{align}
+% The closing square for this manual Example/Solution block is printed
+% immediately before the (7.102) tag, i.e. inline with the last display line
+% (verified at 600 dpi against PDF page 229, folio 213) -- reproduced with an
+% inline \square rather than a trailing \hfill$\square$ to match that
+% placement. (\qedhere was tried first but, verified by test compile, prints
+% nothing outside a \begin{proof} context -- it silently no-ops without a
+% pending \qed to cooperate with, so it is not used here.)
+
+\subsection{Monte Carlo simulation for basket options pricing}
+
+The payoff at maturity $T$ of a basket option on two assets is
+\[
+\max(S_1(T)+S_2(T)-K,0),
+\]
+where $S_1(T)$ and $S_2(T)$ are the prices of the two assets at time $T$.
+
+Assume that the assets have lognormal distributions with risk neutral drift $r$, volatilities
+$\sigma_1$ and $\sigma_2$, continuous dividends $q_1$ and $q_2$, and with correlation $\rho$.
+Then,
+\begin{align}
+S_1(T) &= S_1(0)\exp\!\left(\left(r-q_1-\frac{\sigma_1^2}{2}\right)T+\sigma_1\sqrt{T}X_1\right); \\
+S_2(T) &= S_2(0)\exp\!\left(\left(r-q_2-\frac{\sigma_2^2}{2}\right)T+\sigma_2\sqrt{T}X_2\right),
+\end{align}
+where $X_1$ and $X_2$ are normal random variables with variance $1$ and correlation $\rho$.
+
+The value of the basket option can be found using Monte Carlo simulations by finding sample
+values of $S_1(T)$ and $S_2(T)$ from samples of the standard normal variable which can be
+generated, e.g., by using the Box--Muller method.
+
+Note that, if $Z_1$ and $Z_2$ denote two independent standard normal variables, then
+\begin{align}
+X_1 &= Z_1; \\
+X_2 &= \rho Z_1 + \sqrt{1-\rho^2}Z_2.
+\end{align}
+are normal random variables with variance $1$ and correlation $\rho$; see (7.101--7.102).
+
+From (7.103--7.106), we obtain that
+\begin{align}
+S_1(T) &= S_1(0)\exp\!\left(\left(r-q_1-\frac{\sigma_1^2}{2}\right)T+\sigma_1\sqrt{T}Z_1\right); \\
+S_2(T) &= S_2(0)\exp\!\left(\left(r-q_2-\frac{\sigma_2^2}{2}\right)T+\sigma_2\sqrt{T}\left(\rho Z_1+\sqrt{1-\rho^2}Z_2\right)\right)
+\end{align}
+
+Thus, given $z_1, z_2, \ldots, z_{2N}$ independent samples of the standard normal variable, we
+can obtain $N$ samples of $S_1(T)$ and $S_2(T)$ as follows:
+\begin{align*}
+S_{1,j}(T) &= S_1(0)\exp\!\left(\left(r-q_1-\frac{\sigma_1^2}{2}\right)T+\sigma_1\sqrt{T}z_{2j+1}\right); \\
+S_{2,j}(T) &= S_2(0)\exp\!\left(\left(r-q_2-\frac{\sigma_2^2}{2}\right)T+\sigma_2\sqrt{T}\left(\rho z_{2j+1}+\sqrt{1-\rho^2}z_{2j+2}\right)\right),
+\end{align*}
+for all $j = 0:(N-1)$, which can be used to compute the following $N$ sample values for the
+basket option:
+\[
+V_j \;=\; e^{-rT}\max(S_{1,j}(T)+S_{2,j}(T)-K,0).
+\]

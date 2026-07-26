@@ -1,0 +1,92 @@
+% PAGES: 278-278
+% Closes the \begin{answerx} opened at the end of sec09_c1_11.tex (PDF page
+% 277): the printed closing square appears after "...respectively." below.
+%
+% This is chunk c1's LAST file. Cross-checked against chunk c2's
+% sec09_c2_1.tex (delivered before this file, since c2 started before any c1
+% file existed and rendered PDF page 278 itself to judge the boundary): c2's
+% note states that page 278 ends with the $w_{min}$ derivation closing at
+% "$= (1-w_{min,cash})w_T,$" tagged (9.39), "a numbered multi-line display
+% that is fully closed on that page, not carried over," and that PDF page 279
+% (c2's own first page) opens a fresh sentence, "since, from (9.34), it
+% follows that", with its own self-contained unnumbered display. My own
+% independent reading of page 278 (rendered directly via CropBox, 600 dpi)
+% agrees exactly: nothing else is printed below eq. (9.39) on this page. The
+% \begin{align} below is therefore closed with \end{align} in this file, NOT
+% left open -- the trailing comma after (9.39) belongs to a sentence that
+% continues in prose (not a further display-math line) into c2's
+% sec09_c2_1.tex, which already picks it up correctly. No environment is left
+% open at the end of chunk c1.
+
+and the weight of the cash position is
+\[
+w_{min,cash} \;=\; 1-\bfone^tw_{min} \;=\; -0.3356.
+\]
+
+Thus, the \$100 million minimum variance portfolio with expected return equal to
+2.25\% is obtained by borrowing \$33.56 million and investing \$21.20 million in asset
+1, \$48.88 million in asset 2, \$35.40 million in asset 3, and \$28.08 million in asset
+4.
+
+From (9.35), we find that the standard deviation of the return of the minimum
+variance portfolio is $\sigma_{min} = 0.1949$, i.e., 19.49\%, which is smaller than the
+standard deviation of the returns of each of the four assets, which are $\sqrt{0.09} =
+0.3 = 30\%$, $\sqrt{0.0625} = 0.25 = 25\%$, $\sqrt{0.1225} = 0.35 = 35\%$,
+$\sqrt{0.0576} = 0.24 = 24\%$, respectively. \hfill$\square$
+\end{answerx}
+
+\subsection{Minimum variance portfolios and the tangency portfolio}
+
+It is important to note the connection between the minimum variance portfolio and a
+special portfolio called the tangency portfolio: in a nutshell, any minimum variance
+portfolio consists of a cash position that is determined to match the required
+expected return of the portfolio, with the rest of the portfolio invested in the
+tangency portfolio.
+
+To see this, and implicitly introduce the tangency portfolio, note that the asset
+weights vector $w_{min}$ given by (9.33) is a scalar multiple of the vector
+$\Sigma_R^{-1}\bar\mu$, i.e., $w_{min} = c\,\Sigma_R^{-1}\bar\mu$, where $c =
+\frac{\mu_P-r_f}{\bar\mu^t\Sigma_R^{-1}\bar\mu}$. Denote by
+\begin{equation}
+w_T \;=\; \frac{1}{\bfone^t\Sigma_R^{-1}\bar\mu}\Sigma_R^{-1}\bar\mu
+\end{equation}
+the asset weights vector in a portfolio with no cash, i.e., with $\bfone^tw_T = 1$,
+and with the $n$ assets allocated in the same proportions as the $\Sigma_R^{-1}\bar\mu$
+vector.
+
+This portfolio is called the \textit{tangency portfolio}. Note that another way of
+identifying the tangency portfolio is as the portfolio with the highest Sharpe ratio of
+all portfolios fully invested in $n$ assets. The tangency portfolio also plays an
+important role in the Capital Asset Pricing Model (CAPM), where it is called the market
+portfolio.
+
+From (9.36), we find that
+\[
+\bar\mu^tw_T \;=\; \frac{\bar\mu^t\Sigma_R^{-1}\bar\mu}{\bfone^t\Sigma_R^{-1}\bar\mu},
+\]
+and therefore
+\begin{equation}
+\frac{\bfone^t\Sigma_R^{-1}\bar\mu}{\bar\mu^t\Sigma_R^{-1}\bar\mu} \;=\;
+\frac{1}{\bar\mu^tw_T}.
+\end{equation}
+
+From (9.34) and (9.37), we obtain that the weight $w_{min,cash}$ of the cash position
+in the minimum variance portfolio can be written in terms of $w_T$ as follows:
+\begin{equation}
+w_{min,cash} \;=\; 1 - \frac{\mu_P-r_f}{\bar\mu^tw_T}.
+\end{equation}
+
+Moreover, from (9.33) and (9.36), we find that
+\begin{align}
+w_{min} &= \frac{\mu_P-r_f}{\bar\mu^t\Sigma_R^{-1}\bar\mu} \cdot \Sigma_R^{-1}\bar\mu
+\notag\\
+&= (\mu_P-r_f)\frac{\bfone^t\Sigma_R^{-1}\bar\mu}{\bar\mu^t\Sigma_R^{-1}\bar\mu}
+\cdot \frac{1}{\bfone^t\Sigma_R^{-1}\bar\mu}\Sigma_R^{-1}\bar\mu \notag\\
+&= (1-w_{min,cash})\,w_T,
+\end{align}
+% Chunk c1 ends here (PDF page 278 / folio 262 is fully transcribed). The
+% \end{align} above closes cleanly on this page -- confirmed against chunk
+% c2's sec09_c2_1.tex, whose opening line "since, from (9.34), it follows
+% that" is the direct prose continuation of the sentence ending in the
+% trailing comma after (9.39), not a further aligned display line. c2's file
+% already exists and needs no changes.

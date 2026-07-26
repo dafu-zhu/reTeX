@@ -1,0 +1,142 @@
+% PAGES: 193-194
+% Continues directly after sec06_c2_4.tex (folio 176), which ends mid-section
+% 6.3 with "...or by using a linear solver based on the LU decomposition of
+% the matrix A." and explicitly leaves no environment open. The paragraph
+% below is a fresh sentence, not a continuation of an open environment.
+
+In this section, we show that, for tridiagonal symmetric positive definite matrices,
+the LU solver is more efficient (i.e., has a smaller operation count) than the
+Cholesky solver.
+
+\medskip
+\noindent\textbf{Cholesky linear solvers for tridiagonal spd matrices.}\\
+Let $A$ be an $n \times n$ tridiagonal symmetric positive definite matrix. The linear
+system $Ax = b$ can be solved using the Cholesky decomposition based solver $x =
+\text{linear\_solve\_cholesky}(A,b)$ from Table 6.2. For an efficient implementation,
+the Cholesky decomposition, forward substitution, and backward substitution routines
+from Table 6.2 are replaced by the specialized routines for tridiagonal matrices as
+seen below.
+
+We begin by showing that the Cholesky factor of a tridiagonal symmetric positive
+definite matrix is an upper triangular bidiagonal matrix by analyzing how the Cholesky
+decomposition simplifies for tridiagonal matrices.\footnote{More generally, the
+Cholesky factor of a banded matrix of band $m$ is also banded of band $m$; see an
+exercise from the end of this chapter and Stefanica [38] for details.}
+
+Since the symmetric positive definite matrix $A$ is tridiagonal,\footnote{Note that a
+sufficient, although not necessary, condition for the tridiagonal symmetric matrix $A$
+to be symmetric positive definite is $|A(i,i)| > |A(i,i-1)| + |A(i,i+1)|$ for all $i =
+2:(n-1)$, $|A(1,1)| > |A(1,2)|$, and $|A(n,n)| > |A(n,n-1)|$, since in this case $A$ is
+strictly diagonally dominant, and any strictly diagonally dominant symmetric matrix is
+symmetric positive definite; see Theorem 5.7.} note that
+\begin{align}
+A(j,k) &= 0, \qquad \forall\, 1 \le j,k \le n \text{ with } |j-k| \ge 2; \\
+A(i,i+1) &= A(i+1,i), \qquad \forall\, i = 1:(n-1). \notag
+\end{align}
+
+Let $U$ be the Cholesky factor of $A$. We will show that $U$ is an upper triangular
+bidiagonal matrix, i.e., the only entries of $U$ that can be nonzero are the main
+diagonal entries $U(i,i)$, for $i = 1:n$, and the upper diagonal entries $U(i,i+1)$,
+for $i = 1:(n-1)$.
+
+Following step by step the Cholesky decomposition algorithm from section 6.1.1, we
+compute $U(1,1) = \sqrt{A(1,1)}$ and the first row of $U$ as $U(1,k) =
+\frac{A(1,k)}{U(1,1)}$, for all $k = 2:n$. Note that $A(1,k) = 0$ if $3 \le k \le n$
+since $A$ is a tridiagonal matrix; cf. (6.53). Then, $U(1,k) = 0$ if $3 \le k \le n$,
+and therefore the only possible nonzero entries from the first row of $U$ correspond to
+an upper triangular bidiagonal form for $U$.
+
+Moreover, since $U(1,2:n) = (U(1,2)\ 0\ \ldots\ 0)$, it follows that
+\[
+\begin{aligned}
+\big(U(1,2:n)\big)\tp U(1,2:n)
+&\;=\;
+\begin{pmatrix} U(1,2) \\ 0 \\ \vdots \\ 0 \end{pmatrix}
+\begin{pmatrix} U(1,2) & 0 & \cdots & 0 \end{pmatrix} \\
+&\;=\;
+\begin{pmatrix}
+(U(1,2))^2 & 0 & \cdots & 0 \\
+0 & 0 & \cdots & 0 \\
+\vdots & \vdots & & \vdots \\
+0 & 0 & \cdots & 0
+\end{pmatrix}.
+\end{aligned}
+\]
+
+Thus, updating the $(n-1) \times (n-1)$ lower right part of $A$ as in (6.28), i.e.,
+\[
+A(2:n,2:n) \;=\; A(2:n,2:n) \;-\; \big(U(1,2:n)\big)\tp U(1,2:n),
+\]
+only involves changing the value of $A(2,2)$ to
+\[
+A(2,2) \;=\; A(2,2) \;-\; (U(1,2))^2,
+\]
+which preserves the tridiagonal structure of the matrix $A(2:n,2:n)$.
+
+The tridiagonal structure of the updated part of $A$ and the bidiagonal structure of
+$U$ will be further preserved as every row of $U$ is computed.
+
+For example, assuming that the updated form $A(i:n,i:n)$ of the matrix $A$ is
+tridiagonal after $i-1$ rows of $U$ are computed, the $i$-th row of $U$ is computed as
+follows: $U(i,i) = \sqrt{A(i,i)}$ and $U(i,k) = \frac{A(i,k)}{U(i,i)}$, for all $k =
+(i+1):n$. Since $A(i:n,i:n)$ is tridiagonal, it follows that $A(i,k) = 0$ if $i+2 \le k
+\le n$, and therefore
+\[
+U(i,k) \;=\; 0, \qquad \forall\, i+2 \le k \le n.
+\]
+Thus, the only possible nonzero entries from the $i$-th row of $U$ correspond to an
+upper triangular bidiagonal form for $U$.
+
+Moreover, since $U(i,i+1:n) = (U(i,i+1)\ 0\ \ldots\ 0)$, we find that
+\[
+\begin{aligned}
+\big(U(i,i+1:n)\big)\tp U(i,i+1:n)
+&\;=\;
+\begin{pmatrix} U(i,i+1) \\ 0 \\ \vdots \\ 0 \end{pmatrix}
+\begin{pmatrix} U(i,i+1) & 0 & \cdots & 0 \end{pmatrix} \\
+&\;=\;
+\begin{pmatrix}
+(U(i,i+1))^2 & 0 & \cdots & 0 \\
+0 & 0 & \cdots & 0 \\
+\vdots & \vdots & \ddots & \vdots \\
+0 & 0 & \cdots & 0
+\end{pmatrix}.
+\end{aligned}
+\]
+
+Thus, updating the $(n-i) \times (n-i)$ lower right part of $A$ as follows as in (6.29),
+i.e.,
+\[
+A(i+1:n,i+1:n) \;=\; A(i+1:n,i+1:n) \;-\; \big(U(i,i+1:n)\big)\tp U(i,i+1:n),
+\]
+involves only changing the value of $A(i+1,i+1)$ to
+\[
+A(i+1,i+1) \;=\; A(i+1,i+1) \;-\; (U(i,i+1))^2,
+\]
+which preserves the tridiagonal structure of the updated $(n-i-1) \times (n-i-1)$
+matrix $A(i+1:n,i+1:n)$.
+
+The Cholesky decomposition routine from Table 6.1 simplifies to the pseudocode from
+Table 6.4 for tridiagonal symmetric positive definite matrices.
+
+The operation count for the tridiagonal Cholesky decomposition from Table 6.4 is $4n-3$
+operations: in each step of the ``for'' loop
+
+% NOTE: the source itself prints "for i = 1 : (n-1)" TWICE in a row here,
+% immediately followed by the loop body -- this is an apparent typo in the
+% original, reproduced exactly as printed (not corrected).
+\begin{center}
+\fbox{\begin{minipage}{0.8\linewidth}
+for $i = 1 : (n-1)$\\
+for $i = 1 : (n-1)$\\
+\hspace*{1.5em}$U(i,i) = \sqrt{A(i,i)};\ U(i,i+1) = A(i,i+1)/U(i,i);$\\
+\hspace*{1.5em}$A(i+1,i+1) = A(i+1,i+1) - U(i,i+1)^2;$\\
+end
+\end{minipage}}
+\end{center}
+
+we perform 4 operations, plus one more operation for computing $\sqrt{A(n,n)}$, for a
+total number of operations of
+\begin{equation}
+4(n-1) + 1 \;=\; 4n - 3.
+\end{equation}

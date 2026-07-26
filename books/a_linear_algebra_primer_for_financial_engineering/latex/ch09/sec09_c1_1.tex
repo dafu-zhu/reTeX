@@ -1,0 +1,63 @@
+% PAGES: 267-267
+% First chunk of Chapter 9. Nothing open from Chapter 8: sec08_c2_4.tex (the
+% last file of ch08) closed its own note confirming PDF page 267 / folio 251
+% opens Chapter 9 fresh, and I independently rendered and read this page,
+% confirming the same. The orchestrator writes ch09.tex with the \chapter{}
+% and \label{} commands itself (matching the ch01-ch08 pattern), so this file
+% does not repeat them.
+
+\noindent Efficient portfolios. Markowitz Portfolio Theory.
+\medskip
+
+\noindent Blueprints for finding efficient portfolios.
+\medskip
+
+\noindent Minimum variance portfolios. Minimum variance portfolios and the tangency
+portfolio.
+\medskip
+
+\noindent Maximum return portfolios. Maximum return portfolios and the tangency
+portfolio.
+\medskip
+
+\noindent Minimum variance portfolio with no cash position.
+\medskip
+
+\noindent Value at Risk (VaR). Portfolio VaR.
+\medskip
+
+\noindent Subadditivity of VaR and counterexample.
+\medskip
+
+\section{Efficient portfolios. Markowitz portfolio theory.}
+
+Consider a portfolio invested in $n$ assets and with a cash position. Let $w_i$ be the
+weight of asset $i$ in the portfolio, for $i = 1:n$, i.e., $w_i$ represents the
+proportion of the portfolio invested in asset $i$. Then, the weight of the cash
+position of the portfolio is
+\begin{equation}
+w_{cash} \;=\; 1 - \sum_{i=1}^n w_i.
+\end{equation}
+
+% Verified at 1200 dpi (folio 251-252): $w$, $\mu$, $\bar\mu$ and their entries are
+% set in plain italic throughout this chapter, NOT bold -- unlike the \bfX-style
+% vectors/matrices used in earlier chapters. The only symbol actually bolded in
+% this chapter is $\mathbf{1}$, the vector of ones (matches the preamble note).
+% Reproduced as printed; see also sec09_c2_1.tex's independent confirmation of
+% the same convention on later pages of this chapter.
+\begin{examplex}
+Consider a \$80 million portfolio which is invested in three assets, as follows: a long
+\$50 million position in asset 1, a short \$20 million position in asset 2, a long \$25
+million position in asset 3, and with a long \$25 million cash position.\footnote{The
+asset position in the portfolio is \$50mil + (-\$20mil) + \$25mil = \$55mil, and
+therefore the cash position is \$80mil - \$55mil = \$25mil.} The weights $w_1$, $w_2$,
+$w_3$, and $w_{cash}$ of the three assets and of the cash position are:
+\[
+w_1 \;=\; \frac{50}{80} \;=\; 0.625 \;=\; 62.50\%; \qquad w_2 \;=\; -\frac{20}{80} \;=\;
+-0.25 \;=\; -25\%;
+\]
+\[
+w_3 \;=\; \frac{25}{80} \;=\; 0.3125 \;=\; 31.25\%; \qquad w_{cash} \;=\; \frac{25}{80}
+\;=\; 0.3125 \;=\; 31.25\%.
+\]
+\end{examplex}
