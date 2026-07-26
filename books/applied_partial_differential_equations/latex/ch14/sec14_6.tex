@@ -1,0 +1,250 @@
+% sec14_6.tex — Section 14.6: Slowly Varying Dispersive Waves (Group Velocity and Caustics)
+\section{Slowly Varying Dispersive Waves (Group Velocity and Caustics)}
+\label{sec:slowly-varying-dispersive}
+
+\subsection{Approximate Solutions of Dispersive Partial Differential Equations}
+\label{sec:approximate-solutions-dispersive}
+
+In this section we will show how to obtain approximate solutions to dispersive partial differential equations.  Some of these results follow from the method of stationary phase (and generalizations).  However, we attempt here to develop material independent of the section on the method of stationary phase.
+
+Linear dispersive waves have solutions of the form $Ae^{i(kx - \omega(k)t)}$, where the dispersion relation $\omega = \omega(k)$ is known from the partial differential equation.  Arbitrary initial conditions can be satisfied by expressions such as
+\[
+u(x,t) = \int_{-\infty}^{\infty} A(k)e^{i(kx - \omega(k)t)}\,dk,
+\]
+which are often too complicated to be directly useful.  We wish to consider classes of solutions that are slightly more complicated than an elementary traveling wave $u(x,t) = Ae^{i(kx - \omega t)}$.  For these elementary traveling waves, the wave is purely periodic with a constant amplitude $A$ and a constant $O(1)$ wave number (wave length).  We want to imagine that over very long distances and very large times there are solutions in which the amplitude and the wave number might change.  For example, this might be due to initial conditions in which the wave number and/or amplitude are not constant but slowly change over long distances.  We introduce a \textbf{slowly varying wave train} with a slowly varying amplitude $A(x,t)$ and a phase $\theta(x,t)$:
+\boxed{\begin{equation}
+\label{eq:14.6.1}
+u(x,t) = A(x,t)e^{i\theta(x,t)}.
+\end{equation}}
+
+The wave number and frequency will be slowly varying, and they are defined in the manner that would be used if the wave were a simple traveling wave:
+\boxed{\begin{equation}
+\label{eq:14.6.2}
+\text{slowly varying wave number } k \;\equiv\; \pd{\theta}{x}
+\end{equation}}
+\boxed{\begin{equation}
+\label{eq:14.6.3}
+\text{slowly varying frequency } \omega \;\equiv\; -\pd{\theta}{t}.
+\end{equation}}
+
+From \eqref{eq:14.6.2} and \eqref{eq:14.6.3}, we derive a conservation law
+\boxed{\begin{equation}
+\label{eq:14.6.4}
+\pd{k}{t} + \pd{\omega}{x} = 0,
+\end{equation}}
+which is called \textbf{conservation of waves} (see Exercises~14.6.3 and 14.6.4 for further discussion of this).  We claim that with uniform media, the frequency $\omega$ will satisfy the usual dispersion relation
+\boxed{\begin{equation}
+\label{eq:14.6.5}
+\omega = \omega(k),
+\end{equation}}
+even though the solution \eqref{eq:14.6.1} is not an elementary traveling wave upon which \eqref{eq:14.6.5} was derived.  This can be derived using perturbation methods, but the derivation involves more technical details than we have time here to discuss.
+
+If the dispersion relation \eqref{eq:14.6.5} is substituted into conservation of waves \eqref{eq:14.6.4}, we determine a first-order quasi-linear (really nonlinear) partial differential equation that the wave number $k(x,t)$ must satisfy:
+\begin{equation}
+\label{eq:14.6.6}
+\pd{k}{t} + \od{\omega}{k}\pd{k}{x} = 0.
+\end{equation}
+
+The initial value problem can be solved using the method of characteristics (Sec.~12.6):
+\begin{equation}
+\label{eq:14.6.7}
+\text{if } \od{x}{t} = \od{\omega}{k}, \quad \text{then } \od{k}{t} = 0,
+\end{equation}
+showing that the wave number stays constant moving with the group velocity.  The characteristics are straight lines but not parallel in general (see Fig.~14.6.1), since the group velocity, $\od{\omega}{k}$, depends on $k$.  The coupled system of ordinary differential equations is easy to solve.  If the characteristic (moving observer) is parameterized by its initial position $\xi$, $x(0) = \xi$, then the solution of \eqref{eq:14.6.7} is
+\begin{equation}
+\label{eq:14.6.8}
+k(x,t) = k(\xi,0),
+\end{equation}
+where the equation for the straight-line characteristics follows from \eqref{eq:14.6.7}:
+\begin{equation}
+\label{eq:14.6.9}
+x = \od{\omega}{k}(k(\xi,0))\,t + \xi.
+\end{equation}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch14/fig_14_6_1.png}
+\caption{Characteristics for propagation of dispersive waves.}
+\label{fig:14.6.1}
+\end{figure}
+
+Given $x$ and $t$, we can try to solve for $\xi$ from \eqref{eq:14.6.9}, so that $\xi$ is considered a function of $x$ and $t$.  Once $k(x,t)$ is obtained, the phase can be determined by integrating \eqref{eq:14.6.2} and \eqref{eq:14.6.3}.
+
+The dispersion relation $\omega = \omega(k)$ can be interpreted using \eqref{eq:14.6.2} and \eqref{eq:14.6.3} as a nonlinear partial differential equation for the unknown phase:
+\begin{equation}
+\label{eq:14.6.10}
+-\pd{\theta}{t} = \omega\Bigl(\pd{\theta}{x}\Bigr),
+\end{equation}
+called the \textbf{Hamilton-Jacobi equation}.  In the specific case in which the original partial differential equation is the two-dimensional wave equation, then \eqref{eq:14.6.10} is called the \textbf{eikonal equation}.  However, the simplest way to solve \eqref{eq:14.6.10} for $\theta$ is to use the method of characteristics as preceding (see also Sec.~12.7):
+\[
+\od{\theta}{t} = \theta_t + \theta_x\od{x}{t} = -\omega + k\od{\omega}{k}.
+\]
+Since $\omega$ and $\od{\omega}{k}$ depend only on $k$, and $k$ is a constant moving with the group velocity,
+\[
+\theta(x,t) = \Bigl(-\omega + k\od{\omega}{k}\Bigr)t + \theta(\xi,0),
+\]
+where $\theta(\xi,0)$ is the initial phase which should be given.  The phase can be expressed in a more physically intuitive way using \eqref{eq:14.6.9}:
+\[
+\theta(x,t) = k(x - \xi) - \omega t + \theta(\xi,0).
+\]
+
+\subsection{Formation of a Caustic}
+\label{sec:caustic-formation}
+
+We consider a linear partial differential equation with a dispersion relation $\omega = \omega(k)$.  We assume a slowly varying wave exists of the form $u(x,t) = A(x,t)e^{i\theta(x,t)}$ with $k \equiv \pd{\theta}{x}$ and $\omega \equiv -\pd{\theta}{t}$.  The wave number propagates according to the nonlinear partial differential equation
+\begin{equation}
+\label{eq:14.6.11}
+\pd{k}{t} + \omega'(k)\pd{k}{x} = 0,
+\end{equation}
+which approximates the original linear partial differential equation, but here we consider problems in which the characteristics intersect (see Fig.~14.6.2).  We will show that initial conditions can be chosen so that the wave number evolves from being single valued to being triple valued.  Using the method of characteristics [$\od{k}{t} = 0$ if $\od{x}{t} = \omega'(k)$] yields
+\begin{equation}
+\label{eq:14.6.12}
+k(x,t) = k(\xi,0),
+\end{equation}
+where $\xi$ is the location of the characteristic at $t = 0$ and where we assume the initial distribution for $k$ is given.  The equation for the characteristics is
+\begin{equation}
+\label{eq:14.6.13}
+x = \omega'(k(\xi,0))t + \xi = F(\xi)t + \xi,
+\end{equation}
+where we introduce $F(\xi)$ as the velocity of the characteristics.  The characteristics are straight lines, and some of them are graphed in Fig.~14.6.2.  Characteristics intersect if characteristics to the right move more slowly, $F'(\xi) < 0$, as shown in Fig.~14.6.2.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch14/fig_14_6_2.png}
+\caption{Intersection of characteristics.}
+\label{fig:14.6.2}
+\end{figure}
+
+Neighboring characteristics intersect (and are visible as the boundary between lighter and darker regions) at a curve called a \textbf{caustic}.  In Fig.~14.6.3 we show the caustic generated by a computer drawn plot of a family of straight-line characteristics satisfying \eqref{eq:14.6.13}.  [It can be shown that the amplitude $A(x,t)$ predicted by the appropriate slow variation or geometrical optics or ray theory becomes infinite on a caustic.]  This is the same focusing process for light waves, which is why it is called a caustic (\textbf{caustic} means ``capable of burning,'' as the location where light can be focused to burn material).  Light waves can focus and form a caustic as they bounce off a nonparabolic reflector (using the angle of incidence equaling the angle of reflection as shown in Fig.~14.6.4).  If you look carefully, you will see three reflected rays reaching each point within the caustic, while only one reflected ray reaches points outside the caustic.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch14/fig_14_6_3.png}
+\caption{Caustic formed from characteristics.}
+\label{fig:14.6.3}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch14/fig_14_6_4.png}
+\caption{Caustic formed by reflected rays of nonparabolic reflector.}
+\label{fig:14.6.4}
+\end{figure}
+
+This caustic [envelope of a family of curves \eqref{eq:14.6.13}] can be obtained analytically by simultaneously solving \eqref{eq:14.6.13} with the derivative of \eqref{eq:14.6.13} with respect to $\xi$ (as described in Sec.~12.6):
+\begin{equation}
+\label{eq:14.6.14}
+0 = F'(\xi)t + 1 \quad \text{or, equivalently,} \quad t = \frac{-1}{F'(\xi)},
+\end{equation}
+which determines the time at which the caustic occurs (for a given characteristic).  We must assume the initial conditions are such that $F'(\xi) < 0$ in order for the time to be positive.  (The spatial position of the caustic is $x = -\frac{F}{F'(\xi)} + \xi$, giving the parametric representation of the caustic.)  It can be shown that $\pd{k}{x}$ is infinite at the caustic, so that the caustic is the location of the turning points of the triple-valued wave-number curve.  Two solutions coalesce on the caustic.
+
+The caustic first forms at
+\begin{equation}
+\label{eq:14.6.15}
+t_c = \frac{-1}{F'(\xi_c)} \quad \text{and} \quad x_c = F(\xi_c)t_c + \xi_c,
+\end{equation}
+where $\xi_c$ is the position where $F'(\xi)$ has a negative minimum (see Fig.~14.6.5), so that
+\begin{equation}
+\label{eq:14.6.16}
+F''(\xi_c) = 0
+\end{equation}
+with
+\begin{equation}
+\label{eq:14.6.17}
+F'''(\xi_c) > 0.
+\end{equation}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch14/fig_14_6_5.png}
+\caption{Minimum (first intersection).}
+\label{fig:14.6.5}
+\end{figure}
+
+We will show that the caustic is cusp shaped in the neighborhood of its formation.  We will assume that $x$ is near $x_c$ and $t$ is near $t_c$ so that the parameter $\xi$ is near $\xi_c$.  The solution can be determined in terms of $\xi$:  the wave number is approximately a constant, and the spatial and temporal dependence of the wave number is approximately proportional to $\xi - \xi_c$.  To determine how $\xi - \xi_c$ depends on $x$ and $t$ (near the first focusing time of the caustic), we approximate the characteristics \eqref{eq:14.6.13} for $\xi$ near $\xi_c$.  Using a Taylor series for $F(\xi)$, we obtain
+\begin{equation}
+\label{eq:14.6.19}
+x = F(\xi_c)t + \xi_c + (\xi - \xi_c)[F'(\xi_c)t + 1] + \frac{(\xi-\xi_c)^2}{2!}F''(\xi_c)t + \frac{(\xi-\xi_c)^3}{3!}F'''(\xi_c)t + \cdots.
+\end{equation}
+
+If we note that $t = t_c + t - t_c$, then using \eqref{eq:14.6.15} and \eqref{eq:14.6.16}, \eqref{eq:14.6.19} becomes
+\boxed{\begin{equation}
+\label{eq:14.6.20}
+x - x_c - F(\xi_c)(t - t_c) = (\xi - \xi_c)F'(\xi_c)(t - t_c) + \frac{(\xi-\xi_c)^3}{3!}F'''(\xi_c)t_c,
+\end{equation}}
+where in the last expression we have approximated $t$ by $t_c$ since $t - t_c$ is small.  Equation \eqref{eq:14.6.20} shows the importance of $F(\xi_c)$, the (group) velocity of the critical characteristic.
+
+Equation \eqref{eq:14.6.20} is a \textbf{cubic equation}.  Each root corresponds to a characteristic for a given $x$ and $t$.  To understand the cubic, we introduce $X = x - x_c - F(\xi_c)(t - t_c)$, $T = t - t_c$, and $s = \xi - \xi_c$.  We recall $F'(\xi_c) < 0$ and $F'''(\xi_c) > 0$, so that for convenience we choose $F'(\xi_c) = -1$ and $F'''(\xi_c)t_c = 2$, so that $X$ is an elementary cubic function of $s$,
+\begin{equation}
+\label{eq:14.6.21}
+X = -sT + \tfrac{1}{3}s^3.
+\end{equation}
+
+For elementary graphing for fixed $T$, we need $\od{X}{s} = -T + s^2$.  We see that there are no critical points if $T < 0$ ($t < t_c$), so that $X(s)$ is single valued corresponding to one root for $t < t_c$.  However, if $T > 0$ ($t > t_c$), two elementary critical points, as seen in Fig.~14.6.6, are located at $s = \pm T^{1/2}$, which corresponds to the caustic.  For $t > t_c$ there are three real roots within the caustic region shown in Figs.~14.6.6 and 14.6.7.  In this scaling the \textbf{caustic} satisfies $0 = -T + s^2$, so that $s = \pm T^{1/2}$.  Using \eqref{eq:14.6.21}, the caustic is located at $X = s(-T + \frac{1}{3}s^2) = \frac{2}{3}sT = \pm\frac{2}{3}T^{3/2}$ and is \textbf{cusped shaped} (see Fig.~14.6.7).
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch14/fig_14_6_6.png}
+\caption{Smooth solution becoming triple valued.}
+\label{fig:14.6.6}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch14/fig_14_6_7.png}
+\caption{Cusped caustic.}
+\label{fig:14.6.7}
+\end{figure}
+
+The characteristics form a caustic.  Reflected waves from a nonparabolic reflector form this kind of caustic, as shown in Fig.~14.6.3.  Near the caustic the approximations that yielded the nonlinear partial differential equations \eqref{eq:14.6.11} are no longer valid.  Instead, near the caustic we must return to the original linear partial differential equation and obtain a different solution.  The triple-valued solution predicted by the method of characteristics is meaningful and corresponds to the linear superposition of three slowly varying waves.  We explain this in the next sections.  (When characteristics intersect and form a caustic, the energy focuses and the amplitude increases dramatically though not to infinity as predicted by slow variation theory or ray theory or geometrical optics.)
+
+The curved portions of caustics (away from the cusp) are described in Exercises~14.6.5 and 14.7.1.  In Exercise~14.5.4 and in subsection~14.7.2, we describe a straight-line caustic that separates a region with two rays from a region with no rays.  This is the explanation of the \textbf{rainbow}.  Parallel light rays from the sun (see Fig.~14.6.8) pass through water droplets (using Snell's law of refraction) before reflecting internally.  There is a minimum angle at which the intensity is large.  The wave speed of light in the water depends a little bit on the wave length (color) so that the minimum angle is slightly different for the different colors.  This gives rise to the common rainbow.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch14/fig_14_6_8.png}
+\caption{Caustic formed by refraction and reflection through water droplet.}
+\label{fig:14.6.8}
+\end{figure}
+
+\begin{exercises}{14.6}
+\item[\starred] The solution \eqref{eq:14.5.7} obtained by the method of stationary phase has the phase $\theta(x,t) = k_0 x - \omega(k_0)t$, where $k_0$ is a function of $x$ and $t$ given by the formula \eqref{eq:14.5.6} for a stationary point.  Determine the $k$ and $\omega$ defined by \eqref{eq:14.6.2} and \eqref{eq:14.6.3}.
+
+\item In a uniform rectangular wave guide, we have learned that for a particular mode, $\omega^2 = c^2[k^2 + \bigl(\frac{n\pi}{L}\bigr)^2 + \bigl(\frac{m\pi}{H}\bigr)^2]$.  Let us consider a slowly varying rectangular wave guide in a uniform medium, where the width $L = L(x)$ varies slowly in the propagation direction.  We claim that
+\[
+\omega^2 = c^2\biggl[k^2 + \Bigl(\frac{n\pi}{L(x)}\Bigr)^2 + \Bigl(\frac{m\pi}{H}\Bigr)^2\biggr].
+\]
+What partial differential equation (do not solve it) does the wave number $k(x,t)$ satisfy?
+
+\item Assume the number of wave is conserved.  $\frac{k}{2\pi}$ is the number of waves per unit spatial distance and $\frac{\omega}{2\pi}$ is the number of waves per unit time.  Consider the number of waves between two fixed points $x = a$ and $x = b$.
+\begin{enumerate}
+\item[(a)] Explain why the number of waves between $x = a$ and $x = b$ is $\frac{1}{2\pi}\int_a^b k(x,t)\,dx$.
+\item[(b)] If the number of waves is conserved, show that $\frac{d}{d t}\int_a^b k(x,t)\,dx = \omega(a,t) - \omega(b,t)$.
+\item[(c)] From part (b), derive that $\pd{k}{t} + \pd{\omega}{x} = 0$.
+\end{enumerate}
+
+\item Reconsider Exercise~14.6.3:
+\begin{enumerate}
+\item[(a)] Why does $\frac{d}{d t}\int_a^b k(x,t)\,dx = 0$ if the endpoints are not constant but move with the phase velocity?
+\item[(b)] By differentiating the integral in part (a), derive $\pd{k}{t} + \pd{\omega}{x} = 0$.
+\end{enumerate}
+
+\item \textbf{Curved caustic.}  We wish to analyze any small portion of the curved caustic (see Fig.~14.6.3) away from the cusp.  Characteristics of a dispersive wave problem \eqref{eq:14.6.11} satisfy \eqref{eq:14.6.12} and \eqref{eq:14.6.13}.  At each point $(x_c, t_c)$ in space and time along the curved caustic, there is a specific characteristic $\xi_c$.  We analyze the region near this point, and we will determine the region in which there are two and zero characteristics.  The caustic will satisfy \eqref{eq:14.6.14}, so that \eqref{eq:14.6.15} is also valid.  However, we will assume $F''(\xi_c) \neq 0$.  Assuming $\xi$ is near $\xi_c$, it follows that \eqref{eq:14.6.18} is still valid.
+\begin{enumerate}
+\item[(a)] If $x$ is near $x_c$ and $t$ is near $t_c$, derive that the following quadratic is valid instead of the cubic \eqref{eq:14.6.20}:
+\begin{equation}
+\label{eq:14.6.22}
+x - x_c - F(\xi_c)(t - t_c) = (\xi - \xi_c)F'(\xi_c)(t - t_c) + \frac{(\xi-\xi_c)^2}{2!}F''(\xi_c)t_c.
+\end{equation}
+\item[(b)] Using \eqref{eq:14.6.22}, in what region are there two and zero characteristics?  Show that your answer depends on the sign of $F''(\xi_c)$.
+\end{enumerate}
+
+\item Consider $\pd{u}{t} = \beta(x,t)\frac{\partial^3 u}{\partial x^3}$, where $\beta(x,t)$ is a slowly varying coefficient.  We assume the dispersion relation is $\omega = \beta(x,t)k^3$.
+\begin{enumerate}
+\item[(a)] If $\beta(x,t)$ is constant, determine $k$ and the characteristics.
+\item[(b)] If $\beta(x,t)$ is constant, determine the phase $\theta$ along characteristics.
+\item[(c)] If $\beta(x,t)$ is not constant, what differential equations determine $k$ and the characteristics?
+\item[(d)] If $\beta(x,t)$ is not constant, what differential equations determine $\theta$ along characteristics?
+\item[(e)] If $\beta(t)$ only, determine the characteristics and $\theta$.
+\end{enumerate}
+\end{exercises}

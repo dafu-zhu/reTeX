@@ -1,0 +1,503 @@
+% problems6.tex — Problem Set and Answers for Chapter 6
+
+\begin{problemset}
+
+\subsection*{Analytical Exercises}
+
+\exercise[1] (Mean square limits and their uniqueness) \; In Chapter~2, we defined the mean
+square convergence of a sequence of random variables $\{z_n\}$ to a random variable $z$.
+In this and other questions, we will deal with sequences of random
+variables with finite second moments. For those sequences, the definition of
+mean square convergence is
+
+\medskip
+\noindent\textbf{Definition.} Let $\{z_n\}$ be a sequence of random variables with $\E(z_n^2) < \infty$.
+We say that $\{z_n\}$ converges in mean square to a random variable $z$ with $\E(z^2) <
+\infty$, written $z_n \to_{\mathrm{m.s.}} z$, if $\E[(z_n - z)^2] \to 0$ as $n \to \infty$.
+
+\medskip
+Take this result for granted in answering.
+
+\begin{enumerate}[label=(\alph*)]
+\item Show that, if $z_n \to_{\mathrm{m.s.}} z$ and $z_n \to_{\mathrm{m.s.}} z'$, then $\E[(z - z')^2] = 0$.
+\textbf{Hint:} $z - z' = (z - z_n) + (z_n - z')$. Define $\|x\| = \sqrt{\E(x^2)}$. Then
+\begin{align*}
+  \|z - z'\|^2 &= \|z - z_n\|^2 + 2\,\E[(z - z_n)(z_n - z')] + \|z_n - z'\|^2 \\
+  &\leq \|z - z_n\|^2 + 2\sqrt{\E[(z - z_n)^2]}\sqrt{\E[(z_n - z')^2]} + \|z_n - z'\|^2 \\
+  &= (\|z - z_n\| + \|z_n - z'\|)^2.
+\end{align*}
+So $\|z - z'\| \leq \|z - z_n\| + \|z_n - z'\|$. This is called the \textbf{triangle inequality}.
+
+\item Show that $\Pr(z = z') = 1$. \textbf{Hint:} Use Chebychev's inequality:
+\[
+  \Pr(|z - z'| > \varepsilon) \leq \frac{1}{\varepsilon^2}\,\E[\|z - z'\|^2].
+\]
+\end{enumerate}
+
+\exercise[2] (Proof of Proposition~6.1) \; A well-known result about mean square convergence
+(see, e.g., Brockwell and Davis, 1991, Proposition~2.7.1) is
+\begin{enumerate}[label=(\roman*)]
+\item $\{z_n\}$ converges in mean square if and only if $\E[(z_m - z_n)^2] \to 0$ as $m, n \to \infty$.
+\item If $x_n \to_{\mathrm{m.s.}} x$ and $z_n \to_{\mathrm{m.s.}} z$, then
+$\lim_{n \to \infty} \E(x_n) = \E(x)$ and $\lim_{n \to \infty} \E(x_n z_n) = \E(xz)$.
+\end{enumerate}
+Take this result for granted in answering.
+
+\begin{enumerate}[label=(\alph*)]
+\item Prove that \eqref{eq:6.1.6} converges in mean square as $n \to \infty$ under the hypothesis
+of Proposition~6.1. \textbf{Hint:} Let $y_{t,n} = \mu + \sum_{j=0}^{n} \psi_j \varepsilon_{t-j}$.
+What needs to be proved is that $\{y_{t,n}\}$ converges in mean square as $n \to \infty$
+for each $t$. Given~(i) above, it is sufficient to prove that (assuming $m > n$)
+\[
+  \E\left[\left(\sum_{j=n+1}^{m} \psi_j \varepsilon_{t-j}\right)^2\right]
+  = \sigma^2 \sum_{j=n+1}^{m} \psi_j^2 \to 0 \quad \text{as } m, n \to \infty.
+\]
+Use the fact that an absolutely summable sequence is \textbf{square summable}, i.e.,
+$\sum |\psi_j| < \infty \;\Rightarrow\; \sum \psi_j^2 < \infty$,
+and the fact that a sequence of real numbers $\{\alpha_n\}$ converges (to a finite
+limit) if and only if $\alpha_n$ is a Cauchy sequence:
+$\alpha_n \to \alpha \;\Leftrightarrow\; |\alpha_m - \alpha_n| \to 0$ as $m, n \to \infty$.
+Set $\alpha_n = \sum_{j=0}^{n} \psi_j^2$.
+
+\item Prove that $\E(y_t) = \mu$. \textbf{Hint:} Let $y_{t,n} = \mu + \sum_{j=0}^{n} \psi_j \varepsilon_{t-j}$ as in~(a). It was
+shown in~(a) that $y_{t,n} \to_{\mathrm{m.s.}} y_t$.
+
+\item (Proof of part~(b) of Proposition~6.1) \; Show that
+\[
+  \E[(y_t - \mu)(y_{t-j} - \mu)] = \lim_{n \to \infty} \E[(y_{t,n} - \mu)(y_{t-j,n} - \mu)].
+\]
+Have we shown that $\{y_t\}$ is covariance-stationary? [Answer: Yes.]
+
+\item (Optional) \; Prove part~(c) of Proposition~6.1, taking the following facts
+from calculus for granted.
+\begin{enumerate}[label=(\roman*)]
+\item If $\{a_j\}$ is absolutely summable, then $\{a_j\}$ is summable (i.e., $-\infty <
+\sum_{j=0}^{\infty} a_j < \infty$) and $|\sum_{j=0}^{\infty} a_j| \leq \sum_{j=0}^{\infty} |a_j|$.
+\item Consider a sequence with two subscripts, $\{a_{jk}\}$ ($j, k = 0, 1, 2, \ldots$).
+Suppose $\sum_{j=0}^{\infty} |a_{jk}| < \infty$ for each $k$ and let $s_k \equiv \sum_{j=0}^{\infty} |a_{jk}|$. Suppose
+$\{s_k\}$ is summable. Then
+\[
+  \left|\sum_{j=0}^{\infty}\left(\sum_{k=0}^{\infty} a_{jk}\right)\right| < \infty
+  \quad \text{and} \quad
+  \sum_{j=0}^{\infty}\left(\sum_{k=0}^{\infty} a_{jk}\right) = \sum_{k=0}^{\infty}\left(\sum_{j=0}^{\infty} a_{jk}\right) < \infty.
+\]
+\end{enumerate}
+\textbf{Hint:} Derive
+$\sum |\gamma_j| \leq \sigma^2 \sum_{j=0}^{\infty}\bigl(\sum_{k=0}^{\infty} |\psi_{j+k}| \cdot |\psi_k|\bigr) < \infty$.
+\end{enumerate}
+
+\exercise[3] (Autocovariances of $h(L)x_t$) \; We wish to derive the autocovariances of $\{y_t\}$
+of Proposition~6.2. As in Proposition~6.2, assume throughout this question that
+$\{x_t\}$ is covariance-stationary. First consider a weighted average of finitely many
+terms: $y_{t,n} = h_0 x_t + h_1 x_{t-1} + \cdots + h_n x_{t-n}$.
+
+\begin{enumerate}[label=(\alph*)]
+\item Show that for this $\{y_{t,n}\}$,
+\[
+  \gamma_j = \sum_{k=0}^{n} \sum_{\ell=0}^{n} h_k\,h_\ell\,\gamma_{j-k+\ell}^x
+\]
+where $\gamma_j^x$ is the $j$-th order autocovariance of $\{x_t\}$.
+Verify that this reduces to \eqref{eq:6.1.2a} if $\{x_t\}$ is white noise. \textbf{Hint:} If you find this
+difficult, first set $n = 1$, and then increase $n$ to establish the pattern.
+
+\item Now consider a weighted average of possibly infinitely many terms:
+$y_t = h_0 x_t + h_1 x_{t-1} + \cdots$.
+Taking Proposition~6.2(a) for granted, show that
+\[
+  \gamma_j = \sum_{k=0}^{\infty} \sum_{\ell=0}^{\infty} h_k\,h_\ell\,\gamma_{j-k+\ell}^x
+  \quad \text{if } \{h_j\} \text{ is absolutely summable.}
+\]
+\textbf{Hint:} $y_{t,n} \to_{\mathrm{m.s.}} y_t$ as $n \to \infty$ by Proposition~6.2. Proceed as in~2(c).
+\end{enumerate}
+
+\exercise[4] (Homogeneous linear difference equations) \; Consider a $p$-th order homogeneous
+linear difference equation:
+\begin{equation}
+  y_j - \phi_1 y_{j-1} - \phi_2 y_{j-2} - \cdots - \phi_p y_{j-p} = 0
+  \quad (j = p, p+1, \ldots),
+  \tag{1}
+\end{equation}
+where $(\phi_1, \phi_2, \ldots, \phi_p)$ are real constants with $\phi_p \neq 0$, with the initial condition
+that $(y_0, y_1, \ldots, y_{p-1})$ are given. The associated polynomial equation is
+\begin{equation}
+  1 - \phi_1 z - \phi_2 z^2 - \cdots - \phi_{p-1} z^{p-1} - \phi_p z^p = 0.
+  \tag{2}
+\end{equation}
+Let $\lambda_k$ ($k = 1, \ldots, K$) be the distinct roots of this equation (they can be
+complex numbers) and $r_k$ be the multiplicity of $\lambda_k$. So $r_1 + r_2 + \cdots + r_K = p$.
+The polynomial equation can be written as $\prod_{k=1}^{K} (1 - \lambda_k^{-1} z)^{r_k} = 0$.
+
+As you verify below, the solution to the $p$-th order homogeneous equation
+can be written as
+\begin{equation}
+  y_j = \sum_{k=1}^{K} \sum_{n=0}^{r_k - 1} c_{kn} \cdot (j)^n \lambda_k^{-j}.
+  \tag{5}
+\end{equation}
+In the important special case where all the roots are distinct, $K = p$ and $r_k = 1$
+for all $k$, and (5) becomes $y_j = \sum_{k=1}^{p} c_{k0}\,\lambda_k^{-j}$.
+
+\begin{enumerate}[label=(\alph*)]
+\item For the special case of $p = 2$ and distinct roots, (7) is
+$y_j = c_{10}\,\lambda_1^{-j} + c_{20}\,\lambda_2^{-j}$.
+Verify that this solves the homogeneous difference equation~(1) with $p = 2$
+for any given $(c_{10}, c_{20})$. To determine $(c_{10}, c_{20})$, write down~(8) for $j = 0$
+and $j = 1$, and solve for $c$'s as a function of $(y_0, y_1, \lambda_1, \lambda_2)$.
+
+\item To learn (remember) how to deal with multiple roots, consider the example
+$1 - z + \frac{1}{4}z^2 = 0$, whose root is~2 with multiplicity~2.
+Verify that $y_j = c_{10} \cdot 2^{-j} + c_{11} \cdot j \cdot 2^{-j}$ solves the second-order homogeneous
+difference equation $y_j - y_{j-1} + \frac{1}{4} y_{j-2} = 0$.
+
+\item (Optional) \; Prove the following lemma.
+
+\textbf{Lemma.} \emph{Let $0 \leq \xi < 1$ and let $n$ be a non-negative integer. Then there
+exist two real numbers, $A$ and $b$, such that $\xi < b < 1$ and $(j)^n \xi^j < A b^j$
+for $j = 0, 1, 2, \ldots$.}
+
+\textbf{Hint:} Pick any $b$ such that $\xi < b < 1$. Because $b^j$ eventually gets
+larger than $(j)^n \xi^j$ as $j$ increases, there exists some $j$, call it $J$, such that
+$(j)^n \xi^j < b^j$ for all $j \geq J$.
+
+\item Suppose the stability condition holds for the $p$-th order homogeneous linear
+difference equation. Prove that there exist two numbers, $A$ and $b$, such
+that $0 < b < 1$ and $|y_j| < A b^j$ for $j = 0, 1, 2, \ldots$.
+
+\textbf{Hint:}
+$|y_j| = \left|\sum_{k=1}^{K} \sum_{n=0}^{r_k-1} c_{kn} \cdot (j)^n \lambda_k^{-j}\right|
+\leq \sum_{k=1}^{K} \sum_{n=0}^{r_k-1} |c_{kn}| \cdot (j)^n \cdot |\lambda_k^{-1}|^j$.
+Since $|\lambda_k^{-1}| < 1$ by the stability condition, apply the lemma with $\xi = |\lambda_k^{-1}|$
+and claim $(j)^n |\lambda_k^{-1}|^j < A_k (b_k)^j$ for some $A_k > 0$ and $|\lambda_k^{-1}| < b_k < 1$.
+Set $A^* = \max\{A_k\}$ and $b = \max\{b_k\}$, so that $A_k(b_k)^j \leq A^* b^j$ for all $k$. Then define $A = cpA^*$.
+\end{enumerate}
+
+\exercise[5] (Yule--Walker equations) \; In the text, the autocovariances of an AR(1) process
+were calculated from the $\text{MA}(\infty)$ representation. Here, we use the Yule--Walker
+equations.
+
+\begin{enumerate}[label=(\alph*)]
+\item From $(6.2.1')$ on page~376, derive
+\[
+  \gamma_j - \phi \gamma_{j-1} = \E[\varepsilon_t \cdot (y_{t-j} - \mu)]
+  \quad (j = 0, 1, 2, \ldots).
+\]
+
+\item (Easy) \; From the MA representation, show that
+\[
+  \E[\varepsilon_t \cdot (y_{t-j} - \mu)] = \begin{cases} \sigma^2 & (j = 0) \\ 0 & (j = 1, 2, \ldots). \end{cases}
+\]
+
+\item Derive the Yule--Walker equations:
+\begin{align}
+  \gamma_0 - \phi \gamma_1 &= \sigma^2, \tag{9} \\
+  \gamma_j - \phi \gamma_{j-1} &= 0 \quad (j = 1, 2, \ldots). \tag{10}
+\end{align}
+
+\item Calculate $(\gamma_0, \gamma_1, \ldots)$ from (9) and (10). \textbf{Hint:} First set $j = 1$ in~(10) to
+obtain $\gamma_1 = \phi \gamma_0$. This and~(9) can be solved for $(\gamma_0, \gamma_1)$.
+\end{enumerate}
+
+\exercise[6] (AR(1) without using filters) \; We wish to prove, without the help of Proposition~6.2,
+that $\{y_t\}$ following the AR(1) equation~\eqref{eq:6.2.1}, with the stationarity
+condition $|\phi| < 1$, must have an $\text{MA}(\infty)$ representation if it is covariance-stationary.
+
+\begin{enumerate}[label=(\alph*)]
+\item Let $x_t \equiv y_t - \mu$ so that $\E(x_t) = 0$. By successive substitution, derive from
+$(6.2.1')$ on page~376
+\[
+  x_t = x_{t,n} + \phi^n x_{t-n}
+\]
+where $x_{t,n} = \varepsilon_t + \phi \varepsilon_{t-1} + \phi^2 \varepsilon_{t-2} + \cdots + \phi^{n-1} \varepsilon_{t-n+1}$.
+
+\item Show that $x_{t,n} \to_{\mathrm{m.s.}} x_t$. \textbf{Hint:} What needs to be shown is that $\E[(x_{t,n} -
+x_t)^2] \to 0$ as $n \to \infty$. $(x_{t,n} - x_t)^2 = \phi^{2n} x_{t-n}^2$. Because $\{y_t\}$ is assumed
+to be covariance-stationary, $\E(x_{t-n}^2) < \infty$.
+
+\item (Trivial) \; Recalling that the infinite sum $\sum_{j=0}^{\infty} \phi^j \varepsilon_{t-j}$
+is \emph{defined} to be the mean square limit of the partial sum $x_{t,n}$, show that $y_t$
+can be written as $y_t = \mu + \sum_{j=0}^{\infty} \phi^j \varepsilon_{t-j}$.
+\end{enumerate}
+
+\exercise[7] (Companion form) \; We wish to generalize the argument just developed in
+question~6 to $\text{AR}(p)$. Without loss of generality, we can assume that $\mu = 0$ (or
+redefine $y_t$ to be the deviation from the mean of $y_t$). Define
+\[
+  \underset{(p \times 1)}{\bm{\xi}_t} =
+  \begin{bmatrix} y_t \\ y_{t-1} \\ y_{t-2} \\ \vdots \\ y_{t-p+1} \end{bmatrix}, \quad
+  \underset{(p \times 1)}{\mathbf{v}_t} =
+  \begin{bmatrix} \varepsilon_t \\ 0 \\ 0 \\ \vdots \\ 0 \end{bmatrix}, \quad
+  \underset{(p \times p)}{\mathbf{F}} =
+  \begin{bmatrix}
+    \phi_1 & \phi_2 & \phi_3 & \cdots & \phi_{p-1} & \phi_p \\
+    1 & 0 & 0 & \cdots & 0 & 0 \\
+    0 & 1 & 0 & \cdots & 0 & 0 \\
+    \vdots & \vdots & \vdots & & \vdots & \vdots \\
+    0 & 0 & 0 & \cdots & 1 & 0
+  \end{bmatrix}.
+\]
+Consider the first-order vector stochastic difference equation: $\bm{\xi}_t = \mathbf{F}\bm{\xi}_{t-1} + \mathbf{v}_t$.
+In this system of $p$ equations, called the \textbf{companion form}, the first equation
+is the same as the $\text{AR}(p)$ equation $(6.2.6')$ and the rest are just
+identities about $y_{t-j}$ ($j = 1, 2, \ldots, p-1$).
+
+\begin{enumerate}[label=(\alph*)]
+\item By successive substitution, show that
+$\bm{\xi}_t = \bm{\xi}_{t,n} + (\mathbf{F})^n \bm{\xi}_{t-n}$
+where $\bm{\xi}_{t,n} \equiv \mathbf{v}_t + \mathbf{F}\mathbf{v}_{t-1} + \mathbf{F}^2 \mathbf{v}_{t-2} + \cdots + (\mathbf{F})^{n-1}\mathbf{v}_{t-n+1}$.
+
+The \textbf{eigenvalues} or \textbf{characteristic roots} of a $p \times p$ matrix $\mathbf{F}$ are the roots
+of the determinantal equation $|\mathbf{F} - \lambda \mathbf{I}_p| = 0$.
+It can be shown that $|\mathbf{F} - \lambda \mathbf{I}_p| = \lambda^p - \phi_1 \lambda^{p-1} - \cdots - \phi_{p-1}\lambda - \phi_p$.
+So the determinantal equation becomes the $p$-th order polynomial equation:
+$\lambda^p - \phi_1 \lambda^{p-1} - \cdots - \phi_{p-1}\lambda - \phi_p = 0$.
+
+\item Verify this for $p = 2$.
+
+In the rest of this question, assume that all the roots of the $p$-th order polynomial
+equation are distinct. Let $(\lambda_1, \lambda_2, \ldots, \lambda_p)$ be those distinct eigenvalues. We have from matrix algebra
+that there exists a nonsingular $p \times p$ matrix $\mathbf{T}$ such that
+$\mathbf{F} = \mathbf{T}\bm{\Lambda}\mathbf{T}^{-1}$, $\bm{\Lambda} = \diag(\lambda_1, \ldots, \lambda_p)$.
+
+\item (Very easy) \; Prove that $(\mathbf{F})^n = \mathbf{T}(\bm{\Lambda})^n \mathbf{T}^{-1}$ for $n = 3$.
+
+\item Show that $\bm{\xi}_{t,n} \to_{\mathrm{m.s.}} \bm{\xi}_t$ as $n \to \infty$ if the stationarity condition about the
+$\text{AR}(p)$ equation is satisfied and if $\{y_t\}$ is covariance-stationary. \textbf{Hint:} The
+stationarity condition requires that all the roots be less than~1 in absolute
+value. By~(12) what needs to be shown is that $(\mathbf{F})^n \bm{\xi}_{t-n} \to_{\mathrm{m.s.}} \mathbf{0}$. Recall
+that $\mathbf{z}_n \to_{\mathrm{m.s.}} \bm{\alpha}$ if the mean square convergence occurs component-wise.
+
+\item Show that $y_t$ has the $\text{MA}(\infty)$ representation
+$y_t = \psi_0 \varepsilon_t + \psi_1 \varepsilon_{t-1} + \psi_2 \varepsilon_{t-2} + \cdots$.
+How is $\psi_j$ related to the characteristic roots? \textbf{Hint:} From~(d) it immediately
+follows that $\bm{\xi}_t = \mathbf{v}_t + \mathbf{F}\mathbf{v}_{t-1} + (\mathbf{F})^2 \mathbf{v}_{t-2} + \cdots$.
+The top equation of this is the $\text{MA}(\infty)$ representation for $y_t$.
+\end{enumerate}
+
+\exercise[8] (AR(1) that started at $t = 0$) \; In the text, the $\text{MA}(\infty)$ representation~\eqref{eq:6.2.2} of
+an AR(1) process following $y_t = c + \phi y_{t-1} + \varepsilon_t$ assumes that the process is
+defined for $t = -1, -2, \ldots$ as well as for $t = 0, 1, 2, \ldots$. Instead, consider
+an AR(1) process that started at $t = 0$ with an initial value of $y_0$. Suppose that
+$|\phi| < 1$ and that $y_0$ is uncorrelated with the subsequent white noise process
+$(\varepsilon_1, \varepsilon_2, \ldots)$.
+
+\begin{enumerate}[label=(\alph*)]
+\item Write the variance of $y_t$ as a function of $\sigma^2$ ($\equiv \Var(\varepsilon_t)$), $\Var(y_0)$, and $\phi$.
+\textbf{Hint:} By successive substitution,
+\[
+  y_t = (1 + \phi + \phi^2 + \cdots + \phi^{t-1})c + \varepsilon_t + \phi\varepsilon_{t-1} + \phi^2\varepsilon_{t-2}
+  + \cdots + \phi^{t-1}\varepsilon_1 + \phi^t y_0.
+\]
+Let $\mu$ and $\{\gamma_j\}$ be the mean and autocovariances of the covariance-stationary
+AR(1) process, so $\mu = c/(1-\phi)$ and $\{\gamma_j\}$ are as in \eqref{eq:6.2.5}.
+Show that
+\begin{gather*}
+  \lim_{t \to \infty} \E(y_t) = \mu, \quad
+  \lim_{t \to \infty} \Var(y_t) = \gamma_0, \quad \text{and} \quad
+  \lim_{t \to \infty} \Cov(y_t, y_{t-j}) = \gamma_j.
+\end{gather*}
+
+\item Show that $\{y_t\}$ is covariance-stationary if $\E(y_0) = \mu$ and $\Var(y_0) = \gamma_0$.
+\end{enumerate}
+
+\exercise[9] (Proof of Proposition~6.8(a)) \; We wish to prove Proposition~6.8(a). By Chebychev's
+inequality, it suffices to show that $\lim_{n \to \infty} \Var(\bar{y}) = 0$. From \eqref{eq:6.5.2},
+\[
+  \Var(\bar{y}) = \frac{\gamma_0}{n} + \frac{2}{n} \sum_{j=1}^{n} \Bigl(1 - \frac{j}{n}\Bigr) \gamma_j
+  \leq \frac{\gamma_0}{n} + \frac{2}{n} \sum_{j=1}^{n} |\gamma_j|.
+\]
+
+\begin{enumerate}[label=(\alph*)]
+\item (Optional) \; Prove the following result:
+$\lim_{j \to \infty} a_j = 0 \;\Rightarrow\; \lim_{n \to \infty} \frac{1}{n} \sum_{j=1}^{n} a_j = 0$.
+
+\textbf{Hint:} $\{a_j\}$ converges to~0. So (i)~$|a_j| < M$ for all $j$, and (ii)~for any given $\varepsilon >
+0$ there exists a positive integer $N$ such that $|a_j| < \varepsilon/2$ for all $j > N$. So
+$\frac{1}{n}\sum |a_j| < \frac{NM}{n} + \frac{\varepsilon}{2}$.
+By taking $n$ large enough, $NM/n$ can be made less than $\varepsilon/2$.
+
+\item Taking the result in~(a) as given, prove that $\Var(\bar{y}) \to 0$ as $n \to \infty$.
+\end{enumerate}
+
+\exercise[10] (Proof of Proposition~6.8(b))
+
+\begin{enumerate}[label=(\alph*)]
+\item (Optional) \; Prove the following result:
+$\sum_{j=1}^{\infty} a_j < \infty \;\Rightarrow\; \lim_{n \to \infty} \frac{1}{n}\sum_{j=1}^{n} j\,a_j = 0$.
+
+\textbf{Hint:}
+$\sum_{j=1}^{n} j a_j = (a_1 + a_2 + \cdots + a_n) + (a_2 + a_3 + \cdots + a_n) + \cdots + (a_{n-1} + a_n) + a_n
+= \sum_{j=1}^{n}\Big|\sum_{k=j}^{n} a_k\Big|$.
+
+\item Taking the result in~(a) as given, prove Proposition~6.8(b).
+\end{enumerate}
+
+\subsection*{Empirical Exercises}
+
+\exercise[1] Read at least pp.~115--119 (except the last two paragraphs of p.~119) of Bekaert
+and Hodrick (1993) before answering. Data files DM.ASC (for the Deutsche
+Mark), POUND.ASC (British Pound), and YEN.ASC (Japanese Yen) contain
+weekly data on the following items:
+
+\begin{quote}
+Column 1: the date of the observation (e.g., ``19850104'' is January 4, 1985) \\
+Column 2: the ask price of the dollar in units of the foreign currency in the
+spot market on Friday of the current week ($S_t$) \\
+Column 3: the ask price of the dollar in units of the foreign currency in the
+30-day forward market on Friday of the current week ($F_t$) \\
+Column 4: the bid price of the dollar in units of the foreign currency in the spot
+market on the delivery date on a current forward contract ($S30_t$).
+\end{quote}
+
+The sample period is the first week of 1975 through the last week of 1989.
+The sample size is~778. As in the text, define $s_t \equiv \log(S_t)$, $f_t \equiv \log(F_t)$,
+$s30_t \equiv \log(S30_t)$. Define $\varepsilon_t \equiv s30_t - f_t$.
+
+Pick your favorite currency to answer the following questions.
+
+\begin{enumerate}[label=(\alph*)]
+\item (Library/internet work) \; For the foreign currency of your choice, identify
+the week when the absolute value of the forward premium is largest. For
+that week, find some measure of the domestic one-month interest rate (e.g.,
+the one-month CD rate) for the United States and the currency's home
+country, to verify that the interest rate differential is as large as is indicated
+in the forward premium.
+
+\item (Correlogram of $\{\varepsilon_t\}$) \; Draw the sample correlogram of $\varepsilon_t$ with 40~lags.
+Does the autocorrelation appear to vanish after 4~lags? (It is up to you to
+decide whether to subtract the sample mean in the calculation of sample
+correlations. Theory says the population mean is zero, which you might
+want to impose in the calculation.)
+
+\item (Is the log spot rate a random walk?) \; Draw the sample correlogram of
+$s_{t+1} - s_t$ with 40~lags. For those 40 autocorrelations, use the Box--Ljung
+statistic to test for serial correlation. Can you reject the hypothesis that $\{s_t\}$
+is a random walk with drift?
+
+\item (Unconditional test) \; Carry out the unconditional test. Can you replicate
+the results of Table~6.1 for the currency?
+
+\item (Optional, regression test with truncated kernel) \; Carry out the regression
+test. Can you replicate the results of Table~6.2 for the currency?
+
+\item (Bartlett kernel) \; Use the Bartlett kernel-based estimator of $\mathbf{S}$ to do the
+regression test. Newey and West (1994) provide a data-dependent automatic
+bandwidth selection procedure. Take for granted that the autocovariance
+lag length determined by this procedure is 12 for yen/\$, 8 for DM/\$,
+and 16 for Pound/\$. The standard error for the $f - s$ coefficient for yen/\$ should be 0.6815.
+
+\item (Optional, VARHAC) \; Use the VARHAC estimator for $\hat{\mathbf{S}}$ in the regression
+test. Set $p_{max}$ to the integer part of $n^{1/3}$. In Step~1 of the VARHAC, you
+would estimate a bivariate VAR, and for each of the two VAR equations,
+you would pick the lag length $p$ by BIC on the fixed sample of $t = p_{max} +
+1, \ldots, T$. The information criterion could be either \eqref{eq:6.6.11} or, alternatively,
+\[
+  \log(SSR_p^{(k)}/(n - p_{max})) + pK \cdot \log(n - p_{max})/(n - p_{max}).
+\]
+For yen/\$, the lag length selected should be 4 for the first VAR equation and 6 for the second.
+The standard error for the $f - s$ coefficient should be 0.8027.
+\end{enumerate}
+
+\exercise[2] (Continuation of Fama exercise of Chapter~2) \; Now we know how to use
+the three-month T-bill rate to test the efficiency of the U.S.\ Treasury bills market
+using monthly data. Let
+
+$\pi_t =$ inflation rate (in percent, annual rate) over the three-month
+period ending in month $t - 1$,
+
+$R_t =$ three-month T-bill rate (in percent, annual rate) at the beginning
+of month $t$.
+
+Consider the Fama regression for testing market efficiency:
+\[
+  \pi_{t+3} = \beta_0 + \beta_1 R_t + \varepsilon_t.
+\]
+
+\begin{enumerate}[label=(\alph*)]
+\item (Trivial) \; Why is the dependent variable $\pi_{t+3}$ rather than, say, $\pi_t$?
+
+\item Show that, under the efficient market hypothesis, $\beta_1 = 1$ and the autocovariance
+of $\{\varepsilon_t\}$ vanishes after the second lag (i.e., $\gamma_j = 0$ for $j > 2$).
+
+\item Let $r_{t+3} \equiv R_t - \pi_{t+3}$ be the ex-post real rate on the three-month T-bill.
+Use \emph{PAI3} in MISHKIN.ASC as the measure of the three-month inflation
+rate to calculate the ex-post real rate. Draw the sample correlogram for the sample period of 1/53--7/71. What is
+the prediction of the efficient market hypothesis about the correlogram?
+
+\item Test market efficiency by estimating the Fama regression for the sample
+period of 1/53--7/71. (The sample size should be~223; do not throw away
+two-thirds of the observations, as Fama did in his Tables~6--8.) Use \eqref{eq:6.6.4}
+with $q = 2$ for $\hat{\mathbf{S}}$.
+\end{enumerate}
+
+\end{problemset}
+
+\begin{answers}
+
+\subsection*{Analytical Exercises}
+
+\answer{2d} Since $\{\psi_j\}$ is absolutely summable, $\psi_j \to 0$ as $j \to \infty$. So for any $j$, there
+exists an $A > 0$ such that $|\psi_{j+k}| \leq A$ for all $j, k$. So $|\psi_{j+k} \cdot \psi_k| \leq A|\psi_k|$.
+Since $\{\psi_k\}$ (and hence $\{A\psi_k\}$) is absolutely summable, so is $\{\psi_{j+k} \cdot \psi_k\}$ ($k =
+0, 1, 2, \ldots$) for any given $j$. Thus by~(i),
+\[
+  |\gamma_j| = \sigma^2 \left|\sum_{k=0}^{\infty} \psi_{j+k}\,\psi_k\right|
+  \leq \sigma^2 \sum_{k=0}^{\infty} |\psi_{j+k}\,\psi_k|
+  = \sigma^2 \sum_{k=0}^{\infty} |\psi_{j+k}|\,|\psi_k| < \infty.
+\]
+Now set $a_{jk}$ to $|\psi_{j+k}| \cdot |\psi_k|$. Then
+\[
+  \sum_{j=0}^{\infty} |a_{jk}| = \sum_{j=0}^{\infty} |\psi_{j+k}|\,|\psi_k|
+  \leq |\psi_k| \sum_{j=0}^{\infty} |\psi_j| < \infty.
+\]
+Let $M \equiv \sum |\psi_j|$ and $s_k \equiv |\psi_k| \sum_{j=0}^{\infty} |\psi_{j+k}|$.
+Then $|s_k| \leq |\psi_k| \cdot M$ and $\{\psi_k\}$ is absolutely summable.
+Therefore, by~(ii),
+$\sum_{j=0}^{\infty}\bigl(\sum_{k=0}^{\infty} |\psi_{j+k}| \cdot |\psi_k|\bigr) < \infty$.
+This times $\sigma^2$ is $\sum_{j=0}^{\infty} |\gamma_j|$. So $\{\gamma_j\}$ is absolutely summable.
+
+\answer{7e} $\psi_j$ is the $(1, 1)$ element of $\mathbf{T}(\bm{\Lambda})^j \mathbf{T}^{-1}$.
+
+\answer{8a}
+\begin{align*}
+  \E(y_t) &= \frac{1 - \phi^t}{1 - \phi}\,c + \phi^t\,\E(y_0)
+  = (1 - \phi^t)\mu + \phi^t\,\E(y_0)
+  = \mu + \phi^t \cdot [\E(y_0) - \mu], \\
+  \Var(y_t) &= (1 + \phi^2 + \phi^4 + \cdots + \phi^{2t-2})\sigma^2 + \phi^{2t}\,\Var(y_0)
+  \quad (\text{since } \Cov(\varepsilon_t, y_0) = 0) \\
+  &= \frac{1 - \phi^{2t}}{1 - \phi^2}\,\sigma^2 + \phi^{2t}\,\Var(y_0)
+  = (1 - \phi^{2t})\gamma_0 + \phi^{2t}\,\Var(y_0) \\
+  &= \gamma_0 + \phi^{2t} \cdot [\Var(y_0) - \gamma_0], \\
+  \Cov(y_t, y_{t-j}) &= (\phi^j + \phi^{j+2} + \cdots + \phi^{2t-j-2})\sigma^2 + \phi^{2t-j}\,\Var(y_0) \\
+  &= \phi^j \cdot \frac{1 - \phi^{2(t-j)}}{1 - \phi^2}\,\sigma^2 + \phi^{2t-j}\,\Var(y_0) \\
+  &= \gamma_0 \phi^j + \phi^{2t-j} \cdot [\Var(y_0) - \gamma_0]
+  = \gamma_j + \phi^{2t-j} \cdot [\Var(y_0) - \gamma_0].
+\end{align*}
+
+\subsection*{Empirical Exercises}
+
+\answer{1c} The Ljung--Box statistic with 40~lags is 84.0 with a $p$-value of 0.0058\%. So the
+hypothesis that the spot rate is a random walk with drift can be rejected. See
+Figure~6.6 for the correlogram for yen/\$.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\textwidth,trim=50 350 50 350,clip]{figures/fig_6_6.png}
+\caption{Correlogram of $s_{t+1} - s_t$, Yen/Dollar}
+\label{fig:6.6}
+\end{figure}
+
+\answer{1f} For the yen/\$ exchange rate, the standard errors are 3.72 for the constant and
+0.68 for the $f - s$ coefficient. The Wald statistic for the hypothesis that $\beta_0 = 0$
+and $\beta_1 = 1$ is 21.85 ($p = 0.002\%$).
+
+\answer{2c} The correlogram for the three-month ex-post real rate is shown in Figure~6.7.
+Theory predicts that serial correlation vanishes after the second lag. The
+correlogram is mostly consistent with this prediction.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\textwidth,trim=50 350 50 350,clip]{figures/fig_6_7.png}
+\caption{Correlogram of Three-Month Ex-Post Real Rate}
+\label{fig:6.7}
+\end{figure}
+
+\end{answers}

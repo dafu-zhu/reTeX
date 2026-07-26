@@ -1,0 +1,352 @@
+% ch01.tex — Chapter 1: The Linear Model and Instrumental Variables Estimators
+\chapter{The Linear Model and Instrumental Variables Estimators}\label{ch:linear-model}
+
+The purpose of this book is to provide the reader with the tools and concepts needed to study the behavior of econometric estimators and test statistics in large samples. Throughout, attention will be directed to estimation and inference in the framework of a linear stochastic relationship such as
+\begin{equation}\label{eq:dgp-scalar}
+Y_t = \vec{X}_t' \bfbeta_o + \eps_t, \quad t = 1, \ldots, n,
+\end{equation}
+where we have $n$ observations on the scalar dependent variable $Y_t$ and the vector of explanatory variables $\vec{X}_t = (X_{t1}, X_{t2}, \ldots, X_{tk})'$. The scalar stochastic disturbance $\eps_t$ is unobserved, and $\bfbeta_o$ is an unknown $k \times 1$ vector of coefficients that we are interested in learning about, either through estimation or through hypothesis testing. In matrix notation this relationship is written as
+\begin{equation}\label{eq:dgp-matrix}
+\bfY = \bfX \bfbeta_o + \bfeps,
+\end{equation}
+where $\bfY$ is an $n \times 1$ vector, $\bfX$ is an $n \times k$ matrix with rows $\vec{X}_t'$, and $\bfeps$ is an $n \times 1$ vector with elements $\eps_t$.
+
+(Our notation embodies a convention we follow throughout: scalars will be represented in standard type, while vectors and matrices will be represented in boldface. Throughout, all vectors are column vectors.)
+
+Most econometric estimators can be viewed as solutions to an optimization problem. For example, the ordinary least squares estimator is the value of $\bfbeta$ that minimizes the sum of squared residuals
+\begin{align}
+\text{SSR}(\bfbeta) &= (\bfY - \bfX\bfbeta)'(\bfY - \bfX\bfbeta) \notag \\
+&= \sum_{t=1}^{n} (Y_t - \vec{X}_t'\bfbeta)^2.
+\end{align}
+The first-order conditions for a minimum are
+\begin{align}
+\partial \text{SSR}(\bfbeta) / \partial \bfbeta &= -2\bfX'(\bfY - \bfX\bfbeta) \notag \\
+&= -2 \sum_{t=1}^{n} \vec{X}_t (Y_t - \vec{X}_t'\bfbeta) = \vec{0}.
+\end{align}
+If $\bfX'\bfX = \sum_{t=1}^{n} \vec{X}_t \vec{X}_t'$ is nonsingular, this system of $k$ equations in $k$ unknowns can be uniquely solved for the ordinary least squares (OLS) estimator
+\begin{align}
+\hat{\bfbeta}_n &= (\bfX'\bfX)^{-1} \bfX'\bfY \notag \\
+&= \left( \sum_{t=1}^{n} \vec{X}_t \vec{X}_t' \right)^{-1} \sum_{t=1}^{n} \vec{X}_t Y_t.
+\end{align}
+Our interest centers on the behavior of estimators such as $\hat{\bfbeta}_n$ as $n$ grows larger and larger. We seek conditions that will allow us to draw conclusions about the behavior of $\hat{\bfbeta}_n$; for example, that $\hat{\bfbeta}_n$ has a particular distribution or certain first and second moments.
+
+The assumptions of the \emph{classical linear model} allow us to draw such conclusions for any $n$. These conditions and results can be formally stated as the following theorem.
+
+\begin{theorem}\label{thm:classical}
+\emph{The following are the assumptions of the classical linear model.}
+\begin{enumerate}[label=(\roman*)]
+\item The data are generated as $Y_t = \vec{X}_t' \bfbeta_o + \eps_t$, \quad $t = 1, \ldots, n$, $\bfbeta_o \in \mathbb{R}^k$.
+\item $\bfX$ is a nonstochastic and finite $n \times k$ matrix, $n > k$.
+\item $\bfX'\bfX$ is nonsingular.
+\item $E(\bfeps) = \vec{0}$.
+\item $\bfeps \sim N(\vec{0}, \sigma_o^2 \bfI)$, \quad $\sigma_o^2 < \infty$.
+\end{enumerate}
+\begin{enumerate}[label=(\alph*)]
+\item \emph{(Existence)} Given $(i)$--$(iii)$, $\hat{\bfbeta}_n$ exists and is unique.
+\item \emph{(Unbiasedness)} Given $(i)$--$(iv)$, $E(\hat{\bfbeta}_n) = \bfbeta_o$.
+\item \emph{(Normality)} Given $(i)$--$(v)$, $\hat{\bfbeta}_n \sim N(\bfbeta_o, \sigma_o^2 (\bfX'\bfX)^{-1})$.
+\item \emph{(Efficiency)} Given $(i)$--$(v)$, $\hat{\bfbeta}_n$ is the maximum likelihood estimator and is the best unbiased estimator in the sense that the variance--covariance matrix of any other unbiased estimator exceeds that of $\hat{\bfbeta}_n$ by a positive semidefinite matrix, regardless of the value of $\bfbeta_o$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+See Theil (1971, Ch.\ 3).
+\end{proof}
+
+In the statement of the assumptions above, $E(\cdot)$ denotes the expected value operator, and $\bfeps \sim N(\vec{0}, \sigma_o^2 \bfI)$ means that $\bfeps$ is distributed as ($\sim$) multivariate normal with mean vector zero and covariance matrix $\sigma_o^2 \bfI$, where $\bfI$ is the identity matrix.
+
+The properties of existence, unbiasedness, normality, and efficiency of an estimator are the small sample analogs of the properties that will be the focus of interest here. Unbiasedness tells us that the distribution of $\hat{\bfbeta}_n$ is centered around the unknown true value $\bfbeta_o$, whereas the normality property allows us to construct confidence intervals and test hypotheses using the $t$- or $F$-distributions (see Theil, 1971, pp.\ 130--146). The efficiency property guarantees that our estimator has the greatest possible precision within a given class of estimators and also helps ensure that tests of hypotheses have high power.
+
+Of course, the classical assumptions are rather stringent and can easily fail in situations faced by economists. Since failures of assumptions $(iii)$ and $(iv)$ are easily remedied (exclude linearly dependent regressors if $(iii)$ fails; include a constant in the model if $(iv)$ fails), we will concern ourselves primarily with the failure of assumptions $(ii)$ and $(v)$. The possible failure of assumption $(i)$ is a subject that requires a book in itself (see, e.g., White, 1994) and will not be considered here. Nevertheless, the tools developed in this book will be essential to understanding and treating the consequences of the failure of assumption $(i)$.
+
+Let us briefly examine the consequences of various failures of assumptions $(ii)$ or $(v)$. First, suppose that $\bfeps$ exhibits heteroskedasticity or serial correlation, so that $E(\bfeps\bfeps') = \bfOmega \neq \sigma_o^2 \bfI$. We have the following result for the OLS estimator.
+
+\begin{theorem}\label{thm:ols-nonspherical}
+\emph{Suppose the classical assumptions $(i)$--$(iv)$ hold but replace $(v)$ with $(v')$ $\bfeps \sim N(\vec{0}, \bfOmega)$, $\bfOmega$ finite and nonsingular. Then $(a)$ and $(b)$ hold as before, $(c)$ is replaced by}
+
+$(c')$ \emph{(Normality)} Given $(i)$--$(v')$,
+\begin{equation}
+\hat{\bfbeta}_n \sim N(\bfbeta_o, (\bfX'\bfX)^{-1}\bfX'\bfOmega\bfX(\bfX'\bfX)^{-1}),
+\end{equation}
+
+\emph{and $(d)$ does not hold; that is, $\hat{\bfbeta}_n$ is no longer necessarily the best unbiased estimator.}
+\end{theorem}
+
+\begin{proof}
+By definition, $\hat{\bfbeta}_n = (\bfX'\bfX)^{-1}\bfX'\bfY$. Given $(i)$,
+\begin{equation}
+\hat{\bfbeta}_n = \bfbeta_o + (\bfX'\bfX)^{-1}\bfX'\bfeps,
+\end{equation}
+where $(\bfX'\bfX)^{-1}\bfX'\bfeps$ is a linear combination of jointly normal random variables and is therefore jointly normal with
+\[
+E((\bfX'\bfX)^{-1}\bfX'\bfeps) = (\bfX'\bfX)^{-1}\bfX' E(\bfeps) = \vec{0},
+\]
+given $(ii)$ and $(iv)$ and
+\begin{align}
+\Var((\bfX'\bfX)^{-1}\bfX'\bfeps) &= E((\bfX'\bfX)^{-1}\bfX'\bfeps\bfeps'\bfX(\bfX'\bfX)^{-1}) \notag \\
+&= (\bfX'\bfX)^{-1}\bfX' E(\bfeps\bfeps') \bfX (\bfX'\bfX)^{-1} \notag \\
+&= (\bfX'\bfX)^{-1}\bfX'\bfOmega\bfX(\bfX'\bfX)^{-1},
+\end{align}
+given $(ii)$ and $(v')$. Hence $\hat{\bfbeta}_n \sim N(\bfbeta_o, (\bfX'\bfX)^{-1}\bfX'\bfOmega\bfX(\bfX'\bfX)^{-1})$. That $(d)$ does not hold follows because there exists an unbiased estimator with a smaller covariance matrix than $\hat{\bfbeta}_n$, namely, $\bfbeta_n^* = (\bfX'\bfOmega^{-1}\bfX)^{-1}\bfX'\bfOmega^{-1}\bfY$. We examine its properties next.
+\end{proof}
+
+As long as $\bfOmega$ is known, the presence of serial correlation or heteroskedasticity does not cause problems for testing hypotheses or constructing confidence intervals. This can still be done using $(c')$, although the failure of $(d)$ indicates that the OLS estimator may not be best for these purposes. However, if $\bfOmega$ is unknown (apart from a factor of proportionality), testing hypotheses and constructing confidence intervals is no longer a simple matter. One might be able to construct tests based on estimates of $\bfOmega$, but the resulting statistics may have very complicated distributions. As we shall see in Chapter~6, this difficulty is lessened in large samples by the availability of convenient approximations based on the central limit theorem and laws of large numbers.
+
+If $\bfOmega$ is known, efficiency can be regained by applying OLS to a linear transformation of the original model, i.e.,
+\begin{equation}
+\vec{C}^{-1}\bfY = \vec{C}^{-1}\bfX\bfbeta_o + \vec{C}^{-1}\bfeps
+\end{equation}
+or
+\begin{equation}
+\bfY^* = \bfX^*\bfbeta_o + \bfeps^*,
+\end{equation}
+where $\bfY^* = \vec{C}^{-1}\bfY$, $\bfX^* = \vec{C}^{-1}\bfX$, $\bfeps^* = \vec{C}^{-1}\bfeps$ and $\vec{C}$ is a nonsingular factorization of $\bfOmega$ such that $\vec{C}\vec{C}' = \bfOmega$ so that $\vec{C}^{-1}\bfOmega\vec{C}^{-1\prime} = \bfI$. This transformation ensures that $E(\bfeps^*\bfeps^{*\prime}) = E(\vec{C}^{-1}\bfeps\bfeps'\vec{C}^{-1\prime}) = \vec{C}^{-1}E(\bfeps\bfeps')\vec{C}^{-1\prime} = \vec{C}^{-1}\bfOmega\vec{C}^{-1\prime} = \bfI$, so that assumption $(v)$ once again holds. The least squares estimator for the transformed model is
+\begin{align}
+\hat{\bfbeta}_n^* &= (\bfX^{*\prime}\bfX^*)^{-1}\bfX^{*\prime}\bfY^* \notag \\
+&= (\bfX'\vec{C}^{-1\prime}\vec{C}^{-1}\bfX)^{-1}\bfX'\vec{C}^{-1\prime}\vec{C}^{-1}\bfY \notag \\
+&= (\bfX'\bfOmega^{-1}\bfX)^{-1}\bfX'\bfOmega^{-1}\bfY.
+\end{align}
+The estimator $\hat{\bfbeta}_n^*$ is called the generalized least squares (GLS) estimator, and its properties are given by the following result.
+
+\begin{theorem}\label{thm:gls}
+\emph{The following are the ``generalized'' classical assumptions.}
+\begin{enumerate}[label=(\roman*)]
+\item The data are generated as $Y_t = \vec{X}_t' \bfbeta_o + \eps_t$, \quad $t = 1, \ldots, n$, \quad $\bfbeta_o \in \mathbb{R}^k$.
+\item $\bfX$ is a nonstochastic and finite $n \times k$ matrix, $n > k$.
+\end{enumerate}
+\begin{enumerate}[label=(\roman*)]
+\setcounter{enumi}{2}
+\item[$(iii^*)$] $\bfOmega$ is finite and positive definite, and $\bfX'\bfOmega^{-1}\bfX$ is nonsingular.
+\end{enumerate}
+\begin{enumerate}[label=(\roman*)]
+\setcounter{enumi}{3}
+\item $E(\bfeps) = \vec{0}$.
+\end{enumerate}
+\begin{enumerate}[label=(\roman*)]
+\setcounter{enumi}{4}
+\item[$(v^*)$] $\bfeps \sim N(\vec{0}, \bfOmega)$.
+\end{enumerate}
+\begin{enumerate}[label=(\alph*)]
+\item \emph{(Existence)} Given $(i)$--$(iii^*)$, $\hat{\bfbeta}_n^*$ exists and is unique.
+\item \emph{(Unbiasedness)} Given $(i)$--$(iv)$, $E(\hat{\bfbeta}_n^*) = \bfbeta_o$.
+\item \emph{(Normality)} Given $(i)$--$(v^*)$, $\hat{\bfbeta}_n^* \sim N(\bfbeta_o, (\bfX'\bfOmega^{-1}\bfX)^{-1})$.
+\item \emph{(Efficiency)} Given $(i)$--$(v^*)$, $\hat{\bfbeta}_n^*$ is the maximum likelihood estimator and is the best unbiased estimator.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Apply Theorem~\ref{thm:classical} with $Y_t^* = \vec{X}_t^{*\prime}\bfbeta_o + \eps_t^*$.
+\end{proof}
+
+If $\bfOmega$ is known, we obtain efficiency by transforming the model ``back'' to a form in which OLS gives the efficient estimator. However, if $\bfOmega$ is unknown, this transformation is not immediately available. It might be possible to estimate $\bfOmega$, say by $\hat{\bfOmega}$, but $\hat{\bfOmega}$ is then random and so is the factorization $\hat{\vec{C}}$. Theorem~\ref{thm:classical} no longer applies. Nevertheless, it turns out that in large samples we can often proceed by replacing $\bfOmega$ with a suitable estimator $\hat{\bfOmega}$. We consider such situations in Chapter~4.
+
+Hypothesis testing in the classical linear model relies heavily on being able to make use of the $t$- and $F$-distributions. However, it is quite possible that the normality assumption $(v)$ or $(v^*)$ may fail. When this happens, the classical $t$- and $F$-statistics generally no longer have the $t$- and $F$-distributions. Nevertheless, the central limit theorem can be applied when $n$ is large to guarantee that $\hat{\bfbeta}_n$ or $\hat{\bfbeta}_n^*$ is distributed approximately as normal, as we shall see in Chapters~4 and~5.
+
+Now consider what happens when assumption $(ii)$ fails, so that the explanatory variables $\vec{X}_t$ are stochastic. In some cases, this causes no real problems because we can examine the properties of our estimators ``conditional'' on $\bfX$. For example, consider the unbiasedness property. To demonstrate unbiasedness we use $(i)$ to write
+\begin{equation}
+\hat{\bfbeta}_n = \bfbeta_o + (\bfX'\bfX)^{-1}\bfX'\bfeps.
+\end{equation}
+If $\bfX$ is random, we can no longer write $E((\bfX'\bfX)^{-1}\bfX'\bfeps) = (\bfX'\bfX)^{-1}\bfX' E(\bfeps)$. However, by taking conditional expectations, we can treat $\bfX$ as ``fixed,'' so we have
+\begin{align}
+E(\hat{\bfbeta}_n | \bfX) &= \bfbeta_o + E((\bfX'\bfX)^{-1}\bfX'\bfeps | \bfX) \notag \\
+&= \bfbeta_o + (\bfX'\bfX)^{-1}\bfX' E(\bfeps | \bfX).
+\end{align}
+If we are willing to assume $E(\bfeps | \bfX) = \vec{0}$, then conditional unbiasedness follows, i.e.,
+\begin{equation}
+E(\hat{\bfbeta}_n | \bfX) = \bfbeta_o.
+\end{equation}
+Unconditional unbiasedness follows from this as a consequence of the law of iterated expectations (given in Chapter~3), i.e.,
+\begin{equation}
+E(\hat{\bfbeta}_n) = E[E(\hat{\bfbeta}_n | \bfX)] = E(\bfbeta_o) = \bfbeta_o.
+\end{equation}
+
+The other properties can be similarly considered. However, the assumption that $E(\bfeps | \bfX) = \vec{0}$ is crucial. If $E(\bfeps | \bfX) \neq \vec{0}$, $\hat{\bfbeta}_n$ need not be unbiased, either conditionally or unconditionally.
+
+Situations in which $E(\bfeps | \bfX) \neq \vec{0}$ can arise easily in economics. For example, $\vec{X}_t$ may contain errors of measurement. Suppose the data are generated as
+\begin{equation}
+Y_t = \vec{W}_t' \bfbeta_o + \nu_t, \quad E(\vec{W}_t \nu_t) = \vec{0},
+\end{equation}
+but we measure $\vec{W}_t$ subject to errors $\bfeta_t$, as $\vec{X}_t = \vec{W}_t + \bfeta_t$, $E(\vec{W}_t \bfeta_t') = \vec{0}$, $E(\bfeta_t \bfeta_t') \neq 0$, $E(\bfeta_t \nu_t) = 0$. Then
+\begin{equation}
+Y_t = \vec{X}_t' \bfbeta_o + \nu_t - \bfeta_t' \bfbeta_o = \vec{X}_t' \bfbeta_o + \eps_t.
+\end{equation}
+With $\eps_t = \nu_t - \bfeta_t' \bfbeta_o$, we have $E(\vec{X}_t \eps_t) = E[(\vec{W}_t + \bfeta_t)(\nu_t - \bfeta_t' \bfbeta_o)] = -E(\bfeta_t \bfeta_t')\bfbeta_o \neq \vec{0}$. Now $E(\bfeps | \bfX) = \vec{0}$ implies that for all $t$, $E(\vec{X}_t \eps_t) = \vec{0}$, since $E(\vec{X}_t \eps_t) = E[E(\vec{X}_t \eps_t | \bfX)] = E[\vec{X}_t E(\eps_t | \bfX)] = \vec{0}$. Hence $E(\vec{X}_t \eps_t) \neq \vec{0}$ implies $E(\bfeps | \bfX) \neq \vec{0}$. The OLS estimator will not be unbiased in the presence of measurement errors.
+
+As another example, consider the data generating process
+\begin{align}
+Y_t &= Y_{t-1} \alpha_o + \vec{W}_t' \boldsymbol{\delta}_o + \eps_t, \quad E(\vec{W}_t \eps_t) = \vec{0}; \notag \\
+\eps_t &= \rho_o \eps_{t-1} + \nu_t, \qquad\qquad\quad E(\eps_{t-1} \nu_t) = 0.
+\end{align}
+This is the case of \emph{serially correlated errors} in the presence of a \emph{lagged dependent variable} $Y_{t-1}$. Let $\vec{X}_t = (Y_{t-1}, \vec{W}_t')'$ and $\bfbeta_o = (\alpha_o, \boldsymbol{\delta}_o')'$. Again, we have
+\[
+Y_t = \vec{X}_t' \bfbeta_o + \eps_t,
+\]
+but
+\[
+E(\vec{X}_t \eps_t) = E((Y_{t-1}, \vec{W}_t')' \eps_t) = (E(Y_{t-1} \eps_t), \vec{0})'.
+\]
+If we also assume $E(Y_{t-1} \nu_t) = 0$, $E(Y_{t-1}\eps_{t-1}) = E(Y_t \eps_t)$, and $E(\eps_t^2) = \sigma_o^2$, it can be shown that
+\begin{equation}
+E(Y_{t-1} \eps_t) = \frac{\sigma_o^2 \rho_o}{1 - \rho_o \alpha_o}\,.
+\end{equation}
+Thus if $\rho_o \neq 0$, then $E(\vec{X}_t \eps_t) \neq \vec{0}$ so that $E(\bfeps | \bfX) \neq \vec{0}$ and OLS is not generally unbiased.
+
+As a final example, consider a system of simultaneous equations
+\begin{align}
+Y_{t1} &= Y_{t2}\alpha_o + \vec{W}_{t1}'\boldsymbol{\delta}_o + \eps_{t1}, \quad E(\vec{W}_{t1}\eps_{t1}) = \vec{0}, \notag \\
+Y_{t2} &= \vec{W}_{t2}'\boldsymbol{\gamma}_0 + \eps_{t2}, \qquad\qquad\;\; E(\vec{W}_{t2}\eps_{t2}) = \vec{0}.
+\end{align}
+Suppose we are only interested in the first equation, but we know $E(\eps_{t1}\eps_{t2}) = \sigma_{12} \neq 0$. Let $\vec{X}_{t1} = (Y_{t2}, \vec{W}_{t1}')'$ and $\bfbeta_o = (\alpha_o, \boldsymbol{\delta}_o')'$. The equation of interest is now
+\[
+Y_{t1} = \vec{X}_{t1}' \bfbeta_o + \eps_{t1}.
+\]
+In this case $E(\vec{X}_{t1}\eps_{t1}) = E((Y_{t2}, \vec{W}_{t1}')'\eps_{t1}) = (E(Y_{t2}\eps_{t1}), \vec{0})'$. Now
+\[
+E(Y_{t2}\eps_{t1}) = E((\vec{W}_{t2}'\boldsymbol{\gamma}_0 + \eps_{t2})\eps_{t1}) = E(\eps_{t1}\eps_{t2}) = \sigma_{12} \neq 0,
+\]
+assuming $E(\vec{W}_{t2}\eps_{t1}) = \vec{0}$. Thus $E(\vec{X}_{t1}\eps_{t1}) = (\sigma_{12}, \vec{0})' \neq \vec{0}$, so again OLS is not generally unbiased, either conditionally or unconditionally.
+
+Not only is the OLS estimator generally biased in these circumstances, but it can be shown under reasonable conditions that this bias does not get smaller as $n$ gets larger. Fortunately, there is an alternative to least squares that is better behaved, at least in large samples. This alternative, first used by P.~G.\ Wright (1928) and his son S.\ Wright (1925) and formally developed by Reiers\o l (1941, 1945) and Geary (1949), exploits the fact that even when $E(\vec{X}_t \eps_t) \neq \vec{0}$, it is often possible to use economic theory to find other variables that are uncorrelated with the errors $\eps_t$. Without such variables, correlations between the observables and unobservables (the errors $\eps_t$) persistently contaminate our estimators, making it impossible to learn anything about $\bfbeta_o$. Hence, these variables are instrumental in allowing us to estimate $\bfbeta_o$, and we shall denote these ``instrumental variables'' as an $l \times 1$ vector $\vec{Z}_t$. The $n \times l$ matrix $\bfZ$ has rows $\vec{Z}_t'$.
+
+To be useful, the instrumental variables must also be closely enough related to $\vec{X}_t$ so that $\bfZ'\bfX$ has full column rank. If we know from economic theory that $E(\vec{X}_t \eps_t) = \vec{0}$, then $\vec{X}_t$ can serve directly as the set of instrumental variables. As we saw previously, $\vec{X}_t$ may be correlated with $\eps_t$ so we cannot always choose $\vec{Z}_t = \vec{X}_t$. Nevertheless, in each of those examples, the structure of the data generating process suggests some reasonable choices for $\bfZ$. In the case of errors of measurement, a useful set of instrumental variables would be another set of measurements on $\vec{W}_t$ subject to errors $\boldsymbol{\xi}_t$ uncorrelated with $\bfeta_t$ and $\nu_t$, say $\vec{Z}_t = \vec{W}_t + \boldsymbol{\xi}_t$. Then $E(\vec{Z}_t \eps_t) = E[(\vec{W}_t + \boldsymbol{\xi}_t)(\nu_t - \bfeta_t'\bfbeta_o)] = \vec{0}$. In the case of serial correlation in the presence of lagged dependent variables, a useful choice is $\vec{Z}_t = (\vec{W}_t', \vec{W}_{t-1}')'$ provided $E(\vec{W}_{t-1}\eps_t) = \vec{0}$, which is not unreasonable. Note that the relation $Y_{t-1} = Y_{t-2}\alpha_o + \vec{W}_{t-1}'\boldsymbol{\delta}_o + \eps_{t-1}$ ensures that $\vec{W}_{t-1}$ will be related to $Y_{t-1}$. In the case of simultaneous equations, a useful choice is $\vec{Z}_t = (\vec{W}_{t1}', \vec{W}_{t2}')'$. The relation $Y_{t2} = \vec{W}_{t2}'\boldsymbol{\gamma}_0 + \eps_{2t}$ ensures that $\vec{W}_{t2}$ will be related to $Y_{t2}$.
+
+In what follows, we shall simply assume that such instrumental variables are available. However, in Chapter~4 we shall be able to specify precisely how best to choose the instrumental variables.
+
+Earlier, we stated the important fact that most econometric estimators can be viewed as solutions to an optimization problem. In the present context, the zero correlation property $E(\vec{Z}_t \eps_t) = \vec{0}$ provides the fundamental basis for estimating $\bfbeta_o$. Because $\eps_t = Y_t - \vec{X}_t' \bfbeta_o$, $\bfbeta_o$ is a solution of the equations $E(\vec{Z}_t(Y_t - \vec{X}_t' \bfbeta_o)) = \vec{0}$. However, we usually do not know the expectations $E(\vec{Z}_t Y_t)$ and $E(\vec{Z}_t \vec{X}_t')$ needed to find a solution to these equations, so we replace expectations with sample averages, which we hope will provide a close enough approximation. Thus, consider finding a solution to the equations
+\begin{equation}
+n^{-1}\sum_{t=1}^{n} \vec{Z}_t (Y_t - \vec{X}_t' \bfbeta_o) = \bfZ'(\bfY - \bfX\bfbeta_o)/n = \vec{0}.
+\end{equation}
+This is a system of $l$ equations in $k$ unknowns. If $l < k$, there is a multiplicity of solutions; if $l = k$, the unique solution is $\tilde{\bfbeta}_n = (\bfZ'\bfX)^{-1}\bfZ'\bfY$, provided that $\bfZ'\bfX$ is nonsingular; and if $l > k$, these equations need have no solution, although there may be a value for $\bfbeta$ that makes $\bfZ'(\bfY - \bfX\bfbeta)$ ``closest'' to zero.
+
+This provides the basis for solving an optimization problem. Because economic theory typically leads to situations in which $l > k$, we can estimate $\bfbeta_o$ by finding that value of $\bfbeta$ that minimizes the quadratic distance from zero of $\bfZ'(\bfY - \bfX\bfbeta)$,
+\begin{equation}
+d_n(\bfbeta) = (\bfY - \bfX\bfbeta)'\bfZ\hat{\vec{P}}_n\bfZ'(\bfY - \bfX\bfbeta),
+\end{equation}
+where $\hat{\vec{P}}_n$ is a symmetric $l \times l$ positive definite norming matrix which may be stochastic. For now, $\hat{\vec{P}}_n$ can be any symmetric positive definite matrix. In Chapter~4 we shall see how the choice of $\hat{\vec{P}}_n$ affects the properties of our estimator and how $\hat{\vec{P}}_n$ can best be chosen.
+
+We choose the quadratic distance measure because the minimization problem ``minimize $d_n(\bfbeta)$ with respect to $\bfbeta$'' has a convenient linear solution and yields many well-known econometric estimators. Other distance measures yield other families of estimators that we will not consider here.
+
+The first-order conditions for a minimum are
+\begin{equation}
+\partial d_n(\bfbeta) / \partial \bfbeta = -2\bfX'\bfZ\hat{\vec{P}}_n\bfZ'(\bfY - \bfX\bfbeta) = \vec{0}.
+\end{equation}
+Provided that $\bfX'\bfZ\hat{\vec{P}}_n\bfZ'\bfX$ is nonsingular (for which it is necessary that $\bfZ'\bfX$ have full column rank), the resulting solution is the \emph{instrumental variables} (IV) estimator (also known as the ``method of moments'' estimator)
+\begin{equation}
+\tilde{\bfbeta}_n = (\bfX'\bfZ\hat{\vec{P}}_n\bfZ'\bfX)^{-1}\bfX'\bfZ\hat{\vec{P}}_n\bfZ'\bfY.
+\end{equation}
+All of the estimators considered in this book have this form, and by choosing $\bfZ$ or $\hat{\vec{P}}_n$ appropriately, we can obtain a large number of the estimators of interest to econometricians. For example, with $\bfZ = \bfX$ and $\hat{\vec{P}}_n = (\bfX'\bfX/n)^{-1}$, $\tilde{\bfbeta}_n = \hat{\bfbeta}_n$; that is, the IV estimator equals the OLS estimator. Given any $\bfZ$, choosing $\hat{\vec{P}}_n = (\bfZ'\bfZ/n)^{-1}$ gives an estimator known as \emph{two-stage least squares} (2SLS). The tools developed in the following chapters will allow us to pick $\bfZ$ and $\hat{\vec{P}}_n$ in ways appropriate to many of the situations encountered in economics.
+
+Now consider the problem of determining whether $\tilde{\bfbeta}_n$ is unbiased. If the data generating process is $\bfY = \bfX\bfbeta_o + \bfeps$, we have
+\begin{align}
+\tilde{\bfbeta}_n &= (\bfX'\bfZ\hat{\vec{P}}_n\bfZ'\bfX)^{-1}\bfX'\bfZ\hat{\vec{P}}_n\bfZ'\bfY \notag \\
+&= (\bfX'\bfZ\hat{\vec{P}}_n\bfZ'\bfX)^{-1}\bfX'\bfZ\hat{\vec{P}}_n\bfZ'(\bfX\bfbeta_o + \bfeps) \notag \\
+&= \bfbeta_o + (\bfX'\bfZ\hat{\vec{P}}_n\bfZ'\bfX)^{-1}\bfX'\bfZ\hat{\vec{P}}_n\bfZ'\bfeps,
+\end{align}
+so that
+\begin{equation}
+E(\tilde{\bfbeta}_n) = \bfbeta_o + E((\bfX'\bfZ\hat{\vec{P}}_n\bfZ'\bfX)^{-1}\bfX'\bfZ\hat{\vec{P}}_n\bfZ'\bfeps).
+\end{equation}
+In general, it is not possible to guarantee that the second term above vanishes, even when $E(\bfeps | \bfZ) = \vec{0}$. In fact, the expectation in the second term above may not even be defined. For this reason, the concept of unbiasedness is not particularly relevant to the study of IV estimators. Instead, we shall make use of the weaker concept of \emph{consistency}. Loosely speaking, an estimator is ``consistent'' for $\bfbeta_o$ if it gets closer and closer to $\bfbeta_o$ as $n$ grows. In Chapters~2 and~3 we make this concept precise and explore the consistency properties of OLS and IV estimators. For the examples above in which $E(\bfeps | \bfX) \neq \vec{0}$, it turns out that OLS is not consistent, whereas consistent IV estimators are available under general conditions.
+
+Although we only consider linear stochastic relationships in this book, this still covers a wide range of situations. For example, suppose we have several equations that describe demand for a group of $p$ commodities:
+\begin{align}
+Y_{t1} &= \vec{X}_{t1}'\bfbeta_1 + \eps_{t1} \notag \\
+Y_{t2} &= \vec{X}_{t2}'\bfbeta_2 + \eps_{t2} \notag \\
+&\;\;\vdots \notag \\
+Y_{tp} &= \vec{X}_{tp}'\bfbeta_p + \eps_{tp}, \quad t = 1, \ldots, n.
+\end{align}
+Now let $\vec{Y}_t$, be a $p \times 1$ vector, $\vec{Y}_t = (Y_{t1}, Y_{t2}, \ldots, Y_{tp})'$, let $\bfeps_t' = (\eps_{t1}, \eps_{t2}, \ldots, \eps_{tp})$, let $\bfbeta_o = (\bfbeta_1', \bfbeta_2', \ldots, \bfbeta_p')'$, and let
+\[
+\vec{X}_t = \begin{bmatrix} \vec{X}_{t1} & \vec{0} & \cdots & \vec{0} \\ \vec{0} & \vec{X}_{t2} & & \vec{0} \\ \vdots & \vdots & \ddots & \vdots \\ \vec{0} & \vec{0} & \cdots & \vec{X}_{tp} \end{bmatrix}.
+\]
+Now $\vec{X}_t$ is a $k \times p$ matrix, where $k = \sum_{i=1}^{p} k_i$ and $\vec{X}_{ti}$ is a $k_i \times 1$ vector. The system of equations can be written as
+\[
+\begin{bmatrix} Y_{t1} \\ Y_{t2} \\ \vdots \\ Y_{tp} \end{bmatrix}
+= \begin{bmatrix} \vec{X}_{t1} & \vec{0} & \cdots & \vec{0} \\ \vec{0} & \vec{X}_{t2} & & \vec{0} \\ \vdots & \vdots & \ddots & \vdots \\ \vec{0} & \vec{0} & \cdots & \vec{X}_{tp} \end{bmatrix}'
+\begin{bmatrix} \bfbeta_1 \\ \bfbeta_2 \\ \vdots \\ \bfbeta_p \end{bmatrix}
++ \begin{bmatrix} \eps_{t1} \\ \eps_{t2} \\ \vdots \\ \eps_{tp} \end{bmatrix}
+\]
+or
+\[
+\vec{Y}_t = \vec{X}_t' \bfbeta_o + \bfeps_t.
+\]
+Letting $\bfY = (\vec{Y}_1', \vec{Y}_2', \ldots, \vec{Y}_n')'$, $\bfX = (\vec{X}_1, \vec{X}_2, \ldots, \vec{X}_n)'$, and $\bfeps = (\bfeps_1', \bfeps_2', \ldots, \bfeps_n')'$, we can write this system as
+\[
+\bfY = \bfX\bfbeta_o + \bfeps.
+\]
+Now $\bfY$ is $pn \times 1$, $\bfeps$ is $pn \times 1$, and $\bfX$ is $pn \times k$. This allows us to consider simultaneous systems of equations in the present framework.
+
+Alternatively, suppose that we have observations on an individual $t$ in each of $p$ time periods,
+\begin{align}
+Y_{t1} &= \vec{X}_{t1}'\bfbeta_o + \eps_{t1}, \notag \\
+Y_{t2} &= \vec{X}_{t2}'\bfbeta_o + \eps_{t2}, \notag \\
+&\;\;\vdots \notag \\
+Y_{tp} &= \vec{X}_{tp}'\bfbeta_o + \eps_{tp}, \quad t = 1, \ldots, n.
+\end{align}
+Define $\vec{Y}_t$ and $\bfeps_t$ as above, and let
+\[
+\vec{X}_t = [\vec{X}_{t1}, \vec{X}_{t2}, \ldots, \vec{X}_{tp}]
+\]
+be a $k \times p$ matrix. The observations can now be written as
+\[
+\vec{Y}_t = \vec{X}_t' \bfbeta_o + \bfeps_t,
+\]
+or equivalently as
+\[
+\bfY = \bfX\bfbeta_o + \bfeps,
+\]
+with $\bfY$, $\bfX$, and $\bfeps$ as defined above. This allows us to consider panel data in the present framework. Further, by adopting appropriate definitions, the case of simultaneous systems of equations for panel data can also be considered.
+
+Recall that the GLS estimator was obtained by considering a linear transformation of a linear stochastic relationship, i.e.,
+\begin{equation}
+\bfY^* = \bfX^*\bfbeta_o + \bfeps^*,
+\end{equation}
+where $\bfY^* = \vec{C}^{-1}\bfY$, $\bfX^* = \vec{C}^{-1}\bfX$, and $\bfeps^* = \vec{C}^{-1}\bfeps$ for some nonsingular matrix $\vec{C}$. It follows that any such linear transformation can be considered within the present framework.
+
+The reason for restricting our attention to linear models and IV estimators is to provide clear motivation for the concepts and techniques introduced while also maintaining a relatively simple focus for the discussion. Nevertheless, the tools presented have a much wider applicability and are directly relevant to many other models and estimation techniques.
+
+\section*{References}
+
+\begin{description}[style=nextline, leftmargin=0pt, labelindent=0pt]
+\item[Geary, R.\ C.\ (1949).] ``Determination of linear relations between systematic parts of variables with errors in observation, the variances of which are unknown.'' \emph{Econometrica}, 17, 30--59.
+
+\item[Reiers\o l, O.\ (1941).] ``Confluence analysis by means of lag moments and other methods of confluence analysis.'' \emph{Econometrica}, 9, 1--24.
+
+\hspace{1em}(1945). ``Confluence analysis by means of instrumental sets of variables.'' \emph{Akiv f\"or Matematik, Astronomi och Fysik}, 32a, 1--119.
+
+\item[Theil, H.\ (1971).] \emph{Principles of Econometrics}. Wiley, New York.
+
+\item[White, H.\ (1994).] \emph{Estimation, Inference, and Specification Analysis}. Cambridge University Press, New York.
+
+\item[Wright, P.\ G.\ (1928).] \emph{The Tariff on Animal and Vegetable Oils}. Macmillan, New York.
+
+\item[Wright, S.\ (1925).] ``Corn and Hog Correlations,'' \emph{U.S.\ Department of Agriculture, Bulletin No.\ 1300}, Washington D.C.
+\end{description}
+
+\section*{For Further Reading}
+
+The references given below provide useful background and detailed discussion of many of the issues touched upon in this chapter.
+
+\begin{description}[style=nextline, leftmargin=0pt, labelindent=0pt]
+\item[Chow, G.\ C.\ (1983).] \emph{Econometrics}, Chapters 1, 2. McGraw-Hill, New York.
+
+\item[Dhrymes, P.\ (1978).] \emph{Introductory Econometrics}, Chapters 1--3, 6.1--6.3. Springer-Verlag, New York.
+
+\item[Goldberger, A.\ S.\ (1964).] \emph{Econometric Theory}, Chapters 4, 5.1--5.4, 7.1--7.4. Wiley, New York.
+
+\item[Hamilton, J.\ D.\ (1994).] \emph{Time Series Analysis}. Princeton University Press, Princeton.
+
+\item[Harvey, A.\ C.\ (1981).] \emph{The Econometric Analysis of Time Series}, Chapters 1.2, 1.3, 1.5, 1.6, 2.1--2.4, 2.7--2.10, 7.1--7.2, 8.1, 9.1--9.2. Wiley, New York.
+
+\item[Intriligator, M.\ (1978).] \emph{Econometric Models, Techniques and Applications}, Chapters 2, 4, 5, 6.1--6.5, 10. Prentice-Hall, Englewood Cliffs, New Jersey.
+
+\item[Johnston, J.\ and J.\ DiNardo (1997).] \emph{Econometric Methods}. 4th ed.\ Chapters 5--8. McGraw-Hill, New York.
+
+\item[Kmenta, J.\ (1971).] \emph{Elements of Econometrics}, Chapters 7, 8, 10.1--10.3. Macmillan, New York.
+
+\item[Maddala, G.\ S.\ (1977).] \emph{Econometrics}, Chapters 7, 8, 11.1--11.4, 14, 16.1--16.3. McGraw-Hill, New York.
+
+\item[Malinvaud, E.\ (1970).] \emph{Statistical Methods of Econometrics}, Chapters 1--5, 6.1--6.7. North-Holland, Amsterdam.
+
+\item[Theil, H.\ (1971).] \emph{Principles of Econometrics}, Chapters 3, 6, 7.1--7.2, 9. Wiley, New York.
+\end{description}

@@ -1,0 +1,219 @@
+% sec8_3.tex — Section 8.3: Censored Regression (Tobit) Models
+
+The censored regression model is also called the \textbf{Tobit model} to pay respect to
+Tobin (1958), who was the first to introduce censoring in economics. The simplest
+Tobit model can be written as follows:
+\begin{align}
+  y_t^* &= \mathbf{x}_t'\boldsymbol{\beta}_0 + \varepsilon_t, \quad t = 1, 2, \ldots, n,
+  \label{eq:8.3.1} \tag{8.3.1} \\[4pt]
+  y_t &= \begin{cases}
+    y_t^* & \text{if } y_t^* > c, \\
+    c     & \text{if } y_t^* \leq c.
+  \end{cases}
+  \label{eq:8.3.2} \tag{8.3.2}
+\end{align}
+Here, $\varepsilon_t \mid \mathbf{x}_t$ is $N(0, \sigma_0^2)$ and
+$\{y_t, \mathbf{x}_t\}$ $(t = 1, 2, \ldots, n)$ is i.i.d. The threshold value
+$c$ is known. Unlike in the truncated regression model, there is no truncation here:
+observations for which the value of the dependent variable $y_t^*$ fails to pass the test
+$y_t^* > c$ \emph{are} in the sample. The feature that distinguishes the censored regression
+model from the usual regression model is that the dependent variable is censored,
+that is, constrained to lie in a certain range, which necessitates a distinction between
+the observable dependent variable $y_t$ and the unobservable or latent variable $y_t^*$.
+The former is the censored value of the latter. An equivalent way to write the
+model is
+\begin{equation}
+  y_t = \max\{\mathbf{x}_t'\boldsymbol{\beta}_0 + \varepsilon_t,\, c\}.
+  \label{eq:8.3.3} \tag{8.3.3}
+\end{equation}
+
+\subsection*{Tobit Likelihood Function}
+
+For those observations that remain intact after censoring (Tobin (1958) called those
+observations \textbf{nonlimit observations}), the density of $y_t$ (conditional on $\mathbf{x}_t$) is
+\begin{equation}
+  \frac{1}{\sigma_0}\,\phi\!\biggl(\frac{y_t - \mathbf{x}_t'\boldsymbol{\beta}_0}{\sigma_0}\biggr).
+  \label{eq:8.3.4} \tag{8.3.4}
+\end{equation}
+This differs from the density for the truncated model \eqref{eq:8.2.11} simply because there
+is no truncation. For those observations, called \textbf{limit observations}, for which the
+value of the dependent variable is altered by censoring, all we know is that $y_t^* \leq c$,
+the probability of which is given by
+\begin{align}
+  \text{Prob}(y_t^* \leq c \mid \mathbf{x}_t)
+  &= \text{Prob}\!\biggl(
+    \frac{y_t^* - \mathbf{x}_t'\boldsymbol{\beta}_0}{\sigma_0}
+    \leq \frac{c - \mathbf{x}_t'\boldsymbol{\beta}_0}{\sigma_0}
+    \;\bigg|\; \mathbf{x}_t\biggr) \notag \\
+  &= \Phi\!\biggl(\frac{c - \mathbf{x}_t'\boldsymbol{\beta}_0}{\sigma_0}\biggr)
+  \quad\Bigl(\text{since }
+    \tfrac{y_t^* - \mathbf{x}_t'\boldsymbol{\beta}_0}{\sigma_0}
+    \mid \mathbf{x}_t \sim N(0,1)\Bigr).
+  \label{eq:8.3.5} \tag{8.3.5}
+\end{align}
+Therefore, the density of $y_t$, defined over the interval $[c, \infty)$, is \eqref{eq:8.3.4} for $y_t > c$
+and a probability mass of size $\Phi\bigl(\frac{c - \mathbf{x}_t'\boldsymbol{\beta}_0}{\sigma_0}\bigr)$ at $y_t = c$. This density can be written as
+\begin{equation}
+  \biggl[\frac{1}{\sigma_0}\,\phi\!\biggl(
+    \frac{y_t - \mathbf{x}_t'\boldsymbol{\beta}_0}{\sigma_0}\biggr)\biggr]^{1-D_t}
+  \times
+  \biggl[\Phi\!\biggl(\frac{c - \mathbf{x}_t'\boldsymbol{\beta}_0}{\sigma_0}\biggr)\biggr]^{D_t},
+  \label{eq:8.3.6} \tag{8.3.6}
+\end{equation}
+where the dummy variable $D_t$ is a function of $y_t$ defined as
+\begin{equation}
+  D_t = \begin{cases}
+    0 & \text{if } y_t > c \;\text{(i.e., } y_t^* > c\text{)}, \\
+    1 & \text{if } y_t = c \;\text{(i.e., } y_t^* \leq c\text{)}.
+  \end{cases}
+  \label{eq:8.3.7} \tag{8.3.7}
+\end{equation}
+Taking logs and replacing $(\boldsymbol{\beta}_0, \sigma_0^2)$ by their hypothetical values
+$(\boldsymbol{\beta}, \sigma^2)$, we obtain the log conditional likelihood for observation~$t$:
+\begin{equation}
+  \log f(y_t \mid \mathbf{x}_t;\, \boldsymbol{\beta}, \sigma^2)
+  = (1 - D_t)\log\biggl[\frac{1}{\sigma}\,
+    \phi\!\biggl(\frac{y_t - \mathbf{x}_t'\boldsymbol{\beta}}{\sigma}\biggr)\biggr]
+  + D_t \log \Phi\!\biggl(\frac{c - \mathbf{x}_t'\boldsymbol{\beta}}{\sigma}\biggr).
+  \label{eq:8.3.8} \tag{8.3.8}
+\end{equation}
+Thus, the Tobit average log likelihood for a random sample can be written as
+\begin{align}
+  Q_n(\boldsymbol{\theta})
+  &= \frac{1}{n}\sum_{t=1}^{n}
+    \biggl\{(1 - D_t)\log\biggl[\frac{1}{\sigma}\,
+    \phi\!\biggl(\frac{y_t - \mathbf{x}_t'\boldsymbol{\beta}}{\sigma}\biggr)\biggr]
+    + D_t \log \Phi\!\biggl(\frac{c - \mathbf{x}_t'\boldsymbol{\beta}}{\sigma}\biggr)\biggr\}
+    \notag \\
+  &= \frac{1}{n}\sum_{y_t > c}
+    \biggl\{\log\biggl[\frac{1}{\sigma}\,
+    \phi\!\biggl(\frac{y_t - \mathbf{x}_t'\boldsymbol{\beta}}{\sigma}\biggr)\biggr]\biggr\}
+    + \frac{1}{n}\sum_{y_t = c}
+    \biggl\{\log \Phi\!\biggl(\frac{c - \mathbf{x}_t'\boldsymbol{\beta}}{\sigma}\biggr)\biggr\}.
+  \label{eq:8.3.9} \tag{8.3.9}
+\end{align}
+
+\subsection*{Reparameterization}
+
+As in the truncated regression model, the discussion is simplified if we introduce
+the reparameterization \eqref{eq:8.2.13}. The reparameterized log conditional likelihood is
+\begin{multline}
+  \log \tilde{f}(y_t \mid \mathbf{x}_t;\, \boldsymbol{\delta}, \gamma)
+  = (1 - D_t)\Bigl\{-\tfrac{1}{2}\log(2\pi) + \log(\gamma)
+    - \tfrac{1}{2}(\gamma y_t - \mathbf{x}_t'\boldsymbol{\delta})^2\Bigr\} \\
+  + D_t \log \Phi(\gamma c - \mathbf{x}_t'\boldsymbol{\delta}).
+  \label{eq:8.3.10} \tag{8.3.10}
+\end{multline}
+We have seen that the term in braces is concave in $(\boldsymbol{\delta}, \gamma)$ (see Example~7.7). We
+have also seen that $\log \Phi(v)$ is concave (see Example~7.6), which implies that
+$\log \Phi(\gamma c - \mathbf{x}_t'\boldsymbol{\delta})$ is concave in $(\boldsymbol{\delta}, \gamma)$.
+It follows that the reparameterized Tobit
+average log likelihood for observation~$t$, being a non-negative weighted average of
+two concave functions, \emph{is} concave in the parameters (this finding is due to Olsen,
+1978). Accordingly, as in probit and logit, the relevant consistency theorem for
+Tobit is Proposition~7.6.
+
+The remaining task is to write down the score and the Hessian and check the
+conditions for consistency and asymptotic normality for the reparameterized log
+likelihood \eqref{eq:8.3.10}.
+
+\subsection*{Score and Hessian for Observation \texorpdfstring{$t$}{t}}
+
+A straightforward calculation utilizing the fact that
+$\lambda(-v) = \frac{\phi(-v)}{1 - \Phi(-v)} = \frac{\phi(v)}{\Phi(v)}$ and
+\eqref{eq:8.2.5} produces
+\begin{equation}
+  \underset{((K+1) \times 1)}{\mathbf{s}(\mathbf{w}_t;\, \boldsymbol{\delta}, \gamma)}
+  = (1 - D_t) \cdot
+    \begin{bmatrix}
+      (\gamma y_t - \mathbf{x}_t'\boldsymbol{\delta})\mathbf{x}_t \\[4pt]
+      \frac{1}{\gamma} - (\gamma y_t - \mathbf{x}_t'\boldsymbol{\delta})y_t
+    \end{bmatrix}
+  + D_t \cdot \lambda(-v_t)
+    \begin{bmatrix} -\mathbf{x}_t \\[4pt] c \end{bmatrix},
+  \label{eq:8.3.11} \tag{8.3.11}
+\end{equation}
+\begin{multline}
+  \underset{((K+1) \times (K+1))}{\mathbf{H}(\mathbf{w}_t;\, \boldsymbol{\delta}, \gamma)}
+  = -(1 - D_t) \cdot
+    \begin{bmatrix}
+      \mathbf{x}_t\mathbf{x}_t' & -y_t\mathbf{x}_t \\[4pt]
+      -y_t\mathbf{x}_t' & \frac{1}{\gamma^2} + y_t^2
+    \end{bmatrix} \\
+  - D_t \cdot \lambda(-v_t)[\lambda(-v_t) + v_t]
+    \begin{bmatrix}
+      \mathbf{x}_t\mathbf{x}_t' & -c\,\mathbf{x}_t \\[4pt]
+      -c\,\mathbf{x}_t' & c^2
+    \end{bmatrix},
+  \label{eq:8.3.12} \tag{8.3.12}
+\end{multline}
+where $v_t \equiv \gamma c - \mathbf{x}_t'\boldsymbol{\delta}$
+$\bigl(= \frac{c - \mathbf{x}_t'\boldsymbol{\beta}}{\sigma}\bigr)$.
+
+\subsection*{Consistency and Asymptotic Normality}
+
+For Tobit, we will not verify the conditions for consistency and asymptotic normality. For the case where $\{\mathbf{x}_t\}$ is a sequence of fixed constants, Amemiya (1973) has
+proved the consistency and asymptotic normality of Tobit ML under the assumption that $\mathbf{x}_t$ is bounded and
+$\lim \frac{1}{n}\sum_{t=1}^{n} \mathbf{x}_t\mathbf{x}_t'$ is nonsingular. It seems a reasonable
+guess that for the case where $\mathbf{x}_t$ is stochastic (as here), a sufficient condition for
+consistency and asymptotic normality is the nonsingularity of $\E(\mathbf{x}_t\mathbf{x}_t')$.
+
+\subsection*{Recovering Original Parameters}
+
+As in the truncated regression model, the ML estimate of $(\boldsymbol{\beta}_0, \sigma_0^2)$ can be recovered
+as $\hat{\boldsymbol{\beta}} = \hat{\boldsymbol{\delta}}/\hat{\gamma}$ and
+$\hat{\sigma}^2 = 1/\hat{\gamma}^2$. The asymptotic variance of
+$(\hat{\boldsymbol{\beta}}, \hat{\sigma}^2)$ can be obtained
+by the delta method as
+$\hat{\mathbf{J}}\,\widehat{\avar}(\hat{\boldsymbol{\delta}}, \hat{\gamma})\,\hat{\mathbf{J}}'$,
+where $\hat{\mathbf{J}}$ is as in \eqref{eq:8.2.18} and
+$\widehat{\avar}(\hat{\boldsymbol{\delta}}, \hat{\gamma})$ is
+$-\bigl[\frac{1}{n}\sum_{t=1}^{n}
+\mathbf{H}(\mathbf{w}_t;\, \hat{\boldsymbol{\delta}}, \hat{\gamma})\bigr]^{-1}$.
+
+\bigskip
+\noindent\rule{\textwidth}{0.4pt}
+\textbf{QUESTIONS FOR REVIEW}
+\medskip
+
+\begin{enumerate}
+\item (Censored vs.\ truncated regression)\quad
+  One way to see the difference between
+  truncation and censoring is to calculate $\E(y_t \mid \mathbf{x}_t)$ for the censored regression
+  model. Show that
+  \[
+    \E(y_t \mid \mathbf{x}_t)
+    = \biggl[1 - \Phi\!\Bigl(\frac{c - \mathbf{x}_t'\boldsymbol{\beta}_0}{\sigma_0}\Bigr)\biggr]
+      \times \biggl[\mathbf{x}_t'\boldsymbol{\beta}_0
+      + \sigma_0\,\lambda\!\Bigl(\frac{c - \mathbf{x}_t'\boldsymbol{\beta}_0}{\sigma_0}\Bigr)\biggr]
+    + \Phi\!\Bigl(\frac{c - \mathbf{x}_t'\boldsymbol{\beta}_0}{\sigma_0}\Bigr)\,c.
+  \]
+
+  \textbf{Hint:} Conditional on $y_t > c$, the distribution of $y_t$ (conditional on $\mathbf{x}_t$) is none
+  other than the truncated distribution derived in the previous section, whose
+  expectation is given in \eqref{eq:8.2.6}. The probability that $y_t > c$ is given in \eqref{eq:8.2.10}.
+
+\item Show that the Hessian given in \eqref{eq:8.3.12} is negative semidefinite. \textbf{Hint:}
+  \[
+    \begin{bmatrix}
+      \mathbf{x}_t\mathbf{x}_t' & -y_t\mathbf{x}_t \\
+      -y_t\mathbf{x}_t' & \frac{1}{\gamma^2} + y_t^2
+    \end{bmatrix}
+    = \begin{bmatrix} \mathbf{x}_t \\ -y_t \end{bmatrix}
+      \begin{bmatrix} \mathbf{x}_t' & -y_t \end{bmatrix}
+    + \begin{bmatrix} \mathbf{0} & \mathbf{0} \\ \mathbf{0}' & \frac{1}{\gamma^2} \end{bmatrix},
+  \]
+  \[
+    \begin{bmatrix}
+      \mathbf{x}_t\mathbf{x}_t' & -c\,\mathbf{x}_t \\
+      -c\,\mathbf{x}_t' & c^2
+    \end{bmatrix}
+    = \begin{bmatrix} \mathbf{x}_t \\ -c \end{bmatrix}
+      \begin{bmatrix} \mathbf{x}_t' & -c \end{bmatrix}.
+  \]
+  Also, $\lambda(v) \geq v$ for all $v$ (i.e., $\lambda(-v) + v \geq 0$ for all $-v$).
+
+\item (Tobit for serially correlated observations)\quad
+  Suppose $\{y_t, \mathbf{x}_t\}$ is ergodic stationary but not necessarily i.i.d. Is the Tobit ML estimator described in the text
+  consistent? [Answer: Yes.]
+\end{enumerate}

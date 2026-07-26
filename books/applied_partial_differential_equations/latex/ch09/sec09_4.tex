@@ -1,0 +1,398 @@
+% sec09_4.tex — Section 9.4: Fredholm Alternative and Generalized Green's Functions
+\section{Fredholm Alternative and Generalized Green's Functions}
+\label{sec:fredholm-alt}
+
+%% ────────────────────────────────────────────────────────────────
+\subsection{Introduction}
+\label{sec:fredholm-intro}
+
+If $\lambda = 0$ is an eigenvalue, then the Green's function does not exist.  In order to understand the difficulty, we reexamine the nonhomogeneous problem:
+\begin{equation}
+\label{eq:9.4.1}
+L(u) = f(x),
+\end{equation}
+subject to \emph{homogeneous boundary conditions}.  By the method of eigenfunction expansion, in the preceding section we obtained
+\begin{equation}
+\label{eq:9.4.2}
+u = \sum_{n=1}^{\infty} a_n\phi_n(x),
+\end{equation}
+where by substitution
+\begin{equation}
+\label{eq:9.4.3}
+-a_n\lambda_n = \frac{\displaystyle\int_a^b f(x)\phi_n(x)\dx}{\displaystyle\int_a^b \phi_n^2\,\sigma\dx}.
+\end{equation}
+If $\lambda_n = 0$ (for some $n$, often the lowest eigenvalue), there may not be any solutions to the nonhomogeneous boundary value problem.  In particular, if $\int_a^b f(x)\phi_n(x)\dx \neq 0$ for the eigenfunction corresponding to $\lambda_n = 0$, then \eqref{eq:9.4.3} cannot be satisfied.
+
+\textbf{Example.}
+Consider
+\begin{equation}
+\label{eq:9.4.4}
+\odd{u}{x} = e^x \quad\text{with}\quad \od{u}{x}(0) = 0 \quad\text{and}\quad \od{u}{x}(L) = 0.
+\end{equation}
+After one integration, $du/dx = e^x + c$.  The two boundary conditions cannot both be satisfied as they are contradictory: $0 = 1 + c$ and $0 = e^L + c$, unless $L = 0$.  There is no guarantee that there are \emph{any} solutions to a nonhomogeneous boundary value problem when $\lambda = 0$ is an eigenvalue for the related eigenvalue problem.
+
+From a physical point of view, we are searching for an equilibrium temperature distribution.  Since there are sources and the boundary conditions are of the insulated type, an equilibrium temperature can exist only if there is no net input of thermal energy: $\int_0^L e^x\dx = 0$, which is not valid.
+
+\textbf{Zero eigenvalue.}
+If $\lambda = 0$ is an eigenvalue, the corresponding eigenfunction $\phi_h(x)$ satisfies
+\begin{equation}
+\label{eq:9.4.5}
+L(\phi_h) = 0
+\end{equation}
+with the same homogeneous boundary conditions.  Thus $\phi_h(x)$ is a nontrivial homogeneous solution of \eqref{eq:9.4.1}.  This is important: \textbf{Nontrivial homogeneous solutions of \eqref{eq:9.4.1} solving the same homogeneous boundary conditions are equivalent to eigenfunctions corresponding to the zero eigenvalue.}
+
+\textbf{Example.}
+Consider
+\begin{equation}
+\label{eq:9.4.7}
+\odd{u}{x} + u = e^x \quad\text{with}\quad u(0) = 0 \quad\text{and}\quad u(\pi) = 0.
+\end{equation}
+Are there nontrivial homogeneous solutions?  The answer is yes, $\phi = \sin x$.  The definition of the eigenvalues for \eqref{eq:9.4.7} is
+\[
+\odd{\phi}{x} + \phi = -\lambda\phi \quad\text{with}\quad \phi(0) = 0 \quad\text{and}\quad \phi(\pi) = 0.
+\]
+This is best written as $d^2\phi/dx^2 + (\lambda+1)\phi = 0$.  Therefore, $\lambda + 1 = (n\pi/L)^2 = n^2$, $n=1,2,3,\ldots$, and it is now clear that $\lambda = 0$ is an eigenvalue (corresponding to $n = 1$).
+
+%% ────────────────────────────────────────────────────────────────
+\subsection{Fredholm Alternative}
+\label{sec:fredholm-statement}
+
+Important conclusions can be reached from \eqref{eq:9.4.3}, obtained by the method of eigenfunction expansion.  The \textbf{Fredholm alternative} summarizes these results for nonhomogeneous problems
+\begin{equation}
+\label{eq:9.4.8}
+\boxed{L(u) = f(x),}
+\end{equation}
+subject to \emph{homogeneous boundary conditions} (of the self-adjoint type).  Either
+
+\begin{center}
+\fbox{\parbox{0.8\textwidth}{
+\begin{enumerate
+}}
+\end{center}
+\item $u = 0$ is the only homogeneous solution (i.e., $\lambda=0$ is not an eigenvalue), in which case the nonhomogeneous problem has a unique solution, or
+\item There are nontrivial homogeneous solutions $\phi_h(x)$ (i.e., $\lambda = 0$ is an eigenvalue), in which case the nonhomogeneous problem has no solutions or an infinite number of solutions.
+\end{enumerate}}
+
+By \eqref{eq:9.4.3} \textbf{there are an infinite number of solutions of \eqref{eq:9.4.8}} if a \textbf{solvability condition} holds:
+\begin{equation}
+\label{eq:9.4.9}
+\boxed{\int_a^b f(x)\phi_h(x)\dx = 0,}
+\end{equation}
+because the corresponding $a_n$ is arbitrary.  These nonunique solutions correspond to an arbitrary additive multiple of a homogeneous solution $\phi_h(x)$.  Equation~\eqref{eq:9.4.9} corresponds to the forcing function being orthogonal to the homogeneous solution (with weight~1).  If
+\begin{equation}
+\label{eq:9.4.10}
+\int_a^b f(x)\phi_h(x)\dx \neq 0,
+\end{equation}
+then the nonhomogeneous problem (with homogeneous boundary conditions) has no solutions.  These results are illustrated in Table~9.4.1.
+
+\begin{table}[H]
+\centering
+\caption{Number of Solutions of $L(u)=f(x)$ Subject to Homogeneous Boundary Conditions}
+\label{tab:9.4.1}
+\begin{tabular}{l|c|c}
+\toprule
+& \# of solutions & $\displaystyle\int_a^b f(x)\phi_h(x)\dx$ \\
+\midrule
+$\phi_h = 0$ ($\lambda \neq 0$) & 1 & 0 \\
+$\phi_h \neq 0$ ($\lambda = 0$) & $\infty$ & 0 \\
+$\phi_h \neq 0$ ($\lambda = 0$) & 0 & $\neq 0$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+A different phrasing: \textbf{for the nonhomogeneous problem \eqref{eq:9.4.8} with homogeneous boundary conditions, solutions exist only if the forcing function is orthogonal to all homogeneous solutions.}\footnote{Here the operator $L$ is self-adjoint.  For non-self-adjoint operators, the solutions exist if the forcing function is orthogonal to all solutions of the corresponding homogeneous \emph{adjoint} problem.}
+
+Part of the Fredholm alternative can be shown without using an eigenfunction expansion.  If the nonhomogeneous problem has a solution, then $L(u) = f(x)$.  All homogeneous solutions $\phi_h(x)$ satisfy $L(\phi_h) = 0$.  We now use Green's formula with $v = \phi_h$ and obtain
+\[
+\int_a^b [u \cdot 0 - \phi_h f(x)]\dx = 0 \qquad\text{or}\qquad \int_a^b f(x)\phi_h(x)\dx = 0,
+\]
+since $u$ and $\phi_h$ satisfy the same homogeneous boundary conditions.
+
+\textbf{Examples.}
+First, suppose that
+\begin{equation}
+\label{eq:9.4.11}
+\odd{u}{x} = e^x \quad\text{with}\quad \od{u}{x}(0) = 0 \quad\text{and}\quad \od{u}{x}(L) = 0.
+\end{equation}
+Here $u = 1$ is a homogeneous solution.  By the Fredholm alternative, there is a solution to \eqref{eq:9.4.11} only if $e^x$ is orthogonal to this homogeneous solution.  Since $\int_0^L e^x \cdot 1\dx \neq 0$, there are no solutions of \eqref{eq:9.4.11}.
+
+For another example, suppose that
+\[
+\odd{u}{x} + 2u = e^x \quad\text{with}\quad u(0) = 0 \quad\text{and}\quad u(\pi) = 0.
+\]
+Since there are no solutions of the corresponding homogeneous problem (other than $u=0$), the Fredholm alternative implies that there is a unique solution.
+
+As a more nontrivial example, we consider
+\[
+\odd{u}{x} + \left(\frac{\pi}{L}\right)^2 u = \beta + x \quad\text{with}\quad u(0) = 0 \quad\text{and}\quad u(L) = 0.
+\]
+Since $\phi = \sin\pi x/L$ is a solution of the homogeneous problem, the nonhomogeneous problem has a solution only if the right-hand side is orthogonal to $\sin\pi x/L$:
+\[
+0 = \int_0^L (\beta + x)\sin\frac{\pi x}{L}\dx.
+\]
+This can be used to determine the only value of $\beta$ for which there is a solution:
+\[
+\beta = \frac{-\displaystyle\int_0^L x\sin\pi x/L\dx}{\displaystyle\int_0^L\sin\pi x/L\dx} = -\frac{L}{2}.
+\]
+However, the Fredholm alternative cannot be used to actually obtain the solution $u(x)$.
+
+%% ────────────────────────────────────────────────────────────────
+\subsection{Generalized Green's Functions}
+\label{sec:gen-greens-fn}
+
+In this section, we will analyze
+\begin{equation}
+\label{eq:9.4.12}
+\boxed{L(u) = f}
+\end{equation}
+subject to \textbf{homogeneous boundary conditions when $\lambda = 0$ is an eigenvalue}.  If a solution to \eqref{eq:9.4.12} exists, we will produce a particular solution of \eqref{eq:9.4.12} by defining and constructing a modified or generalized Green's function.
+
+If $\lambda = 0$ is not an eigenvalue, then there is a unique solution of the nonhomogeneous boundary value problem \eqref{eq:9.4.12}, subject to homogeneous boundary conditions.  In Sec.~9.3 we represented the solution using a Green's function $G(x,x_0)$ satisfying $L[G(x,x_0)] = \delta(x - x_0)$ subject to the same homogeneous boundary conditions.
+
+Here we analyze the case in which $\lambda = 0$ is an eigenvalue: There are nontrivial homogeneous solutions $\phi_h(x)$ of \eqref{eq:9.4.12}, $L(\phi_h) = 0$.  We will assume that there are solutions of \eqref{eq:9.4.12}, that is,
+\begin{equation}
+\label{eq:9.4.14}
+\int_a^b f(x)\phi_h(x)\dx = 0.
+\end{equation}
+However, the Green's function defined by $L[G(x,x_0)] = \delta(x-x_0)$ does not exist for all $x_0$ since $\delta(x-x_0)$ is not orthogonal to solutions of the homogeneous problem for all $x_0$:
+\[
+\int_a^b \delta(x-x_0)\phi_h(x)\dx = \phi_h(x_0) \not\equiv 0.
+\]
+
+Instead, we introduce a simple comparison problem that has a solution.  $\delta(x-x_0)$ is not orthogonal to $\phi_h(x)$ because it has a ``component in the direction'' $\phi_h(x)$.  However, there is a solution of \eqref{eq:9.4.12} for all $x_0$ for the forcing function $\delta(x-x_0) + c\phi_h(x)$, if $c$ is properly chosen.  We determine $c$ easily such that this function is orthogonal to $\phi_h(x)$:
+\[
+0 = \int_a^b \phi_h(x)\,[\delta(x-x_0) + c\phi_h(x)]\dx = \phi_h(x_0) + c\int_a^b \phi_h^2(x)\dx.
+\]
+Thus, we introduce the \textbf{generalized Green's function} $G_m(x,x_0)$, which satisfies
+\begin{equation}
+\label{eq:9.4.15}
+\boxed{L[G_m(x,x_0)] = \delta(x - x_0) - \frac{\phi_h(x)\phi_h(x_0)}{\displaystyle\int_a^b \phi_h^2(x)\dx},}
+\end{equation}
+subject to the same homogeneous boundary conditions.
+
+Since the right-hand side of \eqref{eq:9.4.15} is orthogonal to $\phi_h(x)$, unfortunately there are an infinite number of solutions.  In Exercise~9.4.9 it is shown that the generalized Green's function can be chosen to be symmetric:
+\begin{equation}
+\label{eq:9.4.16}
+\boxed{G_m(x,x_0) = G_m(x_0,x).}
+\end{equation}
+
+If $g_m(x,x_0)$ is one symmetric generalized Green's function, then the following is also a symmetric generalized Green's function:
+\[
+G_m(x,x_0) = g_m(x,x_0) + \beta\phi_h(x_0)\phi_h(x)
+\]
+for any \emph{constant} $\beta$ (independent of $x$ and $x_0$).  Thus, there are an infinite number of symmetric generalized Green's functions.  We can use any of these.
+
+We use Green's formula to derive a representation formula for $u(x)$ using the generalized Green's function.  Letting $u = u(x)$ and $v = G_m(x,x_0)$, Green's formula states that
+\[
+\int_a^b \{u(x)L[G_m(x,x_0)] - G_m(x,x_0)L[u(x)]\}\dx = 0,
+\]
+since both $u(x)$ and $G_m(x,x_0)$ satisfy the same homogeneous boundary conditions.  Using the defining differential equations for $u$ and $G_m$, and the fundamental Dirac delta property, we obtain a simple \emph{particular} solution of \eqref{eq:9.4.12}:
+\begin{equation}
+\label{eq:9.4.17}
+\boxed{u(x) = \int_a^b f(x_0)\,G_m(x,x_0)\dx_0,}
+\end{equation}
+the same form as occurs when $u = 0$ is not an eigenvalue [see \eqref{eq:9.3.18}].
+
+\textbf{Example.}
+The simplest example of a problem with a nontrivial homogeneous solution is
+\begin{equation}
+\label{eq:9.4.18}
+\odd{u}{x} = f(x)
+\end{equation}
+\begin{equation}
+\label{eq:9.4.19}
+\od{u}{x}(0) = 0 \quad\text{and}\quad \od{u}{x}(L) = 0.
+\end{equation}
+A constant is a homogeneous solution (eigenfunction corresponding to the zero eigenvalue).  For a solution to exist, by the Fredholm alternative,\footnote{Physically, with insulated boundaries, there must be zero \emph{net} thermal energy generated for equilibrium.} $\int_0^L f(x)\dx = 0$.  We assume $f(x)$ is of this type [e.g., $f(x) = x - L/2$].  The generalized Green's function $G_m(x,x_0)$ satisfies
+\begin{equation}
+\label{eq:9.4.20}
+\odd{G_m}{x} = \delta(x-x_0) + c
+\end{equation}
+\begin{equation}
+\label{eq:9.4.21}
+\od{G_m}{x}(0) = 0 \quad\text{and}\quad \od{G_m}{x}(L) = 0,
+\end{equation}
+since a constant is the eigenfunction.  For there to be such a generalized Green's function, the r.h.s.\ must be orthogonal to the homogeneous solutions:
+\[
+\int_0^L [\delta(x-x_0) + c]\dx = 0 \quad\text{or}\quad c = -\frac{1}{L}.
+\]
+
+We use properties of the Dirac delta function to solve \eqref{eq:9.4.20} with \eqref{eq:9.4.21}.  For $x \neq x_0$,
+\[
+\odd{G_m}{x} = -\frac{1}{L}.
+\]
+By integration
+\begin{equation}
+\label{eq:9.4.22}
+\od{G_m}{x} = \begin{cases} -\dfrac{x}{L} & x < x_0 \\[6pt] -\dfrac{x}{L} + 1 & x > x_0, \end{cases}
+\end{equation}
+where the constants of integration have been chosen to satisfy the boundary conditions at $x=0$ and $x=L$.  The jump condition for the derivative ($dG_m/dx|_{x_0^-}^{x_0^+} = 1$), obtained by integrating \eqref{eq:9.4.20}, is already satisfied by \eqref{eq:9.4.22}.  We integrate again to obtain $G_m(x,x_0)$.  Assuming that $G_m(x,x_0)$ is continuous at $x = x_0$ yields
+\[
+G_m(x,x_0) = \begin{cases} -\dfrac{1}{L}\dfrac{x^2}{2} + x_0 + c(x_0) & x < x_0 \\[8pt] -\dfrac{1}{L}\dfrac{x^2}{2} + x + c(x_0) & x > x_0. \end{cases}
+\]
+$c(x_0)$ is an arbitrary additive constant that depends on $x_0$ and corresponds to an arbitrary multiple of the homogeneous solution.  Often, we desire $G_m(x,x_0)$ to be symmetric.  For example, $G_m(x_0,x)$ for $x < x_0$ yields
+\[
+-\frac{1}{L}\frac{x_0^2}{2} + x_0 + c(x) = -\frac{1}{L}\frac{x^2}{2} + x_0 + c(x_0),
+\]
+or $c(x_0) = -\frac{1}{L}\frac{x_0^2}{2} + \beta$, where $\beta$ is an arbitrary constant.  Thus, finally we obtain the generalized Green's function,
+\begin{equation}
+\label{eq:9.4.23}
+G_m(x,x_0) = \begin{cases}
+-\dfrac{1}{L}\dfrac{x^2+x_0^2}{2} + x_0 + \beta & x < x_0 \\[8pt]
+-\dfrac{1}{L}\dfrac{x^2+x_0^2}{2} + x + \beta & x > x_0.
+\end{cases}
+\end{equation}
+A solution of \eqref{eq:9.4.18}--\eqref{eq:9.4.19} is given by \eqref{eq:9.4.17} with $G_m(x,x_0)$ given previously.
+
+\textbf{An alternative generalized Green's function.}
+In order to solve problems with homogeneous solutions, we could introduce instead a comparison problem satisfying nonhomogeneous boundary conditions.  For example, the Neumann function $G_a$ is defined by
+\begin{equation}
+\label{eq:9.4.24}
+\odd{G_a}{x} = \delta(x-x_0)
+\end{equation}
+\begin{equation}
+\label{eq:9.4.25}
+\od{G_a}{x}(0) = -c
+\end{equation}
+\begin{equation}
+\label{eq:9.4.26}
+\od{G_a}{x}(L) = c.
+\end{equation}
+Physically, this represents a unit negative source $-\delta(x-x_0)$ of thermal energy with heat energy flowing into both ends at the rate of $c$ per unit time.  Thus, physically there will be a solution only if $2c = 1$.  This can be verified by integrating \eqref{eq:9.4.24} from $x=0$ to $x=L$ or by using Green's formula.  This alternate generalized Green's function can be obtained in a manner similar to the previous one.  In terms of this Green's function, the representation of the solution of a nonhomogeneous problem can be obtained using Green's formula (see Exercise~9.4.12).
+
+%% ────────────────────────────────────────────────────────────────
+\begin{exercises}{9.4}
+
+\item Consider
+\[
+L(u) = f(x) \quad\text{with}\quad L = \frac{d}{d x}\!\left(p\frac{d}{d x}\right) + q
+\]
+subject to two homogeneous boundary conditions.  \emph{All} homogeneous solutions $\phi_h$ (if they exist) satisfy $L(\phi_h) = 0$ and the same two homogeneous boundary conditions.  Apply Green's formula to prove that there are no solutions $u$ if $f(x)$ is not orthogonal (weight~1) to all $\phi_h(x)$.
+
+\item Modify Exercise~9.4.1 if
+\[
+L(u) = f(x) \qquad u(0) = \alpha \quad\text{and}\quad u(L) = \beta.
+\]
+\begin{enumerate}
+\item[\starred(a)] Determine the condition for a solution to exist.
+\item[(b)] If this condition is satisfied, show that there are an infinite number of solutions using the method of eigenfunction expansion.
+\end{enumerate}
+
+\item Without determining $u(x)$, how many solutions are there of
+\[
+\odd{u}{x} + \gamma u = \sin x
+\]
+\begin{enumerate}
+\item[(a)] If $\gamma = 1$ and $u(0) = u(\pi) = 0$?
+\item[\starred(b)] If $\gamma = 1$ and $\od{u}{x}(0) = \od{u}{x}(\pi) = 0$?
+\item[(c)] If $\gamma = -1$ and $u(0) = u(\pi) = 0$?
+\item[(d)] If $\gamma = 2$ and $u(0) = u(\pi) = 0$?
+\end{enumerate}
+
+\item For the following examples, obtain the general solution of the differential equation using the method of undetermined coefficients.  Attempt to solve the boundary conditions, and show that the result is consistent with the Fredholm alternative:
+\begin{enumerate}
+\item[(a)] Equation~\eqref{eq:9.4.7}
+\item[(b)] Equation~\eqref{eq:9.4.11}
+\item[(c)] Example after \eqref{eq:9.4.11}
+\item[(d)] Second example after \eqref{eq:9.4.11}
+\end{enumerate}
+
+\item Are there any values of $\beta$ for which there are solutions of
+\[
+\odd{u}{x} + u = \beta + x
+\]
+\[
+u(-\pi) = u(\pi) \quad\text{and}\quad \od{u}{x}(-\pi) = \od{u}{x}(\pi)?
+\]
+
+\item[\starred 9.4.6.] Consider
+\[
+\odd{u}{x} + u = 1.
+\]
+\begin{enumerate}
+\item[(a)] Find the general solution of this differential equation.  Determine all solutions with $u(0) = u(\pi) = 0$.  Is the Fredholm alternative consistent with your result?
+\item[(b)] Redo part~(a) if $\od{u}{x}(0) = \od{u}{x}(\pi) = 0$.
+\item[(c)] Redo part~(a) if $\od{u}{x}(-\pi) = \od{u}{x}(\pi)$ and $u(-\pi) = u(\pi)$.
+\end{enumerate}
+
+\item Consider
+\[
+\odd{u}{x} + 4u = \cos x \qquad \od{u}{x}(0) = \od{u}{x}(\pi) = 0.
+\]
+\begin{enumerate}
+\item[(a)] Determine all solutions using the hint that a particular solution of the differential equation is in the form $u_p = A\cos x$.
+\item[(b)] Determine all solutions using the eigenfunction expansion method.
+\item[(c)] Apply the Fredholm alternative.  Is it consistent with parts~(a) and~(b)?
+\end{enumerate}
+
+\item Consider
+\[
+\odd{u}{x} + u = \cos x,
+\]
+which has a particular solution of the form $u_p = Ax\sin x$.
+\begin{enumerate}
+\item[\starred(a)] Suppose that $u(0) = u(\pi) = 0$.  Find all solutions.  Is your result consistent with the Fredholm alternative?
+\item[(b)] Answer the same questions as in part~(a) if $u(-\pi) = u(\pi)$ and $\od{u}{x}(-\pi) = \od{u}{x}(\pi)$.
+\end{enumerate}
+
+\item
+\begin{enumerate}
+\item[(a)] Since \eqref{eq:9.4.15} (with homogeneous boundary conditions) is solvable, there is an infinite number of solutions.  Suppose that $g_m(x,x_0)$ is one such solution that is not orthogonal to $\phi_h(x)$.  Show that there is a unique generalized Green's function $G_m(x,x_0)$ that is orthogonal to $\phi_h(x)$.
+\item[(b)] Assume that $G_m(x,x_0)$ is the generalized Green's function that is orthogonal to $\phi_h(x)$.  Prove that $G_m(x,x_0)$ is symmetric.  [\textit{Hint:} Apply Green's formula with $G_m(x,x_1)$ and $G_m(x,x_2)$.]
+\end{enumerate}
+
+\item[\starred 9.4.10.] Determine the generalized Green's function that is needed to solve
+\[
+\odd{u}{x} + u = f(x) \qquad u(0) = \alpha \quad\text{and}\quad u(\pi) = \beta.
+\]
+Assume that $f(x)$ satisfies the solvability condition (see Exercise~9.4.2).  Obtain a representation of the solution $u(x)$ in terms of the generalized Green's function.
+
+\item Consider
+\[
+\odd{u}{x} = f(x) \quad\text{with}\quad \od{u}{x}(0) = 0 \quad\text{and}\quad \od{u}{x}(L) = 0.
+\]
+A different generalized Green's function may be defined:
+\begin{gather*}
+\odd{G_a}{x} = \delta(x - x_0) \\
+\od{G_a}{x}(0) = 0 \\
+\od{G_a}{x}(L) = c.
+\end{gather*}
+\begin{enumerate}
+\item[\starred(a)] Determine $c$ using mathematical reasoning.
+\item[\starred(b)] Determine $c$ using physical reasoning.
+\item[(c)] Explicitly determine all possible $G_a(x,x_0)$.
+\item[\starred(d)] Determine all symmetric $G_a(x,x_0)$.
+\item[\starred(e)] Obtain a representation of the solution $u(x)$ using $G_a(x,x_0)$.
+\end{enumerate}
+
+\item The alternate generalized Green's function (Neumann function) satisfies
+\begin{gather*}
+\odd{G_a}{x} = \delta(x - x_0) \\
+\od{G_a}{x}(0) = -c \\
+\od{G_a}{x}(L) = c, \quad\text{where we have shown}\; c = \tfrac{1}{2}.
+\end{gather*}
+\begin{enumerate}
+\item[(a)] Determine all possible $G_a(x,x_0)$.
+\item[(b)] Determine all symmetric $G_a(x,x_0)$.
+\item[(c)] Determine all $G_a(x,x_0)$ that are orthogonal to $\phi_h(x)$.
+\item[(d)] What relationship exists between $\beta$ and $\gamma$ for there to be a solution to
+\[
+\odd{u}{x} = f(x) \quad\text{with}\quad \od{u}{x}(0) = \beta \quad\text{and}\quad \od{u}{x}(L) = \gamma?
+\]
+In this case, derive the solution $u(x)$ in terms of a Neumann function, defined above.
+\end{enumerate}
+
+\item Consider $\odd{u}{x} + u = f(x)$ with $u(0) = 1$ and $u(\pi) = 4$.  How many solutions are there, and how does this depend on $f(x)$?  Do not determine $u(x)$.
+
+\item Consider $\odd{u}{x} + u = f(x)$ with periodic boundary conditions $u(-L) = u(L)$ and $\od{u}{x}(-L) = \od{u}{x}(L)$.  Note that $\phi_h = \sin\frac{\pi x}{L}$ and $\phi_h = \cos\frac{\pi x}{L}$ are homogeneous solutions.
+\begin{enumerate}
+\item[(a)] Under what condition is there a solution?
+\item[(b)] Suppose a generalized Green's function satisfies
+\[
+\odd{G_m}{x} + G_m = \delta(x-x_0) + c_1\cos\frac{\pi x}{L} + c_2\sin\frac{\pi x}{L}
+\]
+with periodic boundary conditions.  What are the constants $c_1$ and $c_2$?  Do NOT solve for $G_m(x,x_0)$.
+\item[(c)] Assume that the generalized Green's function is symmetric.  Derive a representation for $u(x)$ in terms of $G_m(x,x_0)$.
+\end{enumerate}
+
+\end{exercises}

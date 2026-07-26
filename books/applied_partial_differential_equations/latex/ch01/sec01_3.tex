@@ -1,0 +1,76 @@
+% sec01_3.tex — Section 1.3: Boundary Conditions
+
+\section{Boundary Conditions}
+\label{sec:1.3}
+
+In solving the heat equation, either \eqref{eq:1.2.9} or \eqref{eq:1.2.10}, one \textbf{boundary condition} (BC) is needed at each end of the rod. The appropriate condition depends on the physical mechanism in effect at each end. Often the condition at the boundary depends on both the material inside and outside the rod. To avoid a more difficult mathematical problem, we will assume that the outside environment is known, not significantly altered by the rod.
+
+\paragraph{Prescribed temperature.}
+In certain situations, the temperature of the end of the rod, for example, $x = 0$, may be approximated by a \textbf{prescribed temperature},
+\begin{equation}
+u(0,t) = u_B(t),
+\label{eq:1.3.1}
+\end{equation}
+where $u_B(t)$ is the temperature of a fluid bath (or reservoir) with which the rod is in contact.
+
+\paragraph{Insulated boundary.}
+In other situations it is possible to prescribe the heat flow rather than the temperature,
+\begin{equation}
+-K_0(0)\pd{u}{x}(0,t) = \phi(t),
+\label{eq:1.3.2}
+\end{equation}
+where $\phi(t)$ is given. This is equivalent to giving one condition for the first derivative, $\partial u/\partial x$, at $x = 0$. The slope is given at $x = 0$. Equation~\eqref{eq:1.3.2} \emph{cannot} be integrated in $x$ because the slope is known only at one value of $x$. The simplest example of the prescribed heat flow boundary condition is when an end is \textbf{perfectly insulated} (sometimes we omit the ``perfectly''). In this case there is no heat flow at the boundary. If $x = 0$ is insulated, then
+\begin{equation}
+\pd{u}{x}(0,t) = 0.
+\label{eq:1.3.3}
+\end{equation}
+
+\paragraph{Newton's law of cooling.}
+When a one-dimensional rod is in contact at the boundary with a moving fluid (e.g., air), then neither the prescribed temperature nor the prescribed heat flow may be appropriate. For example, let us imagine a very warm rod in contact with cooler moving air. Heat will leave the rod, heating up the air. The air will then carry the heat away. This process of heat transfer is called \textbf{convection}. However, the air will be hotter near the rod. Again, this is a complicated problem; the air temperature will actually vary with distance from the rod (ranging between the bath and rod temperatures). Experiments show that, as a good approximation, the heat flow leaving the rod is proportional to the temperature difference between the bar and the prescribed external temperature. This boundary condition is called \textbf{Newton's law of cooling}. If it is valid at $x = 0$, then
+\begin{equation}
+-K_0(0)\pd{u}{x}(0,t) = -H[u(0,t) - u_B(t)],
+\label{eq:1.3.4}
+\end{equation}
+where the proportionality constant $H$ is called the \textbf{heat transfer coefficient} (or the convection coefficient). This boundary condition\footnote{For another situation in which \eqref{eq:1.3.4} is valid, see Berg and McGregor [1966].} involves a linear combination of $u$ and $\partial u/\partial x$. We must be careful with the sign of proportionality. If the rod is hotter than the bath $[u(0,t) > u_B(t)]$, then usually heat flows out of the rod at $x = 0$. Thus, heat is flowing to the left, and in this case the heat flow would be negative. That is why we introduced a minus sign in \eqref{eq:1.3.4} (with $H > 0$). The same conclusion would have been reached had we assumed that $u(0,t) < u_B(t)$. Another way to understand the signs in \eqref{eq:1.3.4} is to again assume that $u(0,t) < u_B(t)$. The temperature is hotter to the right at $x = 0$, and we should expect the temperature to continue to increase to the right. Equation~\eqref{eq:1.3.4} is consistent with this argument. In Exercise~1.3.1 you are asked to derive, in the same manner, that the equation for Newton's law of cooling at the right end point $x = L$ is
+\begin{equation}
+-K_0(L)\pd{u}{x}(L,t) = H[u(L,t) - u_B(t)],
+\label{eq:1.3.5}
+\end{equation}
+where $u_B(t)$ is the external temperature at $x = L$. We immediately note the significant sign difference between the left boundary \eqref{eq:1.3.4} and the right boundary \eqref{eq:1.3.5}.
+
+The coefficient $H$ in Newton's law of cooling is experimentally determined. It depends on properties of the rod as well as fluid properties (including the fluid velocity). If the coefficient is very small, then very little heat energy flows across the boundary. In the limit as $H \to 0$, Newton's law of cooling approaches the insulated boundary condition. We can think of Newton's law of cooling for $H \neq 0$ as representing an imperfectly insulated boundary. If $H \to \infty$, the boundary condition approaches the one for prescribed temperature, $u(0,t) = u_B(t)$. This is most easily seen by dividing \eqref{eq:1.3.4}, for example, by $H$:
+\[
+-\frac{K_0(0)}{H}\pd{u}{x}(0,t) = -[u(0,t) - u_B(t)].
+\]
+Thus, $H \to \infty$ corresponds to no insulation at all.
+
+\paragraph{Summary.}
+We have described three different kinds of boundary conditions. For example, at $x = 0$,
+\begin{alignat}{3}
+u(0,t) &= u_B(t) &\qquad& \text{prescribed temperature} \notag\\
+-K_0(0)\pd{u}{x}(0,t) &= \phi(t) &\qquad& \text{prescribed heat flux} \notag\\
+-K_0(0)\pd{u}{x}(0,t) &= -H[u(0,t) - u_B(t)] &\qquad& \text{Newton's law of cooling} \notag
+\end{alignat}
+
+These same conditions could hold at $x = L$, noting that the change of sign ($-H$ becoming $H$) is necessary for Newton's law of cooling. One boundary condition occurs at each boundary. It is not necessary that both boundaries satisfy the same kind of boundary condition. For example, it is possible for $x = 0$ to have a prescribed oscillating temperature
+\[
+u(0,t) = 100 - 25\cos t,
+\]
+and for the right end, $x = L$, to be insulated,
+\[
+\pd{u}{x}(L,t) = 0.
+\]
+
+\begin{exercises}{1.3}
+
+\item Consider a one-dimensional rod, $0 \le x \le L$. Assume that the heat energy flowing out of the rod at $x = L$ is proportional to the temperature difference between the end temperature of the bar and the known external temperature. Derive \eqref{eq:1.3.5} (briefly, physically explain why $H > 0$).
+
+\item[\starred 1.3.2.] Two one-dimensional rods of different materials joined at $x = x_0$ are said to be in \textbf{perfect thermal contact} if the temperature is continuous at $x = x_0$:
+\[
+u(x_0-,t) = u(x_0+,t)
+\]
+and no heat energy is lost at $x = x_0$ (i.e., the heat energy flowing out of one flows into the other). What mathematical equation represents the latter condition at $x = x_0$? Under what special condition is $\partial u/\partial x$ continuous at $x = x_0$?
+
+\item[\starred 1.3.3.] Consider a bath containing a fluid of specific heat $c_f$ and mass density $\rho_f$ that surrounds the end $x = L$ of a one-dimensional rod. Suppose that the bath is rapidly stirred in a manner such that the bath temperature is approximately uniform throughout, equaling the temperature at $x = L$, $u(L,t)$. Assume that the bath is thermally insulated except at its perfect thermal contact with the rod, where the bath may be heated or cooled by the rod. Determine an equation for the temperature in the bath. (This will be a boundary condition at the end $x = L$.) (\emph{Hint}: See Exercise~1.3.2.)
+
+\end{exercises}

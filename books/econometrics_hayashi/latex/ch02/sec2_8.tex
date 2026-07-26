@@ -1,0 +1,245 @@
+% sec2_8.tex — Section 2.8: Estimation with Parameterized Conditional Heteroskedasticity
+%                              (optional)
+
+Even when the error is found to be conditionally heteroskedastic, the OLS estimator is
+still consistent and asymptotically normal, and valid statistical inference can be
+conducted with robust standard errors and robust Wald statistics.  However, in the
+(somewhat unlikely) case of \emph{a priori} knowledge of the functional form of the
+conditional second moment $\E(\varepsilon_i^2 \mid \mathbf{x}_i)$, it should be possible
+to obtain sharper estimates with smaller asymptotic variance.  Indeed, in finite-sample
+theory, the WLS (weighted least squares) can incorporate such knowledge for increased
+efficiency in the sense of smaller finite-sample variance.  Does this finite-sample result
+carry over to large-sample theory?  This section deals with the large-sample properties
+of the WLS estimator.  To simplify the discussion, throughout this section we strengthen
+Assumptions~2.2 and 2.5 by assuming that $\{y_i, \mathbf{x}_i\}$ is i.i.d.  This is a
+natural assumption to make, because it is usually in cross-section contexts where WLS is
+invoked.
+
+%% ─── The Functional Form ─────────────────────────────────────────────────────
+\subsection*{The Functional Form}
+
+The parametric functional form for the conditional second moment we consider is
+\begin{equation}
+  \E(\varepsilon_i^2 \mid \mathbf{x}_i) = \mathbf{z}_i' \bm{\alpha},
+  \label{eq:2.8.1}
+\end{equation}
+where $\mathbf{z}_i$ is a function of $\mathbf{x}_i$.
+
+\begin{example}[parametric form of the conditional second moment]
+\label{ex:2.8}
+The functional form used in the WLS estimation in the empirical exercise to Chapter~1 was
+\[
+  \E\!\Bigl(\varepsilon_i^2 \Bigm| \log(Q_i),\, \log(Q_i)^2,\,
+    \log\!\bigl(\tfrac{p_{i1}}{p_{i3}}\bigr),\,
+    \log\!\bigl(\tfrac{p_{i2}}{p_{i3}}\bigr)\Bigr)
+    = \alpha_1 + \alpha_2 \cdot \Bigl(\frac{1}{Q_i}\Bigr).
+\]
+\end{example}
+
+Since the elements of $\mathbf{z}_i$ can be nonlinear functions of $\mathbf{x}_i$, this
+specification is more flexible than it might first look, but still it rules out some
+nonlinearities.  For example, the functional form
+\begin{equation}
+  \E(\varepsilon_i^2 \mid \mathbf{x}_i) = \exp(\mathbf{z}_i' \bm{\alpha})
+  \label{eq:2.8.2}
+\end{equation}
+might be more attractive because its value is guaranteed to be positive.  We consider the
+linear specification \eqref{eq:2.8.1} only because estimating parameters in nonlinear
+specifications such as \eqref{eq:2.8.2} requires the use of nonlinear least squares.
+
+%% ─── WLS with Known alpha ────────────────────────────────────────────────────
+\subsection*{WLS with Known $\bm{\alpha}$}
+
+To isolate the complication arising from the fact that the unknown parameter vector
+$\bm{\alpha}$ must be estimated, we first examine the large-sample distribution of the
+WLS estimator with known $\bm{\alpha}$.  If $\bm{\alpha}$ is known, the conditional
+second moment can be calculated from data as $\mathbf{z}_i' \bm{\alpha}$, and WLS
+proceeds exactly as in Section~1.6: dividing both sides of the estimation equation
+$y_i = \mathbf{x}_i' \bm{\beta} + \varepsilon_i$ by the square root of
+$\mathbf{z}_i' \bm{\alpha}$, to obtain
+\begin{equation}
+  \tilde{y}_i = \tilde{\mathbf{x}}_i' \bm{\beta} + \tilde{\varepsilon}_i,
+  \label{eq:2.8.3}
+\end{equation}
+where
+\[
+  \tilde{y}_i \equiv \frac{y_i}{\sqrt{\mathbf{z}_i' \bm{\alpha}}}, \quad
+  \tilde{\mathbf{x}}_i \equiv \frac{\mathbf{x}_i}{\sqrt{\mathbf{z}_i' \bm{\alpha}}},
+    \quad
+  \tilde{\varepsilon}_i \equiv \frac{\varepsilon_i}{\sqrt{\mathbf{z}_i' \bm{\alpha}}},
+\]
+and then apply OLS.  For later reference, write the resulting WLS estimator as
+$\widehat{\bm{\beta}}(\mathbf{V})$.  It is given by
+\begin{align}
+  \widehat{\bm{\beta}}(\mathbf{V})
+    &\equiv \biggl(\frac{1}{n} \sum_{i=1}^{n}
+      \tilde{\mathbf{x}}_i \tilde{\mathbf{x}}_i'\biggr)^{\!-1}
+      \frac{1}{n} \sum_{i=1}^{n}
+      \tilde{\mathbf{x}}_i \cdot \tilde{y}_i \notag \\
+    &= \biggl(\frac{1}{n} \sum_{i=1}^{n}
+      \frac{1}{\mathbf{z}_i' \bm{\alpha}}\,
+      \mathbf{x}_i \mathbf{x}_i'\biggr)^{\!-1}
+      \frac{1}{n} \sum_{i=1}^{n}
+      \frac{1}{\mathbf{z}_i' \bm{\alpha}}\,
+      \mathbf{x}_i \cdot y_i \notag \\
+    &= (\mathbf{X}' \mathbf{V}^{-1} \mathbf{X})^{-1}
+      \mathbf{X}' \mathbf{V}^{-1} \mathbf{y},
+  \label{eq:2.8.4}
+\end{align}
+with
+\[
+  \mathbf{V} \equiv \begin{bmatrix}
+    \mathbf{z}_1' \bm{\alpha} & & \\
+    & \ddots & \\
+    & & \mathbf{z}_n' \bm{\alpha}
+  \end{bmatrix}.
+\]
+
+If Assumption~2.3 is strengthened by the condition that
+\begin{equation}
+  \E(\varepsilon_i \mid \mathbf{x}_i) = 0,
+  \label{eq:2.8.5}
+\end{equation}
+then $\E(\tilde{\varepsilon}_i \mid \tilde{\mathbf{x}}_i) = 0$.  To see this, note first
+that, because $\mathbf{z}_i$ is a function of $\mathbf{x}_i$,
+\begin{equation}
+  \E(\tilde{\varepsilon}_i \mid \mathbf{x}_i)
+    = \E\!\biggl(\frac{\varepsilon_i}{\sqrt{\mathbf{z}_i' \bm{\alpha}}}
+      \biggm| \mathbf{x}_i\biggr)
+    = \frac{1}{\sqrt{\mathbf{z}_i' \bm{\alpha}}}\,
+      \E(\varepsilon_i \mid \mathbf{x}_i) = 0.
+  \label{eq:2.8.6}
+\end{equation}
+Second, because $\tilde{\mathbf{x}}_i$ is a function of $\mathbf{x}_i$, there is no more
+information in $\tilde{\mathbf{x}}_i$ than in $\mathbf{x}_i$.  So by the Law of Iterated
+Expectations we have
+\[
+  \E(\tilde{\varepsilon}_i \mid \tilde{\mathbf{x}}_i)
+    = \E[\E(\tilde{\varepsilon}_i \mid \mathbf{x}_i) \mid \tilde{\mathbf{x}}_i] = 0.
+\]
+
+Therefore, provided that
+$\E(\tilde{\mathbf{x}}_i \tilde{\mathbf{x}}_i')$ is nonsingular, Assumptions~2.1--2.5
+are satisfied for equation~\eqref{eq:2.8.3}.  Furthermore, by construction, the error
+$\tilde{\varepsilon}_i$ is conditionally homoskedastic:
+$\E(\tilde{\varepsilon}_i^2 \mid \tilde{\mathbf{x}}_i) = 1$.  So Proposition~2.5 applies
+with $\sigma^2 = 1$: the WLS estimator is consistent and asymptotically normal, and the
+asymptotic variance is
+\begin{align}
+  \avar(\widehat{\bm{\beta}}(\mathbf{V}))
+    &= \E(\tilde{\mathbf{x}}_i \tilde{\mathbf{x}}_i')^{-1}
+    \quad (\text{since the error variance is } 1) \notag \\
+    &= \plim\biggl(\frac{1}{n} \sum_{i=1}^{n}
+      \tilde{\mathbf{x}}_i \tilde{\mathbf{x}}_i'\biggr)^{\!-1}
+    \quad (\text{by ergodic stationarity}) \notag \\
+    &= \plim\biggl(\frac{1}{n} \sum_{i=1}^{n}
+      \frac{1}{\mathbf{z}_i' \bm{\alpha}}\,
+      \mathbf{x}_i \mathbf{x}_i'\biggr)^{\!-1}
+    \quad (\text{since } \tilde{\mathbf{x}}_i
+      = \mathbf{x}_i / \sqrt{\mathbf{z}_i' \bm{\alpha}}) \notag \\
+    &= \plim\biggl(\frac{1}{n} \mathbf{X}' \mathbf{V}^{-1}
+      \mathbf{X}\biggr)^{\!-1}.
+  \label{eq:2.8.7}
+\end{align}
+So $\bigl(\frac{1}{n} \mathbf{X}' \mathbf{V}^{-1} \mathbf{X}\bigr)^{-1}$ is a
+consistent estimator of $\avar(\widehat{\bm{\beta}}(\mathbf{V}))$.
+
+%% ─── Regression of e_i^2 on z_i ─────────────────────────────────────────────
+\subsection*{Regression of $e_i^2$ on $\mathbf{z}_i$ Provides a Consistent Estimate of
+$\bm{\alpha}$}
+
+If $\bm{\alpha}$ is unknown, it can be estimated by running a separate regression.
+\eqref{eq:2.8.1} says that $\mathbf{z}_i' \bm{\alpha}$ is a regression of
+$\varepsilon_i^2$.  If we define
+$\eta_i \equiv \varepsilon_i^2 - \E(\varepsilon_i^2 \mid \mathbf{x}_i)$, then
+\eqref{eq:2.8.1} can be written as a regression equation:
+\begin{equation}
+  \varepsilon_i^2 = \mathbf{z}_i' \bm{\alpha} + \eta_i.
+  \label{eq:2.8.8}
+\end{equation}
+By construction, $\E(\eta_i \mid \mathbf{x}_i) = 0$, which, together with the fact that
+$\mathbf{z}_i$ is a function of $\mathbf{x}_i$, implies that the regressors
+$\mathbf{z}_i$ are orthogonal to the error term $\eta_i$.  Hence, provided that
+$\E(\mathbf{z}_i \mathbf{z}_i')$ is nonsingular, Proposition~2.1 is applicable to this
+auxiliary regression \eqref{eq:2.8.8}: the OLS estimator of $\bm{\alpha}$ is consistent
+and asymptotically normal.
+
+Of course, this we cannot do because we don't observe the error term.  However, since the
+OLS estimator $\mathbf{b}$ for the original regression
+$y_i = \mathbf{x}_i' \bm{\beta} + \varepsilon_i$ is consistent despite the presence of
+conditional heteroskedasticity, the OLS residual $e_i$ provides a consistent estimate of
+$\varepsilon_i$.  It is left to you as an analytical exercise to show that, when
+$\varepsilon_i$ is replaced by $e_i$ in the regression \eqref{eq:2.8.8}, the OLS
+estimator, call it $\hat{\bm{\alpha}}$, is consistent for $\bm{\alpha}$.
+
+%% ─── WLS with Estimated alpha ────────────────────────────────────────────────
+\subsection*{WLS with Estimated $\bm{\alpha}$}
+
+The WLS estimation of the original equation $y_i = \mathbf{x}_i' \bm{\beta} +
+\varepsilon_i$ with estimated $\bm{\alpha}$ is
+$\widehat{\bm{\beta}}(\widehat{\mathbf{V}})$, where $\widehat{\mathbf{V}}$ is the
+$n \times n$ diagonal matrix whose $i$-th diagonal is
+$\mathbf{z}_i' \hat{\bm{\alpha}}$.  Under suitable additional conditions (see, e.g.,
+Amemiya (1977) for an explicit statement of such conditions), it can be shown that
+\begin{enumerate}[label=(\alph*)]
+  \item $\sqrt{n}\,(\widehat{\bm{\beta}}(\mathbf{V}) - \bm{\beta})$ and
+    $\sqrt{n}\,(\widehat{\bm{\beta}}(\widehat{\mathbf{V}}) - \bm{\beta})$ are
+    asymptotically equivalent in that their difference converges to zero in probability as
+    $n \to \infty$.  Therefore, by Lemma~2.4(a), the asymptotic distribution of
+    $\sqrt{n}\,(\widehat{\bm{\beta}}(\widehat{\mathbf{V}}) - \bm{\beta})$ is the same as
+    that of $\sqrt{n}\,(\widehat{\bm{\beta}}(\mathbf{V}) - \bm{\beta})$.
+    So $\avar(\widehat{\bm{\beta}}(\widehat{\mathbf{V}}))$ equals
+    $\avar(\widehat{\bm{\beta}}(\mathbf{V}))$, which in turn is given by
+    \eqref{eq:2.8.7};
+
+  \item $\plim \frac{1}{n} \mathbf{X}' \widehat{\mathbf{V}}^{-1} \mathbf{X}
+    = \plim \frac{1}{n} \mathbf{X}' \mathbf{V}^{-1} \mathbf{X}$.
+    So $\bigl(\frac{1}{n} \mathbf{X}' \widehat{\mathbf{V}}^{-1}
+    \mathbf{X}\bigr)^{-1}$ is consistent for
+    $\avar(\widehat{\bm{\beta}}(\widehat{\mathbf{V}}))$.
+\end{enumerate}
+
+All this may sound complicated, but the operational implication for the WLS estimation of
+the equation $y_i = \mathbf{x}_i' \bm{\beta} + \varepsilon_i$ is very clear:
+
+\medskip
+\noindent
+\textit{Step~1:} \; Estimate the equation $y_i = \mathbf{x}_i' \bm{\beta} +
+\varepsilon_i$ by OLS and compute the OLS residuals~$e_i$.
+
+\noindent
+\textit{Step~2:} \; Regress $e_i^2$ on $\mathbf{z}_i$, to obtain the OLS coefficient
+estimate $\hat{\bm{\alpha}}$.
+
+\noindent
+\textit{Step~3:} \; Re-estimate the equation $y_i = \mathbf{x}_i' \bm{\beta} +
+\varepsilon_i$ by WLS, using $1/\sqrt{\mathbf{z}_i' \hat{\bm{\alpha}}}$ as the weight
+for observation~$i$.
+
+\medskip
+\noindent
+Since the correct estimate of the asymptotic variance,
+$\bigl(\frac{1}{n} \mathbf{X}' \widehat{\mathbf{V}}^{-1} \mathbf{X}\bigr)^{-1}$ in (b),
+is ($n$ times) the estimated variance matrix routinely printed out by standard regression
+packages for the \textit{Step~3} regression, calculating appropriate test statistics is
+quite straightforward: the standard $t$- and $F$-ratios from \textit{Step~3} regression
+can be used to do statistical inference.
+
+%% ─── OLS versus WLS ─────────────────────────────────────────────────────────
+\subsection*{OLS versus WLS}
+
+Thus we have two consistent and asymptotically normal estimators, the OLS and WLS
+estimators.  We say that a consistently and asymptotically normal estimator is
+\textbf{asymptotically more efficient} than another consistent and asymptotically normal
+estimator of the same parameter if the asymptotic variance of the former is no larger
+than that of the latter.  It is left to you as an analytical exercise to show that the WLS
+estimator is asymptotically more efficient than the OLS estimator.
+
+The superiority of WLS over OLS, however, rests on the premise that the sample size is
+sufficiently large \emph{and} the functional form of the conditional second moment is
+correctly specified.  If the functional form is misspecified, the WLS estimator would
+still be consistent, but its asymptotic variance may or may not be smaller than
+$\avar(\mathbf{b})$.  In finite samples, even if the functional form is correctly
+specified, the large-sample approximation will probably work less well for the WLS
+estimator than for OLS because of the estimation of extra parameters ($\bm{\alpha}$)
+involved in the WLS procedure.

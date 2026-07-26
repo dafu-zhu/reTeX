@@ -1,0 +1,472 @@
+% sec2_11.tex — Section 2.11: Application: Rational Expectations Econometrics
+
+\section{Application: Rational Expectations Econometrics}
+\label{sec:2.11}
+
+In dynamic economic models and other contexts, expectations about the future
+naturally play an important role. \textbf{Rational expectations econometrics} concerns
+estimating equations involving expectations. Expectations are usually not observable, but, if we assume that economic agents form expectations rationally, we can
+overcome the problem of unobservable expectations using the techniques of this
+chapter. The application we consider is Fama's \textbf{efficient market hypothesis}. In
+his own words, ``An efficient capital market is a market that is efficient in processing
+information\ldots. In an efficient market, prices `fully reflect' available information''
+(Fama, 1976, p.~133). The words ``fully reflect'' can be formalized precisely. We
+will do so for a particular capital market and test its implication.
+
+\subsection*{The Efficient Market Hypotheses}
+
+The capital market studied in Fama (1975) is the market for U.S.\ Treasury bills. In
+this section we focus on the one-month Treasury bill rates observed on a monthly
+basis. (Later in the book we will also consider Treasury bills of different maturities.) To formalize market efficiency for the bills market, we need to introduce a
+few concepts from macroeconomics and finance. Since in this section we deal
+exclusively with time-series data, we use ``$t$'' rather than ``$i$'' for the subscript.
+Define
+%
+\begin{align*}
+v_t &\equiv \text{price of a one-month Treasury bill at the beginning of month } t, \\
+R_t &\equiv \text{one-month nominal interest rate over month } t, \text{ i.e., nominal return} \\
+    &\quad \text{on the bill over the month} = (1 - v_t)/v_t,
+      \text{ so } v_t = 1/(1 + R_t), \\
+P_t &\equiv \text{value of the Consumer Price Index (CPI), which is our measure of} \\
+    &\quad \text{the price level at the beginning of month } t, \\
+\pi_{t+1} &\equiv \text{inflation rate over month } t
+      \text{ (i.e., from the beginning of month } t \text{ to} \\
+    &\quad \text{the beginning of month } t + 1)
+      = (P_{t+1} - P_t)/P_t, \\
+{}_t\pi_{t+1} &\equiv \text{expected inflation rate over month } t,
+      \text{ expectation formed at the} \\
+    &\quad \text{beginning of month } t, \\
+\eta_{t+1} &\equiv \text{inflation forecast error} = \pi_{t+1} - {}_t\pi_{t+1}, \\
+r_{t+1} &\equiv \text{ex-post real interest rate over month } t
+      = \frac{1/P_{t+1} - v_t/P_t}{v_t/P_t} \\
+    &= \frac{1 + R_t}{1 + \pi_{t+1}} - 1 \approx R_t - \pi_{t+1}, \\
+{}_tr_{t+1} &\equiv \text{ex-ante real interest rate}
+      = \frac{1 + R_t}{1 + {}_t\pi_{t+1}} - 1
+      \approx R_t - {}_t\pi_{t+1}.
+\end{align*}
+
+% Figure 2.2 placeholder
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.9\textwidth,trim=50 350 50 350,clip]{figures/fig_2_2.png}
+\caption{What's Observed When}
+\label{fig:2.2}
+\end{figure}
+
+Timing---the value of which variable is observed at what point in time---is very
+important in rational expectations econometrics. Our rule for dating variables
+(which is different from Fama's) is that the variable has subscript $t$ if its value
+is first observed at the beginning of period (month) $t$.\footnote{In Fama's (1975)
+notation, our $\pi_{t+1}$ is $-\widetilde{\Delta}_t$, $r_{t+1}$ is $\tilde{r}_{t+1}$,
+and $I_t$ is $\phi_t$.}
+For example, because $\pi_{t+1}$,
+the inflation rate over month $t$, depends on $P_{t+1}$, its subscript is $t+1$ rather than $t$.
+For the same reason, $r_{t+1}$, the ex-post real interest rate over month $t$ has subscript
+$t + 1$. In contrast, the nominal interest rate $R_t$ over month $t$ has subscript $t$, not
+$t + 1$, because it is determined by the price of the Treasury bill at the beginning of
+month $t$, $v_t$. Figure~\ref{fig:2.2} shows the value of which variable is observed at what point
+in time.
+
+We take a period to be a month, only because our data are monthly. Note that
+the maturity of the security (one month) coincides with the sampling interval (a
+month). If the sampling interval is finer than the maturity, which is the case if,
+for example, we have monthly data on the three-month Treasury bill rate, then
+maturities overlap and we need a more sophisticated technique to be introduced in
+Chapter~6.
+
+The efficient market hypothesis is a joint hypothesis combining:
+
+\medskip
+\noindent\textbf{Rational Expectations.}\quad
+Inflationary expectations are rational:
+${}_t\pi_{t+1} = \E(\pi_{t+1} \mid I_t)$, where $I_t$ is information available at the beginning of month
+$t$ and includes $\{R_t, R_{t-1}, \ldots, \pi_t, \pi_{t-1}, \ldots\}$.
+Also, $I_t \supseteq I_{t-1} \supseteq I_{t-2} \supseteq \cdots$.
+That is, agents participating in the market do not forget.
+
+\medskip
+\noindent\textbf{Constant Real Rates.}\quad
+The ex-ante real interest rate is constant: ${}_tr_{t+1} = r$.
+
+\subsection*{Testable Implications}
+
+We derive two testable implications of the efficient market hypothesis by utilizing the following key observations about the inflation forecast error under rational
+expectations.
+
+\begin{enumerate}[label=(\alph*)]
+\item $\E(\eta_{t+1} \mid I_t) = 0$, that is, the inflation forecast error is a martingale difference
+sequence with respect to the information set.
+
+\item $\{\eta_t, \eta_{t-1}, \ldots\}$ as well as
+$\{R_t, R_{t-1}, \ldots, \pi_t, \pi_{t-1}, \ldots\}$ are included in $I_t$ (known
+at the beginning of month $t$). That is, agents remember all past mistakes.
+\end{enumerate}
+
+(a) makes intuitive sense; if people use all available information to forecast the
+inflation rate, the forecast error, which is known only after the fact, will not have
+any systematic relation to what people knew when they formed expectations. It can
+be proved easily:
+%
+\begin{align}
+\E(\eta_{t+1} \mid I_t)
+&= \E(\pi_{t+1} - {}_t\pi_{t+1} \mid I_t)
+  \quad (\text{since } \eta_{t+1} \equiv \pi_{t+1} - {}_t\pi_{t+1}) \notag \\
+&= \E(\pi_{t+1} \mid I_t) - \E({}_t\pi_{t+1} \mid I_t) \notag \\
+&= \E(\pi_{t+1} \mid I_t) - \E[\E(\pi_{t+1} \mid I_t) \mid I_t] \notag \\
+&\quad (\text{since } {}_t\pi_{t+1} = \E(\pi_{t+1} \mid I_t)
+  \text{ by rational expectations}) \notag \\
+&= \E(\pi_{t+1} \mid I_t) - \E(\pi_{t+1} \mid I_t) = 0.
+\label{eq:2.11.1}
+\end{align}
+%
+(b) follows because agents remember past inflation forecasts. Since
+${}_t{}_{-j-1}\pi_{t-j} = \E(\pi_{t-j} \mid I_{t-j-1})$ is a function of $I_{t-j-1}$, it is included in
+$I_{t-j-1}$ (i.e., known at the beginning of month $t - j - 1$) and hence in $I_t$ (known at the beginning of
+month $t$) for $j \geq 0$. Thus
+$\eta_{t-j} \equiv \pi_{t-j} - {}_{t-j-1}\pi_{t-j}$ is included in $I_t$ for all $j \geq 0$.
+Observations (a) and (b), together with the Law of Total Expectations, imply
+
+\begin{enumerate}[label=(\alph*),start=3]
+\item $\{\eta_t\}$ is m.d.s.
+\end{enumerate}
+
+So, it is a zero mean and serially uncorrelated process.
+
+These are not testable because expectations are unobservable, but, when combined with the constant-real-rate assumption, they imply two testable implications
+about the inflation rate and the interest rate which are observable.
+
+\medskip
+\noindent\textbf{Implication 1:}\quad
+The ex-post real interest rate has a constant mean and is serially
+uncorrelated.
+
+\medskip
+This follows because
+%
+\begin{align}
+r_{t+1} &\equiv R_t - \pi_{t+1} \notag \\
+&= (R_t - {}_t\pi_{t+1}) - (\pi_{t+1} - {}_t\pi_{t+1}) \notag \\
+&= {}_tr_{t+1} - \eta_{t+1} \quad \text{(by definition)} \notag \\
+&= r - \eta_{t+1} \quad
+  (\text{since } {}_tr_{t+1} = r \text{ by assumption}).
+\label{eq:2.11.2}
+\end{align}
+%
+By (c), $\{r_t\}$ has mean $r$ and is serially uncorrelated.
+
+\medskip
+\noindent\textbf{Implication 2:}\quad
+$\E(\pi_{t+1} \mid I_t) = -r + R_t$.
+
+\medskip
+That is, the best (in the sense of minimum mean squared error) inflation forecast on
+the basis of all the available information is the nominal interest rate; the nominal
+interest rate $R_t$, which is determined by the price of a Treasury bill $v_t$, summarizes all the
+currently available information relevant for predicting future inflation. This is the
+formalization of asset prices ``fully reflecting'' available information. This, too, can
+be derived easily. Solve \eqref{eq:2.11.2} for $\pi_{t+1}$ as
+$\pi_{t+1} = -r + R_t + \eta_{t+1}$. So
+%
+\begin{align}
+\E(\pi_{t+1} \mid I_t)
+&= \E(-r + R_t + \eta_{t+1} \mid I_t) \notag \\
+&= -r + R_t + \E(\eta_{t+1} \mid I_t)
+  \quad (\text{since } r \text{ is a constant and } R_t \text{ is included in } I_t) \notag \\
+&= -r + R_t \quad \text{(by (a))}.
+\label{eq:2.11.3}
+\end{align}
+%
+In the rest of this section, we test these two implications of market efficiency.
+
+\subsection*{Testing for Serial Correlation}
+
+Consider first the implication that the ex-post real rate has no serial correlation,
+which Fama tests using the result from Proposition~\ref{prop:2.9}. We use the monthly data
+set used by Mishkin (1992) on the one-month $T$-bill rate and the monthly CPI inflation rate, stated in percent at annual rates.\footnote{The data set is described in some
+detail in the empirical exercise. Following Fama, the inflation measure used in the
+text is calculated from the raw CPI numbers. The inflation measure used by Mishkin (1992)
+treats the housing component of the CPI consistently. See question~(k) of Empirical
+Exercise~1.}
+Figure~2.3 plots the data. The ex-post
+real interest rate, defined as the difference between the T-bill rate and the CPI inflation rate, is plotted in Figure~2.4. To duplicate Fama's results, we take the sample
+period to be the same as in Fama (1975), which is January 1953 through July 1971.
+The sample size is thus 223. The time-series properties of the real interest rate are
+summarized in Table~\ref{tab:2.1}. In calculating the sample autocorrelations
+$\hat{\rho}_j = \hat{\gamma}_j/\hat{\gamma}_0$,
+
+% Figure 2.3 placeholder
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.9\textwidth,trim=50 350 50 350,clip]{figures/fig_2_3.png}
+\caption{Inflation and Interest Rates}
+\label{fig:2.3}
+\end{figure}
+
+% Figure 2.4 placeholder
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.9\textwidth,trim=50 350 50 350,clip]{figures/fig_2_4.png}
+\caption{Real Interest Rates}
+\label{fig:2.4}
+\end{figure}
+
+% Table 2.1
+\begin{table}[htbp]
+\centering
+\caption{Real Interest Rates, January 1953--July 1971}
+\label{tab:2.1}
+\smallskip
+\begin{tabular}{l*{12}{r}}
+\toprule
+\multicolumn{13}{c}{mean $= 0.82\%$, standard deviation $= 2.847\%$,
+sample size $= 223$} \\
+\midrule
+& $j=1$ & $j=2$ & $j=3$ & $j=4$ & $j=5$ & $j=6$
+& $j=7$ & $j=8$ & $j=9$ & $j=10$ & $j=11$ & $j=12$ \\
+\midrule
+$\hat{\rho}_j$
+& $-0.101$ & $0.172$ & $-0.019$ & $-0.004$ & $-0.064$
+& $-0.021$ & $-0.092$ & $0.095$ & $0.094$ & $0.019$
+& $0.004$ & $0.207$ \\
+std.\ error
+& $0.067$ & $0.067$ & $0.067$ & $0.067$ & $0.067$
+& $0.067$ & $0.067$ & $0.067$ & $0.067$ & $0.067$
+& $0.067$ & $0.067$ \\
+Ljung--Box $Q$
+& $2.3$ & $9.1$ & $9.1$ & $9.1$ & $10.1$
+& $10.2$ & $12.1$ & $14.2$ & $16.3$ & $16.4$
+& $16.4$ & $26.5$ \\
+$p$-value (\%)
+& $12.8\%$ & $1.1\%$ & $2.8\%$ & $5.8\%$ & $7.3\%$
+& $11.7\%$ & $9.6\%$ & $7.6\%$ & $6.1\%$ & $8.9\%$
+& $12.8\%$ & $0.9\%$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\noindent
+we use the formula \eqref{eq:2.10.1} for $\hat{\gamma}_j$ where the denominator is the sample size rather
+than $n - j$. Similarly, the formula for the standard error of $\hat{\rho}_j$ is $1/\sqrt{n}$ rather
+than $1/\sqrt{n-j}$ (so the standard error does not depend on $j$). The Ljung--Box $Q$ statistic
+in the table for, say, $j = 2$ is \eqref{eq:2.10.5} with $p = 2$. The results in the table show
+that none of the autocorrelations are highly significant individually or as a group,
+in accordance with the first implication of the efficient market hypothesis.
+
+\subsection*{Is the Nominal Interest Rate the Optimal Predictor?}
+
+We can test Implication~2 by estimating an appropriate regression and carrying
+out the $t$-test of Proposition~2.3. The remarkable fact about the efficient market
+hypothesis is that, despite its simplicity, it is specific enough to imply the important
+parts of the assumptions justifying the $t$-test.\footnote{The technical
+part---that the fourth-moment matrix $\E(\mathbf{g}_t\mathbf{g}_t')$ exists and is finite and that the
+regressors have finite fourth moments---is not implied by the efficient market hypothesis
+and needs to be assumed.}
+To see this, let $y_t \equiv \pi_{t+1}$,
+$\mathbf{x}_t \equiv (1, R_t)'$, $\varepsilon_t \equiv \eta_{t+1}$ (the inflation forecast error), and rewrite
+\eqref{eq:2.11.2} as
+%
+\begin{equation}
+\pi_{t+1} = \beta_1 + \beta_2 R_t + \eta_{t+1}
+\quad \text{or} \quad
+y_t = \mathbf{x}_t'\bm{\beta} + \varepsilon_t,
+\label{eq:2.11.4}
+\end{equation}
+%
+so Assumption~2.1 is obviously satisfied with
+%
+\begin{equation}
+\bm{\beta} = (-r, 1)'.
+\label{eq:2.11.5}
+\end{equation}
+%
+The other assumptions of the model are verified as follows.
+
+\begin{itemize}
+\item \emph{Assumption~2.3 (predetermined regressors).}\quad
+The $\mathbf{g}_t$ ($\equiv \mathbf{x}_t \cdot \varepsilon_t$) in the present
+context is $(\eta_{t+1}, R_t\eta_{t+1})'$. What we need to show is that
+$\E(\eta_{t+1}) = 0$ and $\E(R_t\eta_{t+1}) = 0$. The former is implied by (a) and the Law of Total Expectations:
+%
+\begin{equation}
+\E(\eta_{t+1}) = \E[\E(\eta_{t+1} \mid I_t)] = 0.
+\label{eq:2.11.6}
+\end{equation}
+%
+The latter holds because
+%
+\begin{align}
+\E(R_t\eta_{t+1})
+&= \E[\E(R_t\eta_{t+1} \mid I_t)]
+  \quad \text{(by the Law of Total Expectations)} \notag \\
+&= \E[R_t\,\E(\eta_{t+1} \mid I_t)]
+  \quad \text{(by linearity of conditional expectations and }
+  R_t \in I_t\text{)} \notag \\
+&= 0 \quad \text{(by (a))}.
+\label{eq:2.11.7}
+\end{align}
+
+\item \emph{Assumption~2.5.}\quad
+By (b), $I_t$ includes $(\varepsilon_{t-1}\ (= \eta_t), \varepsilon_{t-2}, \ldots)$ as well as
+$(\mathbf{x}_t, \mathbf{x}_{t-1}, \ldots)$. (a) then implies (2.3.1), which is a sufficient condition for
+$\{\mathbf{g}_t\}$ to be m.d.s.
+
+\item \emph{Assumption~2.4.}\quad
+$\E(\mathbf{x}_t\mathbf{x}_t')$ here is
+%
+\begin{equation}
+\E(\mathbf{x}_t\mathbf{x}_t') = \begin{bmatrix}
+1 & \E(R_t) \\ \E(R_t) & \E(R_t^2)
+\end{bmatrix}.
+\label{eq:2.11.8}
+\end{equation}
+%
+Its determinant is $\E(R_t^2) - [\E(R_t)]^2 = \Var(R_t)$, which must be positive; if the
+variance were zero, we would not observe the interest rate $R_t$ fluctuating.
+
+\item \emph{Assumption~2.2 (ergodic stationarity).}\quad
+It requires $\{\pi_{t+1}, R_t\}$ to be ergodic stationary. The plot in Figure~2.3 shows a stretch of upward movements, especially
+for the nominal interest rate, although the stretch is followed by a reversion to a
+lower level. Testing stationarity of the series will be covered in Example~9.2 of
+Chapter~9. For now, despite this rather casual evidence to the contrary, we proceed under the assumption of stationarity (but the implication of having trending
+series will be touched upon in the final subsection). For ergodicity, we just have
+to assume it.
+\end{itemize}
+
+What we have shown is that, under the efficient market hypothesis, $\{y_t, \mathbf{x}_t\}$
+(where $y_t = \pi_{t+1}$ and $\mathbf{x}_t = (1, R_t)'$) belongs to the set of DGPs satisfying
+Assumptions~2.1--2.5.
+
+Having verified the required assumptions, we now proceed to estimation. Using
+our data, the estimated regression is, for $t = 1/53, \ldots, 7/71$,
+%
+\begin{equation}
+\begin{aligned}
+\pi_{t+1} &= \underset{(0.431)}{-0.868} + \underset{(0.112)}{1.015}\; R_t, \\[4pt]
+R^2 &= 0.24, \quad
+\text{mean of dependent variable} = 2.35, \quad
+\mathit{SER} = 2.84\%, \quad
+n = 223.
+\end{aligned}
+\label{eq:2.11.9}
+\end{equation}
+%
+The heteroskedasticity-robust standard errors calculated as in (2.4.1) (where
+$\widehat{\mathbf{S}}$ is given by (2.5.1) with $\hat{\varepsilon}_i = e_i$) are shown in parentheses.
+As shown in \eqref{eq:2.11.5}, market efficiency implies that the $R_t$ coefficient equals
+1.\footnote{The intercept is known to be $-r$, but it does not produce a testable restriction
+since the efficient market hypothesis does not specify the value of $r$.}
+The robust $t$-ratio for the null that the $R_t$ coefficient equals 1 is
+$(1.015 - 1)/0.112 = 0.13$. Its $p$-value is about 90 percent. Thus, we can easily
+accept the null hypothesis.
+
+There are other ways to test the implication of the nominal interest rate summarizing all the currently available information. We can bring in more explanatory
+variables in the regression and see if they have an explanatory power over and
+above the nominal rate. The additional variables to be brought in, however, must
+be part of the current information set $I_t$ because, obviously, the efficient market
+
+\subsection*{$R_t$ Is Not Strictly Exogenous}
+
+As has been emphasized, one important advantage of large-sample theory over
+finite-sample theory of Chapter~1 is that the regressors do not have to be strictly
+exogenous as long as they are orthogonal to the error term. We now show by
+example that $R_t$ is not strictly exogenous, so finite-sample theory is not applicable
+to the Fama regression \eqref{eq:2.11.4}. Suppose that the process for the inflation rate is
+an AR(1) process:
+\[
+\pi_t = c + \rho\pi_{t-1} + \eta_t, \quad
+\{\eta_t\} \text{ is independent white noise.}
+\]
+If $\eta_{t+1}$ is independent of any elements of $I_t$, then
+\begin{align*}
+\E(\pi_{t+1} \mid I_t)
+&= c + \rho\pi_t + \E(\eta_{t+1} \mid I_t)
+  \quad (\text{since } \pi_t \text{ is in } I_t) \\
+&= c + \rho\pi_t
+  \quad (\text{since } \E(\eta_{t+1} \mid I_t) = \E(\eta_{t+1}) = 0 \text{ by assumption}).
+\end{align*}
+%
+So $\eta_{t+1}$ is indeed the inflation forecast error for $\pi_{t+1}$ and
+\[
+R_t = r + c + \rho\pi_t
+\]
+(since $R_t = r + \E(\pi_{t+1} \mid I_t)$ under market efficiency). It is then easy to see that
+the error term $\varepsilon_t$ in the Fama regression (of $\pi_{t+1}$ on a constant and $R_t$), which is the
+inflation forecast error $\eta_{t+1}$, can be correlated with future regressors. For example,
+%
+\begin{align*}
+\Cov(\varepsilon_t, R_{t+1})
+&= \Cov(\eta_{t+1}, r + c + \rho\pi_{t+1}) \\
+&= \rho\,\Cov(\eta_{t+1}, \pi_{t+1}) \\
+&= \rho\,\Var(\eta_{t+1})
+  \quad (\text{since } \pi_{t+1} = c + \rho\pi_t + \eta_{t+1}
+  \text{ and } \Cov(\eta_{t+1}, \pi_t) = 0),
+\end{align*}
+%
+which is not zero.
+
+Although finite-sample theory is not applicable, its prescription for statistical
+inference is approximately valid, provided that the error is conditionally homoskedastic and the sample size is large enough, which was the message of Section~2.6.
+
+\subsection*{Subsequent Developments}
+
+Although Fama's paper represents perhaps the finest example of rational expectations econometrics, events after its publication and a large number of empirical
+studies it inspired proved that the near one-for-one relation between inflation and
+interest rates is limited to the postwar period until 1979. Such strong association
+cannot be found for the prewar period or for many other countries. Furthermore, the
+increase in the real interest rates after the change in the Fed's operating procedure
+that took place in October 1979 runs counter to the premise of the Fama regression that the expected real interest rate is constant over time. When the sample is
+restricted to the post-October 1979 period, the interest rate coefficient in the Fama
+regression is far below unity.\footnote{See, for example, Mishkin (1992, Table~1).
+We will verify this in part~(l) of Empirical Exercise~1.}
+
+These findings raise the question of why the strong association occurs only for
+certain periods but not for others. The explanation by Mishkin (1992) is that the
+inflation premium gets incorporated into interest rates only gradually. In periods
+when the inflation rate shows only short-run fluctuations, interest rates are not
+responsive to inflation. However, sustained movements in inflation will be reflected
+in interest rates. The period when the strong association is observed (which
+includes Fama's sample period, see Figure~2.3) is precisely when inflation showed
+a sustained upward movement.
+
+On January 29, 1997, the U.S.\ Treasury auctioned \$7 billion in ten-year
+inflation-indexed bonds, making it possible for researchers to observe the ex-ante
+real interest rate as the yield on indexed bonds. Evidence from Great Britain,
+where indexed bonds have been available since the early 1980s, is that the yields
+on indexed bonds, although much less volatile than the yield on ordinary bonds,
+are not constant over time. The constant-real-rate assumption that we made was
+the auxiliary assumption whereby we can test whether bond prices fully reflect
+available information. Now we can do so without the auxiliary assumption by
+regressing the actual inflation rate on the yield differential between the conventional and indexed bonds. We can also relax the assumption, made implicitly so
+far, that the yield differential equals the expected inflation rate. Investors may not
+be risk-neutral, and the inflation risk premium over and above the expected inflation rate may be needed to induce them to hold ordinary bonds. If so, the expected
+inflation rate is once again unobservable. Rational expectations econometrics will
+continue to be a useful tool for dealing with unobservable expectations.
+
+\bigskip
+\noindent\textsc{Questions for Review}
+\begin{enumerate}
+\item Let $R_t = 5\%$ and $\pi_{t+1} = 2\%$. Calculate $r_{t+1}$ using the two formulas,
+$(1 + R_t)/(1 + \pi_{t+1}) - 1$ and $R_t - \pi_{t+1}$. Is the difference small? What if
+$R_t = 20\%$ and $\pi_{t+1} = 17\%$?
+
+\item Show that $\widehat{\E}^*(\pi_{t+1} \mid 1, R_t) = -r + R_t$ under the efficient market
+hypothesis. \textbf{Hint:} Use \eqref{eq:2.9.7}.
+
+\item If the inflation forecast error $\eta_{t+1}$ were observable, how would you test market
+efficiency? Do we need the constant ex-ante real rate assumption?
+
+\item If the inflation rates and the interest rates were measured in fractions rather
+than percent (e.g., 0.08 instead of 8\%), how would the regression result \eqref{eq:2.11.9}
+change? If the inflation rate is in percent but per month and the interest rate is
+in percent per year, then $1 + y = (1 + x)^{12}$ so that $y \approx 12x$.
+\textbf{Hint:} If $x$ is the inflation rate per month and $y$ is its annual
+rate, then $1 + y = (1 + x)^{12}$ so that $y \approx 12x$.
+
+\item Suppose in \eqref{eq:2.11.4} $\mathbf{x}_t$ includes a third variable which is not in $I_t$. Which part
+of the argument deriving Assumption~2.3 fails? \textbf{Hint:} The third element of
+$\mathbf{g}_t$ is the third variable times $\eta_{t+1}$.
+
+\item Provide an example of market \emph{inefficiency} such that Implication~1 holds but
+Implication~2 does not. \textbf{Hint:} Suppose $\pi_t$ and $R_t$ are serially independent and
+mutually independent processes.
+\end{enumerate}

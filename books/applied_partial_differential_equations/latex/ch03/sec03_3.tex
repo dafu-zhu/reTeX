@@ -1,0 +1,532 @@
+% sec03_3.tex — Section 3.3: Fourier Cosine and Sine Series
+\section{Fourier Cosine and Sine Series}
+\label{sec:cosine-sine-series}
+
+In this section we show that the series of sines only (and the series of cosines only) are special cases of a Fourier series.
+
+\subsection{Fourier Sine Series}
+\label{subsec:fourier-sine-series}
+
+\textbf{Odd functions.}  An odd function is a function with the property $f(-x) = -f(x)$.  The sketch of an odd function for $x < 0$ will be minus the mirror image of $f(x)$ for $x > 0$, as illustrated in Fig.~3.3.1.  Examples of odd functions are $f(x) = x^3$ (in fact, any odd power) and $f(x) = \sin 4x$.  The integral of an odd function over a symmetric interval is zero (any contribution from $x > 0$ will be cancelled by a contribution from $x < 0$).
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch03/fig_3_3_1.png}
+\caption{An odd function.}
+\label{fig:3.3.1}
+\end{figure}
+
+\textbf{Fourier series of odd functions.}  Let us calculate the Fourier coefficients of an odd function:
+\begin{align*}
+a_0 &= \frac{1}{2L} \int_{-L}^{L} f(x) \dx = 0 \\[6pt]
+a_n &= \frac{1}{L} \int_{-L}^{L} f(x) \cos \frac{n\pi x}{L} \dx = 0.
+\end{align*}
+Both are zero because the integrand, $f(x) \cos n\pi x/L$, is odd [being the product of an even function $\cos n\pi x/L$ and an odd function $f(x)$].  Since $a_n = 0$, all the cosine functions (which are even) will not appear in the Fourier series of an odd function.  The Fourier series of an odd function is an infinite series of odd functions (sines):
+\begin{equation}
+\label{eq:odd-fourier}
+f(x) \sim \sum_{n=1}^{\infty} b_n \sin \frac{n\pi x}{L},
+\end{equation}
+if $f(x)$ is odd.  In this case formulas for the Fourier coefficients $b_n$ may be simplified:
+\begin{equation}
+\label{eq:bn-odd}
+b_n = \frac{1}{L} \int_{-L}^{L} f(x) \sin \frac{n\pi x}{L} \dx = \frac{2}{L} \int_0^{L} f(x) \sin \frac{n\pi x}{L} \dx,
+\end{equation}
+since the integral of an even function over the symmetric interval $-L$ to $+L$ is twice the integral from $0$ to $L$.  For odd functions, information about $f(x)$ is needed only for $0 \le x \le L$.
+
+\textbf{Fourier sine series.}  However, only occasionally are we given an odd function and asked to compute its Fourier series.  Instead, frequently series of only sines arise in the context of separation of variables.  Note the temperature in a one-dimensional rod $0 < x < L$ with zero-temperature ends [$u(0,t) = u(L,t) = 0$] satisfies
+\begin{equation}
+\label{eq:heat-sine}
+u(x,t) = \sum_{n=1}^{\infty} B_n \sin \frac{n\pi x}{L} e^{-(n\pi/L)^2 kt},
+\end{equation}
+where the initial condition $u(x,0) = f(x)$ is satisfied if
+\begin{equation}
+\label{eq:sine-ic}
+f(x) = \sum_{n=1}^{\infty} B_n \sin \frac{n\pi x}{L}.
+\end{equation}
+$f(x)$ must be represented as a series of sines; \eqref{eq:sine-ic} appears in the same form as \eqref{eq:odd-fourier}.  However, there is a significant difference.  In \eqref{eq:odd-fourier} $f(x)$ is given as an odd function and defined for $-L \le x \le L$.  In \eqref{eq:sine-ic} $f(x)$ is only defined for $0 \le x \le L$ (it is just the initial temperature distribution); $f(x)$ is certainly not necessarily odd.  If $f(x)$ is given only for $0 \le x \le L$, then it can be \textit{extended} as an odd function; see Fig.~3.3.2, called the \textbf{odd extension of $f(x)$}.  The odd extension of $f(x)$ is defined for $-L \le x \le L$.  Fourier's theorem will apply [if the odd extension of $f(x)$ is piecewise smooth, which just requires that $f(x)$ is piecewise smooth for $0 \le x \le L$].  Moreover, since the odd extension of $f(x)$ is certainly odd, its Fourier series involves only sines:
+\[
+\text{the odd extension of } f(x) \sim \sum_{n=1}^{\infty} B_n \sin n\pi x/L, \quad -L \le x \le L,
+\]
+where $B_n$ are given by \eqref{eq:bn-odd}.  However, we are only interested in what happens between $x = 0$ and $x = L$.  In that region, $f(x)$ is identical to its odd extension:
+\begin{equation}
+\label{eq:fourier-sine-series}
+\boxed{f(x) \sim \sum_{n=1}^{\infty} B_n \sin \frac{n\pi x}{L}, \qquad 0 \le x \le L,}
+\end{equation}
+where
+\begin{equation}
+\label{eq:Bn-sine}
+\boxed{B_n = \frac{2}{L} \int_0^{L} f(x) \sin \frac{n\pi x}{L} \dx.}
+\end{equation}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch03/fig_3_3_2.png}
+\caption{Odd extension of $f(x)$.}
+\label{fig:3.3.2}
+\end{figure}
+
+We call this the \textbf{Fourier sine series of $f(x)$} (on the interval $0 \le x \le L$).  This series \eqref{eq:fourier-sine-series} is nothing but an example of a Fourier series.  As such, we can simply apply Fourier's theorem; just remember that $f(x)$ is only defined for $0 \le x \le L$.  We may think of $f(x)$ as being odd (although it is not necessarily) by extending $f(x)$ as an odd function.  Formula \eqref{eq:Bn-sine} is very important but does not need to be memorized.  It can be \textit{derived} from the formulas for a Fourier series simply by assuming that $f(x)$ is odd.  [It is more accurate to say that we consider the odd extension of $f(x)$.]  Formula \eqref{eq:Bn-sine} is a factor of 2 larger than the Fourier series coefficients since the integrand is even.  In \eqref{eq:Bn-sine} the integrals are only from $x = 0$ to $x = L$.
+
+According to Fourier's theorem, sketching the Fourier sine series of $f(x)$ is easy:
+
+\begin{center}
+\fbox{\parbox{0.8\textwidth}{
+\begin{enumerate}
+\item Sketch $f(x)$ (for $0 < x < L$).
+\item Sketch the odd extension of $f(x)$.
+\item Extend as a periodic function (with period $2L$).
+\item Mark an $\times$ at the average at points where the odd periodic extension of $f(x)$ has a jump discontinuity.
+\end{enumerate}
+}}
+\end{center}
+
+\textbf{Example.}  As an example, we show how to sketch the Fourier sine series of $f(x) = 100$.  We consider $f(x) = 100$ only for $0 \le x \le L$.  We begin by sketching in Fig.~3.3.3 its odd extension.  The Fourier sine series of $f(x)$ equals the Fourier series of the odd extension of $f(x)$.  In Fig.~3.3.4 we repeat periodically the odd extension (with period $2L$).  At points of discontinuity, the average is marked with an $\times$.  According to Fourier's theorem (as illustrated in Fig.~3.3.4), the Fourier sine series of 100 actually equals 100 for $0 < x < L$, but the infinite series does not equal 100 at $x = 0$ and $x = L$:
+\begin{equation}
+\label{eq:sine100}
+100 = \sum_{n=1}^{\infty} B_n \sin \frac{n\pi x}{L}, \qquad 0 < x < L.
+\end{equation}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch03/fig_3_3_3.png}
+\caption{Odd extension of $f(x) = 100$.}
+\label{fig:3.3.3}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch03/fig_3_3_4.png}
+\caption{Fourier sine series of $f(x) = 100$.}
+\label{fig:3.3.4}
+\end{figure}
+
+At $x = 0$, Fig.~3.3.4 shows that the Fourier sine series converges to 0, because at $x = 0$ the odd property of the sine series yields the average of 100 and $-100$, which is 0.  For similar reasons, the Fourier sine series also converges to 0 at $x = L$.  These observations agree with the result of substituting $x = 0$ (and $x = L$) into the infinite series of sines.  The Fourier coefficients are determined from \eqref{eq:Bn-sine} [see (2.3.42)]:
+\begin{equation}
+\label{eq:Bn100}
+B_n = \frac{2}{L} \int_0^{L} f(x) \sin \frac{n\pi x}{L} \dx = \frac{200}{L} \int_0^{L} \sin \frac{n\pi x}{L} \dx = \begin{cases} 0 & n \text{ even} \\ \dfrac{400}{n\pi} & n \text{ odd.} \end{cases}
+\end{equation}
+
+\textbf{Physical example.}  One of the simplest examples is the Fourier sine series of a constant.  This problem arose in trying to solve the one-dimensional heat equation with zero boundary conditions and constant initial temperature, $100^\circ$:
+\begin{align*}
+\text{PDE:} &\quad \pd{u}{t} = k \pdd{u}{x}, \qquad 0 < x < L,\ t > 0 \\
+\text{BC1:} &\quad u(0,t) = 0 \\
+\text{BC2:} &\quad u(L,t) = 0 \\
+\text{IC:} &\quad u(x,0) = f(x) = 100^\circ.
+\end{align*}
+The method of separation of variables implies that
+\begin{equation}
+\label{eq:heat-soln-100}
+u(x,t) = \sum_{n=1}^{\infty} B_n \sin \frac{n\pi x}{L} e^{-(n\pi/L)^2 kt}.
+\end{equation}
+The initial conditions are satisfied if
+\[
+100 = f(x) = \sum_{n=1}^{\infty} B_n \sin \frac{n\pi x}{L}, \quad 0 < x < L.
+\]
+This may be interpreted as the Fourier sine series of $f(x) = 100$ [see \eqref{eq:Bn100}].  Equivalently, $B_n$ may be determined from the orthogonality of $\sin n\pi x/L$ [see (2.3.42)].
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch03/fig_3_3_5.png}
+\caption{Boundary and initial conditions.}
+\label{fig:3.3.5}
+\end{figure}
+
+Mathematically, the Fourier series of the initial condition has a rather bizarre behavior at $x = 0$ (and at $x = L$).  In fact, for this problem, the physical situation is not very well defined at $x = 0$ (at $t = 0$).  This might be illustrated in a space-time diagram, Fig.~3.3.5.  We note that Fig.~3.3.5 shows that the domain of our problem is $t \ge 0$ and $0 \le x \le L$.  However, there is a conflict that occurs at $x = 0$, $t = 0$ between the initial condition and the boundary condition.  The initial condition ($t = 0$) prescribes the temperature to be $100^\circ$ even as $x \to 0$, whereas the boundary condition ($x = 0$) prescribes the temperature to be $0^\circ$ even as $t \to 0$.  Thus, the physical problem has a discontinuity at $x = 0$, $t = 0$.  In the actual physical world, the temperature cannot be discontinuous.  We introduced a discontinuity into our mathematical model by ``instantaneously'' transporting (at $t = 0$) the rod from a $100^\circ$ bath to a $0^\circ$ bath at $x = 0$.  It actually takes a finite time, and the temperature would be continuous.  Nevertheless, the transition from $0^\circ$ to $100^\circ$ would occur over an exceedingly small distance and time.  We introduce the temperature discontinuity to approximate the more complicated real physical situation.  Fourier's theorem thus illustrates how the physical discontinuity at $x = 0$ (initially, at $t = 0$) is reproduced mathematically.  The Fourier sine series of $100^\circ$ (which represents the physical solution at $t = 0$) has the nice property that it equals $100^\circ$ for all $x$ inside the rod, $0 < x < L$ (thus satisfying the initial condition there), but it equals $0^\circ$ at the boundaries, $x = 0$ and $x = L$ (thus also satisfying the boundary conditions).  The Fourier sine series of $100^\circ$ is a strange mathematical function, but so is the physical approximation for which it is needed.
+
+\textbf{Fourier series computations and the Gibbs phenomenon.}  Let us gain some confidence in the validity of Fourier series.  The Fourier sine series of $f(x) = 100$ states that
+\begin{equation}
+\label{eq:sine100-expanded}
+100 = \frac{400}{\pi} \left( \frac{\sin \pi x/L}{1} + \frac{\sin 3\pi x/L}{3} + \frac{\sin 5\pi x/L}{5} + \cdots \right).
+\end{equation}
+Do we believe \eqref{eq:sine100-expanded}?  Certainly, it is not valid at $x = 0$ (as well as the other boundary $x = L$), since at $x = 0$ every term in the infinite series is zero (they cannot add to 100).  However, the theory of Fourier series claims that \eqref{eq:sine100-expanded} is valid everywhere except the two ends.  For example, we claim it is valid at $x = L/2$.  Substituting $x = L/2$ into \eqref{eq:sine100-expanded} shows that
+\[
+100 = \frac{400}{\pi} \left(1 - \frac{1}{3} + \frac{1}{5} - \frac{1}{7} + \frac{1}{9} - \frac{1}{11} + \cdots \right) \quad \text{or} \quad \frac{\pi}{4} = 1 - \frac{1}{3} + \frac{1}{5} - \frac{1}{7} + \frac{1}{9} - \frac{1}{11} + \cdots.
+\]
+At first this may seem strange.  However, it is Euler's formula for $\pi$.  It can be used to \textit{compute} $\pi$ (although very inefficiently); it can also be shown to be true without relying on the theory of infinite trigonometric series (see Exercise 3.3.17).  The validity of \eqref{eq:sine100-expanded} for other values of $x$, $0 < x < L$, may also surprise you.  We will sketch the left- and right-hand sides of \eqref{eq:sine100-expanded}, hopefully convincing you of their equality.  We will sketch the r.h.s.\ by adding up the contribution of each term of the series.  Of course, we cannot add up the required infinite number of terms; we will settle for a finite number of terms.  In fact, we will sketch the sum of the first few terms to see how the series approaches the constant 100 as the number of terms increases.  It is helpful to know that $400/\pi = 127.32395\ldots$ (although for rough sketching 125 or 130 will do).  The first term $(400/\pi)\sin \pi x/L$ by itself is the basic first rise and fall of a sine function; it is not a good approximation to the constant 100, as illustrated in Fig.~3.3.6.  On the other hand, for just one term in an infinite series, it is not such a bad approximation.  The next term to be added is $(400/3\pi)\sin 3\pi x/L$.  This is a sinusoidal oscillation, with one third the amplitude and one third the period of the first term.  It is positive near $x = 0$ and $x = L$, where the approximation needs to be increased, and it is negative near $x = L/2$, where the approximation needs to be decreased.  It is sketched in dashed lines and then added to the first term in Fig.~3.3.7.  Note that the sum of the two nonzero terms already seems to be a considerable improvement over the first term.  Computer plots of some partial sums are given in Fig.~3.3.8.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch03/fig_3_3_6.png}
+\caption{First term of Fourier sine series of $f(x) = 100$.}
+\label{fig:3.3.6}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch03/fig_3_3_7.png}
+\caption{First two nonzero terms of Fourier sine series of $f(x) = 100$.}
+\label{fig:3.3.7}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch03/fig_3_3_8.png}
+\caption{Various partial sums of Fourier sine series of $f(x) = 100$.  Using 51 terms (including $n = 51$), the finite series is a good approximation to $f(x) = 100$ away from the endpoints.  Near the endpoints (where there is a jump discontinuity of 200), there is a 9\% overshoot (Gibbs phenomenon).}
+\label{fig:3.3.8}
+\end{figure}
+
+Actually, a lot can be learned from Fig.~3.3.8.  Perhaps now it does seem reasonable that the infinite series converges to 100 for $0 < x < L$.  The worst places (where the finite series differs most from 100) are getting closer and closer to $x = 0$ and $x = L$ as the number of terms increases.  \textit{For a finite number of terms in the series}, the solution starts from zero at $x = 0$ and shoots up beyond 100, what we call the primary \textbf{overshoot}.  It is interesting to note that Fig.~3.3.8 illustrates the overshoot vividly.  We can even extrapolate to guess what happens for 1000 terms.  The series should become more and more accurate as the number of terms increases.  We might expect the overshoot to vanish as $n \to \infty$, but put a straight edge on the points of maximum overshoot.  It just does not seem to approach 100.  Instead, it is far away from that, closer to 118.  This overshoot is an example of the \textbf{Gibbs phenomenon}.  In general (for large $n$), there is an overshoot (and corresponding undershoot) of approximately 9\% of the jump discontinuity.  In this case (see Fig.~3.3.4), the Fourier \textit{sine series} of $f(x) = 100$ jumps from $-100$ to $+100$ at $x = 0$.  Thus, the finite series will overshoot by about 9\% of 200, or approximately 18.  The Gibbs phenomenon occurs only when a \textit{finite} series of eigenfunctions approximates a \textit{discontinuous} function.
+
+\textbf{Further example of a Fourier sine series.}  We consider the Fourier sine series of $f(x) = x$.  $f(x) = x$ is sketched on the interval $0 \le x \le L$ in Fig.~3.3.9a.  The odd-periodic extension of $f(x)$ is sketched in Fig.~3.3.9b.  The jump discontinuity of the odd-periodic extension at $x = (2n-1)L$ shows that, for example, the Fourier sine series of $f(x) = x$ converges to zero at $x = L$.  While $f(L) \ne 0$, we note that the Fourier sine series of $f(x) = x$ actually equals $x$ for $-L < x < L$,
+\begin{equation}
+\label{eq:x-sine}
+x = \sum_{n=1}^{\infty} B_n \sin \frac{n\pi x}{L}, \qquad -L < x < L.
+\end{equation}
+The Fourier coefficients are determined from \eqref{eq:Bn-sine}:
+\begin{equation}
+\label{eq:Bn-x}
+B_n = \frac{2}{L} \int_0^{L} f(x) \sin \frac{n\pi x}{L} \dx = \frac{2}{L} \int_0^{L} x \sin \frac{n\pi x}{L} \dx = \frac{2L}{n\pi}(-1)^{n+1},
+\end{equation}
+where the integral can be evaluated by integration by parts (or by a table).
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch03/fig_3_3_9.png}
+\caption{(a) $f(x) = x$ and (b) its Fourier sine series.}
+\label{fig:3.3.9}
+\end{figure}
+
+\textbf{Example.}  We now consider the Fourier sine series of $f(x) = \cos \pi x/L$.  This may seem to ask for a sine series expansion of an even function, but in applications often the function is only given from $0 \le x \le L$ and \textit{must} be expanded in a series of sines due to the boundary conditions.  $\cos \pi x/L$ is sketched in Fig.~3.3.10a.  It is an even function, but its odd extension is sketched in Fig.~3.3.10b.  The Fourier sine series of $f(x)$ equals the Fourier series of the odd extension of $f(x)$.  Thus, we repeat the sketch in Fig.~3.3.10b periodically (see Fig.~3.3.11), placing an $\times$ at the average of the two values at the jump discontinuities.  The Fourier sine series representation of $\cos \pi x/L$ is
+\[
+\cos \frac{\pi x}{L} \sim \sum_{n=1}^{\infty} B_n \sin \frac{n\pi x}{L}, \qquad 0 \le x \le L,
+\]
+where with some effort we obtain
+\begin{equation}
+\label{eq:Bn-cos}
+B_n = \frac{2}{L} \int_0^{L} \cos \frac{\pi x}{L} \sin \frac{n\pi x}{L} \dx = \begin{cases} 0 & n \text{ odd} \\[4pt] \dfrac{4n}{\pi(n^2-1)} & n \text{ even.} \end{cases}
+\end{equation}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch03/fig_3_3_10.png}
+\caption{(a) $f(x) = \cos \pi x/L$ and (b) its odd extension.}
+\label{fig:3.3.10}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch03/fig_3_3_11.png}
+\caption{Fourier sine series of $f(x) = \cos \pi x/L$.}
+\label{fig:3.3.11}
+\end{figure}
+
+According to Fig.~3.3.11 (based on Fourier's theorem), equality holds for $0 < x < L$, but not at $x = 0$ and not at $x = L$:
+\[
+\cos \frac{\pi x}{L} = \sum_{n=1}^{\infty} B_n \sin \frac{n\pi x}{L}, \qquad 0 < x < L.
+\]
+At $x = 0$ and at $x = L$ the infinite series must converge to 0, since all terms in the series are zero there.  Figure~3.3.11 agrees with this.  You may be a bit puzzled by an aspect of this problem.  You may have recalled that $\sin n\pi x/L$ is orthogonal to $\cos m\pi x/L$, and thus expected all the $B_n$ in \eqref{eq:Bn-cos} to be zero.  However, $B_n \ne 0$.  The subtle point is that you should remember that $\cos m\pi x/L$ and $\sin n\pi x/L$ are orthogonal \textit{on the interval} $-L \le x \le L$, $\int_{-L}^{L} \cos m\pi x/L \sin n\pi x/L \dx = 0$; they are not orthogonal on $0 \le x \le L$.
+
+\subsection{Fourier Cosine Series}
+\label{subsec:fourier-cosine-series}
+
+\textbf{Even functions.}  Similar ideas are valid for even functions, in which $f(-x) = f(x)$.  Let us develop the basic results.  The sine coefficients of a Fourier series will be zero for an even function,
+\[
+b_n = \frac{1}{L} \int_{-L}^{L} f(x) \sin \frac{n\pi x}{L} \dx = 0,
+\]
+since $f(x)$ is even.  The Fourier series of an even function is a representation of $f(x)$ involving an infinite sum of only even functions (cosines):
+\begin{equation}
+\label{eq:even-fourier}
+f(x) \sim \sum_{n=0}^{\infty} a_n \cos \frac{n\pi x}{L},
+\end{equation}
+if $f(x)$ is even.  The coefficients of the cosines may be evaluated using information about $f(x)$ only between $x = 0$ and $x = L$, since
+\begin{equation}
+\label{eq:a0-even}
+a_0 = \frac{1}{2L} \int_{-L}^{L} f(x) \dx = \frac{1}{L} \int_0^{L} f(x) \dx
+\end{equation}
+\begin{equation}
+\label{eq:an-even}
+(n \ge 1) \qquad a_n = \frac{1}{L} \int_{-L}^{L} f(x) \cos \frac{n\pi x}{L} \dx = \frac{2}{L} \int_0^{L} f(x) \cos \frac{n\pi x}{L} \dx,
+\end{equation}
+using the fact that for $f(x)$ even, $f(x)\cos n\pi x/L$ is even.
+
+Often $f(x)$ is not given as an even function.  Instead, in trying to represent an arbitrary function $f(x)$ using an infinite series of $\cos n\pi x/L$, the eigenfunctions of the boundary value problem $d^2\phi/dx^2 = -\lambda\phi$ with $d\phi/dx\,(0) = 0$ and $d\phi/dx\,(L) = 0$, we wanted
+\begin{equation}
+\label{eq:cosine-expansion}
+f(x) = \sum_{n=0}^{\infty} A_n \cos \frac{n\pi x}{L},
+\end{equation}
+\textit{only for} $0 < x < L$.  We had previously determined the coefficients $A_n$ to be the same as given by \eqref{eq:a0-even} and \eqref{eq:an-even}, but our reason was because of the orthogonality of $\cos n\pi x/L$.  To relate \eqref{eq:cosine-expansion} to a Fourier series, we simply introduce the \textbf{even extension} of $f(x)$, an example being illustrated in Fig.~3.3.12.  If $f(x)$ is piecewise smooth for $0 \le x \le L$, then its even extension will also be piecewise smooth, and hence Fourier's theorem can be applied to the even extension of $f(x)$.  Since the even extension of $f(x)$ is an even function, the Fourier series of the even extension of $f(x)$ will have only cosines:
+\[
+\text{even extension of } f(x) \sim \sum_{n=0}^{\infty} a_n \cos \frac{n\pi x}{L}, \qquad -L \le x \le L,
+\]
+where $a_n$ is given by \eqref{eq:a0-even} and \eqref{eq:an-even}.  In the region of interest, $0 \le x \le L$, $f(x)$ is identical to the even extension.  The resulting series in that region is called the \textbf{Fourier cosine series of $f(x)$} (on the interval $0 \le x \le L$):
+\begin{equation}
+\label{eq:fourier-cosine-series}
+\boxed{f(x) \sim \sum_{n=0}^{\infty} A_n \cos \frac{n\pi x}{L}, \qquad 0 \le x \le L}
+\end{equation}
+\begin{equation}
+\label{eq:A0-cosine}
+\boxed{A_0 = \frac{1}{L} \int_0^{L} f(x) \dx}
+\end{equation}
+\begin{equation}
+\label{eq:An-cosine}
+\boxed{A_n = \frac{2}{L} \int_0^{L} f(x) \cos \frac{n\pi x}{L} \dx.}
+\end{equation}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch03/fig_3_3_12.png}
+\caption{Even extension of $f(x)$.}
+\label{fig:3.3.12}
+\end{figure}
+
+The Fourier cosine series of $f(x)$ is exactly the Fourier series of the even extension of $f(x)$.  Since we can apply Fourier's theorem, we have an algorithm to sketch the Fourier cosine series of $f(x)$:
+
+\begin{center}
+\fbox{\parbox{0.8\textwidth}{
+\begin{enumerate}
+\item Sketch $f(x)$ (for $0 < x < L$).
+\item Sketch the even extension of $f(x)$.
+\item Extend as a periodic function (with period $2L$).
+\item Mark $\times$ at points of discontinuity at the average.
+\end{enumerate}
+}}
+\end{center}
+
+\textbf{Example.}  We consider the Fourier cosine series of $f(x) = x$.  $f(x)$ is sketched in Fig.~3.3.13a [note that $f(x)$ is odd!].  We consider $f(x)$ only from $x = 0$ to $x = L$ and then extend it in Fig.~3.3.13b as an even function.  Next, we sketch the Fourier series of the even extension, by periodically extending the even extension (see Fig.~3.3.14).  Note that between $x = 0$ and $x = L$ the Fourier cosine series has no jump discontinuities.  The Fourier cosine series of $f(x) = x$ actually equals $x$, so
+\begin{equation}
+\label{eq:x-cosine}
+x = \sum_{n=0}^{\infty} A_n \cos \frac{n\pi x}{L}, \qquad 0 \le x \le L.
+\end{equation}
+The coefficients are given by the following integrals:
+\begin{equation}
+\label{eq:A0-x}
+A_0 = \frac{1}{L} \int_0^{L} x \dx = \frac{1}{L} \frac{1}{2} x^2 \bigg|_0^{L} = \frac{L}{2}
+\end{equation}
+\begin{equation}
+\label{eq:An-x}
+A_n = \frac{2}{L} \int_0^{L} x \cos \frac{n\pi x}{L} \dx = \frac{2L}{(n\pi)^2}(\cos n\pi - 1).
+\end{equation}
+The latter integral can be evaluated by integration by parts, tables, or a symbolic computation program.  We omit the details.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch03/fig_3_3_13.png}
+\caption{(a) $f(x) = x$, (b) its even extension.}
+\label{fig:3.3.13}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch03/fig_3_3_14.png}
+\caption{Fourier cosine series of $f(x) = x$.}
+\label{fig:3.3.14}
+\end{figure}
+
+\subsection{Representing $f(x)$ by Both a Sine and Cosine Series}
+\label{subsec:sine-cosine-both}
+
+It may be apparent that any function $f(x)$ (which is piecewise smooth) may be represented both as a Fourier sine series and as a Fourier cosine series.  The one you would use is dictated by the boundary conditions (if the problem arose in the context of a solution to a partial differential equation using the method of separation of variables).  It is also possible to use a Fourier series (including both sines and cosines).  As an example, we consider the sketches of the Fourier, Fourier sine, and Fourier cosine series of
+\[
+f(x) = \begin{cases} -\frac{L}{2}\sin\frac{\pi x}{L} & x < 0 \\ x & 0 < x < \frac{L}{2} \\ L - x & x > \frac{L}{2}. \end{cases}
+\]
+The graph of $f(x)$ is sketched for $-L < x < L$ in Fig.~3.3.15.  The Fourier series of $f(x)$ is sketched by repeating this pattern with period $2L$.  On the other hand, for the Fourier sine (cosine) series, first sketch the odd (even) extension of the function $f(x)$ before repeating the pattern.  These three are sketched in Fig.~3.3.16.  Note that for $-L \le x \le L$ only the Fourier series of $f(x)$ actually equals $f(x)$.  However, for all three cases the series equals $f(x)$ over the region $0 \le x \le L$.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch03/fig_3_3_15.png}
+\caption{The graph of $f(x)$ for $-L < x < L$.}
+\label{fig:3.3.15}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch03/fig_3.3.16.png}
+\caption{(a) Fourier series of $f(x)$; (b) Fourier sine series of $f(x)$; (c) Fourier cosine series of $f(x)$.}
+\label{fig:3.3.16}
+\end{figure}
+
+\subsection{Even and Odd Parts}
+\label{subsec:even-odd-parts}
+
+Let us consider the Fourier series of a function $f(x)$ that is not necessarily even or odd:
+\begin{equation}
+\label{eq:fourier-general}
+f(x) \sim a_0 + \sum_{n=1}^{\infty} a_n \cos \frac{n\pi x}{L} + \sum_{n=1}^{\infty} b_n \sin \frac{n\pi x}{L},
+\end{equation}
+where
+\begin{align*}
+a_0 &= \frac{1}{2L} \int_{-L}^{L} f(x) \dx \\[6pt]
+a_n &= \frac{1}{L} \int_{-L}^{L} f(x) \cos \frac{n\pi x}{L} \dx \\[6pt]
+b_n &= \frac{1}{L} \int_{-L}^{L} f(x) \sin \frac{n\pi x}{L} \dx.
+\end{align*}
+
+It is interesting to see that a Fourier series is the sum of a series of cosines and a series of sines.  For example, $\sum_{n=1}^{\infty} b_n \sin n\pi x/L$ is not, in general, the Fourier sine series of $f(x)$, because the coefficients, $b_n = 1/L \int_{-L}^{L} f(x) \sin n\pi x/L \dx$, are \textit{not}, in general, the same as the coefficients of a Fourier sine series [$2/L \int_0^{L} f(x) \sin n\pi x/L \dx$].  This series of sines by itself ought to be the Fourier sine series of some function; let us determine this function.
+
+Equation \eqref{eq:fourier-general} shows that $f(x)$ is represented as a sum of an even function (for the series of cosines must be an even function) and an odd function (similarly, the sine series must be odd).  This is a general property of functions, since for any function it is rather obvious that
+\begin{equation}
+\label{eq:even-odd-decomp}
+f(x) = \frac{1}{2}\left[f(x) + f(-x)\right] + \frac{1}{2}\left[f(x) - f(-x)\right].
+\end{equation}
+Note that the first bracketed term is an even function; we call it the \textbf{even part of $f(x)$}.  The second bracketed term is an odd function, called the \textbf{odd part of $f(x)$}:
+\begin{equation}
+\label{eq:even-odd-defs}
+f_e(x) \equiv \frac{1}{2}\left[f(x) + f(-x)\right] \quad \text{and} \quad f_o(x) \equiv \frac{1}{2}\left[f(x) - f(-x)\right].
+\end{equation}
+In this way, any function is written as the sum of an odd function (the odd part) and an even function (the even part).  For example, if $f(x) = 1/(1+x)$,
+\[
+\frac{1}{1+x} = \frac{1}{2}\left[\frac{1}{1+x} + \frac{1}{1-x}\right] + \frac{1}{2}\left[\frac{1}{1+x} - \frac{1}{1-x}\right] = \frac{1}{1-x^2} - \frac{x}{1-x^2}.
+\]
+This is the sum of an even function, $1/(1-x^2)$, and an odd function, $-x/(1-x^2)$.  Consequently, the Fourier series of $f(x)$ equals the Fourier series of $f_e(x)$ [which is a cosine series since $f_e(x)$ is even] plus the Fourier series of $f_o(x)$ [which is a sine series since $f_o(x)$ is odd].  This shows that the series of sines (cosines) that appears in \eqref{eq:fourier-general} is the Fourier sine (cosine) series of $f_o(x)$($f_e(x)$).  We summarize our result with the statement:
+
+\begin{center}
+\fbox{\parbox{0.8\textwidth}{
+\textit{The Fourier series of $f(x)$ equals the Fourier sine series of $f_o(x)$ plus the Fourier cosine series of $f_e(x)$, where $f_e(x) = \frac{1}{2}[f(x) + f(-x)]$, and $f_o(x) = \frac{1}{2}[f(x) - f(-x)]$.}
+}}
+\end{center}
+
+Please do not confuse this result with even and odd \textit{extensions}.  For example, the even part of $f(x) = \frac{1}{2}[f(x) + f(-x)]$, while the
+\[
+\text{even extension of } f(x) = \begin{cases} f(x), & x > 0 \\ f(-x), & x < 0. \end{cases}
+\]
+
+\subsection{Continuous Fourier Series}
+\label{subsec:continuous-fourier}
+
+The convergence theorem for Fourier series shows that the Fourier series of $f(x)$ may be a different function than $f(x)$.  Nevertheless, over the interval of interest, they are the same except at those few points where the periodic extension of $f(x)$ has a jump discontinuity.  Sine (cosine) series are analyzed in the same way, where instead the odd (even) periodic extension must be considered.  In addition to points of jump discontinuity of $f(x)$ itself, the various extensions of $f(x)$ may introduce a jump discontinuity.  From the examples in the preceding section, we observe that sometimes the resulting series does not have any jump discontinuities.  In these cases the Fourier series will actually equal $f(x)$ in the range of interest.  Also, the Fourier series itself will be a continuous function.
+
+It is worthwhile to summarize the conditions under which a Fourier series is continuous:
+
+\begin{center}
+\fbox{\parbox{0.8\textwidth}{
+For piecewise smooth $f(x)$, the Fourier series of $f(x)$ is continuous and converges to $f(x)$ for $-L \le x \le L$ if and only if $f(x)$ is continuous and $f(-L) = f(L)$.
+}}
+\end{center}
+
+It is necessary for $f(x)$ to be continuous; otherwise, there will be a jump discontinuity [and the Fourier series of $f(x)$ will converge to the average].  In Fig.~3.3.17 we illustrate the significance of the condition $f(-L) = f(L)$.  We illustrate two continuous functions, only one of which satisfies $f(-L) = f(L)$.  The condition $f(-L) = f(L)$ insists that the repeated pattern (with period $2L$) will be continuous at the endpoints.  The preceding boxed statement is a fundamental result for all Fourier series.  It explains the following similar theorems for Fourier sine and cosine series.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch03/fig_3_3_17.png}
+\caption{Fourier series of a continuous function with (a) $f(-L) \ne f(L)$ and (b) $f(-L) = f(L)$.}
+\label{fig:3.3.17}
+\end{figure}
+
+Consider the Fourier cosine series of $f(x)$ [$f(x)$ has been extended as an even function].  If $f(x)$ is continuous, is the Fourier cosine series continuous?  An example that is continuous for $0 \le x \le L$ is sketched in Fig.~3.3.18.  First we extend $f(x)$ evenly and then periodically.  It is easily seen that
+
+\begin{center}
+\fbox{\parbox{0.8\textwidth}{
+For piecewise smooth $f(x)$, the Fourier cosine series of $f(x)$ is continuous and converges to $f(x)$ for $0 \le x \le L$ if and only if $f(x)$ is continuous.
+}}
+\end{center}
+
+We note that no additional conditions on $f(x)$ are necessary for the cosine series to be continuous (besides $f(x)$ being continuous).  One reason for this result is that if $f(x)$ is continuous for $0 \le x \le L$, then the even extension will be continuous for $-L \le x \le L$.  Also note that the even extension is the same at $\pm L$.  Thus, the periodic extension will automatically be continuous at the endpoints.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch03/fig_3_3_18.png}
+\caption{Fourier cosine series of a continuous function.}
+\label{fig:3.3.18}
+\end{figure}
+
+Compare this result to what happens for a Fourier sine series.  Four examples are considered in Fig.~3.3.19, all continuous functions for $0 \le x \le L$.  From the first three figures, we see that it is possible for the sine series of a continuous function to be discontinuous.  It is seen that
+
+\begin{center}
+\fbox{\parbox{0.8\textwidth}{
+For piecewise smooth functions $f(x)$, the Fourier sine series of $f(x)$ is continuous and converges to $f(x)$ for $0 \le x \le L$ if and only if $f(x)$ is continuous and both $f(0) = 0$ \textit{and} $f(L) = 0$.
+}}
+\end{center}
+
+If $f(0) \ne 0$, then the odd extension of $f(x)$ will have a jump discontinuity at $x = 0$, as illustrated in Figs.~3.3.19a and c.  If $f(L) \ne 0$, then the odd extension at $x = -L$ will be of opposite sign from $f(L)$.  Thus, the periodic extension will not be continuous at the endpoints if $f(L) \ne 0$ as in Figs.~3.3.19a and b.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch03/fig_3_3_19.png}
+\caption{Fourier sine series of a continuous function with (a) $f(0) \ne 0$ and $f(L) \ne 0$; (b) $f(0) = 0$ but $f(L) \ne 0$; (c) $f(L) = 0$ but $f(0) \ne 0$; and (d) $f(0) = 0$ and $f(L) = 0$.}
+\label{fig:3.3.19}
+\end{figure}
+
+\begin{exercises}{3.3}
+\item For the following functions, sketch $f(x)$, the Fourier series of $f(x)$, the Fourier sine series of $f(x)$, and the Fourier cosine series of $f(x)$.
+\begin{enumerate}
+\item[\textbf{(a)}] $f(x) = 1$ \hfill \textbf{(b)} $f(x) = 1 + x$
+\item[\textbf{(c)}] $f(x) = \begin{cases} x & x < 0 \\ 1+x & x > 0 \end{cases}$ \hfill \starred\textbf{(d)} $f(x) = e^x$
+\item[\textbf{(e)}] $f(x) = \begin{cases} 2 & x < 0 \\ e^{-x} & x > 0 \end{cases}$
+\end{enumerate}
+
+\item For the following functions, sketch the Fourier sine series of $f(x)$ and determine its Fourier coefficients.
+\begin{enumerate}
+\item[\textbf{(a)}] $f(x) = \cos \pi x/L$ \hfill \textbf{(b)} $f(x) = \begin{cases} 1 & x < L/6 \\ 3 & L/6 < x < L/2 \\ 0 & x > L/2 \end{cases}$
+
+\quad [Verify formula \eqref{eq:Bn-cos}.]
+
+\item[\textbf{(c)}] $f(x) = \begin{cases} 0 & x < L/2 \\ x & x > L/2 \end{cases}$ \hfill \starred\textbf{(d)} $f(x) = \begin{cases} 1 & x < L/2 \\ 0 & x > L/2 \end{cases}$
+\end{enumerate}
+
+\item For the following functions, sketch the Fourier sine series of $f(x)$.  Also, roughly sketch the sum of a \textit{finite} number of nonzero terms (at least the first two) of the Fourier sine series:
+\begin{enumerate}
+\item[\textbf{(a)}] $f(x) = \cos \pi x/L$ [Use formula \eqref{eq:Bn-cos}.]
+\item[\textbf{(b)}] $f(x) = \begin{cases} 1 & x < L/2 \\ 0 & x > L/2 \end{cases}$
+\item[\textbf{(c)}] $f(x) = x$ [Use formula \eqref{eq:Bn-x}.]
+\end{enumerate}
+
+\item Sketch the Fourier cosine series of $f(x) = \sin \pi x/L$.  Briefly discuss.
+
+\item For the following functions, sketch the Fourier cosine series of $f(x)$ and determine its Fourier coefficients:
+\begin{enumerate}
+\item[\textbf{(a)}] $f(x) = x^2$ \hfill \textbf{(b)} $f(x) = \begin{cases} 1 & x < L/6 \\ 3 & L/6 < x < L/2 \\ 0 & x > L/2 \end{cases}$ \hfill \textbf{(c)} $f(x) = \begin{cases} 0 & x < L/2 \\ x & x > L/2 \end{cases}$
+\end{enumerate}
+
+\item For the following functions, sketch the Fourier cosine series of $f(x)$.  Also, roughly sketch the sum of a finite number of nonzero terms (at least the first two) of the Fourier cosine series:
+\begin{enumerate}
+\item[\textbf{(a)}] $f(x) = x$ [Use formulas \eqref{eq:A0-x} and \eqref{eq:An-x}.]
+\item[\textbf{(b)}] $f(x) = \begin{cases} 0 & x < L/2 \\ 1 & x > L/2 \end{cases}$ \quad [Use carefully formulas (3.2.6) and (3.2.7).]
+\item[\textbf{(c)}] $f(x) = \begin{cases} 0 & x < L/2 \\ 1 & x > L/2 \end{cases}$ \quad [\textit{Hint}: Add the functions in parts (b) and (c).]
+\end{enumerate}
+
+\item Show that $e^x$ is the sum of an even and an odd function.
+
+\item
+\begin{enumerate}
+\item[\textbf{(a)}] Determine formulas for the even extension of any $f(x)$.  Compare to the formula for the even part of $f(x)$.
+\item[\textbf{(b)}] Do the same for the odd extension of $f(x)$ and the odd part of $f(x)$.
+\item[\textbf{(c)}] Calculate and sketch the four functions of parts (a) and (b) if
+\[
+f(x) = \begin{cases} x & x > 0 \\ x^2 & x < 0. \end{cases}
+\]
+Graphically add the even and odd extensions.  What occurs?  Similarly, add the even and odd extensions.  What occurs then?
+\end{enumerate}
+
+\item What is the sum of the Fourier sine series of $f(x)$ and the Fourier cosine series of $f(x)$?  [What is the sum of the even and odd extensions of $f(x)$?]
+
+\item[\starred 3.3.10.] If $f(x) = \begin{cases} x^2 & x < 0 \\ e^{-x} & x > 0 \end{cases}$, what are the even and odd parts of $f(x)$?
+
+\item Given a sketch of $f(x)$, describe a procedure to sketch the even and odd parts of $f(x)$.
+
+\item
+\begin{enumerate}
+\item[\textbf{(a)}] Graphically show that the even terms ($n$ even) of the Fourier sine series of any function on $0 \le x \le L$ are odd (antisymmetric) around $x = L/2$.
+\item[\textbf{(b)}] Consider a function $f(x)$ that is odd around $x = L/2$.  Show that the odd coefficients ($n$ odd) of the Fourier sine series of $f(x)$ on $0 \le x \le L$ are zero.
+\end{enumerate}
+
+\item[\starred 3.3.13.] Consider a function $f(x)$ that is even around $x = L/2$.  Show that the even coefficients ($n$ even) of the Fourier sine series of $f(x)$ on $0 \le x \le L$ are zero.
+
+\item
+\begin{enumerate}
+\item[\textbf{(a)}] Consider a function $f(x)$ that is even around $x = L/2$.  Show that the odd coefficients ($n$ odd) of the Fourier cosine series of $f(x)$ on $0 \le x \le L$ are zero.
+\item[\textbf{(b)}] Consider a function $f(x)$ that is odd around $x = L/2$.  Show that the even coefficients ($n$ even) of the Fourier cosine series of $f(x)$ on $0 \le x \le L$ are zero.
+\end{enumerate}
+
+\item Consider a function $f(x)$ that is odd around $x = L/2$.  Show that the even coefficients ($n$ even) of the Fourier cosine series of $f(x)$ on $0 \le x \le L$ are zero.
+
+\item Fourier series can be defined on other intervals besides $-L \le x \le L$.  Suppose that $g(y)$ is defined for $a \le y \le b$.  Represent $g(y)$ using periodic trigonometric functions with period $b - a$.  Determine formulas for the coefficients.  [\textit{Hint}: Use the linear transformation
+\[
+y = \frac{a+b}{2} + \frac{b-a}{2L}\,x.\text{]}
+\]
+
+\item Consider
+\[
+\int_0^1 \frac{dx}{1 + x^2}.
+\]
+\begin{enumerate}
+\item[\textbf{(a)}] Evaluate explicitly.
+\item[\textbf{(b)}] Use the Taylor series of $1/(1+x^2)$ (itself a geometric series) to obtain an infinite series for the integral.
+\item[\textbf{(c)}] Equate part (a) to part (b) in order to derive a formula for $\pi$.
+\end{enumerate}
+
+\item For continuous functions,
+\begin{enumerate}
+\item[\textbf{(a)}] Under what conditions does $f(x)$ equal its Fourier series for all $x$, $-L \le x \le L$?
+\item[\textbf{(b)}] Under what conditions does $f(x)$ equal its Fourier sine series for all $x$, $0 \le x \le L$?
+\item[\textbf{(c)}] Under what conditions does $f(x)$ equal its Fourier cosine series for all $x$, $0 \le x \le L$?
+\end{enumerate}
+\end{exercises}

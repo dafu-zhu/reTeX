@@ -1,0 +1,141 @@
+% sec4_4.tex — Section 4.4: Single-Equation versus Multiple-Equation Estimation
+
+\section{Single-Equation versus Multiple-Equation Estimation}
+\label{sec:4.4}
+
+An obvious alternative to multiple-equation GMM, which estimates the stacked
+coefficient vector $\boldsymbol{\delta}$ $(\sum_m L_m \times 1)$ jointly, is to apply
+the single-equation GMM separately to each equation and then stack the estimated
+coefficients. If the weighting matrix in the single-equation GMM for the $m$-th
+equation is $\hat{\mathbf{W}}_{mm}$ $(K_m \times K_m)$, the resulting equation-by-equation
+GMM estimator of the stacked coefficient vector $\boldsymbol{\delta}$ can be written as
+the multiple-equation GMM estimator $\hat{\boldsymbol{\delta}}(\hat{\mathbf{W}})$ given
+in~\eqref{eq:4.2.3}, where the $\sum_m K_m \times \sum_m K_m$ weighting matrix
+$\hat{\mathbf{W}}$ is a block diagonal matrix whose $m$-th block is
+$\hat{\mathbf{W}}_{mm}$:
+\begin{equation}
+\hat{\mathbf{W}} = \begin{bmatrix}
+\hat{\mathbf{W}}_{11} & & \\
+& \ddots & \\
+& & \hat{\mathbf{W}}_{MM}
+\end{bmatrix}.
+\label{eq:4.4.1}
+\end{equation}
+This is because both $\mathbf{S}_{\mathbf{xz}}$
+$(\sum_m K_m \times \sum_m L_m)$ and $\hat{\mathbf{W}}$ are block diagonal.
+(The reader should actually substitute the expressions~\eqref{eq:4.2.2}
+for $\mathbf{S}_{\mathbf{xz}}$ and~\eqref{eq:4.4.1} for $\hat{\mathbf{W}}$
+into~\eqref{eq:4.2.3} to verify that
+$\mathbf{S}_{\mathbf{xz}}' \hat{\mathbf{W}} \mathbf{S}_{\mathbf{xz}}$ and hence
+$(\mathbf{S}_{\mathbf{xz}}' \hat{\mathbf{W}} \mathbf{S}_{\mathbf{xz}})^{-1}
+\mathbf{S}_{\mathbf{xz}}' \hat{\mathbf{W}}$ are block diagonal,
+using formulas (A.5) and (A.9) of Appendix~A. Set $M = 2$ if it makes it easier.)
+
+Therefore, the difference between the multiple-equation GMM and the equation-by-equation
+GMM estimation of the stacked coefficient vector $\boldsymbol{\delta}$ lies in the
+choice of the $\sum_m K_m \times \sum_m K_m$ weighting matrix $\hat{\mathbf{W}}$.
+Put differently, the equation-by-equation GMM is a particular multiple-equation GMM.
+
+\subsection*{When Are They ``Equivalent''?}
+
+As seen in Chapter~3, if the equation is just identified, the choice of the weighting
+matrix $\hat{\mathbf{W}}$ does not matter because the GMM estimator, regardless
+of the choice of $\hat{\mathbf{W}}$, numerically equals the IV estimator.
+The same is true for multiple-equation GMM: if each equation of the system is exactly
+identified so that $L_m = K_m$ for all $m$, then $\mathbf{S}_{\mathbf{xz}}$
+in the GMM formula~\eqref{eq:4.2.3} is a square matrix and the GMM estimator
+for any choice of $\hat{\mathbf{W}}$ becomes the multiple-equation IV estimator
+$\mathbf{S}_{\mathbf{xz}}^{-1} \mathbf{s}_{\mathbf{xy}}$
+(and, since $\mathbf{S}_{\mathbf{xz}}$ is block diagonal, the estimator is just a
+collection of single-equation IV estimators).
+
+On the other hand, if at least one of the $M$ equations is overidentified, the choice
+of $\hat{\mathbf{W}}$ $(\sum_m K_m \times \sum_m K_m)$ does affect the numerical
+value of the GMM estimator. Consider the efficient equation-by-equation GMM
+estimator of $\boldsymbol{\delta}$ $(\sum_m L_m \times 1)$, where each equation is
+estimated by the efficient single-equation GMM with an optimal choice of
+$\hat{\mathbf{W}}_{mm}$ $(m = 1, 2, \ldots, M)$.
+Is it as efficient as the efficient multiple-equation GMM?
+The equation-by-equation estimator can be written as
+$\hat{\boldsymbol{\delta}}(\hat{\mathbf{W}})$, where the
+$\sum_m K_m \times \sum_m K_m$ block diagonal weighting matrix $\hat{\mathbf{W}}$
+satisfies
+\begin{equation}
+\plim_{n \to \infty} \hat{\mathbf{W}} = \begin{bmatrix}
+\bigl(\E(\varepsilon_{i1}^2\, \mathbf{x}_{i1} \mathbf{x}_{i1}')\bigr)^{-1}
+& & \\
+& \ddots & \\
+& & \bigl(\E(\varepsilon_{iM}^2\, \mathbf{x}_{iM} \mathbf{x}_{iM}')\bigr)^{-1}
+\end{bmatrix}.
+\label{eq:4.4.2}
+\end{equation}
+Because this plim is not necessarily equal to $\mathbf{S}^{-1}$
+(unless~\eqref{eq:4.4.3} below holds), the estimator is generally less efficient than
+the efficient multiple-equation GMM estimator
+$\hat{\boldsymbol{\delta}}(\widehat{\mathbf{S}}^{-1})$, where
+$\widehat{\mathbf{S}}$ is a consistent estimator of $\mathbf{S}$.
+But if the equations are ``unrelated''\footnote{Under conditional homoskedasticity,
+this condition becomes the more familiar condition that
+$\E(\varepsilon_{im}\, \varepsilon_{ih}) = 0$.
+See the next section.} in the sense that
+\begin{equation}
+\E(\varepsilon_{im}\, \varepsilon_{ih}\, \mathbf{x}_{im} \mathbf{x}_{ih}') = \mathbf{0}
+\quad \text{for all } m \neq h \;(= 1, 2, \ldots, M),
+\label{eq:4.4.3}
+\end{equation}
+then $\mathbf{S}$ becomes block diagonal and for the weighting matrix
+$\hat{\mathbf{W}}$ defined above
+$\plim \hat{\mathbf{W}} = \mathbf{S}^{-1}$.
+Since in this case
+$\hat{\mathbf{W}} - \widehat{\mathbf{S}}^{-1} \pto \mathbf{0}$, we have
+(as we proved in Review Question~3 of Section~3.5)
+\[
+\sqrt{n}\, \hat{\boldsymbol{\delta}}(\hat{\mathbf{W}})
+- \sqrt{n}\, \hat{\boldsymbol{\delta}}(\widehat{\mathbf{S}}^{-1}) \pto \mathbf{0}.
+\]
+
+It then follows from Lemma~2.4(a) that the asymptotic distribution of
+$\hat{\boldsymbol{\delta}}(\hat{\mathbf{W}})$ is the same as that of
+$\hat{\boldsymbol{\delta}}(\widehat{\mathbf{S}}^{-1})$, so the efficient
+equation-by-equation GMM estimator is an efficient multiple-equation GMM estimator.
+
+We summarize the discussion so far as
+
+\begin{proposition}[equivalence between single-equation and multiple-equation GMM]
+\label{prop:4.3}
+\leavevmode
+\begin{enumerate}[label=(\alph*)]
+\item \textit{If all equations are just identified, then the equation-by-equation GMM
+and the multiple-equation GMM are numerically the same and equal to the IV estimator.}
+
+\item \textit{If at least one equation is overidentified but the equations are
+``unrelated'' in the sense of\/~\eqref{eq:4.4.3}, then the efficient
+equation-by-equation GMM and the efficient multiple-equation GMM are
+asymptotically equivalent in that $\sqrt{n}$ times the difference converges to
+zero in probability.}
+\end{enumerate}
+\end{proposition}
+
+For those two cases, there is no efficiency gain from joint estimation. Furthermore,
+if it is known \textit{a priori} that the equations are ``unrelated,'' then the
+equation-by-equation estimation should be preferred, because exploiting the
+\textit{a priori} knowledge by requiring the off-diagonal blocks of $\hat{\mathbf{W}}$
+to be zeros (which is what the equation-by-equation estimation entails) will most
+likely improve the finite-sample properties of the estimator.
+
+\subsection*{Joint Estimation Can Be Hazardous}
+
+Except for cases (a) and (b), joint estimation is asymptotically more efficient. Even
+if you are interested in estimating one particular equation (say, the $LW$ equation
+in Example~4.1), you can generally gain asymptotic efficiency by combining it
+with some other equations (see, however, Analytical Exercise~10 for an example
+where joint estimation entails no efficiency gain even if the added equations are not
+unrelated).
+
+There are caveats, however. First of all, the small-sample properties of the
+coefficient estimates of the equation in question might be better without joint estimation.
+Second, the asymptotic result presumes that the model is \textbf{correctly specified},
+that is, all the model assumptions are satisfied. If the model is misspecified,
+neither the single-equation GMM nor the multiple-equation GMM is guaranteed
+even to be consistent. And chances of misspecification increase as you add equations
+to the system.

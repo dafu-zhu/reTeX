@@ -1,0 +1,30 @@
+%% sec7_3.tex — Section 7.3: Discussion and Bibliography
+%% Chapter 7 of "A First Course in Monte Carlo Methods"
+%% Sanz-Alonso & Al-Ghattas, University of Chicago
+
+\section{Discussion and Bibliography}
+\label{sec:7.3}
+
+The simulated annealing algorithm was introduced in \cite{124}. Geman and Geman \cite{82}
+conjectured and Gidas \cite{87} rigorously showed convergence with logarithmic tempering in
+finite state space. Later, Hajek \cite{103} showed that choosing the inverse temperatures via
+logarithmic tempering is a sufficient and necessary condition for global convergence. Further
+early results were reviewed and developed in \cite{228, 221, 1, 2}. For more recent
+expositions, we refer to \cite{109, 149}.
+
+Simulated and parallel tempering were introduced in \cite{220, 154}, and further developed in
+\cite{85, 114}. For a review on parallel tempering, we refer to \cite{66}. The question of how
+to choose the temperatures has been widely studied, and recent theory suggests that a geometric
+sequence of temperature ratios is optimal under mild assumptions \cite{63}. Another important
+question is how often one should propose swaps between chains. In a continuous time setting,
+recent theory indicates the potential advantage of frequent swaps, formalized via the infinite
+swapping limit for parallel tempering \cite{62}.
+
+Augmenting the target to speed-up mixing and running multiple chains that communicate with each
+other are two important ideas that underpin many sampling algorithms and convergence diagnostics
+(see e.g.\ Hamiltonian Monte Carlo in Chapter~8, Box--Muller sampling method in Chapter~3,
+slice sampler in Chapter~5, Gelman and Rubin's diagnostic in Chapter~4). Likewise, introducing
+a sequence of auxiliary target densities to gradually reach a desired target is a powerful idea
+that underpins many sequential Monte Carlo algorithms (see particle filters in Chapter~9).
+Algorithms that rely on tempered transitions for sampling multi-modal distributions are
+discussed in \cite{168}.

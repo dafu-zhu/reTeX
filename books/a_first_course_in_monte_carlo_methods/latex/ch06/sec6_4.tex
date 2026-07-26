@@ -1,0 +1,58 @@
+%% Chapter 6 — Section 6.4: Discussion and Bibliography
+\section{Discussion and Bibliography}
+\label{sec:6.4}
+
+The idea of using continuous-time Langevin for sampling a given target distribution can be
+found in \cite{20} and \cite{98}, but it was only developed in \cite{203} where the MALA
+algorithm was first proposed and analyzed. This chapter emphasized the optimization viewpoint
+on Langevin Monte Carlo considered for instance in \cite{78,79,237,64}. These works establish
+convergence guarantees for Langevin equation and discretizations thereof under convexity
+assumptions akin to those required for convergence of gradient descent optimization \cite{34}.
+The choice of step-size for MALA as well as its optimal scaling is discussed in \cite{198}.
+Recent works show improvement in the scaling with dimension under appropriate convexity
+assumptions \cite{139}.
+
+As for optimization algorithms, \emph{preconditioning} Langevin Monte Carlo algorithms can
+speed-up their convergence. Preconditioning improves the conditioning of the target and may be
+implemented, for instance, by leveraging an ensemble of particles \cite{137,77,44}.
+Relatedly, many algorithms leverage ideas from Riemannian geometry to adapt Langevin dynamics
+to the geometry induced by the target distribution \cite{89,184,79}.
+
+An important caveat of Langevin Monte Carlo algorithms is the need to evaluate gradients, which
+in many applications is computationally expensive. For this reason, there has been significant
+interest in studying Langevin Monte Carlo algorithms that use approximate gradients \cite{53}.
+In this direction, Stochastic Gradient Langevin Dynamics (SGLD) \cite{236} provides an
+important extension to ULA and MALA. Consider the setting of Bayesian inference for a
+parameter $\theta$ under the assumption of i.i.d.\ data $\{y_i\}_{i=1}^K$ giving rise to a
+target posterior distribution of the form
+\[
+  f(\theta \mid y_1, \ldots, y_K) \propto f(\theta)\prod_{i=1}^K f(y_i \mid \theta).
+\]
+Evaluating the log-likelihood involves computing a sum over $K$ terms, which is expensive for
+large $K$. This motivates subsampling $k \ll K$ data points uniformly at random at each
+iteration, which leads to the SGLD update rule
+\[
+  \theta^{(n+1)} = \theta^{(n)} + \epsilon_n\left\{
+    \nabla\log\bigl(f(\theta^{(n)})\bigr)
+    + \frac{K}{k}\sum_{i=1}^k \nabla\log\bigl(f(y_i^{(n)} \mid \theta^{(n)})\bigr)
+  \right\} + \sqrt{2\epsilon_n}\,\xi^{(n)}.
+\]
+Here $y_i^{(n)}$ denotes the $i$-th data point of the $k$ subsampled points during the $n$-th
+iteration, and $\xi^{(n)} \sim \Normal(0, I)$. Further, the step-size $\varepsilon_n$ is
+chosen such that $\sum_{n=1}^\infty \epsilon_n = \infty$ and $\sum_{n=1}^\infty \epsilon_n^2
+< \infty$, ensuring that we can sample from this chain \emph{without} the need for accepting
+and rejecting. Note that $\epsilon_n = 1/n$ satisfies the requirements on the step size.
+Another approach to design gradient-free Langevin Monte Carlo algorithms is to rely on an
+ensemble of interacting particles coupled by their empirical covariance to approximate gradients
+and precondition the dynamics \cite{137,77,44}.
+
+Section~\ref{sec:6.3} provided a brief and informal introduction to Langevin equation. For
+rigorous but accessible introductions to stochastic differential equations, we refer to the
+textbooks \cite{177,72,153}, and for more details on Langevin equation and its use for sampling
+we refer to \cite{185}. Numerical solutions are covered in \cite{125,111}. From a theoretical
+perspective, several works \cite{138,191} have shown that including a non-reversible linear
+drift term in Langevin equation speeds-up the convergence to the stationary distribution in
+continuous time; however, the non-reversible diffusion can be more expensive to discretize
+\cite{79,78}, making less obvious the algorithmic value of this idea. A general recipe for
+building preconditioned non-reversible Langevin-type diffusions can be found in \cite{150},
+while \cite{151} discusses Langevin methods for sampling in hidden Markov models.

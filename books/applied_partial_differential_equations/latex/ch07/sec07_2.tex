@@ -1,0 +1,120 @@
+% sec07_2.tex — Section 7.2: Separation of the Time Variable
+\section{Separation of the Time Variable}
+\label{sec:7.2}
+
+We will show that similar methods can be applied to a variety of problems.  We will begin by discussing the vibrations of a membrane of any shape, and follow that with some analysis for the conduction of heat in any two- or three-dimensional region.
+
+\subsection{Vibrating Membrane: Any Shape}
+\label{sec:7.2.1}
+
+Let us consider the displacement $u$ of a vibrating membrane of any shape.  Later (Secs.~7.3 and 7.7) we will specialize our result to rectangular and circular membranes.  The displacement $u(x,y,t)$ satisfies the two-dimensional wave equation:
+\begin{equation}
+\boxed{\pdd{u}{t} = c^2\left(\pdd{u}{x} + \pdd{u}{y}\right).}
+\label{eq:7.2.1}
+\end{equation}
+The initial conditions will be
+\begin{equation}
+u(x,y,0) = \alpha(x,y)
+\label{eq:7.2.2}
+\end{equation}
+\begin{equation}
+\pd{u}{t}(x,y,0) = \beta(x,y),
+\label{eq:7.2.3}
+\end{equation}
+but as usual they will be ignored at first when separating variables.  A homogeneous boundary condition will be given on the entire boundary; $u = 0$ on the boundary is the most common condition.  However, it is possible, for example, for the displacement to be zero on only part of the boundary and for the rest of the boundary to be ``free.''  There are many other possible boundary conditions.
+
+Let us now apply the method of separation of variables.  We begin by showing that the time variable can be separated out from the problem for a membrane of any shape by seeking product solutions of the following form:
+\begin{equation}
+\boxed{u(x,y,t) = h(t)\phi(x,y).}
+\label{eq:7.2.4}
+\end{equation}
+Here $\phi(x,y)$ is an as yet unknown function of the two variables $x$ and $y$.  We do not (at this time) specify further $\phi(x,y)$ since we might expect different results in different geometries or with different boundary conditions.  Later, we will show that for rectangular membranes $\phi(x,y) = F(x)G(y)$, while for circular membranes $\phi(x,y) = F(r)G(\theta)$; that is, the form of further separation depends on the geometry.  It is for this reason that we begin by analyzing the general form \eqref{eq:7.2.4}.  In fact, for most regions that are \emph{not} geometrically as simple as rectangles and circles, $\phi(x,y)$ cannot be separated further.  If \eqref{eq:7.2.4} is substituted into the equation for a vibrating membrane, \eqref{eq:7.2.1}, then the result is
+\begin{equation}
+\phi(x,y)\frac{d^2 h}{dt^2} = c^2 h(t)\left(\pdd{\phi}{x} + \pdd{\phi}{y}\right).
+\label{eq:7.2.5}
+\end{equation}
+We will attempt to proceed as we did when there were only two independent variables.  Time can be separated from \eqref{eq:7.2.5} by dividing by $h(t)\phi(x,y)$ (and an additional division by the constant $c^2$ is convenient):
+\begin{equation}
+\frac{1}{c^2}\frac{1}{h}\frac{d^2 h}{dt^2} = \frac{1}{\phi}\left(\pdd{\phi}{x} + \pdd{\phi}{y}\right) = -\lambda.
+\label{eq:7.2.6}
+\end{equation}
+The left-hand side of the first equation is only a function of time, while the right-hand side is only a function of space ($x$ and $y$).  Thus, the two (as before) must equal a separation constant.  Again, we must decide what notation is convenient for the separation constant, $\lambda$ or $-\lambda$.  A quick glance at the resulting ordinary differential equation for $h(t)$ shows that $-\lambda$ is more convenient (as will be explained).  We thus obtain two equations, but unlike the case of two independent variables, one of the equations is itself still a partial differential equation:
+\begin{equation}
+\boxed{\odd{h}{t} = -\lambda c^2 h}
+\label{eq:7.2.7}
+\end{equation}
+\begin{equation}
+\boxed{\pdd{\phi}{x} + \pdd{\phi}{y} = -\lambda\phi.}
+\label{eq:7.2.8}
+\end{equation}
+The notation $-\lambda$ for the separation constant was chosen because the time-dependent differential equation \eqref{eq:7.2.7} has oscillatory solutions if $\lambda > 0$.  If $\lambda > 0$, then $h$ is a linear combination of $\sin c\sqrt{\lambda}\,t$ and $\cos c\sqrt{\lambda}\,t$; it oscillates with frequency $c\sqrt{\lambda}$.  The values of $\lambda$ determine the natural frequencies of oscillation of a vibrating membrane.  However, we are not guaranteed that $\lambda > 0$.  To show that $\lambda > 0$, we must analyze the resulting eigenvalue problem, \eqref{eq:7.2.8}, where $\phi$ is subject to a homogeneous boundary condition along the entire boundary (e.g., $\phi = 0$ on the boundary).  Here the eigenvalue problem itself involves a linear homogeneous partial differential equation.  Shortly, we will show that $\lambda > 0$ by introducing a Rayleigh quotient applicable to \eqref{eq:7.2.8}.  Before analyzing \eqref{eq:7.2.8}, we will show that it arises in other contexts.
+
+\subsection{Heat Conduction: Any Region}
+\label{sec:7.2.2}
+
+We will analyze the flow of thermal energy in any two-dimensional region.  We begin by seeking product solutions of the form
+\begin{equation}
+\boxed{u(x,y,t) = h(t)\phi(x,y)}
+\label{eq:7.2.9}
+\end{equation}
+for the two-dimensional heat equation, assuming constant thermal properties and no sources, \eqref{eq:7.1.1}.  By substituting \eqref{eq:7.2.9} into \eqref{eq:7.1.1} and after dividing by $kh(t)\phi(x,y)$, we obtain
+\begin{equation}
+\frac{1}{k}\frac{1}{h}\od{h}{t} = \frac{1}{\phi}\left(\pdd{\phi}{x} + \pdd{\phi}{y}\right).
+\label{eq:7.2.10}
+\end{equation}
+A separation constant in the form $-\lambda$ is introduced so that the time-dependent part of the product solution exponentially decays (if $\lambda > 0$) as expected, rather than exponentially grows.  Then the two equations are
+\begin{equation}
+\boxed{\begin{aligned}
+\od{h}{t} &= -\lambda k h \\[6pt]
+\pdd{\phi}{x} + \pdd{\phi}{y} &= -\lambda\phi.
+\end{aligned}}
+\label{eq:7.2.11}
+\end{equation}
+The eigenvalue $\lambda$ relates to the decay rate of the time-dependent part.  The eigenvalue $\lambda$ is determined by the boundary value problem, again consisting of the partial differential equation \eqref{eq:7.2.11} with a corresponding boundary condition on the entire boundary of the region.
+
+For heat flow in any three-dimensional region, \eqref{eq:7.1.2} is valid.  A product solution,
+\begin{equation}
+\boxed{u(x,y,z,t) = h(t)\phi(x,y,z),}
+\label{eq:7.2.12}
+\end{equation}
+may still be sought, and after separating variables, we obtain equations similar to \eqref{eq:7.2.11},
+\begin{equation}
+\boxed{\begin{aligned}
+\od{h}{t} &= -\lambda k h \\[6pt]
+\pdd{\phi}{x} + \pdd{\phi}{y} + \pdd{\phi}{z} &= -\lambda\phi.
+\end{aligned}}
+\label{eq:7.2.13}
+\end{equation}
+The eigenvalue $\lambda$ is determined by finding those values of $\lambda$ for which nontrivial solutions of \eqref{eq:7.2.13} exist, subject to a homogeneous boundary condition on the entire boundary.
+
+\subsection{Summary}
+\label{sec:7.2.3}
+
+In situations described in this section the spatial part $\phi(x,y)$ or $\phi(x,y,z)$ of the solution of the partial differential equation satisfies the eigenvalue problem consisting of the partial differential equation,
+\begin{equation}
+\boxed{\laplacian\phi = -\lambda\phi,}
+\label{eq:7.2.14}
+\end{equation}
+with $\phi$ satisfying appropriate homogeneous boundary conditions, which may be of the form [see (1.5.2) and (4.5.5)]
+\begin{equation}
+\alpha\phi + \beta\nabla\phi\cdot\hat{n} = 0,
+\label{eq:7.2.15}
+\end{equation}
+where $\alpha$ and $\beta$ can depend on $x$, $y$, and $z$.  If $\beta = 0$, \eqref{eq:7.2.15} is the fixed boundary condition.  If $\alpha = 0$, \eqref{eq:7.2.15} is the insulated or free boundary condition.  If both $\alpha \neq 0$ and $\beta \neq 0$, then \eqref{eq:7.2.15} is the higher-dimensional version of Newton's law of cooling or the elastic boundary condition.  In Sec.~7.4 we will describe general results for this two- or three-dimensional eigenvalue problem, similar to our theorems concerning the general one-dimensional Sturm-Liouville eigenvalue problem.  However, first we will describe the solution of a simple two-dimensional eigenvalue problem in a situation in which $\phi(x,y)$ may be further separated, producing two one-dimensional eigenvalue problems.
+
+\begin{exercises}{7.2}
+
+\item For a vibrating membrane of any shape that satisfies \eqref{eq:7.2.1}, show that \eqref{eq:7.2.14} results after separating time.
+
+\item For heat conduction in any two-dimensional region that satisfies \eqref{eq:7.1.1}, show that \eqref{eq:7.2.14} results after separating time.
+
+\item
+\begin{enumerate}
+\item[(a)] Obtain product solutions, $\phi = f(x)g(y)$, of \eqref{eq:7.2.14} that satisfy $\phi = 0$ on the four sides of a rectangle.  (\emph{Hint:} If necessary, see Sec.~7.3.)
+
+\item[(b)] Using part~(a), solve the initial value problem for a vibrating rectangular membrane (fixed on all sides).
+
+\item[(c)] Using part~(a), solve the initial value problem for the two-dimensional heat equation with zero temperature on all sides.
+\end{enumerate}
+
+\end{exercises}

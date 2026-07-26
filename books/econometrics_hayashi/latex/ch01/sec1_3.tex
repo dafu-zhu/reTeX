@@ -1,0 +1,329 @@
+% sec1_3.tex — Section 1.3: Finite-Sample Properties of OLS
+
+Having derived the OLS estimator, we now examine its finite-sample properties,
+namely, the characteristics of the distribution of the estimator that are valid for any
+given sample size $n$.
+
+%% ─── Finite-Sample Distribution of b ──────────────────────────────────────────
+\subsection*{Finite-Sample Distribution of \texorpdfstring{$\vec{b}$}{b}}
+
+\begin{proposition}[finite-sample properties of the OLS estimator of $\bm{\beta}$]
+\label{prop:1.1}
+\begin{enumerate}[label=(\alph*)]
+  \item \emph{(unbiasedness)} Under Assumptions 1.1--1.3,
+    $\E(\vec{b} \mid \vec{X}) = \bm{\beta}$.
+
+  \item \emph{(expression for the variance)} Under Assumptions 1.1--1.4,
+    $\Var(\vec{b} \mid \vec{X}) = \sigma^{2} \cdot (\vec{X}'\vec{X})^{-1}$.
+
+  \item \emph{(Gauss-Markov Theorem)} Under Assumptions 1.1--1.4, the OLS estimator is
+    \textbf{efficient} in the class of linear unbiased estimators.  That is, for any
+    unbiased estimator $\widehat{\bm{\beta}}$ that is linear in $\vec{y}$,
+    $\Var(\widehat{\bm{\beta}} \mid \vec{X}) \geq \Var(\vec{b} \mid \vec{X})$
+    in the matrix sense.\footnote{Let $\vec{A}$ and $\vec{B}$ be two square matrices
+    of the same size.  We say that $\vec{A} \geq \vec{B}$ if $\vec{A} - \vec{B}$ is
+    positive semidefinite.  A $K \times K$ matrix $\vec{C}$ is said to be positive
+    semidefinite (or nonnegative definite) if $\vec{x}'\vec{C}\vec{x} \geq 0$ for all
+    $K$-dimensional vectors $\vec{x}$.}
+
+  \item Under Assumptions 1.1--1.4,
+    $\Cov(\vec{b}, \vec{e} \mid \vec{X}) = \vec{0}$, where
+    $\vec{e} \equiv \vec{y} - \vec{X}\vec{b}$.
+\end{enumerate}
+\end{proposition}
+
+Before plunging into the proof, let us be clear about what this proposition means.
+
+\begin{itemize}
+  \item The matrix inequality in part (c) says that the $K \times K$ matrix
+    $\Var(\widehat{\bm{\beta}} \mid \vec{X}) - \Var(\vec{b} \mid \vec{X})$ is positive
+    semidefinite, so
+    %
+    \[
+      \vec{a}'[\Var(\widehat{\bm{\beta}} \mid \vec{X})
+        - \Var(\vec{b} \mid \vec{X})]\vec{a} \geq 0
+      \quad\text{or}\quad
+      \vec{a}' \Var(\widehat{\bm{\beta}} \mid \vec{X})\vec{a}
+        \geq \vec{a}' \Var(\vec{b} \mid \vec{X})\vec{a}
+    \]
+    %
+    for any $K$-dimensional vector $\vec{a}$.  In particular, consider a special vector
+    whose elements are all 0 except for the $k$-th element, which is~1.  For this
+    particular $\vec{a}$, the quadratic form $\vec{a}'\vec{A}\vec{a}$ picks up the
+    $(k,k)$ element of $\vec{A}$.  But the $(k,k)$ element of
+    $\Var(\widehat{\bm{\beta}} \mid \vec{X})$, for example, is
+    $\Var(\widehat{\beta}_{k} \mid \vec{X})$ where $\widehat{\beta}_{k}$ is the $k$-th
+    element of $\widehat{\bm{\beta}}$.  Thus the matrix inequality in (c) implies
+    %
+    \begin{equation}
+      \Var(\widehat{\beta}_{k} \mid \vec{X})
+        \geq \Var(b_{k} \mid \vec{X})
+      \quad (k = 1, 2, \ldots, K).
+      \label{eq:1.3.1}
+    \end{equation}
+    %
+    That is, for any regression coefficient, the variance of the OLS estimator is no
+    larger than that of any other linear unbiased estimator.
+
+  \item As clear from (1.2.5), the OLS estimator is linear in $\vec{y}$.  There are many
+    other estimators of $\bm{\beta}$ that are linear and unbiased (you will be asked to
+    provide one in a review question below).  The Gauss-Markov Theorem says that the OLS
+    estimator is \textbf{efficient} in the sense that its conditional variance matrix
+    $\Var(\vec{b} \mid \vec{X})$ is smallest among linear unbiased estimators.  For this
+    reason the OLS estimator is called the Best Linear Unbiased Estimator (\textbf{BLUE}).
+
+  \item The OLS estimator $\vec{b}$ is a function of the sample $(\vec{y}, \vec{X})$.
+    Since $(\vec{y}, \vec{X})$ are random, so is $\vec{b}$.  Now imagine that we fix
+    $\vec{X}$ at some given value, calculate $\vec{b}$ for all samples corresponding to
+    all possible realizations of $\vec{y}$, and take the average of $\vec{b}$ (the Monte
+    Carlo exercise to this chapter will ask you to do this).  This average is the
+    (population) conditional mean $\E(\vec{b} \mid \vec{X})$.  Part (a) (unbiasedness)
+    says that this average equals the true value $\bm{\beta}$.
+
+  \item There is another notion of unbiasedness that is weaker than the unbiasedness of
+    part (a).  By the Law of Total Expectations,
+    $\E[\E(\vec{b} \mid \vec{X})] = \E(\vec{b})$.  So (a) implies
+    %
+    \begin{equation}
+      \E(\vec{b}) = \bm{\beta}.
+      \label{eq:1.3.2}
+    \end{equation}
+    %
+    This says: if we calculated $\vec{b}$ for all possible different samples, differing
+    not only in $\vec{y}$ but also in $\vec{X}$, the average would be the true value.
+    This unconditional statement is probably more relevant in economics because samples do
+    differ in both $\vec{y}$ and $\vec{X}$.  The import of the conditional statement (a)
+    is that it implies the unconditional statement \eqref{eq:1.3.2}, which is more
+    relevant.
+
+  \item The same holds for the conditional statement (c) about the variance.  A review
+    question below asks you to show that statements (a) and (b) imply
+    %
+    \begin{equation}
+      \Var(\widehat{\bm{\beta}}) \geq \Var(\vec{b})
+      \label{eq:1.3.3}
+    \end{equation}
+    %
+    where $\widehat{\bm{\beta}}$ is any linear unbiased estimator (so that
+    $\E(\widehat{\bm{\beta}} \mid \vec{X}) = \bm{\beta}$).
+\end{itemize}
+
+We will now go through the proof of this important result.  The proof may look
+lengthy; if so, it is only because it records every step, however easy.  In the first
+reading, you can skip the proof of part (c).  Proof of (d) is a review question.
+
+\begin{proof}
+\begin{enumerate}[label=(\alph*)]
+
+%% ── Part (a): Unbiasedness ──────────────────────────────────────────────────
+\item (Proof that $\E(\vec{b} \mid \vec{X}) = \bm{\beta}$)\quad
+  $\E(\vec{b} \mid \vec{X}) = \bm{\beta}$ whenever
+  $\E(\vec{b} - \bm{\beta} \mid \vec{X}) = \vec{0}$.  So we prove the former.  By the
+  expression for the sampling error (1.2.14),
+  %
+  \[
+    \vec{b} - \bm{\beta} = \vec{A}\bm{\varepsilon}
+  \]
+  %
+  where $\vec{A}$ here is $(\vec{X}'\vec{X})^{-1}\vec{X}'$.  So
+  %
+  \[
+    \E(\vec{b} - \bm{\beta} \mid \vec{X})
+      = \E(\vec{A}\bm{\varepsilon} \mid \vec{X})
+      = \vec{A}\,\E(\bm{\varepsilon} \mid \vec{X}).
+  \]
+  %
+  Here, the second equality holds by the linearity of conditional expectations;
+  $\vec{A}$ is a function of $\vec{X}$ and so can be treated as if nonrandom.  Since
+  $\E(\bm{\varepsilon} \mid \vec{X}) = \vec{0}$, the last expression is zero.
+
+%% ── Part (b): Expression for the variance ───────────────────────────────────
+\item (Proof that $\Var(\vec{b} \mid \vec{X}) = \sigma^{2} \cdot (\vec{X}'\vec{X})^{-1}$)
+  %
+  \begin{align*}
+    \Var(\vec{b} \mid \vec{X})
+      &= \Var(\vec{b} - \bm{\beta} \mid \vec{X})
+        &\quad&\text{(since $\bm{\beta}$ is not random)} \\
+      &= \Var(\vec{A}\bm{\varepsilon} \mid \vec{X})
+        &&\text{(by (1.2.14) and $\vec{A} \equiv (\vec{X}'\vec{X})^{-1}\vec{X}'$)} \\
+      &= \vec{A}\,\Var(\bm{\varepsilon} \mid \vec{X})\,\vec{A}'
+        &&\text{(since $\vec{A}$ is a function of $\vec{X}$)} \\
+      &= \vec{A}\,\E(\bm{\varepsilon}\bm{\varepsilon}' \mid \vec{X})\,\vec{A}'
+        &&\text{(by Assumption 1.2)} \\
+      &= \vec{A}(\sigma^{2}\vec{I}_{n})\vec{A}'
+        &&\text{(by Assumption 1.4, see (1.1.14))} \\
+      &= \sigma^{2}\vec{A}\vec{A}' \\
+      &= \sigma^{2} \cdot (\vec{X}'\vec{X})^{-1}
+        &&\text{(since $\vec{A}\vec{A}' = (\vec{X}'\vec{X})^{-1}\vec{X}'\vec{X}(\vec{X}'\vec{X})^{-1} = (\vec{X}'\vec{X})^{-1}$).}
+  \end{align*}
+
+%% ── Part (c): Gauss-Markov ──────────────────────────────────────────────────
+\item (Gauss-Markov)\quad Since $\widehat{\bm{\beta}}$ is linear in $\vec{y}$, it can
+  be written as $\widehat{\bm{\beta}} = \vec{C}\vec{y}$ for some matrix $\vec{C}$,
+  which possibly is a function of $\vec{X}$.  Let
+  $\vec{D} \equiv \vec{C} - \vec{A}$ or $\vec{C} = \vec{D} + \vec{A}$ where
+  $\vec{A} \equiv (\vec{X}'\vec{X})^{-1}\vec{X}'$.  Then
+  %
+  \begin{align*}
+    \widehat{\bm{\beta}}
+      &= (\vec{D} + \vec{A})\vec{y} \\
+      &= \vec{D}\vec{y} + \vec{A}\vec{y} \\
+      &= \vec{D}(\vec{X}\bm{\beta} + \bm{\varepsilon}) + \vec{b}
+        &\quad&\text{(since $\vec{y} = \vec{X}\bm{\beta} + \bm{\varepsilon}$ and
+        $\vec{A}\vec{y} = (\vec{X}'\vec{X})^{-1}\vec{X}'\vec{y} = \vec{b}$)} \\
+      &= \vec{D}\vec{X}\bm{\beta} + \vec{D}\bm{\varepsilon} + \vec{b}.
+  \end{align*}
+  %
+  Taking the conditional expectation of both sides, we obtain
+  %
+  \[
+    \E(\widehat{\bm{\beta}} \mid \vec{X})
+      = \vec{D}\vec{X}\bm{\beta}
+        + \E(\vec{D}\bm{\varepsilon} \mid \vec{X})
+        + \E(\vec{b} \mid \vec{X}).
+  \]
+  %
+  Since both $\vec{b}$ and $\widehat{\bm{\beta}}$ are unbiased and since
+  $\E(\vec{D}\bm{\varepsilon} \mid \vec{X})
+    = \vec{D}\,\E(\bm{\varepsilon} \mid \vec{X}) = \vec{0}$,
+  it follows that $\vec{D}\vec{X}\bm{\beta} = \vec{0}$.  For this to be true for any
+  given $\bm{\beta}$, it is necessary that $\vec{D}\vec{X} = \vec{0}$.  So
+  $\widehat{\bm{\beta}} = \vec{D}\bm{\varepsilon} + \vec{b}$ and
+  %
+  \begin{align*}
+    \widehat{\bm{\beta}} - \bm{\beta}
+      &= \vec{D}\bm{\varepsilon} + (\vec{b} - \bm{\beta}) \\
+      &= (\vec{D} + \vec{A})\bm{\varepsilon}
+        &\quad&\text{(by (1.2.14)).}
+  \end{align*}
+  %
+  So
+  %
+  \begin{align*}
+    \Var(\widehat{\bm{\beta}} \mid \vec{X})
+      &= \Var(\widehat{\bm{\beta}} - \bm{\beta} \mid \vec{X}) \\
+      &= \Var[(\vec{D} + \vec{A})\bm{\varepsilon} \mid \vec{X}] \\
+      &= (\vec{D} + \vec{A})\,\Var(\bm{\varepsilon} \mid \vec{X})\,
+         (\vec{D}' + \vec{A}') \\
+      &\qquad\text{(since both $\vec{D}$ and $\vec{A}$ are functions of $\vec{X}$)} \\
+      &= \sigma^{2} \cdot (\vec{D} + \vec{A})(\vec{D}' + \vec{A}')
+        &\quad&\text{(since $\Var(\bm{\varepsilon} \mid \vec{X}) = \sigma^{2}\vec{I}_{n}$)} \\
+      &= \sigma^{2} \cdot
+         (\vec{D}\vec{D}' + \vec{A}\vec{D}' + \vec{D}\vec{A}' + \vec{A}\vec{A}').
+  \end{align*}
+  %
+  But $\vec{D}\vec{A}' = \vec{D}\vec{X}(\vec{X}'\vec{X})^{-1} = \vec{0}$ since
+  $\vec{D}\vec{X} = \vec{0}$.  Also, $\vec{A}\vec{A}' = (\vec{X}'\vec{X})^{-1}$ as
+  shown in (b).  So
+  %
+  \begin{align*}
+    \Var(\widehat{\bm{\beta}} \mid \vec{X})
+      &= \sigma^{2} \cdot [\vec{D}\vec{D}' + (\vec{X}'\vec{X})^{-1}] \\
+      &\geq \sigma^{2} \cdot (\vec{X}'\vec{X})^{-1}
+        &\quad&\text{(since $\vec{D}\vec{D}'$ is positive semidefinite)} \\
+      &= \Var(\vec{b} \mid \vec{X})
+        &&\text{(by (b)).}
+  \end{align*}
+\end{enumerate}
+\end{proof}
+
+It should be emphasized that the strict exogeneity assumption (Assumption~1.2) is
+critical for proving unbiasedness.  Anything short of strict exogeneity will not do.
+For example, it is not enough to assume that $\E(\varepsilon_{i} \mid \vec{x}_{i}) = 0$
+for all $i$ or that $\E(\vec{x}_{i} \cdot \varepsilon_{i}) = \vec{0}$ for all~$i$.  We
+noted in Section~1.1 that most time-series models do not satisfy strict exogeneity even
+if they satisfy weaker conditions such as the orthogonality condition
+$\E(\vec{x}_{i} \cdot \varepsilon_{i}) = \vec{0}$.  It follows that for those models the
+OLS estimator is not unbiased.
+
+%% ─── Finite-Sample Properties of s² ──────────────────────────────────────────
+\subsection*{Finite-Sample Properties of \texorpdfstring{$s^{2}$}{s2}}
+
+We defined the OLS estimator of $\sigma^{2}$ in (1.2.13).  It, too, is unbiased.
+
+\begin{proposition}[Unbiasedness of $s^{2}$]
+\label{prop:1.2}
+\emph{Under Assumptions 1.1--1.4,}
+$\E(s^{2} \mid \vec{X}) = \sigma^{2}$
+\emph{(and hence $\E(s^{2}) = \sigma^{2}$), provided $n > K$ (so that $s^{2}$ is
+well-defined).}
+\end{proposition}
+
+We can prove this proposition easily by the use of the trace
+operator.\footnote{The \textbf{trace} of a square matrix $\vec{A}$ is the sum of
+the diagonal elements of $\vec{A}$:
+$\tr(\vec{A}) = \sum_{i} a_{ii}$.}
+
+\begin{proof}
+Since $s^{2} = \vec{e}'\vec{e}/(n - K)$, the proof amounts to showing that
+$\E(\vec{e}'\vec{e} \mid \vec{X}) = (n - K)\sigma^{2}$.  As shown in (1.2.12),
+$\vec{e}'\vec{e} = \bm{\varepsilon}'\vec{M}\bm{\varepsilon}$ where $\vec{M}$ is the
+annihilator.  The proof consists of proving two properties:
+(1)~$\E(\bm{\varepsilon}'\vec{M}\bm{\varepsilon} \mid \vec{X})
+  = \sigma^{2} \cdot \tr(\vec{M})$, and
+(2)~$\tr(\vec{M}) = n - K$.
+
+\medskip\noindent
+(1) (Proof that
+$\E(\bm{\varepsilon}'\vec{M}\bm{\varepsilon} \mid \vec{X})
+  = \sigma^{2} \cdot \tr(\vec{M})$)\quad
+Since $\bm{\varepsilon}'\vec{M}\bm{\varepsilon}
+  = \sum_{i=1}^{n}\sum_{j=1}^{n} m_{ij}\,\varepsilon_{i}\,\varepsilon_{j}$
+(this is just writing out the quadratic form $\bm{\varepsilon}'\vec{M}\bm{\varepsilon}$),
+we have
+%
+\begin{align*}
+  \E(\bm{\varepsilon}'\vec{M}\bm{\varepsilon} \mid \vec{X})
+    &= \sum_{i=1}^{n}\sum_{j=1}^{n} m_{ij}\;\E(\varepsilon_{i}\,\varepsilon_{j}
+       \mid \vec{X})
+    &\quad&\text{(because $m_{ij}$'s are functions of $\vec{X}$,} \\
+    & &&\phantom{\text{(}}\text{$\E(m_{ij}\,\varepsilon_{i}\,\varepsilon_{j} \mid \vec{X})
+       = m_{ij}\;\E(\varepsilon_{i}\,\varepsilon_{j} \mid \vec{X})$)} \\
+    &= \sum_{i=1}^{n} m_{ii}\,\sigma^{2}
+    &&\text{(since $\E(\varepsilon_{i}\,\varepsilon_{j} \mid \vec{X}) = 0$
+       for $i \neq j$ by Assumption 1.4)} \\
+    &= \sigma^{2} \sum_{i=1}^{n} m_{ii} \\
+    &= \sigma^{2} \cdot \tr(\vec{M}).
+\end{align*}
+
+\medskip\noindent
+(2) (Proof that $\tr(\vec{M}) = n - K$)
+%
+\begin{align*}
+  \tr(\vec{M})
+    &= \tr(\vec{I}_{n} - \vec{P})
+      &\quad&\text{(since $\vec{M} \equiv \vec{I}_{n} - \vec{P}$; see (1.2.8))} \\
+    &= \tr(\vec{I}_{n}) - \tr(\vec{P})
+      &&\text{(fact: the trace operator is linear)} \\
+    &= n - \tr(\vec{P}),
+\end{align*}
+%
+and
+%
+\begin{align*}
+  \tr(\vec{P})
+    &= \tr[\vec{X}(\vec{X}'\vec{X})^{-1}\vec{X}']
+      &\quad&\text{(since $\vec{P} \equiv \vec{X}(\vec{X}'\vec{X})^{-1}\vec{X}'$;
+      see (1.2.7))} \\
+    &= \tr[(\vec{X}'\vec{X})^{-1}\vec{X}'\vec{X}]
+      &&\text{(fact: $\tr(\vec{A}\vec{B}) = \tr(\vec{B}\vec{A})$)} \\
+    &= \tr(\vec{I}_{K}) = K.
+\end{align*}
+%
+So $\tr(\vec{M}) = n - K$.
+\end{proof}
+
+%% ─── Estimate of Var(b | X) ─────────────────────────────────────────────────
+\subsection*{Estimate of \texorpdfstring{$\Var(\vec{b} \mid \vec{X})$}{Var(b|X)}}
+
+If $s^{2}$ is the estimate of $\sigma^{2}$, a natural estimate of
+$\Var(\vec{b} \mid \vec{X}) = \sigma^{2} \cdot (\vec{X}'\vec{X})^{-1}$ is
+%
+\begin{equation}
+  \widehat{\Var(\vec{b} \mid \vec{X})}
+    \equiv s^{2} \cdot (\vec{X}'\vec{X})^{-1}.
+  \label{eq:1.3.4}
+\end{equation}
+%
+This is one of the statistics included in the computer printout of any OLS software
+package.

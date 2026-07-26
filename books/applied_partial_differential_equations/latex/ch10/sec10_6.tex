@@ -1,0 +1,880 @@
+% sec10_6.tex — Section 10.6: Worked Examples Using Transforms
+\section{Worked Examples Using Transforms}
+\label{sec:ft-examples}
+
+%% ── 10.6.1 ──────────────────────────────────────────────────────
+\subsection{One-Dimensional Wave Equation on an Infinite Interval}
+\label{subsec:wave-infinite}
+
+Previously, we have analyzed vibrating strings on a finite interval, usually $0 \le x \le L$.  Here we will study a vibrating string on an infinite interval.  The best way to analyze vibrating strings on an infinite (or semi-infinite) interval is to use the method of characteristics, which we describe in Chapter~12.  There, concepts of wave propagation are more completely discussed.  Here we will analyze only the following example, to show briefly how Fourier transforms can be used to solve the one-dimensional wave equation:
+\begin{equation}
+\label{eq:wave-pde}
+\text{PDE:}\quad \boxed{\pdd{u}{t} = c^2\pdd{u}{x}, \quad -\infty < x < \infty}
+\end{equation}
+\begin{equation}
+\label{eq:wave-ic1}
+\text{IC1:}\quad \boxed{u(x,0) = f(x)}
+\end{equation}
+\begin{equation}
+\label{eq:wave-ic2}
+\text{IC2:}\quad \boxed{\pd{u}{t}(x,0) = 0.}
+\end{equation}
+
+We give the initial position $f(x)$ of the string but insist that the string is at rest, $\partial u/\partial t(x,0) = 0$, in order to simplify the mathematics.
+
+Product solutions can be obtained by separation of variables.  Instead, we will introduce the Fourier transform in $x$ of $u(x,t)$:
+\begin{equation}
+\label{eq:wave-ft-def}
+\overline{U}(\omega,t) = \frac{1}{2\pi}\int_{-\infty}^{\infty}u(x,t)\,e^{i\omega x}\dx
+\end{equation}
+\begin{equation}
+\label{eq:wave-ft-inv}
+u(x,t) = \int_{-\infty}^{\infty}\overline{U}(\omega,t)\,e^{-i\omega x}\,d\omega.
+\end{equation}
+
+Taking the Fourier transform of the one-dimensional wave equation yields
+\begin{equation}
+\label{eq:wave-ft-ode}
+\pdd{\overline{U}}{t} = -c^2\omega^2\,\overline{U},
+\end{equation}
+with the initial conditions becoming
+\begin{equation}
+\label{eq:wave-ft-ic1}
+\overline{U}(\omega,0) = \frac{1}{2\pi}\int_{-\infty}^{\infty}f(x)\,e^{i\omega x}\dx
+\end{equation}
+\begin{equation}
+\label{eq:wave-ft-ic2}
+\frac{\partial}{\partial t}\overline{U}(\omega,0) = 0.
+\end{equation}
+
+The general solution of \eqref{eq:wave-ft-ode} is a linear combination of sines and cosines:
+\begin{equation}
+\label{eq:wave-ft-gen}
+\overline{U}(\omega,t) = A(\omega)\cos c\omega t + B(\omega)\sin c\omega t.
+\end{equation}
+The initial conditions imply that
+\begin{equation}
+\label{eq:wave-B0}
+B(\omega) = 0
+\end{equation}
+\begin{equation}
+\label{eq:wave-A-ic}
+A(\omega) = \overline{U}(\omega,0) = \frac{1}{2\pi}\int_{-\infty}^{\infty}f(x)\,e^{i\omega x}\dx.
+\end{equation}
+
+Using the inverse Fourier transform, the solution of the one-dimensional wave equation is
+\boxed{\begin{equation}
+\label{eq:wave-ft-sol}
+u(x,t) = \int_{-\infty}^{\infty}\overline{U}(\omega,0)\cos c\omega t\,e^{-i\omega x}\,d\omega,
+\end{equation}}
+where $\overline{U}(\omega,0)$ is the Fourier transform of the initial position.
+
+The solution can be considerably simplified.  Using Euler's formula,
+\begin{equation}
+\label{eq:wave-euler}
+u(x,t) = \frac{1}{2}\int_{-\infty}^{\infty}\overline{U}(\omega,0)\left[e^{-i\omega(x-ct)} + e^{-i\omega(x+ct)}\right]d\omega.
+\end{equation}
+However, $\overline{U}(\omega,0)$ is the Fourier transform of $f(x)$, and hence
+\begin{equation}
+\label{eq:wave-f-inv}
+f(x) = \int_{-\infty}^{\infty}\overline{U}(\omega,0)\,e^{-i\omega x}\,d\omega.
+\end{equation}
+By comparing \eqref{eq:wave-euler} and \eqref{eq:wave-f-inv}, we obtain D'Alembert's solution
+\boxed{\begin{equation}
+\label{eq:dalembert}
+u(x,t) = \frac{1}{2}\left[f(x-ct) + f(x+ct)\right].
+\end{equation}}
+
+For an infinite string (\textit{started at rest}), the solution is the sum of two terms, $\frac{1}{2}f(x-ct)$ and $\frac{1}{2}f(x+ct)$.  $\frac{1}{2}f(x-ct)$ is a waveform of fixed shape.  Its height stays fixed if $x - ct = $ constant, and thus $dx/dt = c$.  For example, the origin corresponds to $x = ct$.  Assuming that $c > 0$, this fixed shape moves to the right with velocity $c$.  It is called a \textbf{traveling wave}.  Similarly, $\frac{1}{2}f(x+ct)$ is a wave of fixed shape traveling to the left (at velocity $-c$).  Our interpretation of this result is that if started at rest, the initial position of the string breaks in two, half moving to the left and half moving to the right at equal speeds $c$; the solution is the simple sum of these two traveling waves.
+
+%% ── 10.6.2 ──────────────────────────────────────────────────────
+\subsection{Laplace's Equation in a Semi-Infinite Strip}
+\label{subsec:laplace-strip}
+
+The mathematical problem for steady-state heat conduction in a semi-infinite strip ($0 < x < L$, $y > 0$) is
+\boxed{\begin{equation}
+\label{eq:strip-pde}
+\laplacian u = \pdd{u}{x} + \pdd{u}{y} = 0
+\end{equation}}
+\boxed{\begin{equation}
+\label{eq:strip-bc-left}
+u(0,y) = g_1(y)
+\end{equation}}
+\boxed{\begin{equation}
+\label{eq:strip-bc-right}
+u(L,y) = g_2(y)
+\end{equation}}
+\boxed{\begin{equation}
+\label{eq:strip-bc-bottom}
+u(x,0) = f(x).
+\end{equation}}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch10/fig_strip-decomp.png}
+\caption{Laplace's equation in a semi-infinite strip.}
+\label{fig:strip-decomp}
+\end{figure}
+
+We assume that $g_1(y)$ and $g_2(y)$ approach zero as $y \to \infty$.  In Fig.~\ref{fig:strip-decomp} we illustrate the three nonhomogeneous boundary conditions and the useful simplification
+\boxed{\begin{equation}
+\label{eq:strip-decomp}
+u(x,y) = u_1(x,y) + u_2(x,y).
+\end{equation}}
+Here both $u_1$ and $u_2$ satisfy Laplace's equation.  Separation of variables for Laplace's equation in the semi-infinite strip geometry provides motivation for our approach:
+\begin{equation}
+\label{eq:strip-sep}
+u(x,y) = \phi(x)\theta(y),
+\end{equation}
+in which case
+\begin{equation}
+\label{eq:strip-ode-x}
+\odd{\phi}{x} = -\lambda\phi
+\end{equation}
+\begin{equation}
+\label{eq:strip-ode-y}
+\odd{\theta}{y} = \lambda\theta.
+\end{equation}
+Two homogeneous boundary conditions are necessary for an eigenvalue problem.  That is why we divided our problem into two parts.
+
+\textbf{Zero-temperature sides.}  For the $u_2$-problem, $u_2 = 0$ at both $x = 0$ and $x = L$.  Thus, the differential equation in $x$ is an eigenvalue problem, defined over a \textit{finite} interval.  The boundary conditions are exactly those of a Fourier sine series in $x$.  The $y$-dependent solutions are exponentials.  For $u_2$, separated solutions are
+\[
+u_2(x,y) = \sin\frac{n\pi x}{L}\,e^{-n\pi y/L} \quad \text{and} \quad u_2(x,y) = \sin\frac{n\pi x}{L}\,e^{+n\pi y/L}.
+\]
+The principle of superposition implies that
+\begin{equation}
+\label{eq:strip-u2-super}
+u_2(x,y) = \sum_{n=1}^{\infty}a_n\sin\frac{n\pi x}{L}\,e^{-n\pi y/L} + \sum_{n=1}^{\infty}b_n\sin\frac{n\pi x}{L}\,e^{n\pi y/L}.
+\end{equation}
+There are two other conditions on $u_2$:
+\begin{equation}
+\label{eq:strip-u2-ic}
+u_2(x,0) = f(x)
+\end{equation}
+\begin{equation}
+\label{eq:strip-u2-decay}
+\lim_{y\to\infty}u_2(x,y) = 0.
+\end{equation}
+Since $u_2 \to 0$ as $y \to \infty$, $b_n = 0$.  The nonhomogeneous condition is
+\begin{equation}
+\label{eq:strip-u2-fourier}
+f(x) = \sum_{n=1}^{\infty}a_n\sin\frac{n\pi x}{L},
+\end{equation}
+and thus $a_n$ are the Fourier sine coefficients of the nonhomogeneous boundary condition at $y = 0$:
+\boxed{\begin{equation}
+\label{eq:strip-u2-coeff}
+a_n = \frac{2}{L}\int_0^L f(x)\sin\frac{n\pi x}{L}\dx.
+\end{equation}}
+Using these coefficients, the solution is
+\boxed{\begin{equation}
+\label{eq:strip-u2-sol}
+u_2(x,y) = \sum_{n=1}^{\infty}a_n\sin\frac{n\pi x}{L}\,e^{-n\pi y/L}.
+\end{equation}}
+There is no need to use Fourier transforms for the $u_2$-problem.
+
+\textbf{Zero-temperature bottom.}  For the $u_1$-problem, the second homogeneous boundary condition is less apparent:
+\begin{equation}
+\label{eq:strip-u1-bottom}
+u_1(x,0) = 0
+\end{equation}
+\begin{equation}
+\label{eq:strip-u1-decay}
+\lim_{y\to\infty}u_1(x,y) = 0.
+\end{equation}
+The $y$-dependent part is the boundary value problem.  As $y \to \infty$, the ``separated'' solution must remain bounded (they do not necessarily vanish).  The appropriate solutions of \eqref{eq:strip-ode-y} are sines and cosines (corresponding to $\lambda < 0$).  The homogeneous boundary condition at $y = 0$, \eqref{eq:strip-u1-bottom}, implies that only sines should be used.  Instead of continuing to discuss the method of separation of variables, we now introduce the Fourier sine transform in $y$:
+\boxed{\begin{equation}
+\label{eq:strip-u1-st}
+u_1(x,y) = \int_0^{\infty}\overline{U}_1(x,\omega)\sin\omega y\,d\omega
+\end{equation}}
+\begin{equation}
+\label{eq:strip-u1-st-def}
+\overline{U}_1(x,\omega) = \frac{2}{\pi}\int_0^{\infty}u_1(x,y)\sin\omega y\,dy.
+\end{equation}
+
+We directly take the Fourier sine transform with respect to $y$ of Laplace's equation, \eqref{eq:strip-pde}.  The properties of the transform of derivatives shows that Laplace's equation becomes an ordinary differential equation:
+\begin{equation}
+\label{eq:strip-u1-ode}
+\pdd{}{x}\overline{U}_1(x,\omega) - \omega^2\,\overline{U}_1(x,\omega) = 0.
+\end{equation}
+
+The boundary condition at $y = 0$, $u_1(x,0) = 0$, has been used to simplify our result.  The solution of \eqref{eq:strip-u1-ode} is a linear combination of nonoscillatory (exponential) functions.  It is most convenient (although not necessary) to utilize the following hyperbolic functions:
+\boxed{\begin{equation}
+\label{eq:strip-u1-hyp}
+\overline{U}_1(x,\omega) = a(\omega)\sinh\omega x + b(\omega)\sinh\omega(L-x).
+\end{equation}}
+
+The two nonhomogeneous conditions at $x = 0$ and $x = L$ yield
+\boxed{\begin{equation}
+\label{eq:strip-u1-bc-left}
+\overline{U}_1(0,\omega) = b(\omega)\sinh\omega L = \frac{2}{\pi}\int_0^{\infty}g_1(y)\sin\omega y\,dy
+\end{equation}}
+\boxed{\begin{equation}
+\label{eq:strip-u1-bc-right}
+\overline{U}_1(L,\omega) = a(\omega)\sinh\omega L = \frac{2}{\pi}\int_0^{\infty}g_2(y)\sin\omega y\,dy.
+\end{equation}}
+
+$\overline{U}_1(x,\omega)$, the Fourier sine transform of $u_1(x,y)$, is given by \eqref{eq:strip-u1-hyp}, where $a(\omega)$ and $b(\omega)$ are obtained from \eqref{eq:strip-u1-bc-left} and \eqref{eq:strip-u1-bc-right}.\footnote{Unfortunately, $\overline{U}_1(x,\omega)$ is not the product of the transforms of two simple functions.  Hence, we do not use the convolution theorem.}  This completes the somewhat complicated solution of Laplace's equation in a semi-infinite channel.  It is the sum of a solution obtained using a Fourier sine series and one using a Fourier sine transform.
+
+\textbf{Nonhomogeneous boundary conditions.}  If desired, Laplace's equation \eqref{eq:strip-pde} with three nonhomogeneous boundary conditions, \eqref{eq:strip-bc-left}--\eqref{eq:strip-bc-bottom}, can be solved by directly applying a Fourier sine transform in $y$ without decomposing the problem into two:
+\begin{equation}
+\label{eq:strip-direct}
+u(x,y) = \int_0^{\infty}\overline{U}(x,\omega)\sin\omega y\,d\omega.
+\end{equation}
+Since the boundary condition at $y = 0$, $u(x,0) = f(x)$, is nonhomogeneous, an extra term is introduced into the Fourier sine transform of Laplace's equation \eqref{eq:strip-pde}:
+\begin{equation}
+\label{eq:strip-direct-ode}
+\pdd{\overline{U}}{y} - \omega^2\overline{U} = -\frac{2}{\pi}\omega f(x).
+\end{equation}
+In this case, the Fourier sine transform satisfies a second-order linear constant-coefficient \textit{nonhomogeneous} ordinary differential equation.  This equation must be solved with two nonhomogeneous boundary conditions at $x = 0$ and $x = L$.  Equation \eqref{eq:strip-direct-ode} can be solved by variation of parameters.  This solution is probably more complicated than the one consisting of a sum of a series and a transform.  Furthermore, this solution has a jump discontinuity at $y = 0$; the integral in \eqref{eq:strip-direct} equals zero at $y = 0$ but converges to $f(x)$ as $y \to 0$.  Usually, breaking the problem into two problems is preferable.
+
+%% ── 10.6.3 ──────────────────────────────────────────────────────
+\subsection{Laplace's Equation in a Half-Plane}
+\label{subsec:laplace-halfplane}
+
+If the temperature is specified to equal $f(x)$ on an infinite wall, $y = 0$, then the steady-state temperature distribution for $y > 0$ satisfies Laplace's equation,
+\boxed{\begin{equation}
+\label{eq:halfplane-pde}
+\laplacian u = \pdd{u}{x} + \pdd{u}{y} = 0,
+\end{equation}}
+subject to the boundary condition,
+\begin{equation}
+\label{eq:halfplane-bc}
+u(x,0) = f(x).
+\end{equation}
+If $f(x) \to 0$ as $x \to \pm\infty$, then there are three other implied boundary conditions:
+\begin{equation}
+\label{eq:halfplane-xp}
+\lim_{x\to+\infty}u(x,y) = 0
+\end{equation}
+\begin{equation}
+\label{eq:halfplane-xm}
+\lim_{x\to-\infty}u(x,y) = 0
+\end{equation}
+\begin{equation}
+\label{eq:halfplane-yp}
+\lim_{y\to+\infty}u(x,y) = 0;
+\end{equation}
+the temperature approaches zero at large distances from the wall.
+
+The method of separation of variables suggests the use of a Fourier transform in $x$, since there are two homogeneous boundary conditions as $x \to \pm\infty$:
+\begin{equation}
+\label{eq:halfplane-ft}
+u(x,y) = \int_{-\infty}^{\infty}\overline{U}(\omega,y)\,e^{-i\omega x}\,d\omega
+\end{equation}
+\begin{equation}
+\label{eq:halfplane-ft-def}
+\overline{U}(\omega,y) = \frac{1}{2\pi}\int_{-\infty}^{\infty}u(x,y)\,e^{i\omega x}\dx.
+\end{equation}
+By taking the Fourier transform in $x$ of \eqref{eq:halfplane-pde}, we obtain the ordinary differential equation satisfied by the Fourier transform,
+\begin{equation}
+\label{eq:halfplane-ode}
+\pdd{\overline{U}}{y} - \omega^2\overline{U} = 0.
+\end{equation}
+Since $u(x,y) \to 0$ as $y \to +\infty$, its Fourier transform in $x$ also vanishes as $y \to +\infty$,
+\begin{equation}
+\label{eq:halfplane-decay}
+\overline{U}(\omega,y) \to 0, \quad \text{as } y \to +\infty.
+\end{equation}
+In addition, at $y = 0$, $\overline{U}(\omega,0)$ is the Fourier transform of the boundary condition,
+\begin{equation}
+\label{eq:halfplane-ft-bc}
+\overline{U}(\omega,0) = \frac{1}{2\pi}\int_{-\infty}^{\infty}f(x)\,e^{i\omega x}\dx.
+\end{equation}
+
+We must be careful solving \eqref{eq:halfplane-ode}.  The general solution is
+\begin{equation}
+\label{eq:halfplane-gen}
+\overline{U}(\omega,y) = a(\omega)\,e^{\omega y} + b(\omega)\,e^{-\omega y},
+\end{equation}
+which is of interest \textit{for all} $\omega$ [see \eqref{eq:halfplane-ft}].  There are two boundary conditions to determine the two arbitrary functions $a(\omega)$ and $b(\omega)$.  Equation \eqref{eq:halfplane-decay} states that $\overline{U}(\omega,y) \to 0$ as $y \to +\infty$.  At first you might think that this implies that $a(\omega) = 0$, but that is not correct.  Instead, for $\overline{U}(\omega,y)$ to vanish as $y \to +\infty$, $a(\omega) = 0$ only for $\omega > 0$.  If $\omega < 0$, then $b(\omega)e^{-\omega y}$ grows exponentially as $y \to +\infty$.  Thus, $b(\omega) = 0$ for $\omega < 0$.  We have shown that
+\[
+\overline{U}(\omega,y) = \begin{cases} a(\omega)\,e^{\omega y} & \text{for } \omega < 0 \\ b(\omega)\,e^{-\omega y} & \text{for } \omega > 0, \end{cases}
+\]
+where $a(\omega)$ is arbitrary for $\omega < 0$ and $b(\omega)$ is arbitrary for $\omega > 0$.  It is more convenient to note that this is equivalent to
+\boxed{\begin{equation}
+\label{eq:halfplane-Usol}
+\overline{U}(\omega,y) = c(\omega)\,e^{-|\omega|y},
+\end{equation}}
+for all $\omega$.  The nonhomogeneous boundary condition \eqref{eq:halfplane-bc} now shows that $c(\omega)$ is the Fourier transform of the temperature at the wall, $f(x)$.  This completes our solution.  However, we will determine a simpler representation of the solution.
+
+\textbf{Application of the convolution theorem.}  The easiest way to simplify the solution is to note that $\overline{U}(\omega,y)$ is the product of two Fourier transforms.  $f(x)$ has the Fourier transform $c(\omega)$, and some function $g(x,y)$, as yet unknown, has the Fourier transform $e^{-|\omega|y}$.  Using the convolution theorem, the solution of our problem is
+\begin{equation}
+\label{eq:halfplane-conv}
+u(x,y) = \frac{1}{2\pi}\int_{-\infty}^{\infty}f(\bar{x})\,g(x-\bar{x},y)\,d\bar{x}.
+\end{equation}
+
+We now need to determine what function $g(x,y)$ has the Fourier transform $e^{-|\omega|y}$.  According to the inversion integral,
+\[
+g(x,y) = \int_{-\infty}^{\infty}e^{-|\omega|y}\,e^{-i\omega x}\,d\omega,
+\]
+which may be integrated directly:
+\begin{align*}
+g(x,y) &= \int_{-\infty}^0 e^{\omega y}\,e^{-i\omega x}\,d\omega + \int_0^{\infty}e^{-\omega y}\,e^{-i\omega x}\,d\omega \\
+&= \frac{e^{\omega(y-ix)}}{y-ix}\bigg|_{-\infty}^0 + \frac{e^{-\omega(y+ix)}}{-(y+ix)}\bigg|_0^{\infty} = \frac{1}{y-ix} + \frac{1}{y+ix} = \frac{2y}{x^2+y^2}.
+\end{align*}
+
+Thus, the solution to Laplace's equation in semi-infinite space ($y > 0$) subject to $u(x,0) = f(x)$ is
+\boxed{\begin{equation}
+\label{eq:halfplane-sol}
+u(x,y) = \frac{1}{2\pi}\int_{-\infty}^{\infty}f(\bar{x})\,\frac{2y}{(x-\bar{x})^2+y^2}\,d\bar{x}.
+\end{equation}}
+
+This solution was derived assuming $f(x) \to 0$ as $x \to \pm\infty$.  In fact, it is valid in other cases, roughly speaking, as long as the integral is convergent.  Equation~\ref{eq:halfplane-sol} can be obtained through use of the Green's function.  Moreover, the influence function for the nonhomogeneous boundary condition [see \eqref{eq:halfplane-sol}] is the outward normal derivative (with respect to source points) of the Green's function:
+\[
+-\frac{\partial}{\partial {\bar{y}}}G(x,y;\bar{x},\bar{y})\bigg|_{\bar{y}=0} = \frac{y}{\pi}\frac{1}{(x-\bar{x})^2+y^2},
+\]
+where $G(\vec{x},\vec{x}_0)$ is the Green's function, the influence function for sources in the half-plane ($y > 0$).
+
+\textbf{Example.}  A simple, but interesting, solution arises if
+\begin{equation}
+\label{eq:halfplane-step}
+f(x) = \begin{cases} 0 & x < 0 \\ 1 & x > 0. \end{cases}
+\end{equation}
+This boundary condition corresponds to the wall uniformly heated to two different temperatures.  We will determine the equilibrium temperature distribution for $y > 0$.  From \eqref{eq:halfplane-sol},
+\begin{equation}
+\label{eq:halfplane-step-sol}
+\begin{aligned}
+u(x,y) &= \frac{1}{2\pi}\int_0^{\infty}\frac{2y}{y^2+(x-\bar{x})^2}\,d\bar{x} = \frac{1}{\pi}\tan^{-1}\left(\frac{\bar{x}-x}{y}\right)\bigg|_0^{\infty} \\
+&= \frac{1}{\pi}\left[\tan^{-1}(\infty) - \tan^{-1}\left(\frac{-x}{y}\right)\right] = \frac{1}{\pi}\left[\frac{\pi}{2} + \tan^{-1}\left(\frac{x}{y}\right)\right].
+\end{aligned}
+\end{equation}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch10/fig_tan-arctan.png}
+\caption{Tangent and inverse tangent functions.}
+\label{fig:tan-arctan}
+\end{figure}
+
+Some care must be used in evaluating the inverse tangent function along a continuous branch.  Figure~\ref{fig:tan-arctan}, in which the tangent and inverse tangent functions are sketched, is helpful.  If we introduce the usual angle $\theta$ from the $x$-axis,
+\[
+\theta = \tan^{-1}\left(\frac{y}{x}\right) = \frac{\pi}{2} - \tan^{-1}\left(\frac{x}{y}\right),
+\]
+then the temperature distribution becomes
+\boxed{\begin{equation}
+\label{eq:halfplane-step-theta}
+u(x,y) = 1 - \frac{\theta}{\pi}.
+\end{equation}}
+
+We can check this answer independently.  Reconsider this problem, but pose it in the usual polar coordinates.  Laplace's equation is
+\[
+\frac{1}{r}\frac{\partial}{\partial r}\left(r\pd{u}{r}\right) + \frac{1}{r^2}\pdd{u}{\theta} = 0,
+\]
+and the boundary conditions are $u(r,0) = 1$ and $u(r,-\pi) = 0$.  The solution depends on only the angle, $u(r,\theta) = u(\theta)$, in which case
+\[
+\odd{u}{\theta} = 0,
+\]
+subject to $u(0) = 1$ and $u(\pi) = 0$, confirming \eqref{eq:halfplane-step-theta}.  This result and more complicated ones for Laplace's equation can be obtained using conformal mappings in the complex plane.
+
+%% ── 10.6.4 ──────────────────────────────────────────────────────
+\subsection{Laplace's Equation in a Quarter-Plane}
+\label{subsec:laplace-quarter}
+
+In this subsection we consider the steady-state temperature distribution within a quarter-plane ($x > 0$, $y > 0$) with the temperature given on one of the semi-infinite walls and the heat flow (gradient of temperature) given on the other:
+\boxed{\begin{equation}
+\label{eq:quarter-pde}
+\laplacian u = \pdd{u}{x} + \pdd{u}{y} = 0
+\end{equation}}
+\boxed{\begin{equation}
+\label{eq:quarter-bc-left}
+u(0,y) = g(y) \qquad y > 0
+\end{equation}}
+\boxed{\begin{equation}
+\label{eq:quarter-bc-bottom}
+\pd{u}{y}(x,0) = f(x) \qquad x > 0.
+\end{equation}}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch10/fig_quarter-decomp.png}
+\caption{Laplace's equation in a quarter-plane.}
+\label{fig:quarter-decomp}
+\end{figure}
+
+We assume that $g(y) \to 0$ as $y \to \infty$ and $f(x) \to 0$ as $x \to \infty$, such that $u(x,y) \to 0$ as both $x \to \infty$ and $y \to \infty$.  There are two nonhomogeneous boundary conditions.  Thus, it is convenient to decompose the problem into two, as illustrated in Fig.~\ref{fig:quarter-decomp}:
+\boxed{\begin{equation}
+\label{eq:quarter-decomp}
+u = u_1(x,y) + u_2(x,y),
+\end{equation}}
+where
+\boxed{\begin{equation}
+\label{eq:quarter-u1-pde}
+\laplacian u_1 = 0
+\end{equation}}
+\boxed{\begin{equation}
+\label{eq:quarter-u1-bc}
+u_1(0,y) = g(y)
+\end{equation}}
+\boxed{\begin{equation}
+\label{eq:quarter-u1-flux}
+\frac{\partial}{\partial y}u_1(x,0) = 0
+\end{equation}}
+\boxed{\begin{equation}
+\label{eq:quarter-u2-pde}
+\laplacian u_2 = 0
+\end{equation}}
+\boxed{\begin{equation}
+\label{eq:quarter-u2-bc}
+u_2(0,y) = 0
+\end{equation}}
+\boxed{\begin{equation}
+\label{eq:quarter-u2-flux}
+\frac{\partial}{\partial y}u_2(x,0) = f(x).
+\end{equation}}
+
+Here, we will only analyze the problem for $u_1$, leaving the $u_2$-problem for an exercise.
+
+\textbf{Cosine transform in $y$.}  The $u_1$-problem can be analyzed in two different ways.  The problem is semi-infinite in both $x$ and $y$.  Since $u_1$ is given at $x = 0$, a Fourier sine transform in $x$ can be used.  However, $\partial u_1/\partial y$ is given at $y = 0$, and hence a Fourier cosine transform in $y$ can also be used.  In fact, $\partial u_1/\partial y = 0$ at $y = 0$.  Thus, we prefer to use a Fourier cosine transform in $y$ since we expect the resulting ordinary differential equation to be \textit{homogeneous}:
+\boxed{\begin{equation}
+\label{eq:quarter-u1-ct}
+u_1(x,y) = \int_0^{\infty}\overline{U}_1(x,\omega)\cos\omega y\,d\omega
+\end{equation}}
+\boxed{\begin{equation}
+\label{eq:quarter-u1-ct-def}
+\overline{U}_1(x,\omega) = \frac{2}{\pi}\int_0^{\infty}u_1(x,y)\cos\omega y\,dy.
+\end{equation}}
+
+If the $u_1$-problem is Fourier cosine transformed in $y$, then we obtain
+\begin{equation}
+\label{eq:quarter-u1-ode}
+\pdd{\overline{U}_1}{x} - \omega^2\overline{U}_1 = 0.
+\end{equation}
+The variable $x$ ranges from $0$ to $\infty$.  The two boundary conditions for this ordinary differential equation are
+\begin{equation}
+\label{eq:quarter-u1-ode-bc}
+\overline{U}_1(0,\omega) = \frac{2}{\pi}\int_0^{\infty}g(y)\cos\omega y\,dy \quad \text{and} \quad \lim_{x\to\infty}\overline{U}_1(x,\omega) = 0.
+\end{equation}
+
+The general solution of \eqref{eq:quarter-u1-ode} is
+\boxed{\begin{equation}
+\label{eq:quarter-u1-gen}
+\overline{U}_1(x,\omega) = a(\omega)\,e^{-\omega x} + b(\omega)\,e^{\omega x},
+\end{equation}}
+for $x > 0$ and $\omega > 0$ only.  From the boundary conditions \eqref{eq:quarter-u1-ode-bc}, it follows that
+\boxed{\begin{equation}
+\label{eq:quarter-u1-coeffs}
+b(\omega) = 0 \qquad \text{and} \qquad a(\omega) = \frac{2}{\pi}\int_0^{\infty}g(y)\cos\omega y\,dy.
+\end{equation}}
+
+\textbf{Convolution theorem.}  A simpler form of the solution can be obtained using a convolution theorem for Fourier cosine transforms.  We derived the following in Exercise~10.5.7, where we assume $f(x)$ is even:
+\begin{center}
+\fbox{\parbox{0.8\textwidth}{
+\boxed{If a Fourier cosine transform in $x$, $H(\omega)$, is the product of two Fourier cosine transforms, $H(\omega) = F(\omega)G(\omega)$, then
+}}
+\end{center}
+\[
+h(x) = \frac{1}{\pi}\int_0^{\infty}g(\bar{x})\left[f(x-\bar{x})+f(x+\bar{x})\right]d\bar{x}.
+\]
+\begin{equation}
+\label{eq:cosine-convolution}
+\end{equation}}
+
+In our problem, $\overline{U}_1(x,\omega)$, the Fourier cosine transform of $u_1(x,y)$, is the product of $a(\omega)$, the Fourier cosine transform of $g(y)$, and $e^{-\omega x}$:
+\[
+\overline{U}_1(x,\omega) = a(\omega)\,e^{-\omega x}.
+\]
+
+We use the cosine transform pair [see \eqref{eq:quarter-u1-ct}--\eqref{eq:quarter-u1-ct-def}] to obtain the function $Q(y)$, which has the Fourier cosine transform $e^{-\omega x}$:
+\[
+Q(y) = \int_0^{\infty}e^{-\omega x}\cos\omega y\,d\omega = \int_0^{\infty}e^{-\omega x}\,\frac{e^{i\omega y}+e^{-i\omega y}}{2}\,d\omega = \frac{1}{2}\left(\frac{1}{x-iy}+\frac{1}{x+iy}\right) = \frac{x}{x^2+y^2}.
+\]
+Thus, according to the convolution theorem,
+\boxed{\begin{equation}
+\label{eq:quarter-u1-sol}
+u_1(x,y) = \frac{x}{\pi}\int_0^{\infty}g(\bar{y})\left[\frac{1}{x^2+(y-\bar{y})^2}+\frac{1}{x^2+(y+\bar{y})^2}\right]d\bar{y}.
+\end{equation}}
+
+This result also could have been obtained using the Green's function method (see Chapter~9).  In this case, appropriate image sources may be introduced so as to utilize the infinite space Green's function for Laplace's equation.
+
+\textbf{Sine transform in $x$.}  An alternative method to solve for $u_1(x,y)$ is to use the Fourier sine transform in $x$:
+\begin{align*}
+u_1(x,y) &= \int_0^{\infty}\overline{U}_1(\omega,y)\sin\omega x\,d\omega \\
+\overline{U}_1(\omega,y) &= \frac{2}{\pi}\int_0^{\infty}u_1(x,y)\sin\omega x\dx.
+\end{align*}
+The ordinary differential equation for $\overline{U}_1(\omega,y)$ is nonhomogeneous:
+\[
+\pdd{\overline{U}_1}{y} - \omega^2\overline{U}_1 = -\frac{2}{\pi}\omega g(y).
+\]
+This equation must be solved with the following boundary conditions at $y = 0$ and $y = \infty$:
+\[
+\pd{\overline{U}_1}{y}(\omega,0) = 0 \qquad \text{and} \qquad \lim_{y\to\infty}\overline{U}_1(\omega,y) = 0.
+\]
+This approach is further discussed in the Exercises.
+
+%% ── 10.6.5 ──────────────────────────────────────────────────────
+\subsection{Heat Equation in a Plane (Two-Dimensional Fourier Transforms)}
+\label{subsec:heat-plane}
+
+Transforms can be used to solve problems that are infinite in both $x$ and $y$.  Consider the heat equation in the $x$-$y$ plane, $-\infty < x < \infty$, $-\infty < y < \infty$:
+\boxed{\begin{equation}
+\label{eq:heat2d-pde}
+\pd{u}{t} = k\left(\pdd{u}{x}+\pdd{u}{y}\right),
+\end{equation}}
+subject to the initial condition
+\boxed{\begin{equation}
+\label{eq:heat2d-ic}
+u(x,y,0) = f(x,y).
+\end{equation}}
+
+If we separate variables, we obtain product solutions of the form
+\[
+u(x,y,t) = e^{-i\omega_1 x}\,e^{-i\omega_2 y}\,e^{-k(\omega_1^2+\omega_2^2)t}
+\]
+for all $\omega_1$ and $\omega_2$.  A generalized principle of superposition implies that the form of the integral representation of the solution is
+\begin{equation}
+\label{eq:heat2d-sol-sep}
+u(x,y,t) = \int_{-\infty}^{\infty}\int_{-\infty}^{\infty}A(\omega_1,\omega_2)\,e^{-i\omega_1 x}\,e^{-i\omega_2 y}\,e^{-k(\omega_1^2+\omega_2^2)t}\,d\omega_1\,d\omega_2.
+\end{equation}
+
+The initial condition is satisfied if
+\[
+f(x,y) = \int_{-\infty}^{\infty}\int_{-\infty}^{\infty}A(\omega_1,\omega_2)\,e^{-i\omega_1 x}\,e^{-i\omega_2 y}\,d\omega_1\,d\omega_2.
+\]
+We will show that we can determine $A(\omega_1,\omega_2)$,
+\boxed{\begin{equation}
+\label{eq:heat2d-A}
+A(\omega_1,\omega_2) = \frac{1}{(2\pi)^2}\int_{-\infty}^{\infty}\int_{-\infty}^{\infty}f(x,y)\,e^{i\omega_1 x}\,e^{i\omega_2 y}\dx\,dy,
+\end{equation}}
+completing the solution.  $A(\omega_1,\omega_2)$ is called the \textbf{double Fourier transform} of $f(x,y)$.
+
+\textbf{Double Fourier transforms.}  We have used separation of variables to motivate \textbf{two-dimensional Fourier transforms}.  Suppose that we have a function of two variables $f(x,y)$ that decays sufficiently fast as $x$ and $y \to \pm\infty$.  The Fourier transform in $x$ (keeping $y$ fixed, with transform variable $\omega_1$) is
+\[
+F(\omega_1,y) = \frac{1}{2\pi}\int_{-\infty}^{\infty}f(x,y)\,e^{i\omega_1 x}\dx;
+\]
+its inverse is
+\[
+f(x,y) = \int_{-\infty}^{\infty}F(\omega_1,y)\,e^{-i\omega_1 x}\,d\omega_1.
+\]
+$F(\omega_1,y)$ is a function of $y$ that also can be Fourier transformed (here with transform variable $\omega_2$):
+\begin{align*}
+\hat{F}(\omega_1,\omega_2) &= \frac{1}{2\pi}\int_{-\infty}^{\infty}F(\omega_1,y)\,e^{i\omega_2 y}\,dy \\
+F(\omega_1,y) &= \int_{-\infty}^{\infty}\hat{F}(\omega_1,\omega_2)\,e^{-i\omega_2 y}\,d\omega_2.
+\end{align*}
+Combining these, we obtain the \textbf{two-dimensional (or double) Fourier transform pair}:
+\begin{equation}
+\label{eq:double-ft-forward}
+\hat{F}(\omega_1,\omega_2) = \frac{1}{(2\pi)^2}\int_{-\infty}^{\infty}\int_{-\infty}^{\infty}f(x,y)\,e^{i\omega_1 x}\,e^{i\omega_2 y}\dx\,dy
+\end{equation}
+\begin{equation}
+\label{eq:double-ft-inverse}
+f(x,y) = \int_{-\infty}^{\infty}\int_{-\infty}^{\infty}\hat{F}(\omega_1,\omega_2)\,e^{-i\omega_1 x}\,e^{-i\omega_2 y}\,d\omega_1\,d\omega_2.
+\end{equation}
+
+\textbf{Wave number vector.}  Let us motivate a more convenient notation.  When using $e^{i\omega x}$ we refer to $\omega$ as the wave number (the number of waves in $2\pi$ distance).  Here we note that
+\[
+e^{i\omega_1 x}\,e^{i\omega_2 y} = e^{i(\omega_1 x + \omega_2 y)} = e^{i\vec{\omega}\cdot\vec{r}},
+\]
+where $\vec{r}$ is a \textbf{position vector}\footnote{In other contexts, we use the notation $\vec{x}$ for the position vector.  Thus $\vec{r} = \vec{x}$.} and $\vec{\omega}$ is a \textbf{wave number vector}:
+\begin{equation}
+\label{eq:position-vec}
+\vec{r} = x\hat{i} + y\hat{j}
+\end{equation}
+\begin{equation}
+\label{eq:wavenumber-vec}
+\vec{\omega} = \omega_1\hat{i} + \omega_2\hat{j}.
+\end{equation}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch10/fig_2d-wave.png}
+\caption{Two-dimensional wave and its crests.}
+\label{fig:2d-wave}
+\end{figure}
+
+To interpret $e^{i\vec{\omega}\cdot\vec{r}}$, we discuss, for example, its real part, $\cos(\vec{\omega}\cdot\vec{r}) = \cos(\omega_1 x + \omega_2 y)$.  The crests are located at $\omega_1 x + \omega_2 y = n(2\pi)$, sketched in Fig.~\ref{fig:2d-wave}.  The direction perpendicular to the crests is $\nabla(\omega_1 x + \omega_2 y) = \omega_1\hat{i} + \omega_2\hat{j} = \vec{\omega}$.  This is called the direction of the wave.  Thus, \textit{the wave number vector is in the direction of the wave}.  We introduce the magnitude $\omega$ of the wave number vector
+\[
+\omega^2 = \vec{\omega}\cdot\vec{\omega} = |\vec{\omega}|^2 = \omega_1^2 + \omega_2^2.
+\]
+The unit vector in the wave direction is $\vec{\omega}/\omega$.  If we move a distance $s$ in the wave direction (from the origin), then $\vec{r} = s\vec{\omega}/\omega$.  Thus,
+\[
+\vec{\omega}\cdot\vec{r} = s\omega \qquad \text{and} \qquad \cos(\vec{\omega}\cdot\vec{r}) = \cos(\omega s).
+\]
+Thus, $\omega$ is the number of waves in $2\pi$ distance (in the direction of the wave).  We have justified the name wave number vector for $\vec{\omega}$; that is, \textbf{the wave number vector is in the direction of the wave and its magnitude is the number of waves in $2\pi$ distance (in the direction of the wave)}.
+
+Using the position vector $\vec{r} = x\hat{i}+y\hat{j}$ and the wave number vector $\vec{\omega} = \omega_1\hat{i}+\omega_2\hat{j}$, the double Fourier transform pair, \eqref{eq:double-ft-forward} and \eqref{eq:double-ft-inverse}, becomes
+\boxed{\begin{equation}
+\label{eq:double-ft-vec-forward}
+F(\vec{\omega}) = \frac{1}{(2\pi)^2}\int_{-\infty}^{\infty}\int_{-\infty}^{\infty}f(\vec{r})\,e^{i\vec{\omega}\cdot\vec{r}}\,d^2r
+\end{equation}}
+\boxed{\begin{equation}
+\label{eq:double-ft-vec-inverse}
+f(\vec{r}) = \int_{-\infty}^{\infty}\int_{-\infty}^{\infty}F(\vec{\omega})\,e^{-i\vec{\omega}\cdot\vec{r}}\,d^2\omega,
+\end{equation}}
+where $f(\vec{r}) = f(x,y)$, $d^2r = dx\,dy$, $d^2\omega = d\omega_1\,d\omega_2$, and $F(\vec{\omega})$ is the double Fourier transform of $f(\vec{r})$.
+
+Using the notation $\mathcal{F}[u(x,y,t)]$ for the double spatial Fourier transform of $u(x,y,t)$, we have the following easily verified fundamental properties:
+\begin{align}
+\label{eq:dft-time}
+\mathcal{F}\left[\pd{u}{t}\right] &= \frac{\partial}{\partial t}\mathcal{F}[u] \\
+\label{eq:dft-dx}
+\mathcal{F}\left[\pd{u}{x}\right] &= -i\omega_1\mathcal{F}[u] \\
+\label{eq:dft-dy}
+\mathcal{F}\left[\pd{u}{y}\right] &= -i\omega_2\mathcal{F}[u] \\
+\label{eq:dft-laplacian}
+\mathcal{F}\left[\laplacian u\right] &= -\omega^2\mathcal{F}[u],
+\end{align}
+where $\omega^2 = \vec{\omega}\cdot\vec{\omega} = \omega_1^2+\omega_2^2$, as long as $u$ decays sufficiently rapidly as $x$ and $y \to \pm\infty$.  A short table of the double Fourier transform appears at the end of this subsection.
+
+\textbf{Heat equation.}  Instead of using the method of separation of variables, the two-dimensional heat equation \eqref{eq:heat2d-pde} can be directly solved by double Fourier transforming it:
+\begin{equation}
+\label{eq:heat2d-ft-ode}
+\pd{\overline{U}}{t} = -k\omega^2\overline{U},
+\end{equation}
+where $\overline{U}$ is the double spatial Fourier transform of $u(x,y,t)$:
+\begin{equation}
+\label{eq:heat2d-ft-def}
+\mathcal{F}[u] = \overline{U}(\vec{\omega},t) = \frac{1}{(2\pi)^2}\int_{-\infty}^{\infty}\int_{-\infty}^{\infty}u(x,y,t)\,e^{i\vec{\omega}\cdot\vec{r}}\dx\,dy.
+\end{equation}
+The elementary solution of \eqref{eq:heat2d-ft-ode} is
+\begin{equation}
+\label{eq:heat2d-ft-sol}
+\overline{U}(\vec{\omega},t) = A(\vec{\omega})\,e^{-k\omega^2 t}.
+\end{equation}
+Applying \eqref{eq:heat2d-ic}, $A(\vec{\omega})$ is the Fourier transform of the initial condition:
+\boxed{\begin{equation}
+\label{eq:heat2d-A-def}
+A(\vec{\omega}) = \overline{U}(\vec{\omega},0) = \frac{1}{(2\pi)^2}\int_{-\infty}^{\infty}\int_{-\infty}^{\infty}f(x,y)\,e^{i\vec{\omega}\cdot\vec{r}}\dx\,dy.
+\end{equation}}
+
+Thus, the solution of the two-dimensional heat equation is
+\boxed{\begin{equation}
+\label{eq:heat2d-ft-full}
+\begin{aligned}
+u(x,y,t) &= \int_{-\infty}^{\infty}\int_{-\infty}^{\infty}\overline{U}(\vec{\omega},t)\,e^{-i\vec{\omega}\cdot\vec{r}}\,d\omega_1\,d\omega_2 \\
+&= \int_{-\infty}^{\infty}\int_{-\infty}^{\infty}A(\vec{\omega})\,e^{-k\omega^2 t}\,e^{-i\vec{\omega}\cdot\vec{r}}\,d\omega_1\,d\omega_2.
+\end{aligned}
+\end{equation}}
+
+This verifies what was suggested earlier by separation of variables.
+
+\textbf{Application of convolution theorem.}  In an exercise we show that a \textbf{convolution theorem} holds directly \textit{for double Fourier transforms}: If $H(\vec{\omega}) = F(\vec{\omega})G(\vec{\omega})$, then
+\boxed{\begin{equation}
+\label{eq:double-convolution}
+h(\vec{r}) = \frac{1}{(2\pi)^2}\int_{-\infty}^{\infty}\int_{-\infty}^{\infty}f(\vec{r}_0)\,g(\vec{r}-\vec{r}_0)\,dx_0\,dy_0.
+\end{equation}}
+
+For the two-dimensional heat equation, we have shown that $\overline{U}(\vec{\omega},t)$ is the product of $e^{-k\omega^2 t}$ and $A(\vec{\omega})$, the double Fourier transform of the initial condition.  Thus, we need to determine the function whose double Fourier transform is $e^{-k\omega^2 t}$:
+\[
+\int_{-\infty}^{\infty}\int_{-\infty}^{\infty}e^{-k\omega^2 t}\,e^{-i\vec{\omega}\cdot\vec{r}}\,d\omega_1\,d\omega_2 = \int_{-\infty}^{\infty}e^{-k\omega_1^2 t}\,e^{-i\omega_1 x}\,d\omega_1\int_{-\infty}^{\infty}e^{-k\omega_2^2 t}\,e^{-i\omega_2 y}\,d\omega_2 = \frac{\pi}{kt}\,e^{-r^2/4kt}.
+\]
+The inverse transform of $e^{-k\omega^2 t}$ is the product of the two one-dimensional inverse transforms; it is a two-dimensional Gaussian, $(\pi/kt)\,e^{-r^2/4kt}$, where $r^2 = x^2+y^2$.  In this manner, the solution of the initial value problem for the two-dimensional heat equation on an infinite plane is
+\boxed{\begin{equation}
+\label{eq:heat2d-influence}
+u(x,y,t) = \int_{-\infty}^{\infty}\int_{-\infty}^{\infty}f(x_0,y_0)\,\frac{1}{4\pi kt}\exp\left[-\frac{(x-x_0)^2+(y-y_0)^2}{4kt}\right]dx_0\,dy_0.
+\end{equation}}
+
+The influence function for the initial condition is
+\[
+g(x,y,t;x_0,y_0,0) = \frac{1}{4\pi kt}\exp\left[-\frac{(x-x_0)^2+(y-y_0)^2}{4kt}\right] = \frac{1}{4\pi kt}\,e^{-|\vec{r}-\vec{r}_0|^2/4kt}.
+\]
+It expresses the effect at $x$, $y$ (at time $t$) due to the initial heat energy at $x_0$, $y_0$.  The influence function is the \textbf{fundamental solution} of the two-dimensional heat equation, obtained by letting the initial condition be a two-dimensional Dirac delta function, $f(x,y) = \delta(x)\delta(y)$, concentrated at the origin.  \textbf{The fundamental solution for the two-dimensional heat equation is the product of the fundamental solutions of two one-dimensional heat equations.}
+
+%% ── 10.6.6 ──────────────────────────────────────────────────────
+\subsection{Table of Double-Fourier Transforms}
+\label{subsec:double-ft-table}
+
+We present a short table of double-Fourier transforms (Table~\ref{tab:double-ft}).
+
+\begin{table}[H]
+\centering
+\caption{Double-Fourier Transform}
+\label{tab:double-ft}
+\begin{tabular}{lll}
+\toprule
+$f(\vec{r})$ & $F(\vec{\omega})$ & Reference \\
+$= \displaystyle\int_{-\infty}^{\infty}\int_{-\infty}^{\infty}F(\vec{\omega})\,e^{-i\vec{\omega}\cdot\vec{r}}\,d\omega_1\,d\omega$ & $= \dfrac{1}{(2\pi)^2}\displaystyle\int_{-\infty}^{\infty}\int_{-\infty}^{\infty}f(\vec{r})\,e^{i\vec{\omega}\cdot\vec{r}}\dx\,dy$ & \\
+\midrule
+$\pd{f}{x},\;\pd{f}{y}$ & $-i\omega_1 F(\vec{\omega}),\;-i\omega_2 F(\vec{\omega})$ & \multirow{2}{*}{Derivatives (Sec.~10.6.5)} \\
+$\laplacian f$ & $-\omega^2 F(\vec{\omega})$ & \\[4pt]
+$\dfrac{\pi}{\beta}\,e^{-r^2/4\beta}$ & $e^{-\beta\omega^2}$ & Gaussian (Sec.~10.6.5) \\[4pt]
+$f(\vec{r}-\vec{\beta})$ & $e^{i\vec{\omega}\cdot\vec{\beta}}\,F(\vec{\omega})$ & Exercise~10.6.8 \\[4pt]
+$\dfrac{1}{(2\pi)^2}\displaystyle\int\!\int f(\vec{r}_0)\,g(\vec{r}-\vec{r}_0)\,dx_0\,dy_0$ & $F(\vec{\omega})\,G(\vec{\omega})$ & Convolution (Exercise~10.6.7) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{exercises}{10.6}
+\item Solve
+\[
+\pdd{u}{x}+\pdd{u}{y}=0 \quad \text{for } 0 < y < H,\;-\infty < x < \infty,
+\]
+subject to
+\begin{enumerate}
+\item[\starred (a)] $u(x,0) = f_1(x)$ and $u(x,H) = f_2(x)$
+\item[(b)] $\frac{\partial}{\partial y}u(x,0) = f_1(x)$ and $u(x,H) = f_2(x)$
+\item[(c)] $u(x,0) = 0$ and $\frac{\partial}{\partial y}u(x,H)+hu(x,H) = f(x)$
+\end{enumerate}
+
+\item Solve
+\[
+\pdd{u}{x}+\pdd{u}{y}=0 \quad \text{for } 0 < x < L,\;y > 0
+\]
+subject to the following boundary conditions.  If there is a solvability condition, state it and explain it physically:
+\begin{enumerate}
+\item[(a)] $\pd{u}{x}(0,y) = g_1(y)$, \quad $\pd{u}{x}(L,y) = g_2(y)$, \quad $\pd{u}{y}(x,0) = 0$
+\item[\starred (b)] $u(0,y) = g_1(y)$, \quad $\pd{u}{x}(L,y) = 0$, \quad $\pd{u}{y}(x,0) = 0$
+\item[(c)] $\pd{u}{x}(0,y) = 0$, \quad $\pd{u}{x}(L,y) = 0$, \quad $\pd{u}{y}(x,0) = f(x)$
+\item[(d)] $\pd{u}{x}(0,y) = g_1(y)$, \quad $\pd{u}{x}(L,y) = g_2(y)$, \quad $u(x,0) = f(x)$
+\end{enumerate}
+
+\item \textbf{(a)} Solve
+\[
+\pdd{u}{x}+\pdd{u}{y}=0 \quad \text{for } x < 0,\;-\infty < y < \infty,
+\]
+subject to $u(0,y) = g(y)$.
+
+\textbf{(b)} Determine the simplest form of the solution if
+\[
+g(y) = \begin{cases} 0 & |y| > 1 \\ 1 & |y| < 1. \end{cases}
+\]
+
+\item Solve
+\[
+\pdd{u}{x}+\pdd{u}{y}=0 \quad \text{for } x > 0,\;y > 0
+\]
+subject to
+\begin{enumerate}
+\item[\starred (a)] $u(0,y) = 0$ and $\pd{u}{y}(x,0) = f(x)$ [\textit{Hint:} Invert $\pd{\overline{U}}{y}$.]
+\item[(b)] $u(0,y) = 0$ and $u(x,0) = f(x)$
+\end{enumerate}
+
+\item Reconsider Exercise~10.6.4(a).  Let $w = \partial u/\partial y$.  Show that $w$ satisfies Exercise~10.6.4(b).  In this manner solve both Exercises~10.6.4(a) and~(b).
+
+\item Consider \eqref{eq:quarter-u1-pde} with \eqref{eq:quarter-u1-bc}--\eqref{eq:quarter-u1-flux}.  In the text we introduce the Fourier cosine transform in $y$.  Instead, here we introduce the Fourier sine transform in $x$.
+\begin{enumerate}
+\item[(a)] Solve for $\overline{U}_1(\omega,y)$ if
+\begin{align*}
+\pdd{\overline{U}_1}{y} - \omega^2\overline{U}_1 &= -\frac{2}{\pi}\omega g(y) \\
+\pd{\overline{U}_1}{y}(\omega,0) &= 0 \\
+\lim_{y\to\infty}\overline{U}_1(\omega,y) &= 0.
+\end{align*}
+[\textit{Hint:} See (9.3.9)--(9.3.14) or (13.3.10), using exponentials.]
+\item[(b)] Derive $u_1(x,y)$.  Show that \eqref{eq:quarter-u1-sol} is valid.
+\end{enumerate}
+
+\item Derive the two-dimensional convolution theorem, \eqref{eq:double-convolution}.
+
+\item Derive the following shift theorem for two-dimensional Fourier transforms: The inverse transform of $e^{i\vec{\omega}\cdot\vec{\beta}}F(\vec{\omega})$ is $f(\vec{r}-\vec{\beta})$.
+
+\item Solve
+\[
+\pd{u}{t} + \vec{v}_0\cdot\nabla u = k\laplacian u \qquad t > 0, \quad -\infty < x < \infty, \quad -\infty < y < \infty
+\]
+subject to the initial condition $u(x,y,0) = f(x,y)$.
+
+(\textit{Hint:} See Exercise~10.6.7.)  Show how the influence function is altered by the convection term $\vec{v}_0\cdot\nabla u$.
+
+\item Solve
+\[
+\pd{u}{t} = k_1\pdd{u}{x}+k_2\pdd{u}{y} \qquad t > 0, \quad -\infty < x < \infty, \quad -\infty < y < \infty
+\]
+subject to the initial condition $u(x,y,0) = f(x,y)$.
+
+\item Consider
+\[
+\pd{u}{t} = k\left(\pdd{u}{x}+\pdd{u}{y}\right), \quad x > 0, \quad y > 0
+\]
+subject to the initial condition $u(x,y,0) = f(x,y)$.
+
+Solve with the following boundary conditions:
+\begin{enumerate}
+\item[\starred (a)] $u(0,y,t) = 0$ and $u(x,0,t) = 0$
+\item[(b)] $u(0,y,t) = 0$ and $\pd{u}{y}(x,0,t) = 0$
+\item[(c)] $u(0,y,t) = 0$ and $\pd{u}{y}(x,0,t) = 0$
+\end{enumerate}
+
+\item Consider
+\[
+\pd{u}{t} = k\left(\pdd{u}{x}+\pdd{u}{y}\right), \quad 0 < x < L, \quad y > 0
+\]
+subject to the initial condition $u(x,y,0) = f(x,y)$.
+
+Solve with the following boundary conditions:
+\begin{enumerate}
+\item[\starred (a)] $u(0,y,t) = 0$, \quad $u(L,y,t) = 0$, \quad $u(x,0,t) = 0$
+\item[(b)] $u(0,y,t) = 0$, \quad $u(L,y,t) = 0$, \quad $\pd{u}{y}(x,0,t) = 0$
+\item[(c)] $\pd{u}{x}(0,y,t) = 0$, \quad $\pd{u}{x}(L,y,t) = 0$, \quad $\pd{u}{y}(x,0,t) = 0$
+\end{enumerate}
+
+\item Solve
+\[
+\pd{u}{t} = k\left(\pdd{u}{x}+\pdd{u}{y}\right), \quad 0 < y < H, \quad -\infty < x < \infty
+\]
+subject to $u(x,y,0) = f(x,y)$ and $u(x,0,t) = 0$, $u(x,H,t) = 0$.
+
+\item \textbf{(a)} Without deriving or applying a convolution theorem, solve for $u(x,y,z,t)$:
+\[
+\pd{u}{t} = k\left(\pdd{u}{x}+\pdd{u}{y}+\pdd{u}{z}\right)
+\]
+with $t > 0$, $-\infty < x < \infty$, $-\infty < y < \infty$, $0 < z < \infty$, $u(x,y,z,0) = f(x,y,z)$, and $u(x,y,0,t) = 0$.
+
+\textbf{(b)} Simplify your answer (developing convolution ideas, as needed).
+
+\item Consider
+\[
+\pdd{u}{x}+\pdd{u}{y}+\pdd{u}{z}=0, \quad z > 0, \quad -\infty < x < \infty, \quad -\infty < y < \infty
+\]
+with $u(x,y,0) = f(x,y)$.
+\begin{enumerate}
+\item[\starred (a)] Determine the double Fourier transform of $u$.
+\item[\starred (b)] Solve for $u(x,y,z)$ by calculating the inversion integral in polar coordinates.  [\textit{Hints:} It is easier first to solve for $w$, where $u = \partial w/\partial z$.  Then the following integral may be useful:
+\[
+\int_0^{2\pi}\frac{d\theta}{a^2\sin^2\theta+b^2\cos^2\theta} = \frac{2\pi}{ab}.
+\]
+(This integral may be derived using the change of variables $z = e^{i\theta}$ and the theory of complex variables.)]
+\item[(c)] Compare your result with the Green's function result.
+\end{enumerate}
+
+\item Consider Laplace's equation
+\[
+\laplacian u = 0
+\]
+inside a quarter-circle (Fig.~\ref{fig:quarter-circle-ex}) (a finite region) subject to the boundary conditions
+\[
+u(a,\theta) = f(\theta), \quad u(r,0) = g_1(r), \quad u\!\left(r,\frac{\pi}{2}\right) = g_2(r).
+\]
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch10/fig_quarter-circle-ex.png}
+\caption{Laplace's equation in a quarter-circle.}
+\label{fig:quarter-circle-ex}
+\end{figure}
+
+\begin{enumerate}
+\item[(a)] Divide into three problems, $u = u_1+u_2+u_3$ such that
+\begin{align*}
+u_1(a,\theta) &= 0, & u_2(a,\theta) &= 0, & u_3(a,\theta) &= f(\theta) \\
+u_1(r,0) &= g_1(r), & u_2(r,0) &= 0, & u_3(r,0) &= 0 \\
+u_1\!\left(r,\tfrac{\pi}{2}\right) &= 0, & u_2\!\left(r,\tfrac{\pi}{2}\right) &= g_2(r), & u_3\!\left(r,\tfrac{\pi}{2}\right) &= 0.
+\end{align*}
+Solve for $u_3(r,\theta)$.
+\item[\starred (b)] Solve for $u_2(r,\theta)$.  [\textit{Hints:} Try to use the method of separation of variables, $u_2(r,\theta) = \phi(r)h(\theta)$.  Show that $\phi(r) = \sin[\sqrt{\lambda}\ln(r/a)]$ for all $\lambda > 0$.  It will be necessary to use a Fourier sine transform in the variable $\rho = -\ln(r/a)$ instead of $r$.  Here, a singular Sturm-Liouville problem on a \textit{finite} interval occurs that has a continuous spectrum.  For the wave equation on a quarter-circle, the corresponding singular Sturm-Liouville problem (involving Bessel functions) has a discrete spectrum.]
+\end{enumerate}
+
+\item Reconsider the problem for $u_2(r,\theta)$ described in Exercise~10.6.16(b).  Introduce the independent variable $\rho = -\ln(r/a)$ instead of $r$.  [\textit{Comment:} In complex variables this is the conformal transformation
+\[
+w = -\ln\left(\frac{z}{a}\right), \quad \text{where} \quad z = x + iy\text{.]}
+\]
+\begin{enumerate}
+\item[(a)] Determine the partial differential equation for $u_2$ in the variables $\rho$ and $\theta$.  Sketch the boundary in Cartesian coordinates, $\rho$ and $\theta$.
+\item[(b)] Solve this problem.  (\textit{Hint:} Section~10.6.2 may be helpful.)
+\item[(c)] Compare to Exercise~10.6.16.
+\end{enumerate}
+
+\item[\starred 10.6.18.] Solve
+\begin{align*}
+\pdd{u}{t} &= c^2\pdd{u}{x}, \quad -\infty < x < \infty \\
+u(x,0) &= 0 \\
+\pd{u}{t}(x,0) &= g(x).
+\end{align*}
+(\textit{Hint:} Use the convolution theorem and see Exercise~10.4.6.)
+
+\item For the problem in Sec.~10.6.1, we showed that
+\[
+\overline{U}(\omega,t) = F(\omega)\cos c\omega t.
+\]
+Obtain $u(x,t)$ using the convolution theorem.  (\textit{Hint:} $\cos c\omega t$ does not have an ordinary inverse Fourier transform.  However, obtain the inverse Fourier transform of $\cos c\omega t$ using Dirac delta functions.)
+
+\item Consider Exercise~10.6.17 for $u_3(r,\theta)$ rather than $u_2(r,\theta)$.
+\end{exercises}

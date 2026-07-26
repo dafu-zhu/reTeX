@@ -1,0 +1,420 @@
+% appendixA.tex — Appendix A: Partitioned Matrices and Kronecker Products
+
+\chapter{Partitioned Matrices and Kronecker Products}
+\label{app:matrices}
+
+This appendix collects some useful facts about partitioned matrices and
+Kronecker products that are used throughout the text.
+
+%% ── A.1 Addition and Multiplication ──────────────────────────────
+\section{Addition and Multiplication of Partitioned Matrices}
+\label{sec:A.1}
+
+A matrix can be partitioned into submatrices (blocks) by drawing horizontal
+and vertical lines between its rows and columns.  For example, the
+$m \times n$ matrix $\vec{A}$ can be written as
+\begin{equation}
+  \vec{A} =
+  \begin{bmatrix}
+    \vec{A}_{11} & \vec{A}_{12} \\
+    \vec{A}_{21} & \vec{A}_{22}
+  \end{bmatrix},
+  \label{eq:A.1}
+\end{equation}
+where $\vec{A}_{11}$ is $m_1 \times n_1$, $\vec{A}_{12}$ is
+$m_1 \times n_2$, $\vec{A}_{21}$ is $m_2 \times n_1$, and
+$\vec{A}_{22}$ is $m_2 \times n_2$, with $m_1 + m_2 = m$ and
+$n_1 + n_2 = n$.
+
+Two matrices $\vec{A}$ and $\vec{B}$ of the same dimensions that are
+\emph{conformably partitioned} (i.e., partitioned so that corresponding
+blocks have the same dimensions) can be added block by block:
+\begin{equation}
+  \vec{A} + \vec{B} =
+  \begin{bmatrix}
+    \vec{A}_{11} + \vec{B}_{11} & \vec{A}_{12} + \vec{B}_{12} \\
+    \vec{A}_{21} + \vec{B}_{21} & \vec{A}_{22} + \vec{B}_{22}
+  \end{bmatrix}.
+  \label{eq:A.2}
+\end{equation}
+
+Partitioned matrices can also be multiplied block by block, provided that
+the partitioning is \emph{conformable for multiplication}: the column
+partition of the first matrix must match the row partition of the second.
+If $\vec{A}$ is $m \times n$ and $\vec{B}$ is $n \times p$, with $\vec{A}$
+partitioned as in \eqref{eq:A.1} and
+\begin{equation}
+  \vec{B} =
+  \begin{bmatrix}
+    \vec{B}_{11} & \vec{B}_{12} \\
+    \vec{B}_{21} & \vec{B}_{22}
+  \end{bmatrix},
+  \label{eq:A.3}
+\end{equation}
+where $\vec{B}_{11}$ is $n_1 \times p_1$, $\vec{B}_{12}$ is
+$n_1 \times p_2$, $\vec{B}_{21}$ is $n_2 \times p_1$, and
+$\vec{B}_{22}$ is $n_2 \times p_2$, then the product $\vec{A}\vec{B}$
+can be computed as
+\begin{equation}
+  \vec{A}\vec{B} =
+  \begin{bmatrix}
+    \vec{A}_{11}\vec{B}_{11} + \vec{A}_{12}\vec{B}_{21} &
+      \vec{A}_{11}\vec{B}_{12} + \vec{A}_{12}\vec{B}_{22} \\
+    \vec{A}_{21}\vec{B}_{11} + \vec{A}_{22}\vec{B}_{21} &
+      \vec{A}_{21}\vec{B}_{12} + \vec{A}_{22}\vec{B}_{22}
+  \end{bmatrix}.
+  \label{eq:A.4}
+\end{equation}
+The key requirement is that the number of columns in $\vec{A}_{i1}$
+equals the number of rows in $\vec{B}_{1j}$ (namely $n_1$), and the
+number of columns in $\vec{A}_{i2}$ equals the number of rows in
+$\vec{B}_{2j}$ (namely $n_2$).
+
+As a special case, if $\vec{x}$ is an $n$-dimensional column vector
+partitioned as
+\[
+  \vec{x} =
+  \begin{bmatrix}
+    \vec{x}_1 \\ \vec{x}_2
+  \end{bmatrix},
+  \quad
+  \vec{x}_1 \; (n_1 \times 1), \quad
+  \vec{x}_2 \; (n_2 \times 1),
+\]
+then
+\begin{equation}
+  \vec{A}\vec{x} =
+  \begin{bmatrix}
+    \vec{A}_{11}\vec{x}_1 + \vec{A}_{12}\vec{x}_2 \\
+    \vec{A}_{21}\vec{x}_1 + \vec{A}_{22}\vec{x}_2
+  \end{bmatrix}.
+  \label{eq:A.5}
+\end{equation}
+
+%% ── A.2 Inverting Partitioned Matrices ───────────────────────────
+\section{Inverting Partitioned Matrices}
+\label{sec:A.2}
+
+The inverse of a partitioned matrix can be expressed in terms of the
+inverses of its blocks.  The key concept is the \emph{Schur complement}.
+
+\begin{definition}[Schur Complement]
+\label{def:schur}
+Let
+\[
+  \vec{A} =
+  \begin{bmatrix}
+    \vec{A}_{11} & \vec{A}_{12} \\
+    \vec{A}_{21} & \vec{A}_{22}
+  \end{bmatrix}
+\]
+be a nonsingular matrix with $\vec{A}_{11}$ and $\vec{A}_{22}$ square.
+If $\vec{A}_{22}$ is nonsingular, the \emph{Schur complement of
+$\vec{A}_{22}$ in $\vec{A}$} is defined as
+\begin{equation}
+  \vec{A}_{11 \cdot 2}
+  \equiv \vec{A}_{11} - \vec{A}_{12}\vec{A}_{22}^{-1}\vec{A}_{21}.
+  \label{eq:A.6}
+\end{equation}
+Similarly, if $\vec{A}_{11}$ is nonsingular, the \emph{Schur complement
+of $\vec{A}_{11}$ in $\vec{A}$} is
+\begin{equation}
+  \vec{A}_{22 \cdot 1}
+  \equiv \vec{A}_{22} - \vec{A}_{21}\vec{A}_{11}^{-1}\vec{A}_{12}.
+  \label{eq:A.7}
+\end{equation}
+\end{definition}
+
+\begin{proposition}[Partitioned Inverse]
+\label{prop:partitioned-inverse}
+If $\vec{A}$ and $\vec{A}_{22}$ are both nonsingular, then
+\begin{equation}
+  \vec{A}^{-1} =
+  \begin{bmatrix}
+    \vec{A}_{11 \cdot 2}^{-1} &
+      -\vec{A}_{11 \cdot 2}^{-1}\vec{A}_{12}\vec{A}_{22}^{-1} \\[4pt]
+    -\vec{A}_{22}^{-1}\vec{A}_{21}\vec{A}_{11 \cdot 2}^{-1} &
+      \vec{A}_{22}^{-1} + \vec{A}_{22}^{-1}\vec{A}_{21}
+        \vec{A}_{11 \cdot 2}^{-1}\vec{A}_{12}\vec{A}_{22}^{-1}
+  \end{bmatrix}.
+  \label{eq:A.8}
+\end{equation}
+Alternatively, if $\vec{A}$ and $\vec{A}_{11}$ are both nonsingular, then
+\begin{equation}
+  \vec{A}^{-1} =
+  \begin{bmatrix}
+    \vec{A}_{11}^{-1} + \vec{A}_{11}^{-1}\vec{A}_{12}
+      \vec{A}_{22 \cdot 1}^{-1}\vec{A}_{21}\vec{A}_{11}^{-1} &
+      -\vec{A}_{11}^{-1}\vec{A}_{12}\vec{A}_{22 \cdot 1}^{-1} \\[4pt]
+    -\vec{A}_{22 \cdot 1}^{-1}\vec{A}_{21}\vec{A}_{11}^{-1} &
+      \vec{A}_{22 \cdot 1}^{-1}
+  \end{bmatrix}.
+  \label{eq:A.9}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+To verify \eqref{eq:A.8}, multiply the right-hand side by $\vec{A}$ and
+confirm the product is the identity matrix.  Write
+\[
+  \begin{bmatrix}
+    \vec{A}_{11 \cdot 2}^{-1} &
+      -\vec{A}_{11 \cdot 2}^{-1}\vec{A}_{12}\vec{A}_{22}^{-1} \\[4pt]
+    -\vec{A}_{22}^{-1}\vec{A}_{21}\vec{A}_{11 \cdot 2}^{-1} &
+      \vec{A}_{22}^{-1} + \vec{A}_{22}^{-1}\vec{A}_{21}
+        \vec{A}_{11 \cdot 2}^{-1}\vec{A}_{12}\vec{A}_{22}^{-1}
+  \end{bmatrix}
+  \begin{bmatrix}
+    \vec{A}_{11} & \vec{A}_{12} \\
+    \vec{A}_{21} & \vec{A}_{22}
+  \end{bmatrix}.
+\]
+For the $(1,1)$ block of the product:
+\begin{align*}
+  &\vec{A}_{11 \cdot 2}^{-1}\vec{A}_{11}
+    - \vec{A}_{11 \cdot 2}^{-1}\vec{A}_{12}\vec{A}_{22}^{-1}\vec{A}_{21} \\
+  &\quad = \vec{A}_{11 \cdot 2}^{-1}
+    (\vec{A}_{11} - \vec{A}_{12}\vec{A}_{22}^{-1}\vec{A}_{21})
+  = \vec{A}_{11 \cdot 2}^{-1}\vec{A}_{11 \cdot 2}
+  = \vec{I}.
+\end{align*}
+For the $(1,2)$ block:
+\begin{align*}
+  &\vec{A}_{11 \cdot 2}^{-1}\vec{A}_{12}
+    - \vec{A}_{11 \cdot 2}^{-1}\vec{A}_{12}\vec{A}_{22}^{-1}\vec{A}_{22}
+  = \vec{A}_{11 \cdot 2}^{-1}\vec{A}_{12}
+    - \vec{A}_{11 \cdot 2}^{-1}\vec{A}_{12}
+  = \vec{0}.
+\end{align*}
+The $(2,1)$ and $(2,2)$ blocks can be verified similarly.
+Formula~\eqref{eq:A.9} is verified in the same manner.
+\end{proof}
+
+By comparing the $(1,1)$ blocks of \eqref{eq:A.8} and \eqref{eq:A.9},
+one obtains a useful identity.
+
+\begin{proposition}[Matrix Inversion Lemma]
+\label{prop:matrix-inversion-lemma}
+If $\vec{A}_{11}$, $\vec{A}_{22}$, and $\vec{A}$ are all nonsingular,
+then
+\begin{equation}
+  (\vec{A}_{11} - \vec{A}_{12}\vec{A}_{22}^{-1}\vec{A}_{21})^{-1}
+  = \vec{A}_{11}^{-1} + \vec{A}_{11}^{-1}\vec{A}_{12}
+    (\vec{A}_{22} - \vec{A}_{21}\vec{A}_{11}^{-1}\vec{A}_{12})^{-1}
+    \vec{A}_{21}\vec{A}_{11}^{-1}.
+  \label{eq:A.10}
+\end{equation}
+That is,
+\begin{equation}
+  \vec{A}_{11 \cdot 2}^{-1}
+  = \vec{A}_{11}^{-1} + \vec{A}_{11}^{-1}\vec{A}_{12}\,
+    \vec{A}_{22 \cdot 1}^{-1}\,
+    \vec{A}_{21}\vec{A}_{11}^{-1}.
+  \label{eq:A.11}
+\end{equation}
+\end{proposition}
+
+This result is sometimes called the \emph{Woodbury identity} or the
+\emph{Sherman--Morrison--Woodbury formula}.  It is especially useful
+when $\vec{A}_{11}$ is large and easy to invert while
+$\vec{A}_{22}$ is small.
+
+%% ── A.3 Kronecker Products ──────────────────────────────────────
+\section{Kronecker Products}
+\label{sec:A.3}
+
+\begin{definition}[Kronecker Product]
+\label{def:kronecker}
+Let $\vec{A}$ be $m \times n$ and $\vec{B}$ be $p \times q$.
+The \emph{Kronecker product} (or \emph{direct product})
+$\vec{A} \otimes \vec{B}$ is the $mp \times nq$ matrix defined by
+\begin{equation}
+  \vec{A} \otimes \vec{B}
+  =
+  \begin{bmatrix}
+    a_{11}\vec{B} & a_{12}\vec{B} & \cdots & a_{1n}\vec{B} \\
+    a_{21}\vec{B} & a_{22}\vec{B} & \cdots & a_{2n}\vec{B} \\
+    \vdots & \vdots & \ddots & \vdots \\
+    a_{m1}\vec{B} & a_{m2}\vec{B} & \cdots & a_{mn}\vec{B}
+  \end{bmatrix},
+  \label{eq:A.12}
+\end{equation}
+where $a_{ij}$ is the $(i,j)$ element of $\vec{A}$.
+\end{definition}
+
+The Kronecker product has several useful properties.
+
+\begin{proposition}[Properties of Kronecker Products]
+\label{prop:kronecker-properties}
+Let $\vec{A}$, $\vec{B}$, $\vec{C}$, and $\vec{D}$ be matrices whose
+dimensions are such that the indicated operations are well defined, and
+let $c$ be a scalar.  Then:
+\begin{enumerate}[label=(\alph*)]
+  \item \textbf{Associativity}:
+    \begin{equation}
+      (\vec{A} \otimes \vec{B}) \otimes \vec{C}
+      = \vec{A} \otimes (\vec{B} \otimes \vec{C}).
+      \label{eq:A.13}
+    \end{equation}
+
+  \item \textbf{Distributivity over addition}:
+    \begin{equation}
+      \vec{A} \otimes (\vec{B} + \vec{C})
+      = \vec{A} \otimes \vec{B} + \vec{A} \otimes \vec{C},
+      \label{eq:A.14}
+    \end{equation}
+    \begin{equation}
+      (\vec{A} + \vec{B}) \otimes \vec{C}
+      = \vec{A} \otimes \vec{C} + \vec{B} \otimes \vec{C}.
+      \label{eq:A.15}
+    \end{equation}
+
+  \item \textbf{Scalar multiplication}:
+    \begin{equation}
+      c(\vec{A} \otimes \vec{B})
+      = (c\vec{A}) \otimes \vec{B}
+      = \vec{A} \otimes (c\vec{B}).
+      \label{eq:A.16}
+    \end{equation}
+
+  \item \textbf{Mixed-product property}: If $\vec{A}$ is $m \times n$,
+    $\vec{B}$ is $p \times q$, $\vec{C}$ is $n \times r$, and
+    $\vec{D}$ is $q \times s$, then
+    \begin{equation}
+      (\vec{A} \otimes \vec{B})(\vec{C} \otimes \vec{D})
+      = (\vec{A}\vec{C}) \otimes (\vec{B}\vec{D}).
+      \label{eq:A.17}
+    \end{equation}
+
+  \item \textbf{Transpose}:
+    \begin{equation}
+      (\vec{A} \otimes \vec{B})'
+      = \vec{A}' \otimes \vec{B}'.
+      \label{eq:A.18}
+    \end{equation}
+
+  \item \textbf{Inverse}: If $\vec{A}$ ($m \times m$) and $\vec{B}$
+    ($p \times p$) are both nonsingular, then $\vec{A} \otimes \vec{B}$
+    is nonsingular and
+    \begin{equation}
+      (\vec{A} \otimes \vec{B})^{-1}
+      = \vec{A}^{-1} \otimes \vec{B}^{-1}.
+      \label{eq:A.19}
+    \end{equation}
+
+  \item \textbf{Trace}: If $\vec{A}$ is $m \times m$ and $\vec{B}$ is
+    $p \times p$, then
+    \begin{equation}
+      \tr(\vec{A} \otimes \vec{B})
+      = \tr(\vec{A}) \cdot \tr(\vec{B}).
+      \label{eq:A.20}
+    \end{equation}
+
+  \item \textbf{Determinant}: If $\vec{A}$ is $m \times m$ and
+    $\vec{B}$ is $p \times p$, then
+    \begin{equation}
+      \det(\vec{A} \otimes \vec{B})
+      = (\det \vec{A})^{p} \cdot (\det \vec{B})^{m}.
+      \label{eq:A.21}
+    \end{equation}
+
+  \item \textbf{Rank}:
+    \begin{equation}
+      \rank(\vec{A} \otimes \vec{B})
+      = \rank(\vec{A}) \cdot \rank(\vec{B}).
+      \label{eq:A.22}
+    \end{equation}
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Properties (a)--(c) follow directly from the definition~\eqref{eq:A.12}.
+
+\medskip
+\noindent\textbf{(d) Mixed-product property.}\quad
+The $(i,j)$ block of $(\vec{A} \otimes \vec{B})(\vec{C} \otimes \vec{D})$
+is
+\[
+  \sum_{k=1}^{n} a_{ik}\vec{B} \cdot c_{kj}\vec{D}
+  = \biggl(\sum_{k=1}^{n} a_{ik}c_{kj}\biggr) \vec{B}\vec{D}
+  = [\vec{A}\vec{C}]_{ij}\,(\vec{B}\vec{D}),
+\]
+which is exactly the $(i,j)$ block of
+$(\vec{A}\vec{C}) \otimes (\vec{B}\vec{D})$.
+
+\medskip
+\noindent\textbf{(e) Transpose.}\quad
+Follows from the definition, since the $(i,j)$ block of
+$(\vec{A} \otimes \vec{B})'$ is $(a_{ji}\vec{B})' = a_{ji}\vec{B}'$,
+which equals the $(i,j)$ block of $\vec{A}' \otimes \vec{B}'$.
+
+\medskip
+\noindent\textbf{(f) Inverse.}\quad
+By the mixed-product property~(d),
+\[
+  (\vec{A} \otimes \vec{B})(\vec{A}^{-1} \otimes \vec{B}^{-1})
+  = (\vec{A}\vec{A}^{-1}) \otimes (\vec{B}\vec{B}^{-1})
+  = \vec{I}_m \otimes \vec{I}_p
+  = \vec{I}_{mp}.
+\]
+
+\medskip
+\noindent\textbf{(g) Trace.}\quad
+Since $\tr(\vec{A} \otimes \vec{B})
+= \sum_{i=1}^{m} \tr(a_{ii}\vec{B})
+= \sum_{i=1}^{m} a_{ii}\,\tr(\vec{B})
+= \tr(\vec{A})\,\tr(\vec{B})$.
+
+\medskip
+\noindent\textbf{(h) Determinant.}\quad
+See, e.g., Horn and Johnson (1985, Theorem~4.2.15).
+
+\medskip
+\noindent\textbf{(i) Rank.}\quad
+See, e.g., Horn and Johnson (1985, Corollary~4.2.11).
+\end{proof}
+
+A useful identity relating the Kronecker product to the $\vect$
+operator (which stacks the columns of a matrix into a single column
+vector) is the following.
+
+\begin{proposition}[Vec and Kronecker Product]
+\label{prop:vec-kronecker}
+For matrices $\vec{A}$ ($m \times n$), $\vec{B}$ ($n \times p$), and
+$\vec{C}$ ($p \times q$),
+\begin{equation}
+  \vect(\vec{A}\vec{B}\vec{C})
+  = (\vec{C}' \otimes \vec{A})\,\vect(\vec{B}).
+  \label{eq:A.23}
+\end{equation}
+As a special case, for any $n \times 1$ vector $\vec{b}$,
+\begin{equation}
+  \vec{A}\vec{b} = (\vec{b}' \otimes \vec{I}_m)
+    \,\vect(\vec{A})
+  = (\vec{I}_n \otimes \vec{A})\,\vec{b}.
+  \label{eq:A.24}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Let $\vec{c}_j$ denote the $j$-th column of $\vec{C}$.  The $j$-th
+column of $\vec{A}\vec{B}\vec{C}$ is $\vec{A}\vec{B}\vec{c}_j$.
+Therefore
+\[
+  \vect(\vec{A}\vec{B}\vec{C})
+  = \begin{bmatrix}
+    \vec{A}\vec{B}\vec{c}_1 \\
+    \vec{A}\vec{B}\vec{c}_2 \\
+    \vdots \\
+    \vec{A}\vec{B}\vec{c}_q
+  \end{bmatrix}
+  = \begin{bmatrix}
+    \vec{c}_1' \otimes \vec{A} \\
+    \vec{c}_2' \otimes \vec{A} \\
+    \vdots \\
+    \vec{c}_q' \otimes \vec{A}
+  \end{bmatrix}
+  \vect(\vec{B})
+  = (\vec{C}' \otimes \vec{A})\,\vect(\vec{B}). \qedhere
+\]
+\end{proof}

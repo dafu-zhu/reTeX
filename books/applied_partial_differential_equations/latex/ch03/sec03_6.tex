@@ -1,0 +1,88 @@
+% sec03_6.tex — Section 3.6: Complex Form of Fourier Series
+\section{Complex Form of Fourier Series}
+\label{sec:complex-fourier}
+
+With periodic boundary conditions, we have found the theory of Fourier series to be quite useful:
+\begin{equation}
+\label{eq:fourier-real}
+f(x) \sim a_0 + \sum_{n=1}^{\infty}\left(a_n \cos \frac{n\pi x}{L} + b_n \sin \frac{n\pi x}{L}\right),
+\end{equation}
+where
+\begin{equation}
+\label{eq:a0-complex}
+a_0 = \frac{1}{2L}\int_{-L}^{L} f(x)\dx
+\end{equation}
+\begin{equation}
+\label{eq:an-complex}
+a_n = \frac{1}{L}\int_{-L}^{L} f(x)\cos\frac{n\pi x}{L}\dx
+\end{equation}
+\begin{equation}
+\label{eq:bn-complex}
+b_n = \frac{1}{L}\int_{-L}^{L} f(x)\sin\frac{n\pi x}{L}\dx.
+\end{equation}
+To introduce complex exponentials instead of sines and cosines, we use Euler's formulas
+\[
+\cos\theta = \frac{e^{i\theta} + e^{-i\theta}}{2} \quad \text{and} \quad \sin\theta = \frac{e^{i\theta} - e^{-i\theta}}{2i}.
+\]
+It follows that
+\begin{equation}
+\label{eq:fourier-mixed}
+f(x) \sim a_0 + \frac{1}{2}\sum_{n=1}^{\infty}(a_n - ib_n)\,e^{in\pi x/L} + \frac{1}{2}\sum_{n=1}^{\infty}(a_n + ib_n)\,e^{-in\pi x/L}.
+\end{equation}
+In order to have only $e^{-in\pi x/L}$, we change the dummy index in the first summation, replacing $n$ by $-n$.  Thus,
+\[
+f(x) \sim a_0 + \frac{1}{2}\sum_{n=-\infty}^{-1}\left[a_{(-n)} - ib_{(-n)}\right]e^{-in\pi x/L} + \frac{1}{2}\sum_{n=1}^{\infty}(a_n + ib_n)\,e^{-in\pi x/L}.
+\]
+From the definition of $a_n$ and $b_n$, \eqref{eq:an-complex} and \eqref{eq:bn-complex}, $a_{(-n)} = a_n$ and $b_{(-n)} = -b_n$.  Thus, if we define
+\begin{align*}
+c_0 &= a_0 \\
+c_n &= \frac{a_n + ib_n}{2},
+\end{align*}
+then $f(x)$ becomes simply
+\begin{equation}
+\label{eq:complex-fourier}
+\boxed{f(x) \sim \sum_{n=-\infty}^{\infty} c_n e^{-in\pi x/L}.}
+\end{equation}
+
+Equation \eqref{eq:complex-fourier} is known as the \textbf{complex form of the Fourier series of $f(x)$}.\footnote{As before, an equal sign appears if $f(x)$ is continuous [and periodic, $f(-L) = f(L)$].  At a jump discontinuity of $f(x)$ in the interior, the series converges to $[f(x+) + f(x-)]/2$.}  It is equivalent to the usual form.  It is more compact to write, but it is only used infrequently.  In this form the complex Fourier coefficients are
+\begin{equation}
+\label{eq:cn-formula}
+\boxed{c_n = \frac{1}{2L}\int_{-L}^{L} f(x)\,e^{in\pi x/L}\dx. \qquad \text{(all } n\text{)}}
+\end{equation}
+
+We immediately recognize a simplification, using Euler's formula.  Thus, we derive a formula for the complex Fourier coefficients
+\[
+c_n = \frac{1}{2}(a_n + ib_n) = \frac{1}{2L}\int_{-L}^{L} f(x)\left(\cos\frac{n\pi x}{L} + i\sin\frac{n\pi x}{L}\right)\dx \quad (n \ne 0)
+\]
+Notice that the complex Fourier series representation of $f(x)$ has $e^{-in\pi x/L}$ and is summed over the discrete integers corresponding to the sum over the discrete eigenvalues.  The complex Fourier coefficients, on the other hand, involve $e^{+in\pi x/L}$ and are integrated over the region of definition of $f(x)$ (with periodic boundary conditions), namely $-L \le x \le L$.  If $f(x)$ is real, $c_{-n} = \bar{c}_n$ (see Exercise~3.6.2).
+
+\textbf{Complex orthogonality.}  There is an alternative way to derive the formula for the complex Fourier coefficients.  Always, in the past, we have determined Fourier coefficients using the orthogonality of the eigenfunctions.  A similar idea holds here.  However, here the eigenfunctions $e^{-in\pi x/L}$ are complex.  For complex functions the concept of orthogonality must be slightly modified.  A complex function $\phi$ is said to be orthogonal to a complex function $\psi$ (over an interval $a \le x \le b$) if $\int_a^b \bar{\phi}\psi \dx = 0$, where $\bar{\phi}$ is the complex conjugate of $\phi$.  This guarantees that the length squared of a complex function $f$, defined by $\int_a^b \bar{f}f \dx$, is positive (this would not have been valid for $\int_a^b ff \dx$ since $f$ is complex).
+
+Using this notion of orthogonality, the eigenfunctions $e^{-in\pi x/L}$, $-\infty < n < \infty$, can be verified to form an orthogonal set because by simple integration
+\[
+\int_{-L}^{L} \overline{(e^{-im\pi x/L})}\,e^{-in\pi x/L}\dx = \begin{cases} 0 & n \ne m, \\ 2L & n = m, \end{cases}
+\]
+since
+\[
+\overline{(e^{-im\pi x/L})} = e^{im\pi x/L}.
+\]
+
+Now to determine the complex Fourier coefficients $c_n$, we multiply \eqref{eq:complex-fourier} by $e^{im\pi x/L}$ and integrate from $-L$ to $+L$ (assuming that the term-by-term use of these operations is valid).  In this way
+\[
+\int_{-L}^{L} f(x)\,e^{im\pi x/L}\dx = \sum_{n=-\infty}^{\infty} c_n \int_{-L}^{L} e^{im\pi x/L}\,e^{-in\pi x/L}\dx.
+\]
+Using the orthogonality condition, the sum reduces to one term, $n = m$.  Thus,
+\[
+\int_{-L}^{L} f(x)\,e^{im\pi x/L}\dx = 2L\,c_m,
+\]
+which explains the $1/2L$ in \eqref{eq:cn-formula} as well as the switch of signs in the exponent.
+
+\begin{exercises}{3.6}
+\item[\starred 3.6.1.] Consider
+\[
+f(x) = \begin{cases} 0 & x < x_0 \\ 1/\Delta & x_0 < x < x_0 + \Delta \\ 0 & x > x_0 + \Delta. \end{cases}
+\]
+Assume that $x_0 > -L$ and $x_0 + \Delta < L$.  Determine the complex Fourier coefficients $c_n$.
+
+\item If $f(x)$ is real, show that $c_{-n} = \bar{c}_n$.
+\end{exercises}

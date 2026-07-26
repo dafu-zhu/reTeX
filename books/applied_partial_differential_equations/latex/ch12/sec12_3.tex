@@ -1,0 +1,257 @@
+% sec12_3.tex — Section 12.3: Method of Characteristics for the One-Dimensional Wave Equation
+\section{Method of Characteristics for the One-Dimensional Wave Equation}
+\label{sec:char-wave-eq}
+
+\subsection{General Solution}
+\label{sec:char-wave-general}
+
+From the one-dimensional wave equation,
+\boxed{\begin{equation}
+\label{eq:12.3.1}
+\pdd{u}{t} - c^2\pdd{u}{x} = 0,
+\end{equation}}
+we derived two first-order partial differential equations, $\partial w/\partial t + c\,\partial w/\partial x = 0$ and $\partial v/\partial t - c\,\partial v/\partial x = 0$, where $w = \partial u/\partial t - c\,\partial u/\partial x$ and $v = \partial u/\partial t + c\,\partial u/\partial x$.  We have shown that $w$ remains the same shape moving at velocity $c$:
+\begin{equation}
+\label{eq:12.3.2}
+w = \pd{u}{t} - c\pd{u}{x} = P(x - ct).
+\end{equation}
+The problem for $v$ is identical (replace $c$ by $-c$).  Thus, we could have shown that $v$ is translated unchanged at velocity $-c$:
+\begin{equation}
+\label{eq:12.3.3}
+v = \pd{u}{t} + c\pd{u}{x} = Q(x + ct).
+\end{equation}
+By combining \eqref{eq:12.3.2} and \eqref{eq:12.3.3} we obtain, for example,
+\[
+2\pd{u}{t} = P(x - ct) + Q(x + ct) \quad \text{and} \quad 2c\pd{u}{x} = Q(x + ct) - P(x - ct),
+\]
+and thus
+\boxed{\begin{equation}
+\label{eq:12.3.4}
+u(x,t) = F(x - ct) + G(x + ct),
+\end{equation}}
+where $F$ and $G$ are arbitrary functions ($-cF' = \tfrac{1}{2}P$ and $cG' = \tfrac{1}{2}Q$).  This result was obtained by d'Alembert in 1747.  \textbf{Equation~\eqref{eq:12.3.4} is a remarkable result as it is a general solution of the one-dimensional wave equation, \eqref{eq:12.3.1},} a very nontrivial partial differential equation.
+
+The general solution is the sum of $F(x - ct)$, a wave of fixed shape moving to the right with velocity $c$, and $G(x + ct)$, a wave of fixed shape moving to the left with velocity $-c$.  The solution may be sketched if $F(x)$ and $G(x)$ are known.  We shift $F(x)$ to the right a distance $ct$ and shift $G(x)$ to the left a distance $ct$ and add the two.  Although each shape is unchanged, the sum will in general be a shape that is changing in time.  In Sec.~12.3.2 we will show how to determine $F(x)$ and $G(x)$ from initial conditions.
+
+\textbf{Characteristics.}  Part of the solution is constant along the family of characteristics $x - ct = \text{constant}$, while a different part of the solution is constant along $x + ct = \text{constant}$.  For the one-dimensional wave equation, \eqref{eq:12.3.1}, there are two families of characteristic curves, as sketched in Fig.~12.3.1.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch12/fig_12_3_1.png}
+\caption{Characteristics for the one-dimensional wave equation.}
+\label{fig:12.3.1}
+\end{figure}
+
+\textbf{Alternate derivation of the general solution.}  We may derive the general solution of the wave equation, by making a somewhat unmotivated change of variables to ``characteristic coordinates'' $\xi = x - ct$ and $\eta = x + ct$ moving with the velocities $\pm c$.  Using the chain rule, first derivatives are given by $\frac{\partial}{\partial x} = \frac{\partial}{\partial \xi} + \frac{\partial}{\partial \eta}$ and $\frac{\partial}{\partial t} = -c\frac{\partial}{\partial \xi} + c\frac{\partial}{\partial \eta}$.  Substituting the corresponding second derivatives into the wave equation \eqref{eq:12.3.1} yields
+\[
+c^2\!\left(\pdd{u}{\xi} - 2\frac{\partial^2 u}{\partial\xi\,\partial\eta} + \pdd{u}{\eta}\right) = c^2\!\left(\pdd{u}{\xi} + 2\frac{\partial^2 u}{\partial\xi\,\partial\eta} + \pdd{u}{\eta}\right).
+\]
+After canceling the terms $c^2(\frac{\partial^2 u}{\partial\xi^2} + \frac{\partial^2 u}{\partial\eta^2})$, we obtain
+\[
+4c^2 \frac{\partial^2 u}{\partial\xi\,\partial\eta} = 0.
+\]
+By integrating with respect to $\xi$ (fixed $\eta$), we obtain $\frac{\partial u}{\partial\eta} = g(\eta)$, where $g(\eta)$ is an arbitrary function of $\eta$.  Now integrating with respect to $\eta$ (fixed $\xi$) yields the general solution \eqref{eq:12.3.4}, $u = F(\xi) + G(\eta) = F(x - ct) + G(x + ct)$, where $F$ and $G$ are arbitrary functions.
+
+\subsection{Initial Value Problem (Infinite Domain)}
+\label{sec:char-wave-ivp}
+
+In Sec.~12.3.1 we showed that the general solution of the one-dimensional wave equation is
+\boxed{\begin{equation}
+\label{eq:12.3.5}
+u(x,t) = F(x - ct) + G(x + ct).
+\end{equation}}
+Here we will determine the arbitrary functions in order to satisfy the initial conditions:
+\boxed{\begin{equation}
+\label{eq:12.3.6}
+u(x,0) = f(x), \qquad -\infty < x < \infty
+\end{equation}}
+\boxed{\begin{equation}
+\label{eq:12.3.7}
+\pd{u}{t}(x,0) = g(x), \qquad -\infty < x < \infty.
+\end{equation}}
+These initial conditions imply that
+\begin{align}
+\label{eq:12.3.8}
+f(x) &= F(x) + G(x) \\
+\label{eq:12.3.9}
+\frac{g(x)}{c} &= -\od{F}{x} + \od{G}{x}.
+\end{align}
+We solve for $G(x)$ by eliminating $F(x)$; for example, adding the derivative of \eqref{eq:12.3.8} to \eqref{eq:12.3.9} yields
+\[
+\od{G}{x} = \frac{1}{2}\left(\od{f}{x} + \frac{g(x)}{c}\right).
+\]
+By integrating this, we obtain
+\boxed{\begin{equation}
+\label{eq:12.3.10}
+G(x) = \frac{1}{2}f(x) + \frac{1}{2c}\int_0^x g(\bar{x})\,d\bar{x} + k
+\end{equation}}
+\boxed{\begin{equation}
+\label{eq:12.3.11}
+F(x) = \frac{1}{2}f(x) - \frac{1}{2c}\int_0^x g(\bar{x})\,d\bar{x} - k,
+\end{equation}}
+where the latter equation was obtained from \eqref{eq:12.3.8}.  $k$ can be neglected since $u(x,t)$ is obtained from \eqref{eq:12.3.5} by adding \eqref{eq:12.3.10} and \eqref{eq:12.3.11} (with appropriate shifts).
+
+\textbf{Sketching technique.}  The solution $u(x,t)$ can be graphed based on \eqref{eq:12.3.5} in the following straightforward manner:
+\begin{enumerate}
+\item Given $f(x)$ and $g(x)$, obtain the graphs of
+\[
+\frac{1}{2}f(x) \quad \text{and} \quad \frac{1}{2c}\int_0^x g(\bar{x})\,d\bar{x},
+\]
+the latter by integrating first.
+\item By addition and subtraction, form $F(x)$ and $G(x)$; see \eqref{eq:12.3.10} and \eqref{eq:12.3.11}.
+\item Translate (shift) $F(x)$ to the right a distance $ct$ and $G(x)$ to the left $ct$.
+\item Add the two shifted functions, thus satisfying \eqref{eq:12.3.5}.
+\end{enumerate}
+
+\textbf{Initially at rest.}  If a vibrating string is initially at rest $[\partial u/\partial t\,(x,0) = g(x) = 0]$, then from \eqref{eq:12.3.10} and \eqref{eq:12.3.11} $F(x) = G(x) = \frac{1}{2}f(x)$.  Thus,
+\begin{equation}
+\label{eq:12.3.12}
+u(x,t) = \frac{1}{2}[f(x - ct) + f(x + ct)].
+\end{equation}
+The initial condition $u(x,0) = f(x)$ splits into two parts; half moves to the left and half to the right.
+
+\textbf{Example.}  Suppose that an infinite vibrating string is initially stretched into the shape of a single rectangular pulse and is let go from rest.  The corresponding initial conditions are
+\[
+u(x,0) = f(x) = \begin{cases} 1 & |x| < h \\ 0 & |x| > h \end{cases}
+\]
+and
+\[
+\pd{u}{t}(x,0) = g(x) = 0.
+\]
+The solution is given by \eqref{eq:12.3.12}.  By adding together these two rectangular pulses, we obtain Fig.~12.3.2.  The pulses overlap until the left end of the right-moving one passes the right end of the other.  Since each is traveling at speed $c$, they are moving apart at velocity $2c$.  The ends are initially a distance $2h$ apart, and hence the time at which the two pulses separate is
+\[
+t = \frac{\text{distance}}{\text{velocity}} = \frac{2h}{2c} = \frac{h}{c}.
+\]
+Important characteristics are sketched in Fig.~12.3.3.  $F$ stays constant moving to the right at velocity $c$, while $G$ stays constant moving to the left.  From \eqref{eq:12.3.10} and \eqref{eq:12.3.11},
+\[
+F(x) = G(x) = \begin{cases} \frac{1}{2} & |x| < h \\ 0 & |x| > h. \end{cases}
+\]
+This information also appears in Fig.~12.3.3.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch12/fig_12_3_2.png}
+\caption{Initial value problem for the one-dimensional wave equation.}
+\label{fig:12.3.2}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch12/fig_12_3_3.png}
+\caption{Method of characteristics for the one-dimensional wave equation.}
+\label{fig:12.3.3}
+\end{figure}
+
+\textbf{Example not at rest.}  Suppose that an infinite string is initially horizontally stretched with prescribed initial velocity as follows:
+\begin{align*}
+u(x,0) &= f(x) = 0 \\
+\pd{u}{t}(x,0) &= g(x) = \begin{cases} 1 & |x| < h \\ 0 & |x| > h. \end{cases}
+\end{align*}
+In Exercise~12.3.2 it is shown that this corresponds to instantaneously applying a constant impulsive force to the entire region $|x| < h$, as though the string is being struck by a broad ($|x| < h$) hammer.  The calculation of the solution of the wave equation with these initial conditions is more involved than in the preceding example.  From \eqref{eq:12.3.10} and \eqref{eq:12.3.11}, we need $\int_0^x g(\bar{x})\,d\bar{x}$, representing the area under $g(x)$ from $0$ to $x$:
+\[
+2cG(x) = -2cF(x) = \int_0^x g(\bar{x})\,d\bar{x} = \begin{cases} -h & x < -h \\ x & -h < x < h \\ h & x > h. \end{cases}
+\]
+The solution $u(x,t)$ is the sum of $F(x)$ shifted to the right (at velocity $c$) and $G(x)$ shifted to the left (at velocity $c$).  $F(x)$ and $G(x)$ are sketched in Fig.~12.3.4, as is their shifted sum.  The striking of the broad hammer causes the displacement of the string to gradually increase near where the hammer hit and to have this disturbance spread out to the left and right as time increases.  Eventually, the string reaches an elevated rest position.  Alternatively, the solution can be obtained in an algebraic way (see Exercise~12.3.5).  The characteristics sketched in Fig.~12.3.3 are helpful.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch12/fig_12_3_4.png}
+\caption{Time evolution for a struck string.}
+\label{fig:12.3.4}
+\end{figure}
+
+\subsection{D'Alembert's Solution}
+\label{sec:dalembert}
+
+The general solution of the one-dimensional wave equation can be simplified somewhat.  Substituting \eqref{eq:12.3.10} and \eqref{eq:12.3.11} into the general solution \eqref{eq:12.3.5} yields
+\[
+u(x,t) = \frac{f(x+ct) + f(x-ct)}{2} + \frac{1}{2c}\left[\int_0^{x+ct} g(\bar{x})\,d\bar{x} - \int_0^{x-ct} g(\bar{x})\,d\bar{x}\right]
+\]
+or
+\boxed{\begin{equation}
+\label{eq:12.3.13}
+u(x,t) = \frac{f(x-ct) + f(x+ct)}{2} + \frac{1}{2c}\int_{x-ct}^{x+ct} g(\bar{x})\,d\bar{x},
+\end{equation}}
+known as \textbf{d'Alembert's solution} (obtained in Chapter~11 by using Green's formula and the infinite space Green's function for the one-dimensional wave equation).  It is a very elegant result.  However, for sketching solutions often it is easier to work directly with \eqref{eq:12.3.10} and \eqref{eq:12.3.11}, where these are shifted according to \eqref{eq:12.3.5}.
+
+\textbf{Domain of dependence and range of influence.}  The importance of the characteristics $x - ct = \text{constant}$ and $x + ct = \text{constant}$ is clear.  At position $x$ at time $t$ the initial position data are needed at $x \pm ct$, while all the initial velocity data between $x - ct$ and $x + ct$ is needed.  The region between $x - ct$ and $x + ct$ is called the \textbf{domain of dependence} of the solution at $(x,t)$ as sketched in Fig.~12.3.5.  In addition, we sketch the \textbf{range of influence}, the region affected by the initial data at one point.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch12/fig_12_3_5.png}
+\caption{(a) Domain of dependence; (b) range of influence.}
+\label{fig:12.3.5}
+\end{figure}
+
+\textbf{Space- and timelike boundaries.}  Two initial conditions \eqref{eq:12.3.6} and \eqref{eq:12.3.7} are specified along $t = 0$, which is the $x$-axis, called a \textbf{spacelike boundary}.  In the next section, it is shown that one boundary condition is specified at a fixed boundary---for example, $x = 0$---along which time varies, so that $x = 0$ is called a \textbf{timelike boundary}.  For a subsonic moving boundary, moving at a speed less than the characteristic velocity $c$, $\left|\frac{dx}{dt}\right| < c$, then one condition is specified on that moving boundary, and the boundary is said to be \textbf{timelike}.  For a supersonic moving boundary, moving at a speed greater than the characteristic velocity $c$, $\left|\frac{dx}{dt}\right| > c$, two conditions are specified (but sometimes information propagates out of the region), and the boundary is said to be \textbf{spacelike}.  The boundaries do not have to move at constant velocities.
+
+\begin{exercises}{12.3}
+
+\item \label{ex:12.3.1}
+Suppose that $u(x,t) = F(x - ct) + G(x + ct)$, where $F$ and $G$ are sketched in Fig.~12.3.6.  Sketch the solution for various times.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch12/fig_12_3_6.png}
+\caption{}
+\label{fig:12.3.6}
+\end{figure}
+
+\item \label{ex:12.3.2}
+Suppose that a stretched string is unperturbed (horizontal, $u = 0$) and at rest ($\partial u/\partial t = 0$).  If an impulsive force is applied at $t = 0$, the initial value problem is
+\[
+\pdd{u}{t} = c^2\pdd{u}{x} + \alpha(x)\delta(t)
+\]
+\[
+u(x,t) = 0, \qquad t < 0.
+\]
+\begin{enumerate}
+\item[(a)] Without using explicit solutions, show that this is equivalent to
+\[
+\pdd{u}{t} = c^2\pdd{u}{x}, \quad t > 0
+\]
+subject to $u(x,0) = 0$ and $\frac{\partial u}{\partial t}(x,0) = \alpha(x)$.
+
+Thus, the initial velocity $\alpha(x)$ is equivalent to an impulsive force.
+\item[(b)] Do part (a) using the explicit solution of both problems.
+\end{enumerate}
+
+\item \label{ex:12.3.3}
+An alternative way to solve the one-dimensional wave equation \eqref{eq:12.3.1} is based on \eqref{eq:12.3.2} and \eqref{eq:12.3.3}.  Solve the wave equation by introducing a change of variables from $(x,t)$ to two moving coordinates $(\xi,\eta)$ one moving to the left (with velocity $-c$) and one moving to the right (with velocity $c$):
+\[
+\xi = x - ct \quad \text{and} \quad \eta = x + ct.
+\]
+
+\item\starred \label{ex:12.3.4}
+Suppose that $u(x,t) = F(x - ct)$.  Evaluate:
+\begin{enumerate}
+\item[(a)] $\frac{\partial u}{\partial t}(x,0)$
+\item[(b)] $\frac{\partial u}{\partial x}(0,t)$
+\end{enumerate}
+
+\item \label{ex:12.3.5}
+Determine analytic formulas for $u(x,t)$ if
+\begin{align*}
+u(x,0) &= f(x) = 0 \\
+\pd{u}{t}(x,0) &= g(x) = \begin{cases} 1 & |x| < h \\ 0 & |x| > h. \end{cases}
+\end{align*}
+(\emph{Hint:} Using characteristics as sketched in Fig.~12.3.3, show that there are two distinct regions $t < h/c$ and $t > h/c$.  In each, show that the solution has five different forms, depending on $x$.)
+
+\item \label{ex:12.3.6}
+Consider the three-dimensional wave equation
+\[
+\pdd{u}{t} = c^2\nabla^2 u.
+\]
+Assume that the solution is \textbf{spherically symmetric}, so that
+\[
+\nabla^2 u = (1/\rho^2)(\partial/\partial\rho)(\rho^2\,\partial u/\partial\rho).
+\]
+\begin{enumerate}
+\item[(a)] Make the transformation $u = (1/\rho)w(\rho,t)$ and verify that
+\[
+\pdd{w}{t} = c^2\pdd{w}{\rho}.
+\]
+\item[(b)] Show that the most general spherically symmetric solution of the wave equation consists of the sum of two spherically symmetric waves, one moving outward at speed $c$ and the other inward at speed $c$.  Note the decay of the amplitude.
+\end{enumerate}
+
+\end{exercises}

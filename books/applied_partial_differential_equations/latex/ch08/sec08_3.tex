@@ -1,0 +1,223 @@
+% sec08_3.tex — Section 8.3: Method of Eigenfunction Expansion with Homogeneous BCs
+\section{Method of Eigenfunction Expansion with Homogeneous Boundary Conditions (Differentiating Series of Eigenfunctions)}
+\label{sec:eigenfunction-expansion-homog}
+
+In Sec.~8.2 we showed how to introduce a problem with homogeneous boundary conditions, even if the original problem of interest has nonhomogeneous boundary conditions.  For that reason we will investigate nonhomogeneous linear partial differential equations with homogeneous boundary conditions.  For example, consider
+\begin{equation}
+\label{eq:8.3.1}
+\text{PDE:}\quad \boxed{\pd{v}{t} = k\pdd{v}{x} + \bar{Q}(x,t)}
+\end{equation}
+\begin{equation}
+\label{eq:8.3.2}
+\text{BC:}\quad \boxed{\begin{aligned} v(0,t) &= 0 \\ v(L,t) &= 0 \end{aligned}}
+\end{equation}
+\begin{equation}
+\label{eq:8.3.3}
+\text{IC:}\quad \boxed{v(x,0) = g(x).}
+\end{equation}
+
+We will solve this problem by the \textbf{method of eigenfunction expansion}.  Consider the eigenfunctions of the related homogeneous problem.  The related homogeneous problem is
+\begin{align}
+\label{eq:8.3.4}
+\pd{u}{t} &= k\pdd{u}{x} \notag\\
+u(0,t) &= 0 \notag\\
+u(L,t) &= 0.
+\end{align}
+The eigenfunctions of this related homogeneous problem satisfy
+\begin{align}
+\label{eq:8.3.5}
+\odd{\phi}{x} + \lambda\phi &= 0 \notag\\
+\phi(0) &= 0 \notag\\
+\phi(L) &= 0.
+\end{align}
+We know that the eigenvalues are $\lambda_n = (n\pi/L)^2$, $n=1,2,\ldots$ and the corresponding eigenfunctions are $\phi_n(x) = \sin n\pi x/L$.  However, the eigenfunctions will be different for other problems.  We do not wish to emphasize the method of eigenfunction expansion solely for this one example.  Thus, we will speak in some generality.  We assume that the eigenfunctions (of the related homogeneous problem) are known, and we designate them $\phi_n(x)$.  The eigenfunctions satisfy a Sturm--Liouville eigenvalue problem and as such they are complete (any piecewise smooth function may be expanded in a series of these eigenfunctions).  \textbf{The method of eigenfunction expansion, employed to solve the nonhomogeneous problem \eqref{eq:8.3.1} with homogeneous boundary conditions, \eqref{eq:8.3.2}, consists of expanding the unknown solution $v(x,t)$ in a series of the related homogeneous eigenfunctions:}
+\begin{equation}
+\label{eq:8.3.6}
+\boxed{v(x,t) = \sum_{n=1}^{\infty} a_n(t)\phi_n(x).}
+\end{equation}
+For each fixed $t$, $v(x,t)$ is a function of $x$, and hence $v(x,t)$ will have a generalized Fourier series.  In our example, $\phi_n(x) = \sin n\pi x/L$, and this series is an ordinary Fourier sine series.  The generalized Fourier coefficients are $a_n$, but the coefficients will vary as $t$ changes.  Thus, the generalized Fourier coefficients are functions of time, $a_n(t)$.  At first glance \eqref{eq:8.3.6} may appear similar to what occurs in separating variables for homogeneous problems.  However, \eqref{eq:8.3.6} is substantially different.  Here $a_n(t)$ are \emph{not} the time-dependent separated solutions $e^{-k(n\pi/L)^2 t}$.  Instead, $a_n(t)$ is not usually proportional to $e^{-k(n\pi/L)^2 t}$.
+
+Equation \eqref{eq:8.3.6} automatically satisfies the homogeneous boundary conditions.  We emphasize this by stating that both $v(x,t)$ and $\phi_n(x)$ satisfy the same homogeneous boundary conditions.  The initial condition is satisfied if
+\[
+g(x) = \sum_{n=1}^{\infty} a_n(0)\phi_n(x).
+\]
+Due to the orthogonality of the eigenfunctions [with weight~1 in this problem because of the constant coefficient in \eqref{eq:8.3.5}], we can determine the initial values of the generalized Fourier coefficients:
+\begin{equation}
+\label{eq:8.3.7}
+a_n(0) = \frac{\int_0^L g(x)\phi_n(x)\dx}{\int_0^L \phi_n^2(x)\dx}.
+\end{equation}
+
+``All'' that remains is to determine $a_n(t)$ such that \eqref{eq:8.3.6} solves the nonhomogeneous partial differential equation \eqref{eq:8.3.1}.  We will show in two different ways that $a_n(t)$ satisfies a first-order differential equation in order for \eqref{eq:8.3.6} to satisfy \eqref{eq:8.3.1}.
+
+One method to determine $a_n(t)$ is by direct substitution.  This is easy to do but requires calculation of $\partial v/\partial t$ and $\partial^2 v/\partial x^2$.  Since $v(x,t)$ is an infinite series, the differentiation can be a delicate process.  We simply state that with some degree of generality, if $v$ and $\partial v/\partial x$ are continuous and if $v(x,t)$ \textbf{solves the same homogeneous boundary conditions as does} $\phi_n(x)$, \textbf{then the necessary term-by-term differentiations can be justified.}  For the cases of Fourier sine and cosine series, a more detailed investigation of the properties of the term-by-term differentiation of these series was presented in Sec.~3.4, which proved this result.  For the general case, we omit a proof.  However, we obtain the same solution in Sec.~8.4 by an alternative method, which thus justifies the somewhat simpler technique of the present section.  We thus proceed to term-by-term differentiate $v(x,t)$:
+\begin{align*}
+\pd{v}{t} &= \sum_{n=1}^{\infty} \od{a_n(t)}{t}\,\phi_n(x) \\
+\pdd{v}{x} &= \sum_{n=1}^{\infty} a_n(t)\,\frac{d^2\phi_n(x)}{dx^2}
+= -\sum_{n=1}^{\infty} a_n(t)\,\lambda_n\,\phi_n(x),
+\end{align*}
+since $\phi_n(x)$ satisfies $d^2\phi_n/dx^2 + \lambda_n\phi_n = 0$.  Substituting these results into \eqref{eq:8.3.1} yields
+\begin{equation}
+\label{eq:8.3.8}
+\sum_{n=1}^{\infty} \left[\od{a_n}{t} + \lambda_n k\,a_n\right]\phi_n(x) = \bar{Q}(x,t).
+\end{equation}
+The left-hand side is the generalized Fourier series for $\bar{Q}(x,t)$.  Due to the orthogonality of $\phi_n(x)$, we obtain a first-order differential equation for $a_n(t)$:
+\begin{equation}
+\label{eq:8.3.9}
+\od{a_n}{t} + \lambda_n k\,a_n = \frac{\int_0^L \bar{Q}(x,t)\,\phi_n(x)\dx}{\int_0^L \phi_n^2(x)\dx} \equiv \bar{q}_n(t).
+\end{equation}
+The right-hand side is a known function of time (and $n$), namely, the Fourier coefficient of $\bar{Q}(x,t)$:
+\[
+\bar{Q}(x,t) = \sum_{n=1}^{\infty} \bar{q}_n(t)\,\phi_n(x).
+\]
+
+Equation \eqref{eq:8.3.9} requires an initial condition, and sure enough $a_n(0)$ equals the generalized Fourier coefficients of the initial condition [see \eqref{eq:8.3.7}].
+
+Equation \eqref{eq:8.3.9} is a nonhomogeneous linear first-order equation.  Perhaps the easiest method\footnote{Another method is variation of parameters.} to solve it [unless $\bar{q}_n(t)$ is particularly simple] is to multiply it by the integrating factor $e^{\lambda_n kt}$.  Thus,
+\[
+e^{\lambda_n kt}\left(\od{a_n}{t} + \lambda_n k\,a_n\right)
+= \frac{d}{d t}\bigl(a_n\,e^{\lambda_n kt}\bigr)
+= \bar{q}_n\,e^{\lambda_n kt}.
+\]
+Integrating from $0$ to $t$ yields
+\[
+a_n(t)\,e^{\lambda_n kt} - a_n(0) = \int_0^t \bar{q}_n(\tau)\,e^{\lambda_n k\tau}\,d\tau.
+\]
+We solve for $a_n(t)$ and obtain
+\begin{equation}
+\label{eq:8.3.10}
+\boxed{a_n(t) = a_n(0)\,e^{-\lambda_n kt} + e^{-\lambda_n kt}\int_0^t \bar{q}_n(\tau)\,e^{\lambda_n k\tau}\,d\tau.}
+\end{equation}
+Note that $a_n(t)$ is in the form of a constant, $a_n(0)$, times the homogeneous solution $e^{-\lambda_n kt}$ plus a particular solution.  This completes the method of eigenfunction expansions.  The solution of our nonhomogeneous partial differential equation with homogeneous boundary conditions is
+\[
+v(x,t) = \sum_{n=1}^{\infty} a_n(t)\,\phi_n(x),
+\]
+where $\phi_n(x) = \sin n\pi x/L$, $\lambda_n = (n\pi/L)^2$, $a_n(t)$ is given by \eqref{eq:8.3.10}, $\bar{q}_n(\tau)$ is given by \eqref{eq:8.3.9}, and $a_n(0)$ is given by \eqref{eq:8.3.7}.  The solution is rather complicated.
+
+As a check, if the problem was homogeneous, $Q(x,t) = 0$, then the solution simplifies to
+\[
+v(x,t) = \sum_{n=1}^{\infty} a_n(t)\,\phi_n(x),
+\]
+where
+\[
+a_n(t) = a_n(0)\,e^{-\lambda_n kt}
+\]
+and $a_n(0)$ is given by \eqref{eq:8.3.7}, exactly the solution obtained by separation of variables.
+
+\begin{example}
+As an elementary example, suppose that for $0 < x < \pi$ (i.e., $L=\pi$)
+\begin{alignat*}{2}
+\pd{u}{t} &= \pdd{u}{x} + \sin 3x\;e^{-t} &\quad\text{subject to}\quad u(0,t) &= 0 \\
+& & u(\pi,t) &= 1 \\
+& & u(x,0) &= f(x).
+\end{alignat*}
+To make the boundary conditions homogeneous, we introduce the displacement from equilibrium $v(x,t) = u(x,t) - x/\pi$, in which case
+\begin{alignat*}{2}
+\pd{v}{t} &= \pdd{v}{x} + \sin 3x\;e^{-t} &\quad\text{subject to}\quad v(0,t) &= 0 \\
+& & v(\pi,t) &= 0 \\
+& & v(x,0) &= f(x).
+\end{alignat*}
+The eigenfunctions are $\sin n\pi x/L = \sin nx$ (since $L=\pi$), and thus
+\begin{equation}
+\label{eq:8.3.11}
+v(x,t) = \sum_{n=1}^{\infty} a_n(t)\sin nx.
+\end{equation}
+This eigenfunction expansion is substituted into the PDE, yielding
+\[
+\sum_{n=1}^{\infty}\left(\od{a_n}{t} + n^2 a_n\right)\sin nx = \sin 3x\;e^{-t}.
+\]
+Thus, the unknown Fourier sine coefficients satisfy
+\[
+\od{a_n}{t} + n^2 a_n =
+\begin{cases}
+0 & n\neq 3 \\
+e^{-t} & n = 3.
+\end{cases}
+\]
+\end{example}
+
+The solution of this does not require \eqref{eq:8.3.10}:
+\begin{equation}
+\label{eq:8.3.12}
+a_n(t) =
+\begin{cases}
+a_n(0)\,e^{-n^2 t} & n\neq 3 \\[4pt]
+\tfrac{1}{8}\,e^{-t} + [a_3(0)-\tfrac{1}{8}]\,e^{-9t} & n = 3,
+\end{cases}
+\end{equation}
+where
+\begin{equation}
+\label{eq:8.3.13}
+a_n(0) = \frac{2}{\pi}\int_0^{\pi}\left[f(x) - \frac{x}{\pi}\right]\sin nx\dx.
+\end{equation}
+The solution to the original nonhomogeneous problem is given by $u(x,t) = v(x,t) + x/\pi$, where $v$ satisfies \eqref{eq:8.3.11} with $a_n(t)$ determined by \eqref{eq:8.3.12} and \eqref{eq:8.3.13}.
+
+\begin{exercises}{8.3}
+
+\item Solve the initial value problem for the heat equation with time-dependent sources
+\begin{align*}
+\pd{u}{t} &= k\pdd{u}{x} + Q(x,t) \\
+u(x,0) &= f(x)
+\end{align*}
+subject to the following boundary conditions:
+\begin{enumerate}
+\item[(a)] $u(0,t) = 0$, \quad $\pd{u}{x}(L,t) = 0$
+\item[(b)] $u(0,t) = 0$, \quad $u(L,t) + 2\pd{u}{x}(L,t) = 0$
+\item[\starred(c)] $u(0,t) = A(t)$, \quad $\pd{u}{x}(L,t) = 0$
+\item[(d)] $u(0,t) = A\neq 0$, \quad $u(L,t) = 0$
+\item[(e)] $\pd{u}{x}(0,t) = A(t)$. \quad $\pd{u}{x}(L,t) = B(t)$
+\item[\starred(f)] $\pd{u}{x}(0,t) = 0$, \quad $\pd{u}{x}(L,t) = 0$
+\item[(g)] Specialize part~(f) to the case $Q(x,t) = Q(x)$ (independent of~$t$) such that $\int_0^L Q(x)\dx \neq 0$.  In this case show that there are no time-independent solutions.  What happens to the time-dependent solution as $t\to\infty$?  Briefly explain.
+\end{enumerate}
+
+\item Consider the heat equation with a steady source
+\[
+\pd{u}{t} = k\pdd{u}{x} + Q(x)
+\]
+subject to the initial and boundary conditions described in this section:
+\[
+u(0,t) = 0,\quad u(L,t) = 0,\quad\text{and}\quad u(x,0) = f(x).
+\]
+Obtain the solution by the method of eigenfunction expansion.  Show that the solution approaches a steady-state solution.
+
+\item[\starred 8.3.3.] Solve the initial value problem
+\[
+c\rho\pd{u}{t} = \frac{\partial}{\partial x}\left(K_0\pd{u}{x}\right) + qu + f(x,t),
+\]
+where $c$, $\rho$, $K_0$, and $q$ are functions of $x$ only, subject to the conditions
+\[
+u(0,t) = 0,\quad u(L,t) = 0,\quad\text{and}\quad u(x,0) = g(x).
+\]
+Assume that the eigenfunctions $\phi_n(x)$ of the related homogeneous problem are known.  [\textit{Hint:} let $L \equiv \frac{d}{d x}\left(K_0\frac{d}{d x}\right) + q$.]
+
+\item Consider
+\begin{alignat*}{2}
+\pd{u}{t} &= \frac{1}{\sigma(x)}\frac{\partial}{\partial x}\left[K_0(x)\pd{u}{x}\right] &\qquad (K_0 &> 0, \sigma > 0)
+\end{alignat*}
+with the boundary and initial conditions:
+\[
+u(x,0) = g(x),\quad u(0,t) = A,\quad\text{and}\quad u(L,t) = B.
+\]
+\begin{enumerate}
+\item[\starred(a)] Find a time-independent solution, $u_0(x)$.
+\item[(b)] Show that $\lim_{t\to\infty} u(x,t) = f(x)$ independent of the initial conditions.  [Show that $f(x) = u_0(x)$.]
+\end{enumerate}
+
+\item[\starred 8.3.5.] Solve
+\[
+\pd{u}{t} = k\laplacian u + f(r,t)
+\]
+inside the circle ($r < a$) with $u=0$ at $r=a$ and initially $u=0$.
+
+\item[8.3.6.] Solve
+\[
+\pd{u}{t} = \pdd{u}{x} + \sin 5x\;e^{-2t}
+\]
+subject to $u(0,t) = 1$, $u(\pi,t) = 0$, and $u(x,0) = 0$.
+
+\item[\starred 8.3.7.] Solve
+\[
+\pd{u}{t} = \pdd{u}{x}
+\]
+subject to $u(0,t) = 0$, $u(L,t) = t$, and $u(x,0) = 0$.
+
+\end{exercises}

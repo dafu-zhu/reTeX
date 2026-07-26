@@ -1,0 +1,268 @@
+% sec10_5.tex — Section 10.5: Application: The Demand for Money in the United States
+
+The literature on the estimation of the money demand function is very large (see
+Goldfeld and Sichel, 1990, for a review). The money demand equation typically
+estimated in the literature is
+\begin{equation}
+  m_t - p_t = \mu + \gamma_y y_t + \gamma_R R_t + z_t^*,
+  \label{eq:10.5.1} \tag{10.5.1}
+\end{equation}
+where $m_t$ is the log of money stock in period $t$, $p_t$ is the log of price level, $y_t$ is
+log income, $R_t$ is the nominal interest rate, and $z_t^*$ is some error term. $\gamma_y$ is the
+income elasticity and $\gamma_R$ is the interest semielasticity of money demand (it is a
+semielasticity because the interest rate enters the money demand equation in lev\-els,
+not in logs). Most empirical analyses that predate the literature on unit roots
+and cointegration suffer from two drawbacks. First, as will be verified below, all
+the variables involved, $m_t - p_t$, $y_t$, and $R_t$, appear to contain stochastic trends. If
+the variables have trends, conventional inference under the stationarity assumption
+is not valid. Second, the regressors may be endogenous. This is likely to be a seri\-ous
+problem in the case of money demand, because in virtually all macro models a
+shift in money demand represented by the error term $z_t^*$ affects the nominal interest
+rate and perhaps income. A resolution of both problems is provided by the econo\-metric
+technique for estimating cointegrating regressions presented in the previous
+section.
+
+Another issue addressed in this section is the stability of the money demand
+function. The consensus in the literature is that money demand is unstable. This
+is challenged by Lucas (1988) who, using annual data since 1900, argues that the
+interest semielasticity is stable if the income elasticity is constrained to be unity.
+We will examine Lucas' claim by applying the state-of-the-art econometric tech\-niques
+developed in this chapter.
+
+\subsection*{The Data}
+
+We base our analysis on the annual data studied by Lucas (1988), extended by
+Stock and Watson (1993) to cover 1900--1989. Their measures of the money stock,
+income, and the nominal interest rate are M1, net national product (NNP), and
+the six-month commercial paper rate (in percent at an annual rate), respectively.
+The use of \emph{net} national product --- rather than gross national product --- follows the
+tradition since Friedman (1959) that the scale variable ($y_t$) in the money demand
+equation should be a measure of wealth rather than a measure of transaction vol\-ume.
+There are no official statistics on M1 that date back to as early as 1900, so one
+needs to do some splicing on series from multiple sources. For the money stock
+and the interest rate, monthly data were averaged to obtain annual observations.
+See Appendix~B of Stock and Watson (1993) for more details on data construction.
+
+\subsection*{$(m - p, y, R)$ as a Cointegrated System}
+
+Figures~10.2 and~10.3 plot $m - p$, $y$, and $R$. The three series have clear trends.
+Log real money stock ($m - p$) grew rapidly over the first half of the century, but
+experienced almost no growth thereafter until 1981. Log income ($y$), on the other
+hand, grew steadily over the entire sample period with a major interruption from
+1930 to the early 1940s, so M1 velocity ($y - (m - p)$), also plotted in Figure~10.3,
+dropped during that period and then grew steadily until 1981. This movement in
+M1 velocity is fairly closely followed by the nominal interest rate, which suggests
+that $m - p$, $y$, and $R$ are cointegrated, with a cointegrating vector whose element
+corresponding to $y$ is about~1.
+
+Inspection of these figures suggests that the three variables, $m - p$, $y$, and
+$R$, might be well described as being individually I(1). In fact, Stock and Watson
+(1993), based on the ADF tests, report that $m - p$ and $y$ are individually I(1) with
+drift, while $R$ is I(1) with no drift. They also report, based on the Stock-Watson
+(1988) common trend test, that the three-variable system is cointegrated with a
+cointegrating rank of~1. In what follows, we proceed under the assumption that
+$m - p$ is cointegrated with $y$ and $R$. (In the empirical exercise, you will be asked
+to check the validity of this premise.)
+
+\begin{figure}[htbp]
+  \centering
+  % Placeholder for Figure 10.2
+  \includegraphics[width=0.9\textwidth,trim=50 350 50 350,clip]{figures/fig_10_2.png}
+  \caption{U.S.\ Real NNP and Real M1, in Logs}
+  \label{fig:10.2}
+\end{figure}
+
+\begin{figure}[htbp]
+  \centering
+  % Placeholder for Figure 10.3
+  \includegraphics[width=0.9\textwidth,trim=50 350 50 350,clip]{figures/fig_10_3.png}
+  \caption{Log M1 Velocity (left scale) and Short-Term Commercial Paper Rate (right scale)}
+  \label{fig:10.3}
+\end{figure}
+
+\subsection*{DOLS}
+
+The first line of Table~10.2 reports the SOLS estimate of the cointegrating regres\-sion
+(10.5.1). (The sample period is 1903--1987 because in the DOLS estimation
+below two lead and lagged changes will be included in the augmented cointegrating
+regression.) The standard errors are not reported because the asymptotic distribu\-tion
+of the associated $t$-ratio, being dependent on nuisance parameters, is unknown.
+The SOLS estimate of the income elasticity of 0.943 is close to unity, but we can\-not
+tell whether it is insignificantly different from unity. To be able to do inference,
+we turn to the DOLS estimation of the cointegrating vector, which is to estimate
+the parameters $(\mu, \gamma_y, \gamma_R)$ in the cointegrating regression (10.5.1) by adding $\Delta y_t$,
+$\Delta R_t$, and their leads and lags. Following Stock and Watson (1993), the number
+of leads and lags is (arbitrarily) chosen to be~2, so the augmented cointegrating
+regression associated with (10.5.1) is
+\begin{align}
+  m_t - p_t
+  &= \mu + \gamma_y y_t + \gamma_R R_t
+  \notag \\
+  &\quad + \beta_{y0} \Delta y_t
+    + \beta_{y,-1} \Delta y_{t+1} + \beta_{y,-2} \Delta y_{t+2}
+    + \beta_{y1} \Delta y_{t-1} + \beta_{y2} \Delta y_{t-2}
+  \notag \\
+  &\quad + \beta_{R0} \Delta R_t
+    + \beta_{R,-1} \Delta R_{t+1} + \beta_{R,-2} \Delta R_{t+2}
+    + \beta_{R1} \Delta R_{t-1} + \beta_{R2} \Delta R_{t-2}
+    + v_t.
+  \label{eq:10.5.2} \tag{10.5.2}
+\end{align}
+This dictates the sample period to be $t = 1903, \ldots, 1987$. The DOLS point esti\-mate
+of $(\gamma_y, \gamma_R)$, reported in the second line of Table~10.2, is obtained from esti\-mating
+this equation by OLS.
+
+To calculate appropriate standard errors, the long-run variance of the error term
+$v_t$ needs to be estimated. For this purpose we fit an autoregressive process to the
+DOLS residuals. The order of the autoregression is (again arbitrarily) set to~2. With
+the DOLS residuals calculated for $t = 1903, \ldots, 1987$, the sample period for the
+AR(2) estimation is for $t = 1905, \ldots, 1987$ (sample size $= 83$). The estimated
+autoregression is
+\begin{equation}
+  \hat{v}_t = 0.93806\, \hat{v}_{t-1} - 0.13341\, \hat{v}_{t-2},
+  \quad SSR = 0.19843.
+  \label{eq:10.5.3} \tag{10.5.3}
+\end{equation}
+We then use the formula (10.4.17), but to be able to replicate the DOLS estimates
+by Stock and Watson (1993, Table~III), we divide the SSR by $T - p - K$ rather
+than $T - p$, where $K$ here is the number of regressors in the
+augmented cointegrating regression (which is 13 here). Thus
+$\hat{\sigma}_e^2 = 0.19843/(83 - 2 - 13) = 0.0029181$ and
+\begin{equation}
+  \hat{\lambda}_v^2
+  = \frac{0.0029181}{(1 - 0.93806 + 0.13341)^2}
+  = 0.07647.
+  \label{eq:10.5.4} \tag{10.5.4}
+\end{equation}
+
+\begin{table}[htbp]
+\centering
+\caption{SOLS and DOLS Estimates, 1903--1987}
+\label{tab:10.2}
+\begin{tabular}{l cccc}
+\toprule
+ & $\gamma_y$ & $\gamma_R$ & $R^2$ & Std.\ error \\
+ & & & & of regression \\
+\midrule
+SOLS estimates & 0.943 & $-0.082$ & 0.959 & 0.135 \\[3pt]
+DOLS estimates & 0.970 & $-0.101$ & 0.982 & 0.096 \\
+(Rescaled standard errors) & (0.046) & (0.013) & & \\
+\bottomrule
+\end{tabular}
+
+\medskip
+\small
+\textsc{Source:} The point estimates and standard errors are from Table~III of Stock
+and Watson (1993). The $R^2$ and standard error of regression are by author's
+calculation.
+\end{table}
+
+The estimate $\hat{\lambda}_v$ is the square root of this, which is 0.277. Since the standard error
+of the DOLS regression is 0.096, the factor in the formula (10.4.15) for rescal\-ing
+the usual OLS standard errors from the augmented cointegrating regression is
+$0.277/0.096 = 2.89$. The numbers in parentheses in Table~10.2 are the adjusted
+standard errors thus calculated. Now we can see that the estimated income elastic\-ity
+is not significantly different from unity.
+
+\subsection*{Unstable Money Demand?}
+
+Table~10.3 reports the parameter estimates by SOLS and DOLS for two subsam\-ples,
+1903--1945 and 1946--1987. (Following Stock and Watson (1993), the break
+date of 1946 was chosen both because of the natural break at the end of World
+War~II and because it divides the full sample nearly in two.) In sharp contrast to
+the estimates based on the first-half of the sample, the postwar estimates are very
+different from those based on the full sample.
+
+\begin{table}[htbp]
+\centering
+\caption{Money Demand in Two Subsamples}
+\label{tab:10.3}
+\begin{tabular}{l cccc}
+\toprule
+ & \multicolumn{2}{c}{1903--1945} & \multicolumn{2}{c}{1946--1987} \\
+ & $\gamma_y$ & $\gamma_R$ & $\gamma_y$ & $\gamma_R$ \\
+\midrule
+SOLS estimates & 0.919 & $-0.085$ & 0.192 & $-0.016$ \\[3pt]
+DOLS estimates & 0.887 & $-0.104$ & 0.269 & $-0.027$ \\
+(Rescaled standard errors) & (0.197) & (0.038) & (0.213) & (0.025) \\
+\bottomrule
+\end{tabular}
+
+\medskip
+\small
+\textsc{Source:} Table~III of Stock and Watson (1993).
+\end{table}
+
+Lucas (1988) argues that estimates like these are consistent with a stable
+demand for money with a unitary income elasticity. To support this view, he points
+to the evidence depicted in Figure~10.4. It plots $m_t - p_t - y_t$ (the log inverse velocity),
+which would be the dependent variable in the money demand equation (10.5.1) if
+the income elasticity $\gamma_y$ were set to unity) against the interest rate, with the postwar
+observations indicated by a different set of symbols from the prewar observations.
+The striking feature is that, although postwar interest rates are substantially higher,
+postwar observations lie on the line defined by the prewar observations.\footnote{%
+In Lucas' (1988) original plot, the sample period is 1900--1985 and the break date is 1957, but the message
+of the figure is essentially the same.}
+
+\begin{figure}[htbp]
+  \centering
+  % Placeholder for Figure 10.4
+  \includegraphics[width=0.9\textwidth,trim=50 350 50 350,clip]{figures/fig_10_4.png}
+  \caption{Plot of $m - p - y$ against $R$}
+  \label{fig:10.4}
+\end{figure}
+
+This finding suggests that the postwar estimates suffer from the near multi\-collinearity
+problem: because of the similar trends in $y$ and $R$ in the postwar period
+(shown in Figures~10.2 and~10.3), $\gamma_y$ and $\gamma_R$ estimated on postwar data are strongly
+correlated. Even though for each element the postwar estimate of $(\gamma_y, \gamma_R)$ is differ\-ent
+from the prewar estimate, they may not be jointly significantly different. This
+possibility could be easily checked by the Chow test of structural change, at least
+if the regressors were stationary. In the Chow test, you would estimate
+\begin{equation}
+  m_t - p_t = \mu + \gamma_y y_t + \gamma_R R_t
+    + \delta_0 D_t + \delta_y y_t D_t + \delta_R R_t D_t + z_t^*,
+  \label{eq:10.5.5} \tag{10.5.5}
+\end{equation}
+where $D_t$ is a dummy variable whose value is 1 if $t \geq 1946$ and 0 otherwise.
+Thus, the coefficients of the constant, $y_t$, and $R_t$ are $(\mu, \gamma_y, \gamma_R)$ until 1945 and
+$(\mu + \delta_0, \gamma_y + \delta_y, \gamma_R + \delta_R)$ thereafter. If the regressors are stationary, the Wald
+statistic for the null hypothesis that $\delta_0 = 0, \delta_y = 0, \delta_R = 0$ is asymptotically
+$\chi^2(3)$ as both subsamples grow larger with the relative size held constant (see
+Analytical Exercise~12 in Chapter~2). Now in the present case where regressors
+are I(1) and not cointegrated, it has been shown by Hansen (1992b, Theorem~3(a))
+that the Wald statistic (properly rescaled if necessary) has the same asymptotic
+distribution (of $\chi^2$) if the parameters of the cointegrating regression are estimated
+by an efficient method such as DOLS (which adds $\Delta y_t$, $\Delta R_t$, and their leads and
+lags to the cointegrating regression (10.5.5)), the Fully Modified estimation, or the
+Johansen ML.\footnote{%
+We noted in the previous section that the Wald statistic is not asymptotically chi squared even after rescaling
+if the hypothesis involves $\mu$. Hansen's (1992b) result, however, shows that the Wald statistic for the hypothesis
+about the \emph{difference} in $\mu$ is asymptotically chi squared. Hansen (1992b) also develops tests for structural change
+at unknown break dates.}
+The DOLS estimates of (10.5.5) augmented with two leads and
+two lags of $\Delta y$ and $\Delta R$ are shown in Table~10.4. The insignificant Wald statistic
+supports Lucas' view that the money demand in the United States has been stable
+in the twentieth century.
+
+\begin{table}[htbp]
+\centering
+\caption{Test for Structural Change}
+\label{tab:10.4}
+\begin{tabular}{l ccccc c}
+\toprule
+ & $\gamma_y$ & $\gamma_R$ & $\delta_0$ & $\delta_y$ & $\delta_R$
+ & Wald statistic \\
+\midrule
+DOLS estimates
+  & 0.925 & $-0.090$ & 1.36 & $-0.52$ & 0.048 & 1.85 \\
+(Rescaled standard errors)
+  & (0.142) & (0.026) & (0.72) & (0.31) & (0.034)
+  & ($p$-value $= 0.60$) \\
+\bottomrule
+\end{tabular}
+
+\medskip
+\small
+\textsc{Source:} Author's calculation, to be verified in the empirical exercise.
+\end{table}

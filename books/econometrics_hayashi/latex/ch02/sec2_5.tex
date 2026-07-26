@@ -1,0 +1,149 @@
+% sec2_5.tex — Section 2.5: Estimating E(epsilon^2 x_i x_i') Consistently
+
+The theory developed so far presumes that there is available a consistent estimator,
+$\widehat{\mathbf{S}}$, of $\mathbf{S} = \E(\mathbf{g}_i \mathbf{g}_i') \equiv \E(\varepsilon_i^2 \mathbf{x}_i \mathbf{x}_i')$
+to be used to calculate the estimated asymptotic
+variance, $\widehat{\avar}(\mathbf{b})$.  This section explains how to obtain $\widehat{\mathbf{S}}$
+from the sample $(\mathbf{y}, \mathbf{X})$.
+
+%% ─── Using Residuals for the Errors ───────────────────────────────────────────
+\subsection*{Using Residuals for the Errors}
+
+If the error were observable, then the sample mean of $\varepsilon_i^2 \mathbf{x}_i \mathbf{x}_i'$
+is obviously consistent by ergodic stationarity.  But we do not observe the error term,
+and the substitution of some consistent estimate of it results in
+\begin{equation}
+  \widehat{\mathbf{S}} \equiv \frac{1}{n} \sum_{i=1}^{n} \hat{\varepsilon}_i^2\,
+    \mathbf{x}_i \mathbf{x}_i',
+  \label{eq:2.5.1}
+\end{equation}
+where $\hat{\varepsilon}_i \equiv y_i - \mathbf{x}_i' \widetilde{\bm{\beta}}$, and
+$\widetilde{\bm{\beta}}$ is some consistent estimator of $\bm{\beta}$.
+(Although the obvious candidate for the consistent estimator
+$\widetilde{\bm{\beta}}$ is the OLS estimator $\mathbf{b}$, we use
+$\widetilde{\bm{\beta}}$ rather than $\mathbf{b}$ here, in order to make the point
+that the results of this section hold for any consistent estimator.)
+For this estimator to be consistent for $\mathbf{S}$, we need to make a fourth-moment
+assumption about the regressors.
+
+\begin{assumption}[finite fourth moments for regressors]
+\label{ass:2.6}
+$\E[(x_{ik} x_{ij})^2]$ \emph{exists and is finite for all} $k$, $j$ $(= 1, 2, \ldots, K)$.
+\end{assumption}
+
+\begin{proposition}[consistent estimation of $\mathbf{S}$]
+\label{prop:2.4}
+\emph{Suppose the coefficient estimate $\widetilde{\bm{\beta}}$ used for calculating the
+residual $\hat{\varepsilon}_i$ for $\widehat{\mathbf{S}}$ in \eqref{eq:2.5.1} is consistent,
+and suppose $\mathbf{S} = \E(\mathbf{g}_i \mathbf{g}_i')$ exists and is finite.  Then,
+under Assumptions~2.1, 2.2, and 2.6, $\widehat{\mathbf{S}}$ given in \eqref{eq:2.5.1} is
+consistent for $\mathbf{S}$.}
+\end{proposition}
+
+To indicate why the fourth-moment assumption is needed for the regressors, we provide
+a sketch of the proof for the special case of $K = 1$ (only one regressor).  So
+$\mathbf{x}_i$ is now a scalar $x_i$, $\mathbf{g}_i$ is a scalar $g_i = x_i \varepsilon_i$,
+and (2.3.10) (with $\mathbf{b} = \widetilde{\bm{\beta}}$ and $e_i = \hat{\varepsilon}_i$)
+simplifies to
+\begin{equation}
+  \hat{\varepsilon}_i^2 = \varepsilon_i^2 - 2(\widetilde{\beta} - \beta) x_i \varepsilon_i
+    + (\widetilde{\beta} - \beta)^2 x_i^2.
+  \label{eq:2.5.2}
+\end{equation}
+By multiplying both sides by $x_i^2$ and summing over $i$,
+\begin{equation}
+  \frac{1}{n} \sum_{i=1}^{n} \hat{\varepsilon}_i^2 x_i^2
+    - \frac{1}{n} \sum_{i=1}^{n} \varepsilon_i^2 x_i^2
+    = -2(\widetilde{\beta} - \beta) \frac{1}{n} \sum_{i=1}^{n} \varepsilon_i x_i^3
+    + (\widetilde{\beta} - \beta)^2 \frac{1}{n} \sum_{i=1}^{n} x_i^4.
+  \label{eq:2.5.3}
+\end{equation}
+Now we can see why the finite fourth-moment assumption on $x_i$ is required: if the
+fourth moment $\E(x_i^4)$ is finite, then by ergodic stationarity the sample average of
+$x_i^4$ converges in probability to some finite number, so that the last term in
+\eqref{eq:2.5.3} vanishes (converges to 0 in probability) if $\widetilde{\beta}$ is
+consistent for $\beta$.  It can also be shown (see Analytical Exercise~4 for proof) that,
+by combining the same fourth-moment assumption and the fourth-moment assumption that
+$\E(\mathbf{g}_i \mathbf{g}_i') \;(= \E(\varepsilon_i^2 \mathbf{x}_i \mathbf{x}_i'))$ is
+finite, the sample average of $x_i^3 \varepsilon_i$ converges in probability to some
+finite number, so that the other term on the RHS of \eqref{eq:2.5.3}, too, vanishes.
+
+According to Proposition~2.1(a), the assumptions made in Proposition~2.3 are sufficient
+to guarantee that $\mathbf{b}$ is consistent, so we can set
+$\mathbf{b} = \widetilde{\bm{\beta}}$ in \eqref{eq:2.5.1} and use the OLS residual to
+calculate $\widehat{\mathbf{S}}$.  Also, the assumption made in Proposition~2.4 that
+$\E(\mathbf{g}_i \mathbf{g}_i')$ is finite is part of Assumption~2.5, which is assumed in
+Proposition~2.3.  Therefore, the import of Proposition~2.4 is:
+
+\medskip
+\noindent
+If Assumption~2.6 is added to the hypothesis in Proposition~2.3, then the
+$\widehat{\mathbf{S}}$ given in \eqref{eq:2.5.1} with
+$\mathbf{b} = \widetilde{\bm{\beta}}$ (so $\hat{\varepsilon}_i$ is the OLS residual $e_i$)
+can be used in (2.3.5) to calculate the estimated asymptotic variance:
+\begin{equation}
+  \widehat{\avar}(\mathbf{b}) = \mathbf{S}_{\mathbf{xx}}^{-1}
+    \biggl(\frac{1}{n} \sum_{i=1}^{n} e_i^2\, \mathbf{x}_i \mathbf{x}_i'\biggr)
+    \mathbf{S}_{\mathbf{xx}}^{-1},
+  \label{eq:2.5.4}
+\end{equation}
+which is consistent for $\avar(\mathbf{b})$.
+
+%% ─── Data Matrix Representation of S ─────────────────────────────────────────
+\subsection*{Data Matrix Representation of $\widehat{\mathbf{S}}$}
+
+If $\mathbf{B}$ is the $n \times n$ diagonal matrix whose $i$-th diagonal element is
+$\hat{\varepsilon}_i^2$, then the $\widehat{\mathbf{S}}$ in \eqref{eq:2.5.1} can be
+represented in terms of data matrices as
+\begin{equation}
+  \widehat{\mathbf{S}} = \frac{\mathbf{X}' \mathbf{B} \mathbf{X}}{n}
+  \tag{2.5.1$'$}
+  \label{eq:2.5.1p}
+\end{equation}
+with
+\[
+  \mathbf{B} = \begin{bmatrix}
+    \hat{\varepsilon}_1^2 & & \\
+    & \ddots & \\
+    & & \hat{\varepsilon}_n^2
+  \end{bmatrix}.
+\]
+So \eqref{eq:2.5.4} can be rewritten (with $\hat{\varepsilon}_i$ in $\mathbf{B}$ set to
+$e_i$) as
+\begin{equation}
+  \widehat{\avar}(\mathbf{b}) = n \cdot (\mathbf{X}'\mathbf{X})^{-1}
+    (\mathbf{X}'\mathbf{B}\mathbf{X})(\mathbf{X}'\mathbf{X})^{-1}.
+  \tag{2.5.4$'$}
+  \label{eq:2.5.4p}
+\end{equation}
+These expressions, although useful for some purposes, should not be used for computation
+purposes, because the $n \times n$ matrix $\mathbf{B}$ will take up too much of the
+computer's working memory, particularly when the sample size is large.  To compute
+$\widehat{\mathbf{S}}$ from the sample, the formula \eqref{eq:2.5.1} is more useful than
+\eqref{eq:2.5.1p}.
+
+%% ─── Finite-Sample Considerations ────────────────────────────────────────────
+\subsection*{Finite-Sample Considerations}
+
+Of course, in finite samples, the power may well be far below one against certain
+alternatives.  Also, the probability of rejecting the null when the DGP does satisfy the
+null (the Type~I error) may be very different from the assumed significance level.
+Davidson and MacKinnon (1993, Section~16.3) report that, at least for the Monte Carlo
+simulations they have seen, the robust $t$-ratio based on \eqref{eq:2.5.1} rejects the
+null too often and that simply replacing the denominator $n$ in \eqref{eq:2.5.1} by the
+degrees of freedom $n - K$ or equivalently multiplying \eqref{eq:2.5.1} by $n/(n - K)$
+(this is a \textbf{degrees of freedom correction}) mitigates the problem of overrejecting.
+They also report that the robust $t$-ratios based on the following adjustments on
+$\widehat{\mathbf{S}}$ perform even better:
+\begin{equation}
+  \widehat{\mathbf{S}} = \frac{1}{n} \sum_{i=1}^{n}
+    \frac{e_i^2}{(1 - p_i)^d}\, \mathbf{x}_i \mathbf{x}_i', \quad d = 1 \text{ or } 2,
+  \label{eq:2.5.5}
+\end{equation}
+where $p_i$ is the $p_i$ defined in the context of the influential analysis in
+Chapter~1: it is the $i$-th diagonal element of the projection matrix $\mathbf{P}$,
+that is,
+\[
+  p_i \equiv \mathbf{x}_i'(\mathbf{X}'\mathbf{X})^{-1}\mathbf{x}_i
+    = \frac{\mathbf{x}_i' \mathbf{S}_{\mathbf{xx}}^{-1} \mathbf{x}_i}{n}.
+\]

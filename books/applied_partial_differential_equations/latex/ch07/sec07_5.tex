@@ -1,0 +1,223 @@
+% sec07_5.tex — Section 7.5: Green's Formula, Self-Adjoint Operators
+\section{Green's Formula, Self-Adjoint Operators and Multidimensional Eigenvalue Problems}
+\label{sec:7.5}
+
+\textbf{Introduction.}  In this section we prove some of the properties of the multidimensional eigenvalue problem:
+\begin{equation}
+\boxed{\laplacian\phi + \lambda\phi = 0}
+\label{eq:7.5.1}
+\end{equation}
+with
+\begin{equation}
+\boxed{\beta_1\phi + \beta_2\nabla\phi\cdot\hat{n} = 0}
+\label{eq:7.5.2}
+\end{equation}
+on the entire boundary.  Here $\beta_1$ and $\beta_2$ are real functions of the location in space.  As with Sturm-Liouville eigenvalue problems, we will simply assume that there is an infinite number of eigenvalues for \eqref{eq:7.5.1} with \eqref{eq:7.5.2} and that the resulting set of eigenfunctions is complete.  Proofs of these statements are difficult and beyond the intent of this text.  The proofs for various other properties of the multidimensional eigenvalue problem are quite similar to corresponding proofs for the one-dimensional Sturm-Liouville eigenvalue problem.  We let
+\begin{equation}
+L \equiv \laplacian,
+\label{eq:7.5.3}
+\end{equation}
+in which case the notation for the multidimensional eigenvalue problem becomes
+\begin{equation}
+L(\phi) + \lambda\phi = 0.
+\label{eq:7.5.4}
+\end{equation}
+By comparing \eqref{eq:7.5.4} to \eqref{eq:7.4.3}, we notice that the weight function for this multidimensional problem is expected to be 1.
+
+\textbf{Multidimensional Green's formula.}  The proofs for the one-dimensional Sturm-Liouville eigenvalue problem depended on $uL(v) - vL(u)$ being an exact differential (known as Lagrange's identity).  The corresponding integrated form (known as Green's formula) was also needed.  Similar identities will be derived for the Laplacian operator, $L = \laplacian$, a multidimensional analog of the Sturm-Liouville differential operator.  We will calculate $uL(v) - vL(u) = u\laplacian v - v\laplacian u$.  We recall that $\laplacian u = \nabla\cdot(\nabla u)$ and $\nabla\cdot(a\vec{B}) = a\nabla\cdot\vec{B} + \nabla a\cdot\vec{B}$ (where $a$ is a scalar and $\vec{B}$ a vector).  Thus,
+\begin{align}
+\nabla\cdot(u\nabla v) &= u\laplacian v + \nabla u\cdot\nabla v \label{eq:7.5.5} \\
+\nabla\cdot(v\nabla u) &= v\laplacian u + \nabla v\cdot\nabla u. \notag
+\end{align}
+By subtracting these,
+\begin{equation}
+\boxed{u\laplacian v - v\laplacian u = \nabla\cdot(u\nabla v - v\nabla u).}
+\label{eq:7.5.6}
+\end{equation}
+The differential form, \eqref{eq:7.5.6}, is the multidimensional version of Lagrange's identity, (5.5.7).  Instead of integrating from $a$ to $b$ as we did in one-dimensional problems, we integrate over the entire two-dimensional region
+\[
+\iint_R (u\laplacian v - v\laplacian u)\dx\dy = \iint_R \nabla\cdot(u\nabla v - v\nabla u)\dx\dy.
+\]
+The right-hand side is in the correct form to apply the divergence theorem (recall that $\iint_R \nabla\cdot\vec{A}\dx\dy = \oint\vec{A}\cdot\hat{n}\ds$).  Thus,
+\begin{equation}
+\boxed{\iint_R (u\laplacian v - v\laplacian u)\dx\dy = \oint(u\nabla v - v\nabla u)\cdot\hat{n}\ds.}
+\label{eq:7.5.7}
+\end{equation}
+Equation \eqref{eq:7.5.7} is analogous to Green's formula, (5.5.8).  It is known as \textbf{Green's second identity},\footnote{Green's first identity arises from integrating \eqref{eq:7.5.5} [rather than \eqref{eq:7.5.6}] with $v = u$ and applying the divergence theorem.} but we will just refer to it as \textbf{Green's formula}.
+
+We have shown that $L = \laplacian$ is a multidimensional \textbf{self-adjoint} operator in the following sense:
+
+\begin{center}
+\fbox{\parbox{0.8\textwidth}{
+\boxed{If $u$ and $v$ are any two functions such that
+}}
+\end{center}
+\begin{equation}
+\oint(u\nabla v - v\nabla u)\cdot\hat{n}\ds = 0,
+\label{eq:7.5.8}
+\end{equation}
+then
+\begin{equation}
+\iint_R\left[u\laplacian v - v\laplacian u\right]\dx\dy = 0.
+\label{eq:7.5.9}
+\end{equation}
+where $L = \laplacian$.}
+
+In many problems, prescribed homogeneous boundary conditions will cause the boundary term to vanish.  For example, \eqref{eq:7.5.8} and thus \eqref{eq:7.5.9} is valid if $u$ and $v$ both vanish on the boundary.  Again for three-dimensional problems, $\iint$ must be replaced by $\iiint$ and $\oint$ must be replaced by $\oiint$.
+
+\textbf{Orthogonality of the eigenfunctions.}  As with the one-dimensional Sturm-Liouville eigenvalue problem, we can prove a number of theorems directly from Green's formula \eqref{eq:7.5.7}.  To show eigenfunctions corresponding to different eigenvalues are orthogonal, we consider two eigenfunctions $\phi_1$ and $\phi_2$ corresponding to the eigenvalues $\lambda_1$ and $\lambda_2$:
+\begin{equation}
+\begin{aligned}
+\laplacian\phi_1 + \lambda_1\phi_1 &= 0 \quad\text{or}\quad L(\phi_1) + \lambda_1\phi_1 = 0 \\
+\laplacian\phi_2 + \lambda_2\phi_2 &= 0 \quad\text{or}\quad L(\phi_2) + \lambda_2\phi_2 = 0.
+\end{aligned}
+\label{eq:7.5.10}
+\end{equation}
+If both $\phi_1$ and $\phi_2$ satisfy the same homogeneous boundary conditions, then \eqref{eq:7.5.8} is satisfied, in which case \eqref{eq:7.5.9} follows.  Thus
+\[
+\iint_R (-\phi_1\lambda_2\phi_2 + \phi_2\lambda_1\phi_1)\dx\dy = (\lambda_1 - \lambda_2)\iint_R \phi_1\phi_2\dx\dy = 0.
+\]
+If $\lambda_1 \neq \lambda_2$, then
+\begin{equation}
+\iint_R \phi_1\phi_2\dx\dy = 0,
+\label{eq:7.5.11}
+\end{equation}
+which means that eigenfunctions corresponding to different eigenvalues are orthogonal (in a multidimensional sense with weight 1).  If two or more eigenfunctions correspond to the same eigenvalue, they can be made orthogonal to each other (as well as all other eigenfunctions) by a procedure shown in the appendix of this section known as the Gram-Schmidt method.
+
+We can now prove that the eigenvalues will be real.  The proof is left for an exercise since the proof is identical to that used for the one-dimensional Sturm-Liouville problem (see Sec.~5.5).
+
+\begin{exercises}{7.5}
+
+\item The vertical displacement of a nonuniform membrane satisfies
+\[
+\pdd{u}{t} = c^2\left(\pdd{u}{x} + \pdd{u}{y}\right),
+\]
+where $c$ depends on $x$ and $y$.  Suppose that $u = 0$ on the boundary of an irregularly shaped membrane.
+
+\begin{enumerate}
+\item[(a)] Show that the time variable can be separated by assuming that
+\[
+u(x,y,t) = \phi(x,y)h(t).
+\]
+Show that $\phi(x,y)$ satisfies the eigenvalue problem
+\begin{equation}
+\laplacian\phi + \lambda\sigma(x,y)\phi = 0 \quad\text{with}\quad \phi = 0 \text{ on the boundary.}
+\label{eq:7.5.12}
+\end{equation}
+What is $\sigma(x,y)$?
+
+\item[(b)] If the eigenvalues are known (and $\lambda > 0$), determine the frequencies of vibration.
+\end{enumerate}
+
+\item See Exercise~7.5.1.  Consider the two-dimensional eigenvalue problem given in \eqref{eq:7.5.12}.
+
+\begin{enumerate}
+\item[(a)] Prove that the eigenfunctions belonging to different eigenvalues are orthogonal (with what weight?).
+
+\item[(b)] Prove that all the eigenvalues are real.
+
+\item[(c)] Do Exercise~7.6.1.
+\end{enumerate}
+
+\item Redo Exercise~7.5.2 if the boundary condition is instead
+\begin{enumerate}
+\item[(a)] $\nabla\phi\cdot\hat{n} = 0$ on the boundary
+\item[(b)] $\nabla\phi\cdot\hat{n} + h(x,y)\phi = 0$ on the boundary
+\item[(c)] $\phi = 0$ on part of the boundary and $\nabla\phi\cdot\hat{n} = 0$ on the rest of the boundary
+\end{enumerate}
+
+\item Consider the heat equation in three dimensions with no sources but with nonconstant thermal properties
+\[
+c\rho\pd{u}{t} = \nabla\cdot(K_0\nabla u),
+\]
+where $c\rho$ and $K_0$ are functions of $x$, $y$, and $z$.  Assume that $u = 0$ on the boundary.  Show that the time variable can be separated by assuming that
+\[
+u(x,y,z,t) = \phi(x,y,z)h(t).
+\]
+Show that $\phi(x,y,z)$ satisfies the eigenvalue problem
+\begin{equation}
+\nabla\cdot(p\nabla\phi) + \lambda\sigma(x,y,z)\phi = 0 \quad\text{with}\quad \phi = 0 \text{ on the boundary.}
+\label{eq:7.5.13}
+\end{equation}
+What are $\sigma(x,y,z)$ and $p(x,y,z)$?
+
+\item See Exercise~7.5.4.  Consider the three-dimensional eigenvalue problem given in \eqref{eq:7.5.13}.
+
+\begin{enumerate}
+\item[(a)] Prove that the eigenfunctions belonging to different eigenvalues are orthogonal (with what weight?).
+
+\item[(b)] Prove that all the eigenvalues are real.
+
+\item[(c)] Do Exercise~7.6.3.
+\end{enumerate}
+
+\item Derive an expression for
+\[
+\iint [uL(v) - vL(u)]\dx\dy
+\]
+over a two-dimensional region $R$, where
+\[
+L = \laplacian + q(x,y) \quad\text{[i.e., } L(u) = \laplacian u + q(x,y)u\text{]}.
+\]
+
+\item Consider Laplace's equation $\laplacian u = 0$ in a three-dimensional region $R$ (where $u$ is the temperature).  Suppose that the heat flux is given on the boundary (not necessarily a constant).
+
+\begin{enumerate}
+\item[(a)] Explain \emph{physically} why $\oiint\nabla u\cdot\hat{n}\dS = 0$.
+
+\item[(b)] Show this mathematically.
+\end{enumerate}
+
+\item Suppose that in a three-dimensional region $R$
+\[
+\laplacian\phi = f(x,y,z)
+\]
+with $f$ given and $\nabla\phi\cdot\hat{n} = 0$ on the boundary.
+
+\begin{enumerate}
+\item[(a)] Show mathematically that (if there is a solution)
+\[
+\iiint_R f\dx\dy\,dz = 0.
+\]
+
+\item[(b)] Briefly explain physically (using the heat flow model) why condition (a) must hold for a solution.  What happens in a heat flow problem if
+\[
+\iiint_R f\dx\dy\,dz > 0?
+\]
+\end{enumerate}
+
+\item Show that the boundary term \eqref{eq:7.5.8} vanishes if both $u$ and $v$ satisfy \eqref{eq:7.5.2}:
+\begin{enumerate}
+\item[(a)] Assume that $\beta_2 \neq 0$.
+\item[(b)] Assume that $\beta_2 = 0$ for part of the boundary.
+\end{enumerate}
+
+\end{exercises}
+
+\subsection*{Appendix to 7.5: Gram-Schmidt Method}
+
+We wish to show in general that eigenfunctions \emph{corresponding to the same eigenvalue} can be made orthogonal.  The process is known as \textbf{Gram-Schmidt orthogonalization}.  Let us suppose that $\phi_1, \phi_2, \ldots, \phi_n$ are independent eigenfunctions corresponding to the \emph{same eigenvalue}.  We will form a set of $n$-independent eigenfunctions denoted $\psi_1, \psi_2, \ldots, \psi_n$ which are mutually orthogonal, even if $\phi_1, \ldots, \phi_n$ are not.  Let $\psi_1 = \phi_1$ be any one eigenfunction.  Any linear combination of the eigenfunctions is also an eigenfunction (since they satisfy the \emph{same} linear homogeneous differential equation and boundary conditions).  Thus, $\psi_2 = \phi_2 + c\psi_1$ is also an eigenfunction (automatically independent of $\psi_1$), where $c$ is an arbitrary constant.  We choose $c$ so that $\psi_2 = \phi_2 + c\psi_1$ is orthogonal to $\psi_1$: $\iint_R\psi_1\psi_2\dx\dy = 0$ becomes
+\[
+\iint_R (\phi_2 + c\psi_1)\psi_1\dx\dy = 0.
+\]
+$c$ is uniquely determined:
+\begin{equation}
+c = \frac{-\iint_R \phi_2\psi_1\dx\dy}{\iint_R \psi_1^2\dx\dy}.
+\label{eq:7.5.14}
+\end{equation}
+Since there may be more than two eigenfunctions corresponding to the same eigenvalue, we continue this process.  A third eigenfunction is $\psi_3 = \phi_3 + c_1\psi_1 + c_2\psi_2$, where we choose $c_1$ and $c_2$ so that $\psi_3$ is orthogonal to the previous two: $\iint_R\psi_3\begin{pmatrix}\psi_1\\\psi_2\end{pmatrix}\dx\dy = 0$.  Thus,
+\[
+\iint_R (\phi_3 + c_1\psi_1 + c_2\psi_2)\begin{pmatrix}\psi_1\\\psi_2\end{pmatrix}\dx\dy = 0.
+\]
+However, $\psi_2$ is already orthogonal to $\psi_1$, and hence
+\[
+\begin{aligned}
+\iint_R \phi_3\psi_1\dx\dy + c_1\iint_R \psi_1^2\dx\dy &= 0 \\
+\iint_R \phi_3\psi_2\dx\dy + c_2\iint_R \psi_2^2\dx\dy &= 0,
+\end{aligned}
+\]
+easily determining the two constants.  This process can be used to determine $n$ orthogonal eigenfunctions.  In general,
+\[
+\psi_j = \phi_j - \sum_{i=1}^{j-1}\left(\frac{\iint_R \phi_j\psi_i\dx\dy}{\iint_R \psi_i^2\dx\dy}\right)\psi_i.
+\]
+We have shown that even in the case of a multiple eigenvalue, we are always able to restrict our attention to orthogonal eigenfunctions, if necessary by this Gram-Schmidt construction.

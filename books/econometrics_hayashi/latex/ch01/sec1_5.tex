@@ -1,0 +1,441 @@
+% sec1_5.tex — Section 1.5: Relation to Maximum Likelihood
+
+Having specified the distribution of the error vector $\bm{\varepsilon}$, we can use the
+\textbf{maximum likelihood (ML) principle} to estimate the model parameters
+$(\bm{\beta}, \sigma^2)$.\footnote{For a fuller treatment of maximum likelihood, see Chapter~7.}
+In this section, we will show that $\vec{b}$, the OLS estimator of $\bm{\beta}$, is also the
+ML estimator, and the OLS estimator of $\sigma^2$ differs only slightly from the ML
+counterpart, when the error is normally distributed.  We will also show that $\vec{b}$
+achieves the \textbf{Cramer-Rao lower bound}.
+
+%% ─── The Maximum Likelihood Principle ─────────────────────────────────────────
+\subsection*{The Maximum Likelihood Principle}
+
+As you might recall from elementary statistics, the basic idea of the ML principle is to
+choose the parameter estimates to maximize the probability of obtaining the observed
+sample.  To be more precise, we assume that the probability density of the sample
+$(\vec{y}, \vec{X})$ is a member of a family of functions indexed by a finite-dimensional
+parameter vector $\tilde{\bm{\zeta}}$: $f(\vec{y}, \vec{X}; \tilde{\bm{\zeta}})$.
+(This is described as \textbf{parameterizing} the density function.)  This function, viewed
+as a function of the hypothetical parameter vector $\tilde{\bm{\zeta}}$, is called the
+\textbf{likelihood function}.  At the true parameter vector $\bm{\zeta}$, the density of
+$(\vec{y}, \vec{X})$ is $f(\vec{y}, \vec{X}; \bm{\zeta})$.  The ML estimate of the true
+parameter vector $\bm{\zeta}$ is the $\tilde{\bm{\zeta}}$ that maximizes the likelihood
+function given the data $(\vec{y}, \vec{X})$.
+
+%% ─── Conditional versus Unconditional Likelihood ──────────────────────────────
+\subsection*{Conditional versus Unconditional Likelihood}
+
+Since a (joint) density is the product of a marginal density and a conditional density,
+the density of $(\vec{y}, \vec{X})$ can be written as
+%
+\begin{equation}
+  f(\vec{y}, \vec{X}; \bm{\zeta})
+    = f(\vec{y} \mid \vec{X}; \bm{\theta}) \cdot f(\vec{X}; \bm{\psi}),
+  \label{eq:1.5.1}
+\end{equation}
+%
+where $\bm{\theta}$ is the subset of the parameter vector $\bm{\zeta}$ that determines the
+conditional density function and $\bm{\psi}$ is the subset determining the marginal density
+function.  The parameter vector of interest is $\bm{\theta}$; for the linear regression model
+with normal errors, $\bm{\theta} = (\bm{\beta}', \sigma^2)'$ and $f(\vec{y} \mid \vec{X};
+\bm{\theta})$ is given by \eqref{eq:1.5.4} below.
+
+Let $\tilde{\bm{\zeta}} \equiv (\tilde{\bm{\theta}}', \tilde{\bm{\psi}}')'$ be a hypothetical
+value of $\bm{\zeta} = (\bm{\theta}', \bm{\psi}')'$.  Then the (unconditional or joint)
+likelihood function is
+%
+\begin{equation}
+  f(\vec{y}, \vec{X}; \tilde{\bm{\zeta}})
+    = f(\vec{y} \mid \vec{X}; \tilde{\bm{\theta}})
+      \cdot f(\vec{X}; \tilde{\bm{\psi}}).
+  \label{eq:1.5.2}
+\end{equation}
+%
+If we knew the parametric form of $f(\vec{X}; \tilde{\bm{\psi}})$, then we could maximize
+this joint likelihood function over the entire hypothetical parameter vector
+$\tilde{\bm{\zeta}}$, and the ML estimate of $\bm{\theta}$ would be the elements of the ML
+estimate of $\bm{\zeta}$.  We cannot do this for the classical regression model because the
+model does not specify $f(\vec{X}; \tilde{\bm{\psi}})$.  However, if there is no functional
+relationship between $\tilde{\bm{\theta}}$ and $\tilde{\bm{\psi}}$ (such as a subset of
+$\tilde{\bm{\psi}}$ being a function of $\tilde{\bm{\theta}}$), then maximizing
+\eqref{eq:1.5.2} with respect to $\tilde{\bm{\zeta}}$ is achieved by separately maximizing
+$f(\vec{y} \mid \vec{X}; \tilde{\bm{\theta}})$ with respect to $\tilde{\bm{\theta}}$ and
+maximizing $f(\vec{X}; \tilde{\bm{\psi}})$ with respect to $\tilde{\bm{\psi}}$.  Thus the ML
+estimate of $\bm{\theta}$ also maximizes the \textbf{conditional likelihood}
+$f(\vec{y} \mid \vec{X}; \tilde{\bm{\theta}})$.
+
+%% ─── The Log Likelihood for the Regression Model ─────────────────────────────
+\subsection*{The Log Likelihood for the Regression Model}
+
+As already observed, Assumption~1.5 (the normality assumption) together with
+Assumptions~1.2 and~1.4 imply that the distribution of $\bm{\varepsilon}$ conditional on
+$\vec{X}$ is $N(\vec{0}, \sigma^2 \vec{I}_n)$ (see (1.4.1)).  But since
+$\vec{y} = \vec{X}\bm{\beta} + \bm{\varepsilon}$ by Assumption~1.1, we have
+%
+\begin{equation}
+  \vec{y} \mid \vec{X} \sim N(\vec{X}\bm{\beta},\; \sigma^2 \vec{I}_n).
+  \label{eq:1.5.3}
+\end{equation}
+%
+Thus, the conditional density of $\vec{y}$ given $\vec{X}$
+is\footnote{Recall from basic probability theory that the density function for an
+$n$-variate normal distribution with mean $\bm{\mu}$ and variance matrix $\bm{\Sigma}$ is
+\[
+  (2\pi)^{-n/2} \lvert \bm{\Sigma} \rvert^{-1/2}
+  \exp\!\biggl[-\frac{1}{2}(\vec{y} - \bm{\mu})' \bm{\Sigma}^{-1}
+  (\vec{y} - \bm{\mu})\biggr].
+\]
+To derive \eqref{eq:1.5.4}, just set $\bm{\mu} = \vec{X}\bm{\beta}$ and
+$\bm{\Sigma} = \sigma^2 \vec{I}_n$.}
+%
+\begin{equation}
+  f(\vec{y} \mid \vec{X})
+    = (2\pi\sigma^2)^{-n/2}
+      \exp\!\biggl[-\frac{1}{2\sigma^2}
+      (\vec{y} - \vec{X}\bm{\beta})'(\vec{y} - \vec{X}\bm{\beta})\biggr].
+  \label{eq:1.5.4}
+\end{equation}
+%
+Replacing the true parameters $(\bm{\beta}, \sigma^2)$ by their hypothetical values
+$(\widetilde{\bm{\beta}}, \tilde{\sigma}^2)$ and taking logs, we obtain the
+\textbf{log likelihood function}:
+%
+\begin{equation}
+  \log L(\widetilde{\bm{\beta}}, \tilde{\sigma}^2)
+    = -\frac{n}{2}\log(2\pi)
+      - \frac{n}{2}\log(\tilde{\sigma}^2)
+      - \frac{1}{2\tilde{\sigma}^2}
+        (\vec{y} - \vec{X}\widetilde{\bm{\beta}})'
+        (\vec{y} - \vec{X}\widetilde{\bm{\beta}}).
+  \label{eq:1.5.5}
+\end{equation}
+%
+Since the log transformation is a monotone transformation, the ML estimator of
+$(\bm{\beta}, \sigma^2)$ is the $(\widetilde{\bm{\beta}}, \tilde{\sigma}^2)$ that maximizes
+this log likelihood.
+
+%% ─── ML via Concentrated Likelihood ──────────────────────────────────────────
+\subsection*{ML via Concentrated Likelihood}
+
+It is instructive to maximize the log likelihood in two stages.  First, maximize over
+$\widetilde{\bm{\beta}}$ for any given $\tilde{\sigma}^2$.  The $\widetilde{\bm{\beta}}$
+that maximizes the objective function could (but does not, in the present case of
+Assumptions~1.1--1.5) depend on $\tilde{\sigma}^2$.  Second, maximize over
+$\tilde{\sigma}^2$ taking into account that the $\widetilde{\bm{\beta}}$ obtained in the
+first stage could depend on $\tilde{\sigma}^2$.  The log likelihood function in which
+$\widetilde{\bm{\beta}}$ is constrained to be the value from the first stage is called the
+\textbf{concentrated log likelihood function} (concentrated with respect to
+$\widetilde{\bm{\beta}}$).  For the normal log likelihood \eqref{eq:1.5.5}, the first stage
+amounts to minimizing the sum of squares
+$(\vec{y} - \vec{X}\widetilde{\bm{\beta}})'(\vec{y} - \vec{X}\widetilde{\bm{\beta}})$.
+The $\widetilde{\bm{\beta}}$ that does it is none other than the OLS estimator $\vec{b}$,
+and the minimized sum of squares is $\vec{e}'\vec{e}$.  Thus, the concentrated log
+likelihood is
+%
+\begin{equation}
+  \text{concentrated log likelihood}
+    = -\frac{n}{2}\log(2\pi)
+      - \frac{n}{2}\log(\tilde{\sigma}^2)
+      - \frac{1}{2\tilde{\sigma}^2}\,\vec{e}'\vec{e}.
+  \label{eq:1.5.6}
+\end{equation}
+%
+This is a function of $\tilde{\sigma}^2$ alone, and the $\tilde{\sigma}^2$ that maximizes the
+concentrated likelihood is the ML estimate of $\sigma^2$.  The maximization is
+straightforward for the present case of the classical regression model, because
+$\vec{e}'\vec{e}$ is not a function of $\tilde{\sigma}^2$ and so can be taken as a constant.
+Still, taking the derivative with respect to $\tilde{\sigma}^2$, rather than with respect to
+$\tilde{\sigma}$, can be tricky.  This can be avoided by denoting $\tilde{\sigma}^2$ by
+$\tilde{\gamma}$.  Taking the derivative of \eqref{eq:1.5.6} with respect to
+$\tilde{\gamma}$ ($\equiv \tilde{\sigma}^2$) and setting it to zero, we obtain the following
+result.
+
+\begin{proposition}[ML Estimator of $(\bm{\beta}, \sigma^2)$]
+\label{prop:1.5}
+\textit{Suppose Assumptions~1.1--1.5 hold.
+Then the ML estimator of\/ $\bm{\beta}$ is the OLS estimator\/ $\vec{b}$ and}
+%
+\begin{equation}
+  \textit{ML estimator of\/ $\sigma^2$}
+    = \frac{1}{n}\,\vec{e}'\vec{e}
+    = \frac{SSR}{n}
+    = \frac{n - K}{n}\,s^2.
+  \label{eq:1.5.7}
+\end{equation}
+\end{proposition}
+
+We know from Proposition~1.2 that $s^2$ is unbiased.  Since $s^2$ is multiplied by a
+factor $(n - K)/n$ which is different from~1, the ML estimator of $\sigma^2$ is biased,
+although the bias becomes arbitrarily small as the sample size $n$ increases for any given
+fixed $K$.
+
+For later use, we calculate the maximized value of the likelihood function.  Substituting
+\eqref{eq:1.5.7} into \eqref{eq:1.5.6}, we obtain
+%
+\[
+  \text{maximized log likelihood}
+    = -\frac{n}{2}\log\!\biggl(\frac{2\pi}{n}\biggr)
+      - \frac{n}{2}
+      - \frac{n}{2}\log(SSR),
+\]
+%
+so that the maximized likelihood is
+%
+\begin{equation}
+  \max_{\widetilde{\bm{\beta}},\, \tilde{\sigma}^2}
+    L(\widetilde{\bm{\beta}}, \tilde{\sigma}^2)
+    = \biggl(\frac{2\pi}{n}\biggr)^{-n/2}
+      \cdot \exp\!\biggl(-\frac{n}{2}\biggr)
+      \cdot (SSR)^{-n/2}.
+  \label{eq:1.5.8}
+\end{equation}
+
+%% ─── Cramer-Rao Bound for the Classical Regression Model ─────────────────────
+\subsection*{Cramer-Rao Bound for the Classical Regression Model}
+
+Just to refresh your memory of basic statistics, we temporarily step outside the classical
+regression model and present without proof the Cramer-Rao inequality for the
+variance-covariance matrix of any unbiased estimator.  For this purpose, define the
+\textbf{score vector} at a hypothetical parameter value $\tilde{\bm{\theta}}$ to be the
+gradient (vector of partial derivatives) of log likelihood:
+%
+\begin{equation}
+  \text{score:}\quad
+  \vec{s}(\tilde{\bm{\theta}})
+    \equiv \frac{\partial \log L(\tilde{\bm{\theta}})}
+                {\partial \tilde{\bm{\theta}}}.
+  \label{eq:1.5.9}
+\end{equation}
+
+\medskip
+\noindent\textbf{Cramer-Rao Inequality:}\enspace
+\textit{Let\/ $\vec{z}$ be a vector of random variables (not necessarily independent) the
+joint density of which is given by $f(\vec{z}; \bm{\theta})$, where $\bm{\theta}$ is an
+$m$-dimensional vector of parameters in some parameter space $\Theta$.  Let
+$L(\tilde{\bm{\theta}}) \equiv f(\vec{z}; \tilde{\bm{\theta}})$ be the likelihood function,
+and let\/ $\hat{\bm{\theta}}(\vec{z})$ be an unbiased estimator of\/ $\bm{\theta}$ with a
+finite variance-covariance matrix.  Then, under some regularity conditions on
+$f(\vec{z}; \bm{\theta})$ (not stated here),}
+%
+\[
+  \Var[\hat{\bm{\theta}}(\vec{z})]
+    \underset{(m \times m)}{\geq}
+    \vec{I}(\bm{\theta})^{-1}
+  \quad (\equiv \textit{Cramer-Rao Bound}),
+\]
+%
+\textit{where\/ $\vec{I}(\bm{\theta})$ is the \textbf{information matrix} defined by}
+%
+\begin{equation}
+  \vec{I}(\bm{\theta})
+    \equiv \E[\vec{s}(\bm{\theta})\,\vec{s}(\bm{\theta})'].
+  \label{eq:1.5.10}
+\end{equation}
+%
+\textit{(Note well that the score is evaluated at the true parameter value $\bm{\theta}$.)
+Also under the regularity conditions, the information matrix equals the negative of the
+expected value of the Hessian (matrix of second partial derivatives) of the log likelihood:}
+%
+\begin{equation}
+  \vec{I}(\bm{\theta})
+    = -\,\E\!\biggl[
+        \frac{\partial^2 \log L(\bm{\theta})}
+             {\partial \tilde{\bm{\theta}}\,\partial \tilde{\bm{\theta}}'}
+      \biggr].
+  \label{eq:1.5.11}
+\end{equation}
+%
+\textit{This is called the \textbf{information matrix equality}.}
+
+\medskip
+
+See, e.g., Amemiya (1985, Theorem~1.3.1) for a proof and a statement of the regularity
+conditions.  Those conditions guarantee that the operations of differentiation and taking
+expectations can be interchanged.  Thus, for example,
+%
+\[
+  \E[\partial L(\bm{\theta}) / \partial \tilde{\bm{\theta}}]
+    = \partial\, \E[L(\bm{\theta})] / \partial \tilde{\bm{\theta}}.
+\]
+
+Now, for the classical regression model (of Assumptions~1.1--1.5), the likelihood function
+$L(\tilde{\bm{\theta}})$ in the Cramer-Rao inequality is the conditional density
+\eqref{eq:1.5.4}, so the variance in the inequality is the variance conditional on
+$\vec{X}$.  It can be shown that those regularity conditions are satisfied for the normal
+density \eqref{eq:1.5.4} (see, e.g., Amemiya, 1985, Sections~1.3.2 and~1.3.3).  In the
+rest of this subsection, we calculate the information matrix for \eqref{eq:1.5.4}.  The
+parameter vector $\bm{\theta}$ is $(\bm{\beta}', \sigma^2)'$.
+
+So $\tilde{\bm{\theta}} = (\widetilde{\bm{\beta}}', \tilde{\gamma})'$ and the matrix of
+second derivatives we seek to calculate is
+%
+\begin{equation}
+  \frac{\partial^2 \log L(\bm{\theta})}
+       {\partial \tilde{\bm{\theta}}\,\partial \tilde{\bm{\theta}}'}
+  \underset{((K+1) \times (K+1))}{=}
+  \begin{bmatrix}
+    \dfrac{\partial^2 \log L(\bm{\theta})}
+          {\partial \widetilde{\bm{\beta}}\,\partial \widetilde{\bm{\beta}}'}
+    & \dfrac{\partial^2 \log L(\bm{\theta})}
+            {\partial \widetilde{\bm{\beta}}\,\partial \tilde{\gamma}} \\[12pt]
+    \underset{(K \times K)}{}
+    & \underset{(K \times 1)}{} \\[4pt]
+    \dfrac{\partial^2 \log L(\bm{\theta})}
+          {\partial \tilde{\gamma}\,\partial \widetilde{\bm{\beta}}'}
+    & \dfrac{\partial^2 \log L(\bm{\theta})}
+            {\partial \tilde{\gamma}^2} \\[6pt]
+    \underset{(1 \times K)}{}
+    & \underset{(1 \times 1)}{}
+  \end{bmatrix}.
+  \label{eq:1.5.12}
+\end{equation}
+
+The first and second derivatives of the log likelihood \eqref{eq:1.5.5} with respect to
+$\tilde{\bm{\theta}}$, evaluated at the true parameter vector $\bm{\theta}$, are
+%
+\begin{align}
+  \frac{\partial \log L(\bm{\theta})}{\partial \widetilde{\bm{\beta}}}
+    &= \frac{1}{\gamma}\,\vec{X}'(\vec{y} - \vec{X}\bm{\beta}),
+  \label{eq:1.5.13a} \\[6pt]
+  \frac{\partial \log L(\bm{\theta})}{\partial \tilde{\gamma}}
+    &= -\frac{n}{2\gamma}
+       + \frac{1}{2\gamma^2}
+         (\vec{y} - \vec{X}\bm{\beta})'(\vec{y} - \vec{X}\bm{\beta}).
+  \label{eq:1.5.13b}
+\end{align}
+%
+\begin{align}
+  \frac{\partial^2 \log L(\bm{\theta})}
+       {\partial \widetilde{\bm{\beta}}\,\partial \widetilde{\bm{\beta}}'}
+    &= -\frac{1}{\gamma}\,\vec{X}'\vec{X},
+  \label{eq:1.5.14a} \\[6pt]
+  \frac{\partial^2 \log L(\bm{\theta})}{\partial \tilde{\gamma}^2}
+    &= \frac{n}{2\gamma^2}
+       - \frac{1}{\gamma^3}
+         (\vec{y} - \vec{X}\bm{\beta})'(\vec{y} - \vec{X}\bm{\beta}),
+  \label{eq:1.5.14b} \\[6pt]
+  \frac{\partial^2 \log L(\bm{\theta})}
+       {\partial \widetilde{\bm{\beta}}\,\partial \tilde{\gamma}}
+    &= -\frac{1}{\gamma^2}\,\vec{X}'(\vec{y} - \vec{X}\bm{\beta}).
+  \label{eq:1.5.14c}
+\end{align}
+
+Since the derivatives are evaluated at the true parameter value,
+$\vec{y} - \vec{X}\bm{\beta} = \bm{\varepsilon}$ in these expressions.  Substituting
+\eqref{eq:1.5.14a}--\eqref{eq:1.5.14c} into \eqref{eq:1.5.12} and using
+$\E(\bm{\varepsilon} \mid \vec{X}) = \vec{0}$ (Assumption~1.2),
+$\E(\bm{\varepsilon}'\bm{\varepsilon} \mid \vec{X}) = n\sigma^2$ (implication of
+Assumption~1.4), and recalling $\gamma = \sigma^2$, we can easily derive
+%
+\begin{equation}
+  \vec{I}(\bm{\theta})
+    = \begin{bmatrix}
+        \dfrac{1}{\sigma^2}\,\vec{X}'\vec{X} & \vec{0} \\[8pt]
+        \vec{0}' & \dfrac{n}{2\sigma^4}
+      \end{bmatrix}.
+  \label{eq:1.5.15}
+\end{equation}
+%
+Here, the expectation is conditional on $\vec{X}$ because the likelihood function
+\eqref{eq:1.5.4} is a conditional density conditional on $\vec{X}$.  This block diagonal
+matrix can be inverted to obtain the Cramer-Rao bound:
+%
+\begin{equation}
+  \text{Cramer-Rao bound}
+    \equiv \vec{I}(\bm{\theta})^{-1}
+    = \begin{bmatrix}
+        \sigma^2 \cdot (\vec{X}'\vec{X})^{-1} & \vec{0} \\[8pt]
+        \vec{0}' & \dfrac{2\sigma^4}{n}
+      \end{bmatrix}.
+  \label{eq:1.5.16}
+\end{equation}
+%
+Therefore, the unbiased estimator $\vec{b}$, whose variance is
+$\sigma^2 \cdot (\vec{X}'\vec{X})^{-1}$ by Proposition~1.1, attains the Cramer-Rao bound.
+We have thus proved
+
+\begin{proposition}[$\vec{b}$ is the Best Unbiased Estimator (BUE)]
+\label{prop:1.6}
+\textit{Under Assumptions~1.1--1.5, the OLS estimator\/ $\vec{b}$ of\/ $\bm{\beta}$ is BUE
+in that any other unbiased (but not necessarily linear) estimator has larger conditional
+variance in the matrix sense.}
+\end{proposition}
+
+This result should be distinguished from the Gauss-Markov Theorem that $\vec{b}$ is
+minimum variance among those estimators that are unbiased \textit{and} linear in $\vec{y}$.
+Proposition~1.6 says that $\vec{b}$ is minimum variance in a larger class of estimators
+that includes nonlinear unbiased estimators.  This stronger statement is obtained under the
+normality assumption (Assumption~1.5) which is not assumed in the Gauss-Markov Theorem.
+Put differently, the Gauss-Markov Theorem does not exclude the possibility of some
+nonlinear estimator beating OLS, but this possibility is ruled out by the normality
+assumption.
+
+As was already seen, the ML estimator of $\sigma^2$ is biased, so the Cramer-Rao bound
+does not apply.  But the OLS estimator $s^2$ of $\sigma^2$ is unbiased.  Does it achieve
+the bound?  We have shown in a review question to the previous section that
+%
+\[
+  \Var(s^2 \mid \vec{X}) = \frac{2\sigma^4}{n - K}
+\]
+%
+under the same set of assumptions as in Proposition~1.6.  Therefore, $s^2$ does not attain
+the Cramer-Rao bound $2\sigma^4/n$.  However, it can be shown that an unbiased estimator of
+$\sigma^2$ with variance lower than $2\sigma^4/(n - K)$ does not exist (see, e.g., Rao,
+1973, p.~319).
+
+%% ─── The F-Test as a Likelihood Ratio Test ───────────────────────────────────
+\subsection*{The $F$-Test as a Likelihood Ratio Test}
+
+The \textbf{likelihood ratio test} of the null hypothesis compares $L_U$, the maximized
+likelihood without the imposition of the restriction specified in the null hypothesis, with
+$L_R$, the likelihood maximized subject to the restriction.  If the likelihood ratio
+$\lambda \equiv L_U / L_R$ is too large, it should be a sign that the null is false.  The
+$F$-test of the null hypothesis $\mathrm{H}_0\colon \vec{R}\bm{\beta} = \vec{r}$ considered
+in the previous section is a likelihood ratio test because the $F$-ratio is a monotone
+transformation of the likelihood ratio $\lambda$.  For the present model, $L_U$ is given by
+\eqref{eq:1.5.8} where the $SSR$, the sum of squared residuals minimized without the
+constraint $\mathrm{H}_0$, is the $SSR_U$ in (1.4.11).  The restricted likelihood $L_R$ is
+given by replacing this $SSR$ by the restricted sum of squared residuals, $SSR_R$.  So
+%
+\begin{equation}
+  L_R
+    = \max_{\widetilde{\bm{\beta}},\,\tilde{\sigma}^2
+            \;\text{s.t.}\;\mathrm{H}_0}
+      L(\widetilde{\bm{\beta}}, \tilde{\sigma}^2)
+    = \biggl(\frac{2\pi}{n}\biggr)^{-n/2}
+      \cdot \exp\!\biggl(-\frac{n}{2}\biggr)
+      \cdot (SSR_R)^{-n/2},
+  \label{eq:1.5.17}
+\end{equation}
+%
+and the likelihood ratio is
+%
+\begin{equation}
+  \lambda
+    \equiv \frac{L_U}{L_R}
+    = \biggl(\frac{SSR_U}{SSR_R}\biggr)^{-n/2}.
+  \label{eq:1.5.18}
+\end{equation}
+%
+Comparing this with the formula (1.4.11) for the $F$-ratio, we see that the $F$-ratio is a
+monotone transformation of the likelihood ratio $\lambda$:
+%
+\begin{equation}
+  F = \frac{n - K}{\#\vec{r}}\,(\lambda^{2/n} - 1),
+  \label{eq:1.5.19}
+\end{equation}
+%
+so that the two tests are the same.
+
+%% ─── Quasi-Maximum Likelihood ────────────────────────────────────────────────
+\subsection*{Quasi-Maximum Likelihood}
+
+All these results assume the normality of the error term.  Without normality, there is no
+guarantee that the ML estimator of $\bm{\beta}$ is OLS (Proposition~1.5) or that the OLS
+estimator $\vec{b}$ achieves the Cramer-Rao bound (Proposition~1.6).  However,
+Proposition~1.5 does imply that $\vec{b}$ is a \textbf{quasi-} (or \textbf{pseudo-)
+maximum likelihood estimator}, an estimator that maximizes a misspecified likelihood
+function.  The misspecified likelihood function we have considered is the normal likelihood.
+The results of Section~1.3 can then be interpreted as providing the finite-sample properties
+of the quasi-ML estimator when the error is incorrectly specified to be normal.

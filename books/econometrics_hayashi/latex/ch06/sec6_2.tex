@@ -1,0 +1,524 @@
+% sec6_2.tex — Section 6.2: ARMA Processes
+
+Having introduced the concept of the filter, we can study with ease and grace a class
+of linear processes called ARMA processes, which are a parameterization of the
+coefficients of $\text{MA}(\infty)$ processes.
+
+\subsection*{AR(1) and Its MA($\infty$) Representation}
+
+A \textbf{first-order autoregressive process} (\textbf{AR(1)}) satisfies the following stochastic
+difference equation:
+\begin{equation}
+  y_t = c + \phi y_{t-1} + \varepsilon_t \quad \text{or} \quad
+  y_t - \phi y_{t-1} = c + \varepsilon_t \quad \text{or} \quad
+  (1 - \phi L) y_t = c + \varepsilon_t,
+  \label{eq:6.2.1}
+\end{equation}
+where $\{\varepsilon_t\}$ is white noise. If $\phi \neq 1$, let $\mu \equiv c/(1 - \phi)$ and rewrite this equation as
+\begin{equation}
+  (y_t - \mu) - \phi \cdot (y_{t-1} - \mu) = \varepsilon_t \quad \text{or} \quad
+  (1 - \phi L)(y_t - \mu) = \varepsilon_t.
+  \label{eq:6.2.1prime}
+  \tag{6.2.1$'$}
+\end{equation}
+As will be seen in a moment, $\mu$, not $c$, is the mean of $y_t$ if $y_t$ is covariance-stationary.
+For this reason, we will call \eqref{eq:6.2.1prime} a deviation-from-the-mean form.
+The moving average is on the successive values of $\{y_t\}$, not on $\{\varepsilon_t\}$. The difference
+equation is called stochastic because of the presence of the random variable $\varepsilon_t$.
+
+We seek a covariance-stationary solution $\{y_t\}$ to this stochastic difference equation.
+The solution depends on whether $|\phi|$ is less than, equal to, or greater than~1.
+
+\medskip
+\noindent\textbf{Case 1:} $|\phi| < 1$
+
+The solution can be obtained easily by the use of the inverse $(1 - \phi L)^{-1}$ given by
+\eqref{eq:6.1.20}. Since this filter is absolutely summable when $|\phi| < 1$, we can apply it to
+both sides of the AR(1) equation \eqref{eq:6.2.1prime} to obtain
+\[
+  (1 - \phi L)^{-1}(1 - \phi L)(y_t - \mu) = (1 - \phi L)^{-1} \varepsilon_t.
+\]
+This operation is legitimate because, thanks to Proposition~6.2, both sides of this
+equation are well defined as mean square limits. By the definition \eqref{eq:6.1.14} of
+inverses, $(1 - \phi L)(1 - \phi L)^{-1} = 1$, and by commutativity of inverses $(1 - \phi L)^{-1}(1 -
+\phi L) = 1$. Therefore, if $\{y_t\}$ is covariance-stationary, the left-hand side equals $y_t - \mu$
+by \eqref{eq:6.1.13}. So
+\begin{equation}
+  y_t - \mu = (1 - \phi L)^{-1} \varepsilon_t
+  = (1 + \phi L + \phi^2 L^2 + \cdots) \varepsilon_t
+  = \sum_{j=0}^{\infty} \phi^j \varepsilon_{t-j}
+  \quad \text{or} \quad
+  y_t = \mu + \sum_{j=0}^{\infty} \phi^j \varepsilon_{t-j}.
+  \label{eq:6.2.2}
+\end{equation}
+What we have shown is that, if $\{y_t\}$ is a covariance-stationary solution to the stochastic
+difference equation \eqref{eq:6.2.1} or \eqref{eq:6.2.1prime}, then $y_t$ has the \textbf{moving-average representation}
+as in \eqref{eq:6.2.2}. Conversely, if $y_t$ has the representation \eqref{eq:6.2.2}, then
+it satisfies the difference equation. This can be derived easily by substitution of
+\eqref{eq:6.2.2} into \eqref{eq:6.2.1prime}:
+\begin{align*}
+  (1 - \phi L)(y_t - \mu) &= (1 - \phi L)(1 - \phi L)^{-1} \varepsilon_t \\
+  &= \varepsilon_t \quad (\text{since } (1 - \phi L)(1 - \phi L)^{-1} = 1 \text{ by definition of inverses}).
+\end{align*}
+Thus, the process $\{y_t\}$ given by \eqref{eq:6.2.2} is the \emph{unique} covariance-stationary solution
+to the first-order stochastic difference equation if $|\phi| < 1$. The mean of this process
+is $\mu$ by Proposition~6.1(b).
+
+The condition $|\phi| < 1$, which is the stability condition \eqref{eq:6.1.18} associated
+with the first-order polynomial equation $1 - \phi z = 0$, is called the \textbf{stationarity
+condition} in the present context of autoregressive processes. Intuitively, this result
+says that the process, if it started a long time ago, ``settles down,'' provided that
+$|\phi| < 1$ so that the effect of the past dies out geometrically as time progresses.
+
+\medskip
+\noindent\textbf{Case 2:} $|\phi| > 1$
+
+By shifting time forward by one period (i.e., by replacing ``$t$'' by ``$t+1$''), multiplying
+both sides by $\phi^{-1}$, and rearranging, the stochastic difference equation \eqref{eq:6.2.1prime}
+can be written as
+\begin{equation}
+  y_t - \mu = \phi^{-1}(y_{t+1} - \mu) - \phi^{-1} \varepsilon_{t+1}.
+  \label{eq:6.2.3}
+\end{equation}
+Applying the above argument but this time moving in the opposite direction in time
+shows that the unique covariance-stationary solution is
+\begin{equation}
+  y_t = \mu - \sum_{j=1}^{\infty} \phi^{-j} \varepsilon_{t+j}.
+  \label{eq:6.2.4}
+\end{equation}
+That is, the current value of $y$ is a moving average of \emph{future} values of $\varepsilon$. The infinite
+sum is well defined because the sequence $\{\phi^{-j}\}$ is absolutely summable if $|\phi| > 1$.
+
+\medskip
+\noindent\textbf{Case 3:} $|\phi| = 1$
+
+The stochastic difference equation has no covariance-stationary solution. For example,
+if $\phi = 1$, the stochastic difference equation becomes
+\begin{align*}
+  y_t &= c + y_{t-1} + \varepsilon_t \\
+  &= c + (c + y_{t-2} + \varepsilon_{t-1}) + \varepsilon_t \quad (\text{since } y_{t-1} = c + y_{t-2} + \varepsilon_{t-1}) \\
+  &= c + \bigl(c + (c + y_{t-3} + \varepsilon_{t-2}) + \varepsilon_{t-1}\bigr) + \varepsilon_t, \quad \text{etc.}
+\end{align*}
+Repeating this type of successive substitution $j$ times, we obtain
+\[
+  y_t - y_{t-j} = c \cdot j + (\varepsilon_t + \varepsilon_{t-1} + \cdots + \varepsilon_{t-j+1}).
+\]
+(If $\{\varepsilon_t\}$ is independent white noise, this process is a \textbf{random walk with drift} $c$.)
+Suppose, contrary to our claim, that the process is covariance-stationary. Then the
+variance of $y_t - y_{t-j}$ is $2(\gamma_0 - \gamma_j)$. The variance of the right-hand side is $\sigma^2 \cdot j$. So
+\[
+  2 \cdot (\gamma_0 - \gamma_j) = \sigma^2 \cdot j \quad \text{or} \quad
+  \rho_j = 1 - \frac{\sigma^2}{2\gamma_0} \cdot j < -1 \quad \text{for $j$ large enough}
+\]
+(recall: $\rho_j = \gamma_j / \gamma_0$).
+This is a contradiction since autocorrelation coefficients cannot be greater than one
+in absolute value. So $\{y_t\}$ cannot be covariance-stationary. Processes with $\phi = 1$
+are examples of ``unit-root processes'' and will be studied in Chapter~9.
+
+The solution \eqref{eq:6.2.4} for the case of $|\phi| > 1$, with the current value of $y$ linked
+to the future values of the forcing process $\{\varepsilon_t\}$, is not useful in economics, which
+does not confer perfect foresight on economic agents. In what follows, unless otherwise
+stated, we will use the term ``an AR(1) process'' as the unique covariance-stationary
+solution to an AR(1) equation \eqref{eq:6.2.1} or \eqref{eq:6.2.1prime} when the stationarity
+condition holds.
+
+\subsection*{Autocovariances of AR(1)}
+
+The autocovariances $\{\gamma_j\}$ of AR(1) (for the case of $|\phi| < 1$) can be calculated in
+two ways. The first method is to represent AR(1) as $\text{MA}(\infty)$ as in \eqref{eq:6.2.2} and use
+\eqref{eq:6.1.7}. Since $\psi_j = \phi^j$ for AR(1), we have
+\begin{equation}
+  \gamma_j = (\phi^j + \phi^{j+2} + \phi^{j+4} + \cdots) \sigma^2
+         = \frac{\phi^j \sigma^2}{1 - \phi^2}
+  \quad \text{and} \quad
+  \rho_j \;(\equiv \gamma_j / \gamma_0) = \phi^j
+  \quad (j = 0, 1, \ldots).
+  \label{eq:6.2.5}
+\end{equation}
+So the correlogram of an AR(1) process is very simple: it declines with $j$ at a
+constant geometric rate.
+
+The second method bases the calculation on what is called the \textbf{Yule--Walker
+equations}; see Analytical Exercise~5 for the use of the Yule--Walker equations in
+the calculation of autocovariances.
+
+\subsection*{AR(\textit{p}) and Its MA($\infty$) Representation}
+
+All the results just derived for AR(1) can be generalized to $\text{AR}(p)$, the \textbf{\textit{p}-th
+order autoregressive process}, which satisfies the $p$-th order stochastic difference
+equation:
+\begin{equation}
+\begin{gathered}
+  y_t = c + \phi_1 y_{t-1} + \cdots + \phi_p y_{t-p} + \varepsilon_t \quad \text{or} \\
+  y_t - \phi_1 y_{t-1} - \cdots - \phi_p y_{t-p} = c + \varepsilon_t \quad \text{or} \\
+  \phi(L) y_t = c + \varepsilon_t \quad \text{with } \phi(L) = 1 - \phi_1 L - \phi_2 L^2 - \cdots - \phi_p L^p,
+\end{gathered}
+\label{eq:6.2.6}
+\end{equation}
+where $\{\varepsilon_t\}$ is white noise and $\phi_p \neq 0$. Evidently, $\phi(1) = 1 - \phi_1 - \cdots - \phi_p$. If
+$\phi(1) \neq 0$, let $\mu \equiv c/(1 - \phi_1 - \cdots - \phi_p) = c/\phi(1)$. As shown below, $\mu$ is the
+mean of $y_t$ if $y_t$ is covariance-stationary. Substituting for $c$, the AR($p$) equation
+\eqref{eq:6.2.6} can be written equivalently in deviation-from-the-mean form:
+\begin{equation}
+  (y_t - \mu) - \phi_1 \cdot (y_{t-1} - \mu) - \cdots - \phi_p \cdot (y_{t-p} - \mu) = \varepsilon_t
+  \quad \text{or} \quad \phi(L)(y_t - \mu) = \varepsilon_t.
+  \label{eq:6.2.6prime}
+  \tag{6.2.6$'$}
+\end{equation}
+The generalization to $\text{AR}(p)$ of what we have derived for AR(1) is
+
+\begin{proposition}[AR(\textit{p}) as MA($\infty$) with absolutely summable coefficients]
+\label{prop:6.4}
+Suppose the $p$-th degree polynomial $\phi(z)$ satisfies the stationarity (stability) condition
+\eqref{eq:6.1.18} or \eqref{eq:6.1.18prime}. Then
+\begin{enumerate}[label=(\alph*)]
+\item The unique covariance-stationary solution to the $p$-th order stochastic difference
+equation \eqref{eq:6.2.6} or \eqref{eq:6.2.6prime} has the $\mathrm{MA}(\infty)$ representation
+\begin{equation}
+  y_t = \mu + \psi(L) \varepsilon_t, \quad
+  \psi(L) = \psi_0 + \psi_1 L + \psi_2 L^2 + \psi_3 L^3 + \cdots\,,
+  \label{eq:6.2.7}
+\end{equation}
+where $\psi(L) = \phi(L)^{-1}$. The coefficient sequence $\{\psi_j\}$ is bounded in absolute
+value by a geometrically declining sequence and hence is absolutely summable.
+
+\item The mean $\mu$ of the process is given by
+\begin{equation}
+  \mu = \phi(1)^{-1} c \quad \text{where $c$ is the constant in \eqref{eq:6.2.6}.}
+  \label{eq:6.2.8}
+\end{equation}
+
+\item $\{\gamma_j\}$ is bounded in absolute value by a sequence that declines geometrically
+with $j$. Hence, the autocovariances are absolutely summable.
+\end{enumerate}
+\end{proposition}
+
+Unless otherwise stated, we will use the term ``an $\text{AR}(p)$ process'' as the unique
+covariance-stationary solution \eqref{eq:6.2.7} to an $\text{AR}(p)$ equation \eqref{eq:6.2.6} that satisfies the
+stationarity condition. The absolute summability of the inverse $\phi(L)^{-1}$ in part~(a)
+of this proposition is immediate from Proposition~6.3. Given absolute summability,
+the first part of~(a) can be proved by the same argument we used for AR(1); just
+multiply both sides of \eqref{eq:6.2.6prime} by $\phi(L)^{-1}$ and observe that
+\[
+  \phi(L)^{-1} \phi(L) = \phi(L)\,\phi(L)^{-1} = 1.
+\]
+Part~(b) is immediate from Proposition~6.1(b). Part~(c) can easily be proved by
+combining (a) and Proposition~6.1(b). Analytical Exercise~7 will ask you to give
+an alternative proof of the proposition without using filters but using the apparatus
+called the \textbf{companion form}.
+
+As in AR(1), autocovariances can be obtained in two ways. The first method
+utilizes the $\text{MA}(\infty)$ representation. The coefficients $\{\psi_j\}$ in the MA representation
+are the coefficients in the inverse of the lag polynomial $\phi(L)$, and the algorithm for
+calculating the inverse coefficients has already been presented (see \eqref{eq:6.1.16}). Given
+$\{\psi_j\}$, use \eqref{eq:6.1.7} to calculate the autocovariances $\{\gamma_j\}$. The second method uses the
+Yule--Walker equations.
+
+\subsection*{ARMA(\textit{p}, \textit{q})}
+
+An $\text{ARMA}(p, q)$ process combines $\text{AR}(p)$ and $\text{MA}(q)$:
+\begin{equation}
+\begin{gathered}
+  y_t = c + \phi_1 y_{t-1} + \phi_2 y_{t-2} + \cdots + \phi_p y_{t-p} \\
+  \quad + \theta_0 \varepsilon_t + \theta_1 \varepsilon_{t-1} + \theta_2 \varepsilon_{t-2} + \cdots + \theta_q \varepsilon_{t-q}
+\end{gathered}
+\end{equation}
+or
+\begin{equation}
+\begin{gathered}
+  y_t - \phi_1 y_{t-1} - \phi_2 y_{t-2} - \cdots - \phi_p y_{t-p} \\
+  = c + \theta_0 \varepsilon_t + \theta_1 \varepsilon_{t-1} + \theta_2 \varepsilon_{t-2} + \cdots + \theta_q \varepsilon_{t-q}
+\end{gathered}
+\end{equation}
+or
+\begin{equation}
+\begin{gathered}
+  \phi(L) y_t = c + \theta(L) \varepsilon_t, \quad
+  \phi(L) = 1 - \phi_1 L - \cdots - \phi_p L^p, \\
+  \theta(L) = \theta_0 + \theta_1 L + \cdots + \theta_q L^q,
+\end{gathered}
+\label{eq:6.2.9}
+\end{equation}
+where $\{\varepsilon_t\}$ is white noise. If $\phi(1) \neq 1$, set $\mu = c/\phi(1)$. The deviation-from-the-mean
+form is
+\begin{equation}
+\begin{gathered}
+  (y_t - \mu) - \phi_1 \cdot (y_{t-1} - \mu) - \cdots - \phi_p \cdot (y_{t-p} - \mu) \\
+  = \theta_0 \varepsilon_t + \theta_1 \varepsilon_{t-1} + \cdots + \theta_q \varepsilon_{t-q}
+\end{gathered}
+\end{equation}
+or
+\begin{equation}
+  \phi(L)(y_t - \mu) = \theta(L) \varepsilon_t.
+  \label{eq:6.2.9prime}
+  \tag{6.2.9$'$}
+\end{equation}
+This is still a stochastic $p$-th order difference equation but with a serially correlated
+forcing process $\{\theta(L) \varepsilon_t\}$ instead of a white noise process $\{\varepsilon_t\}$. Proposition~6.4
+generalizes easily to
+
+\begin{proposition}[ARMA(\textit{p},\,\textit{q}) as MA($\infty$) with absolutely summable coefficients]
+\label{prop:6.5}
+Suppose the $p$-th degree polynomial $\phi(z)$ satisfies the stationarity (stability)
+condition \eqref{eq:6.1.18} or \eqref{eq:6.1.18prime}. Then
+\begin{enumerate}[label=(\alph*)]
+\item The unique covariance-stationary solution to the $p$-th order stochastic difference
+equation \eqref{eq:6.2.9} or \eqref{eq:6.2.9prime} has the $\mathrm{MA}(\infty)$ representation
+\begin{equation}
+  y_t = \mu + \psi(L) \varepsilon_t, \quad
+  \psi(L) = \psi_0 + \psi_1 L + \psi_2 L^2 + \psi_3 L^3 + \cdots\,,
+  \label{eq:6.2.10}
+\end{equation}
+where $\psi(L) \equiv \phi(L)^{-1} \theta(L)$. The coefficient sequence $\{\psi_j\}$ is bounded in
+absolute value by a geometrically declining sequence and hence is absolutely
+summable.
+
+\item The mean $\mu$ of the process is given by
+\begin{equation}
+  \mu = \phi(1)^{-1} c \quad \text{where $c$ is the constant in \eqref{eq:6.2.9}.}
+  \label{eq:6.2.11}
+\end{equation}
+
+\item $\{\gamma_j\}$ is bounded in absolute value by a sequence that declines geometrically
+with $j$. Hence, the autocovariances are absolutely summable.
+\end{enumerate}
+\end{proposition}
+
+Unless otherwise stated, we will use the term ``an ARMA process'' as the unique
+solution \eqref{eq:6.2.10} to an ARMA equation \eqref{eq:6.2.9} or \eqref{eq:6.2.9prime} that satisfies the
+stationarity condition. The $\text{MA}(\infty)$ representation can be derived easily by multiplying
+both sides of \eqref{eq:6.2.9prime} by $\phi(L)^{-1}$ and observing that $\phi(L)^{-1} \phi(L) =
+\phi(L)\,\phi(L)^{-1} = 1$. For the rest of part~(a) and part~(b), the only nontrivial part
+of the proof is to show that $\{\psi_j\}$ is bounded in absolute value by a geometrically
+declining sequence. For $\text{AR}(p)$ we used the algorithm based on the set of equations
+\eqref{eq:6.1.16} to solve $\phi(L)\,\psi(L) = 1$ for $\psi(L)$. This algorithm can easily be
+generalized. This time $\psi(L) \equiv \phi(L)^{-1} \theta(L)$ or
+\[
+  \phi(L)\,\psi(L) = \theta(L).
+\]
+To solve this for $\psi(L)$, apply the convolution formula \eqref{eq:6.1.12} with $\alpha(L) = \phi(L)$,
+$\beta(L) = \psi(L)$, and $\delta(L) = \theta(L)$ (instead of~1). The resulting set of equations is
+the same as \eqref{eq:6.1.16}, except that the right-hand side of the equation for the constant
+is $\theta_0$ rather than~1, that of the equation for $L$ is $\theta_1$ rather than~0, that of $L^2$ is $\theta_2$, and
+so forth, until the equation for $L^q$, whose right-hand side is $\theta_q$. The right-hand side
+of the rest of the equations is~0. As in $\text{AR}(p)$, these equations can easily be solved
+successively for $(\psi_0, \psi_1, \psi_2, \ldots)$ as
+\[
+  \psi_0 = \theta_0 = 1, \quad \psi_1 = \theta_1 + \phi_1, \quad
+  \psi_2 = \theta_2 + \phi_2 + \theta_1 \phi_1 + \phi_1^2, \quad \text{etc.}
+\]
+Again, as in the $\text{AR}(p)$ case, for sufficiently large $j$ (actually, for $j \geq \max(p,
+q+1)$, as you will verify in Review Question~5), $\{\psi_j\}$ follows the same $p$-th order
+homogeneous difference equation \eqref{eq:6.1.17}. So $\{\psi_j\}$ is bounded in absolute value
+by a geometrically declining sequence and hence is absolutely summable.
+
+Again there are two ways to derive the expression for autocovariances in terms
+of $(\phi_1, \ldots, \phi_p, \theta_1, \ldots, \theta_q, \sigma^2)$. You can calculate the coefficients $\{\psi_j\}$ in the MA
+representation as just described and then use \eqref{eq:6.1.7}. The other method is based on
+the Yule--Walker equations.
+
+\subsection*{ARMA(\textit{p}, \textit{q}) with Common Roots}
+
+In the $\text{ARMA}(p, q)$ equation \eqref{eq:6.2.9prime}, suppose $\phi(L)$ satisfies the stationarity condition
+as in Proposition~6.5, but suppose that one of the roots of $\phi(z) = 0$ is also a root
+of $\theta(z) = 0$. If that root is $\lambda$, the polynomials $\phi(z)$ and $\theta(z)$ have a factorization
+\[
+  \phi(z) = \alpha(z)\,\phi^*(z), \quad
+  \theta(z) = \alpha(z)\,\theta^*(z) \quad
+  \text{with } \alpha(z) = 1 - \lambda^{-1} z.
+\]
+The inverse of $\phi(L)$ is $\phi^*(L)^{-1} \alpha(L)^{-1}$. So the $\psi(L)$ in Proposition~6.5 can be
+written as
+\begin{equation}
+  \psi(L) = \phi(L)^{-1} \theta(L)
+           = \phi^*(L)^{-1} \alpha(L)^{-1} \alpha(L)\,\theta^*(L)
+           = \phi^*(L)^{-1} \theta^*(L),
+  \label{eq:6.2.12}
+\end{equation}
+which shows that the $\text{ARMA}(p, q)$ equation \eqref{eq:6.2.9prime} and the simpler $\text{ARMA}(p-1,
+q-1)$ equation
+\[
+  \phi^*(L)(y_t - \mu) = \theta^*(L) \varepsilon_t
+\]
+share the same process as the unique covariance-stationary solution.\footnote{Since we defined filters for sequences of real numbers, the discussion in the text presumes that the root $\lambda$ is real. If $\lambda$ is complex, then there must be another common root which is the complex conjugate of $\lambda$. Let $\lambda_1 = a + bi$ and $\lambda_2 = a - bi$ be the pair of complex roots. Then if we define
+\[
+  \alpha(z) = 1 - (\lambda_1^{-1} + \lambda_2^{-1})z + \frac{1}{(\lambda_1 \cdot \lambda_2)} z^2
+  = 1 - \frac{2a}{(a^2 + b^2)} z + \frac{1}{(a^2 + b^2)} z^2,
+\]
+the discussion in the text carries over.}
+For reasons of parsimony, ARMA equations with common roots are rarely used to parameterize
+covariance-stationary processes.
+
+\subsection*{Invertibility}
+
+For the $\text{ARMA}(p, q)$ equation \eqref{eq:6.2.9}, if $\phi(z) = 0$ and $\theta(z) = 0$ have no common
+roots and if $\theta(z)$ satisfies the stability condition \eqref{eq:6.1.18} or \eqref{eq:6.1.18prime}, then the
+ARMA process is said to be \textbf{invertible} and the stability condition on $\theta(z)$ is called
+the \textbf{invertibility condition}.\footnote{It is easy to confuse invertibility and the existence of an inverse. Since $\theta_0 = 1 \neq 0$, $\theta(L)$ does have an inverse. The inverse, however, may not be absolutely summable unless the invertibility condition is satisfied.}
+Since $\theta(L)^{-1}$ is absolutely summable if $\theta(z)$ satisfies
+the invertibility (stability) condition, we can multiply both sides of the ARMA
+equation \eqref{eq:6.2.9} by $\theta(L)^{-1}$ and use the relation $\theta(L)^{-1} c = c\,\theta(1)^{-1} = c/\theta(1)$ to
+obtain
+\begin{equation}
+  \theta(L)^{-1} \phi(L) y_t = \frac{c}{\theta(1)} + \varepsilon_t.
+  \label{eq:6.2.13}
+\end{equation}
+So, the process has the infinite-order autoregressive ($\text{AR}(\infty)$) representation. The
+derivation does not require the stationarity condition (that $\phi(z)$ satisfies the stability
+condition). If both $\phi(z)$ and $\theta(z)$ satisfy the stability condition, then the
+$\text{ARMA}(p, q)$ process has both the $\text{MA}(\infty)$ and $\text{AR}(\infty)$ representations.
+
+\subsection*{Autocovariance-Generating Function and the Spectrum}
+
+A particularly useful way to summarize the whole profile of autocovariances,
+$\{\gamma_j\}$, of a covariance-stationary process $\{y_t\}$ is the \textbf{autocovariance-generating
+function}:
+\begin{equation}
+  g_Y(z) \equiv \sum_{j=-\infty}^{\infty} \gamma_j z^j
+  = \gamma_0 + \sum_{j=1}^{\infty} \gamma_j \cdot (z^j + z^{-j})
+  \quad (\text{since } \gamma_{-j} = \gamma_j).
+  \label{eq:6.2.14}
+\end{equation}
+The argument of this function ($z$) is a complex scalar. Because the summation
+involves infinitely many terms, there arises a question as to whether the function
+is well defined. A familiar result from calculus says that the infinite sum is well
+defined at least for $|z| = 1$ (the unit circle) if $\{\gamma_j\}$ is absolutely summable. For
+example, for $z = 1$,
+\begin{equation}
+  g_Y(1) = \sum_{j=-\infty}^{\infty} \gamma_j = \gamma_0 + 2 \sum_{j=1}^{\infty} \gamma_j.
+  \label{eq:6.2.15}
+\end{equation}
+This is indeed well defined because the infinite sum converges.\footnote{Fact: If $\{\gamma_j\}$ is absolutely summable, then it is summable (i.e., the partial sum of $\{\gamma_j\}$ converges to a finite limit).}
+
+Any complex number on the unit circle can be represented as
+\begin{equation}
+  z = \cos(\omega) - i \sin(\omega) = e^{-i\omega},
+  \label{eq:6.2.16}
+\end{equation}
+where $i = \sqrt{-1}$ and $\omega$ is the negative of the radian angle that $z$ makes with the real
+axis. If the autocovariance-generating function is evaluated at this $z$ and divided by
+$2\pi$, the resulting function of $\omega$,
+\begin{equation}
+  s_Y(\omega) \equiv \frac{1}{2\pi}\,g_Y\bigl(\cos(\omega) - i\sin(\omega)\bigr)
+  = \frac{1}{2\pi}\,g_Y(e^{-i\omega})
+  \label{eq:6.2.17}
+\end{equation}
+is called the \textbf{(power) spectrum} or the \textbf{spectral density (function)} of $\{y_t\}$, and $\omega$
+is referred to as the \textbf{frequency}.
+
+It can be shown that for absolutely summable autocovariances, all of the autocovariances
+can be calculated from the spectrum (hence the term autocovariance-generating
+function). So there is a one-to-one mapping between the $\{\gamma_j\}$ sequence
+and $g_Y(z)$ or $s_Y(\omega)$. The \textbf{time domain approach}, which concentrates on $\{\gamma_j\}$ and
+which is what we have been doing, and the \textbf{frequency domain approach}, which
+is based on the interpretation of the spectrum, are therefore \emph{equivalent}, although
+some results can be more easily stated in one approach than in the other. This book
+will not cover the frequency domain approach any further than this.
+
+If $\{y_t\}$ is white noise, then evidently $g_Y(z)$ is constant and equal to the variance.
+For MA(1), $g_Y(z)$ is obtained by simple substitution of \eqref{eq:6.1.2a} for $q = 1$ into the
+definition \eqref{eq:6.2.14}:
+\begin{align*}
+  g_Y(z) &= \gamma_{-1} z^{-1} + \gamma_0 + \gamma_1 z \\
+  &= (\theta_1 \sigma^2) z^{-1} + (1 + \theta_1^2)\sigma^2 + (\theta_1 \sigma^2) z \\
+  &= \sigma^2 \cdot [\theta_1 z^{-1} + (1 + \theta_1^2) + \theta_1 z] \\
+  &= \sigma^2 \cdot (1 + \theta_1 z)(1 + \theta_1 z^{-1}).
+\end{align*}
+So
+\begin{equation}
+  g_Y(z) = \sigma^2\,\theta(z)\,\theta(z^{-1}),
+  \label{eq:6.2.18}
+\end{equation}
+where $\theta(z) = 1 + \theta_1 z$. This last expression generalizes to the $\text{MA}(q)$ case where
+$\theta(z) = 1 + \theta_1 z + \theta_2 z^2 + \cdots + \theta_q z^q$. (You should verify this by carrying out the
+multiplication in this expression for $g_Y(z)$ for $\text{MA}(q)$, collecting terms by powers
+of $z$, and looking at the coefficient of $z^j$ or $z^{-j}$.) The expression is also good for
+$\text{MA}(\infty)$ processes if the coefficients are absolutely summable, as the following
+result assures us.
+
+\begin{proposition}[Autocovariance-generating function for filtered processes]
+\label{prop:6.6}
+Let $\{\varepsilon_t\}$ be white noise and let $\psi(L) = \psi_0 + \psi_1 L + \psi_2 L^2 + \cdots$ be an absolutely
+summable filter (i.e., with $\{\psi_j\}$ absolutely summable). Then the autocovariance-generating
+function of the $\mathrm{MA}(\infty)$ process $\{y_t\}$ where $y_t = \mu + \psi(L) \varepsilon_t$ is
+\begin{equation}
+  g_Y(z) = \sigma^2\,\psi(z)\,\psi(z^{-1}).
+  \label{eq:6.2.19}
+\end{equation}
+More generally, let $\{x_t\}$ be covariance-stationary with absolutely summable
+autocovariances and $g_X(z)$ be the autocovariance-generating function of $\{x_t\}$. The
+autocovariance-generating function of the filtered series $\{y_t\}$ where $y_t = h(L) x_t$
+(with absolutely summable $\{h_j\}$) is
+\begin{equation}
+  g_Y(z) = h(z)\,g_X(z)\,h(z^{-1}).
+  \label{eq:6.2.20}
+\end{equation}
+\end{proposition}
+
+We will not prove this result; see, e.g., Fuller (1996, Theorem~4.3.1).
+
+Because $\text{AR}(p)$ and $\text{ARMA}(p, q)$ processes have the $\text{MA}(\infty)$ representations,
+their autocovariance-generating functions can be derived easily from \eqref{eq:6.2.19}.
+Since $\psi(L) = 1/\phi(L)$ for $\text{AR}(p)$, and $\psi(L) = \theta(L)/\phi(L)$ for $\text{ARMA}(p, q)$, we
+have
+\begin{align}
+  \text{AR}(p) &: \; g_Y(z) = \sigma^2 \frac{1}{\phi(z)\,\phi(z^{-1})},
+  \label{eq:6.2.21} \\
+  \text{ARMA}(p, q) &: \; g_Y(z) = \sigma^2 \frac{\theta(z)\,\theta(z^{-1})}{\phi(z)\,\phi(z^{-1})}.
+  \label{eq:6.2.22}
+\end{align}
+
+\subsection*{Questions for Review}
+
+\begin{enumerate}
+\item If $\{y_t\}$ is the covariance-stationary solution to the AR(1) equation \eqref{eq:6.2.1} with
+$|\phi| < 1$, what is
+\[
+  \widehat{\E}^*(y_t \mid 1, y_{t-1})
+\]
+(the least squares projection)? \textbf{Hint:} $\E(y_{t-1} \varepsilon_t) = 0$. Do the projection coefficients
+depend on $t$? Is $\widehat{\E}^*(y_t \mid 1, y_{t-1}) = \E(y_t \mid y_{t-1})$? \textbf{Hint:} $\E(y_{t-1} \varepsilon_t) = 0$
+but does it mean $\E(\varepsilon_t \mid y_{t-1}) = 0$? What is $\widehat{\E}^*(y_t \mid 1, y_{t-1}, y_{t-2})$? Now
+suppose that $\{y_t\}$ is the covariance-stationary solution to the AR(1) equation
+when $|\phi| > 1$. Is it true that $\E(y_{t-1} \varepsilon_t) = 0$? [Answer: No.] Does $\widehat{\E}^*(y_t \mid
+1, y_{t-1}) = c + \phi y_{t-1}$ as was the case when $|\phi| < 1$?
+
+\item (AR(1) with $\phi = -1$) \; For simplicity, set $c = 0$ in the AR(1) equation \eqref{eq:6.2.1}.
+Show that the AR(1) equation with $\phi = -1$ has no covariance-stationary solution.
+\textbf{Hint:} The same sort of successive substitution we did for the case $\phi = 1$
+yields
+\[
+  y_t - (-1)^j y_{t-j} = \varepsilon_t - \varepsilon_{t-1} + \cdots + (-1)^{j-1} \varepsilon_{t-j+1}.
+\]
+From this, derive
+\[
+  (-1)^j \rho_j = 1 - \frac{\sigma^2}{2\gamma_0} \cdot j.
+\]
+
+\item (About Proposition~6.4) \; How do we know that $\phi(1) \neq 0$ in \eqref{eq:6.2.8}?
+\textbf{Hint:} Use the stationarity condition. Prove part~(b) of Proposition~6.4. \textbf{Hint:} Take the expectation
+of both sides of \eqref{eq:6.2.6} and exploit the covariance-stationarity of $\{y_t\}$.
+
+\item (About Proposition~6.5) \; Verify that $y_t - \mu = \phi(L)^{-1}\,\theta(L) \varepsilon_t$ is a solution to
+the $\text{ARMA}(p, q)$ equation.
+
+\item ($\{\psi_j\}$ for $\text{ARMA}(p, q)$) \; For $\text{AR}(p)$, we used the equations \eqref{eq:6.1.12} to calculate
+the MA coefficients $\{\psi_j\}$. For $\text{ARMA}(3, 1)$, write down the corresponding
+equations. From which lag $j$ does $\{\psi_j\}$ start following
+\[
+  \psi_j - \phi_1 \psi_{j-1} - \phi_2\,\psi_{j-2} - \phi_3\,\psi_{j-3} = 0,
+\]
+which is \eqref{eq:6.1.17} for $p = 3$? Do the same for $\text{ARMA}(1, 2)$. From which $j$
+does $\{\psi_j\}$ start following \eqref{eq:6.1.17} for $p = 1$? [Answer: $j = 3$.]
+
+\item (How filtering alters the spectrum) \; Let $h(L)$ be absolutely summable. By
+Proposition~6.2, if $\{x_t\}$ is covariance-stationary with absolutely summable autocovariances,
+then so is $\{y_t\}$ where $y_t = h(L) x_t$. Using \eqref{eq:6.2.20}, verify that
+\[
+  s_Y(\omega) = h(e^{-i\omega})\,s_X(\omega)\,h(e^{i\omega}).
+\]
+
+\item (The spectrum is real valued) \; Show that the spectrum is real valued. \textbf{Hint:}
+Substitute \eqref{eq:6.2.16} into \eqref{eq:6.2.14}. Use the following facts from complex analysis:
+$[\cos(\omega) - i\sin(\omega)]^j = \cos(j\omega) - i\sin(j\omega)$; $\sin(-\omega) = -\sin(\omega)$.
+\end{enumerate}

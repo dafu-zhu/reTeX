@@ -1,0 +1,101 @@
+% sec07_6.tex — Section 7.6: Rayleigh Quotient and Laplace's Equation
+\section{Rayleigh Quotient and Laplace's Equation}
+\label{sec:7.6}
+
+\subsection{Rayleigh Quotient}
+\label{sec:7.6.1}
+
+In Sec.~5.6 we obtained the Rayleigh quotient, for the one-dimensional Sturm-Liouville eigenvalue problem.  The result was obtained by multiplying the differential equation by $\phi$, integrating over the entire region, solving for $\lambda$, and simplifying using integration by parts.  We will derive a similar result for
+\begin{equation}
+\laplacian\phi + \lambda\phi = 0.
+\label{eq:7.6.1}
+\end{equation}
+We proceed as before by multiplying \eqref{eq:7.6.1} by $\phi$.  Integrating over the entire two-dimensional region and solving for $\lambda$ yields
+\begin{equation}
+\lambda = \frac{-\iint_R \phi\laplacian\phi\dx\dy}{\iint_R \phi^2\dx\dy}.
+\label{eq:7.6.2}
+\end{equation}
+
+Next, we want to generalize integration by parts to multidimensional functions.  Integration by parts is based on the product rule for the derivative, $d/dx(fg) = f\,dg/dx + g\,df/dx$.  Instead of using the derivative, we use a product rule for the divergence, $\nabla\cdot(fg) = f\nabla\cdot g + g\cdot\nabla f$.  Letting $f = \phi$ and $g = \nabla\phi$, it follows that $\nabla\cdot(\phi\nabla\phi) = \phi\nabla\cdot(\nabla\phi) + \nabla\phi\cdot\nabla\phi$.  Since $\nabla\cdot(\nabla\phi) = \laplacian\phi$ and $\nabla\phi\cdot\nabla\phi = |\nabla\phi|^2$,
+\begin{equation}
+\phi\,\laplacian\phi = \nabla\cdot(\phi\,\nabla\phi) - |\nabla\phi|^2.
+\label{eq:7.6.3}
+\end{equation}
+Using \eqref{eq:7.6.3} in \eqref{eq:7.6.2} yields an alternative expression for the eigenvalue,
+\begin{equation}
+\lambda = \frac{-\oint\int_R \nabla\cdot(\phi\,\nabla\phi)\dx\dy + \iint_R |\nabla\phi|^2\dx\dy}{\iint_R \phi^2\dx\dy}.
+\label{eq:7.6.4}
+\end{equation}
+
+Now we use (again) the divergence theorem to evaluate the first integral in the numerator of \eqref{eq:7.6.4}.  Since $\iint_R \nabla\cdot\vec{A}\dx\dy = \oint\vec{A}\cdot\hat{n}\ds$, it follows that
+\begin{equation}
+\boxed{\lambda = \frac{-\oint\phi\nabla\phi\cdot\hat{n}\ds + \iint_R |\nabla\phi|^2\dx\dy}{\iint_R \phi^2\dx\dy},}
+\label{eq:7.6.5}
+\end{equation}
+known as the \textbf{Rayleigh quotient}.  This is quite similar to the Rayleigh quotient for Sturm-Liouville eigenvalue problems.  Note that there is a boundary contribution for each: $-p\phi\,d\phi/dx\big|_a^b$ for (5.6.3) and $-\oint\phi\nabla\phi\cdot\hat{n}\ds$ for \eqref{eq:7.6.5}.
+
+\textbf{Example.}  We consider any region in which the boundary condition is $\phi = 0$ on the entire boundary.  Then $\oint\phi\nabla\phi\cdot\hat{n}\ds = 0$, and hence from \eqref{eq:7.6.5}, $\lambda \geq 0$.  If $\lambda = 0$, then \eqref{eq:7.6.5} implies that
+\begin{equation}
+0 = \iint_R |\nabla\phi|^2\dx\dy.
+\label{eq:7.6.6}
+\end{equation}
+Thus,
+\begin{equation}
+\nabla\phi = \pd{\phi}{x}\hat{\imath} + \pd{\phi}{y}\hat{\jmath} = 0
+\label{eq:7.6.7}
+\end{equation}
+everywhere.  From \eqref{eq:7.6.7} it follows that $\partial\phi/\partial x = 0$ and $\partial\phi/\partial y = 0$ everywhere.  Thus, $\phi$ is a constant everywhere, but since $\phi = 0$ on the boundary, $\phi = 0$ everywhere.  $\phi = 0$ everywhere is not an eigenfunction, and thus we have shown that $\lambda = 0$ is not an eigenvalue.  In conclusion, $\lambda > 0$.
+
+\subsection{Time-Dependent Heat Equation and Laplace's Equation}
+\label{sec:7.6.2}
+
+Equilibrium solutions of the time-dependent heat equation satisfy Laplace's equation $\laplacian\phi = 0$ subject to homogeneous boundary conditions.  Solving Laplace's equation corresponds to investigating whether $\lambda = 0$ is an eigenvalue for \eqref{eq:7.6.1}.
+
+\textbf{Zero temperature boundary condition.}  Consider $\laplacian\phi = 0$ subject to $\phi = 0$ along the entire boundary.  It can be concluded from \eqref{eq:7.6.6} that $\phi = 0$ everywhere inside the region (since $\lambda = 0$ is not an eigenvalue).  For an object of any shape subject to the zero temperature boundary condition on the entire boundary, the steady-state (equilibrium) temperature distribution is zero temperature, which is somewhat obvious physically.  For the time-dependent heat equation $\partial u/\partial t = k\laplacian u$, \eqref{eq:7.6.1} arises by separation of variables, and $\lambda > 0$ (from the Rayleigh quotient) proves that $u(x,y,t) \to 0$ as $t \to \infty$, the time dependent temperature approaches the equilibrium temperature distribution for large time.
+
+\textbf{Insulated boundary condition.}  Consider $\laplacian\phi = 0$ subject to $\nabla\phi\cdot\hat{n} = 0$ along the entire boundary.  It can be concluded from \eqref{eq:7.6.6} that $\phi = c ={}$arbitrary constant everywhere inside the region (since $\lambda = 0$ is an eigenvalue and $\phi = c$ is the eigenfunction).  The constant equilibrium solution can be determined from the initial value problem for the time-dependent diffusion (heat) equation $\partial u/\partial t = k\laplacian u$.  The fundamental integral conservation law (see Section~1.5) using the entire region is $\frac{d}{dt}\iint u\dx\dy \doteq k\oint\nabla u\cdot\hat{n}\ds = 0$, where we have used the insulated boundary condition.  Thus, the total thermal energy $\iint u\dx\dy$ is constant in time, and its equilibrium value ($t \to \infty$), $\iint c\dx\dy = cA$, equals its initial value ($t = 0$), $\iint f(x,y)\dx\dy$.  In this way, $c = \frac{1}{A}\iint f(x,y)\dx\dy$ so that the constant equilibrium temperature with insulated boundaries must be the average of the initial temperature distribution.  Here $A$ is the area of the two-dimensional region.  For the time-dependent heat equation with insulated boundary conditions, it can be shown that $u(x,y,t) \to c = \frac{1}{A}\iint f(x,y)\dx\dy$ as $t \to \infty$ since $\lambda \geq 0$ (with $\phi = 1$ corresponding to $\lambda = 0$ from the Rayleigh quotient) (i.e., the time-dependent temperature approaches the equilibrium temperature distribution for large time).
+
+Similar results hold in three dimensions.
+
+\begin{exercises}{7.6}
+
+\item See Exercise~7.5.1.  Consider the two-dimensional eigenvalue problem with $\sigma > 0$
+\[
+\laplacian\phi + \lambda\sigma(x,y)\phi = 0 \quad\text{with}\quad \phi = 0 \text{ on the boundary.}
+\]
+
+\begin{enumerate}
+\item[(a)] Prove that $\lambda \geq 0$.
+
+\item[(b)] Is $\lambda = 0$ an eigenvalue, and if so, what is the eigenfunction?
+\end{enumerate}
+
+\item Redo Exercise~7.6.1 if the boundary condition is instead
+\begin{enumerate}
+\item[(a)] $\nabla\phi\cdot\hat{n} = 0$ on the boundary
+\item[(b)] $\nabla\phi\cdot\hat{n} + h(x,y)\phi = 0$ on the boundary
+\item[(c)] $\phi = 0$ on part of the boundary and $\nabla\phi\cdot\hat{n} = 0$ on the rest of the boundary
+\end{enumerate}
+
+\item Redo Exercise~7.6.1 if the differential equation is
+\[
+\nabla\cdot(p\nabla\phi) + \lambda\sigma(x,y,z)\phi = 0
+\]
+with boundary condition
+\begin{enumerate}
+\item[(a)] $\phi = 0$ on the boundary
+\item[(b)] $\nabla\phi\cdot\hat{n} = 0$ on the boundary
+\end{enumerate}
+
+\item
+\begin{enumerate}
+\item[(a)] If $\laplacian\phi = 0$ with $\phi = 0$ on the boundary, prove that $\phi = 0$ everywhere.  (\emph{Hint:} Use the fact that $\lambda = 0$ is not an eigenvalue for $\laplacian\phi = -\lambda\phi$.)
+
+\item[(b)] Prove that there cannot be two different solutions of the problem
+\[
+\laplacian u = f(x,y,z)
+\]
+subject to the given boundary condition $u = g(x,y,z)$ on the boundary. [\emph{Hint:} Consider $u_1 - u_2$ and use part~(a).]
+\end{enumerate}
+
+\end{exercises}

@@ -1,0 +1,777 @@
+% sec09_5.tex — Section 9.5: Green's Functions for Poisson's Equation
+\section{Green's Functions for Poisson's Equation}
+\label{sec:greens-poisson}
+
+%% ────────────────────────────────────────────────────────────────
+\subsection{Introduction}
+\label{sec:greens-poisson-intro}
+
+In Secs.~9.3 and~9.4 we discussed Green's functions for Sturm--Liouville-type ordinary differential equations $L(u) = f$, where $L = d/dx(p\,d/dx) + q$.  Before discussing Green's functions for time-dependent partial differential equations (such as the heat and wave equations), we will analyze Green's functions for Poisson's equation, a time-independent partial differential equation:
+\begin{equation}
+\label{eq:9.5.1}
+L(u) = f,
+\end{equation}
+where $L = \laplacian$, the Laplacian.  At first, we will assume that $u$ satisfies homogeneous boundary conditions.  Later we will show how to use the same ideas to solve problems with nonhomogeneous boundary conditions.  We will begin by assuming that the region is finite, as illustrated in Fig.~9.5.1.  The extension to infinite domains will be discussed in some depth.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch09/fig_9_5_1.png}
+\caption{Finite two-dimensional region.}
+\label{fig:9.5.1}
+\end{figure}
+
+We will frequently use \textbf{Green's formula} for the Laplacian, either in its two- or three-dimensional forms:
+\boxed{\begin{align*}
+\iiint (u\laplacian v - v\laplacian u)\dV &= \oiint (u\nabla v - v\nabla u)\cdot\hat{\mathbf{n}}\dS \\
+\iint (u\laplacian v - v\laplacian u)\dA &= \oint (u\nabla v - v\nabla u)\cdot\hat{\mathbf{n}}\ds.
+\end{align*}}
+
+%% ────────────────────────────────────────────────────────────────
+\subsection{Multidimensional Dirac Delta Function and Green's Functions}
+\label{sec:greens-multidim-dirac}
+
+The Green's function is defined as the solution to the nonhomogeneous problem with a concentrated source, subject to homogeneous boundary conditions.  We define a two-dimensional Dirac delta function as an operator with a concentrated source with unit volume.  It is the product of two one-dimensional Dirac delta functions.  If the source is concentrated at $\vec{x} = \vec{x}_0$ ($\vec{x} = x\hat{\imath}+y\hat{\jmath}$, $\vec{x}_0 = x_0\hat{\imath}+y_0\hat{\jmath}$), then
+\begin{equation}
+\label{eq:9.5.2}
+\boxed{\delta(\vec{x}-\vec{x}_0) = \delta(x-x_0)\delta(y-y_0).}
+\end{equation}
+Similar ideas hold in three dimensions.  The fundamental operator property of this multidimensional Dirac delta function is that
+\begin{equation}
+\label{eq:9.5.3}
+\boxed{\int_{-\infty}^{\infty}\int_{-\infty}^{\infty} f(\vec{x})\,\delta(\vec{x}-\vec{x}_0)\dA = f(\vec{x}_0)}
+\end{equation}
+\begin{equation}
+\label{eq:9.5.4}
+\boxed{\int_{-\infty}^{\infty}\int_{-\infty}^{\infty} f(x,y)\,\delta(x-x_0)\delta(y-y_0)\dA = f(x_0,y_0),}
+\end{equation}
+in vector or two-dimensional component form, where $f(\vec{x}) = f(x,y)$.
+
+\textbf{Green's function.}
+In order to solve the nonhomogeneous partial differential equation
+\begin{equation}
+\label{eq:9.5.5}
+\boxed{\laplacian u = f(\vec{x}),}
+\end{equation}
+subject to homogeneous conditions along the boundary, we introduce the Green's function $G(\vec{x},\vec{x}_0)$ for Poisson's equation\footnote{Sometimes this is called the Green's function for Laplace's equation.}:
+\begin{equation}
+\label{eq:9.5.6}
+\boxed{\laplacian G(\vec{x},\vec{x}_0) = \delta(\vec{x}-\vec{x}_0),}
+\end{equation}
+subject to the \emph{same homogeneous} boundary conditions.  Here $G(\vec{x},\vec{x}_0)$ represents the response at $\vec{x}$ due to a source at $\vec{x}_0$.
+
+\textbf{Representation formula using Green's function.}
+Green's formula (in its two-dimensional form) with $v = G(\vec{x},\vec{x}_0)$ becomes
+\[
+\iint (u\laplacian G - G\laplacian u)\dA = 0,
+\]
+since both $u(\vec{x})$ and $G(\vec{x},\vec{x}_0)$ solve the same homogeneous boundary conditions such that $\oint(u\nabla G - G\nabla u)\cdot\hat{\mathbf{n}}\ds$ vanishes.  From \eqref{eq:9.5.5} and \eqref{eq:9.5.6}, it follows that
+\[
+u(\vec{x}_0) = \iint f(\vec{x})\,G(\vec{x},\vec{x}_0)\dA.
+\]
+If we reverse the role of $\vec{x}$ and $\vec{x}_0$, we obtain
+\[
+u(\vec{x}) = \iint f(\vec{x}_0)\,G(\vec{x}_0,\vec{x})\,dA_0.
+\]
+As we will show, the Green's function is symmetric:
+\begin{equation}
+\label{eq:9.5.7}
+\boxed{G(\vec{x},\vec{x}_0) = G(\vec{x}_0,\vec{x}),}
+\end{equation}
+and hence
+\begin{equation}
+\label{eq:9.5.8}
+\boxed{u(\vec{x}) = \iint f(\vec{x}_0)\,G(\vec{x},\vec{x}_0)\,dA_0.}
+\end{equation}
+This shows how the solution of the partial differential equation may be computed if the Green's function is known.
+
+\textbf{Symmetry.}
+As in one-dimensional problems, to show the symmetry of the Green's function we use Green's formula with $G(\vec{x},\vec{x}_1)$ and $G(\vec{x},\vec{x}_2)$.  Since both satisfy the same homogeneous boundary conditions, we have
+\[
+\iint [G(\vec{x},\vec{x}_1)\laplacian G(\vec{x},\vec{x}_2) - G(\vec{x},\vec{x}_2)\laplacian G(\vec{x},\vec{x}_1)]\dA = 0.
+\]
+Since $\laplacian G(\vec{x},\vec{x}_1) = \delta(\vec{x}-\vec{x}_1)$ and $\laplacian G(\vec{x},\vec{x}_2) = \delta(\vec{x}-\vec{x}_2)$, it follows using the fundamental property of the Dirac delta function that $G(\vec{x}_1,\vec{x}_2) = G(\vec{x}_2,\vec{x}_1)$; the Green's function is symmetric.
+
+%% ────────────────────────────────────────────────────────────────
+\subsection{Green's Functions by the Method of Eigenfunction Expansion and the Fredholm Alternative}
+\label{sec:greens-poisson-eigexp}
+
+One method to solve Poisson's equation in a finite region with homogeneous boundary conditions,
+\begin{equation}
+\label{eq:9.5.9}
+\boxed{\laplacian u = f(\vec{x}),}
+\end{equation}
+is to use an eigenfunction expansion.  We consider the related eigenfunctions, $\laplacian\phi = -\lambda\phi$, subject to the same homogeneous boundary conditions.  We assume that the eigenvalues $\lambda$ and corresponding eigenfunctions $\phi_\lambda(\vec{x})$ are known.  We solve for $u(\vec{x})$ using the method of eigenfunction expansion:
+\begin{equation}
+\label{eq:9.5.10}
+u(\vec{x}) = \sum_\lambda a_\lambda\,\phi_\lambda(\vec{x}).
+\end{equation}
+Since $u(\vec{x})$ and $\phi_\lambda(\vec{x})$ solve the same homogeneous boundary condition, we expect to be able to differentiate term by term:
+\[
+f = \laplacian u = \sum_\lambda a_\lambda\laplacian\phi_\lambda(\vec{x}) = -\sum_\lambda \lambda a_\lambda\,\phi_\lambda(\vec{x}).
+\]
+This can be verified using Green's formula.  Due to the multidimensional orthogonality of $\phi_\lambda(\vec{x})$, it follows that
+\begin{equation}
+\label{eq:9.5.11}
+-\lambda a_\lambda = \frac{\iint f(\vec{x}_0)\phi_\lambda(\vec{x}_0)\,dA_0}{\iint \phi_\lambda^2\dA}.
+\end{equation}
+If $\lambda = 0$ is not an eigenvalue, then we can determine $a_\lambda$.  The representation of the solution $u(\vec{x})$ follows from \eqref{eq:9.5.10} after interchanging $\sum_\lambda$ and $\iint$:
+\begin{equation}
+\label{eq:9.5.12}
+\boxed{u(\vec{x}) = \iint f(\vec{x}_0)\,G(\vec{x},\vec{x}_0)\,dA_0,}
+\end{equation}
+where the eigenfunction expansion of the Green's function is given by
+\begin{equation}
+\label{eq:9.5.13}
+\boxed{G(\vec{x},\vec{x}_0) = \sum_\lambda \frac{\phi_\lambda(\vec{x})\,\phi_\lambda(\vec{x}_0)}{-\lambda\iint\phi_\lambda^2\dA}.}
+\end{equation}
+This is the natural generalization of the one-dimensional result.
+
+\textbf{Example.}
+For a rectangle, $0 < x < L$, $0 < y < H$, with boundary conditions zero on all four sides, the eigenvalues are $\lambda_{nm} = (n\pi/L)^2 + (m\pi/H)^2$ ($n = 1,2,3,\ldots$ and $m = 1,2,3,\ldots$) and the corresponding eigenfunctions are $\phi_\lambda(\vec{x}) = \sin(n\pi x/L)\sin(m\pi y/H)$.  The normalization constants are $\iint\phi_\lambda^2\dx\dy = L/2 \cdot H/2$.  The Green's function can be expanded in a series of these eigenfunctions, a Fourier sine series in $x$ and $y$,
+\[
+G(\vec{x},\vec{x}_0) = \frac{-4}{LH}\sum_{n=1}^{\infty}\sum_{m=1}^{\infty}\frac{\sin n\pi x/L\sin m\pi y/H\sin n\pi x_0/L\sin m\pi y_0/H}{(n\pi/L)^2+(m\pi/H)^2}.
+\]
+Later in this section, as well as in Exercise~9.5.22(a), we will obtain alternative forms of this Green's function.
+
+\textbf{Fredholm alternative.}
+We show that there is a Fredholm alternative as in Sec.~9.4.  If $\lambda \neq 0$, we have obtained a unique solution of the nonhomogeneous problem \eqref{eq:9.5.9} subject to homogeneous boundary conditions.  As before, difficulties occur if $\lambda = 0$ is an eigenvalue.  In this case there is at least one nontrivial homogeneous solution $\phi_h$ of Laplace's equation $\laplacian\phi_h = 0$ satisfying homogeneous boundary conditions.  From \eqref{eq:9.5.11}, it follows that for the nonhomogeneous boundary value problem \eqref{eq:9.5.9} subject to homogeneous boundary conditions, exactly one of the following statements holds:
+
+\begin{center}
+\fbox{\parbox{0.8\textwidth}{
+There is an infinite number of solutions if the right-hand side is orthogonal to all homogeneous solutions $\iint f(\vec{x}_0)\phi_h(\vec{x}_0)\,dA_0 = 0$.  From \eqref{eq:9.5.11} the corresponding $a_\lambda$ is arbitrary.
+}}
+\end{center}
+\begin{equation}
+\label{eq:9.5.14}
+\tag{9.5.14}
+\end{equation}
+
+\begin{center}
+\fbox{\parbox{0.8\textwidth}{
+There are no solutions if $\iint f(\vec{x}_0)\phi_h(\vec{x}_0)\,dA_0 \neq 0$.
+}}
+\end{center}
+\begin{equation}
+\label{eq:9.5.15}
+\tag{9.5.15}
+\end{equation}
+
+\textbf{Example.}
+If the entire boundary is insulated, $\nabla\phi\cdot\hat{\mathbf{n}} = 0$, then $\phi_h$ equaling any constant is a nontrivial solution of $\laplacian\phi = 0$ satisfying the boundary conditions.  $\phi_h = 1$ is the eigenfunction corresponding to $\lambda = 0$.  Solutions of $\laplacian u = f(\vec{x})$ then exist only if $\iint f(\vec{x})\dA = 0$.  Physically for a steady-state heat equation with insulated boundaries, the net heat energy generated must be zero.  This is just the two-dimensional version of the problem discussed in Sec.~9.4.  In particular, we could introduce in some way a generalized Green's function (which is also known as a \textbf{Neumann function}).  We leave any discussion of this for the Exercises.  For the remainder of Sec.~9.5 we will assume that $\lambda = 0$ is not an eigenvalue.
+
+%% ────────────────────────────────────────────────────────────────
+\subsection{Direct Solution of Green's Functions (One-Dimensional Eigenfunctions)}
+\label{sec:greens-poisson-direct}
+
+Green's functions can also be obtained by more direct methods.  Consider the Green's function for Poisson's equation,
+\begin{equation}
+\label{eq:9.5.16}
+\laplacian G(\vec{x},\vec{x}_0) = \delta(\vec{x}-\vec{x}_0),
+\end{equation}
+inside a rectangle with zero boundary conditions, as illustrated in Fig.~9.5.2.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch09/fig_9_5_2.png}
+\caption{Green's function for Poisson's equation on a rectangle.}
+\label{fig:9.5.2}
+\end{figure}
+
+Instead of solving for this Green's function using a series of two-dimensional eigenfunctions (see Sec.~9.5.3), we will use one-dimensional eigenfunctions, either a sine series in $x$ or $y$ due to the boundary conditions.  Using a Fourier sine series in $x$,
+\begin{equation}
+\label{eq:9.5.17}
+G(\vec{x},\vec{x}_0) = \sum_{n=1}^{\infty} a_n(y)\sin\frac{n\pi x}{L}.
+\end{equation}
+By substituting \eqref{eq:9.5.17} into \eqref{eq:9.5.16}, we obtain [since both $G(\vec{x},\vec{x}_0)$ and $\sin(n\pi x/L)$ satisfy the same set of homogeneous boundary conditions]
+\begin{equation}
+\label{eq:9.5.18}
+\odd{a_n}{y} - \left(\frac{n\pi}{L}\right)^2 a_n = \frac{2}{L}\sin\frac{n\pi x_0}{L}\,\delta(y-y_0).
+\end{equation}
+The boundary conditions at $y=0$ and $y=H$ imply that the Fourier coefficients must satisfy the corresponding boundary conditions,
+\begin{equation}
+\label{eq:9.5.19}
+a_n(0) = 0 \quad\text{and}\quad a_n(H) = 0.
+\end{equation}
+Equation~\eqref{eq:9.5.18} with boundary conditions \eqref{eq:9.5.19} may be solved by a Fourier sine series in $y$; but this will yield the earlier double-sine-series analysis.  On the other hand, since the nonhomogeneous term for $a_n(y)$ is a one-dimensional Dirac delta function, we may solve \eqref{eq:9.5.18} as we have done for Green's functions.  The differential equation is homogeneous if $y \neq y_0$.  In addition, if we utilize the boundary conditions, we obtain
+\[
+a_n(y) = \begin{cases}
+c_n\sinh\dfrac{n\pi y}{L}\sinh\dfrac{n\pi(y_0-H)}{L} & y < y_0 \\[8pt]
+c_n\sinh\dfrac{n\pi(y-H)}{L}\sinh\dfrac{n\pi y_0}{L} & y > y_0,
+\end{cases}
+\]
+where in this form continuity at $y = y_0$ is automatically satisfied.  In addition, we integrate \eqref{eq:9.5.18} from $y_{0-}$ to $y_{0+}$ to obtain the jump in the derivative:
+\begin{equation}
+\label{eq:9.5.20}
+c_n\frac{n\pi}{L}\left[\sinh\frac{n\pi y_0}{L}\cosh\frac{n\pi(y_0-H)}{L} - \sinh\frac{n\pi(y_0-H)}{L}\cosh\frac{n\pi y_0}{L}\right] = \frac{2}{L}\sin\frac{n\pi x_0}{L}.
+\end{equation}
+Using an addition formula for hyperbolic functions, we obtain
+\[
+c_n = \frac{2\sin n\pi x_0/L}{n\pi\sinh n\pi H/L}.
+\]
+This yields the Fourier sine series (in $x$) representation of the Green's function
+\begin{equation}
+\label{eq:9.5.21}
+G(\vec{x},\vec{x}_0) = \sum_{n=1}^{\infty} \frac{2\sin n\pi x_0/L\sin n\pi x/L}{n\pi\sinh n\pi H/L} \begin{cases}
+\sinh\dfrac{n\pi(y_0-H)}{L}\sinh\dfrac{n\pi y}{L} & y < y_0 \\[8pt]
+\sinh\dfrac{n\pi(y-H)}{L}\sinh\dfrac{n\pi y_0}{L} & y > y_0.
+\end{cases}
+\end{equation}
+The symmetry is exhibited explicitly.  In the preceding subsection this same Green's function was represented as a double Fourier sine series in both $x$ and $y$.  A third representation of this Green's function is also possible.  Instead of using a Fourier sine series in $x$, we could have used a Fourier sine series in $y$.  We omit the nearly identical analysis.
+
+%% ────────────────────────────────────────────────────────────────
+\subsection{Using Green's Functions for Problems with Nonhomogeneous Boundary Conditions}
+\label{sec:greens-poisson-nonhomog}
+
+As with one-dimensional problems, the \emph{same} Green's function determined in Secs.~9.5.2 through~9.5.4, $\laplacian G = \delta(\vec{x}-\vec{x}_0)$ [with $G(\vec{x},\vec{x}_0)$ satisfying homogeneous boundary conditions], may be used to solve Poisson's equation $\laplacian u = f(\vec{x})$ subject to \emph{nonhomogeneous} boundary conditions.
+
+For example, consider
+\begin{equation}
+\label{eq:9.5.22}
+\boxed{\laplacian u = f(\vec{x})}
+\end{equation}
+with
+\begin{equation}
+\label{eq:9.5.23}
+\boxed{u = h(\vec{x})}
+\end{equation}
+on the boundary.  The Green's function is defined by
+\begin{equation}
+\label{eq:9.5.24}
+\boxed{\laplacian G = \delta(\vec{x}-\vec{x}_0),}
+\end{equation}
+with
+\begin{equation}
+\label{eq:9.5.25}
+\boxed{G(\vec{x},\vec{x}_0) = 0}
+\end{equation}
+for $\vec{x}$ on the boundary ($\vec{x}_0$ is often not on the boundary).  The Green's function satisfies the related homogeneous boundary conditions.  To obtain the Green's function representation of the solution of \eqref{eq:9.5.22} and \eqref{eq:9.5.23}, we again employ Green's formula,
+\[
+\iint (u\laplacian G - G\laplacian u)\dA = \oint (u\nabla G - G\nabla u)\cdot\hat{\mathbf{n}}\ds.
+\]
+Using the defining differential equations and the boundary conditions,
+\[
+\iint [u(\vec{x})\delta(\vec{x}-\vec{x}_0) - f(\vec{x})G(\vec{x},\vec{x}_0)]\dA = \oint h(\vec{x})\nabla G\cdot\hat{\mathbf{n}}\ds,
+\]
+and thus,
+\[
+u(\vec{x}_0) = \iint f(\vec{x})\,G(\vec{x},\vec{x}_0)\dA + \oint h(\vec{x})\nabla G(\vec{x},\vec{x}_0)\cdot\hat{\mathbf{n}}\ds.
+\]
+We interchange $\vec{x}$ and $\vec{x}_0$, and we use the symmetry of $G(\vec{x},\vec{x}_0)$ to obtain
+\begin{equation}
+\label{eq:9.5.26}
+\boxed{u(\vec{x}) = \iint f(\vec{x}_0)\,G(\vec{x},\vec{x}_0)\,dA_0 + \oint h(\vec{x}_0)\nabla_{\vec{x}_0}G(\vec{x},\vec{x}_0)\cdot\hat{\mathbf{n}}\,ds_0.}
+\end{equation}
+We must be especially careful with the closed line integral, representing the effect of the nonhomogeneous boundary condition.  $\nabla_{\vec{x}_0}$ is a symbol for the gradient with respect to the position of the source,
+\[
+\nabla_{\vec{x}_0} \equiv \frac{\partial}{\partial x_0}\hat{\imath} + \frac{\partial}{\partial y_0}\hat{\jmath}.
+\]
+So, $G(\vec{x},\vec{x}_0)$ is the influence function for the source term, while $\nabla_{\vec{x}_0}G(\vec{x},\vec{x}_0)\cdot\hat{\mathbf{n}}$ is the influence function for the nonhomogeneous boundary conditions.  This is an ordinary derivative with respect to the source position in the normal direction.  Using the definition of a directional derivative,
+\[
+\nabla_{\vec{x}_0}G(\vec{x},\vec{x}_0)\cdot\hat{\mathbf{n}} = \lim_{\Delta s \to 0}\frac{G(\vec{x},\vec{x}_0+\Delta s\hat{\mathbf{n}}) - G(\vec{x},\vec{x}_0)}{\Delta s}.
+\]
+This yields an interpretation of this normal derivative of the Green's function.  The influence function for the nonhomogeneous boundary condition consists of two concentrated sources of opposite effects whose strength is $1/\Delta s$ and distance apart is $\Delta s$, in the limit as $\Delta s \to 0$.  This is called a \textbf{dipole source}.  Thus, \emph{this nonhomogeneous boundary condition has an equivalent effect as a surface distribution of dipoles}.
+
+%% ────────────────────────────────────────────────────────────────
+\subsection{Infinite Space Green's Functions}
+\label{sec:greens-infinite-space}
+
+In Secs.~9.5.2 through~9.5.4 we obtained representations of the Green's function for Poisson's equation, $\laplacian G(\vec{x},\vec{x}_0) = \delta(\vec{x}-\vec{x}_0)$.  However, these representations were complicated.  The resulting infinite series do not give a very good understanding of the effect at $\vec{x}$ of a concentrated source at $\vec{x}_0$.  As we will show, the difficulty is caused by the presence of boundaries.
+
+In order to obtain simpler representations, we begin by considering solving Poisson's equation $\laplacian u = f(\vec{x})$ in infinite space with no boundaries.  We introduce the Green's function $G(\vec{x},\vec{x}_0)$ defined by
+\begin{equation}
+\label{eq:9.5.27}
+\boxed{\laplacian G = \delta(\vec{x}-\vec{x}_0),}
+\end{equation}
+to be valid for all $\vec{x}$.  Since this is a model of steady-state heat flow with a concentrated source located at $\vec{x} = \vec{x}_0$ \emph{with no boundaries}, there should be a solution that is symmetric around the source point $\vec{x} = \vec{x}_0$.  Our results are somewhat different in two and three dimensions.  We simultaneously solve both.  We let $r$ represent radial distance (from $\vec{x} = \vec{x}_0$) in two dimensions and $\rho$ represent radial distance (from $\vec{x} = \vec{x}_0$) in three dimensions:
+\begin{equation}
+\label{eq:9.5.28}
+\begin{array}{ll}
+\textbf{two} & \textbf{three} \\
+\vec{r} = \vec{x} - \vec{x}_0 & \vec{\rho} = \vec{x} - \vec{x}_0 \\
+r = |\vec{r}| = |\vec{x}-\vec{x}_0| & \rho = |\vec{\rho}| = |\vec{x}-\vec{x}_0| \\
+= \sqrt{(x-x_0)^2+(y-y_0)^2} & = \sqrt{(x-x_0)^2+(y-y_0)^2+(z-z_0)^2}.
+\end{array}
+\end{equation}
+We assume that $G(\vec{x},\vec{x}_0)$ depends only on $r$ ($\rho$).  Away from the source ($r \neq 0$ or $\rho \neq 0$), the forcing function is zero.  In two dimensions we look for circularly symmetric solutions of Laplace's equation; in three dimensions the solutions should be spherically symmetric.  From our earlier work,
+\[
+\frac{1}{r}\frac{d}{d r}\!\left(r\od{G}{r}\right) = 0, \quad (r\neq 0) \qquad\bigg|\qquad \frac{1}{\rho^2}\frac{d}{d \rho}\!\left(\rho^2\od{G}{\rho}\right) = 0, \quad (\rho\neq 0).
+\]
+The general solution can be obtained by integration:
+\begin{equation}
+\label{eq:9.5.29}
+G(r) = c_1\ln r + c_2 \qquad\bigg|\qquad G(\rho) = \frac{c_3}{\rho} + c_4.
+\end{equation}
+
+We determine the constants that account for the singularity at the source.  We can obtain the appropriate singularity by integrating \eqref{eq:9.5.27} around a small circle (sphere) of radius $r$ ($\rho$).  Using the divergence theorem, the derivative of the Green's function normal to a circle, $\nabla G\cdot\hat{\mathbf{n}}$, is $\partial G/\partial r$ (in three dimensions $\partial G/\partial\rho$).  On the circle (sphere) the radius is constant.  Thus,
+\[
+2\pi r\pd{G}{r} = 1 \qquad\bigg|\qquad 4\pi\rho^2\pd{G}{\rho} = 1.
+\]
+We will express the singularity condition as
+\begin{equation}
+\label{eq:9.5.30}
+\boxed{\lim_{r\to 0} r\pd{G}{r} = \frac{1}{2\pi}} \qquad\bigg|\qquad \boxed{\lim_{\rho\to 0}\rho^2\pd{G}{\rho} = \frac{1}{4\pi}.}
+\end{equation}
+From \eqref{eq:9.5.29} and \eqref{eq:9.5.30},
+\[
+c_1 = \frac{1}{2\pi} \qquad\bigg|\qquad c_3 = -\frac{1}{4\pi}.
+\]
+$c_2$ and $c_4$ are arbitrary, indicating that the infinite space Green's function for Poisson's equation is determined to within an arbitrary additive constant.  For convenience we let $c_2 = 0$ and $c_4 = 0$:
+\begin{equation}
+\label{eq:9.5.31}
+\boxed{G(\vec{x},\vec{x}_0) = \frac{1}{2\pi}\ln r} \qquad\bigg|\qquad \boxed{G(\vec{x},\vec{x}_0) = -\frac{1}{4\pi\rho}}
+\end{equation}
+\[
+r = |\vec{x}-\vec{x}_0| = \sqrt{(x-x_0)^2+(y-y_0)^2} \qquad\bigg|\qquad \rho = |\vec{x}-\vec{x}_0| = \sqrt{(x-x_0)^2+(y-y_0)^2+(z-z_0)^2}.
+\]
+Note that these are symmetric.  These infinite space Green's functions are themselves singular at the concentrated source.  (This does not occur in one dimension.)
+
+In order to obtain the solution of Poisson's equation, $\laplacian u = f(\vec{x})$, in \emph{infinite space}, using the infinite space Green's function, we need to utilize Green's formula.  The closed line integral $\oint$ (closed surface integral $\oiint$) represents integrating over the entire boundary.  For infinite space problems with no boundaries, we must consider large circles (spheres) and take the limit as the radius approaches infinity.  We would like the contribution to this closed integral ``from infinity'' to vanish:
+\begin{equation}
+\label{eq:9.5.33}
+\boxed{\lim_{|\vec{x}|\to\infty}\oint (u\nabla G - G\nabla u)\cdot\hat{\mathbf{n}}\ds = 0} \qquad\bigg|\qquad \boxed{\lim_{|\vec{x}|\to\infty}\oiint (u\nabla G - G\nabla u)\cdot\hat{\mathbf{n}}\dS = 0.}
+\end{equation}
+In this case, using the defining differential equations, integrating \eqref{eq:9.5.33} with the Dirac delta function, and reversing the roles of $\vec{x}$ and $\vec{x}_0$ [using the symmetry of $G(\vec{x},\vec{x}_0)$] yields a representation formula for a solution of Poisson's equation in infinite space:
+\begin{equation}
+\label{eq:9.5.34}
+\boxed{u(\vec{x}) = \iint f(\vec{x}_0)\,G(\vec{x},\vec{x}_0)\,dA_0} \qquad\bigg|\qquad \boxed{u(\vec{x}) = \iiint f(\vec{x}_0)\,G(\vec{x},\vec{x}_0)\,dV_0,}
+\end{equation}
+where $G(\vec{x},\vec{x}_0)$ is given by \eqref{eq:9.5.31}.
+
+The condition necessary for \eqref{eq:9.5.33} to be valid is obtained by integrating in polar (spherical) coordinates centered at $\vec{x} = \vec{x}_0$.  By substituting the known Green's functions, we obtain conditions that must be satisfied at $\infty$ in order for the ``boundary'' terms to vanish there:
+\begin{equation}
+\label{eq:9.5.35}
+\boxed{\lim_{r\to\infty}\left(u - r\ln r\pd{u}{r}\right) = 0} \qquad\bigg|\qquad \boxed{\lim_{\rho\to\infty}\left(u + \rho\pd{u}{\rho}\right) = 0.}
+\end{equation}
+These are important conditions.  For example, they are satisfied if $u \sim 1/r$ ($u \sim 1/\rho$) as $r \to \infty$ ($\rho \to \infty$).
+
+%% ────────────────────────────────────────────────────────────────
+\subsection{Green's Functions for Bounded Domains Using Infinite Space Green's Functions}
+\label{sec:greens-bounded-infinite}
+
+In this subsection we solve for the Green's function,
+\begin{equation}
+\label{eq:9.5.36}
+\boxed{\laplacian G = \delta(\vec{x}-\vec{x}_0),}
+\end{equation}
+on a bounded \emph{two-dimensional} domain, subject to homogeneous boundary conditions.  We already discussed some methods of solution only for simple geometries, and even these involve a considerable amount of computation.  However, we now know a particular solution of \eqref{eq:9.5.36}, namely the infinite space Green's function
+\begin{equation}
+\label{eq:9.5.37}
+G_p(\vec{x},\vec{x}_0) = \frac{1}{2\pi}\ln r = \frac{1}{2\pi}\ln|\vec{x}-\vec{x}_0| = \frac{1}{2\pi}\ln\sqrt{(x-x_0)^2+(y-y_0)^2}.
+\end{equation}
+Unfortunately, this infinite space Green's function will not solve the homogeneous boundary conditions.  Instead, consider
+\begin{equation}
+\label{eq:9.5.38}
+\boxed{G(\vec{x},\vec{x}_0) = \frac{1}{2\pi}\ln|\vec{x}-\vec{x}_0| + v(\vec{x},\vec{x}_0).}
+\end{equation}
+$v(\vec{x},\vec{x}_0)$ represents the effect of the boundary.  It will be a homogeneous solution, solving Laplace's equation, $\laplacian v = 0$, subject to some nonhomogeneous boundary condition.  For example, if $G = 0$ on the boundary, then $v = -(1/2\pi)\ln|\vec{x}-\vec{x}_0|$ on the boundary.  $v(\vec{x},\vec{x}_0)$ may be solved by standard methods for Laplace's equation based on separation of variables (if the geometry allows).  It may be quite involved to calculate $v(\vec{x},\vec{x}_0)$; nevertheless, this representation of the Green's function is quite important.  In particular, since $v(\vec{x},\vec{x}_0)$ will be well-behaved everywhere, including $\vec{x} = \vec{x}_0$, \eqref{eq:9.5.38} shows that \textbf{the Green's function on a finite domain will have the same singularity at source location $\vec{x} = \vec{x}_0$ as does the infinite space Green's function}.  This technique represented by \eqref{eq:9.5.38} removes the singularity.
+
+%% ────────────────────────────────────────────────────────────────
+\subsection{Green's Functions for a Semi-Infinite Plane ($y > 0$) Using Infinite Space Green's Functions: The Method of Images}
+\label{sec:greens-semi-infinite}
+
+The infinite space Green's function can be used to obtain Green's functions for certain semi-infinite problems.  Consider Poisson's equation in the two-dimensional semi-infinite region $y > 0$:
+\begin{equation}
+\label{eq:9.5.39}
+\boxed{\laplacian u = f(\vec{x}),}
+\end{equation}
+subject to a nonhomogeneous condition (given temperature) on $y = 0$:
+\begin{equation}
+\label{eq:9.5.40}
+\boxed{u(x,0) = h(x).}
+\end{equation}
+The defining problem for the Green's function,
+\begin{equation}
+\label{eq:9.5.41}
+\laplacian G(\vec{x},\vec{x}_0) = \delta(\vec{x}-\vec{x}_0),
+\end{equation}
+satisfies the corresponding homogeneous boundary conditions,
+\begin{equation}
+\label{eq:9.5.42}
+G(x,0;x_0,y_0) = 0.
+\end{equation}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch09/fig_9_5_3.png}
+\caption{Image source for a semi-infinite plane.}
+\label{fig:9.5.3}
+\end{figure}
+
+\textbf{Image source.}
+There is a simple way to obtain a solution that is zero at $y=0$.  Consider an infinite space problem (i.e., no boundaries) with source $\delta(\vec{x}-\vec{x}_0)$ at $\vec{x} = \vec{x}_0$, and a negative image source $-\delta(\vec{x}-\vec{x}_0^*)$ at $\vec{x} = \vec{x}_0^*$ (where $\vec{x}_0 = x_0\hat{\imath}+y_0\hat{\jmath}$ and $\vec{x}_0^* = x_0\hat{\imath}-y_0\hat{\jmath}$):
+\begin{equation}
+\label{eq:9.5.43}
+\laplacian G = \delta(\vec{x}-\vec{x}_0) - \delta(\vec{x}-\vec{x}_0^*).
+\end{equation}
+According to the principle of superposition for nonhomogeneous problems, the response should be the sum of two individual responses:
+\begin{equation}
+\label{eq:9.5.44}
+G = \frac{1}{2\pi}\ln|\vec{x}-\vec{x}_0| - \frac{1}{2\pi}\ln|\vec{x}-\vec{x}_0^*|.
+\end{equation}
+By symmetry, the response at $y = 0$ due to the source at $\vec{x} = \vec{x}_0^*$ should be minus the response at $y = 0$ due to the source at $\vec{x} = \vec{x}_0$.  Thus, the sum should be zero at $y = 0$ (as we will verify shortly).  We call this the \textbf{method of images}.  In this way, we have obtained the Green's function for Poisson's equation on a semi-infinite space ($y > 0$):
+\begin{equation}
+\label{eq:9.5.45}
+\boxed{G(\vec{x},\vec{x}_0) = \frac{1}{2\pi}\ln\frac{|\vec{x}-\vec{x}_0|}{|\vec{x}-\vec{x}_0^*|} = \frac{1}{4\pi}\ln\frac{(x-x_0)^2+(y-y_0)^2}{(x-x_0)^2+(y+y_0)^2}.}
+\end{equation}
+
+\textbf{Solution.}
+To solve Poisson's equation with nonhomogeneous boundary conditions, we need the solution's representation in terms of this Green's function, \eqref{eq:9.5.45}.  Using Green's formula (considering a large semicircle as the radius tends to infinity), we obtain
+\begin{equation}
+\label{eq:9.5.46}
+\boxed{u(\vec{x}) = \iint f(\vec{x}_0)\,G(\vec{x},\vec{x}_0)\,dA_0 - \int_{-\infty}^{\infty} h(x_0)\frac{\partial}{\partial y_0}G(\vec{x},\vec{x}_0)\bigg|_{y_0=0}\dx_0,}
+\end{equation}
+since $G = 0$ on $y = 0$.  From \eqref{eq:9.5.45},
+\[
+\frac{\partial}{\partial y_0}G(\vec{x},\vec{x}_0) = \frac{1}{4\pi}\left[\frac{-2(y-y_0)}{(x-x_0)^2+(y-y_0)^2} - \frac{2(y+y_0)}{(x-x_0)^2+(y+y_0)^2}\right].
+\]
+Evaluating this at $y_0 = 0$ (corresponding to the source point on the boundary) yields
+\begin{equation}
+\label{eq:9.5.47}
+\boxed{\frac{\partial}{\partial y_0}G(\vec{x},\vec{x}_0)\bigg|_{y_0=0} = -\frac{y/\pi}{(x-x_0)^2+y^2}.}
+\end{equation}
+This is an example of a dipole source (see Sec.~9.5.5).
+
+\textbf{Example.}
+Consider Laplace's equation for the two-dimensional semi-infinite space ($y > 0$):
+\begin{equation}
+\label{eq:9.5.48}
+\boxed{\begin{aligned}
+\laplacian u &= 0 \\
+u(x,0) &= h(x).
+\end{aligned}}
+\end{equation}
+Equation~\eqref{eq:9.5.46} can be utilized with a zero source term.  Here the solution is only due to the nonhomogeneous boundary condition.  Using the normal derivative of the Green's function, \eqref{eq:9.5.47}, we obtain
+\begin{equation}
+\label{eq:9.5.49}
+\boxed{u(x,y) = \frac{y}{\pi}\int_{-\infty}^{\infty} h(x_0)\frac{1}{(x-x_0)^2+y^2}\dx_0.}
+\end{equation}
+The influence function for the boundary condition $h(x)$ is not the Green's function, but
+\[
+-\frac{\partial}{\partial y_0}G(\vec{x},\vec{x}_0)\bigg|_{y_0=0} = \frac{y}{\pi[(x-x_0)^2+y^2]}.
+\]
+This is not only an influence function, but it is the dipole source described in Sec.~9.5.5, which is an elementary solution of Laplace's equation corresponding to the boundary condition itself being a delta function.  In Chapter~10 we will obtain the same answer using Fourier transform techniques rather than using Green's functions.
+
+\textbf{Insulated boundaries.}
+If the boundary condition for the Green's function is of the insulated kind $\partial/\partial y\;G(\vec{x},\vec{x}_0)|_{y=0} = 0$, then a positive image source must be used for $y < 0$.  In this way equal sources of thermal energy are located at $\vec{x} = \vec{x}_0$ and $\vec{x} = \vec{x}_0^*$.  By symmetry, no heat will flow across $y = 0$, as desired.  The resulting solution is obtained in an exercise.
+
+%% ────────────────────────────────────────────────────────────────
+\subsection{Green's Functions for a Circle: The Method of Images}
+\label{sec:greens-circle}
+
+The Green's function for Poisson's equation for a circle of radius $a$ (with zero boundary conditions),
+\begin{equation}
+\label{eq:9.5.50}
+\laplacian G(\vec{x},\vec{x}_0) = \delta(\vec{x}-\vec{x}_0)
+\end{equation}
+\begin{equation}
+\label{eq:9.5.51}
+G(\vec{x},\vec{x}_0) = 0 \quad\text{for}\quad |\vec{x}| = a,
+\end{equation}
+is rather remarkably obtained using the method of images.  The idea is that for geometric reasons there exists an image point $\vec{x} = \vec{x}_0^*$ (as sketched in Fig.~9.5.4) such that the response along the circumference of a circle is constant.  Consider an infinite space Green's function corresponding to a source at $\vec{x} = \vec{x}_0$ and a negative image source at $\vec{x} = \vec{x}_0^*$, where we do not define $\vec{x}_0^*$ yet:
+\begin{equation}
+\label{eq:9.5.52}
+\laplacian G(\vec{x},\vec{x}_0) = \delta(\vec{x}-\vec{x}_0) - \delta(\vec{x}-\vec{x}_0^*).
+\end{equation}
+According to the principle of superposition, the solution will be the sum of the two infinite space Green's functions.  We also introduce a constant homogeneous solution of Laplace's equation so that
+\begin{equation}
+\label{eq:9.5.53}
+G(\vec{x},\vec{x}_0) = \frac{1}{2\pi}\ln|\vec{x}-\vec{x}_0| - \frac{1}{2\pi}\ln|\vec{x}-\vec{x}_0^*| + c = \frac{1}{4\pi}\ln\frac{|\vec{x}-\vec{x}_0|^2}{|\vec{x}-\vec{x}_0^*|^2} + c.
+\end{equation}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch09/fig_9_5_4.png}
+\caption{Green's function for Poisson's equation for a circle (image source).}
+\label{fig:9.5.4}
+\end{figure}
+
+We will show that there exists a point $\vec{x}_0^*$ such that $G(\vec{x},\vec{x}_0)$ given by \eqref{eq:9.5.53} vanishes on the circle $|\vec{x}| = a$.  In order for this to occur,
+\begin{equation}
+\label{eq:9.5.54}
+|\vec{x}-\vec{x}_0|^2 = k|\vec{x}-\vec{x}_0^*|^2
+\end{equation}
+when $|\vec{x}| = a$ (where $c = -1/4\pi\ln k$).  We show that there is an image point $\vec{x}_0^*$ along the same radial line as the source point $\vec{x}_0$ as illustrated in Fig.~9.5.4:
+\begin{equation}
+\label{eq:9.5.55}
+\vec{x}_0^* = \gamma\vec{x}_0.
+\end{equation}
+We introduce the angle $\phi$ between $\vec{x}$ and $\vec{x}_0$ (the same as the angle between $\vec{x}$ and $\vec{x}_0^*$).  Therefore, using the law of cosines,
+\begin{equation}
+\label{eq:9.5.56}
+\begin{aligned}
+|\vec{x}-\vec{x}_0|^2 &= |\vec{x}|^2 + |\vec{x}_0|^2 - 2|\vec{x}||\vec{x}_0|\cos\phi \\
+|\vec{x}-\vec{x}_0^*|^2 &= |\vec{x}|^2 + |\vec{x}_0^*|^2 - 2|\vec{x}||\vec{x}_0^*|\cos\phi.
+\end{aligned}
+\end{equation}
+Equation~\eqref{eq:9.5.54} will be valid on the circle $|\vec{x}|=a$ [using \eqref{eq:9.5.55}] only if
+\[
+a^2 + r_0^2 - 2ar_0\cos\phi = k(a^2 + \gamma^2r_0^2 - 2a\gamma r_0\cos\phi),
+\]
+where $r_0 = |\vec{x}_0|$.  This must hold for all angles $\phi$, requiring $\gamma$ and $k$ to satisfy the following two equations:
+\[
+a^2 + r_0^2 = k(a^2 + \gamma^2r_0^2) \qquad\text{and}\qquad -2ar_0 = k(-2a\gamma r_0).
+\]
+We obtain $k = 1/\gamma$, and thus
+\[
+a^2 + r_0^2 = \frac{1}{\gamma}a^2 + \gamma r_0^2 \qquad\text{or}\qquad \gamma = \frac{a^2}{r_0^2}.
+\]
+The image point is located at
+\[
+\vec{x}_0^* = \frac{a^2}{r_0^2}\vec{x}_0.
+\]
+Note that $|\vec{x}_0^*| = a^2/r_0$ (the product of the radii of the source and image points is the radius squared of the circle).  The closer $\vec{x}_0$ is to the center of the circle, the farther the image point moves away.
+
+\textbf{Green's function.}
+From $k = l/\gamma = r_0^2/a^2$, we obtain the Green's function
+\[
+G(\vec{x},\vec{x}_0) = \frac{1}{4\pi}\ln\left(\frac{|\vec{x}-\vec{x}_0|^2 a^2}{|\vec{x}-\vec{x}_0^*|^2 r_0^2}\right).
+\]
+Using the law of cosines, \eqref{eq:9.5.56},
+\begin{equation}
+\label{eq:9.5.57}
+\boxed{G(\vec{x},\vec{x}_0) = \frac{1}{4\pi}\ln\left(a^2\,\frac{r^2+r_0^2-2rr_0\cos\phi}{r^2r_0^2+a^4-2rr_0a^2\cos\phi}\right),}
+\end{equation}
+where $\phi$ is the angle between $\vec{x}$ and $\vec{x}_0$ and $r = |\vec{x}|$ and $r_0 = |\vec{x}_0|$.  In these forms, it can be seen that on the circle $r = a$, $G(\vec{x},\vec{x}_0) = 0$.
+
+\textbf{Solution.}
+The solution of Poisson's equation is directly represented in terms of the Green's function.  In general, from \eqref{eq:9.5.26},
+\begin{equation}
+\label{eq:9.5.58}
+u(\vec{x}) = \iint f(\vec{x}_0)\,G(\vec{x},\vec{x}_0)\,dA_0 + \oint h(\vec{x}_0)\nabla_{\vec{x}_0}G(\vec{x},\vec{x}_0)\cdot\hat{\mathbf{n}}\,ds_0.
+\end{equation}
+This line integral on the circular boundary can be evaluated.  It is best to use polar coordinates ($ds_0 = a\,d\theta_0$), in which case
+\begin{equation}
+\label{eq:9.5.59}
+\oint h(\vec{x}_0)\nabla_{\vec{x}_0}G(\vec{x},\vec{x}_0)\cdot\hat{\mathbf{n}}\,ds_0 = \int_0^{2\pi} h(\theta_0)\frac{\partial}{\partial r_0}G(\vec{x},\vec{x}_0)\bigg|_{r_0=a}\,a\,d\theta_0,
+\end{equation}
+where $r_0 = |\vec{x}_0|$.  From \eqref{eq:9.5.57},
+\begin{equation}
+\label{eq:9.5.60}
+\pd{G}{r_0}\bigg|_{r_0=a} = \frac{1}{4\pi}\frac{2a - 2r\cos\phi - (2r^2/a - 2r\cos\phi)}{r^2+a^2-2ar\cos\phi} = \frac{a}{2\pi}\frac{1-(r/a)^2}{r^2+a^2-2ar\cos\phi},
+\end{equation}
+where $\phi$ is the angle between $\vec{x}$ and $\vec{x}_0$.  If polar coordinates are used for both $\vec{x}$ and $\vec{x}_0$, then $\phi = \theta - \theta_0$, as indicated in Fig.~9.5.5.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch09/fig_9_5_5.png}
+\caption{Polar coordinates.}
+\label{fig:9.5.5}
+\end{figure}
+
+\textbf{Example.}
+For Laplace's equation, $\laplacian u = 0$ [i.e., $f(\vec{x}) = 0$ in Poisson's equation] inside a circle with $u(x,y) = h(\theta)$ at $r = a$, we obtain from \eqref{eq:9.5.58}--\eqref{eq:9.5.60} in polar coordinates
+\begin{equation}
+\label{eq:9.5.61}
+\boxed{u(r,\theta) = \frac{1}{2\pi}\int_0^{2\pi} h(\theta_0)\frac{a^2-r^2}{r^2+a^2-2ar\cos(\theta-\theta_0)}\,d\theta_0,}
+\end{equation}
+known as \textbf{Poisson's formula}.  Previously, we obtained a solution of Laplace's equation in this situation by the method of separation of variables (see Sec.~2.5.2).  It can be shown that the infinite series solution so obtained can be summed to yield Poisson's formula (see Exercise~9.5.18).
+
+%% ────────────────────────────────────────────────────────────────
+\begin{exercises}{9.5}
+
+\item Consider \eqref{eq:9.5.10}, the eigenfunction expansion for $G(\vec{x},\vec{x}_0)$.  Assume that $\laplacian G$ has some eigenfunction expansion.  Using Green's formula, verify that $\laplacian G$ may be obtained by term-by-term differentiation of \eqref{eq:9.5.10}.
+
+\item
+\begin{enumerate}
+\item[(a)] Solve
+\[
+\laplacian u = f(x,y)
+\]
+on a rectangle ($0 < x < L$, $0 < y < H$) with $u = 0$ on the boundary using the method of eigenfunction expansion.
+\item[(b)] Write the solution in the form
+\[
+u(\vec{x}) = \int_0^L\int_0^H f(\vec{x}_0)\,G(\vec{x},\vec{x}_0)\dx_0\dy_0.
+\]
+Show that this $G(\vec{x},\vec{x}_0)$ is the Green's function obtained previously.
+\end{enumerate}
+
+\item Using the method of (multidimensional) eigenfunction expansion, determine $G(\vec{x},\vec{x}_0)$ if $\laplacian G = \delta(\vec{x}-\vec{x}_0)$ and
+\begin{enumerate}
+\item[(a)] on the rectangle ($0 < x < L$, $0 < y < H$) and
+\[
+\begin{array}{ll}
+\text{at } x=0,\; G=0; & \text{at } y=0,\; \pd{G}{y}=0 \\
+\text{at } x=L,\; \pd{G}{x}=0; & \text{at } y=H,\; \pd{G}{y}=0.
+\end{array}
+\]
+\item[(b)] on the rectangular-shaped box ($0 < x < L$, $0 < y < H$, $0 < z < W$) with $G = 0$ on the six sides
+\item[\starred(c)] on the semicircle ($0 < r < a$, $0 < \theta < \pi$) with $G = 0$ on the entire boundary
+\item[(d)] on the quarter-circle ($0 < r < a$, $0 < \theta < \pi/2$) with $G = 0$ on the straight sides and $\partial G/\partial r = 0$ at $r = a$
+\end{enumerate}
+
+\item[\starred 9.5.4.] Consider in some three-dimensional region
+\[
+\laplacian u = f
+\]
+with $u = h(\vec{x})$ on the boundary.  Represent $u(\vec{x})$ in terms of the Green's function (assumed to be known).
+
+\item Consider inside a circle of radius $a$
+\[
+\laplacian u = f
+\]
+with
+\begin{alignat*}{2}
+u(a,\theta) &= h_1(\theta) &\qquad& \text{for } 0 < \theta < \pi \\
+\pd{u}{r}(a,\theta) &= h_2(\theta) &\qquad& \text{for } -\pi < \theta < 0.
+\end{alignat*}
+Represent $u(r,\theta)$ in terms of the Green's function (assumed to be known).
+
+\item Consider $\laplacian u = f(\vec{x})$ in two dimensions, satisfying homogeneous boundary conditions.  Suppose that $\phi_h$ is a homogeneous solution, $\laplacian\phi_h = 0$, satisfying the same homogeneous boundary conditions.  There may be more than one function $\phi_h$.
+\begin{enumerate}
+\item[(a)] Show that there are no solutions $u(\vec{x})$ if $\iint f(\vec{x})\phi_h(\vec{x})\dA \neq 0$ for any $\phi_h(\vec{x})$.
+\item[(b)] Show that there are an infinite number of solutions if $\iint f(\vec{x})\phi_h(\vec{x})\dA = 0$.
+\end{enumerate}
+
+\item Consider in three dimensions
+\begin{equation}
+\label{eq:9.5.62}
+\laplacian u = f(\vec{x}) \quad\text{with on the boundary}\quad \nabla u\cdot\hat{\mathbf{n}} = 0.
+\end{equation}
+\begin{enumerate}
+\item[(a)] Show that $\phi_h = 1$ is a homogeneous solution satisfying homogeneous boundary conditions.
+\item[(b)] Under what condition is there a solution of \eqref{eq:9.5.62}?
+\item[(c)] What problem defines a generalized Green's function for \eqref{eq:9.5.62}?  (Do \emph{not} attempt to determine a generalized Green's function.)
+\item[(d)] \emph{Assume} that the generalized Green's function is symmetric.  \emph{Derive} a representation formula for $u(\vec{x})$ in terms of your generalized Green's function.
+\end{enumerate}
+
+\item Redo Exercise~9.5.7 if on the boundary $\nabla u\cdot\hat{\mathbf{n}} = h(\vec{x})$.
+
+\item Using the method of one-dimensional eigenfunction expansion, determine $G(\vec{x},\vec{x}_0)$ if $\laplacian G = \delta(\vec{x}-\vec{x}_0)$ and
+\begin{enumerate}
+\item[(a)] on the rectangle ($0 < x < L$, $0 < y < H$) and
+\[
+\begin{array}{ll}
+\text{at } x=0,\; G=0; & \text{at } y=0,\; \pd{G}{y}=0 \\
+\text{at } x=L,\; \pd{G}{x}=0; & \text{at } y=H,\; \pd{G}{y}=0.
+\end{array}
+\]
+Use $y$-dependent eigenfunctions.
+\item[\starred(b)] on the semicircle ($0 < r < a$, $0 < \theta < \pi$) with $G = 0$ on the entire boundary.  Use $\theta$-dependent eigenfunctions.
+\end{enumerate}
+
+\item[\starred 9.5.10.] Consider the wave equation with a periodic source of frequency $\omega > 0$
+\[
+\pdd{\phi}{t} = c^2\laplacian\phi + g(\vec{x})e^{-i\omega t}.
+\]
+Show that a particular solution at the same frequency, $\phi = u(\vec{x})e^{-i\omega t}$, satisfies a nonhomogeneous Helmholtz equation
+\[
+\laplacian u + k^2 u = f(\vec{x}). \qquad\text{[What are $k^2$ and $f(\vec{x})$?]}
+\]
+The Green's function satisfies
+\[
+\laplacian G + k^2 G = \delta(\vec{x}-\vec{x}_0).
+\]
+\begin{enumerate}
+\item[(a)] What is Green's formula for the operator $\laplacian + k^2$?
+\item[(b)] In infinite three-dimensional space, show that
+\[
+G = \frac{c_1 e^{ik\rho} + c_2 e^{-ik\rho}}{\rho}.
+\]
+Choose $c_1$ and $c_2$ so that the corresponding $\phi(\vec{x},t)$ is an \emph{outward}-propagating wave.  [\textit{Hint:} Make the unmotivated change of variables $G = h/\rho$.]
+\item[(c)] In infinite two-dimensional space, show that the Green's function is a linear combination of Bessel functions.  Determine the constants so that the corresponding $\phi(\vec{x},t)$ is an \emph{outward}-propagating wave for $r$ sufficiently large.
+\end{enumerate}
+
+\item
+\begin{enumerate}
+\item[(a)] Determine the Green's function for $y > 0$ (in two dimensions) for $\laplacian G = \delta(\vec{x}-\vec{x}_0)$ subject to $\partial G/\partial y = 0$ on $y = 0$.  (\textit{Hint:} Consider a positive source at $\vec{x}_0$ and a positive image source at $\vec{x}_0^*$.)
+\item[(b)] Use part~(a) to solve $\laplacian u = f(\vec{x})$ with
+\[
+\pd{u}{y} = h(x) \qquad\text{at } y = 0.
+\]
+Ignore the contribution at $\infty$.
+\end{enumerate}
+
+\item Modify Exercise~9.5.11 if the physical region is $y < 0$.
+
+\item[\starred 9.5.13.] Modify Exercise~9.5.11 if the region is three-dimensional with $y > 0$.  [Note that $h(x)$ in part~(b) becomes $h(x,z)$.]
+
+\item[\starred 9.5.14.] Using the method of images, solve
+\[
+\laplacian G = \delta(\vec{x}-\vec{x}_0)
+\]
+in the first quadrant ($x \ge 0$ and $y \ge 0$) with $G = 0$ on the boundaries.
+
+\item
+\begin{enumerate}
+\item[(a)] Reconsider Exercise~9.5.14 if $G = 0$ at $x = 0$ and $\partial G/\partial y = 0$ at $y = 0$.
+\item[(b)] Use part~(a) to solve ($x \ge 0$ and $y \ge 0$)
+\begin{gather*}
+\laplacian u = f(x,y) \\
+u(0,y) = g(y) \\
+\pd{u}{y}(x,0) = h(x).
+\end{gather*}
+\end{enumerate}
+
+\item
+\begin{enumerate}
+\item[(a)] Using the method of images, solve
+\[
+\laplacian G = \delta(\vec{x}-\vec{x}_0)
+\]
+in the $60^\circ$ wedge-shaped region ($0 < \theta < \pi/3$, $0 < r < \infty$) with $G = 0$ on the boundaries.
+\item[(b)] For what other angled wedges can the method of images be used?
+\end{enumerate}
+
+\item A generalized Green's function $G_m(\vec{x},\vec{x}_0)$ satisfies
+\[
+\laplacian G_m = \delta(\vec{x}-\vec{x}_0) + c
+\]
+with $\nabla G_m \cdot\hat{\mathbf{n}} = 0$ on the boundary of the rectangle ($0 < x < L$, $0 < y < H$).
+\begin{enumerate}
+\item[(a)] Show that the method of eigenfunction expansion (two-dimensional) works only for $c = -1/LH$.  For this $c$, determine $G_m(\vec{x},\vec{x}_0)$.  If possible, make $G_m(\vec{x},\vec{x}_0)$ symmetric.
+\item[(b)] Show that the method of eigenfunction expansion (one-dimensional) works only for $c = -1/LH$.  For this $c$, determine $G_m(\vec{x},\vec{x}_0)$.  If possible, make $G_m(\vec{x},\vec{x}_0)$ symmetric.
+\end{enumerate}
+
+\item Solve $\laplacian u = 0$ inside a circle of radius $a$ with $u(x,y) = h(\theta)$ at $r = a$, using the method of separation of variables.  Show that
+\[
+u(r,\theta) = \int_0^{2\pi} h(\theta_0)\,I(r,\theta,\theta_0)\,d\theta_0.
+\]
+Show that the infinite series for $I(r,\theta,\theta_0)$ can be summed yielding Poisson's formula \eqref{eq:9.5.61}.
+
+\item[\starred 9.5.19.] Determine the Green's function $G(\vec{x},\vec{x}_0)$ inside the semicircle ($0 < r < a$, $0 < \theta < \pi$)
+\[
+\laplacian G = \delta(\vec{x}-\vec{x}_0)
+\]
+with $G = 0$ on the boundary.
+
+\item Modify Exercise~9.5.19 if $G = 0$ on $r = a$, but $\partial G/\partial\theta = 0$ on $\theta = 0$ and $\theta = \pi$.
+
+\item Determine the Green's function $G(\vec{x},\vec{x}_0)$ inside the sphere of radius $a$
+\[
+\laplacian G = \delta(\vec{x}-\vec{x}_0)
+\]
+with $G = 0$ on the boundary.
+
+\item Use the method of multiple images to obtain the Green's function $G(\vec{x},\vec{x}_0)$
+\[
+\laplacian G = \delta(\vec{x}-\vec{x}_0)
+\]
+\begin{enumerate}
+\item[(a)] inside the rectangle ($0 < x < L$, $0 < y < H$) if $G = 0$ at $x = 0$ and $x = L$ and $G = 0$ at $y = 0$ and $y = H$
+\item[(b)] on the infinite strip ($0 < x < L$, $-\infty < y < \infty$) if $G = 0$ at $x = 0$ and $\partial G/\partial x = 0$ at $x = L$
+\item[\starred(c)] on the infinite strip ($0 < x < L$, $-\infty < y < \infty$, $-\infty < z < \infty$) if $G = 0$ at $x = 0$ and $G = 0$ at $x = L$
+\item[(d)] on the semi-infinite strip ($0 < x < L$, $0 < y < \infty$) if $G = 0$ along the boundaries
+\item[(e)] on the semi-infinite strip ($0 < x < L$, $-\infty < y < 0$) if $G = 0$ at $x = 0$, $G = 0$ at $x = L$, $\partial G/\partial y = 0$ at $y = 0$
+\end{enumerate}
+
+\item Determine a particular solution of
+\[
+\laplacian u = f(\vec{x})
+\]
+in infinite two-dimensional space if $f(\vec{x}) = g(r)$, where $r = |\vec{x}|$:
+\begin{enumerate}
+\item[(a)] Use the infinite space Green's function \eqref{eq:9.5.31}.
+\item[(b)] Use a Green's function for the ordinary differential equation
+\[
+\frac{1}{r}\frac{d}{d r}\!\left(r\od{u}{r}\right) = g(r).
+\]
+\item[(c)] Compare parts~(a) and~(b).
+\end{enumerate}
+
+\item Consider in two dimensions $\laplacian u = f(\vec{x})$
+\begin{enumerate}
+\item[(a)] with $u = h(\vec{x})$ on the boundary.  How many solutions are there, and how does this depend on $f(\vec{x})$ and $h(\vec{x})$?  Do not determine $u(x,y)$.
+\item[(b)] with $\nabla u\cdot\hat{\mathbf{n}} = h(\vec{x})$ on the boundary.  How many solutions are there, and how does this depend on $f(\vec{x})$ and $h(\vec{x})$?  Do not determine $u(x,y)$.
+\end{enumerate}
+
+\end{exercises}

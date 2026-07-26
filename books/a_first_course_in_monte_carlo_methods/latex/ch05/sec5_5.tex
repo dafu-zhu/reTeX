@@ -1,0 +1,235 @@
+%% Chapter 5 — Section 5.5: Exercises
+%% A First Course in Monte Carlo Methods
+%% D. Sanz-Alonso & O. Al-Ghattas
+
+\section{Exercises}
+\label{sec:5.5}
+
+\begin{enumerate}
+
+\item[\textbf{5.1}] Consider the bivariate normal model
+  \[
+    \begin{bmatrix} X \\ Y \end{bmatrix}
+    \sim \Normal\!\left(
+      \begin{bmatrix} 0 \\ 0 \end{bmatrix},
+      \begin{bmatrix} 1 & \alpha \\ \alpha & 1 \end{bmatrix}
+    \right),
+  \]
+  where $\alpha \in (-1, 1)$ represents the correlation between $X$ and $Y$. For
+  $\alpha = 0, 0.5$, and $0.99$, obtain $N = 10^4$ draws from a Gibbs sampler
+  deterministically initialized at $(3, 0)$. For each choice of $\alpha$, plot using the
+  samples you generated: (i)~histograms for the marginals of $X$ and $Y$; (ii)~a scatterplot
+  in $x$-$y$ space of the draws along with some level curves of the true target density; and
+  (iii)~the distance between an estimate of the expected value and the true expected value ---
+  which is $(0, 0)$ --- as a function of the sample size $N$. Explore how your results change
+  by using a deterministic vs random scan implementations.
+
+\item[\textbf{5.2}] Consider the bivariate normal model
+  \[
+    \begin{bmatrix} X \\ Y \end{bmatrix}
+    \sim \Normal\!\left(
+      \begin{bmatrix} 0 \\ 0 \end{bmatrix},
+      \begin{bmatrix} 1 & \alpha \\ \alpha & 1 \end{bmatrix}
+    \right),
+  \]
+  where $\alpha \in (-1, 1)$ represents the correlation between $X$ and $Y$. Write pseudocode
+  for a Gibbs sampler for this target distribution. Show directly that the sub-chain
+  $\{X_n\}$ corresponding to the first marginal satisfies
+  \[
+    X_{n+1} | X_n = x_n \sim \Normal(\alpha^2 x_n,\, 1 - \alpha^4),
+  \]
+  and find by induction the distribution of $X_n | X_0 = x_0$. Show that it converges to
+  $\Normal(0, 1)$ as $n \to \infty$. Explain in words if and how the (fixed) value of $\alpha$
+  plays a role on the mixing of the Gibbs sampler.
+
+\item[\textbf{5.3}] Let $f(x) = \frac{1}{2} e^{-\sqrt{x}}$ defined for $x > 0$. Implement a
+  slice sampler to obtain $N = 5000$ samples from this density, and plot a histogram along with
+  the density.
+
+\item[\textbf{5.4}] (The content of this question does not require you to seek background
+  information from outside sources. Interested readers should look at the book ``Monte Carlo
+  Methods in Statistical Physics'' by Newman and Barkema). Graphical models are a family of
+  multivariate distributions which are Markov in accordance to a particular undirected graph.
+  Each node in the graph $i \in V$ is associated to a random variable. The set $E$ of edges
+  encodes the conditional dependency relationships: a variable conditioned on its neighbors is
+  independent of the remaining variables.
+
+  In this problem, we focus on the setting where the collection of random variables
+  $\{x_i\}_{i=1}^p$ take on discrete values $\pm 1$. This is known as the Ising model and is
+  described with the following joint distribution over the variables $x$:
+  \[
+    f(x) = \frac{1}{c} \exp\!\Bigl\{\sum_{\{s,t\} \in E} \theta_{s,t} x_s x_t\Bigr\}.
+  \]
+  Here $c$ is a normalizing constant and $\theta \in \R^{p \times p}$ encodes the graph
+  structure. (We consider the setting in which diagonal elements of $\theta$ are set to zero.)
+  In particular, $\theta_{s,t}$ is non-zero if variables $s$ and $t$ are connected via an edge.
+
+  \begin{enumerate}
+    \item Suppose that you were tasked with sampling from this joint distribution. One approach
+      that we learned in class was importance sampling, a technique that is based on sampling
+      from another distribution, and reweighting the samples based on the likelihood of the
+      original joint distribution. While this is a natural approach, it becomes intractable in
+      the setting where the number of variables $p$ is large (say $p = 20$). Why?
+
+    \item Show that the conditional distribution of a variable $x_r$ given the rest
+      $(x_{V \setminus r})$ is given by:
+      \[
+        f(x_r | x_{V \setminus r})
+        = \frac{\exp\!\bigl(2x_r \sum_{t \in V \setminus r} \theta_{rt} x_t\bigr)}
+               {\exp\!\bigl(2x_r \sum_{t \in V \setminus r} \theta_{rt} x_t\bigr) + 1}.
+      \]
+
+      \textbf{Remark:} Notice that sampling from the conditional distribution is tractable.
+      Why? This suggests that Gibbs sampling could be used to draw samples from the joint
+      distribution.
+
+    \item We consider a specific example to showcase the use of Gibbs sampling for this
+      problem. Consider a collection of $x \in \R^5$ discrete variables specified by the
+      following $\theta^* \in \R^{5 \times 5}$:
+      \[
+        \theta^* =
+        \begin{bmatrix}
+          0   & 0.5 & 0   & 0.5 & 0   \\
+          0.5 & 0   & 0.5 & 0   & 0.5 \\
+          0   & 0.5 & 0   & 0.5 & 0   \\
+          0.5 & 0   & 0.5 & 0   & 0   \\
+          0   & 0.5 & 0   & 0   & 0
+        \end{bmatrix}.
+      \]
+      Using a Gibbs sampler with initialization $x^{(0)} = (1, -1, -1, 1, 1)$ and burn-in
+      period of 5000 samples, draw $N = 1000$ samples from the joint distribution. Report the
+      sample mean and sample variance for each of the variables. From your samples, compute a
+      correlation matrix of all 5 variables and plot an image of the correlation heatmap. Do
+      you see a pattern? Does this confirm the validity of the sampling technique?
+
+    \item You will now reverse engineer $\theta$ from the samples you generated! You will use
+      the Metropolis Hastings algorithm to get the posterior distribution
+      $f(\theta | \{x^{(n)}\}_{n=1}^N)$. Notice that $\theta$ is symmetric and has zeros on
+      the diagonal, meaning that there are $p(p-1)/2$ free parameters. Hence, we work with a
+      vector $\tilde{\theta} \in \R^{p(p-1)/2}$ containing all the degrees of freedom of
+      $\theta$. We need to construct a prior on $\theta$ and a proposal distribution. Since we
+      expect the graph structure to be sparse (i.e.\ $\theta$ sparse), a natural prior on each
+      $\theta_i$ is the Laplace distribution $\theta_i \overset{\mathrm{i.i.d.}}{\sim}
+      \operatorname{Laplace}(0, \lambda)$. Further, we use a random walk proposal distribution
+      \[
+        v^* \sim \tilde{\theta}^{(n)} + \sigma \xi^*,
+      \]
+      where $\xi^* \sim \Normal(0, I)$. Setting $\sigma^2 = 0.1$, $\lambda = 0.2$, and using
+      a burn-in time of $10^4$ samples, generate 1000 samples from the posterior
+      $f(\theta | \{x^{(n)}\}_{n=1}^N)$ via Metropolis Hastings. Compute and report the
+      sample mean and variance of these samples. Do your findings match the underlying
+      $\theta^*$?
+  \end{enumerate}
+
+\item[\textbf{5.5}] We say that a random variable $Y$ is distributed according to a Gaussian
+  mixture model with $C$ clusters if
+  \[
+    Y \sim \sum_{c=1}^{C} \pi_c \Normal(\mu_c, 1).
+  \]
+  For $1 \le c \le C$, $\mu_c$ represents the mean of the $c$-th cluster and $\pi_c$
+  represents the probability with which a draw from the mixture model belongs to the $c$-th
+  cluster. Thus, it holds that $0 < \pi_c < 1$ and $\sum_c \pi_c = 1$. In this exercise, you
+  will use the Gibbs sampler to estimate the vector $\mu = (\mu_1, \ldots, \mu_C)$ of cluster
+  means and the vector $\pi = (\pi_1, \ldots, \pi_C)$ of mixing coefficients, using data
+  $y = \{y^{(1)}, \ldots, y^{(K)}\}$ independently drawn from the Gaussian mixture model. The
+  number $C$ of clusters will be assumed to be known.
+
+  \begin{enumerate}
+    \item \textbf{Setting and Preparation}: Consider a Gaussian mixture model with $C = 3$
+      clusters. Sample $K = 10^4$ draws $y^{(1)}, \ldots, y^{(K)}$ from the Gaussian mixture
+      model with true parameters $\mu = (0, -1, 1)$ and $\pi = (1/4, 1/4, 1/2)$. Your goal
+      will be to recover these parameters from the simulated data. To obtain each draw
+      $y^{(k)}$, $1 \le k \le K$, do the following:
+      \begin{enumerate}[label=\alph*)]
+        \item Sample a latent variable $Z^{(k)}$ with p.m.f.\ $\Prob(Z^{(k)} = c) = \pi_c$,
+          $1 \le c \le 3$. Note that to generate the simulated data you should use the true
+          mixing coefficients $\pi = (1/4, 1/4, 1/2)$. The random outcome $c \in \{1, 2, 3\}$
+          of the draw $Z^{(k)}$ will be interpreted as the cluster assignment of the $k$-th
+          data point $y^{(k)}$.
+
+        \item Given that $Z^{(k)} = c$, draw $y^{(k)} \sim \Normal(\mu_c, 1)$. Note that to
+          generate the simulated data you should use the true cluster means vector
+          $\mu = (0, -1, 1)$.
+      \end{enumerate}
+
+      Plot a histogram of all draws $y^{(k)}$ you simulated using three different colors
+      according to the value of the corresponding latent variable $Z^{(k)}$.
+
+    \item \textbf{Gibbs Sampler}: Adopt a Bayesian formulation, and specify a prior%
+      \footnote{Recall that a continuous random vector $X \sim \operatorname{Dirichlet}(\alpha_1,
+      \ldots, \alpha_C)$ has p.d.f.\ $f(x) \propto \prod_{c=1}^C x_c^{\alpha_c - 1}$ where
+      $x = (x_1, \ldots, x_C)$. A discrete random vector $X \sim \operatorname{Multinomial}(n,
+      \alpha_1, \ldots, \alpha_C)$ has p.m.f.\ $f(x) = \frac{n!}{\prod_{c=1}^C x_c!}
+      \prod_{c=1}^C \alpha_c^{x_c}$.}
+      \begin{align*}
+        \pi &\sim \operatorname{Dirichlet}(p_1, \ldots, p_C),\\
+        \mu_c &\sim \Normal(\mu_{0c}, \sigma^2), \qquad 1 \le c \le C.
+      \end{align*}
+      To implement the Gibbs sampler, we find the full conditionals of the posterior. For the
+      numerical experiments, choose $\mu_{0c} = 0$ and $p_c = \frac{1}{C}$, $1 \le c \le C$.
+
+      \begin{enumerate}[label=\alph*)]
+        \setcounter{enumii}{2}
+        \item Prove that the posterior full conditionals admit the following factorizations:
+          \begin{align*}
+            f(Z | y, \mu, \pi) &\propto f(y | Z, \mu) f(Z | \pi),\\
+            f(\mu | y, Z, \pi) &\propto f(y | Z, \mu) f(\mu),\\
+            f(\pi | y, Z, \mu) &\propto f(Z | \pi) f(\pi).
+          \end{align*}
+          Here, $Z = (Z^{(1)}, \ldots, Z^{(K)})$, $y = (y^{(1)}, \ldots, y^{(K)})$, and
+          $\mu = (\mu_1, \ldots, \mu_C)$.
+
+        \item Let $\zeta_{kc} := \mathbf{1}_{\{Z^{(k)} = c\}}$. Prove that the posterior full
+          conditionals are given by
+          \begin{align*}
+            \zeta_{kc} &\sim \operatorname{Multinomial}\!\left(1,\,
+              \frac{b_{k1}}{\sum_{c=1}^C b_{kc}},\, \ldots,\,
+              \frac{b_{kC}}{\sum_{c=1}^C b_{kc}}\right),\\[4pt]
+            b_{kc} &:= \pi_c \exp\!\left(\frac{-(y^{(k)} - \mu_c)^2}{2}\right),
+              \quad 1 \le c \le C,\\[4pt]
+            \pi &\sim \operatorname{Dirichlet}\!\left(
+              \sum_{k=1}^K \zeta_{k1} + p_1,\, \ldots,\,
+              \sum_{k=1}^K \zeta_{kC} + p_C\right),\\[4pt]
+            \mu_c &\sim \Normal\!\left(
+              \frac{\sigma^2 \sum_{k=1}^K y^{(k)} \zeta_{kc} + \mu_{0c}}%
+                   {\sigma^2 \sum_{k=1}^K \zeta_{kc} + 1},\,
+              \frac{\sigma^2}{\sigma^2 \sum_{k=1}^K \zeta_{kc} + 1}
+            \right),\quad 1 \le c \le C.
+          \end{align*}
+
+        \item Implement a Gibbs sampler to obtain $N = 10^5$ posterior samples. Plot a
+          histogram and compare it to the one you obtained in (b). In addition, plot the value
+          of the samples for $\pi$ and $\mu$ against the iterations and compare them with
+          their true values.
+      \end{enumerate}
+  \end{enumerate}
+
+\item[\textbf{5.6}] Let $B = -(H_L + H_D)^{-1}H_U = -(H_L + H_D)^{-1}H_L^T$ where $H$ is
+  the precision matrix of a non-degenerate Gaussian $\Normal(0, H^{-1})$. Recall that $B$ is
+  commonly referred to as the Gauss--Seidel companion matrix. In this question, we will work
+  through the proof that $\rho(B) < 1$ (adapted from Golub and Loan (4th Edition)
+  Theorem~11.2.3).
+
+  \begin{enumerate}
+    \item Define $B_1 = H_D^{1/2} B H_D^{-1/2}$.
+      \begin{enumerate}[label=(\alph*)]
+        \item Argue that $B_1$ is well defined.
+        \item Argue that $B$ and $B_1$ have the same spectrum.
+      \end{enumerate}
+
+    \item Identify the matrix $L_1$ such that $B_1 = -(I + L_1)^{-1}L_1^T$.
+
+    \item Suppose that $\lambda$ is an eigenvalue of $B_1$, so that $B_1 x = \lambda x$ for
+      $x$ satisfying $x^* x = 1$ where $x^*$ denotes the conjugate transpose of $x$. Show
+      that
+      \[
+        |\lambda|^2 = \frac{a^2 + b^2}{1 + 2a + a^2 + b^2}
+      \]
+      where $x^* L_1 x = a + bi$ and $i$ is the imaginary unit.
+
+    \item Show that $1 + 2a = 1 + x^* L_1 x + x^* L_1^T x$.
+
+    \item Using what you have shown so far, conclude that $\rho(B) < 1$.
+  \end{enumerate}
+
+\end{enumerate}

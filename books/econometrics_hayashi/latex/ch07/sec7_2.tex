@@ -1,0 +1,343 @@
+% sec7_2.tex — Section 7.2: Consistency
+
+In this section, we first present a set of sufficient conditions under which an extremum estimator is consistent. Those conditions will then be specialized to NLS, ML, and GMM.
+
+\subsection*{Two Consistency Theorems for Extremum Estimators}
+
+The objective function $Q_n(\cdot)$ is a random function because for each $\bm{\theta}$ its value $Q_n(\bm{\theta})$, being dependent on the data $(\mathbf{w}_1, \ldots, \mathbf{w}_n)$, is a random variable. The basic idea for the consistency of an extremum estimator is that if $Q_n(\bm{\theta})$ converges in probability to $Q_0(\bm{\theta})$, and the true parameter $\bm{\theta}_0$ solves the ``limit problem'' of maximizing the limit function $Q_0(\bm{\theta})$, then the limit of the maximum $\hat{\bm{\theta}}$ should be $\bm{\theta}_0$. Sufficient conditions for the maximum of the limit to be the limit of the maximum are that the convergence in probability be ``uniform'' (in the sense made precise in a moment) and that the parameter space $\Theta$ be compact. As already mentioned, the parameter space is not compact in most applications. We therefore provide an alternative set of consistency conditions, which does not require $\Theta$ to be compact.
+
+To state the first consistency theorem for extremum estimators, we need to make precise what we mean by convergence being ``uniform.'' If you are already familiar from calculus with the notion of uniform convergence of a sequence of \emph{functions}, you will recognize that the definition about to be given is a natural extension to a sequence of random functions, $Q_n(\cdot)$ $(n = 1, 2, \ldots)$. \textbf{Pointwise convergence in probability} of $Q_n(\cdot)$ to some nonrandom function $Q_0(\cdot)$ simply means $\plim_{n \to \infty} Q_n(\bm{\theta}) = Q_0(\bm{\theta})$ for all $\bm{\theta}$, namely, that the sequence of random variables $|Q_n(\bm{\theta}) - Q_0(\bm{\theta})|$ $(n = 1, 2, \ldots)$ converges in probability to 0 for each $\bm{\theta}$. \textbf{Uniform convergence in probability} is stronger. The convergence has to occur ``uniformly'' over the parameter space $\Theta$ in the following sense:
+\begin{equation}
+\label{eq:7.2.1}
+\sup_{\bm{\theta} \in \Theta} |Q_n(\bm{\theta}) - Q_0(\bm{\theta})| \pto 0 \quad \text{as } n \to \infty.
+\end{equation}
+
+As in the case of convergence in probability, uniform convergence in probability can be extended readily to sequences of \emph{vector} random functions or matrix random functions (by viewing a matrix as a vector whose elements have been rearranged), by requiring uniform convergence for each element: a sequence of vector random functions $\{\mathbf{h}_n(\cdot)\}$ converges uniformly in probability to a nonrandom function $\mathbf{h}_0(\cdot)$ if each element converges uniformly. This element-by-element convergence is equivalent to convergence in the norm:
+\begin{equation}
+\label{eq:7.2.2}
+\sup_{\bm{\theta} \in \Theta} \| \mathbf{h}_n(\bm{\theta}) - \mathbf{h}_0(\bm{\theta}) \| \pto 0 \quad \text{as } n \to \infty,
+\end{equation}
+where $\| \cdot \|$ is the usual Euclidean norm.%
+\footnote{The Euclidean norm of a $p$-dimensional vector $\mathbf{x} = (x_1, x_2, \ldots, x_p)'$, denoted $\|\mathbf{x}\|$, is defined as $\sqrt{x_1^2 + x_2^2 + \cdots + x_p^2}$.}
+
+In the following statement of our first consistency theorem, the conditions ensuring that $\hat{\bm{\theta}}$ is well defined are labeled (i)--(iii), while those ensuring consistency are (a) and (b).
+
+\begin{proposition}[Consistency with compact parameter space]
+\label{prop:7.1}
+Suppose that \emph{(i)} $\Theta$ is a compact subset of $\mathbb{R}^p$, \emph{(ii)} $Q_n(\bm{\theta})$ is continuous in $\bm{\theta}$ for any data $(\mathbf{w}_1, \ldots, \mathbf{w}_n)$, and \emph{(iii)} $Q_n(\bm{\theta})$ is a measurable function of the data for all $\bm{\theta}$ in $\Theta$ (so by Lemma~\ref{lem:7.1} the extremum estimator $\hat{\bm{\theta}}$ defined in \emph{(\ref{eq:7.1.1})} is a well-defined random variable). If there is a function $Q_0(\bm{\theta})$ such that
+\begin{enumerate}[label=(\alph*)]
+\item \emph{(identification)} \enspace $Q_0(\bm{\theta})$ is uniquely maximized on $\Theta$ at $\bm{\theta}_0 \in \Theta$,
+\item \emph{(uniform convergence)} \enspace $Q_n(\cdot)$ converges uniformly in probability to $Q_0(\cdot)$,
+\end{enumerate}
+then $\hat{\bm{\theta}} \pto \bm{\theta}_0$.
+\end{proposition}
+
+We will not prove this result; see, e.g., Amemiya (1985, Theorem 4.1.1) for a proof. For estimates such as ML, NLS, and GMM, we will state later the identification condition (a) in more primitive terms so that the condition can be interpreted more intuitively.
+
+The theorem that does away with the compactness of $\Theta$ is
+
+\begin{proposition}[Consistency without compactness]
+\label{prop:7.2}
+Suppose that \emph{(i)} the true parameter vector $\bm{\theta}_0$ is an element of the interior of a convex parameter space $\Theta$ $(\subset \mathbb{R}^p)$, \emph{(ii)} $Q_n(\bm{\theta})$ is concave\,%
+\footnote{A scalar function $h(\mathbf{x})$ is said to be \textbf{concave} if $\alpha h(\mathbf{x}_1) + (1-\alpha)h(\mathbf{x}_2) \leq h(\alpha \mathbf{x}_1 + (1-\alpha)\mathbf{x}_2)$ for all $\mathbf{x}_1$, $\mathbf{x}_2$, $0 \leq \alpha \leq 1$. So a linear function is concave. Some authors use the term ``globally concave'' to distinguish it from the concept of ``local concavity'' that the Hessian evaluated at the parameter vector in question is negative semidefinite. If a function is concave, then it is continuous. So condition \emph{(ii)} in this proposition is stronger than condition \emph{(ii)} in the previous proposition.}
+over the parameter space for any data $(\mathbf{w}_1, \ldots, \mathbf{w}_n)$, and \emph{(iii)} $Q_n(\bm{\theta})$ is a measurable function of the data for all $\bm{\theta}$ in $\Theta$. Let $\hat{\bm{\theta}}$ be the extremum estimator defined by \emph{(\ref{eq:7.1.1})} (wait for a moment to learn about its existence). If there is a function $Q_0(\bm{\theta})$ such that
+\begin{enumerate}[label=(\alph*)]
+\item \emph{(identification)} \enspace $Q_0(\bm{\theta})$ is uniquely maximized on $\Theta$ at $\bm{\theta}_0 \in \Theta$,
+\item \emph{(pointwise convergence)} \enspace $Q_n(\bm{\theta})$ converges in probability to $Q_0(\bm{\theta})$ for all $\bm{\theta} \in \Theta$,
+\end{enumerate}
+then, as $n \to \infty$, $\hat{\bm{\theta}}$ exists with probability approaching 1 and $\hat{\bm{\theta}} \pto \bm{\theta}_0$.
+\end{proposition}
+
+See Newey and McFadden (1994, pp.~2133--2134) for a proof. In most applications, $\Theta$ is an open convex set (as in Examples~7.1--7.4), so condition (i) is satisfied. The convergence of $Q_n(\bm{\theta})$ to $Q_0(\bm{\theta})$ is required to be only pointwise, which is easier to verify in applications. The price of these niceties is the requirement that the objective function $Q_n(\bm{\theta})$ be concave for any data (under which pointwise convergence implies uniform convergence), but in many applications this condition is satisfied. Below we will verify that concavity is satisfied for ML for the linear regression model (after a reparameterization), probit ML, and linear GMM.
+
+\subsection*{Consistency of M-Estimators}
+
+For an M-estimator, the objective function is given by (\ref{eq:7.1.2}). If $\{\mathbf{w}_t\}$ is ergodic stationary, the Ergodic Theorem implies pointwise convergence for $Q_n(\bm{\theta})$: $Q_n(\bm{\theta})$ converges in probability pointwise for each $\bm{\theta} \in \Theta$ to $Q_0(\bm{\theta})$ given by
+\begin{equation}
+\label{eq:7.2.3}
+Q_0(\bm{\theta}) = \E[m(\mathbf{w}_t; \bm{\theta})]
+\end{equation}
+(provided, of course, that $\E[m(\mathbf{w}_t; \bm{\theta})]$ exists and is finite). To apply the first consistency result (Proposition~\ref{prop:7.1}) to M-estimators, we need to show that the convergence of $\frac{1}{n}\sum_{t=1}^{n} m(\mathbf{w}_t; \,\cdot\,)$ to $\E[m(\mathbf{w}_t; \,\cdot\,)]$ is uniform. A standard method to prove uniform convergence in probability, which exploits the fact that the expression is a sample mean, is the \textbf{uniform law of large numbers}. Its version for ergodic stationary processes (stated as Lemma~2.4 in Newey and McFadden, 1994, and as Theorem~A.2.2 in White, 1994) is
+
+\begin{lemma}[Uniform law of large numbers]
+\label{lem:7.2}
+Let $\{\mathbf{w}_t\}$ be an ergodic stationary process. Suppose that \emph{(i)} the set $\Theta$ is compact, \emph{(ii)} $m(\mathbf{w}_t; \bm{\theta})$ is continuous in $\bm{\theta}$ for all $\mathbf{w}_t$, and \emph{(iii)} $m(\mathbf{w}_t; \bm{\theta})$ is measurable in $\mathbf{w}_t$ for all $\bm{\theta}$ in $\Theta$. Suppose, in addition, the
+
+\begin{quote}
+\textbf{dominance condition:} there exists a function $d(\mathbf{w}_t)$ (sometimes called the ``dominating function'') such that $|m(\mathbf{w}_t; \bm{\theta})| \leq d(\mathbf{w}_t)$ for all $\bm{\theta} \in \Theta$ and $\E[d(\mathbf{w}_t)] < \infty$.
+\end{quote}
+
+Then $\frac{1}{n}\sum_{t=1}^{n} m(\mathbf{w}_t; \,\cdot\,)$ converges uniformly in probability to $\E[m(\mathbf{w}_t; \,\cdot\,)]$ over $\Theta$. Moreover, $\E[m(\mathbf{w}_t; \bm{\theta})]$ is a continuous function of $\bm{\theta}$.
+\end{lemma}
+
+Since by construction $|m(\mathbf{w}_t; \bm{\theta})| \leq \sup_{\bm{\theta} \in \Theta} |m(\mathbf{w}_t; \bm{\theta})|$ for all $\bm{\theta} \in \Theta$, we can use $\sup_{\bm{\theta} \in \Theta} |m(\mathbf{w}_t; \bm{\theta})|$ for $d(\mathbf{w}_t)$, so the above dominance condition can be stated simply as $\E[\sup_{\bm{\theta} \in \Theta} |m(\mathbf{w}_t; \bm{\theta})|] < \infty$. The Uniform Law of Large Numbers can be extended immediately to vector random functions as follows:
+
+\begin{quote}
+Let $\{\mathbf{w}_t\}$ be an ergodic stationary process. Suppose that (i) the parameter space $\Theta$ is compact, (ii) $\mathbf{h}(\mathbf{w}_t; \bm{\theta})$ is continuous in $\bm{\theta}$ for all $\mathbf{w}_t$, and (iii) $\mathbf{h}(\mathbf{w}_t; \bm{\theta})$ is measurable in $\mathbf{w}_t$ for all $\bm{\theta}$ in $\Theta$. Suppose, in addition, the
+
+\textbf{dominance condition:} $\E[\sup_{\bm{\theta} \in \Theta} \| \mathbf{h}(\mathbf{w}_t; \bm{\theta}) \|] < \infty$.
+
+Then $\E[\mathbf{h}(\mathbf{w}_t; \bm{\theta})]$ is a continuous function of $\bm{\theta}$ and $\frac{1}{n}\sum_{t=1}^{n} \mathbf{h}(\mathbf{w}_t; \,\cdot\,)$ converges uniformly in probability to $\E[\mathbf{h}(\mathbf{w}_t; \,\cdot\,)]$ over $\Theta$.
+\end{quote}
+
+Just by combining this lemma with the first consistency theorem for extremum estimators, and noting that $Q_n(\bm{\theta})$ is continuous if $m(\mathbf{w}_t; \bm{\theta})$ is continuous in $\bm{\theta}$ and that $Q_n(\bm{\theta})$ is a measurable function of the data if $m(\mathbf{w}_t; \bm{\theta})$ is measurable in $\mathbf{w}_t$, we obtain
+
+\begin{proposition}[Consistency of M-estimators with compact parameter space]
+\label{prop:7.3}
+Let $\{\mathbf{w}_t\}$ be ergodic stationary. Suppose that \emph{(i)} the parameter space $\Theta$ is a compact subset of $\mathbb{R}^p$, \emph{(ii)} $m(\mathbf{w}_t; \bm{\theta})$ is continuous in $\bm{\theta}$ for all $\mathbf{w}_t$, and \emph{(iii)} $m(\mathbf{w}_t; \bm{\theta})$ is measurable in $\mathbf{w}_t$ for all $\bm{\theta}$ in $\Theta$. Let $\hat{\bm{\theta}}$ be the M-estimator defined by \emph{(\ref{eq:7.1.1})} and \emph{(\ref{eq:7.1.2})}. Suppose, further, that
+\begin{enumerate}[label=(\alph*)]
+\item \emph{(identification)} \enspace $\E[m(\mathbf{w}_t; \bm{\theta})]$ is uniquely maximized on $\Theta$ at $\bm{\theta}_0 \in \Theta$,
+\item \emph{(dominance)} \enspace $\E[\sup_{\bm{\theta} \in \Theta} |m(\mathbf{w}_t; \bm{\theta})|] < \infty$.
+\end{enumerate}
+Then $\hat{\bm{\theta}} \pto \bm{\theta}_0$.
+\end{proposition}
+
+It is even more straightforward to specialize the second consistency theorem for extremum estimators to M-estimators. The objective function $Q_n(\bm{\theta})$ is concave if $m(\mathbf{w}_t; \bm{\theta})$ is concave in $\bm{\theta}$.%
+\footnote{A fact from calculus: if $f(\mathbf{x})$ and $g(\mathbf{x})$ are concave functions, then so is $f(\mathbf{x}) + g(\mathbf{x})$.}
+As noted above, the pointwise convergence of $Q_n(\bm{\theta})$ to $Q_0(\bm{\theta})$ $(= \E[m(\mathbf{w}_t; \bm{\theta})])$ is assured by the Ergodic Theorem if $\E[m(\mathbf{w}_t; \bm{\theta})]$ exists and is finite for all $\bm{\theta}$. Thus
+
+\begin{proposition}[Consistency of M-estimators without compactness]
+\label{prop:7.4}
+Let $\{\mathbf{w}_t\}$ be ergodic stationary. Suppose that \emph{(i)} the true parameter vector $\bm{\theta}_0$ is an element of the interior of a convex parameter space $\Theta$ $(\subset \mathbb{R}^p)$, \emph{(ii)} $m(\mathbf{w}_t; \bm{\theta})$ is concave over the parameter space for all $\mathbf{w}_t$, and \emph{(iii)} $m(\mathbf{w}_t; \bm{\theta})$ is measurable in $\mathbf{w}_t$ for all $\bm{\theta}$ in $\Theta$. Let $\hat{\bm{\theta}}$ be the M-estimator defined by \emph{(\ref{eq:7.1.1})} and \emph{(\ref{eq:7.1.2})}. Suppose, further, that
+\begin{enumerate}[label=(\alph*)]
+\item \emph{(identification)} \enspace $\E[m(\mathbf{w}_t; \bm{\theta})]$ is uniquely maximized on $\Theta$ at $\bm{\theta}_0 \in \Theta$,
+\item $\E[\,|m(\mathbf{w}_t; \bm{\theta})|\,] < \infty$ (i.e., $\E[m(\mathbf{w}_t; \bm{\theta})]$ exists and is finite) for all $\bm{\theta} \in \Theta$.
+\end{enumerate}
+Then, as $n \to \infty$, $\hat{\bm{\theta}}$ exists with probability approaching 1 and $\hat{\bm{\theta}} \pto \bm{\theta}_0$.
+\end{proposition}
+
+The following example shows that probit conditional ML satisfies the concavity condition.
+
+\begin{example}[Concavity of the probit likelihood function]
+\label{ex:7.6}
+The $m$ function for probit is given in (\ref{eq:7.1.15}) where $\Phi(\cdot)$ is the cumulative density function of the standard normal distribution. Since the normal distribution is symmetric, $\Phi(-v) = 1 - \Phi(v)$ and the $m$ function can be rewritten as
+\begin{equation}
+\label{eq:7.2.4}
+m(\mathbf{w}_t; \bm{\theta}) = y_t \log \Phi(\mathbf{x}_t' \bm{\theta}) + (1 - y_t) \log \Phi(-\mathbf{x}_t' \bm{\theta}).
+\end{equation}
+
+Concavity of $m$ is implied if both $\log \Phi(\mathbf{x}_t' \bm{\theta})$ and $\log \Phi(-\mathbf{x}_t' \bm{\theta})$ are concave in $\bm{\theta}$. Since $\mathbf{x}_t' \bm{\theta}$ is linear in $\bm{\theta}$, it suffices to show concavity of $\log \Phi(v)$. The first derivative of $\log \Phi(v)$ is
+\begin{equation}
+\label{eq:7.2.5}
+\frac{d \log \Phi(v)}{dv} = \frac{\phi(v)}{\Phi(v)},
+\end{equation}
+where $\phi(v)$ $(= \Phi'(v))$ is the density of $N(0,1)$. It is well known that $\phi(v)/\Phi(v)$ is a decreasing function. So $\log \Phi(v)$ is (strictly) concave.
+\end{example}
+
+\subsection*{Concavity after Reparameterization}
+
+Proposition~\ref{prop:7.4} can be extended easily to estimators for objective functions that are concave after reparameterization. Suppose that all the conditions of the proposition except concavity are satisfied and that there is a continuous one-to-one mapping $\bm{\tau}(\bm{\theta}) : \Theta \to \Lambda \equiv \bm{\tau}(\Theta)$ such that
+\[
+\widetilde{m}(\mathbf{w}_t; \bm{\lambda}) \equiv m(\mathbf{w}_t; \bm{\tau}^{-1}(\bm{\lambda}))
+\]
+is concave in $\bm{\lambda}$ and $\Lambda = \bm{\tau}(\Theta)$ is a convex set. Let
+\[
+\widetilde{Q}_n(\bm{\lambda}) \equiv \frac{1}{n} \sum_{t=1}^{n} \widetilde{m}(\mathbf{w}_t; \bm{\lambda})
+\]
+be the objective function after this reparameterization. Clearly, all the assumptions of Proposition~\ref{prop:7.4} are satisfied for $\bm{\lambda}$, $\Lambda$, and $\widetilde{m}(\mathbf{w}_t; \bm{\lambda})$: $\bm{\lambda}_0 \equiv \bm{\tau}(\bm{\theta}_0)$ is an interior point of $\Lambda$, $\E[\widetilde{m}(\mathbf{w}_t; \bm{\lambda})]$ is uniquely maximized at $\bm{\lambda}_0$, and $\E[\,|\widetilde{m}(\mathbf{w}_t; \bm{\lambda})|\,] < \infty$ for all $\bm{\lambda}$ in $\Lambda$. Thus for sufficiently large $n$, there exists an M-estimator $\hat{\bm{\lambda}}$ such that $\plim_{n\to\infty} \hat{\bm{\lambda}} = \bm{\lambda}_0$. Since $\widetilde{Q}_n(\bm{\lambda})$ satisfies (\ref{eq:7.1.17}) for the one-to-one mapping $\bm{\tau}$, $\hat{\bm{\theta}} \equiv \bm{\tau}^{-1}(\hat{\bm{\lambda}})$ maximizes the original objective function $Q_n(\bm{\theta})$. The estimator $\hat{\bm{\theta}}$ is consistent because
+\begin{equation}
+\label{eq:7.2.6}
+\plim_{n\to\infty} \hat{\bm{\theta}} = \plim_{n\to\infty} \bm{\tau}^{-1}(\hat{\bm{\lambda}}) = \bm{\tau}^{-1}(\plim_{n\to\infty} \hat{\bm{\lambda}}) \quad (\text{since } \bm{\tau}^{-1} \text{ is continuous}) = \bm{\tau}^{-1}(\bm{\lambda}_0) = \bm{\theta}_0.
+\end{equation}
+
+\begin{example}[Concavity of linear regression likelihood function]
+\label{ex:7.7}
+In the conditional ML estimation of the linear regression model, $m(\mathbf{w}_t; \bm{\theta})$ is given in (\ref{eq:7.1.13}) with $\bm{\theta} = (\bm{\beta}', \sigma^2)'$ and $\mathbf{w}_t = (y_t, \mathbf{x}_t')'$. This function is not necessarily concave,%
+\footnote{For example, the second partial derivative of $m$ with respect to $\sigma^2$ may or may not be non-negative depending on the value of $y_t - \mathbf{x}_t' \bm{\beta}$. Recall that a necessary condition for a twice differentiable function $h(x_1, \ldots, x_p)$ to be concave is that $\partial^2 h / (\partial x_j)^2$ be non-negative for all $j = 1, 2, \ldots, p$.}
+but consider a reparameterization: $\gamma = 1/\sigma$ and $\bm{\delta} = \bm{\beta}/\sigma$. It is a continuous one-to-one mapping between $\Theta = \mathbb{R}^K \times \mathbb{R}_{++}$ and $\Lambda = \mathbb{R}^K \times \mathbb{R}_{++}$. The new parameter space $\Lambda$ is convex. With $\bm{\lambda} = (\bm{\delta}', \gamma)'$, the $m$ function after reparameterization becomes
+\begin{equation}
+\label{eq:7.2.7}
+\widetilde{m}(\mathbf{w}_t; \bm{\lambda}) = -\frac{1}{2}\log(2\pi) + \log(\gamma) - \frac{1}{2}(\gamma y_t - \mathbf{x}_t' \bm{\delta})^2.
+\end{equation}
+
+Since $\log(\gamma)$ is concave in $\gamma$, it is concave in $\bm{\lambda}$. Since $v \equiv \gamma y_t - \mathbf{x}_t' \bm{\delta}$ is linear in $\bm{\lambda}$ and $-\frac{1}{2}v^2$ is concave, $-\frac{1}{2}(\gamma y_t - \mathbf{x}_t' \bm{\delta})^2$ is concave in $\bm{\lambda}$. So $\widetilde{m}$ above, which is the sum of two concave functions (plus a constant), is concave in $\bm{\lambda}$ for any $\mathbf{w}_t$. Therefore, provided that all the conditions besides concavity are satisfied for $\bm{\theta}$, $\Theta$, and $m(\mathbf{w}_t; \bm{\theta})$, the conditional ML estimator $\hat{\bm{\theta}}$ is consistent.
+\end{example}
+
+\subsection*{Identification in NLS and ML}
+
+The identification condition (a) (that $\E[m(\mathbf{w}_t; \bm{\theta})]$ be uniquely maximized at $\bm{\theta}_0$) in these consistency theorems for M-estimators can be stated in more primitive terms for NLS and ML.
+
+\medskip
+\noindent\textbf{NLS}
+
+\medskip
+Consider first NLS, where $m(\mathbf{w}_t; \bm{\theta}) = -(y_t - \varphi(\mathbf{x}_t; \bm{\theta}))^2$ and $\E(y_t \mid \mathbf{x}_t) = \varphi(\mathbf{x}_t; \bm{\theta}_0)$. We have shown in Section~2.9 that the conditional expectation minimizes the mean squared error, that is, for any (measurable) function $h(\mathbf{x}_t)$,
+\begin{equation}
+\label{eq:7.2.8}
+\begin{split}
+\text{mean squared error} &\equiv \E\bigl[(y_t - h(\mathbf{x}_t))^2\bigr] \\
+&= \E\bigl[(y_t - \E(y_t \mid \mathbf{x}_t))^2\bigr] + \E\bigl[(\E(y_t \mid \mathbf{x}_t) - h(\mathbf{x}_t))^2\bigr] \\
+&\geq \E\bigl[(y_t - \E(y_t \mid \mathbf{x}_t))^2\bigr].
+\end{split}
+\end{equation}
+
+This is just reproducing (2.9.4) in the current notation. Furthermore, the conditional expectation is essentially the unique minimizer in the following sense.
+
+Being functions of $\mathbf{x}_t$, $h(\mathbf{x}_t)$ and $\E(y_t \mid \mathbf{x}_t)$ are random variables. For two random variables $X$ and $Y$, let $X \neq Y$ mean $\text{Prob}(X \neq Y) > 0$ (i.e., $\text{Prob}(X = Y) < 1$) and let $X = Y$ mean $\text{Prob}(X \neq Y) = 0$. (If $X$ and $Y$ differ only for events whose probability is zero, we do not need to care about the difference.) Therefore, $h(\mathbf{x}_t) \neq \E(y_t \mid \mathbf{x}_t)$ means $\text{Prob}(h(\mathbf{x}_t) \neq \E(y_t \mid \mathbf{x}_t)) > 0$. If $h(\mathbf{x}_t) \neq \E(y_t \mid \mathbf{x}_t)$ in this sense, then $\E[(\E(y_t \mid \mathbf{x}_t) - h(\mathbf{x}_t))^2] > 0$ with positive probability. Consequently, $\E\bigl[(\E(y_t \mid \mathbf{x}_t) - h(\mathbf{x}_t))^2\bigr]$ in (\ref{eq:7.2.8}) is positive and the mean squared error is strictly greater than $\E\bigl[(y_t - \E(y_t \mid \mathbf{x}_t))^2\bigr]$.
+
+Just setting $h(\mathbf{x}_t) = \varphi(\mathbf{x}_t; \bm{\theta})$ and noting that $\varphi(\mathbf{x}_t; \bm{\theta}_0) = \E(y_t \mid \mathbf{x}_t)$, we conclude that
+\begin{equation}
+\label{eq:7.2.9}
+\begin{cases}
+\E\bigl[(y_t - \varphi(\mathbf{x}_t; \bm{\theta}))^2\bigr] > \E\bigl[(y_t - \varphi(\mathbf{x}_t; \bm{\theta}_0))^2\bigr] & \text{if } \varphi(\mathbf{x}_t; \bm{\theta}) \neq \varphi(\mathbf{x}_t; \bm{\theta}_0), \\
+\E\bigl[(y_t - \varphi(\mathbf{x}_t; \bm{\theta}))^2\bigr] = \E\bigl[(y_t - \varphi(\mathbf{x}_t; \bm{\theta}_0))^2\bigr] & \text{if } \varphi(\mathbf{x}_t; \bm{\theta}) = \varphi(\mathbf{x}_t; \bm{\theta}_0).
+\end{cases}
+\end{equation}
+
+Therefore, the identification condition---that $\E[m(\mathbf{w}_t; \bm{\theta})] = -\E\bigl[(y_t - \varphi(\mathbf{x}_t; \bm{\theta}))^2\bigr]$ be maximized (i.e., $\E\bigl[(y_t - \varphi(\mathbf{x}_t; \bm{\theta}))^2\bigr]$ be minimized) uniquely at $\bm{\theta}_0$---holds if
+
+\begin{defbox}
+\textbf{conditional mean identification:} $\varphi(\mathbf{x}_t; \bm{\theta}) \neq \varphi(\mathbf{x}_t; \bm{\theta}_0) \quad \text{for all } \bm{\theta} \neq \bm{\theta}_0$. \hfill (7.2.10)
+\end{defbox}
+
+\medskip
+\noindent\textbf{ML}
+
+\medskip
+For ML, the role played by (\ref{eq:7.2.8}) for NLS is played by the \textbf{Kullback-Leibler information inequality}. Here we examine identification for conditional ML (doing the same for unconditional or joint ML is more straightforward). The hypothetical conditional density $f(y_t \mid \mathbf{x}_t; \bm{\theta})$, being a function of $(y_t, \mathbf{x}_t)$, is a random variable for any $\bm{\theta}$. The expected value of the random variable $\log f(y_t \mid \mathbf{x}_t; \bm{\theta})$ can be written as%
+\footnote{If $f(y_t \mid \mathbf{x}_t; \bm{\theta}) = 0$, then its log cannot be defined. If this bothers you, assume $f(y_t \mid \mathbf{x}_t; \bm{\theta})$ is positive for all $y_t$, $\mathbf{x}_t$, and $\bm{\theta}$. See White (1994, p.~9) for an argument that avoids such a simplifying assumption.}
+\begin{equation}
+\label{eq:7.2.11}
+\E[\log f(y_t \mid \mathbf{x}_t; \bm{\theta})] = \int \log f(y_t \mid \mathbf{x}_t; \bm{\theta}) \, f(y_t, \mathbf{x}_t; \bm{\theta}_0, \bm{\psi}_0) \, dy_t \, d\mathbf{x}_t.
+\end{equation}
+
+Note well that the expected value is with respect to the \emph{true} joint density $f(y_t, \mathbf{x}_t; \bm{\theta}_0, \bm{\psi}_0)$. The Kullback-Leibler information inequality about density functions (adapted to conditional densities) states that
+\begin{equation}
+\label{eq:7.2.12}
+\begin{cases}
+\E[\log f(y_t \mid \mathbf{x}_t; \bm{\theta})] < \E[\log f(y_t \mid \mathbf{x}_t; \bm{\theta}_0)] & \text{if } f(y_t \mid \mathbf{x}_t; \bm{\theta}) \neq f(y_t \mid \mathbf{x}_t; \bm{\theta}_0), \\
+\E[\log f(y_t \mid \mathbf{x}_t; \bm{\theta})] = \E[\log f(y_t \mid \mathbf{x}_t; \bm{\theta}_0)] & \text{if } f(y_t \mid \mathbf{x}_t; \bm{\theta}) = f(y_t \mid \mathbf{x}_t; \bm{\theta}_0)
+\end{cases}
+\end{equation}
+(provided, of course, that $\E[\log f(y_t \mid \mathbf{x}_t; \bm{\theta})]$ exists and is finite). (See Analytical Exercise~1 for derivation.) It immediately follows that the identification condition (that $\E[\log f(y_t \mid \mathbf{x}_t; \bm{\theta})]$ be maximized uniquely at $\bm{\theta}_0$) is satisfied if
+
+\begin{defbox}
+\textbf{conditional density identification:} $f(y_t \mid \mathbf{x}_t; \bm{\theta}) \neq f(y_t \mid \mathbf{x}_t; \bm{\theta}_0)$
+
+\hfill for all $\bm{\theta} \neq \bm{\theta}_0$. \hfill (7.2.13)
+\end{defbox}
+
+We can turn the two consistency theorems for M-estimators, Propositions~\ref{prop:7.3} and \ref{prop:7.4}, into ones for conditional ML, with $\mathbf{w}_t = (y_t, \mathbf{x}_t')'$ and $m(\mathbf{w}_t; \bm{\theta}) = \log f(y_t \mid \mathbf{x}_t; \bm{\theta})$. Replacing the identification condition for M-estimators by conditional density identification, we obtain the following two self-contained statements about consistency of ML.
+
+\begin{proposition}[Consistency of conditional ML with compact parameter space]
+\label{prop:7.5}
+Let $\{y_t, \mathbf{x}_t\}$ be ergodic stationary with conditional density $f(y_t \mid \mathbf{x}_t; \bm{\theta}_0)$ and let $\hat{\bm{\theta}}$ be the conditional ML estimator, which maximizes the average log conditional likelihood (derived under the assumption that $\{y_t, \mathbf{x}_t\}$ is i.i.d.):
+\[
+\hat{\bm{\theta}} = \argmax_{\bm{\theta} \in \Theta} \frac{1}{n} \sum_{t=1}^{n} \log f(y_t \mid \mathbf{x}_t; \bm{\theta}).
+\]
+
+Suppose the model is correctly specified so that $\bm{\theta}_0$ is in $\Theta$. Suppose that \emph{(i)} the parameter space $\Theta$ is a compact subset of $\mathbb{R}^p$, \emph{(ii)} $f(y_t \mid \mathbf{x}_t; \bm{\theta})$ is continuous in $\bm{\theta}$ for all $(y_t, \mathbf{x}_t)$, and \emph{(iii)} $f(y_t \mid \mathbf{x}_t; \bm{\theta})$ is measurable in $(y_t, \mathbf{x}_t)$ for all $\bm{\theta} \in \Theta$ (so by Lemma~\ref{lem:7.1} $\hat{\bm{\theta}}$ is a well-defined random variable). Suppose, further, that
+\begin{enumerate}[label=(\alph*)]
+\item \emph{(identification)} \enspace $\text{Prob}[f(y_t \mid \mathbf{x}_t; \bm{\theta}) \neq f(y_t \mid \mathbf{x}_t; \bm{\theta}_0)] > 0$ for all $\bm{\theta} \neq \bm{\theta}_0$ in $\Theta$,
+\item \emph{(dominance)} \enspace $\E[\sup_{\bm{\theta} \in \Theta} |\log f(y_t \mid \mathbf{x}_t; \bm{\theta})|] < \infty$ (note: the expectation is over $y_t$ and $\mathbf{x}_t$).
+\end{enumerate}
+Then $\hat{\bm{\theta}} \pto \bm{\theta}_0$.
+\end{proposition}
+
+\begin{proposition}[Consistency of conditional ML without compactness]
+\label{prop:7.6}
+Let $\{y_t, \mathbf{x}_t\}$ be ergodic stationary with conditional density $f(y_t \mid \mathbf{x}_t; \bm{\theta}_0)$ and let $\hat{\bm{\theta}}$ be the conditional ML estimator, which maximizes the average log conditional likelihood (derived under the assumption that $\{y_t, \mathbf{x}_t\}$ is i.i.d.):
+\[
+\hat{\bm{\theta}} = \argmax_{\bm{\theta} \in \Theta} \frac{1}{n} \sum_{t=1}^{n} \log f(y_t \mid \mathbf{x}_t; \bm{\theta}).
+\]
+
+Suppose the model is correctly specified so that $\bm{\theta}_0$ is in $\Theta$. Suppose that \emph{(i)} the true parameter vector $\bm{\theta}_0$ is an element of the interior of a convex parameter space $\Theta$ $(\subset \mathbb{R}^p)$, \emph{(ii)} $\log f(y_t \mid \mathbf{x}_t; \bm{\theta})$ is concave in $\bm{\theta}$ for all $(y_t, \mathbf{x}_t)$, and \emph{(iii)} $\log f(y_t \mid \mathbf{x}_t; \bm{\theta})$ is measurable in $(y_t, \mathbf{x}_t)$ for all $\bm{\theta}$ in $\Theta$. (For sufficiently large $n$, $\hat{\bm{\theta}}$ is well defined; see a few lines below.) Suppose, further, that
+\begin{enumerate}[label=(\alph*)]
+\item \emph{(identification)} \enspace $\text{Prob}[f(y_t \mid \mathbf{x}_t; \bm{\theta}) \neq f(y_t \mid \mathbf{x}_t; \bm{\theta}_0)] > 0$ for all $\bm{\theta} \neq \bm{\theta}_0$ in $\Theta$,
+\item $\E[\,|\log f(y_t \mid \mathbf{x}_t; \bm{\theta})|\,] < \infty$ (i.e., $\E[\log f(y_t \mid \mathbf{x}_t; \bm{\theta})]$ exists and is finite) for all $\bm{\theta} \in \Theta$ (note: the expectation is over $y_t$ and $\mathbf{x}_t$).
+\end{enumerate}
+Then, as $n \to \infty$, $\hat{\bm{\theta}}$ exists with probability approaching 1 and $\hat{\bm{\theta}} \pto \bm{\theta}_0$.
+\end{proposition}
+
+There are two remarks worth making.
+
+\begin{itemize}
+\item The Kullback-Leibler information inequality (\ref{eq:7.2.12}) holds for unconditional densities as well (the proof is easier for unconditional densities). Therefore, Propositions~\ref{prop:7.5} and \ref{prop:7.6} hold for unconditional ML; just replace $f(y_t \mid \mathbf{x}_t; \bm{\theta})$ by $f(\mathbf{w}_t; \bm{\theta})$.
+
+\item The noteworthy feature of these two ML consistency theorems is that, \emph{despite} the fact that the log likelihood is derived under the i.i.d.\ assumption for $\{y_t, \mathbf{x}_t\}$, consistency is assured even if $\{y_t, \mathbf{x}_t\}$ is not i.i.d.\ but merely ergodic stationary. This is because the ML estimator is an M-estimator. An ML estimator that maximizes a likelihood function different from the model's likelihood function is called a \textbf{quasi-ML estimator} or \textbf{QML estimator}. Put differently, a QML estimator maximizes the likelihood function of a misspecified model. Therefore, the ``maximum likelihood'' estimators in Propositions~\ref{prop:7.5} and \ref{prop:7.6} are QML estimators if $\{y_t, \mathbf{x}_t\}$ is ergodic stationary but not i.i.d. The propositions say that those particular QML estimators are consistent.
+\end{itemize}
+
+The identification condition in conditional ML can be stated in even more primitive terms for specific examples.
+
+\begin{example}[Identification in linear regression model]
+\label{ex:7.8}
+For the linear regression model with normal errors, the log conditional likelihood for observation $t$ is
+\[
+\log f(y_t \mid \mathbf{x}_t; \bm{\theta}) = -\frac{1}{2}\log(2\pi) - \frac{1}{2}\log(\sigma^2) - \frac{1}{2\sigma^2}(y_t - \mathbf{x}_t' \bm{\beta})^2.
+\]
+
+Since the log function is strictly monotonic, conditional density identification is equivalent to the condition that $\log f(y_t \mid \mathbf{x}_t; \bm{\theta}) \neq \log f(y_t \mid \mathbf{x}_t; \bm{\theta}_0)$ with positive probability if $\bm{\theta} \neq \bm{\theta}_0$. This condition is satisfied if $\E(\mathbf{x}_t \mathbf{x}_t')$ is nonsingular (and hence positive definite). To see why, let $\bm{\theta} = (\bm{\beta}', \sigma^2)'$ and $\bm{\theta}_0 = (\bm{\beta}_0', \sigma_0^2)'$. Clearly, $\log f(y_t \mid \mathbf{x}_t; \bm{\theta}) \neq \log f(y_t \mid \mathbf{x}_t; \bm{\theta}_0)$ with positive probability if $\sigma^2 \neq \sigma_0^2$. So consider the case where $\sigma^2 = \sigma_0^2$ but $\bm{\beta} \neq \bm{\beta}_0$. Then
+\[
+\E\bigl[(\mathbf{x}_t' \bm{\beta} - \mathbf{x}_t' \bm{\beta}_0)^2\bigr] = \E\bigl[(\mathbf{x}_t' (\bm{\beta} - \bm{\beta}_0))^2\bigr] = (\bm{\beta} - \bm{\beta}_0)' \E(\mathbf{x}_t \mathbf{x}_t') (\bm{\beta} - \bm{\beta}_0) > 0.
+\]
+
+Hence, $\mathbf{x}_t' \bm{\beta} \neq \mathbf{x}_t' \bm{\beta}_0$ with positive probability; if $\mathbf{x}_t' \bm{\beta} = \mathbf{x}_t' \bm{\beta}_0$ with probability 1 (i.e., if $\mathbf{x}_t' \bm{\beta} \neq \mathbf{x}_t' \bm{\beta}_0$ with probability zero), then $\E\bigl[(\mathbf{x}_t' \bm{\beta} - \mathbf{x}_t' \bm{\beta}_0)^2\bigr]$ will be zero. Thus, $y_t - \mathbf{x}_t' \bm{\beta} \neq y_t - \mathbf{x}_t' \bm{\beta}_0$ with positive probability, implying that the identification condition is satisfied. The same condition about $\E(\mathbf{x}_t \mathbf{x}_t')$ also implies condition (b) in Proposition~\ref{prop:7.6} because
+\[
+\E\bigl[(y_t - \mathbf{x}_t' \bm{\beta})^2\bigr] = \E\bigl[(\varepsilon_t + \mathbf{x}_t'(\bm{\beta}_0 - \bm{\beta}))^2\bigr] = \E(\varepsilon_t^2) + (\bm{\beta}_0 - \bm{\beta})' \E(\mathbf{x}_t \mathbf{x}_t')(\bm{\beta}_0 - \bm{\beta}) \quad (\text{since } \E(\varepsilon_t \cdot \mathbf{x}_t) = \mathbf{0}).
+\]
+
+The last term is finite if $\E(\mathbf{x}_t \mathbf{x}_t')$ is. These results, together with the fact noted earlier that the log likelihood is concave after reparameterization, imply that the conditional ML estimator of the linear regression model with normal errors (derived under the i.i.d.\ assumption for $\{y_t, \mathbf{x}_t\}$) is consistent if $\{y_t, \mathbf{x}_t\}$ is ergodic stationary and $\E(\mathbf{x}_t \mathbf{x}_t')$ is nonsingular.
+\end{example}
+
+\begin{example}[Identification in probit]
+\label{ex:7.9}
+The same conclusion just derived in the previous example for the linear model also holds for the probit model, whose conditional likelihood for observation $t$ is
+\[
+f(y_t \mid \mathbf{x}_t; \bm{\theta}) = \Phi(\mathbf{x}_t' \bm{\theta})^{y_t} \Phi(-\mathbf{x}_t' \bm{\theta})^{1-y_t}.
+\]
+
+The same argument used in Example~\ref{ex:7.8} implies that, under the nonsingularity of $\E(\mathbf{x}_t \mathbf{x}_t')$, $\mathbf{x}_t' \bm{\theta} \neq \mathbf{x}_t' \bm{\theta}_0$ with positive probability if $\bm{\theta} \neq \bm{\theta}_0$. But since $\Phi(v)$ is strictly monotonic, $\mathbf{x}_t' \bm{\theta} \neq \mathbf{x}_t' \bm{\theta}_0$ with positive probability implies $\Phi(\mathbf{x}_t' \bm{\theta}) \neq \Phi(\mathbf{x}_t' \bm{\theta}_0)$ and $\Phi(-\mathbf{x}_t' \bm{\theta}) \neq \Phi(-\mathbf{x}_t' \bm{\theta}_0)$ with positive probability. Hence, the identification condition (a) in Proposition~\ref{prop:7.6} is satisfied if $\E(\mathbf{x}_t \mathbf{x}_t')$ is nonsingular.
+
+The nonsingularity of $\E(\mathbf{x}_t \mathbf{x}_t')$ also implies that condition (b) of Proposition~\ref{prop:7.6} is satisfied for probit. It is easy to verify that
+\begin{equation}
+\label{eq:7.2.14}
+|\log \Phi(v)| \leq |\log \Phi(0)| + |v| + |v|^2 \quad \text{for all } v.
+\end{equation}
+
+Combining this bound for $|\log \Phi(v)|$ and the fact that $y_t$ and $1 - y_t$ are less than or equal to 1 in absolute value, it is easy to show that $\E[\,|\log f(y_t \mid \mathbf{x}_t; \bm{\theta})|\,] < \infty$ if $\E(\mathbf{x}_t \mathbf{x}_t')$ exists and is finite (a condition implied by the nonsingularity of $\E(\mathbf{x}_t \mathbf{x}_t')$).%
+\footnote{Only for interested readers, here is a proof:
+\begin{align*}
+|\log f(y_t \mid \mathbf{x}_t; \bm{\theta})| &\leq |y_t| |\log \Phi(\mathbf{x}_t' \bm{\theta})| + |1 - y_t| |\log \Phi(-\mathbf{x}_t' \bm{\theta})| \\
+&\leq |\log \Phi(\mathbf{x}_t' \bm{\theta})| + |\log \Phi(-\mathbf{x}_t' \bm{\theta})| \quad (\text{since } |y_t| \leq 1 \text{ and } |1 - y_t| \leq 1) \\
+&\leq 2 \times \bigl[ |\log \Phi(0)| + |\mathbf{x}_t' \bm{\theta}| + |\mathbf{x}_t' \bm{\theta}|^2 \bigr] \quad (\text{by } (\ref{eq:7.2.14})) \\
+&\leq 2 \times \bigl[ |\log \Phi(0)| + \|\mathbf{x}_t\| \cdot \|\bm{\theta}\| + \|\mathbf{x}_t\|^2 \cdot \|\bm{\theta}\|^2 \bigr].
+\end{align*}
+The last inequality is due to the Cauchy-Schwarz inequality that $|\mathbf{x}'\mathbf{y}| \leq \|\mathbf{x}\| \, \|\mathbf{y}\|$ for any two conformable vectors $\mathbf{x}$ and $\mathbf{y}$. Also, $\E(\|\mathbf{x}_t\|^2)$, which is the sum of $\E(x_{ti}^2)$ over $i$, is finite because the nonsingularity of $\E(\mathbf{x}_t \mathbf{x}_t')$ implies $\E(x_{ti}^2) < \infty$ for all $i$. If $\E(\|\mathbf{x}_t\|^2) < \infty$, then $\E(\|\mathbf{x}_t\|) < \infty$.}
+We therefore conclude that the probit ML estimator (whose log likelihood is derived under the i.i.d.\ assumption for $\{y_t, \mathbf{x}_t\}$) is consistent if $\{y_t, \mathbf{x}_t\}$ is ergodic stationary and $\E(\mathbf{x}_t \mathbf{x}_t')$ is nonsingular.
+\end{example}
+
+\subsection*{Consistency of GMM}
+
+We now turn to GMM and specialize Proposition~\ref{prop:7.1} to GMM by verifying the conditions of the proposition under a set of appropriate sufficient conditions. The GMM objective function is given by (\ref{eq:7.1.3}). Clearly, the continuity of $Q_n(\bm{\theta})$ in $\bm{\theta}$ is satisfied if $\mathbf{g}(\mathbf{w}_t; \bm{\theta})$ is continuous in $\bm{\theta}$ for all $\mathbf{w}_t$. If $\{\mathbf{w}_t\}$ is ergodic stationary, then $\mathbf{g}_n(\bm{\theta})$ $(\equiv \frac{1}{n}\sum_{t=1}^{n} \mathbf{g}(\mathbf{w}_t; \bm{\theta})) \pto \E[\mathbf{g}(\mathbf{w}_t; \bm{\theta})]$. So the limit function $Q_0(\bm{\theta})$ is
+\begin{equation}
+\label{eq:7.2.15}
+Q_0(\bm{\theta}) = -\frac{1}{2}\E[\mathbf{g}(\mathbf{w}_t; \bm{\theta})]' \mathbf{W} \, \E[\mathbf{g}(\mathbf{w}_t; \bm{\theta})].
+\end{equation}
+
+This function is nonpositive if $\mathbf{W}$ $(\equiv \plim \widehat{\mathbf{W}})$ is positive definite. It has a maximum of zero at $\bm{\theta}_0$ because $\E[\mathbf{g}(\mathbf{w}_t; \bm{\theta}_0)] = \mathbf{0}$ by the orthogonality conditions. Thus, the identification condition (that $Q_0(\bm{\theta})$ be uniquely maximized at $\bm{\theta}_0$) in Proposition~\ref{prop:7.1} is satisfied if $\E[\mathbf{g}(\mathbf{w}_t; \bm{\theta})] \neq \mathbf{0}$ for $\bm{\theta} \neq \bm{\theta}_0$. Regarding the uniform convergence of $Q_n(\bm{\theta})$ to $Q_0(\bm{\theta})$, it is not hard to show that the condition is satisfied if $\mathbf{g}_n(\cdot)$ converges uniformly to $\E[\mathbf{g}(\mathbf{w}_t; \,\cdot\,)]$ (see Newey and McFadden, 1994, p.~2132). The multivariate version of the Uniform Law of Large Numbers stated right below Lemma~\ref{lem:7.2}, in turn, provides a sufficient condition for the uniform convergence. So we have proved
+
+\begin{proposition}[Consistency of GMM with compact parameter space]
+\label{prop:7.7}
+Let $\{\mathbf{w}_t\}$ be ergodic stationary and let $\hat{\bm{\theta}}$ be the GMM estimator defined by
+\[
+\hat{\bm{\theta}} = \argmin_{\bm{\theta} \in \Theta} \left[ \frac{1}{n} \sum_{t=1}^{n} \mathbf{g}(\mathbf{w}_t; \bm{\theta}) \right]' \widehat{\mathbf{W}} \left[ \frac{1}{n} \sum_{t=1}^{n} \mathbf{g}(\mathbf{w}_t; \bm{\theta}) \right],
+\]
+where the symmetric matrix $\widehat{\mathbf{W}}$ is assumed to converge in probability to some symmetric positive definite matrix $\mathbf{W}$. Suppose that the model is correctly specified in that $\E[\mathbf{g}(\mathbf{w}_t; \bm{\theta}_0)] = \mathbf{0}$ (i.e., the orthogonality conditions hold) for $\bm{\theta}_0 \in \Theta$. Suppose that \emph{(i)} $\Theta$ is a compact subset of $\mathbb{R}^p$, \emph{(ii)} $\mathbf{g}(\mathbf{w}_t; \bm{\theta})$ is continuous in $\bm{\theta}$ for all $\mathbf{w}_t$, and \emph{(iii)} $\mathbf{g}(\mathbf{w}_t; \bm{\theta})$ is measurable in $\mathbf{w}_t$ for all $\bm{\theta}$ in $\Theta$ (so $\hat{\bm{\theta}}$ is a well-defined random variable by Lemma~\ref{lem:7.1}). Suppose, further, that
+\begin{enumerate}[label=(\alph*)]
+\item \emph{(identification)} \enspace $\E[\mathbf{g}(\mathbf{w}_t; \bm{\theta})] \neq \mathbf{0}$ for all $\bm{\theta} \neq \bm{\theta}_0$ in $\Theta$,
+\item \emph{(dominance)} \enspace $\E[\sup_{\bm{\theta} \in \Theta} \| \mathbf{g}(\mathbf{w}_t; \bm{\theta}) \|] < \infty$.
+\end{enumerate}
+Then $\hat{\bm{\theta}} \pto \bm{\theta}_0$.
+\end{proposition}
+
+If $Q_n(\bm{\theta})$ is concave, then the compactness of $\Theta$, the continuity of $\mathbf{g}(\mathbf{w}_t; \bm{\theta})$, and the dominance condition can be replaced by the condition that $\E[\mathbf{g}(\mathbf{w}_t; \bm{\theta})]$ exist and be finite for all $\bm{\theta}$. We will not state this result as a proposition because there are very few applications in which $Q_n(\bm{\theta})$ is concave. For example, the GMM objective function for the Euler equation model in Example~\ref{ex:7.5} is not concave. Just about the only well-known case is one in which $\mathbf{g}(\mathbf{w}_t; \bm{\theta})$ is linear in $\bm{\theta}$, but the linear case has been treated rather thoroughly in Chapter~3. When $\mathbf{g}(\mathbf{w}_t; \bm{\theta})$ is nonlinear in $\bm{\theta}$, specifying primitive conditions for (a) (identification) and (b) (dominance) in Proposition~\ref{prop:7.7} is generally quite difficult. So in most applications those conditions are simply assumed.
+
+\subsection*{Questions for Review}
+
+\begin{enumerate}
+\item (Necessity of density identification) \enspace We have shown for conditional ML that the conditional density identification (\ref{eq:7.2.13}) is sufficient for condition (a) (that $\E[\log f(y_t \mid \mathbf{x}_t; \bm{\theta})]$ be maximized uniquely at $\bm{\theta}_0$). That it is also a necessary condition is clear from the Kullback-Leibler information inequality. Without using this inequality, show the necessity of conditional mean identification. \textbf{Hint:} Show that, if (\ref{eq:7.2.13}) were false, then (a) would not hold. Suppose there exists a $\bm{\theta}_1 \neq \bm{\theta}_0$ such that $\bm{\theta}_1 \in \Theta$ and $f(y_t \mid \mathbf{x}_t; \bm{\theta}_1) = f(y_t \mid \mathbf{x}_t; \bm{\theta}_0)$. Then $\E[\log f(y_t \mid \mathbf{x}_t; \bm{\theta}_1)] = \E[\log f(y_t \mid \mathbf{x}_t; \bm{\theta}_0)]$.
+
+\item (Necessity of conditional mean identification) \enspace Without using (\ref{eq:7.2.8}), show that conditional mean identification is necessary as well as sufficient for identification in NLS.
+
+\item (Identification in NLS) \enspace Suppose that the $\varphi$ function in NLS is linear: $\varphi(\mathbf{x}_t; \bm{\theta}) = \mathbf{x}_t' \bm{\theta}$. Verify that identification is satisfied if $\E(\mathbf{x}_t \mathbf{x}_t')$ is nonsingular.
+\end{enumerate}

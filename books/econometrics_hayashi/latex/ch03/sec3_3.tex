@@ -1,0 +1,307 @@
+% sec3_3.tex — Section 3.3: The General Formulation
+
+We now provide a general formulation.  It is a model described by the following set
+of assumptions and is a generalization of the model of Chapter~2.
+
+%% ─── Regressors and Instruments ────────────────────────────────────────────
+\subsection*{Regressors and Instruments}
+
+\begin{assumption}[linearity]
+\label{ass:3.1}
+\emph{The equation to be estimated is linear:}
+\[
+  y_i = \mathbf{z}_i' \boldsymbol{\delta} + \varepsilon_i
+  \quad (i = 1, 2, \ldots, n),
+\]
+\emph{where $\mathbf{z}_i$ is an $L$-dimensional vector of regressors, $\boldsymbol{\delta}$ is an
+$L$-dimensional coefficient vector, and $\varepsilon_i$ is an unobservable error term.}
+\end{assumption}
+
+\begin{assumption}[ergodic stationarity]
+\label{ass:3.2}
+\emph{Let $\mathbf{x}_i$ be a $K$-dimensional vector to be
+referred to as the vector of instruments, and let $\mathbf{w}_i$ be the unique and nonconstant
+elements of $(y_i, \mathbf{z}_i, \mathbf{x}_i)$.\footnote{See examples below for illustrations of
+$\mathbf{w}_i$.}  $\{\mathbf{w}_i\}$ is jointly stationary and ergodic.}
+\end{assumption}
+
+\begin{assumption}[orthogonality conditions]
+\label{ass:3.3}
+\emph{All the $K$ variables in $\mathbf{x}_i$ are \textbf{predetermined} in the sense that they are all
+orthogonal to the current error term:
+$\E(x_{ik}\,\varepsilon_i) = 0$ for all $i$ and $k$ $(k = 1, 2, \ldots, K)$.\footnote{As was noted in
+Section~2.3, our use of the term \emph{predetermined} may not be standard in some quarters
+of the profession.  All we require for the term is that the current error term be orthogonal
+to the current regressors.  We do not require that the current error term be orthogonal to
+the past regressors.}  This can be written as}
+\[
+  \E[\mathbf{x}_i \cdot (y_i - \mathbf{z}_i' \boldsymbol{\delta})] = \mathbf{0}
+  \quad \text{or} \quad
+  \E(\mathbf{g}_i) = \mathbf{0},
+\]
+\emph{where $\mathbf{g}_i \equiv \mathbf{x}_i \cdot \varepsilon_i$.}
+\end{assumption}
+
+We remarked in Section~2.3 that, when the regressors include a constant, the orthogonality
+conditions are equivalent to the condition that $\E(\varepsilon_i) = 0$ and that the
+regressors be uncorrelated with the error term.  Here, the orthogonality conditions are
+about the instrumental variables.  So if one of the instruments is a constant, Assumption~3.3
+is equivalent to the condition that $\E(\varepsilon_i) = 0$ and that nonconstant instruments be
+uncorrelated with the error term.
+
+The examples examined in the previous two sections can be written in this
+general format.  For example,
+
+\begin{example}[Working's example with an observable supply shifter]
+\label{ex:3.1}
+Consider the market equilibrium model of \eqref{eq:3.1.2a} and \eqref{eq:3.1.2bp} on
+page~189.  Suppose the equation to be estimated is the demand equation.  The example
+can be cast in the general format by setting
+\[
+  y_i = q_i, \quad L = 2, \quad
+  \boldsymbol{\delta} = \begin{bmatrix} \alpha_0 \\ \alpha_1 \end{bmatrix}, \quad
+  \mathbf{z}_i = \begin{bmatrix} 1 \\ p_i \end{bmatrix}, \quad
+  \varepsilon_i = u_i, \quad K = 2, \quad
+  \mathbf{x}_i = \begin{bmatrix} 1 \\ x_i \end{bmatrix},
+\]
+and $\mathbf{w}_i = (q_i, p_i, x_i)'$.  Since the mean of the error term is zero, a constant is
+orthogonal to the error term and so can be included in $\mathbf{x}_i$.  It follows that $x_i$,
+which is assumed to be uncorrelated with the error term, satisfies the orthogonality
+condition $\E(x_i \varepsilon_i) = 0$.  So it too can be included in $\mathbf{x}_i$.
+\end{example}
+
+The other examples of the previous sections can be similarly written as special
+cases of the general model.
+
+Having two separate symbols, $\mathbf{x}_i$ and $\mathbf{z}_i$, may give you the impression that
+the regressors and the instruments do not share the same variables, but that is not
+always the case.  Indeed in the above example, $\mathbf{x}_i$ and $\mathbf{z}_i$ share the same variable
+(a constant).  The instruments that are also regressors are called \textbf{predetermined
+regressors}, and the rest of the regressors, those that are not included in $\mathbf{x}_i$, are
+called \textbf{endogenous regressors}.  A good example to make the point is
+
+\begin{example}[wage equation]
+\label{ex:3.2}
+A simplified version of the wage equation to be estimated later in this chapter is
+\[
+  LW_i = \delta_1 + \delta_2 S_i + \delta_3 \mathit{EXPR}_i + \delta_4 \mathit{IQ}_i + \varepsilon_i,
+\]
+where $LW_i$ is the log wage of individual $i$, $S_i$ is completed years of schooling,
+$\mathit{EXPR}_i$ is experience in years, $\mathit{IQ}_i$ is IQ, and $\varepsilon_i$ is unobservable individual
+characteristics relevant for the wage rate.  We assume $\E(\varepsilon_i) = 0$ (if not,
+include the mean of $\varepsilon_i$ in $\delta_1$).  In one of the specifications we estimate later, we
+assume that $S_i$ is predetermined but that $\mathit{IQ}_i$, an error-ridden measure of the
+individual's ability, is endogenous due to the errors-in-variables problem.  We
+also assume $\mathit{EXPR}_i$, $\mathit{AGE}_i$ (age of the individual), and $\mathit{MED}_i$ (mother's
+education in years) are predetermined.  $\mathit{AGE}_i$ is excluded from the wage equation,
+reflecting the underlying assumption that, once experience is controlled
+for, age has no effect on the wage rate.  In terms of the general model,
+\[
+  y_i = LW_i, \quad L = 4, \quad
+  \mathbf{z}_i = \begin{bmatrix} 1 \\ S_i \\ \mathit{EXPR}_i \\ \mathit{IQ}_i \end{bmatrix}, \quad
+  K = 5, \quad
+  \mathbf{x}_i = \begin{bmatrix} 1 \\ S_i \\ \mathit{EXPR}_i \\ \mathit{AGE}_i \\ \mathit{MED}_i \end{bmatrix},
+\]
+and $\mathbf{w}_i = (LW_i, S_i, \mathit{EXPR}_i, \mathit{IQ}_i, \mathit{AGE}_i, \mathit{MED}_i)'$.
+As in Example~3.1, we can include a constant in $\mathbf{x}_i$ because $\E(\varepsilon_i) = 0$.  In this
+example, $\mathbf{x}_i$ and $\mathbf{z}_i$ share three variables $(1, S_i, \mathit{EXPR}_i)$.  If, for example,
+$S_i$ were not included in $\mathbf{x}_i$, that would amount to treating $S_i$ as endogenous.
+\end{example}
+
+If, as in this example, some of the regressors $\mathbf{z}_i$ are predetermined, those predetermined
+regressors should be included in the list of instruments $\mathbf{x}_i$.  The GMM
+estimation of the parameter vector is about how to exploit the information afforded
+by the orthogonality conditions.  Not including predetermined regressors as elements
+of $\mathbf{x}_i$ amounts to throwing away the orthogonality conditions that could have
+been exploited.
+
+%% ─── Identification ────────────────────────────────────────────────────────
+\subsection*{Identification}
+
+As seen from the examples of the previous two sections, an instrument must be not
+only predetermined (i.e., orthogonal to the error term) but also correlated with the
+regressors.  Otherwise, the instrumental variables estimator cannot be defined (see,
+e.g., \eqref{eq:3.1.11}).  The generalization to the case with more than one regressor and
+more than one predetermined variable is
+
+\begin{assumption}[rank condition for identification]
+\label{ass:3.4}
+\emph{The $K \times L$ matrix $\E(\mathbf{x}_i \mathbf{z}_i')$
+is of full column rank (i.e., its rank equals $L$, the number of columns).  We
+denote this matrix by $\boldsymbol{\Sigma}_{\mathbf{xz}}$.\footnote{So the cross moment
+$\E(\mathbf{x}_i \mathbf{z}_i')$ is assumed to exist and is finite.  If a moment is indicated, as here,
+then by implication the moment is assumed to exist and is finite.}}
+\end{assumption}
+
+To see that this is indeed a generalization, consider Example~3.1.  With
+$\mathbf{z}_i = (1, p_i)'$, $\mathbf{x}_i = (1, x_i)'$, the $\boldsymbol{\Sigma}_{\mathbf{xz}}$
+matrix is
+\[
+  \boldsymbol{\Sigma}_{\mathbf{xz}}
+  = \begin{bmatrix} 1 & \E(p_i) \\ \E(x_i) & \E(x_i p_i) \end{bmatrix}.
+\]
+The determinant of this matrix is not zero (and hence is of full column rank) if and
+only if $\Cov(x_i, p_i) = \E(x_i p_i) - \E(x_i)\,\E(p_i) \neq 0$.
+
+Assumption~3.4 is called the \textbf{rank condition for identification} for the following
+reason.  To emphasize the dependence of $\mathbf{g}_i$ ($\equiv \mathbf{x}_i \cdot \varepsilon_i$) on the data and the
+parameter vector, rewrite $\mathbf{g}_i$ as
+\begin{equation}
+  \mathbf{g}_i = \mathbf{g}(\mathbf{w}_i;\, \boldsymbol{\delta})
+  \equiv \mathbf{x}_i \cdot (y_i - \mathbf{z}_i' \boldsymbol{\delta}).
+  \label{eq:3.3.1}
+\end{equation}
+So the orthogonality conditions can be rewritten as
+\begin{equation}
+  \E[\mathbf{g}(\mathbf{w}_i;\, \boldsymbol{\delta})]
+  = \underset{(K \times 1)}{\mathbf{0}}.
+  \label{eq:3.3.2}
+\end{equation}
+Now let $\tilde{\boldsymbol{\delta}}$ ($L \times 1$) be a hypothetical value of $\boldsymbol{\delta}$
+and consider the system of $K$ simultaneous equations in $L$ unknowns (the $L$ elements
+of $\tilde{\boldsymbol{\delta}}$):
+\begin{equation}
+  \E[\mathbf{g}(\mathbf{w}_i;\, \tilde{\boldsymbol{\delta}})]
+  = \underset{(K \times 1)}{\mathbf{0}}.
+  \label{eq:3.3.3}
+\end{equation}
+The orthogonality conditions \eqref{eq:3.3.2} mean that the true value of the coefficient
+vector, $\boldsymbol{\delta}$, is \emph{a} solution to this system of $K$ simultaneous equations
+\eqref{eq:3.3.3}.  So the assumptions we have made so far guarantee that there exists a
+solution to the simultaneous equations system.  We say that the coefficient vector (or
+the equation) is \textbf{identified} if $\tilde{\boldsymbol{\delta}} = \boldsymbol{\delta}$ is the
+\emph{only} solution.
+
+Because the estimation equation is linear in our model, the function
+$\mathbf{g}(\mathbf{w}_i;\, \tilde{\boldsymbol{\delta}})$ is linear in $\tilde{\boldsymbol{\delta}}$,
+as it can be written as
+$\mathbf{x}_i \cdot y_i - \mathbf{x}_i \mathbf{z}_i' \tilde{\boldsymbol{\delta}}$.
+So \eqref{eq:3.3.3} is a system of $K$ linear equations:
+\begin{equation}
+  \E(\mathbf{x}_i \cdot y_i) - \E(\mathbf{x}_i \mathbf{z}_i')
+  \tilde{\boldsymbol{\delta}}
+  = \mathbf{0}
+  \quad \text{or} \quad
+  \underset{(K \times L)}{\boldsymbol{\Sigma}_{\mathbf{xz}}} \;
+  \underset{(L \times 1)}{\tilde{\boldsymbol{\delta}}}
+  = \underset{(K \times 1)}{\boldsymbol{\sigma}_{\mathbf{xy}}},
+  \label{eq:3.3.4}
+\end{equation}
+where
+\[
+  \boldsymbol{\sigma}_{\mathbf{xy}} \equiv \E(\mathbf{x}_i \cdot y_i), \quad
+  \boldsymbol{\Sigma}_{\mathbf{xz}} \equiv \E(\mathbf{x}_i \mathbf{z}_i').
+\]
+A necessary and sufficient condition that $\tilde{\boldsymbol{\delta}} = \boldsymbol{\delta}$ is the only
+solution can be derived from the following result from matrix algebra.\footnote{See, e.g.,
+Searle (1982, pp.~233--234).}
+
+Suppose there exists a solution to a system of linear simultaneous equations
+in $\mathbf{x}$: $\mathbf{A}\mathbf{x} = \mathbf{b}$.  A necessary and sufficient condition that it is the only
+solution is that $\mathbf{A}$ is of full column rank.
+
+Therefore, $\tilde{\boldsymbol{\delta}} = \boldsymbol{\delta}$ is the only solution to \eqref{eq:3.3.4} if
+and only if $\boldsymbol{\Sigma}_{\mathbf{xz}}$ is of full column rank, which is Assumption~3.4.
+
+%% ─── Order Condition for Identification ────────────────────────────────────
+\subsection*{Order Condition for Identification}
+
+Since $\rank(\boldsymbol{\Sigma}_{\mathbf{xz}}) < L$ if $K < L$, a \emph{necessary}
+condition for identification is that
+\begin{equation}
+  K \; (= \text{\#predetermined variables})
+  \;\geq\; L \; (= \text{\#regressors}).
+  \label{eq:3.3.5a}
+\end{equation}
+This is called the \textbf{order condition for identification}.  It can be stated in different
+ways.  Since $K$ is also the number of orthogonality conditions and $L$ is the number
+of parameters, the order condition can be stated equivalently as
+\begin{equation}
+  \text{\#orthogonality conditions} \;\geq\; \text{\#parameters}.
+  \label{eq:3.3.5b}
+\end{equation}
+By subtracting the number of predetermined regressors from both sides of the
+inequality, we obtain another equivalent statement:
+\begin{equation}
+  \text{\#predetermined variables excluded from the equation}
+  \;\geq\; \text{\#endogenous regressors}.
+  \label{eq:3.3.5c}
+\end{equation}
+Depending on whether the order condition is satisfied, we say that the equation is
+\begin{itemize}
+\item \textbf{overidentified} if the rank condition is satisfied and $K > L$,
+\item \textbf{exactly identified} or \textbf{just identified} if the rank condition is satisfied
+  and $K = L$,
+\item \textbf{underidentified} (or not identified) if the order condition is not satisfied
+  (i.e., if $K < L$).
+\end{itemize}
+Since the order condition is a necessary condition for identification, a failure of the
+order condition means that the equation is not identified.
+
+%% ─── The Assumption for Asymptotic Normality ──────────────────────────────
+\subsection*{The Assumption for Asymptotic Normality}
+
+As in Chapter~2, we need to strengthen the orthogonality conditions for the estimator
+to be asymptotically normal.
+
+\begin{assumption}[$\mathbf{g}_i$ is a martingale difference sequence with finite second
+moments]
+\label{ass:3.5}
+\emph{Let $\mathbf{g}_i \equiv \mathbf{x}_i \cdot \varepsilon_i$.
+$\{\mathbf{g}_i\}$ is a martingale difference sequence (so a fortiori
+$\E(\mathbf{g}_i) = \mathbf{0}$).  The $K \times K$ matrix of cross moments,
+$\E(\mathbf{g}_i \mathbf{g}_i')$, is nonsingular.
+We use $\mathbf{S}$ for $\avar(\bar{\mathbf{g}})$ (i.e., the variance of the limiting distribution
+of $\sqrt{n}\,\bar{\mathbf{g}}$, where
+$\bar{\mathbf{g}} \equiv \frac{1}{n} \sum_{i=1}^{n} \mathbf{g}_i$).
+By Assumption~3.2 and the ergodic stationary Martingale Differences CLT,
+$\mathbf{S} = \E(\mathbf{g}_i \mathbf{g}_i')$.}
+\end{assumption}
+
+This is the same as Assumption~2.5, and the same comments apply:
+\begin{itemize}
+\item If the instruments include a constant, then this assumption implies that the error
+  is a martingale difference sequence (and \emph{a fortiori} serially uncorrelated).
+
+\item A sufficient and perhaps easier to understand condition for Assumption~3.5 is
+  that
+  \begin{equation}
+    \E(\varepsilon_i \mid \varepsilon_{i-1}, \ldots, \varepsilon_1,
+    \mathbf{x}_i, \mathbf{x}_{i-1}, \ldots, \mathbf{x}_1) = 0,
+    \label{eq:3.3.6}
+  \end{equation}
+  which means that, besides being a martingale difference sequence, the error term
+  is orthogonal not only to the current but also to the past instruments.
+
+\item Since $\mathbf{g}_i \mathbf{g}_i' = \varepsilon_i^2\, \mathbf{x}_i \mathbf{x}_i'$,
+  $\mathbf{S}$ is a matrix of fourth moments.  Consistent estimation of $\mathbf{S}$ will require a
+  fourth-moment assumption to be specified in Assumption~3.6 below.
+
+\item If $\{\mathbf{g}_i\}$ is serially correlated, then $\mathbf{S}$ (which is defined to be
+  $\avar(\bar{\mathbf{g}})$) does not equal $\E(\mathbf{g}_i \mathbf{g}_i')$ and will take a more
+  complicated form, as we will see in Chapter~6.
+\end{itemize}
+
+%% ─── Questions for Review ──────────────────────────────────────────────────
+\bigskip
+\begin{center}\rule{0.6\textwidth}{0.4pt}\end{center}
+\noindent\textsc{Questions for Review}
+\medskip
+
+\begin{enumerate}
+\item In the Working example of Example~3.1, is the demand equation identified?
+  Overidentified?  Is the supply equation identified?
+
+\item Suppose the rank condition is satisfied for the wage equation of Example~3.2.
+  Is the equation overidentified?
+
+\item In the production function example, no instrument other than a constant is specified.
+  So $K = 1$ and $L = 2$.  The order condition informs us that the log output
+  equation \eqref{eq:3.2.13} cannot be identified.  Write down the orthogonality condition
+  and verify that there are infinitely many combinations of $(\phi_0, \phi_1)$ that satisfy
+  the orthogonality condition.
+
+\item Verify that the examples of Section~3.2 are special cases of the model of this
+  section by specifying $(y_i, \mathbf{x}_i, \mathbf{z}_i)$ and writing down the rank condition for each
+  example.
+\end{enumerate}

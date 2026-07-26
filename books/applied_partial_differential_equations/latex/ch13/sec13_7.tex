@@ -1,0 +1,174 @@
+% sec13_7.tex — Section 13.7: Inversion of Laplace Transforms Using Contour Integrals
+\section{Inversion of Laplace Transforms Using Contour Integrals in the Complex Plane}
+\label{sec:13.7}
+
+Laplace transforms sometimes can be inverted by using tables.  However, one of the most important properties of Laplace transforms is that they can be inverted by a contour integral in the complex plane.  Furthermore, we will show how to evaluate this integral using results from the theory of functions of a complex variable.
+
+\textbf{Fourier and Laplace transforms.}
+First we show that the Laplace transform can be considered a special case of the Fourier transform.  As a review, we introduce $g(x)$ and its Fourier transform $G(\omega)$:
+\begin{align}
+G(\omega) &= \frac{1}{2\pi}\int_{-\infty}^{\infty} g(x)\,e^{i\omega x}\,dx \label{eq:13.7.1}\\
+g(x) &= \int_{-\infty}^{\infty} G(\omega)\,e^{-i\omega x}\,d\omega. \label{eq:13.7.2}
+\end{align}
+Suppose, as is usual for functions that will be Laplace transformed, we discuss functions $g(x)$ that are zero for $x < 0$:
+\begin{equation}
+g(x) = \begin{cases} 0 & x < 0 \\ 2\pi f(x)\,e^{-\gamma x} & x > 0. \end{cases}
+\label{eq:13.7.3}
+\end{equation}
+The $e^{-\gamma x}$ is introduced (and $\gamma$ chosen) so that $g(x)$ automatically decays sufficiently rapidly as $x \to \infty$ for certain $f(x)$.  For this function, the Fourier transform pair \eqref{eq:13.7.1}--\eqref{eq:13.7.2} becomes
+\begin{align*}
+G(\omega) &= \int_0^{\infty} f(x)\,e^{-(-i\omega+\gamma)x}\,dx \\
+2\pi f(x)\,e^{-\gamma x} &= \int_{-\infty}^{\infty} G(\omega)\,e^{-i\omega x}\,d\omega
+\quad (x > 0).
+\end{align*}
+If we introduce
+\[
+s = \gamma - i\omega \qquad (ds = -i\,d\omega)
+\]
+and
+\begin{equation}
+F(s) \equiv G(\omega) = G\!\left(\frac{s-\gamma}{-i}\right),
+\label{eq:13.7.4}
+\end{equation}
+then using $t$ instead of $x$ ($x = t$) yields
+\boxed{\begin{equation}
+F(s) = \int_0^{\infty} f(t)\,e^{-st}\dt
+\label{eq:13.7.5}
+\end{equation}}
+\boxed{\begin{equation}
+f(t) = \frac{1}{2\pi i}\int_{\gamma-i\infty}^{\gamma+i\infty} F(s)\,e^{st}\ds
+\qquad (t > 0).
+\label{eq:13.7.6}
+\end{equation}}
+
+Equation~\eqref{eq:13.7.5} shows that $F(s)$ \emph{is the Laplace transform} of $f(t)$.  (We usually use $t$ instead of $x$ when discussing Laplace transforms.)  $F(s)$ \emph{is also the Fourier transform} of
+\[
+g(t) = \begin{cases} 0 & t < 0 \\ 2\pi f(t)\,e^{-\gamma t} & t > 0. \end{cases}
+\]
+More importantly, \textbf{given the Laplace transform $F(s)$}, \eqref{eq:13.7.6} \textbf{shows how to compute its inverse Laplace transform.}  It involves a line integral in the complex $s$-plane, as illustrated in Fig.~13.7.1.  From the theory of complex variables, it can be shown that the line integral is to the right of all singularities of $F(s)$.  Other than that, the evaluation of the integral is independent of the value of $\gamma$.  All singularities are in the ``left half-plane.''
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch13/fig_13_7_1.png}
+\caption{Line integral in complex $s$-plane for inverse Laplace transforms.}
+\label{fig:13.7.1}
+\end{figure}
+
+\textbf{Cauchy's theorem and residues.}
+We give only an extremely brief discussion of evaluating integrals using the theory of complex variables.  The fundamental tool is \textbf{Cauchy's theorem}, which states that if $g(s)$ is analytic (no singularities) at all points inside and on a closed contour $C$, then the closed line integral is zero:
+\begin{equation}
+\oint_C g(s)\ds = 0.
+\label{eq:13.7.7}
+\end{equation}
+Closed line integrals are nonzero only due to singularities of $g(s)$.  The \textbf{residue theorem} states that the closed line integral (counterclockwise) can be evaluated in terms of contributions (called \textbf{residues}) of the singularities $s_n$ \emph{inside the contour} (if there are no branch points, which usually are square-root or logarithmic-type singularities):
+\begin{equation}
+\oint_C g(s)\ds = 2\pi i \sum_n \operatorname{res}(s_n).
+\label{eq:13.7.8}
+\end{equation}
+The evaluation of residues is often straightforward.  If $g(s) = R(s)/Q(s)$ \emph{has simple poles at simple zeros} $s_n$ of $Q(s)$ inside the contour, then in complex variables it is shown that
+\begin{equation}
+\operatorname{res}(s_n) = \frac{R(s_n)}{Q'(s_n)},
+\label{eq:13.7.9}
+\end{equation}
+and thus
+\begin{equation}
+\oint_C g(s)\ds = 2\pi i \sum_n \frac{R(s_n)}{Q'(s_n)}.
+\label{eq:13.7.10}
+\end{equation}
+
+\textbf{Inversion integral.}
+The inversion integral for Laplace transforms is not a closed line integral but instead an infinite straight line (with constant real part~$\gamma$) to the right of all singularities.  In order to utilize a finite closed line integral, we can consider either of the two large semicircles illustrated in Fig.~13.7.2.  We will allow the radius to approach infinity so that the straight part of the closed contour approaches the desired infinite straight line.  We want the line integral along the arc of the circle to vanish as the radius approaches infinity.  The integrand $F(s)e^{st}$ in the inversion integral \eqref{eq:13.7.6} must be sufficiently small.  Since $F(s) \to 0$ as $s \to \infty$ [see Sec.~13.2 or \eqref{eq:13.7.5}], we will need $e^{st}$ to vanish as the radius approaches infinity.  If $t < 0$, $e^{st}$ exponentially decays as the radius increases only on the right-facing semicircle (real part of $s > 0$).  Thus, if $t < 0$, we ``close the contour'' to the right.  Since there are no singularities to the right and the contribution of the large semicircle vanishes, we conclude that
+\[
+f(t) = \frac{1}{2\pi i}\int_{\gamma-i\infty}^{\gamma+i\infty} F(s)\,e^{st}\ds = 0
+\]
+if $t < 0$; when we use Laplace transforms, we insist that $f(t) = 0$ for $t < 0$.  Of more immediate importance is our analysis of the inversion integral \eqref{eq:13.7.6} for $t > 0$.  If $t > 0$, $e^{st}$ exponentially decays in the left half-plane (real part of $s < 0$).  Thus, if $t > 0$, we close the contour to the left.  There is a contribution to the integral from all the singularities.  For $t > 0$, the inverse Laplace transform of $F(s)$ is
+\begin{equation}
+f(t) = \frac{1}{2\pi i}\int_{\gamma-i\infty}^{\gamma+i\infty} F(s)\,e^{st}\ds
+     = \frac{1}{2\pi i}\oint F(s)\,e^{st}\ds
+     = \sum_n \operatorname{res}(s_n).
+\label{eq:13.7.11}
+\end{equation}
+This is valid if $F(s)$ has no branch points.  The summation includes all singularities (since the path is to the right of all singularities).
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch13/fig_13_7_2.png}
+\caption{Closing the line integrals.}
+\label{fig:13.7.2}
+\end{figure}
+
+\textbf{Simple poles.}
+If $F(s) = p(s)/q(s)$ [so that $g(s) = p(s)e^{st}/q(s)$] and if all the singularities of the Laplace transform $F(s)$ are simple poles [at simple zeros of $q(s)$], then $\operatorname{res}(s_n) = p(s_n)e^{s_n t}/q'(s_n)$, and thus
+\begin{equation}
+f(t) = \sum_n \frac{p(s_n)}{q'(s_n)}\,e^{s_n t}.
+\label{eq:13.7.12}
+\end{equation}
+Equation~\eqref{eq:13.7.12} is the same result we derived earlier by partial fractions if $F(s)$ is a rational function [i.e., if $p(s)$ and $q(s)$ are polynomials].
+
+\textbf{Example of the calculation of the inverse Laplace transform.}
+Consider $F(s) = (s^2+2s+4)/[s(s^2+1)]$.  The inverse transform yields
+\[
+f(t) = \sum_n \operatorname{res}(s_n).
+\]
+The poles of $F(s)$ are the zeros of $s(s^2+1)$, namely, $s = 0, \pm i$.  The residues at these simple poles are
+\begin{align*}
+\operatorname{res}(0) &= 4e^{0t} = 4 \\
+\operatorname{res}(s_n = \pm i) &= \frac{s_n^2+2s_n+4}{3s_n^2+1}\,e^{s_n t}
+= \frac{3+2s_n}{-2}\,e^{s_n t}.
+\end{align*}
+Thus,
+\begin{align*}
+f(t) &= 4 + \left(-\tfrac{3}{2} - i\right)e^{it}
+       + \left(-\tfrac{3}{2} + i\right)e^{-it}
+     = 4 - \tfrac{3}{2}\cdot 2\cos t - i\cdot 2i\sin t \\
+     &= 4 - 3\cos t + 2\sin t,
+\end{align*}
+using Euler's formulas.  In the next section we apply these ideas to solve for the inverse Laplace transform that arises in a partial differential equation's problem.
+
+%% ── Exercises 13.7 ──────────────────────────────────────────────
+\begin{exercises}{13.7}
+
+\item Use the inverse theory for Laplace transforms to determine $f(t)$ if $F(s) =$:
+\begin{enumerate}
+\item[(a)] $1/(s-a)$
+\item[\starred(b)] $1/(s^2+9)$
+\item[(c)] $(s+3)/(s^2+16)$
+\end{enumerate}
+
+\item The residue $b_{-1}$ at a singularity $s_0$ of $f(s)$ is the coefficient of $1/(s-s_0)$ in an expansion of $f(s)$ valid near $s = s_0$.  In general,
+\[
+f(s) = \sum_{m=-\infty}^{\infty} b_m(s-s_0)^m,
+\]
+called a \textbf{Laurent series or expansion}.
+\begin{enumerate}
+\item[(a)] For a simple pole, the most negative power is $m = -1$ ($b_m = 0$ for $m < -1$).  In this case, show that
+\[
+\operatorname{res}(s_0) = \lim_{s\to s_0}(s-s_0)\,f(s).
+\]
+\item[(b)] If $s_0$ is a simple pole and $f(s) = R(s)/Q(s)$ [with $Q(s_0) = 0$, $R(s_0) \ne 0$, and $dQ/ds(s_0) \ne 0$], show that
+\[
+\operatorname{res}(s_0) = \frac{R(s_0)}{Q'(s_0)},
+\]
+assuming that both $R(s)$ and $Q(s)$ have Taylor series around $s_0$.
+\item[(c)] For an $M$th-order pole, the most negative power is $m = -M$ ($b_m = 0$ for $m < -M$).  In this case, show that
+\begin{equation}
+\operatorname{res}(s_0) = \frac{1}{(M-1)!}\,\frac{d^{M-1}}{ds^{M-1}}\left[(s-s_0)^M f(s)\right]\bigg|_{s=s_0}.
+\label{eq:13.7.13}
+\end{equation}
+\item[(d)] In part~(c), show that the $M$ appearing in \eqref{eq:13.7.13} may be replaced by any integer greater than $M$.
+\end{enumerate}
+
+\item Using Exercise~13.7.2, determine $f(t)$ if $F(s) =$
+\begin{enumerate}
+\item[(a)] $1/s$
+\item[(b)] $1/(s^2+4)^2$
+\end{enumerate}
+
+\item If $|F(s)| < \alpha/r^2$ for large $r \equiv |s|$, prove that
+\[
+\int_{C_R} F(s)\,e^{st}\ds \to 0 \quad\text{as}\quad r \to \infty \quad\text{for } t > 0,
+\]
+where $C_R$ is any arc of a circle in the left half-plane ($\Real\,s \le 0$).
+[If $|F(s)| < \alpha/r$ instead, it is more difficult to prove the same conclusion.  The latter case is equivalent to \textbf{Jordan's lemma} in complex variables.]
+
+\end{exercises}

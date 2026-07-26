@@ -1,0 +1,2290 @@
+\chapter{Line Integrals and the Curl}
+
+\epigraph{\textit{To err from the right path is common to Mankind.}}{Sophocles}
+
+%% ================================================================
+\section{Work and Line Integrals}
+%% ================================================================
+
+We remarked above that the differential form of Gauss' law,
+Equations~(II-18) and~(II-23), although it fulfills our goal of relating
+a property of the electric field (its divergence) at a point to a known
+quantity (the charge density) at the same point, nonetheless falls short
+of providing a convenient way to find~$\bfE$.  The reason is that
+$\nabla\cdot\bfE = \rho/\epszero$ is (or seems to be) a single
+differential equation in three unknowns ($E_x$, $E_y$, $E_z$).  But
+there is another feature of electrostatic fields that has not yet played
+an explicit role in our discussion and that will yield a relationship
+among the components of~$\bfE$.  It will thus provide us with the
+crucial last step in obtaining a useful way to calculate fields.  In the
+process of examining this question, we shall encounter some of the most
+important topics in vector calculus.
+
+The property of electrostatic fields that we shall now begin to
+discuss is intimately bound up with the question of work and energy.
+You no doubt recall the elementary definition of work as force times
+distance.  Thus, in one dimension, if a force $F(x)$ acts from $x=a$
+to $x=b$, the work done is, by definition,
+\[
+  \int_a^b F(x)\dx.
+\]
+
+To be able to handle more general situations, we must now introduce
+the concept of the \emph{line integral}.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.6\textwidth]{figures/ch03/fig_III_1.png}
+\caption{}
+\label{fig:III-1}
+\end{figure}
+
+Suppose we have a curve~$C$ in three dimensions (Figure~III-1) and
+suppose the curve is \emph{directed}.  By this we mean that we put an
+arrow on the curve and say ``This is the positive direction.''  Let~$s$
+be the arc length measured along the curve from some arbitrary point on
+it with $s=s_1$ at a point~$P_1$ and $s=s_2$ at~$P_2$.  Suppose
+further that we have a function $f(x,y,z)$ defined everywhere on~$C$.
+Now let us subdivide the portion of~$C$ between $P_1$ and $P_2$
+arbitrarily into $N$~sections.  Figure~III-1 shows an example of such a
+subdivision for $N=4$.  Next, join successive subdivision points by
+chords, a typical one of which, say the $l$th, has length~$\Delta s_l$.
+Now evaluate $f(x,y,z)$ at $(x_l,y_l,z_l)$, which is any point on the
+$l$th subdivision of the curve, and form the product
+$f(x_l,y_l,z_l)\,\Delta s_l$.  Doing this for each of the $N$~segments
+of~$C$, we form the sum
+\[
+  \sum_{l=1}^{N} f(x_l,y_l,z_l)\,\Delta s_l.
+\]
+
+By definition, the line integral of $f(x,y,z)$ along the curve~$C$ is
+the limit of this sum as the number of subdivisions $N$ approaches
+infinity and the length of each chord approaches zero:
+\begin{equation}
+  \int_C f(x,y,z)\ds = \lim_{\substack{N\to\infty\\ \text{each }\Delta s_l\to 0}}
+  \sum_{l=1}^{N} f(x_l,y_l,z_l)\,\Delta s_l.
+\end{equation}
+
+To evaluate the line integral, we need to know the path~$C$.
+Usually the most convenient way to specify this path is parametrically
+in terms of the arc length parameter~$s$.  Thus, we write $x=x(s)$,
+$y=y(s)$, and $z=z(s)$.  In such a situation the line integral can be
+reduced to an ordinary definite integral:
+\begin{equation}
+  \int_C f(x,y,z)\ds = \int_{s_1}^{s_2} f[x(s),\,y(s),\,z(s)]\ds.
+\end{equation}
+
+An example of a line integral will be helpful here.  For simplicity
+let us work in two dimensions and evaluate
+\[
+  \int_C (x+y)\ds,
+\]
+where $C$~is the straight line from the origin to the point whose
+coordinates are~$(1,1)$ (Figure~III-2).  If $(x,y)$ are the coordinates
+of
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.5\textwidth]{figures/ch03/fig_III_2.png}
+\caption{}
+\label{fig:III-2}
+\end{figure}
+
+\noindent any point~$P$ on~$C$ and if $s$~is the arc length measured
+from the origin, then $x = s/\sqrt{2}$ and $y = s/\sqrt{2}$.  Hence,
+$x+y = 2s/\sqrt{2} = \sqrt{2}\,s$.  Thus,
+\begin{equation}
+  \int_C (x+y)\ds = \sqrt{2}\int_0^{\sqrt{2}} s\ds = \sqrt{2}.
+\end{equation}
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.5\textwidth]{figures/ch03/fig_III_3.png}
+\caption{}
+\label{fig:III-3}
+\end{figure}
+
+Let us integrate this same function $(x+y)$ from $(0,0)$ to $(1,1)$
+along another path as shown in Figure~III-3.  Here we break the
+integration into two parts, one along~$C_1$ and the second along~$C_2$.
+On $C_1$ we have $x=s$ and $y=0$.  Thus, on $C_1$, $x+y=s$, and so
+\[
+  \int_{C_1}(x+y)\ds = \int_0^1 s\ds = \tfrac{1}{2}.
+\]
+
+Along $C_2$, $x=1$ and $y=s$ [note that the arc length on this
+segment of the path is measured from the point~$(1,0)$].  It follows
+then that
+\[
+  \int_{C_2}(x+y)\ds = \int_0^1 (1+s)\ds = \tfrac{3}{2}.
+\]
+
+Adding the results for the two segments, we find
+\[
+  \int_C (x+y)\ds = \int_{C_1}(x+y)\ds + \int_{C_2}(x+y)\ds
+  = \tfrac{1}{2}+\tfrac{3}{2} = 2.
+\]
+
+The lesson to be learned is this: the value of a line integral can
+(indeed, usually does) depend on the path of integration.
+
+
+%% ================================================================
+\section{Line Integrals Involving Vector Functions}
+%% ================================================================
+
+Although the preceding discussion tells us what a line integral is,
+the kind of line integral we must deal with here has a feature not yet
+mentioned.  You will recall that we introduced our discussion of line
+integrals with the concept of work.  Work, in the most elementary
+sense, is force times displacement.  That this needs elaboration becomes
+clear when we recognize that both force and displacement are vectors.
+
+Thus, consider some path~$C$ in three dimensions (Figure~III-4).
+Let us suppose that under the action of a force an object moves on this
+path from $s_1$ to~$s_2$.  At any point~$P$ on the curve let the force
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.6\textwidth]{figures/ch03/fig_III_4.png}
+\caption{}
+\label{fig:III-4}
+\end{figure}
+
+\noindent acting be designated $\mathbf{f}(x,y,z)$.  The component of
+$\mathbf{f}$ that does work is, by definition, only that one which acts
+\emph{along} the curve, that is, the tangential component.  Let
+$\hat{\mathbf{t}}$ denote a unit vector that is tangent to the curve
+at~$P$.\footnote{$\hat{\mathbf{t}}$ is a function of $x$, $y$, and $z$
+and should really be written $\hat{\mathbf{t}}(x,y,z)$.  We write
+simply $\hat{\mathbf{t}}$ to avoid complicating the notation.}  Then
+the work done by the force in moving the object from $s_1$ to~$s_2$
+along the curve~$C$ is
+\begin{equation}
+  W = \int_C \mathbf{f}(x,y,z)\cdot\hat{\mathbf{t}}\ds,
+\end{equation}
+where it is understood, of course, that the integration begins at
+$s=s_1$ and ends at $s=s_2$.  The new feature of this integral is that
+the integrand is the dot product of two vector functions.  To be able to
+handle such a line integral, we must know how to find
+$\hat{\mathbf{t}}$, and it is to this problem that we now turn.
+
+Consider an arbitrary curve~$C$ (Figure~III-5) parametrized by its
+arc length.  At some point~$s$ on the curve we have $x=x(s)$, $y=y(s)$,
+and $z=z(s)$.  At another point $s+\Delta s$ we have
+$x+\Delta x = x(s+\Delta s)$, $y+\Delta y = y(s+\Delta s)$, and
+$z+\Delta z = z(s+\Delta s)$.  Thus,
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.6\textwidth]{figures/ch03/fig_III_5.png}
+\caption{}
+\label{fig:III-5}
+\end{figure}
+
+\noindent the chord joining the two points on the curve directed from
+the first to the second is the vector
+$\Delta\bfr \equiv \bfi\,\Delta x + \bfj\,\Delta y + \bfk\,\Delta z$,
+where
+\begin{align*}
+  \Delta x &= x(s+\Delta s) - x(s), \\
+  \Delta y &= y(s+\Delta s) - y(s), \\
+  \Delta z &= z(s+\Delta s) - z(s).
+\end{align*}
+
+If we now divide this vector by~$\Delta s$, we get
+\[
+  \frac{\Delta\bfr}{\Delta s}
+  = \bfi\,\frac{\Delta x}{\Delta s}
+  + \bfj\,\frac{\Delta y}{\Delta s}
+  + \bfk\,\frac{\Delta z}{\Delta s}.
+\]
+
+Taking the limit of this as $\Delta s$ approaches zero yields
+\[
+  \bfi\,\frac{dx}{ds} + \bfj\,\frac{dy}{ds} + \bfk\,\frac{dz}{ds},
+\]
+and we assert that this is~$\hat{\mathbf{t}}$.  To begin with, it's
+clear that as $\Delta s\to 0$, the vector $\Delta\bfr$ becomes tangent
+to the curve at~$s$.  Further, in the limit $\Delta s\to 0$, we see
+that $|\Delta\bfr|\to\Delta s$.  Hence, in the limit the magnitude of
+this quantity is~1.  It follows then that we can make the identification
+\begin{equation}
+  \hat{\mathbf{t}}(s)
+  = \bfi\,\frac{dx}{ds} + \bfj\,\frac{dy}{ds} + \bfk\,\frac{dz}{ds}.
+\end{equation}
+
+If we return now to the expression for work~$W$ and use this formula
+for~$\hat{\mathbf{t}}$, we find
+\begin{equation}
+  W = \int_C \mathbf{f}(x,y,z)\cdot
+      \left[\bfi\,\frac{dx}{ds}+\bfj\,\frac{dy}{ds}
+            +\bfk\,\frac{dz}{ds}\right]ds
+    = \int_C (f_x\dx + f_y\dy + f_z\dz).
+\end{equation}
+
+This is a formal expression; often, to carry out the integration, it is
+useful to restore the $ds$ as the following example illustrates.
+Consider
+\[
+  \mathbf{f}(x,y,z) = \bfi\,y - \bfj\,x
+\]
+and the path shown in Figure~III-6(a).  To calculate
+$\int_C(\mathbf{f}\cdot\hat{\mathbf{t}})\ds$ in
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.5\textwidth]{figures/ch03/fig_III_6a.png}
+\caption{}
+\label{fig:III-6a}
+\end{figure}
+
+\noindent this case, we break the path~$C$ into three parts, $C_1$,
+$C_2$, and $C_3$ as shown.  Since $f_z=0$, we have
+\begin{align*}
+  \int_C \mathbf{f}\cdot\hat{\mathbf{t}}\ds
+    &= \int_C f_x\dx + f_y\dy \\
+    &= \int_C y\dx - x\dy.
+\end{align*}
+
+Now, on~$C_1$, $y=0$ and $dy=0$, so there is no contribution to the
+integral.  Similarly, on $C_3$ we have $x=0$ and $dx=0$, and again the
+result is zero.  Thus, the only contribution to the integral over~$C$
+can come from~$C_2$.  Restoring the $ds$, we have
+\[
+  \int_C \left(y\,\frac{dx}{ds} - x\,\frac{dy}{ds}\right)ds.
+\]
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.5\textwidth]{figures/ch03/fig_III_6b.png}
+\caption{}
+\label{fig:III-6b}
+\end{figure}
+
+But $(1-x)/s = \cos 45^\circ = 1/\sqrt{2}$ and $y/s = \sin 45^\circ
+= 1/\sqrt{2}$ [Figure~III-6(b)].  Thus,
+\[
+  x = 1 - \frac{s}{\sqrt{2}} \;\Rightarrow\; \frac{dx}{ds}
+    = -\frac{1}{\sqrt{2}} \qquad
+  y = \frac{s}{\sqrt{2}} \;\Rightarrow\; \frac{dy}{ds}
+    = \frac{1}{\sqrt{2}}
+  \qquad 0\le s\le\sqrt{2}.
+\]
+
+Hence, the integral is
+\begin{align*}
+  \int_0^{\sqrt{2}} &\left[\frac{s}{\sqrt{2}}
+    \left(-\frac{1}{\sqrt{2}}\right)
+    - \left(1-\frac{s}{\sqrt{2}}\right)\frac{1}{\sqrt{2}}\right]ds \\
+  &= -\frac{1}{\sqrt{2}}\int_0^{\sqrt{2}}ds = -1.
+\end{align*}
+
+As a second example of a line integral involving a vector function, let
+\[
+  \mathbf{f}(x,y,z) = \bfi\,x^2 - \bfj\,xy,
+\]
+and take~$C$ to be the quarter circle of radius~$R$ oriented as shown
+in Figure~III-6(c).  We then have
+\[
+  \int_C \mathbf{f}\cdot\hat{\mathbf{t}}\ds
+    = \int_C x^2\dx - xy\dy.
+\]
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.45\textwidth]{figures/ch03/fig_III_6c.png}
+\caption{}
+\label{fig:III-6c}
+\end{figure}
+
+Letting $x=R\cos\theta$, $y=R\sin\theta$, we find this integral becomes
+\begin{align*}
+  \int_0^{\pi/2} [R^2\cos^2\theta(-R\sin\theta)
+    - R^2\sin\theta\cos\theta(R\cos\theta)]\,d\theta
+  &= -2R^3\int_0^{\pi/2}\cos^2\theta\,\sin\theta\,d\theta \\
+  &= -2R^3/3.
+\end{align*}
+
+
+%% ================================================================
+\section{Path Independence}
+%% ================================================================
+
+In a line integral the path of integration is one of the ingredients
+which determines the very function we integrate.  It isn't remarkable,
+then, that the value of the integral can depend on the path of
+integration.  What is remarkable is that, under some conditions, the
+value of the integral does \emph{not} depend on the path!
+
+We show how this path independence comes about in the case of the
+Coulomb force.  Let a charge~$q_0$ be fixed at the origin and let
+another charge~$q$ be situated at $(x,y,z)$ (Figure~III-7).  The
+Coulomb force on~$q$ is
+\begin{equation}
+  \bfF = \frac{1}{4\pi\epszero}\,\frac{qq_0}{r^2}\,\hat{\mathbf{u}},
+  \label{eq:III-1}
+\end{equation}
+where $r=(x^2+y^2+z^2)^{1/2}$ is the distance between the two charges
+and $\hat{\mathbf{u}}$~is a unit vector pointing from $q_0$ to~$q$.
+With this arrangement $\hat{\mathbf{u}}$~is clearly in the radial
+direction.  Even more
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.6\textwidth]{figures/ch03/fig_III_7.png}
+\caption{}
+\label{fig:III-7}
+\end{figure}
+
+\noindent clearly, the radial vector~$\bfr$ is in the radial direction.
+Thus, we have $\hat{\mathbf{u}}=\bfr/r=(\bfi\,x+\bfj\,y+\bfk\,z)/r$,
+and so
+\[
+  \bfF = \frac{qq_0}{4\pi\epszero}\,
+         \frac{\bfi\,x+\bfj\,y+\bfk\,z}{r^3}.
+\]
+
+Thus,
+\[
+  \bfF\cdot\hat{\mathbf{t}}\ds
+  = F_x\dx + F_y\dy + F_z\dz
+  = \frac{qq_0}{4\pi\epszero}\,\frac{x\dx + y\dy + z\dz}{r^3}.
+\]
+
+The trick now is to use the relationship
+\[
+  r^2 = x^2 + y^2 + z^2.
+\]
+
+Taking differentials in this equation and dividing by a factor of~2
+yields
+\[
+  x\dx + y\dy + z\dz = r\,dr,
+\]
+so that
+\[
+  \bfF\cdot\hat{\mathbf{t}}\ds
+  = \frac{qq_0}{4\pi\epszero}\,\frac{r\,dr}{r^3}
+  = \frac{qq_0}{4\pi\epszero}\,\frac{dr}{r^2}.
+\]
+
+Suppose now that the charge~$q$ moves from a point~$P_1$ at a
+distance~$r_1$ from the origin to a point~$P_2$ at a distance~$r_2$,
+over some path~$C$ connecting the two points (Figure~III-8).  Then
+\begin{equation}
+  \int_C \bfF\cdot\hat{\mathbf{t}}\ds
+  = \frac{qq_0}{4\pi\epszero}\int_{r_1}^{r_2}\frac{dr}{r^2}
+  = \frac{qq_0}{4\pi\epszero}
+    \left(\frac{1}{r_1}-\frac{1}{r_2}\right).
+\end{equation}
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.6\textwidth]{figures/ch03/fig_III_8.png}
+\caption{}
+\label{fig:III-8}
+\end{figure}
+
+Notice that to get this result, we haven't had to specify $C$ in any
+way whatever; we'd get the same answer for \emph{any} path connecting
+$P_1$ and~$P_2$.  This, of course, proves that the line integral
+\[
+  \int_C \bfF\cdot\hat{\mathbf{t}}\ds
+\]
+with $\bfF$ given by Equation~(\ref{eq:III-1}) is path-independent,
+but the result, so far, has been established only for the Coulomb force
+on~$q$ due to a single charge~$q_0$ [Equation~(\ref{eq:III-1})].  If
+there are many charges $q_1,q_2,\dots,q_N$, then the total force on~$q$
+is $\bfF_1+\bfF_2+\cdots+\bfF_N$, where $\bfF_l$~is the Coulomb force
+on~$q$ due to the $l$th charge~$q_l$.  Hence,
+\[
+  \int_C \bfF\cdot\hat{\mathbf{t}}\ds
+  = \int_C \bfF_1\cdot\hat{\mathbf{t}}\ds
+  + \cdots
+  + \int_C \bfF_N\cdot\hat{\mathbf{t}}\ds.
+\]
+
+Now the discussion given above shows that each term of this sum is path
+independent; hence, so is the sum itself.  (All this, of course, is
+merely an application of the superposition principle.)  To phrase this
+result in terms of the field requires one last trivial step: Since
+$\bfF=q\bfE$, it follows that
+$q\int_C\bfE\cdot\hat{\mathbf{t}}\ds$ is path independent, whence
+$\int_C\bfE\cdot\hat{\mathbf{t}}\ds$ is also.  Strange to say, it is
+this fact that will enable us eventually to convert
+$\nabla\cdot\bfE=\rho/\epszero$ into a more useful equation.
+
+If you examine the foregoing discussion carefully, you'll see that
+the fact that the Coulomb force varies inversely as the square of~$r$
+has nothing whatever to do with the path independence of the line
+integral.  The path independence rests solely on two properties of the
+Coulomb force: (1) It depends only on the distance between the two
+particles, and (2) it acts along the line joining them.
+
+Any force~$\bfF$ with these two properties is called a
+\emph{central force}, and $\int_C\bfF\cdot\hat{\mathbf{t}}\ds$ is
+independent of path for \emph{any} central
+force.\footnote{Our having illustrated path independence with a central
+force may give the erroneous impression that \emph{only} central forces
+have path-independent line integrals.  That is certainly \emph{not}
+true; many functions which are not central forces have path-independent
+line integrals.  Later we'll develop a simple criterion for identifying
+such functions.}
+
+One further step pertaining to path independence can be taken here.
+If
+\[
+  \int_C \bfF\cdot\hat{\mathbf{t}}\ds
+\]
+is independent of path, then
+\[
+  \int_{C_1}\bfF\cdot\hat{\mathbf{t}}\ds
+  = \int_{C_2}\bfF\cdot\hat{\mathbf{t}}\ds,
+\]
+where, as indicated in Figure~III-9, $C_1$ and $C_2$ are two different
+arbitrary paths connecting the two points $P_1$ and $P_2$ and directed
+as shown in the figure.  Now if instead of integrating along~$C_1$ from
+$P_1$ to~$P_2$, we go the other way, we simply change the sign of the
+line integral; that is,
+\[
+  \int_{-C_1}\bfF\cdot\hat{\mathbf{t}}\ds
+  = -\int_{C_1}\bfF\cdot\hat{\mathbf{t}}\ds,
+\]
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.5\textwidth]{figures/ch03/fig_III_9.png}
+\caption{}
+\label{fig:III-9}
+\end{figure}
+
+\noindent where $-C_1$ merely indicates that the integration is to be
+carried out along~$C_1$ from $P_2$ to~$P_1$.  Thus,
+\[
+  \int_{C_2}\bfF\cdot\hat{\mathbf{t}}\ds
+  = -\int_{-C_1}\bfF\cdot\hat{\mathbf{t}}\ds
+\]
+or
+\[
+  \int_{-C_1+C_2}\bfF\cdot\hat{\mathbf{t}}\ds = 0.
+\]
+
+But $-C_1+C_2$ is just the closed loop from $P_1$ to $P_2$ and back,
+as shown in Figure~III-10.  Thus, if
+$\int\bfF\cdot\hat{\mathbf{t}}\ds$ is independent of path, then
+\[
+  \oint \bfF\cdot\hat{\mathbf{t}}\ds = 0,
+\]
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.5\textwidth]{figures/ch03/fig_III_10.png}
+\caption{}
+\label{fig:III-10}
+\end{figure}
+
+\noindent where $\oint$ is the standard notation for a line integral
+around a closed path.  It follows that if $\bfE$~is an electrostatic
+field, we can write
+\begin{equation}
+  \oint \bfE\cdot\hat{\mathbf{t}}\ds = 0.
+  \label{eq:III-2}
+\end{equation}
+
+The term ``circulation'' is often given to the path integral around a
+closed curve of the tangential component of a vector function.  Thus we
+have demonstrated that the circulation of the electrostatic field is
+zero.  In what follows we'll call this the circulation law.
+
+
+%% ================================================================
+\section{The Curl}
+%% ================================================================
+
+If we are given some vector function $\bfF(x,y,z)$ and asked, ``Could
+this be an electrostatic field?'' we can, in principle, provide an
+answer.  If
+\[
+  \oint \bfF\cdot\hat{\mathbf{t}}\ds \ne 0
+\]
+over even \emph{one} path, then $\bfF$ cannot be an electrostatic
+field.  If
+\[
+  \oint \bfF\cdot\hat{\mathbf{t}}\ds = 0
+\]
+over \emph{every} closed path, then $\bfF$ can (but does not have to)
+be an electrostatic field.
+
+Clearly, this criterion is not easy to apply since we must be sure the
+circulation of~$\bfF$ is zero over all possible paths.  To develop a
+more useful criterion, we proceed much as we did in dealing with Gauss'
+law, which, like the circulation law, is an expression involving an
+integral over the electric field.  Gauss' law is more useful in the
+differential form [Equations~(II-18) and~(II-23)] obtained by
+considering the ratio of flux to volume for ever-decreasing surfaces.
+We now treat the circulation law in the same spirit and attempt to find
+the differential form of Equation~(\ref{eq:III-2}).  To stress the
+generality of our analysis and results, we deal with an arbitrary
+function $\bfF(x,y,z)$ and specialize to $\bfE(x,y,z)$ at a later
+stage in the development.
+
+Let us consider the circulation of~$\bfF$ over a small rectangle
+parallel to the $xy$-plane, with sides $\Delta x$ and $\Delta y$ and
+with the point $(x,y,z)$ at the center [Figure~III-11(a)].  As shown in
+Figure~III-11(b), we carry out the path integration in a
+counterclockwise direction looking down at the $xy$-plane.  The line
+integral is broken up into four parts: $C_B$~(bottom), $C_R$~(right),
+$C_T$~(top), and $C_L$~(left).  Since the rectangle is small
+(eventually we shall take the limit as it shrinks down to zero), we'll
+approximate the integral over each segment by
+$\bfF\cdot\hat{\mathbf{t}}$ evaluated at the center of the segment,
+multiplied by the length of the
+segment.\footnote{Reread footnote~9 of Chapter~II and then give an
+argument in support of this approximation.}
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.6\textwidth]{figures/ch03/fig_III_11a.png}
+\caption{}
+\label{fig:III-11a}
+\end{figure}
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.5\textwidth]{figures/ch03/fig_III_11b.png}
+\caption{}
+\label{fig:III-11b}
+\end{figure}
+
+Taking $C_B$ first, we have
+\begin{equation}
+  \int_{C_B}\bfF\cdot\hat{\mathbf{t}}\ds
+  = \int_{C_B}F_x\dx
+  \approx F_x\!\left(x,\,y-\frac{\Delta y}{2},\,z\right)\Delta x.
+  \label{eq:III-3a}
+\end{equation}
+
+Over $C_T$ we find
+\begin{equation}
+  \int_{C_T}\bfF\cdot\hat{\mathbf{t}}\ds
+  = \int_{C_T}F_x\dx
+  \approx -F_x\!\left(x,\,y+\frac{\Delta y}{2},\,z\right)\Delta x.
+  \label{eq:III-3b}
+\end{equation}
+
+The negative sign here is required by the fact that
+\[
+  \int_{C_T}F_x\dx = \int_{C_T}F_x\,\frac{dx}{ds}\ds
+\]
+and $dx/ds=-1$ over~$C_T$.  Adding Equation~(\ref{eq:III-3a}) and
+(\ref{eq:III-3b}), we find
+\begin{align*}
+  \int_{C_T+C_B}(\bfF\cdot\hat{\mathbf{t}})\ds
+  &\approx -\left[F_x\!\left(x,\,y+\frac{\Delta y}{2},\,z\right)
+           - F_x\!\left(x,\,y-\frac{\Delta y}{2},\,z\right)\right]\Delta x.
+\end{align*}
+
+The factor $\Delta x\,\Delta y$ is clearly the area $\Delta S$ of the
+rectangle.  Thus,
+\begin{equation}
+  \frac{1}{\Delta S}\int_{C_T+C_B}(\bfF\cdot\hat{\mathbf{t}})\ds
+  \approx -\frac{F_x\!\left(x,\,y+\frac{\Delta y}{2},\,z\right)
+           - F_x\!\left(x,\,y-\frac{\Delta y}{2},\,z\right)}{\Delta y}.
+  \label{eq:III-4}
+\end{equation}
+
+Exactly the same sort of analysis applied to the left and right sides
+of the rectangle ($C_L$ and $C_R$) results in
+\begin{equation}
+  \frac{1}{\Delta S}\int_{C_L+C_R}(\bfF\cdot\hat{\mathbf{t}})\ds
+  \approx \frac{F_y\!\left(x+\frac{\Delta x}{2},\,y,\,z\right)
+           - F_y\!\left(x-\frac{\Delta x}{2},\,y,\,z\right)}{\Delta x}.
+  \label{eq:III-5}
+\end{equation}
+
+Adding Equations~(\ref{eq:III-4}) and~(\ref{eq:III-5}) and taking the
+limit as $\Delta S$ shrinks down about a point $(x,y,z)$ (in which case
+$\Delta x$ and $\Delta y\to 0$ as well), we get
+\begin{equation}
+  \lim_{\substack{\Delta S\to 0 \\ \text{about }(x,y,z)}}
+  \frac{1}{\Delta S}\oint \bfF\cdot\hat{\mathbf{t}}\ds
+  = \pd{F_y}{x} - \pd{F_x}{y},
+  \label{eq:III-6}
+\end{equation}
+where $\oint$ is our semicomical notation meaning the circulation
+around the little rectangle.
+
+You may wonder about the generality and uniqueness of this result
+since it is obtained using a path of integration that is special in two
+ways: first, it is a rectangle, and second, it is parallel to the
+$xy$-plane.  If the path were not a rectangle, but a plane curve of
+arbitrary shape, it would not affect our result (see Problems~III-2
+and~III-30).  But our result definitely \emph{does} depend on the
+special orientation of the path of integration.  The choice of
+orientation made above clearly suggests two others, and they are shown
+in Figure~III-12(a) and~(b) along with the result of calculating
+\[
+  \lim_{\substack{\Delta S\to 0 \\ \text{about }(x,y,z)}}
+  \frac{1}{\Delta S}\oint \bfF\cdot\hat{\mathbf{t}}\ds
+\]
+for each.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.6\textwidth]{figures/ch03/fig_III_12a.png}
+\caption{}
+\label{fig:III-12a}
+\end{figure}
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.6\textwidth]{figures/ch03/fig_III_12b.png}
+\caption{}
+\label{fig:III-12b}
+\end{figure}
+
+Each of these three paths is named in honor of the vector normal to
+the enclosed area.  The convention we use is this: Trace the curve~$C$
+so that the enclosed area is always to the left [Figure~III-13(a)].
+Then choose the normal so that it points ``up'' in the di-
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.5\textwidth]{figures/ch03/fig_III_13a.png}
+\caption{}
+\label{fig:III-13a}
+\end{figure}
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.5\textwidth]{figures/ch03/fig_III_13b.png}
+\caption{}
+\label{fig:III-13b}
+\end{figure}
+
+\noindent rection shown in the picture.  This convention is sometimes
+called the right-hand rule, for if the right hand is oriented so that
+the fingers curl in the direction in which the curve is traced, the
+thumb, extended, points in the direction of the normal
+[Figure~III-13(b)].  Using the right-hand rule, we have the following:
+
+\medskip
+Calculating $\displaystyle\lim_{\Delta S\to 0}\oint
+\bfF\cdot\hat{\mathbf{t}}\ds/\Delta S$
+
+\begin{equation}
+\left.
+\begin{aligned}
+  &\text{for a path whose normal is } \bfi,
+    &\quad &\pd{F_z}{y} - \pd{F_y}{z}, \\[4pt]
+  &\text{for a path whose normal is } \bfj,
+    &\quad &\pd{F_x}{z} - \pd{F_z}{x}, \\[4pt]
+  &\text{for a path whose normal is } \bfk,
+    &\quad &\pd{F_y}{x} - \pd{F_x}{y}.
+\end{aligned}
+\;\right\}
+\label{eq:III-7a}
+\end{equation}
+
+It turns out that these three quantities are the Cartesian components
+of a vector.  To this vector we give the name ``curl of~$\bfF$,'' which
+we write curl~$\bfF$.  Thus, we have
+\begin{equation}
+  \text{curl}\;\bfF
+  = \bfi\left(\pd{F_z}{y}-\pd{F_y}{z}\right)
+  + \bfj\left(\pd{F_x}{z}-\pd{F_z}{x}\right)
+  + \bfk\left(\pd{F_y}{x}-\pd{F_x}{y}\right).
+  \label{eq:III-7b}
+\end{equation}
+
+This expression is often (indeed, usually) given as the definition of
+the curl, but we prefer to regard it as merely the form of the curl in
+Cartesian coordinates.  We shall define the curl as the limit
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.5\textwidth]{figures/ch03/fig_III_14.png}
+\caption{}
+\label{fig:III-14}
+\end{figure}
+
+\noindent of circulation to area as the area tends to zero.  To be
+precise, let $\oint_{C_n}\bfF\cdot\hat{\mathbf{t}}\ds$ be the
+circulation of~$\bfF$ about some path whose normal is~$\nhat$ as shown
+in Figure~III-14.  Then by definition
+\begin{equation}
+  \nhat\cdot\text{curl}\;\bfF
+  = \lim_{\substack{\Delta S\to 0 \\ \text{about }(x,y,z)}}
+    \frac{1}{\Delta S}\oint_{C_n}\bfF\cdot\hat{\mathbf{t}}\ds.
+  \label{eq:III-8}
+\end{equation}
+
+By taking $\nhat$ successively equal to $\bfi$, $\bfj$, and $\bfk$, we
+get back the results given in Equation~(\ref{eq:III-7b}).  Since this
+limit will, in general, have different values for different points
+$(x,y,z)$, the curl of~$\bfF$ is a \emph{vector function} of
+position.\footnote{The word \emph{rotation} (abbreviated ``rot,''
+amusingly enough) was once used for what we now call the \emph{curl}.
+Though the term has long since dropped out of use, a related one
+survives: If $\text{curl}\;\bfF=0$, the function~$\bfF$ is said to be
+\emph{irrotational}.}  Note incidentally that although in our work we
+always assumed that the area enclosed by the path of integration was a
+plane, this need not be the case.  Since the curl is defined in terms of
+a limit in which the enclosed surface shrinks to zero about some point,
+in the final stages of this limiting process the enclosed surface is
+infinitesimally close to a plane, and all our considerations apply.
+
+Since it is undoubtedly beyond the powers of a mere mortal to
+remember the expression given above for curl~$\bfF$ in Cartesian
+coordinates [Equation~(\ref{eq:III-7b})], it is fortunate that there is
+a mnemonic device to fall back on.  If the three-by-three
+determinant\footnote{A mathematician would object to this since,
+strictly speaking, a determinant cannot contain either vectors or
+operators.  We aren't doing any serious damage, however, because our
+``determinant'' is merely a memory aid.}
+\[
+  \begin{vmatrix}
+    \bfi & \bfj & \bfk \\[3pt]
+    \partial/\partial x & \partial/\partial y & \partial/\partial z \\[3pt]
+    F_x & F_y & F_z
+  \end{vmatrix}
+\]
+is expanded (most conveniently in minors of the first row) and if
+certain ``products'' are interpreted as partial derivatives [for example,
+$(\partial/\partial x)F_y = \partial F_y/\partial x$], the result will
+be identical with the one given in Equation~(\ref{eq:III-7b}).  Thus,
+the anguish of remembering the form of curl~$\bfF$ in Cartesian
+coordinates can be replaced by the pain of remembering how to expand a
+three-by-three determinant.  \emph{Chacun \`a son go\^ut.}
+
+As an example of calculating the curl, consider the vector function
+\[
+  \bfF(x,y,z) = \bfi\,xz + \bfj\,yz - \bfk\,y^2.
+\]
+We have
+\begin{align*}
+  \text{curl}\;\bfF
+  &= \begin{vmatrix}
+       \bfi & \bfj & \bfk \\
+       \partial/\partial x & \partial/\partial y & \partial/\partial z \\
+       xz & yz & -y^2
+     \end{vmatrix} \\
+  &= \bfi(-2y-y) + \bfj(x-0) + \bfk(0-0) \\
+  &= -3\bfi\,y + \bfj\,x.
+\end{align*}
+
+You may have noticed that the curl operator can be written in terms
+of the del notation we introduced earlier.  You can verify for yourself
+that
+\[
+  \text{curl}\;\bfF = \nabla\times\bfF,
+\]
+which is read ``del cross~$\bfF$.''  Henceforth, we shall always use
+$\nabla\times\bfF$ to indicate the curl.
+
+
+%% ================================================================
+\section{The Curl in Cylindrical and Spherical Coordinates}
+%% ================================================================
+
+To obtain the form of $\nabla\times\bfF$ in other coordinate systems,
+we proceed as we did above in finding the Cartesian form, merely
+modifying the paths of integration appropriately.  As an example, using
+the path shown in Figure~III-15(a) will yield the $z$-component of
+$\nabla\times\bfF$ in cylindrical
+coordinates.\footnote{In deriving the Cartesian form of
+$\nabla\times\bfF$, each segment of each path of integration (see
+Figures~III-11 and~III-12) was of the form $x=\text{constant}$,
+$y=\text{constant}$, or $z=\text{constant}$.  Similarly, in deriving the
+cylindrical form, each segment of each path is of the form
+$r=\text{constant}$, $\theta=\text{constant}$, or $z=\text{constant}$.}
+Note that we trace the curve in
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.6\textwidth]{figures/ch03/fig_III_15a.png}
+\caption{}
+\label{fig:III-15a}
+\end{figure}
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.5\textwidth]{figures/ch03/fig_III_15b.png}
+\caption{}
+\label{fig:III-15b}
+\end{figure}
+
+\noindent accordance with the right-hand rule given in the previous
+section.  Viewing the path from above [as we do in Figure~III-15(b)],
+the line integral of
+$\bfF(r,\theta,z)\cdot\hat{\mathbf{t}}$ along the segment of path
+marked~1 is
+\[
+  \int_{C_1}\bfF\cdot\hat{\mathbf{t}}\ds
+  \approx F_r\!\left(r,\,\theta-\frac{\Delta\theta}{2},\,z\right)
+    \Delta r,
+\]
+while along segment~3 it is
+\[
+  \int_{C_3}\bfF\cdot\hat{\mathbf{t}}\ds
+  \approx -F_r\!\left(r,\,\theta+\frac{\Delta\theta}{2},\,z\right)
+    \Delta r.
+\]
+
+The area enclosed by the path is $r\,\Delta r\,\Delta\theta$, so
+\[
+  \frac{1}{\Delta S}\int_{C_1+C_3}\bfF\cdot\hat{\mathbf{t}}\ds
+  \approx -\frac{\Delta r}{r\,\Delta r\,\Delta\theta}
+    \left[F_r\!\left(r,\,\theta+\frac{\Delta\theta}{2},\,z\right)
+    - F_r\!\left(r,\,\theta-\frac{\Delta\theta}{2},\,z\right)\right].
+\]
+
+In the limit as $\Delta r$ and $\Delta\theta$ tend to zero, this
+becomes
+\[
+  -\frac{1}{r}\pd{F_r}{\theta}
+\]
+evaluated at the point $(r,\theta,z)$.
+
+Along segment~2 we find
+\[
+  \int_{C_2}\bfF\cdot\hat{\mathbf{t}}\ds
+  \approx F_\theta\!\left(r+\frac{\Delta r}{2},\,\theta,\,z\right)
+    \left(r+\frac{\Delta r}{2}\right)\Delta\theta,
+\]
+and along segment~4
+\[
+  \int_{C_4}\bfF\cdot\hat{\mathbf{t}}\ds
+  \approx -F_\theta\!\left(r-\frac{\Delta r}{2},\,\theta,\,z\right)
+    \left(r-\frac{\Delta r}{2}\right)\Delta\theta.
+\]
+
+Thus,
+\begin{align*}
+  \frac{1}{\Delta S}\int_{C_2+C_4}\bfF\cdot\hat{\mathbf{t}}\ds
+  &\approx \frac{\Delta\theta}{r\,\Delta r\,\Delta\theta}
+    \left[\left(r+\frac{\Delta r}{2}\right)
+    F_\theta\!\left(r+\frac{\Delta r}{2},\,\theta,\,z\right)\right.\\
+  &\qquad\qquad \left.-\left(r-\frac{\Delta r}{2}\right)
+    F_\theta\!\left(r-\frac{\Delta r}{2},\,\theta,\,z\right)\right].
+\end{align*}
+
+In the limit this becomes $(1/r)(\partial/\partial r)(rF_\theta)$
+evaluated at $(r,\theta,z)$.  Hence,
+\[
+  (\nabla\times\bfF)_z
+  \equiv \lim_{\Delta S\to 0}\frac{1}{\Delta S}
+  \oint \bfF\cdot\hat{\mathbf{t}}\ds
+  = \frac{1}{r}\pd{}{r}(rF_\theta) - \frac{1}{r}\pd{F_r}{\theta}.
+\]
+
+Paths for finding the $r$- and $\theta$-components of
+$\nabla\times\bfF$ are shown in Figures~III-15(c) and~(d),
+respectively.  You are asked to obtain these two components yourself in
+Problem~III-8.  For completeness we give all three components of
+$\nabla\times\bfF$ in cylindrical coordinates:
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.6\textwidth]{figures/ch03/fig_III_15c.png}
+\caption{}
+\label{fig:III-15c}
+\end{figure}
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.6\textwidth]{figures/ch03/fig_III_15d.png}
+\caption{}
+\label{fig:III-15d}
+\end{figure}
+
+\begin{align}
+  (\nabla\times\bfF)_r     &= \frac{1}{r}\pd{F_z}{\theta}
+                              - \pd{F_\theta}{z}, \notag\\[4pt]
+  (\nabla\times\bfF)_\theta &= \pd{F_r}{z} - \pd{F_z}{r},
+    \label{eq:cyl-curl}\\[4pt]
+  (\nabla\times\bfF)_z     &= \frac{1}{r}\pd{}{r}(rF_\theta)
+                              - \frac{1}{r}\pd{F_r}{\theta}. \notag
+\end{align}
+
+As an example of calculating the curl in cylindrical coordinates
+consider the function
+\[
+  \bfF(r,\theta,z)
+  = \hat{\mathbf{e}}_r\,r^2 z
+  + \hat{\mathbf{e}}_\theta\,rz^2\cos\theta
+  + \hat{\mathbf{e}}_z\,r^3.
+\]
+Then
+\begin{align*}
+  (\nabla\times\bfF)_r
+    &= \frac{1}{r}\pd{}{\theta}(r^3) - \pd{}{z}(rz^2\cos\theta)
+     = -2rz\cos\theta, \\
+  (\nabla\times\bfF)_\theta
+    &= \pd{}{z}(r^2 z) - \pd{}{r}(r^3)
+     = -2r^2, \\
+  (\nabla\times\bfF)_z
+    &= \frac{1}{r}\pd{}{r}(rz^2\cos\theta\cdot r)
+     - \frac{1}{r}\pd{}{\theta}(r^2 z)
+     = 2z^2\cos\theta.
+\end{align*}
+Hence
+\[
+  \nabla\times\bfF
+  = -2\hat{\mathbf{e}}_r\,rz\cos\theta
+    -2\hat{\mathbf{e}}_\theta\,r^2
+    +2\hat{\mathbf{e}}_z\,z^2\cos\theta.
+\]
+
+The three components of curl~$\bfF$ in \emph{spherical} coordinates
+(see Problem~III-9) are as follows:
+\begin{align}
+  (\nabla\times\bfF)_r
+    &= \frac{1}{r\sin\phi}\pd{}{\phi}(\sin\phi\,F_\theta)
+     - \frac{1}{r\sin\phi}\pd{F_\phi}{\theta}, \notag\\[4pt]
+  (\nabla\times\bfF)_\phi
+    &= \frac{1}{r\sin\phi}\pd{F_r}{\theta}
+     - \frac{1}{r}\pd{}{r}(rF_\theta), \label{eq:sph-curl}\\[4pt]
+  (\nabla\times\bfF)_\theta
+    &= \frac{1}{r}\pd{}{r}(rF_\phi)
+     - \frac{1}{r}\pd{F_r}{\phi}. \notag
+\end{align}
+
+As an example of calculating the curl in spherical coordinates,
+consider the function
+\[
+  \bfF(r,\theta,\phi)
+  = \frac{\hat{\mathbf{e}}_r}{r\,\theta}
+  + \frac{\hat{\mathbf{e}}_\phi}{r}
+  + \frac{\hat{\mathbf{e}}_\theta}{r\cos\phi}.
+\]
+Then
+\begin{align*}
+  (\nabla\times\bfF)_r
+    &= \frac{1}{r\sin\phi}\pd{}{\phi}
+       \!\left(\sin\phi\,\frac{1}{r\cos\phi}\right)
+     - \frac{1}{r\sin\phi}\cdot 0
+     = \frac{\sec^2\phi}{r^2\sin\phi}, \\[4pt]
+  (\nabla\times\bfF)_\phi
+    &= \frac{1}{r\sin\phi}\pd{}{\theta}\!\left(\frac{1}{r\,\theta}\right)
+     - \frac{1}{r}\pd{}{r}(\cos\phi)
+     = -\frac{1}{r^2\theta^2\sin\phi}, \\[4pt]
+  (\nabla\times\bfF)_\theta
+    &= \frac{1}{r}\pd{}{r}(1)
+     - \frac{1}{r}\pd{}{\phi}\!\left(\frac{1}{r\,\theta}\right)
+     = 0.
+\end{align*}
+Hence
+\[
+  \nabla\times\bfF
+  = \frac{\sec^2\phi}{r^2\sin\phi}\,\hat{\mathbf{e}}_r
+  - \frac{1}{r^2\theta^2\sin\phi}\,\hat{\mathbf{e}}_\phi.
+\]
+
+
+%% ================================================================
+\section{The Meaning of the Curl}
+%% ================================================================
+
+The preceding discussion may leave you with the feeling that knowing
+how to define and calculate the curl of some vector function is a far
+cry from knowing what it is.  The fact that the curl has something to do
+with a line integral \emph{around} a closed path (indeed, the word
+``curl'' itself) may suggest to you that it somehow has to do with
+things rotating, swirling, or curling around.  By means of a few
+examples taken from fluid motion, we'll try to make these vague
+impressions a little clearer.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.5\textwidth]{figures/ch03/fig_III_16.png}
+\caption{}
+\label{fig:III-16}
+\end{figure}
+
+Suppose water is flowing in circular paths, something like the water
+draining from a bathtub.  A small volume of the water at a point
+$(x,y)$ at time~$t$ has coordinates $x=r\cos\omega t$,
+$y=r\sin\omega t$, where $\omega$~is the constant angular velocity of
+the water (Figure~III-16).\footnote{This is not a realistic description
+of water draining from a tub since rotating water shears tangentially
+and its angular velocity will therefore vary with~$r$.  The crude
+description we use here is adequate for our purposes and has the virtue
+of being simple.}  Thus, its velocity at $(x,y)$ is
+\begin{align*}
+  \bfv &= \bfi(dx/dt) + \bfj(dy/dt)
+        = r\omega[-\bfi\sin\omega t + \bfj\cos\omega t] \\
+       &= \omega(-\bfi\,y + \bfj\,x).
+\end{align*}
+
+This expression gives what is called the velocity field of the water;
+it tells us the velocity of the water at any point $(x,y)$.  Your
+intuition probably tells you that, because the motion is circular, this
+velocity must have a nonzero curl.  In fact, as you can show very
+easily,
+\[
+  \nabla\times\bfv = 2\bfk\,\omega.
+\]
+
+This result should seem quite reasonable because it says that curl of
+the velocity is proportional to the angular velocity of the swirling
+water.  We see that $\nabla\times\bfv$ is a vector perpendicular to the
+plane of motion and in the positive $z$-direction [Figure~III-17(a)].
+If the water were rotating around in the other direction, the curl
+of~$\bfv$ would then be in the negative $z$-direction
+[Figure~III-17(b)].  Note that this is consistent with the right-hand
+rule (see page~79--80).  If
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.4\textwidth]{figures/ch03/fig_III_17a.png}
+\caption{}
+\label{fig:III-17a}
+\end{figure}
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.4\textwidth]{figures/ch03/fig_III_17b.png}
+\caption{}
+\label{fig:III-17b}
+\end{figure}
+
+\noindent we were to put a small paddle wheel in the water, it would
+commence spinning because the impinging water would exert a net torque
+on the paddles (Figure~III-18).  Furthermore, the paddle wheel would
+rotate with its axis pointing in the direction of the curl.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.5\textwidth]{figures/ch03/fig_III_18.png}
+\caption{}
+\label{fig:III-18}
+\end{figure}
+
+Now consider a different velocity field, namely,
+\[
+  \bfv = \bfj\,v_0\,e^{-y^2/\lambda^2},
+\]
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.5\textwidth]{figures/ch03/fig_III_19.png}
+\caption{}
+\label{fig:III-19}
+\end{figure}
+
+\noindent where $v_0$ and $\lambda$ are constants.  Water with such a
+velocity field would have a flow pattern as indicated in Figure~III-19.
+The velocity at all points is in the positive $y$-direction, and its
+magnitude (indicated by the length of the arrows) varies with~$y$.
+Since you see only straight line flow here without any rotational
+motion, you would probably guess that $\nabla\times\bfv=0$ in this
+case, and you would be right, as a simple calculation shows.  There
+would be no net torque on a paddle wheel placed anywhere in this flow
+pattern, and as a consequence, it would not
+spin.\footnote{If $\nabla\times\bfv=0$, the flow is said to be
+irrotational.  Compare with footnote~4.}
+
+Our last example is trickier than the two given previously and shows
+that intuition can lead you astray if you're not careful.  Let a
+velocity field be given by
+\[
+  \bfv = \bfj\,v_0\,e^{-x^2/\lambda^2}.
+\]
+
+As in the previous example, the velocity in this case is everywhere in
+the $y$-direction, but now it varies with~$x$, not~$y$ (Figure~III-20).
+Here, as in the preceding example, you see no evidence of rotational
+motion and you might guess that $\nabla\times\bfv=0$ once again.  But
+as you should show for yourself,
+\[
+  \nabla\times\bfv
+  = -\bfk\,v_0\,\frac{2x}{\lambda^2}\,e^{-x^2/\lambda^2}.
+\]
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.5\textwidth]{figures/ch03/fig_III_20.png}
+\caption{}
+\label{fig:III-20}
+\end{figure}
+
+A small paddle wheel placed in this flow pattern would spin, even
+though the water is everywhere moving in the same direction.  The
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.5\textwidth]{figures/ch03/fig_III_21.png}
+\caption{}
+\label{fig:III-21}
+\end{figure}
+
+\noindent reason this happens is that the velocity of the water varies
+with~$x$, so that it strikes one of the paddles ($P$ in
+Figure~III-21) with greater velocity than the other~($P'$).  Thus,
+there will be a net torque.  In more mathematical terms, the line
+integral of $\bfv\cdot\hat{\mathbf{t}}$ around a small rectangle
+(Figure~III-22) will be different from zero, for while
+\[
+  \int_{\text{bottom}}\bfv\cdot\hat{\mathbf{t}}\ds
+  = \int_{\text{top}}\bfv\cdot\hat{\mathbf{t}}\ds = 0,
+\]
+the contributions from the other two sides are
+\[
+  \int_{\text{right}}\bfv\cdot\hat{\mathbf{t}}\ds
+  \approx v_y(x+\Delta x)\,\Delta y
+\]
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.5\textwidth]{figures/ch03/fig_III_22.png}
+\caption{}
+\label{fig:III-22}
+\end{figure}
+
+\noindent and
+\[
+  \int_{\text{left}}\bfv\cdot\hat{\mathbf{t}}\ds
+  \approx -v_y(x)\,\Delta y.
+\]
+
+These do not cancel because $v_y(x)\ne v_y(x+\Delta x)$.
+Incidentally, you should try to explain to your own satisfaction why in
+this example $\nabla\times\bfv$ is in the negative (positive)
+$z$-direction when $x$~is positive (negative) and why
+$\nabla\times\bfv=0$ at $x=0$.
+
+
+%% ================================================================
+\section{Differential Form of the Circulation Law}
+%% ================================================================
+
+The curl is defined to be the limit of circulation to area.  Thus,
+\[
+  \nhat\cdot\nabla\times\bfE
+  = \lim_{\Delta S\to 0}\frac{1}{\Delta S}
+    \oint_C \bfE\cdot\hat{\mathbf{t}}\ds,
+\]
+where $\nhat$~is a unit vector normal to the surface enclosed by~$C$ at
+the point about which the curve shrinks to zero.  But if $\bfE$~is an
+electrostatic field, then
+\[
+  \oint_C \bfE\cdot\hat{\mathbf{t}}\ds = 0
+\]
+for any path~$C$.  It follows that
+\[
+  \nhat\cdot\nabla\times\bfE = 0.
+\]
+
+Since the curve~$C$ is arbitrary, we can arrange matters so that
+$\nhat$~is a unit vector pointing in any direction we choose.  Thus,
+\begin{alignat*}{3}
+  &\text{taking } \nhat=\bfi, &\quad &\text{we have }
+    (\nabla\times\bfE)_x = 0; \\
+  &\text{taking } \nhat=\bfj, &\quad &\text{we have }
+    (\nabla\times\bfE)_y = 0; \\
+  &\text{taking } \nhat=\bfk, &\quad &\text{we have }
+    (\nabla\times\bfE)_z = 0.
+\end{alignat*}
+
+Thus, all three Cartesian components of $\nabla\times\bfE$ vanish and
+we can conclude that for an electrostatic field,
+\begin{equation}
+  \nabla\times\bfE = 0.
+\end{equation}
+
+This is the long-sought-after differential form of the circulation law.
+We are now in a position to give an alternative and much more tractable
+answer to the question ``Can a given vector function $\bfF(x,y,z)$ be
+an electrostatic field?''  The answer is
+\begin{align*}
+  &\text{If } \nabla\times\bfF = 0,
+    \text{ then $\bfF$ can be an electrostatic field, and} \\
+  &\text{if } \nabla\times\bfF \ne 0,
+    \text{ then $\bfF$ cannot be an electrostatic field.}
+\end{align*}
+
+This is clearly a much more convenient criterion to apply than our
+earlier one (page~77), which required us to determine the line integral
+of~$\bfF$ over \emph{all} closed paths!  To see how it works, let us do
+several examples.
+
+\emph{Example~1.}  Could $\bfF = K(\bfi\,y + \bfj\,x)$ be an
+electrostatic field?  ($K$~is a constant.)  Here we have
+\begin{align*}
+  \frac{1}{K}\,\nabla\times\bfF
+  &= \bfi\!\left(\pd{}{y}\,0-\pd{x}{z}\right)
+   + \bfj\!\left(\pd{y}{z}-\pd{}{x}\,0\right)
+   + \bfk\!\left(\pd{x}{x}-\pd{y}{y}\right) \\
+  &= 0 \;\Rightarrow\; \nabla\times\bfF = 0.
+\end{align*}
+\emph{Answer:} Yes.
+
+\emph{Example~2.}  Could $\bfF = K(\bfi\,y - \bfj\,x)$ be an
+electrostatic field?  In this case
+\[
+  \frac{1}{K}\,\nabla\times\bfF
+  = \bfk\!\left(\pd{(-x)}{x}-\pd{y}{y}\right) = -2\bfk
+  \;\Rightarrow\; \nabla\times\bfF = -2\bfk\,K.
+\]
+\emph{Answer:} No.
+
+From these examples we can see how easy this criterion is to apply.
+
+
+%% ================================================================
+\section{Stokes' Theorem}
+%% ================================================================
+
+For the remainder of this chapter we digress from our presentation to
+discuss another famous theorem, one strongly reminiscent of the
+divergence theorem and yet, as we'll see, quite different from it.
+This theorem, named for the mathematician Stokes, relates a line
+integral around a closed path to a surface integral over what is called
+a \emph{capping surface} of the path, so the first item on our agenda
+is to define this term.  Suppose we have a closed curve~$C$, as shown
+in Figure~III-23(a), and imagine that it is made of
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.4\textwidth]{figures/ch03/fig_III_23a.png}
+\caption{}
+\label{fig:III-23a}
+\end{figure}
+
+\noindent wire.  Now let us suppose we attach an elastic membrane to
+the wire as indicated in Figure~III-23(b).  This membrane is a capping
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.4\textwidth]{figures/ch03/fig_III_23b.png}
+\caption{}
+\label{fig:III-23b}
+\end{figure}
+
+\noindent surface of the curve~$C$.  Any other surface which can be
+formed by stretching the membrane is also a capping surface; an example
+is shown in Figure~III-23(c).  Figure~III-24 shows four different
+capping surfaces of a plane circular path: (a) the region of the
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.4\textwidth]{figures/ch03/fig_III_23c.png}
+\caption{}
+\label{fig:III-23c}
+\end{figure}
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.7\textwidth]{figures/ch03/fig_III_24.png}
+\caption{}
+\label{fig:III-24}
+\end{figure}
+
+\noindent plane enclosed by the circle, (b)~a hemisphere with the
+circle as its rim, (c)~the curved surface of a dunce cap (a right
+circular cone), and (d)~the upper and lateral surfaces of a tuna fish
+can.
+
+With these preliminary remarks in mind, you won't be surprised to see
+us begin this discussion of Stokes' theorem by considering some closed
+curve~$C$ and a capping surface~$S$ [Figure~III-25(a)].  As we have
+done before, we approximate this capping
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.5\textwidth]{figures/ch03/fig_III_25a.png}
+\caption{}
+\label{fig:III-25a}
+\end{figure}
+
+\noindent surface by a polyhedron of $N$~faces, each of which is
+tangent to $S$ at some point [Figure~III-25(b)].  Note that this will
+automatically create a polygon [marked $P$ in Figure~III-25(b)] that is
+an approx-
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.5\textwidth]{figures/ch03/fig_III_25b.png}
+\caption{}
+\label{fig:III-25b}
+\end{figure}
+
+\noindent imation to the curve~$C$.  Let $\bfF(x,y,z)$ be a
+well-behaved vector function defined throughout the region of space
+occupied by the curve~$C$ and its capping surface~$S$.  Let us form the
+circulation of~$\bfF$ around $C_l$, the boundary of the $l$th face of
+the polyhedron:
+\[
+  \oint_{C_l}\bfF\cdot\hat{\mathbf{t}}\ds.
+\]
+
+If we do this for each of the faces of the polyhedron and then add
+together all the circulations, we assert that this sum will be equal to
+the circulation of~$\bfF$ around the polygon~$P$:
+\begin{equation}
+  \sum_{l=1}^{N}\oint_{C_l}\bfF\cdot\hat{\mathbf{t}}\ds
+  = \oint_P\bfF\cdot\hat{\mathbf{t}}\ds.
+  \label{eq:III-9}
+\end{equation}
+
+This is easy to prove.  Consider two adjacent faces as shown in
+Figure~III-26.  The circulation about the face on the left
+[Figure~III-26(a)] includes a term from the segment~$AB$, which is
+$\int_A^B\bfF\cdot\hat{\mathbf{t}}\ds$.  But the segment~$AB$ is
+common to both faces, and its contribution to the circulation around
+the \emph{right}-hand face [Figure~III-26(b)] is
+\[
+  \int_B^A \bfF\cdot\hat{\mathbf{t}}\ds
+  = -\int_A^B \bfF\cdot\hat{\mathbf{t}}\ds.
+\]
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.45\textwidth]{figures/ch03/fig_III_26a.png}
+\caption{}
+\label{fig:III-26a}
+\end{figure}
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.45\textwidth]{figures/ch03/fig_III_26b.png}
+\caption{}
+\label{fig:III-26b}
+\end{figure}
+
+We see that we traverse the common segment~$AB$ one way as part of
+the boundary of the left-hand face, and the other way as part of the
+boundary of the right-hand face.  Thus, when we add the circulations
+of~$\bfF$ over the two faces, the segment~$AB$ contributes
+\[
+  \int_A^B\bfF\cdot\hat{\mathbf{t}}\ds
+  + \int_B^A\bfF\cdot\hat{\mathbf{t}}\ds = 0.
+\]
+
+It is clear that any segment common to two adjacent faces contributes
+nothing to the sum in Equation~(\ref{eq:III-9}) because such segments
+always give rise to pairs of canceling terms.  But \emph{all} segments
+are common to pairs of adjacent faces except those that, taken
+together, constitute the polygon~$P$.  This establishes
+Equation~(\ref{eq:III-9}).
+
+Now we go through an analysis very similar to that which yielded the
+divergence theorem.  We write
+\begin{equation}
+  \oint_P\bfF\cdot\hat{\mathbf{t}}\ds
+  = \sum_{l=1}^{N}\oint_{C_l}\bfF\cdot\hat{\mathbf{t}}\ds
+  = \sum_{l=1}^{N}\left[\frac{1}{\Delta S_l}
+    \oint_{C_l}\bfF\cdot\hat{\mathbf{t}}\ds\right]\Delta S_l,
+  \label{eq:III-10}
+\end{equation}
+where $\Delta S_l$ is the area of the $l$th face.  The quantity in the
+square brackets is, approximately, equal to
+$\nhat_l\cdot(\nabla\times\bfF)_l$ where $\nhat_l$~is the unit
+positive normal on the $l$th face and $(\nabla\times\bfF)_l$~is the
+curl of the vector function~$\bfF$ evaluated at the point on the $l$th
+face at which it is tangent to~$S$.  We say ``approximately'' because it
+is actually the \emph{limit} as $\Delta S_l$ tends to zero of the
+bracketed quantity in Equation~(\ref{eq:III-10}), which is to be
+identified as $\nhat_l\cdot(\nabla\times\bfF)_l$.  Ignoring this lack
+of rigor, we write
+\begin{align}
+  \lim_{\substack{N\to\infty\\ \text{each }\Delta S_l\to 0}}
+  \sum_{l=1}^{N}\left[\frac{1}{\Delta S_l}
+    \oint_{C_l}\bfF\cdot\hat{\mathbf{t}}\ds\right]\Delta S_l
+  &= \lim_{\substack{N\to\infty\\ \text{each }\Delta S_l\to 0}}
+     \sum_{l=1}^{N}\nhat_l\cdot(\nabla\times\bfF)_l\,\Delta S_l
+     \notag\\
+  &= \iint_S \nhat\cdot\nabla\times\bfF\dS.
+  \label{eq:III-11}
+\end{align}
+
+Since the curve~$C$ is the limiting shape of the polygon~$P$, we also
+have
+\begin{equation}
+  \lim_{\substack{N\to\infty\\ \text{each }\Delta S_l\to 0}}
+  \oint_P\bfF\cdot\hat{\mathbf{t}}\ds
+  = \oint_C\bfF\cdot\hat{\mathbf{t}}\ds.
+  \label{eq:III-12}
+\end{equation}
+
+Combining Equations~(\ref{eq:III-10}), (\ref{eq:III-11}),
+and~(\ref{eq:III-12}), we arrive, finally, at Stokes' theorem:
+\begin{equation}
+  \oint_C\bfF\cdot\hat{\mathbf{t}}\ds
+  = \iint_S \nhat\cdot\nabla\times\bfF\dS,
+  \label{eq:III-13}
+\end{equation}
+where $S$~is \emph{any} surface capping the curve~$C$.  Thus, in words,
+Stokes' theorem says that the line integral of the tangential component
+of a vector function over some closed path equals the surface integral
+of the normal component of the curl of that function integrated over
+any capping surface of the path.  Stokes' theorem holds for any vector
+function~$\bfF$ that is continuous and differentiable and has continuous
+derivatives on $C$ and~$S$.
+
+Let's work an example.  Take
+$\bfF(x,y,z) = \bfi\,z + \bfj\,x - \bfk\,x$, with $C$~the circle of
+radius~1 centered at the origin and lying in the $xy$-plane, and $S$
+the part of the $xy$-plane enclosed by the circle [see
+Figure~III-27(a)].  Now
+\[
+  \bfF\cdot\hat{\mathbf{t}}\ds = z\dx + x\dy - x\dz.
+\]
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.5\textwidth]{figures/ch03/fig_III_27a.png}
+\caption{}
+\label{fig:III-27a}
+\end{figure}
+
+Thus, $\oint_C\bfF\cdot\hat{\mathbf{t}}\ds = \oint x\dy$.  Heretofore
+we have always parametrized curves with the arc length~$s$.  In this
+situation, however, the path~$C$ is most easily parametrized in terms
+of the angle~$\theta$ shown in Figure~III-27(b).  Thus, we write
+\begin{equation}
+  \oint x\dy = \oint x\,\frac{dy}{d\theta}\,d\theta
+  = \int_0^{2\pi}\cos^2\theta\,d\theta = \pi,
+  \label{eq:III-14}
+\end{equation}
+where we use $x=\cos\theta$ and $y=\sin\theta$.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.5\textwidth]{figures/ch03/fig_III_27b.png}
+\caption{}
+\label{fig:III-27b}
+\end{figure}
+
+Next we calculate
+\[
+  \nabla\times\bfF
+  = \begin{vmatrix}
+      \bfi & \bfj & \bfk \\
+      \partial/\partial x & \partial/\partial y & \partial/\partial z \\
+      z & x & -x
+    \end{vmatrix}
+  = 2\bfj + \bfk.
+\]
+
+The capping surface here is a portion of the $xy$-plane, so that the
+unit normal in the positive direction is $\nhat=\bfk$.  Thus,
+\[
+  \nhat\cdot\nabla\times\bfF = \bfk\cdot(2\bfj+\bfk) = 1
+\]
+and
+\begin{equation}
+  \iint_S \nhat\cdot\nabla\times\bfF\dS
+  = \iint_S dS = \pi,
+  \label{eq:III-15}
+\end{equation}
+where this last equality follows from the fact that the surface integral
+in this case is merely the area of the unit circle.  Since this result
+[Equation~(\ref{eq:III-15})] is identical with the one obtained above
+[Equation~(\ref{eq:III-14})], we have illustrated Stokes' theorem
+[Equation~(\ref{eq:III-13})].
+
+Let's redo this calculation, this time choosing the hemisphere shown
+in Figure~III-27(c) as our capping surface~$S$.  Using Equation~(II-13)
+with $\bfF$ replaced by $\nabla\times\bfF$, we get
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.5\textwidth]{figures/ch03/fig_III_27c.png}
+\caption{}
+\label{fig:III-27c}
+\end{figure}
+
+\begin{align*}
+  \iint_S \nhat\cdot\nabla\times\bfF\dS
+  &= \iint_R \left[-2\!\left(-\frac{y}{z}\right)+1\right]dx\dy \\
+  &= 2\iint_R \frac{y}{z}\dx\dy + \iint_R dx\dy
+\end{align*}
+where $R$~is the unit circle in the $xy$-plane shown in
+Figure~III-27(a).  The second integral in the right-most equality above
+is just the area of that circle, and so its value is~$\pi$.  The first
+integral can be handled by introducing polar coordinates.  We find
+\[
+  2\iint_R \frac{y}{z}\dx\dy
+  = 2\iint_R \frac{y\dx\dy}{\sqrt{1-x^2-y^2}}
+  = 2\int_0^{2\pi}\int_0^1
+    \frac{r\sin\theta\;r\,dr\,d\theta}{\sqrt{1-r^2}}
+  = 2\int_0^{2\pi}\sin\theta\,d\theta
+    \int_0^1\frac{r^2\,dr}{\sqrt{1-r^2}}.
+\]
+
+It's easy to show that the integral over~$\theta$ is zero.  Hence
+$\iint_S\nhat\cdot\nabla\times\bfF\dS=\pi$, consistent with our
+earlier result.
+
+
+%% ================================================================
+\section{An Application of Stokes' Theorem}
+%% ================================================================
+
+An important application of Stokes' theorem is provided by Amp\`ere's
+circuital law.  Consider any closed loop~$C$ enclosing a current~$I$ as
+in Figure~III-28.  Note that the direction of~$C$ and that of~$I$
+correspond to the same right-hand rule that relates the directions
+of~$C$ and the positive normal to a surface capping~$C$.  Amp\`ere's
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.45\textwidth]{figures/ch03/fig_III_28.png}
+\caption{}
+\label{fig:III-28}
+\end{figure}
+
+\noindent circuital law says that the line integral of the
+\emph{magnetic} field~$\bfB$ is related to the current thus:
+\[
+  \oint_C\bfB\cdot\hat{\mathbf{t}}\ds = \mu_0 I
+\]
+where the constant $\mu_0$, called the permeability of free space, has
+the value $1.257\times 10^{-6}$~newtons per ampere$^2$.  This law, like
+Gauss' law and the circulation law, says something about the integral
+of a field (the magnetic field in this case), and just as in the two
+previous cases, it is convenient to re-express it so that it will tell
+us something about the field at a point.  To this end, we first
+introduce the current density~$\bfJ$ (see page~52).  Thus, if current
+is flowing through an area~$\Delta S$ with normal~$\nhat$
+(Figure~III-29), the current density~$\bfJ$ is such that
+\[
+  \Delta I = \bfJ\cdot\nhat\,\Delta S,
+\]
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.45\textwidth]{figures/ch03/fig_III_29.png}
+\caption{}
+\label{fig:III-29}
+\end{figure}
+
+\noindent where $\Delta I$ is the total current.  That is, current
+density is a vector function whose magnitude is the current per unit
+area and whose direction is that of the current flow.  If
+$\bfJ(x,y,z)$ is the current density, then the total current flowing
+through a surface~$S$ is
+\[
+  \iint_S \bfJ\cdot\nhat\dS.
+\]
+
+Thus, Amp\`ere's law can be written
+\[
+  \oint_C\bfB\cdot\hat{\mathbf{t}}\ds
+  = \mu_0\iint_S \bfJ\cdot\nhat\dS.
+\]
+
+$S$~can be any surface capping the curve~$C$.  If, as is usually the
+case, the current flows through a wire the cross section of which
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.5\textwidth]{figures/ch03/fig_III_30.png}
+\caption{}
+\label{fig:III-30}
+\end{figure}
+
+\noindent does not include the entire capping surface, it does not
+matter; we can integrate over more than the wire cross section if we
+remember that $\bfJ\ne 0$ for that part of the surface~$S$ cut by the
+wire and $\bfJ=0$ for the rest (Figure~III-30).  Thus,
+\[
+  \iint_{\substack{\text{cross section}\\\text{of wire}}}
+  \bfJ\cdot\nhat\dS
+  = \iint_{\substack{\text{entire capping}\\\text{surface }S}}
+  \bfJ\cdot\nhat\dS.
+\]
+
+Now using Stokes' theorem [Equation~(\ref{eq:III-13})], we have
+\[
+  \oint_C\bfB\cdot\hat{\mathbf{t}}\ds
+  = \iint_S\nhat\cdot\nabla\times\bfB\dS
+  = \mu_0\iint_S\nhat\cdot\bfJ\dS.
+\]
+
+Since $C$ and $S$ are arbitrary, we conclude that
+\[
+  \nabla\times\bfB = \mu_0\bfJ.
+\]
+
+This is the differential form of Amp\`ere's law.  It is also a special
+case of one of Maxwell's equations, valid when the fields do not vary
+with time.
+
+
+%% ================================================================
+\section{Stokes' Theorem and Simply Connected Regions}
+%% ================================================================
+
+For many purposes, including some important applications, we must be
+able to assert that Stokes' theorem holds throughout some region~$D$ in
+three-dimensional space.  By this we mean that we want the theorem to
+hold for any closed curve~$C$ lying entirely in~$D$ and any capping
+surface of~$C$ also lying entirely in~$D$.  This, of course, means the
+function~$\bfF$ must be continuous and differentiable and have
+continuous first derivatives in~$D$.  But in addition we must impose a
+restriction on the region~$D$ itself.  To understand how this comes
+about, suppose first that $D$~is the interior of a sphere.  If $\bfF$
+is smooth\footnote{Hereafter when we say that a function is ``smooth,''
+we'll mean that it is continuous, differentiable, and has continuous
+first derivatives.} everywhere in~$D$, then Stokes' theorem holds for
+any closed curve~$C$ lying entirely in~$D$, and any capping surface
+of~$C$ also lying entirely in~$D$.  In other words, Stokes' theorem
+holds everywhere in~$D$.  A little thought should convince you that the
+same line of reasoning applies to the region between two concentric
+spheres, provided $\bfF$~is smooth in that region.  But for certain
+kinds of regions, troubles can arise.  As an example, suppose $D$~is
+the interior of a torus (roughly like a bagel or an inflated inner
+tube; see Figure~III-31).  The problem in this case is that it's
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.5\textwidth]{figures/ch03/fig_III_31.png}
+\caption{}
+\label{fig:III-31}
+\end{figure}
+
+\noindent possible to construct a closed curve in~$D$ like the one
+shown in the figure with the property that none of its capping surfaces
+lies entirely in~$D$.  Although we insist that $\bfF$ be smooth in~$D$,
+no conditions are imposed upon it elsewhere, so that outside the region
+it may not fulfill the requirements of smoothness that ensure the
+validity of Stokes' theorem.  The relation between the line integral
+over~$C$ and the surface integral over~$S$ asserted by the theorem can,
+and in many cases does, break down if $\bfF$~is not smooth on~$S$.
+
+Mathematicians refer to regions such as the interior of a sphere or
+the space between two concentric spheres as \emph{simply connected},
+whereas the interior of a torus is not simply connected.  By definition,
+a region~$D$ is simply connected if any closed curve lying entirely
+in~$D$ can shrink down to a point without leaving~$D$.  Using this
+definition, you should be able to verify that the interior of a sphere
+and the region between two concentric spheres are both simply connected,
+but that the interior of a torus is not.  With the concept of simple
+connectedness available to us, we can easily specify the conditions
+under which Stokes' theorem holds throughout a region: The vector
+function~$\bfF$ must be smooth everywhere in a \emph{simply connected}
+region~$D$.  Then Stokes' theorem [Equation~(\ref{eq:III-13})] is valid
+for any closed curve~$C$ and any capping surface~$S$ of~$C$, both of
+which lie entirely in~$D$.
+
+Most of the time we'll assume that the functions we work with are
+smooth and that the regions of interest are simply connected.  There are
+situations, however, like the one discussed in the next section, where
+simple connectedness plays an essential role, and we'll point them out
+as we come to them.
+
+
+%% ================================================================
+\section{Path Independence and the Curl}
+%% ================================================================
+
+In our discussion of the differential form of the circulation law, we
+showed that because the line integral of an electrostatic field~$\bfE$
+is zero over any closed path, the curl of~$\bfE$ is zero.  The same is
+true of any vector function~$\bfF$; that is, if
+\[
+  \oint_C\bfF\cdot\hat{\mathbf{t}}\ds = 0
+\]
+for all closed paths~$C$, then
+\[
+  \nabla\times\bfF = 0.
+\]
+
+The proof of this fact is precisely the same as the one given on
+pages~90--91 with $\bfE$ replaced everywhere by~$\bfF$.
+
+Is the converse of this statement also true?  That is, if
+$\nabla\times\bfF=0$, does this imply that the circulation of~$\bfF$ is
+zero over all closed paths?  At first glance it might appear that the
+answer to this question is yes.  All we have to do is use Stokes'
+theorem and observe that since by assumption
+$\nabla\times\bfF=0$,
+\[
+  \oint_C\bfF\cdot\hat{\mathbf{t}}\ds
+  = \iint_S \nhat\cdot\nabla\times\bfF\dS = 0.
+\]
+
+However, there is a flaw in this line of reasoning.  Recall that the
+validity of Stokes' theorem requires that $\bfF$ be smooth \emph{in a
+simply connected region}.  If the region is not simply connected,
+Stokes' theorem may not hold, at least for some closed paths lying in
+the region, and the fact that $\nabla\times\bfF=0$ does not guarantee
+that the circulation of~$\bfF$ is zero over all closed paths.  The
+closest we can come to a converse is to say that if
+$\nabla\times\bfF=0$ \emph{everywhere in a simply connected region},
+then the circulation of~$\bfF$ is zero for all closed paths in that
+region.  The two statements ``circulation equals zero'' and ``curl
+equals zero'' are equivalent only in a simply connected region.
+
+There is a slightly different, but often useful, way to state this
+connection between circulation and curl; namely, if
+$\int_C\bfF\cdot\hat{\mathbf{t}}\ds$ is independent of path, then
+$\nabla\times\bfF=0$, and if $\nabla\times\bfF=0$ in a simply
+connected region, then $\int_C\bfF\cdot\hat{\mathbf{t}}\ds$ is
+independent of path.  You should have no difficulty in establishing this
+for yourself.
+
+
+%% ================================================================
+\begin{problems}
+%% ================================================================
+
+\prob
+Use an argument like the one given in the text for the Coulomb force
+(pages~71--73) to show that $\int_C\bfF\cdot\hat{\mathbf{t}}\ds$ is
+independent of path for \emph{any} central force~$\bfF$.
+
+\prob
+In the text we obtained the result
+\[
+  (\nabla\times\bfF)_z = \pd{F_y}{x} - \pd{F_x}{y}
+\]
+by integrating over a small rectangular path.  As an example of the fact
+that this result is independent of the path, rederive it, using the
+triangular path shown in the figure.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.4\textwidth]{figures/ch03/fig_prob_III_2.png}
+\caption{}
+\label{fig:prob-III-2}
+\end{figure}
+
+\prob
+Calculate the curl of each of the following functions using
+Equation~(\ref{eq:III-7b}):
+\begin{enumerate}[label=(\alph*)]
+\item $\bfi\,z^2 + \bfj\,x^2 - \bfk\,y^2$.
+\item $3\bfi\,xz - \bfk\,x^2$.
+\item $\bfi\,e^{-y} + \bfj\,e^{-z} + \bfk\,e^{-x}$.
+\item $\bfi\,yz + \bfj\,xz + \bfk\,xy$.
+\item $-\bfi\,yz + \bfj\,xz$.
+\item $\bfi\,x + \bfj\,y + \bfk(x^2+y^2)$.
+\item $\bfi\,xy + \bfj\,y^2 + \bfk\,yz$.
+\item $(\bfi\,x+\bfj\,y+\bfk\,z)/(x^2+y^2+z^2)^{3/2}$,
+      $(x,y,z)\ne(0,0,0)$.
+\end{enumerate}
+
+\prob
+\begin{enumerate}[label=(\alph*)]
+\item Calculate $\oint\bfF\cdot\hat{\mathbf{t}}\ds$ for the function
+in Problem~III-3(a) over a square path of side~$s$ centered at
+$(x_0,y_0,0)$, lying in the $xy$-plane, and oriented so that each side
+is parallel to the $x$- or $y$-axis.
+\item Divide the result of part~(a) by the area of the square and take
+the limit of the quotient as $s\to 0$.  Compare your result with the
+$z$-component of the curl found in Problem~III-3(a).
+\item Repeat parts~(a) and~(b) for the functions in Problem~III-3(b),
+(c), and~(d).  (You may find it interesting to try paths of different
+orientations and/or shapes.)
+\end{enumerate}
+
+\prob
+\begin{enumerate}[label=(\alph*)]
+\item Calculate $\oint\bfF\cdot\hat{\mathbf{t}}\ds$ where
+\[
+  \bfF = \bfk(y+y^2)
+\]
+over the perimeter of the triangle shown in the figure (integrate in the
+direction indicated by the arrows).
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.5\textwidth]{figures/ch03/fig_prob_III_5.png}
+\caption{}
+\label{fig:prob-III-5}
+\end{figure}
+
+\item Divide the result of part~(a) by the area of the triangle and
+take the limit as $a\to 0$.
+\item Show that the result of part~(b) is
+$\nhat\cdot\nabla\times\bfF$ evaluated at $(0,0,0)$ where $\nhat$~is
+the unit vector normal to the triangle and directed away from the
+origin.
+\end{enumerate}
+
+\prob
+Show that
+\[
+  \nabla\times\frac{\bfA\times\bfr}{2} = \bfA,
+\]
+where $\bfr = \bfi\,x + \bfj\,y + \bfk\,z$ and $\bfA$~is a constant
+vector.
+
+\prob
+Show that $\nabla\cdot(\nabla\times\bfF) = 0$.  (Assume that mixed
+second partial derivatives are independent of the order of
+differentiation.  For example,
+$\partial^2 F_z/\partial x\,\partial z =
+\partial^2 F_z/\partial z\,\partial x$.)
+
+\prob
+In the text (pages~82--86) we obtained the $z$-component of
+$\nabla\times\bfF$ in cylindrical coordinates.  Proceeding in the same
+way, obtain the $\theta$- and $r$-components given on page~86.
+
+\prob
+Following the procedure suggested in the text (pages~82--86), obtain
+the expression for $\nabla\times\bfF$ in spherical coordinates given on
+page~86.  The figures given on page~106 will be helpful.
+
+\prob
+\begin{enumerate}[label=(\alph*)]
+\item Rewrite the function in Problem~III-3(e) in cylindrical
+coordinates and compute its curl using the expression given on
+page~86.  Convert your result back to Cartesian coordinates and compare
+with the answer obtained in Problem~III-3(e) (see Problem~II-16).
+\item Repeat the above calculation for the function of
+Problem~III-3(f).
+\end{enumerate}
+
+\prob
+\begin{enumerate}[label=(\alph*)]
+\item Rewrite the function in Problem~III-3(g) in spherical coordinates
+and compute its curl using the expression given on page~86.  Convert
+your result back to Cartesian coordinates and compare with the answer
+obtained in Problem~III-3(g) (see Problem~II-17).
+\item Repeat the above calculation for the function of
+Problem~III-3(h).
+\end{enumerate}
+
+\prob
+Any central force can be written in the form
+\[
+  \bfF(r) = \hat{\mathbf{e}}_r\,f(r),
+\]
+where $\hat{\mathbf{e}}_r$ is a unit vector in the radial direction and
+$f$~is a scalar function.  Show by direct calculation of the curl that
+this function is irrotational (that is, $\nabla\times\bfF=0$).
+
+\prob
+Which of the functions in Problem~III-3 could be electrostatic fields?
+
+\prob
+Use Stokes' theorem to show that
+\[
+  \oint_C \hat{\mathbf{t}}\ds = 0,
+\]
+where $C$~is a closed curve and $\hat{\mathbf{t}}$~is a unit vector
+tangent to the curve~$C$.
+
+\prob
+Verify Stokes' theorem
+\[
+  \oint_C\bfF\cdot\hat{\mathbf{t}}\ds
+  = \iint_S \nhat\cdot\nabla\times\bfF\dS
+\]
+in each of the following cases:
+\begin{enumerate}[label=(\alph*)]
+\item $\bfF = \bfi\,z^2 - \bfj\,y^2$.
+
+$C$, the square of side~1 lying in the $xz$-plane and directed as
+shown.
+
+$S$, the five squares $S_1$, $S_2$, $S_3$, $S_4$, and $S_5$ as shown
+in the figure.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.5\textwidth]{figures/ch03/fig_prob_III_15a.png}
+\caption{}
+\label{fig:prob-III-15a}
+\end{figure}
+
+\item $\bfF = \bfi\,y + \bfj\,z + \bfk\,x$.
+
+$C$, the three quarter circle arcs $C_1$, $C_2$, and $C_3$ directed as
+shown in the figure.
+
+$S$, the octant of the sphere $x^2+y^2+z^2=1$ enclosed by the three
+arcs.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.5\textwidth]{figures/ch03/fig_prob_III_15b.png}
+\caption{}
+\label{fig:prob-III-15b}
+\end{figure}
+
+\item $\bfF = \bfi\,y - \bfj\,x + \bfk\,z$.
+
+$C$, the circle of radius~$R$ lying in the $xy$-plane, centered at
+$(0,0,0)$ and directed as shown in the figure.
+
+$S$, the curved and upper surfaces of the cylinder of radius~$R$ and
+height~$h$.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.5\textwidth]{figures/ch03/fig_prob_III_15c.png}
+\caption{}
+\label{fig:prob-III-15c}
+\end{figure}
+\end{enumerate}
+
+\prob
+\begin{enumerate}[label=(\alph*)]
+\item Consider a vector function with the property
+$\nabla\times\bfF=0$ everywhere on two closed curves $C_1$ and $C_2$
+and on any capping surface~$S$ of the region enclosed by them (see the
+figure).  Show that the circulation of~$\bfF$ around $C_1$ equals the
+circulation of~$\bfF$ around~$C_2$.  In calculating the circulations
+direct the curves as indicated by the arrows in the figure.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.45\textwidth]{figures/ch03/fig_prob_III_16a.png}
+\caption{}
+\label{fig:prob-III-16a}
+\end{figure}
+
+\item The magnetic field due to an infinitely long straight wire
+carrying a uniform current~$I$ is
+$\bfB=(\mu_0 I/2\pi r)\hat{\mathbf{e}}_\theta$.  Show that
+$\nabla\times\bfB=0$ everywhere except at $r=0$.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.45\textwidth]{figures/ch03/fig_prob_III_16b.png}
+\caption{}
+\label{fig:prob-III-16b}
+\end{figure}
+
+\item Prove Amp\`ere's circuital law for the field of the wire given in
+part~(b).  [\emph{Hint:} Use the result of~(b) to find the circulation
+of~$\bfB$ around a circle with the wire passing through its center and
+normal to its plane.  Then use the result of part~(a) to relate this
+circulation to the circulation around an arbitrary curve enclosing the
+current.]
+\end{enumerate}
+
+\prob
+\begin{enumerate}[label=(\alph*)]
+\item Consider the function given in cylindrical coordinates by
+\[
+  \bfF(r,\theta,z) = \frac{\hat{\mathbf{e}}_\theta}{r}.
+\]
+Show that Stokes' theorem does not hold for this function if $C$~is the
+circle of radius~$R$ in the $xy$-plane centered at the origin, and
+$S$~is the portion of the $xy$-plane enclosed by~$C$.  Why does the
+theorem fail in this case?
+\item Consider the region~$D$ that consists of all of
+three-dimensional space with the $z$-axis removed.  Is the function
+$\bfF$ defined in~(a) smooth in~$D$?  Does Stokes' theorem hold
+in~$D$?  Is $D$~a simply connected region?
+\end{enumerate}
+
+\prob
+The electromotive force $\mathscr{E}$ in a circuit~$C$ is equal to the
+circulation of the electric field~$\bfE$ around the circuit:
+\[
+  \mathscr{E} = \oint_C\bfE\cdot\hat{\mathbf{t}}\ds.
+\]
+Faraday discovered that in a stationary circuit an electromotive force
+is induced by a changing magnetic flux.  That is,
+\[
+  \mathscr{E} = -\frac{d\Phi}{dt},
+\]
+where
+\[
+  \Phi = \iint_S \bfB\cdot\nhat\dS,
+\]
+$t$~is time (don't confuse it with the tangent vector
+$\hat{\mathbf{t}}$), and $S$~is any capping surface of~$C$.  Use this
+information and Stokes' theorem to derive the equation
+\[
+  \nabla\times\bfE = -\pd{\bfB}{t},
+\]
+which is one of Maxwell's equations.
+
+\prob
+Determine the value of the line integral
+$\int_C\bfF\cdot\hat{\mathbf{t}}\ds$, where
+\[
+  \bfF = (e^{-y}-ze^{-x})\bfi + (e^{-z}-xe^{-y})\bfj
+       + (e^{-x}-ye^{-z})\bfk
+\]
+and $C$~is the path
+\[
+  x = \frac{1}{\ln 2}\ln(1+p),\quad
+  y = \sin\frac{\pi p}{2},\quad
+  z = \frac{1-e^p}{1-e},
+  \qquad 0\le p\le 1
+\]
+from $(0,0,0)$ to $(1,1,1)$.  [\emph{Suggestion:} Think before you
+write!]
+
+\prob
+Maxwell's equations are
+\[
+  \nabla\cdot\bfE = \rho/\epszero,\qquad
+  \nabla\cdot\bfB = 0,
+\]
+\[
+  \nabla\times\bfE = -\pd{\bfB}{t},\qquad
+  \nabla\times\bfB = \epszero\mu_0\pd{\bfE}{t} + \mu_0\bfJ,
+\]
+where $\bfE$~is the electric field, $\bfB$~the magnetic field,
+$\rho$~the charge density, and $\bfJ$~the current density.  Use
+Maxwell's equations to derive the continuity equation
+\[
+  \nabla\cdot\bfJ + \pd{\rho}{t} = 0.
+\]
+Interpret this equation.
+
+\prob
+The electromagnetic field stores energy, and it is possible to show
+that in a volume~$V$ the amount of electromagnetic energy is
+\[
+  \iiint_V \rho_E\dV,
+\]
+where the energy density
+\[
+  \rho_E = \tfrac{1}{2}(\epszero\bfE\cdot\bfE
+          + \bfB\cdot\bfB/\mu_0)
+         = \tfrac{1}{2}(\epszero E^2 + B^2/\mu_0).
+\]
+Use Maxwell's equations (see Problem~III-20) to show that
+\[
+  \pd{\rho_E}{t}
+  + \nabla\cdot\!\left(\frac{\bfE\times\bfB}{\mu_0}\right)
+  = -\bfJ\cdot\bfE.
+\]
+Interpret this equation.
+
+\prob
+\begin{enumerate}[label=(\alph*)]
+\item Apply the divergence theorem to the function
+\[
+  \bfG(x,y) = \bfi\,G_x(x,y) + \bfj\,G_y(x,y),
+\]
+using for $V$ and $S$ the volume and surface shown in the diagram; its
+bottom is a region~$R$ of the $xy$-plane, its top has the same shape as,
+and is parallel to, the bottom, and its side is parallel to the
+$z$-axis.  In this way obtain the relation
+\[
+  \oint_C G_x\dy - G_y\dx
+  = \iint_R\left(\pd{G_x}{x}+\pd{G_y}{y}\right)dx\dy,
+\]
+which is the divergence theorem in two dimensions.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.5\textwidth]{figures/ch03/fig_prob_III_22.png}
+\caption{}
+\label{fig:prob-III-22}
+\end{figure}
+
+\item Apply Stokes' theorem to the function
+\[
+  \bfF(x,y) = \bfi\,F_x(x,y) + \bfj\,F_y(x,y)
+\]
+using for $C$~a closed curve lying entirely in the $xy$-plane and for
+$S$~the region~$R$ of the $xy$-plane enclosed by~$C$.  In this way
+obtain the relation
+\[
+  \oint_C F_x\dx + F_y\dy
+  = \iint_R\left(\pd{F_y}{x}-\pd{F_x}{y}\right)dx\dy,
+\]
+which is Stokes' theorem in two dimensions.
+\item Show that in two dimensions the divergence theorem and Stokes'
+theorem are identical.
+\end{enumerate}
+
+\prob
+\begin{enumerate}[label=(\alph*)]
+\item Let $C$~be a closed curve lying in the $xy$-plane.  What
+condition must the function~$\bfF$ satisfy in order that
+\[
+  \oint_C\bfF\cdot\hat{\mathbf{t}}\ds = A,
+\]
+where $A$~is the area enclosed by~$C$?  [\emph{Hint:} See
+Problem~III-22.]
+\item Give some examples of functions~$\bfF$ having the property
+described in~(a).
+\item Use line integrals to find formulas for the area of
+\begin{enumerate}[label=(\roman*)]
+  \item a rectangle.
+  \item a right triangle.
+  \item a circle.
+\end{enumerate}
+\item Show that the area enclosed by the plane curve~$C$ is the
+magnitude of
+\[
+  \frac{1}{2}\oint_C \bfr\times\hat{\mathbf{t}}\ds,
+\]
+where $\bfr = \bfi\,x + \bfj\,y$.
+\end{enumerate}
+
+\prob
+\begin{enumerate}[label=(\alph*)]
+\item There is an important theorem in vector calculus that says
+$\nabla\cdot\bfG=0$ (where $\bfG$~is some differentiable vector
+function) implies and is implied by $\bfG=\nabla\times\mathbf{H}$
+(where $\mathbf{H}$~is another differentiable function).  To prove this
+we note first of all that $\bfG=\nabla\times\mathbf{H}$ implies that
+$\nabla\cdot\bfG=0$ (see Problem~III-7).  To show that
+$\nabla\cdot\bfG=0$ implies that we can write
+$\bfG=\nabla\times\mathbf{H}$, the simplest procedure is to give
+$\mathbf{H}$:
+\begin{align*}
+  H_x &= 0, \\
+  H_y &= \int_{x_0}^{x}G_z(x',y,z)\,dx', \\
+  H_z &= -\int_{x_0}^{x}G_y(x',y,z)\,dx'
+        + \int_{y_0}^{y}G_x(x_0,y',z)\,dy',
+\end{align*}
+where $x_0$ and $y_0$ are arbitrary constants.  Show by direct
+calculation that if $\nabla\cdot\bfG=0$, then
+$\bfG=\nabla\times\mathbf{H}$.
+\item Is the vector function~$\mathbf{H}$ specified in~(a) unique?
+That is, can we alter it in any way without invalidating the relation
+$\bfG=\nabla\times\mathbf{H}$?
+\end{enumerate}
+
+\prob
+Determine in which of the following cases it is possible to write
+$\bfG=\nabla\times\mathbf{H}$.  In the cases where it is possible,
+find~$\mathbf{H}$ (see Problem~III-24).
+\begin{enumerate}[label=(\alph*)]
+\item $\bfG = \bfi\,y + \bfj\,z + \bfk\,x$.
+\item $\bfG = B_0\bfk$, \;$B_0$ a constant.
+\item $\bfG = \bfi\,x^2 - \bfk\,y^2$.
+\item $\bfG = 2\bfi\,x - \bfj\,y - \bfk\,z$.
+\item $\bfG = 2\bfi\,x - \bfj\,y + \bfk\,z$.
+\end{enumerate}
+
+\prob
+Since the divergence of any magnetic field~$\bfB$ is zero, we can
+write $\bfB=\nabla\times\bfA$ (see Problem~III-24).  Prove that the
+circulation of~$\bfA$ around an arbitrary closed path~$C$ is equal to
+the flux of~$\bfB$ through any surface~$S$ capping~$C$.
+
+\prob
+Prove the statement made in Problem~III-24(a) by applying Stokes'
+theorem and the divergence theorem.  [\emph{Hint:} See the diagram
+below.]
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.45\textwidth]{figures/ch03/fig_prob_III_27.png}
+\caption{}
+\label{fig:prob-III-27}
+\end{figure}
+
+\prob
+\begin{enumerate}[label=(\alph*)]
+\item What is the integral form of the equation
+$\bfG=\nabla\times\mathbf{H}$?  [\emph{Hint:} Compare the differential
+and integral forms of Amp\`ere's circuital law.]
+\item Verify your result in part~(a) using for $\bfG$ and $\mathbf{H}$
+functions selected from Problem~III-25, and paths and surfaces of
+integration of your own choice.
+\end{enumerate}
+
+\prob
+In the text we defined the curl as the limit of a certain ratio.  An
+alternative definition is provided by the equation
+\[
+  \nabla\times\bfF
+  = \lim_{\Delta V\to 0}\frac{1}{\Delta V}
+    \iint_S \nhat\times\bfF\dS,
+\]
+where $\bfF$~is a vector function of position, the integration is
+carried out over a closed surface~$S$ which encloses the
+volume~$\Delta V$, and $\nhat$~is the unit vector normal to $S$
+pointing outward from the enclosed volume.  (This definition does not
+display the geometric significance of the curl as well as the one given
+in the text.  Nonetheless, in one respect at least it may be
+preferable: it gives the $\nabla\times\bfF$ rather than just a
+component of it.)
+\begin{enumerate}[label=(\alph*)]
+\item Following a procedure similar to the one used in the text in
+treating the divergence, integrate over a ``cuboid'' and show that the
+definition given above yields Equation~(\ref{eq:III-7b}).
+\item Arguing as we did in the text in establishing the divergence
+theorem, use the above expression for the curl to derive the equation
+\[
+  \iint_S \nhat\times\bfF\dS = \iiint_V\nabla\times\bfF\dV,
+\]
+where $V$~is the volume enclosed by~$S$.
+\item Derive the equation of part~(b) directly from the divergence
+theorem.  [\emph{Hint:} In the divergence theorem [Equation~(II-30)]
+replace $\bfF$ by $\mathbf{e}\times\bfF$, where $\mathbf{e}$~is an
+arbitrary constant vector.]
+\item Verify the equation of part~(b) for
+$\bfF=\bfi\,y-\bfj\,z+\bfk\,x$ and $V$~the unit cube shown in the
+figure.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.45\textwidth]{figures/ch03/fig_prob_III_29.png}
+\caption{}
+\label{fig:prob-III-29}
+\end{figure}
+\end{enumerate}
+
+\prob
+The result
+\[
+  (\nabla\times\bfF)_z = \pd{F_y}{x} - \pd{F_x}{y}
+\]
+has been established by calculating the circulation of~$\bfF$ around a
+rectangle (see the text, pages~75~ff.) and around a right triangle (see
+Problem~III-2).  In this problem you will show that the result holds
+when the circulation is calculated around \emph{any} closed curve lying
+in the $xy$-plane.
+\begin{enumerate}[label=(\alph*)]
+\item Approximate an arbitrary closed curve~$C$ in the $xy$-plane by a
+polygon~$P$ as shown in the figure.  Subdivide the area enclosed by~$P$
+into $N$~patches of which the $l$th has area~$\Delta S_l$.  Convince
+yourself by means of a sketch that this subdivision can be made with
+only two kinds of patches: rectangles and right triangles.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.45\textwidth]{figures/ch03/fig_prob_III_30.png}
+\caption{}
+\label{fig:prob-III-30}
+\end{figure}
+
+\item Letting $C(x,y) = \partial F_y/\partial x - \partial
+F_x/\partial y$, use Taylor series to show that for $N$ large and each
+$\Delta S_l$ small,
+\begin{align*}
+  \oint_P\bfF\cdot\hat{\mathbf{t}}\ds
+  &= \sum_{l=1}^{N}\oint_{C_l}\bfF\cdot\hat{\mathbf{t}}\ds \\
+  &\cong C(x_0,y_0)\,\Delta A
+   + \left(\pd{C}{x}\right)_{x_0,y_0}
+     \sum_{l=1}^{N}(x_l-x_0)\,\Delta S_l \\
+  &\quad + \left(\pd{C}{y}\right)_{x_0,y_0}
+     \sum_{l=1}^{N}(y_l-y_0)\,\Delta S_l + \cdots,
+\end{align*}
+where $C_l$~is the perimeter of the $l$th patch, $(x_0,y_0)$~is some
+point in $P$, and $\Delta A$~is the area enclosed by~$P$.
+\item Show that
+\[
+  \lim_{\substack{N\to\infty\\\text{each }\Delta S_l\to 0}}
+  \oint_P\bfF\cdot\hat{\mathbf{t}}\ds
+  = \oint_C\bfF\cdot\hat{\mathbf{t}}\ds
+\]
+where $\Delta S$~is the area of the region~$R$ enclosed by~$C$ and
+$(\bar{x},\bar{y})$ are the coordinates of the centroid of the
+region~$R$; that is,
+\[
+  \bar{x} = \frac{1}{\Delta S}\iint_R x\dx\dy
+  \qquad\text{and}\qquad
+  \bar{y} = \frac{1}{\Delta S}\iint_R y\dx\dy.
+\]
+\item Finally, calculate
+\[
+  (\nabla\times\bfF)_z
+  = \lim_{\substack{\Delta S\to 0 \\ \text{about }x_0,y_0}}
+    \frac{1}{\Delta S}\oint_C\bfF\cdot\hat{\mathbf{t}}\ds.
+\]
+\end{enumerate}
+
+\end{problems}

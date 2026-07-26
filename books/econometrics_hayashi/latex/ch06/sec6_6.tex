@@ -1,0 +1,286 @@
+% sec6_6.tex — Section 6.6: Incorporating Serial Correlation in GMM
+
+\subsection*{The Model and Asymptotic Results}
+
+We have now all the tools needed to introduce serial correlation in the single-equation
+GMM model of Chapter~3. Recall that $\mathbf{g}_t$ in Chapter~3 (with the subscript
+``$i$'' replaced by ``$t$'') is a $K$-dimensional vector defined as $\mathbf{x}_t \cdot \varepsilon_t$, the product
+of the $K$-dimensional vector of instruments $\mathbf{x}_t$ and the scalar error term $\varepsilon_t$. By
+Assumption~3.3 (orthogonality conditions), the mean of $\mathbf{g}_t$ is zero. We assumed
+in Assumption~3.5 that $\{\mathbf{g}_t\}$ was a martingale difference sequence. Since no serial
+correlation is allowed under this assumption, the matrix $\mathbf{S}$, defined to be the asymptotic
+variance of $\bar{\mathbf{g}}$ ($\equiv \frac{1}{n} \sum_{t=1}^{n} \mathbf{g}_t$), was simply the variance of $\mathbf{g}_t$. We can now allow
+for serial correlation in $\{\mathbf{g}_t\}$ by relaxing Assumption~3.5 as
+
+\medskip
+\noindent\textbf{Assumption 3.5$'$ (Gordin's condition restricting the degree of serial correlation):}
+\emph{$\{\mathbf{g}_t\}$ satisfies Gordin's condition. Its long-run covariance matrix is nonsingular.}
+
+\medskip
+Then by the multivariate version of Proposition~6.10, $\sqrt{n}\,\bar{\mathbf{g}}$ converges to a normal
+distribution. The variance of this limiting distribution (namely, $\avar(\bar{\mathbf{g}})$), denoted
+$\mathbf{S}$, equals the long-run covariance matrix,
+\begin{equation}
+  \mathbf{S} = \sum_{j=-\infty}^{\infty} \bm{\Gamma}_j
+  = \bm{\Gamma}_0 + \sum_{j=1}^{\infty} (\bm{\Gamma}_j + \bm{\Gamma}_j'),
+  \label{eq:6.6.1}
+\end{equation}
+where $\bm{\Gamma}_j$ is the $j$-th order autocovariance matrix
+\begin{equation}
+  \bm{\Gamma}_j = \E(\mathbf{g}_t \mathbf{g}_{t-j}')
+  \quad (j = 0, \pm 1, \pm 2, \ldots).
+  \label{eq:6.6.2}
+\end{equation}
+(Since $\E(\mathbf{g}_t) = \mathbf{0}$ by the orthogonality conditions, there is no need to subtract the
+mean from $\mathbf{g}_t$.)
+
+That is, $\mathbf{S}$ ($\equiv \avar(\bar{\mathbf{g}})$) equals $\bm{\Gamma}_0$ under Assumption~3.5 and $\sum_{j=-\infty}^{\infty} \bm{\Gamma}_j$ under
+Assumption~3.5$'$. This is the \emph{only} difference between the GMM model with and
+without serial correlation. Accordingly, all the results we developed in Sections
+3.5--3.7 carry over, provided that $\mathbf{S}$ is now given by \eqref{eq:6.6.1} and $\hat{\mathbf{S}}$, some consistent
+estimation of $\mathbf{S}$, is redefined to take into account serial correlation. More
+specifically:
+\begin{itemize}
+\item The GMM estimator $\hat{\bm{\delta}}(\hat{\mathbf{W}})$ remains consistent and asymptotically normal. Its
+asymptotic variance is consistently estimated by (3.5.2), provided that the $\hat{\mathbf{S}}$
+there is consistent for $\mathbf{S}$ defined in \eqref{eq:6.6.1}. This estimated asymptotic variance
+sometimes gets the adjective heteroskedasticity and autocorrelation consistent
+(\textbf{HAC}).
+
+\item The GMM estimator achieves the minimum variance when $\plim_{n \to \infty} \hat{\mathbf{W}} = \mathbf{S}^{-1}$
+where $\mathbf{S}$ is given by \eqref{eq:6.6.1}.
+
+\item The two-step procedure described in Section~3.5 still provides an efficient GMM
+estimator, provided that $\hat{\mathbf{S}}$ calculated in \emph{Step~1} is consistent for $\mathbf{S}$.
+
+\item With $\hat{\mathbf{S}}$ thus properly defined, the expressions for the $t$, $W$, $J$, $C$, and $LR$ statistics
+of Sections~3.5--3.7 remain valid; those statistics retain the same asymptotic
+distributions in the presence of serial correlation.
+\end{itemize}
+
+\subsection*{Estimating S When Autocovariances Vanish after Finite Lags}
+
+All these results assume that you have a consistent estimate, $\hat{\mathbf{S}}$, of the long-run
+variance matrix $\mathbf{S}$. Obtaining such an estimate takes some intellectual effort, particularly
+when autocovariances do not vanish after finite lags.
+
+We start our quest with consistent estimation of individual autocovariances.
+The natural estimator is
+\begin{equation}
+  \hat{\bm{\Gamma}}_j = \frac{1}{n} \sum_{t=j+1}^{n} \hat{\mathbf{g}}_t \hat{\mathbf{g}}_{t-j}'
+  \quad (j = 0, 1, \ldots, n-1)
+  \label{eq:6.6.3}
+\end{equation}
+where
+\[
+  \hat{\mathbf{g}}_t \equiv \mathbf{x}_t \cdot \hat{\varepsilon}_t, \quad
+  \hat{\varepsilon}_t = y_t - \mathbf{z}_t' \hat{\bm{\delta}}, \quad
+  \hat{\bm{\delta}} \text{ consistent for } \bm{\delta}.
+\]
+If we had the true value $\mathbf{g}_t$ in place of the estimated value $\hat{\mathbf{g}}_t$ in this formula, then
+$\hat{\bm{\Gamma}}_j$ would be consistent for $\bm{\Gamma}_j$ under Assumptions~3.1 and~3.2, the assumptions
+implying ergodic stationarity for $\{\mathbf{g}_t\}$. But we have to use the estimated series $\{\hat{\mathbf{g}}_t\}$
+rather than the true series to calculate autocovariances. For this reason we need
+some suitable fourth-moment condition (which we will not bother to state) for the
+estimated autocovariances to be consistent. The proof of consistency is not given
+here because it is very similar to the proof of Proposition~3.4.
+
+Given the estimated autocovariances, there are two cases to consider for the
+calculation of $\hat{\mathbf{S}}$. If we know \emph{a priori} that $\bm{\Gamma}_j = \mathbf{0}$ for $j > q$ where $q$ is known and
+finite, then clearly $\mathbf{S}$ can be consistently estimated by
+\begin{equation}
+  \hat{\mathbf{S}} = \hat{\bm{\Gamma}}_0 + \sum_{j=1}^{q} (\hat{\bm{\Gamma}}_j + \hat{\bm{\Gamma}}_j')
+  = \sum_{j=-q}^{q} \hat{\bm{\Gamma}}_j
+  \quad (\text{recall: } \hat{\bm{\Gamma}}_{-j} = \hat{\bm{\Gamma}}_j').
+  \label{eq:6.6.4}
+\end{equation}
+More difficult is the other case where we do not know $q$ (which may or may not
+be infinite). How can we estimate the long-run variance matrix, which involves
+possibly infinitely many parameters? There are two approaches.
+
+\subsection*{Using Kernels to Estimate S}
+
+Recently, several procedures have been proposed to estimate the long-run variance
+matrix $\mathbf{S}$.\footnote{For the results to be stated in this and the next subsection to hold, we need to impose a set of technical conditions (in addition to Gordin's condition above) that further restrict the nature of serial correlation. For a statement of those conditions and a more detailed discussion of the subject treated in this and the next subsection, see Den Haan and Levin (1996b).}
+A class of estimators, called the \textbf{kernel-based} (or ``nonparametric'')
+\textbf{estimators}, can be expressed as a weighted average of estimated autocovariances:
+\begin{equation}
+  \hat{\mathbf{S}} = \sum_{j=-n+1}^{n-1} k\!\left(\frac{j}{q(n)}\right) \cdot \hat{\bm{\Gamma}}_j.
+  \label{eq:6.6.5}
+\end{equation}
+Here, the function $k(\cdot)$, which gives weights for autocovariances, is called a \textbf{kernel}
+and $q(n)$ is called the \textbf{bandwidth}. The bandwidth can depend on the sample size $n$.
+The estimator \eqref{eq:6.6.4} above is a special kernel-based estimator with $q(n) = q$ and
+\begin{equation}
+  k(x) = \begin{cases} 1 & \text{for } |x| \leq 1, \\ 0 & \text{for } |x| > 1. \end{cases}
+  \label{eq:6.6.6}
+\end{equation}
+This kernel is called the \textbf{truncated kernel}. In the present case of unknown $q$,
+we could use the truncated kernel with a bandwidth $q(n)$ that increases with the
+sample size. As $q(n)$ increases to infinity, more and more (and ultimately all) autocovariances
+can be included in the calculation of $\hat{\mathbf{S}}$. This truncated kernel-based
+$\hat{\mathbf{S}}$, however, is not guaranteed to be positive semidefinite in finite samples. This is
+a problem because then the estimated asymptotic variance of the GMM estimator
+may not be positive semidefinite.
+
+Newey and West (1987) noted that the kernel-based estimator can be made
+nonnegative definite in finite samples if the kernel is the \textbf{Bartlett kernel}:
+\begin{equation}
+  k(x) = \begin{cases} 1 - |x| & \text{for } |x| \leq 1, \\ 0 & \text{for } |x| > 1. \end{cases}
+  \label{eq:6.6.7}
+\end{equation}
+The Bartlett kernel-based estimator of $\mathbf{S}$ is called (in econometrics) the \textbf{Newey--West
+estimator}. For example, for $q(n) = 3$, the kernel-based estimator includes
+autocovariances up to two (\emph{not} three) lags:
+\begin{equation}
+  \hat{\mathbf{S}} = \hat{\bm{\Gamma}}_0
+  + \Bigl(\frac{2}{3}\Bigr)(\hat{\bm{\Gamma}}_1 + \hat{\bm{\Gamma}}_1')
+  + \Bigl(\frac{1}{3}\Bigr)(\hat{\bm{\Gamma}}_2 + \hat{\bm{\Gamma}}_2').
+  \label{eq:6.6.8}
+\end{equation}
+
+In his definitive treatment of kernel-based estimation of the long-run variance,
+Andrews (1991) has examined positive semidefinite kernels, namely, the class of
+kernels (including Bartlett's) that yield a positive semidefinite $\hat{\mathbf{S}}$. He shows that,
+under some suitable regularity conditions, how the speed at which $\hat{\mathbf{S}}$ converges (in mean
+square) to $\mathbf{S}$ depends on the kernel and $q(n)$. The most rapid possible rate is $n^{2/5}$
+(i.e., $n^{2/5} \cdot (\hat{\mathbf{S}} - \mathbf{S})$ remains stochastically bounded),\footnote{A sequence of random variables $\{x_n\}$ is said to be \textbf{stochastically bounded} and written $x_n = O_p$ if for any $\varepsilon$ there exists an $M > 0$ such that $\Pr(|x_n| > M) < \varepsilon$ for all $n$. If a sequence converges in distribution to a random variable, then the sequence is stochastically bounded.}
+which occurs when $q(n)$
+grows at rate $n^{1/5}$ (i.e., $q(n)/n^{1/5}$ remains bounded) and the kernel is a member of
+a certain subset of positive semidefinite kernels. The Bartlett kernel is not in this
+subset. For Bartlett, the most rapid possible rate is $n^{1/3}$ which occurs when $q(n)$
+grows at rate $n^{1/3}$. Therefore, at least on asymptotic grounds, positive semidefinite
+kernels in this subset should be preferred to Bartlett. An example of such kernels
+is the \textbf{quadratic spectral} (\textbf{QS}) \textbf{kernel}:
+\begin{equation}
+  k(x) = \frac{25}{12\pi^2 x^2}
+  \left(\frac{\sin(6\pi x/5)}{6\pi x/5} - \cos(6\pi x/5)\right).
+  \label{eq:6.6.9}
+\end{equation}
+Since $k(x) \neq 0$ for $|x| > 1$ in the QS kernel, all the estimated autocovariances $\hat{\bm{\Gamma}}_j$
+($j = 0, 1, \ldots, n-1$) enter the calculation of $\hat{\mathbf{S}}$ even if $q(n) < n - 1$.
+
+To be sure, the knowledge of the growth rate is not enough to determine the
+value of the bandwidth for any particular data of finite length. Andrews (1991)
+also considered a data-dependent formula for determining the bandwidth that not
+only grows at the optimal rate but also minimizes some appropriate criterion (the
+asymptotic mean square error). But even in this formula, some parameter values
+need to be provided by the user, so the formula does not really provide automatic
+data-based selection of the bandwidth.
+
+\subsection*{VARHAC}
+
+The other procedure for estimating $\mathbf{S}$, called the VAR Heteroskedasticity and Autocorrelation
+Consistent (\textbf{VARHAC}) estimator, was proposed by Den Haan and Levin
+(1996a). The idea is to fit a finite-order VAR to the $K$-dimensional series $\{\hat{\mathbf{g}}_t\}$ and
+then construct the long-run covariance matrix implied by the estimated VAR. This
+is not to say that $\mathbf{g}_t$ is assumed to be a finite-order VAR. In fact, in this procedure
+(and also in the kernel-based procedure), $\mathbf{g}_t$ does not even have to be a linear
+process, let alone a finite-order autoregression.
+The VARHAC procedure consists of two steps.
+
+\medskip
+\noindent\emph{Step~1: Lag length selection for each VAR equation.} \; In this step, for each VAR
+equation, you determine the lag length by the Bayesian information criterion
+(BIC). Let $\hat{g}_{kt}$ be the $k$-th element of the $K$-dimensional vector $\hat{\mathbf{g}}_t$.
+The $k$-th VAR equation can be written as
+\begin{equation}
+\begin{aligned}
+  \hat{g}_{kt} &= \phi_{11}^{(k)} \hat{g}_{1,t-1} + \phi_{12}^{(k)} \hat{g}_{1,t-2} + \cdots + \phi_{1p}^{(k)} \hat{g}_{1,t-p} \\
+  &\quad + \phi_{21}^{(k)} \hat{g}_{2,t-1} + \phi_{22}^{(k)} \hat{g}_{2,t-2} + \cdots + \phi_{2p}^{(k)} \hat{g}_{2,t-p} \\
+  &\quad \cdots \\
+  &\quad + \phi_{K1}^{(k)} \hat{g}_{K,t-1} + \phi_{K2}^{(k)} \hat{g}_{K,t-2} + \cdots + \phi_{Kp}^{(k)} \hat{g}_{K,t-p} + e_{kt} \\
+  &= \bm{\phi}_1^{(k)} \hat{\mathbf{g}}_{t-1} + \cdots + \bm{\phi}_p^{(k)} \hat{\mathbf{g}}_{t-p} + e_{kt},
+\end{aligned}
+\label{eq:6.6.10}
+\end{equation}
+where
+\[
+  \underset{(1 \times K)}{\bm{\phi}_j^{(k)}} = (\phi_{1j}^{(k)}, \ldots, \phi_{Kj}^{(k)})
+  \quad (j = 1, 2, \ldots, p).
+\]
+In picking the lag length by the BIC, the maximum lag length $p_{max}$ needs
+to be specified. In Section~6.4, when the BIC was introduced in the context
+of estimating the true order (lag length) of a finite-order autoregression,
+$p_{max}$ was set to some integer known to be greater than or equal to the
+true lag length. In the present case where $\mathbf{g}_t$ is not necessarily a finite-order
+VAR, Den Haan and Levin (1996a, Theorem~2(c)) show that the
+VARHAC estimator is consistent for $\mathbf{S}$ when $p_{max}$ grows at rate $n^{1/3}$ and
+recommend setting $p_{max}$ to $[n^{1/3}]$ (the integer part of $n^{1/3}$). To emphasize
+its dependence on the sample size, we denote the maximum lag length by
+$p_{max}(n)$. Let $SSR_p^{(k)}$ be the sum of squared residuals (SSR) from the OLS
+estimation of \eqref{eq:6.6.10} (the $k$-th equation in the VAR) for $t = p_{max}(n) +
+1, p_{max}(n) + 2, \ldots, n$.\footnote{So the sample period is fixed throughout the process of picking the lag length.}
+For $p = 0$, $SSR_p^{(k)} = \sum_{t=p_{max}(n)+1}^{n} (\hat{g}_{kt})^2$, the SSR
+from the regression of $\hat{g}_{kt}$ on no regressors. Since there are $pK$ coefficients
+in the $k$-th equation, the BIC criterion is
+\begin{equation}
+  \log(SSR_p^{(k)} / n) + pK \cdot \log(n) / n.
+  \label{eq:6.6.11}
+\end{equation}
+(The $n$ in this expression could be replaced by the actual sample size $n -
+p_{max}$ with no asymptotic consequences.) Let $p(k)$ be the $p$ that minimizes
+the information criterion over $p = 0, 1, \ldots, p_{max}(n)$ for the $k$-th VAR
+equation. Also let $\hat{\bm{\phi}}_j^{(k)}$ ($j = 1, 2, \ldots, p(k)$) be the OLS estimate of the
+VAR coefficients $\bm{\phi}_j^{(k)}$ ($j = 1, 2, \ldots, p(k)$) when \eqref{eq:6.6.10} is estimated by
+OLS for $p = p(k)$.
+
+\medskip
+\noindent\emph{Step~2: Calculating the implied long-run variance.} \; Let
+\[
+  P \equiv \max\{p(1), p(2), \ldots, p(K)\},
+\]
+the largest lag length in the $K$ equations. By construction, $P \leq p_{max}(n)$.
+\emph{Step~1} produces an estimated VAR which can be written as
+\begin{equation}
+  \underset{(K \times 1)}{\hat{\mathbf{g}}_t} =
+  \underset{(K \times K)}{\hat{\bm{\Phi}}_1}\;\hat{\mathbf{g}}_{t-1}
+  + \cdots +
+  \underset{(K \times K)}{\hat{\bm{\Phi}}_P}\;\hat{\mathbf{g}}_{t-P}
+  + \underset{(K \times 1)}{\hat{\mathbf{e}}_t}
+  \quad (t = p_{max}(n) + 1, p_{max}(n) + 2, \ldots, n).
+  \label{eq:6.6.12}
+\end{equation}
+Since the lag length differs across equations, some rows of $\hat{\bm{\Phi}}_p$ ($p =
+1, 2, \ldots, P$) may be zero. The rows of $\hat{\bm{\Phi}}_p$ are related to $\hat{\bm{\phi}}_j^{(k)}$ ($j = 1, 2, \ldots,
+p(k)$) obtained in \emph{Step~1} as
+\begin{equation}
+  k\text{-th row of } \underset{(K \times K)}{\hat{\bm{\Phi}}_p} =
+  \begin{cases}
+    \hat{\bm{\phi}}_p^{(k)} & \text{for } 1 \leq p \leq p(k), \\
+    \mathbf{0} & \text{for } p(k) < p \leq P.
+  \end{cases}
+  \label{eq:6.6.13}
+\end{equation}
+Let $\hat{\bm{\Omega}}$ be the VAR residual variance matrix:
+\begin{equation}
+  \underset{(K \times K)}{\hat{\bm{\Omega}}} \equiv \frac{1}{n} \sum_{t=p_{max}(n)+1}^{n} \hat{\mathbf{e}}_t \hat{\mathbf{e}}_t'.
+  \label{eq:6.6.14}
+\end{equation}
+Recall that the long-run variance matrix of a VAR is given by \eqref{eq:6.3.16} for
+$z = 1$. The estimator of $\mathbf{S}$ implied by the estimated VAR \eqref{eq:6.6.12} is then
+\begin{equation}
+  \hat{\mathbf{S}} = \left[\mathbf{I}_K - \sum_{p=1}^{P} \hat{\bm{\Phi}}_p\right]^{-1}
+  \hat{\bm{\Omega}}
+  \left[\mathbf{I}_K - \sum_{p=1}^{P} \hat{\bm{\Phi}}_p\right]^{-1\prime}.
+  \label{eq:6.6.15}
+\end{equation}
+
+This VARHAC estimator is positive semidefinite by construction. Den Haan
+and Levin (1996a) show that (under suitable regularity conditions) the estimator
+converges to $\mathbf{S}$ at a faster rate than any positive semidefinite kernel-based estimator
+for almost all autocovariance structures of $\mathbf{g}_t$ (which is not necessarily a finite-order
+VAR). In particular, if $\mathbf{g}_t$ is finite-order VARMA, then the lag order chosen by the
+BIC grows at a logarithmic rate and the VARHAC estimator converges at a rate
+arbitrarily close to $n^{1/2}$, which is faster than the maximum rate $n^{2/5}$ achieved by
+positive semidefinite kernel-based estimators.
+
+\subsection*{Questions for Review}
+
+\begin{enumerate}
+\item When $\mathbf{x}_t = \mathbf{z}_t$, what is the efficient GMM estimator?
+
+\item (Consequence of ignoring serial correlation) \; Consider the efficient GMM estimator
+that presumes $\{\mathbf{g}_t\}$ to be serially \emph{un}correlated. If $\{\mathbf{g}_t\}$ is in fact serially
+correlated, is the estimator consistent? Efficient?
+\end{enumerate}

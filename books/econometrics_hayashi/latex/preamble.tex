@@ -1,0 +1,170 @@
+% preamble.tex — Shared LaTeX preamble for Econometrics (Hayashi)
+
+\documentclass[11pt,openright]{book}
+
+%% ── Page Geometry ──────────────────────────────────────────────
+% Princeton University Press format, approx 6.125" x 9.25"
+\usepackage[
+  paperwidth=6.125in,
+  paperheight=9.25in,
+  top=0.9in,
+  bottom=1in,
+  left=0.85in,
+  right=0.85in,
+  headheight=14pt,
+  headsep=0.3in,
+  footskip=0.4in
+]{geometry}
+
+%% ── Encoding & Fonts ──────────────────────────────────────────
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{mathptmx}           % Times-like serif (matches source)
+\usepackage{microtype}
+
+%% ── Math ───────────────────────────────────────────────────────
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{bm}
+
+% Equation numbering: (chapter.section.number)
+\numberwithin{equation}{section}
+
+% Figure/table numbering: chapter.number
+\usepackage{chngcntr}
+\counterwithin{figure}{chapter}
+\counterwithin{table}{chapter}
+
+%% ── Boxed Equations/Definitions ─────────────────────────────────
+\usepackage[most]{tcolorbox}
+\newtcolorbox{defbox}{
+  colback=white,
+  colframe=black,
+  boxrule=0.5pt,
+  arc=0pt,
+  left=6pt, right=6pt, top=4pt, bottom=4pt,
+  boxsep=2pt
+}
+
+%% ── Theorem Environments ─────────────────────────────────────────
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{assumption}{Assumption}[section]
+\newtheorem{example}{Example}[section]
+
+\theoremstyle{remark}
+\newtheorem{remark}{Remark}[section]
+
+%% ── Problem Set / Exercises ──────────────────────────────────────
+\usepackage{enumitem}
+
+% Hayashi uses numbered exercises within "Problem Set" at chapter end
+% Format: plain numbers (1, 2, 3, ...) with parts (a), (b), (c)
+\newenvironment{problemset}{%
+  \section*{Problem Set}%
+  \addcontentsline{toc}{section}{Problem Set}%
+}{%
+}
+
+\newenvironment{answers}{%
+  \section*{Answers to Selected Questions}%
+  \addcontentsline{toc}{section}{Answers to Selected Questions}%
+}{%
+}
+
+\newcommand{\exercise}[1][]{\par\medskip\noindent\textbf{#1.}\enspace}
+\newcommand{\answer}[1]{\par\medskip\noindent\textbf{#1.}\enspace}
+
+% Starred exercise marker
+\newcommand{\starred}{\textsuperscript{*}}
+
+%% ── Figures ──────────────────────────────────────────────────────
+\usepackage{graphicx}
+\graphicspath{{figures/}}
+\usepackage{float}
+
+%% ── Tables ───────────────────────────────────────────────────────
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{multirow}
+
+%% ── Headers & Footers ────────────────────────────────────────────
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[LE]{\thepage}
+\fancyhead[RE]{\leftmark}
+\fancyhead[RO]{\thepage}
+\fancyhead[LO]{\rightmark}
+\renewcommand{\headrulewidth}{0pt}
+
+\renewcommand{\chaptermark}[1]{\markboth{Chapter \thechapter.\ #1}{}}
+\renewcommand{\sectionmark}[1]{\markright{\thesection\ #1}}
+
+\fancypagestyle{plain}{%
+  \fancyhf{}%
+  \fancyfoot[C]{\thepage}%
+  \renewcommand{\headrulewidth}{0pt}%
+}
+
+%% ── Cross-references ─────────────────────────────────────────────
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks=false,
+  pdfborder={0 0 0},
+  pdftitle={Econometrics},
+  pdfauthor={Fumio Hayashi}
+}
+\usepackage{cleveref}
+
+%% ── Index ────────────────────────────────────────────────────────
+\usepackage{makeidx}
+\makeindex
+
+%% ── TOC depth ────────────────────────────────────────────────────
+\setcounter{tocdepth}{2}
+\setcounter{secnumdepth}{2}
+
+%% ── Custom Commands (Econometrics notation) ──────────────────────
+
+% Expectation, variance, covariance
+\newcommand{\E}{\mathrm{E}}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\Cov}{\mathrm{Cov}}
+\newcommand{\Corr}{\mathrm{Corr}}
+
+% Convergence
+\newcommand{\plim}{\operatorname{plim}}
+\newcommand{\avar}{\mathrm{Avar}}
+\newcommand{\dto}{\overset{d}{\to}}
+\newcommand{\pto}{\overset{p}{\to}}
+\newcommand{\asto}{\overset{a.s.}{\to}}
+\newcommand{\iid}{\overset{\text{i.i.d.}}{\sim}}
+
+% Matrix/linear algebra operators
+\newcommand{\tr}{\operatorname{tr}}
+\newcommand{\rank}{\operatorname{rank}}
+\newcommand{\diag}{\operatorname{diag}}
+\newcommand{\vect}{\operatorname{vec}}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+
+% Bold vectors
+\renewcommand{\vec}[1]{\mathbf{#1}}
+
+% Partial derivatives
+\newcommand{\pd}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand{\pdd}[2]{\frac{\partial^2 #1}{\partial #2^2}}
+\newcommand{\pddm}[3]{\frac{\partial^2 #1}{\partial #2 \partial #3}}
+
+% Ordinary derivatives
+\newcommand{\od}[2]{\frac{d #1}{d #2}}
+\newcommand{\odd}[2]{\frac{d^2 #1}{d #2^2}}

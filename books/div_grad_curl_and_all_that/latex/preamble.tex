@@ -1,0 +1,163 @@
+% preamble.tex — Div, Grad, Curl, and All That (4th Ed.)
+% Page geometry: ~6"×9" trade paperback
+
+\documentclass[11pt,openright]{book}
+
+%% ── Page Geometry ──────────────────────────────────────────────
+\usepackage[
+  paperwidth=6in,
+  paperheight=9in,
+  top=1in,
+  bottom=1in,
+  inner=1.2in,
+  outer=0.8in,
+  headheight=14pt,
+  headsep=0.3in,
+  footskip=0.4in
+]{geometry}
+
+%% ── Encoding & Fonts ──────────────────────────────────────────
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+
+%% ── Math ───────────────────────────────────────────────────────
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{bm}
+\usepackage{esint}            % \oiint etc.
+\usepackage{mathrsfs}         % \mathscr
+
+%% ── Roman numeral chapter numbering ──
+\renewcommand{\thechapter}{\Roman{chapter}}
+
+%% ── Equation numbering: (I-1) format ──
+\numberwithin{equation}{chapter}
+\renewcommand{\theequation}{\thechapter-\arabic{equation}}
+
+%% ── Figure numbering: Figure I-1 format ──
+\usepackage{chngcntr}
+\counterwithin{figure}{chapter}
+\renewcommand{\thefigure}{\thechapter-\arabic{figure}}
+
+%% ── Footnote: reset per page ──
+\usepackage[perpage]{footmisc}
+
+%% ── TOC depth: chapters + sections ──
+\setcounter{tocdepth}{1}
+\setcounter{secnumdepth}{0}   % sections unnumbered (matches source)
+
+%% ── Section formatting (italic like source) ──
+\usepackage{titlesec}
+\titleformat{\section}
+  {\large\bfseries\itshape}{}{0pt}{}
+\titleformat{\subsection}
+  {\normalsize\bfseries\itshape}{}{0pt}{}
+
+%% ── Epigraphs ──────────────────────────────────────────────────
+\usepackage{epigraph}
+\setlength{\epigraphwidth}{0.7\textwidth}
+\renewcommand{\epigraphflush}{center}
+\renewcommand{\sourceflush}{center}
+
+%% ── Figures ────────────────────────────────────────────────────
+\usepackage{graphicx}
+\usepackage{float}
+\graphicspath{{figures/}}
+
+%% ── Headers & Footers ──────────────────────────────────────────
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[LE]{\thepage}
+\fancyhead[RE]{\itshape\leftmark}
+\fancyhead[RO]{\thepage}
+\fancyhead[LO]{\itshape\rightmark}
+\renewcommand{\headrulewidth}{0pt}
+
+\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+\renewcommand{\sectionmark}[1]{\markright{#1}}
+
+\fancypagestyle{plain}{%
+  \fancyhf{}%
+  \fancyfoot[C]{\thepage}%
+  \renewcommand{\headrulewidth}{0pt}%
+}
+
+%% ── Cross-references ──────────────────────────────────────────
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks=false,
+  pdfborder={0 0 0},
+  pdftitle={Div, Grad, Curl, and All That},
+  pdfauthor={H. M. Schey}
+}
+\usepackage{cleveref}
+
+%% ── Index ──────────────────────────────────────────────────────
+\usepackage{makeidx}
+\makeindex
+
+%% ── Enumeration ────────────────────────────────────────────────
+\usepackage{enumitem}
+
+%% ── Problem environment ────────────────────────────────────────
+% Problems numbered I-1, I-2, ... with (a), (b) sub-parts
+\newcounter{problem}[chapter]
+\renewcommand{\theproblem}{\thechapter-\arabic{problem}}
+\newenvironment{problems}{%
+  \section*{Problems}%
+}{%
+  \par\bigskip
+}
+\newcommand{\prob}[1][]{\refstepcounter{problem}\par\medskip\noindent\textbf{\theproblem.}\enspace}
+
+%% ── Bold vector macros ─────────────────────────────────────────
+\renewcommand{\vec}[1]{\mathbf{#1}}
+\newcommand{\bfF}{\mathbf{F}}
+\newcommand{\bfE}{\mathbf{E}}
+\newcommand{\bfr}{\mathbf{r}}
+\newcommand{\bfv}{\mathbf{v}}
+\newcommand{\bfn}{\mathbf{n}}
+\newcommand{\bfi}{\mathbf{i}}
+\newcommand{\bfj}{\mathbf{j}}
+\newcommand{\bfk}{\mathbf{k}}
+\newcommand{\bfA}{\mathbf{A}}
+\newcommand{\bfB}{\mathbf{B}}
+\newcommand{\bfG}{\mathbf{G}}
+\newcommand{\bfJ}{\mathbf{J}}
+
+%% ── Unit vector hat notation ───────────────────────────────────
+\newcommand{\rhat}{\hat{\mathbf{r}}}
+\newcommand{\nhat}{\hat{\mathbf{n}}}
+\newcommand{\that}{\hat{\boldsymbol{\theta}}}
+\newcommand{\phat}{\hat{\boldsymbol{\phi}}}
+
+%% ── Differential shortcuts ────────────────────────────────────
+\newcommand{\dx}{\,dx}
+\newcommand{\dy}{\,dy}
+\newcommand{\dz}{\,dz}
+\newcommand{\dt}{\,dt}
+\newcommand{\ds}{\,ds}
+\newcommand{\dA}{\,dA}
+\newcommand{\dV}{\,dV}
+\newcommand{\dS}{\,dS}
+\newcommand{\dl}{\,d\ell}
+\newcommand{\dr}{\,dr}
+\newcommand{\dtheta}{\,d\theta}
+\newcommand{\dphi}{\,d\phi}
+
+%% ── Partial derivatives ───────────────────────────────────────
+\newcommand{\pd}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand{\pdd}[2]{\frac{\partial^2 #1}{\partial #2^2}}
+
+%% ── Del/nabla shortcuts ──────────────────────────────────────
+\DeclareMathOperator{\Div}{div}
+\DeclareMathOperator{\Curl}{curl}
+\DeclareMathOperator{\Grad}{grad}
+\newcommand{\laplacian}{\nabla^2}
+
+%% ── Common constants ─────────────────────────────────────────
+\newcommand{\epszero}{\epsilon_0}

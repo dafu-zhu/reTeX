@@ -1,0 +1,192 @@
+% sec4_2.tex — Section 4.2: Multiple-Equation GMM Defined
+
+\section{Multiple-Equation GMM Defined}
+\label{sec:4.2}
+
+Derivation of the GMM estimator for multiple equations, too, can be carried out in
+much the same way as in the single-equation case. Let $\tilde{\boldsymbol{\delta}}$
+be a hypothetical value of the true parameter vector $\boldsymbol{\delta}$ and define
+$\mathbf{g}_n(\tilde{\boldsymbol{\delta}})$ by~\eqref{eq:4.1.1}. The definition of the GMM
+estimator is the same as in (3.4.5), provided that the weighting matrix
+$\hat{\mathbf{W}}$ is now
+$\sum_m K_m \times \sum_m K_m$. In the previous section, we were able to rewrite
+$\E[\mathbf{g}(\mathbf{w}_i;\, \tilde{\boldsymbol{\delta}})]$ for multiple equations as a
+linear function of $\tilde{\boldsymbol{\delta}}$ (see~\eqref{eq:4.1.8}).
+We can do the same for the sample analogue
+$\mathbf{g}_n(\tilde{\boldsymbol{\delta}})$:
+\begin{align}
+\underset{(\sum_{m=1}^{M} K_m \times 1)}{\mathbf{g}_n(\tilde{\boldsymbol{\delta}})}
+&= \begin{bmatrix}
+\dfrac{1}{n} \displaystyle\sum_{i=1}^{n} \mathbf{x}_{i1} \cdot
+(y_{i1} - \mathbf{z}_{i1}' \tilde{\boldsymbol{\delta}}_1) \\[6pt]
+\vdots \\[4pt]
+\dfrac{1}{n} \displaystyle\sum_{i=1}^{n} \mathbf{x}_{iM} \cdot
+(y_{iM} - \mathbf{z}_{iM}' \tilde{\boldsymbol{\delta}}_M)
+\end{bmatrix} \notag \\[6pt]
+&= \begin{bmatrix}
+\dfrac{1}{n} \displaystyle\sum_{i=1}^{n} \mathbf{x}_{i1} \cdot y_{i1} \\[6pt]
+\vdots \\[4pt]
+\dfrac{1}{n} \displaystyle\sum_{i=1}^{n} \mathbf{x}_{iM} \cdot y_{iM}
+\end{bmatrix}
+- \begin{bmatrix}
+\dfrac{1}{n} \displaystyle\sum_{i=1}^{n}
+\mathbf{x}_{i1} \mathbf{z}_{i1}' \tilde{\boldsymbol{\delta}}_1 \\[6pt]
+\vdots \\[4pt]
+\dfrac{1}{n} \displaystyle\sum_{i=1}^{n}
+\mathbf{x}_{iM} \mathbf{z}_{iM}' \tilde{\boldsymbol{\delta}}_M
+\end{bmatrix} \notag \\[6pt]
+&= \begin{bmatrix}
+\dfrac{1}{n} \displaystyle\sum_{i=1}^{n} \mathbf{x}_{i1} \cdot y_{i1} \\[6pt]
+\vdots \\[4pt]
+\dfrac{1}{n} \displaystyle\sum_{i=1}^{n} \mathbf{x}_{iM} \cdot y_{iM}
+\end{bmatrix}
+- \begin{bmatrix}
+\dfrac{1}{n} \displaystyle\sum_{i=1}^{n} \mathbf{x}_{i1} \mathbf{z}_{i1}' & & \\
+& \ddots & \\
+& & \dfrac{1}{n} \displaystyle\sum_{i=1}^{n} \mathbf{x}_{iM} \mathbf{z}_{iM}'
+\end{bmatrix}
+\begin{bmatrix}
+\tilde{\boldsymbol{\delta}}_1 \\ \vdots \\ \tilde{\boldsymbol{\delta}}_M
+\end{bmatrix} \notag \\[6pt]
+&\equiv \mathbf{s}_{\mathbf{x}\mathbf{y}}
+- \mathbf{S}_{\mathbf{x}\mathbf{z}}\, \tilde{\boldsymbol{\delta}},
+\label{eq:4.2.1}
+\end{align}
+where
+\begin{equation}
+\mathbf{s}_{\mathbf{x}\mathbf{y}}
+\equiv \begin{bmatrix}
+\dfrac{1}{n} \displaystyle\sum_{i=1}^{n} \mathbf{x}_{i1} \cdot y_{i1} \\[6pt]
+\vdots \\[4pt]
+\dfrac{1}{n} \displaystyle\sum_{i=1}^{n} \mathbf{x}_{iM} \cdot y_{iM}
+\end{bmatrix}, \quad
+\mathbf{S}_{\mathbf{x}\mathbf{z}}
+\equiv \begin{bmatrix}
+\dfrac{1}{n} \displaystyle\sum_{i=1}^{n} \mathbf{x}_{i1} \mathbf{z}_{i1}' & & \\
+& \ddots & \\
+& & \dfrac{1}{n} \displaystyle\sum_{i=1}^{n} \mathbf{x}_{iM} \mathbf{z}_{iM}'
+\end{bmatrix}.
+\label{eq:4.2.2}
+\end{equation}
+
+Again, this is the \textit{same} in form as the expression for
+$\mathbf{g}_n(\tilde{\boldsymbol{\delta}})$ for the single-equation case.
+
+It follows that the results of Section~3.4 about the derivation of the GMM estimator
+are applicable to the multiple-equation case. In particular, just reproducing
+(3.4.8) and (3.4.11),
+\begin{align}
+\text{multiple-equation GMM estimator:}\quad
+\hat{\boldsymbol{\delta}}(\hat{\mathbf{W}})
+&= (\mathbf{S}_{\mathbf{x}\mathbf{z}}' \hat{\mathbf{W}} \mathbf{S}_{\mathbf{x}\mathbf{z}})^{-1}
+\mathbf{S}_{\mathbf{x}\mathbf{z}}' \hat{\mathbf{W}} \mathbf{s}_{\mathbf{x}\mathbf{y}},
+\label{eq:4.2.3} \\[4pt]
+\text{its sampling error:}\quad
+\hat{\boldsymbol{\delta}}(\hat{\mathbf{W}}) - \boldsymbol{\delta}
+&= (\mathbf{S}_{\mathbf{x}\mathbf{z}}' \hat{\mathbf{W}} \mathbf{S}_{\mathbf{x}\mathbf{z}})^{-1}
+\mathbf{S}_{\mathbf{x}\mathbf{z}}' \hat{\mathbf{W}} \bar{\mathbf{g}}.
+\label{eq:4.2.4}
+\end{align}
+
+The features specific to the multiple-equation GMM formula are the following:
+(i)~$\mathbf{s}_{\mathbf{x}\mathbf{y}}$ is a stacked vector as in~\eqref{eq:4.2.2},
+(ii)~$\mathbf{S}_{\mathbf{x}\mathbf{z}}$ is a block diagonal matrix as in~\eqref{eq:4.2.2},
+(iii)~accordingly, the size of the weighting matrix $\hat{\mathbf{W}}$ is
+$\sum_m K_m \times \sum_m K_m$,
+and (iv)~$\bar{\mathbf{g}}$ in~\eqref{eq:4.2.4}, the sample mean of $\mathbf{g}_i$,
+is the stacked vector
+\begin{equation}
+\bar{\mathbf{g}} \equiv \frac{1}{n} \sum_{i=1}^{n} \mathbf{g}_i
+= \begin{bmatrix}
+\dfrac{1}{n} \displaystyle\sum_{i=1}^{n} \mathbf{x}_{i1} \cdot \varepsilon_{i1} \\[6pt]
+\vdots \\[4pt]
+\dfrac{1}{n} \displaystyle\sum_{i=1}^{n} \mathbf{x}_{iM} \cdot \varepsilon_{iM}
+\end{bmatrix}
+= \mathbf{g}_n(\boldsymbol{\delta}).
+\label{eq:4.2.5}
+\end{equation}
+
+It will be necessary to rewrite the multiple-equation GMM formula~\eqref{eq:4.2.3}
+while explicitly taking account of those special features. If
+$\hat{\mathbf{W}}_{mh}$ $(K_m \times K_h)$ is the $(m, h)$ block of
+$\hat{\mathbf{W}}$ $(m, h = 1, 2, \ldots, M)$, then~\eqref{eq:4.2.3} can be written
+out in full as
+\begin{align}
+\hat{\boldsymbol{\delta}}(\hat{\mathbf{W}})
+&= \begin{bmatrix}
+\hat{\boldsymbol{\delta}}_1(\hat{\mathbf{W}}) \\ \vdots \\
+\hat{\boldsymbol{\delta}}_M(\hat{\mathbf{W}})
+\end{bmatrix} \notag \\[6pt]
+&= \left(
+\begin{bmatrix}
+\dfrac{1}{n} \displaystyle\sum \mathbf{z}_{i1} \mathbf{x}_{i1}' & & \\
+& \ddots & \\
+& & \dfrac{1}{n} \displaystyle\sum \mathbf{z}_{iM} \mathbf{x}_{iM}'
+\end{bmatrix}
+\begin{bmatrix}
+\hat{\mathbf{W}}_{11} & \cdots & \hat{\mathbf{W}}_{1M} \\
+\vdots & & \vdots \\
+\hat{\mathbf{W}}_{M1} & \cdots & \hat{\mathbf{W}}_{MM}
+\end{bmatrix}
+\begin{bmatrix}
+\dfrac{1}{n} \displaystyle\sum \mathbf{x}_{i1} \mathbf{z}_{i1}' & & \\
+& \ddots & \\
+& & \dfrac{1}{n} \displaystyle\sum \mathbf{x}_{iM} \mathbf{z}_{iM}'
+\end{bmatrix}
+\right)^{-1} \notag \\[6pt]
+&\quad \times
+\begin{bmatrix}
+\dfrac{1}{n} \displaystyle\sum \mathbf{z}_{i1} \mathbf{x}_{i1}' & & \\
+& \ddots & \\
+& & \dfrac{1}{n} \displaystyle\sum \mathbf{z}_{iM} \mathbf{x}_{iM}'
+\end{bmatrix}
+\begin{bmatrix}
+\hat{\mathbf{W}}_{11} & \cdots & \hat{\mathbf{W}}_{1M} \\
+\vdots & & \vdots \\
+\hat{\mathbf{W}}_{M1} & \cdots & \hat{\mathbf{W}}_{MM}
+\end{bmatrix}
+\begin{bmatrix}
+\dfrac{1}{n} \displaystyle\sum \mathbf{x}_{i1} \cdot y_{i1} \\[6pt]
+\vdots \\[4pt]
+\dfrac{1}{n} \displaystyle\sum \mathbf{x}_{iM} \cdot y_{iM}
+\end{bmatrix} \notag \\[6pt]
+&= \begin{bmatrix}
+\Bigl(\dfrac{1}{n} \displaystyle\sum \mathbf{z}_{i1} \mathbf{x}_{i1}'\Bigr)
+\hat{\mathbf{W}}_{11}
+\Bigl(\dfrac{1}{n} \displaystyle\sum \mathbf{x}_{i1} \mathbf{z}_{i1}'\Bigr)
+& \cdots &
+\Bigl(\dfrac{1}{n} \displaystyle\sum \mathbf{z}_{i1} \mathbf{x}_{i1}'\Bigr)
+\hat{\mathbf{W}}_{1M}
+\Bigl(\dfrac{1}{n} \displaystyle\sum \mathbf{x}_{iM} \mathbf{z}_{iM}'\Bigr) \\[6pt]
+\vdots & & \vdots \\[4pt]
+\Bigl(\dfrac{1}{n} \displaystyle\sum \mathbf{z}_{iM} \mathbf{x}_{iM}'\Bigr)
+\hat{\mathbf{W}}_{M1}
+\Bigl(\dfrac{1}{n} \displaystyle\sum \mathbf{x}_{i1} \mathbf{z}_{i1}'\Bigr)
+& \cdots &
+\Bigl(\dfrac{1}{n} \displaystyle\sum \mathbf{z}_{iM} \mathbf{x}_{iM}'\Bigr)
+\hat{\mathbf{W}}_{MM}
+\Bigl(\dfrac{1}{n} \displaystyle\sum \mathbf{x}_{iM} \mathbf{z}_{iM}'\Bigr)
+\end{bmatrix}^{-1} \notag \\[6pt]
+&\quad \times
+\begin{bmatrix}
+\Bigl(\dfrac{1}{n} \displaystyle\sum \mathbf{z}_{i1} \mathbf{x}_{i1}'\Bigr)
+\hat{\mathbf{W}}_{11}
+\Bigl(\dfrac{1}{n} \displaystyle\sum \mathbf{x}_{i1} y_{i1}\Bigr)
++ \cdots +
+\Bigl(\dfrac{1}{n} \displaystyle\sum \mathbf{z}_{i1} \mathbf{x}_{i1}'\Bigr)
+\hat{\mathbf{W}}_{1M}
+\Bigl(\dfrac{1}{n} \displaystyle\sum \mathbf{x}_{iM} y_{iM}\Bigr) \\[6pt]
+\vdots \\[4pt]
+\Bigl(\dfrac{1}{n} \displaystyle\sum \mathbf{z}_{iM} \mathbf{x}_{iM}'\Bigr)
+\hat{\mathbf{W}}_{M1}
+\Bigl(\dfrac{1}{n} \displaystyle\sum \mathbf{x}_{i1} y_{i1}\Bigr)
++ \cdots +
+\Bigl(\dfrac{1}{n} \displaystyle\sum \mathbf{z}_{iM} \mathbf{x}_{iM}'\Bigr)
+\hat{\mathbf{W}}_{MM}
+\Bigl(\dfrac{1}{n} \displaystyle\sum \mathbf{x}_{iM} y_{iM}\Bigr)
+\end{bmatrix}.
+\label{eq:4.2.6}
+\end{align}
+To go from the second-to-last to the last line, use formulas (A.6) and (A.7) of
+the appendix on partitioned matrices. If you find the operation too much, just set
+$M = 2$.

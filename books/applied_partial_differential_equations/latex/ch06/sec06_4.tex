@@ -1,0 +1,73 @@
+% sec06_4.tex — Section 6.4: Two-Dimensional Heat Equation
+\section{Two-Dimensional Heat Equation}
+\label{sec:fd-2d-heat}
+
+Similar ideas may be applied to numerically compute solutions of the two-dimensional heat equation
+\begin{equation*}
+\boxed{\pd{u}{t} = k\left(\pdd{u}{x} + \pdd{u}{y}\right).}
+\end{equation*}
+We introduce a two-dimensional mesh (or lattice), where for convenience we assume that $\Delta x = \Delta y$.  Using a forward difference in time and the formula for the Laplacian based on a centered difference in both $x$ and $y$ [see \eqref{eq:6.2.17}], we obtain
+\begin{equation}
+\boxed{\frac{u_{j,l}^{(m+1)} - u_{j,l}^{(m)}}{\Delta t} = \frac{k}{(\Delta x)^2}\left[u_{j+1,l}^{(m)} + u_{j-1,l}^{(m)} + u_{j,l+1}^{(m)} + u_{j,l-1}^{(m)} - 4u_{j,l}^{(m)}\right],}
+\label{eq:6.4.1}
+\end{equation}
+where $u_{j,l}^{(m)} \approx u(j\Delta x, l\Delta y, m\Delta t)$.  We march forward in time using \eqref{eq:6.4.1}.
+
+\paragraph{Stability analysis.}
+As before, the numerical scheme may be unstable.  We perform a simplified stability analysis, and thus ignore the boundary conditions.  We investigate possible growth of spatially periodic waves by substituting
+\begin{equation}
+u_{j,l}^{(m)} = Q^{t/\Delta t}e^{i(\alpha x + \beta y)}
+\label{eq:6.4.2}
+\end{equation}
+into \eqref{eq:6.4.1}.  We immediately obtain
+\begin{align*}
+Q &= 1 + s\left(e^{i\alpha\Delta x} + e^{-i\alpha\Delta x} + e^{i\beta\Delta y} + e^{-i\beta\Delta y} - 4\right) \\
+&= 1 + 2s(\cos\alpha\Delta x + \cos\beta\Delta y - 2),
+\end{align*}
+where $s = k\Delta t/(\Delta x)^2$ and $\Delta x = \Delta y$.  To ensure stability, $-1 < Q < 1$, and hence we derive the stability condition for the two-dimensional heat equation
+\begin{equation}
+\boxed{s = \frac{k\Delta t}{(\Delta x)^2} \le \frac{1}{4}.}
+\label{eq:6.4.3}
+\end{equation}
+
+\begin{example}
+As an elementary example, yet one in which an exact solution is not available, we consider the heat equation on an $L$-shaped region sketched in Fig.~\ref{fig:6.4.1}.  We assume that the temperature is initially zero.  Also, on the boundary $u = 1000$ at $x = 0$, but $u = 0$ on the rest of the boundary.  We compute with the largest stable time step, $s = \frac{1}{4}$ [$\Delta t = (\Delta x)^2/4k$], so that \eqref{eq:6.4.1} becomes
+\begin{equation}
+u_{j,l}^{(m+1)} = \frac{\left[u_{j+1,l}^{(m)} + u_{j-1,l}^{(m)} + u_{j,l+1}^{(m)} + u_{j,l-1}^{(m)}\right]}{4}.
+\label{eq:6.4.4}
+\end{equation}
+In this numerical scheme, the temperature at the next time is the average of the four neighboring mesh (or lattice) points at the present time.  We choose $\Delta x = \frac{1}{10}$ ($\Delta t = 1/400k$) and sketch the numerical solution in Figs.~\ref{fig:6.4.2} and \ref{fig:6.4.3}.  We draw contours of approximately equal temperature in order to observe the thermal energy invading the interior of this region.
+\end{example}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch06/fig_6_4_1.png}
+\caption{Initial condition.}
+\label{fig:6.4.1}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch06/fig_6_4_2.png}
+\caption{Numerical computation of temperature in an $L$-shaped region.}
+\label{fig:6.4.2}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch06/fig_6_4_3.png}
+\caption{Numerical computation of temperature in an $L$-shaped region.}
+\label{fig:6.4.3}
+\end{figure}
+
+The partial difference equation is straightforward to apply if the boundary is composed entirely of mesh points.  Usually, this is unlikely, in which case some more complicated procedure must be applied for the boundary condition.
+
+\begin{exercises}{6.4}
+\item[\starred 6.4.1.] Derive the stability condition (ignoring the boundary condition) for the two-dimensional heat equation if $\Delta x \ne \Delta y$.
+
+\item Derive the stability condition (including the effect of the boundary condition) for the two-dimensional heat equation with $u(x,y) = 0$ on the four sides of a square if $\Delta x = \Delta y$.
+
+\item Derive the stability condition (ignoring the boundary condition) for the three-dimensional heat equation if $\Delta x = \Delta y = \Delta z$.
+
+\item Solve numerically the heat equation on a rectangle $0 < x < 1$, $0 < y < 2$ with the temperature initially zero.  Assume that the boundary conditions are zero on three sides, but $u = 1$ on one long side.
+\end{exercises}
