@@ -97,8 +97,10 @@ def scrub_hayashi_progress(text: str) -> str:
     return re.sub(r"^- \*\*Publisher\*\*:.*\n", "", text, flags=re.MULTILINE)
 
 
+# applied_partial_differential_equations was removed from the repo (it carried
+# pre-existing malformed markup inherited from its source branch), so its
+# scrubber above is retained only as a worked example of the pattern.
 TARGETS = [
-    ("applied_partial_differential_equations/latex/frontmatter.tex", scrub_applied_pde),
     ("asymptotic_theory_white/latex/frontmatter.tex", scrub_asymptotic),
     ("econometrics_hayashi/latex/frontmatter.tex", scrub_hayashi_frontmatter),
     ("econometrics_hayashi/progress.md", scrub_hayashi_progress),

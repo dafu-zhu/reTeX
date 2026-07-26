@@ -90,11 +90,11 @@ error that points nowhere near the cause. The rules are absolute:
 Good:
 
 ```sh
-BOOK_NAME="a_first_course_in_monte_carlo_methods"
-TITLE="A First Course in Monte Carlo Methods"
-AUTHOR="D. Sanz-Alonso and O. Al-Ghattas"
+BOOK_NAME="a_linear_algebra_primer_for_financial_engineering"
+TITLE="A Linear Algebra Primer for Financial Engineering"
+AUTHOR="Dan Stefanica"
 EDITION="1"
-SOURCE_PDF="pdfs/a_first_course_in_monte_carlo_methods.pdf"
+SOURCE_PDF="pdfs/a_linear_algebra_primer_for_financial_engineering.pdf"
 PAGE_COUNT="341"
 PAGE_OFFSET="12"
 COPYRIGHT_PAGE="4"
