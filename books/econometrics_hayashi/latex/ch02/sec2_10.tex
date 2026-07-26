@@ -1,0 +1,456 @@
+% sec2_10.tex — Section 2.10: Testing for Serial Correlation
+
+\section{Testing for Serial Correlation}
+\label{sec:2.10}
+
+As remarked in Section~2.3 (see (2.3.3)), when the regressors include a constant
+(true in virtually all known applications), Assumption~2.5 implies that the error
+term is a scalar martingale difference sequence (m.d.s.), so if the error is found to
+be serially correlated, that is an indication of a failure of Assumption~2.5. Serial
+correlation has traditionally been an important subject in econometrics, and there
+are available a number of tests for serial correlation (i.e., tests of the null of no
+serial correlation in the error term). Some of them, however, require that the
+regressors be strictly exogenous. The test to be presented in this section does not
+require strict exogeneity. Because the issue of serial correlation arises only in time-series models, we use the subscript ``$t$'' instead of ``$i$'' in this section (and the next).
+Throughout this section we assume that the regressors include a constant.
+
+It would be nice to have those tests extended to cover serial correlation in $\mathbf{g}_t$
+($\equiv \mathbf{x}_t \cdot \varepsilon_t$), but no such tests have been proposed to gain acceptance. This is a gap
+in the literature, but not a serious one, because nowadays researchers know how
+to live with serial correlation in $\mathbf{g}_t$. That is, as will be shown in Chapter~6, there
+is available a method to do inference in the presence of serial correlation in $\mathbf{g}_t$.
+
+\subsection*{Box--Pierce and Ljung--Box}
+
+Before turning to the tests for serial correlation in the error term, we temporarily
+step outside the regression framework and consider serial correlation in a univariate time series. Suppose we have a sample of size $n$, $\{z_1, \ldots, z_n\}$, drawn from a
+scalar covariance-stationary process. In Section~2.2 we defined the (population)
+$j$-th order autocovariance $\gamma_j$. The \textbf{sample $j$-th order autocovariance} is
+%
+\begin{equation}
+\hat{\gamma}_j \equiv \frac{1}{n}\sum_{t=j+1}^{n}(z_t - \bar{z}_n)(z_{t-j} - \bar{z}_n)
+\quad (j = 0, 1, \ldots\,),
+\label{eq:2.10.1}
+\end{equation}
+%
+where
+\[
+\bar{z}_n \equiv \frac{1}{n}\sum_{t=1}^{n} z_t.
+\]
+%
+(If the population mean $\E(z_t)$ is known, it can replace the sample mean $\bar{z}_n$; doing
+so would improve the small sample property.) Here, even though only $n - j$ terms
+are in the sum, the denominator is $n$ rather than $n - j$. Whether the sum of $n - j$
+terms is divided by $n$ or by $n - j$ does not affect large-sample results. For moderate
+sample sizes, however, the numerical difference can be substantial, and you should
+always be explicit about which is used as the denominator. The \textbf{sample $j$-th order
+autocorrelation coefficient}, $\hat{\rho}_j$, is defined as
+%
+\begin{equation}
+\hat{\rho}_j \equiv \frac{\hat{\gamma}_j}{\hat{\gamma}_0}
+\quad (j = 1, 2, \ldots\,).
+\label{eq:2.10.2}
+\end{equation}
+%
+If $\{z_t\}$ is ergodic stationary, then it is easy to show (see a review question) that
+$\hat{\gamma}_j$ is consistent for $\gamma_j$ ($j = 0, 1, 2, \ldots$). Hence, by Lemma~2.3(a),
+$\hat{\rho}_j$ is consistent for $\rho_j$ ($j = 1, 2, \ldots$). In particular, if $\{z_t\}$ is serially uncorrelated,
+then all the sample autocorrelation coefficients converge to 0 in probability. To test for
+serial correlation, however, we need to know the asymptotic distribution of
+$\sqrt{n}\,\hat{\rho}_j$. It is provided by
+
+\begin{proposition}[2.9 (special case of Theorem 6.7 of Hall and Heyde (1980))]
+\label{prop:2.9}
+Suppose $\{z_t\}$ can be written as $\mu + \varepsilon_t$, where $\varepsilon_t$ is a stationary
+martingale difference sequence with ``own'' conditional homoskedasticity:
+\[
+\textup{(own conditional homoskedasticity)}\quad
+\E(\varepsilon_t^2 \mid \varepsilon_{t-1}, \varepsilon_{t-2}, \ldots\,) = \sigma^2,
+\quad \sigma^2 > 0.
+\]
+Let the sample autocorrelation $\hat{\rho}_j$ be defined as in \eqref{eq:2.10.1} and \eqref{eq:2.10.2}. Then
+\[
+\sqrt{n}\,\hat{\bm{\gamma}} \dto N(\mathbf{0}, \sigma^4 \mathbf{I}_p)
+\quad \text{and} \quad
+\sqrt{n}\,\hat{\bm{\rho}} \dto N(\mathbf{0}, \mathbf{I}_p),
+\]
+where $\hat{\bm{\gamma}} = (\hat{\gamma}_1, \hat{\gamma}_2, \ldots, \hat{\gamma}_p)'$
+and $\hat{\bm{\rho}} = (\hat{\rho}_1, \hat{\rho}_2, \ldots, \hat{\rho}_p)'$.
+\end{proposition}
+
+Here, the process $\varepsilon_t$ is not required to be ergodic. Proving this under the additional
+condition of ergodicity is left as an analytical exercise. Thus, asymptotically,
+($\sqrt{n}$ times) the autocorrelations are i.i.d.\ and the distribution is $N(0, 1)$. The
+process $\{\varepsilon_t\}$ assumed here is more general than independent white noise processes,
+but the conditional second moment has to be constant, so this result does not cover
+ARCH processes, for example.
+
+One way to test for serial correlation in the series is to check whether the first-order autocorrelation, $\rho_1$, is 0. Proposition~\ref{prop:2.9} implies that
+%
+\begin{equation}
+\sqrt{n}\,\hat{\rho}_1 = \frac{\hat{\rho}_1}{1/\sqrt{n}}
+\dto N(0, 1).
+\label{eq:2.10.3}
+\end{equation}
+%
+So the $t$-statistic formed as the ratio of $\hat{\rho}_1$ to a ``standard error'' of $1/\sqrt{n}$
+is asymptotically standard normal.
+
+We can also test whether a group of autocorrelations are simultaneously zero.
+Let $\hat{\bm{\rho}} = (\hat{\rho}_1, \ldots, \hat{\rho}_p)'$ be the $p$-dimensional vector collecting the first $p$ sample
+autocorrelations. Since the elements of $\sqrt{n}\,\hat{\bm{\rho}}$ are asymptotically independent and
+individually distributed as standard normal, their squared sum, called the \textbf{Box--Pierce $Q$} because it was first considered by Box and Pierce (1970), is asymptotically
+chi-squared:
+%
+\begin{equation}
+\text{Box--Pierce } Q \text{ statistic}
+\equiv n \sum_{j=1}^{p}\hat{\rho}_j^2
+= \sum_{j=1}^{p}(\sqrt{n}\,\hat{\rho}_j)^2
+\dto \chi^2(p).
+\label{eq:2.10.4}
+\end{equation}
+%
+It is easy to show (see a review question) that the following modification, called
+the \textbf{Ljung--Box $Q$}, is asymptotically equivalent in that its difference from the Box--Pierce $Q$ vanishes in large samples. So by Lemma~2.4(a) it, too, is asymptotically
+chi-squared:
+%
+\begin{equation}
+\text{Ljung--Box } Q \text{ statistic}
+\equiv n \cdot (n+2) \sum_{j=1}^{p}\frac{\hat{\rho}_j^2}{n - j}
+= \sum_{j=1}^{p}\frac{n+2}{n-j}\,(\sqrt{n}\,\hat{\rho}_j)^2
+\dto \chi^2(p).
+\label{eq:2.10.5}
+\end{equation}
+%
+This modification often provides a better approximation to the chi-square distribution for moderate sample sizes (you will be asked to verify this in a Monte Carlo
+exercise). For either statistic, there is no clear guide to the choice of $p$. If $p$ is too
+small, there is a danger of missing the existence of higher-order autocorrelations,
+but if $p$ is too large relative to the sample size, its finite-sample distribution is likely
+to deteriorate, diverging greatly from the chi-square distribution.
+
+\subsection*{Sample Autocorrelations Calculated from Residuals}
+
+Now go back to the regression model described by Assumptions~2.1--2.5. If the
+error term $\varepsilon_t$ were observable, we would calculate the sample autocorrelations as
+%
+\begin{equation}
+\tilde{\rho}_j \equiv \frac{\tilde{\gamma}_j}{\tilde{\gamma}_0}
+\quad (j = 1, 2, \ldots\,),
+\label{eq:2.10.6}
+\end{equation}
+%
+where
+%
+\begin{equation}
+\tilde{\gamma}_j \equiv \frac{1}{n}\sum_{t=j+1}^{n}\varepsilon_t\,\varepsilon_{t-j}
+\quad (j = 0, 1, 2, \ldots\,).
+\label{eq:2.10.7}
+\end{equation}
+%
+(There is no need to subtract the sample mean because the population mean is
+zero, an implication of the inclusion of a constant in the regressors. Since
+$\{\varepsilon_t\varepsilon_{t-j}\}$ is ergodic stationary by Assumption~2.2, $\tilde{\gamma}_j$ converges in probability
+to the corresponding population mean, $\E(\varepsilon_t\varepsilon_{t-j})$, for all $j$, and $\tilde{\rho}_j$ is consistent
+for the population $j$-th autocorrelation coefficient of $\varepsilon_t$.
+
+Next consider the more realistic case where we do not observe the error term.
+We can replace $\varepsilon_t$ in the above formula by the OLS estimate $e_t$ and calculate the
+sample autocorrelations as
+%
+\begin{equation}
+\hat{\rho}_j \equiv \frac{\hat{\gamma}_j}{\hat{\gamma}_0}
+\quad (j = 1, 2, \ldots\,),
+\label{eq:2.10.8}
+\end{equation}
+%
+where
+%
+\begin{equation}
+\hat{\gamma}_j \equiv \frac{1}{n}\sum_{t=j+1}^{n} e_t\,e_{t-j}
+\quad (j = 0, 1, 2, \ldots\,).
+\label{eq:2.10.9}
+\end{equation}
+%
+(Because the regressors include a constant, the normal equation corresponding to
+the constant ensures that the sample mean of $e_t$ is zero. So there is no need to
+subtract the sample mean.) Is it all right to use $\hat{\rho}_j$ (calculated from the residuals) instead of $\tilde{\rho}_j$ and the residual-based $Q$ statistics derived from $\{\hat{\rho}_j\}$ for testing
+for serial correlation? The answer is yes, but only if the regressors are strictly
+exogenous.
+
+Recall that the expression linking the residual $e_t$ to the true error $\varepsilon_t$ was
+given in (2.3.9). Using this, the difference between $\tilde{\gamma}_j$ and $\hat{\gamma}_j$ can be written as
+%
+\begin{align}
+\hat{\gamma}_j &\equiv \frac{1}{n}\sum_{t=j+1}^{n} e_t\,e_{t-j} \notag \\
+&= \frac{1}{n}\sum_{t=j+1}^{n}
+[\varepsilon_t - \mathbf{x}_t'(\mathbf{b} - \bm{\beta})]
+[\varepsilon_{t-j} - \mathbf{x}_{t-j}'(\mathbf{b} - \bm{\beta})] \notag \\
+&= \tilde{\gamma}_j
+- \frac{1}{n}\sum_{t=j+1}^{n}
+(\mathbf{x}_{t-j} \cdot \varepsilon_t + \mathbf{x}_t \cdot \varepsilon_{t-j})'(\mathbf{b} - \bm{\beta}) \notag \\
+&\quad + (\mathbf{b} - \bm{\beta})'\Bigl(\frac{1}{n}\sum_{t=j+1}^{n}
+\mathbf{x}_t\,\mathbf{x}_{t-j}'\Bigr)(\mathbf{b} - \bm{\beta}).
+\label{eq:2.10.10}
+\end{align}
+%
+If $\E(\mathbf{x}_t \cdot \varepsilon_{t-j})$, $\E(\mathbf{x}_{t-j} \cdot \varepsilon_t)$, and
+$\E(\mathbf{x}_t\,\mathbf{x}_{t-j}')$ are all finite, then the second and the third
+terms vanish (converge to zero in probability) because
+$\mathbf{b} - \bm{\beta} \pto \mathbf{0}$. Therefore,
+\[
+\hat{\gamma}_j - \tilde{\gamma}_j \pto 0
+\quad (j = 0, 1, 2, \ldots\,),
+\]
+and thus the difference between $\tilde{\rho}_j$ and $\hat{\rho}_j$, too, vanishes in large samples.
+However, $\sqrt{n}$ times the difference does not.
+$\sqrt{n}\,\tilde{\rho}_j$ and $\sqrt{n}\,\hat{\rho}_j$ can be written as
+%
+\begin{equation}
+\sqrt{n}\,\tilde{\rho}_j = \frac{\sqrt{n}\,\tilde{\gamma}_j}{\tilde{\gamma}_0}
+\quad \text{and} \quad
+\sqrt{n}\,\hat{\rho}_j = \frac{\sqrt{n}\,\hat{\gamma}_j}{\hat{\gamma}_0}.
+\label{eq:2.10.11}
+\end{equation}
+%
+We have just seen that, for both $\sqrt{n}\,\tilde{\rho}_j$ and $\sqrt{n}\,\hat{\rho}_j$,
+the denominator $\pto \sigma^2$. So the difference between $\sqrt{n}\,\tilde{\rho}_j$ and
+$\sqrt{n}\,\hat{\rho}_j$ will vanish if the difference between $\sqrt{n}\,\tilde{\gamma}_j$
+and $\sqrt{n}\,\hat{\gamma}_j$ does (if you are not convinced, see Review Question~3 below).
+Now, by multiplying both sides of \eqref{eq:2.10.10} by $\sqrt{n}$, we obtain
+%
+\begin{align}
+\sqrt{n}\,\hat{\gamma}_j &= \sqrt{n}\,\tilde{\gamma}_j
+- \frac{1}{n}\sum_{t=j+1}^{n}
+(\mathbf{x}_{t-j}\cdot\varepsilon_t + \mathbf{x}_t\cdot\varepsilon_{t-j})'\,
+\sqrt{n}\,(\mathbf{b} - \bm{\beta}) \notag \\
+&\quad + \sqrt{n}\,(\mathbf{b} - \bm{\beta})'\Bigl(\frac{1}{n}\sum_{t=j+1}^{n}
+\mathbf{x}_t\,\mathbf{x}_{t-j}'\Bigr)(\mathbf{b} - \bm{\beta}).
+\label{eq:2.10.12}
+\end{align}
+%
+Because $\sqrt{n}\,(\mathbf{b} - \bm{\beta})$ converges to a random variable (whose distribution is
+normal), the third term on the RHS vanishes by Lemma~2.4(b). Regarding the second term,
+%
+\begin{equation}
+\frac{1}{n}\sum_{t=j+1}^{n}
+(\mathbf{x}_{t-j}\cdot\varepsilon_t + \mathbf{x}_t\cdot\varepsilon_{t-j})
+\pto \E(\mathbf{x}_{t-j}\cdot\varepsilon_t) + \E(\mathbf{x}_t\cdot\varepsilon_{t-j}).
+\label{eq:2.10.13}
+\end{equation}
+%
+If the regressors are strictly exogenous in the sense that
+$\E(\mathbf{x}_t \cdot \varepsilon_s) = \mathbf{0}$ for all $t$, $s$, then
+%
+\begin{equation}
+\E(\mathbf{x}_{t-j}\cdot\varepsilon_t) + \E(\mathbf{x}_t\cdot\varepsilon_{t-j}) = \mathbf{0},
+\label{eq:2.10.14}
+\end{equation}
+%
+and by Lemma~2.4(b) the second term converges to zero in probability. So the
+difference between $\sqrt{n}\,\tilde{\rho}_j$ and $\sqrt{n}\,\hat{\rho}_j$ vanishes,
+which means that the $Q$ statistic calculated from the regression residuals $\{e_t\}$,
+too, is asymptotically chi-squared, and we can use this residual-based $Q$ to test for
+serial correlation. If, on the other hand, the regressors are not strictly exogenous,
+then there is no guarantee that \eqref{eq:2.10.14} holds. Consequently, the residual-based
+$Q$ statistic may not be asymptotically chi-squared.
+
+\subsection*{Testing with Predetermined, but Not Strictly Exogenous, Regressors}
+
+Therefore, when the regressors are not strictly exogenous, we need to modify the
+$Q$ statistic to restore its asymptotic distribution. For this purpose, consider two
+restrictions:
+%
+\begin{align}
+&\text{(stronger form of predeterminedness)}\quad
+\E(\varepsilon_t \mid \varepsilon_{t-1}, \varepsilon_{t-2}, \ldots,
+\mathbf{x}_t, \mathbf{x}_{t-1}, \ldots\,) = 0,
+\label{eq:2.10.15} \\[6pt]
+&\text{(stronger form of conditional homoskedasticity)} \notag \\
+&\qquad \E(\varepsilon_t^2 \mid \varepsilon_{t-1}, \varepsilon_{t-2}, \ldots,
+\mathbf{x}_t, \mathbf{x}_{t-1}, \ldots\,) = \sigma^2 > 0.
+\label{eq:2.10.16}
+\end{align}
+%
+The first condition is just reproducing (2.3.1) (with ``$t$'' now being used as the
+subscript). As was shown in Section~2.3, this is stronger than Assumption~2.3 and
+implies that $\mathbf{g}_t$ ($\equiv \mathbf{x}_t \cdot \varepsilon_t$) is an m.d.s. Condition~\eqref{eq:2.10.16}, with the conditioning
+set including $\mathbf{x}_t$, is obviously stronger than Assumption~2.7 (conditional homoskedasticity). It also is stronger than the own conditional homoskedasticity assumption
+in Proposition~\ref{prop:2.9} because the conditioning set includes current and past $\mathbf{x}$ as well
+as past $\varepsilon$. The next result shows that under these additional conditions there is an
+appropriate modification of the $Q$ statistic.
+
+\begin{proposition}[2.10 (testing for serial correlation with predetermined regressors)]
+\label{prop:2.10}
+Suppose that Assumptions~2.1, 2.2, 2.4, \eqref{eq:2.10.15}, and \eqref{eq:2.10.16}
+are satisfied. Let the sample autocorrelation of the OLS residuals, $\hat{\rho}_j$,
+be defined as in \eqref{eq:2.10.8}. Then,
+%
+\begin{equation}
+\sqrt{n}\,\hat{\bm{\gamma}} \dto N(\mathbf{0},\,\sigma^4 \cdot (\mathbf{I}_p - \mathbf{\Phi}))
+\quad \text{and} \quad
+\sqrt{n}\,\hat{\bm{\rho}} \dto N(\mathbf{0},\,\mathbf{I}_p - \mathbf{\Phi}),
+\label{eq:2.10.17}
+\end{equation}
+%
+where
+$\hat{\bm{\gamma}} = (\hat{\gamma}_1, \hat{\gamma}_2, \ldots, \hat{\gamma}_p)'$,
+$\hat{\bm{\rho}} = (\hat{\rho}_1, \hat{\rho}_2, \ldots, \hat{\rho}_p)'$,
+and $\phi_{jk}$ ($\equiv (j,k)$ element of the $p \times p$ matrix $\mathbf{\Phi}$) is given by
+%
+\begin{equation}
+\phi_{jk} = \E(\mathbf{x}_t \cdot \varepsilon_{t-j})'\,
+\E(\mathbf{x}_t\mathbf{x}_t')^{-1}\,
+\E(\mathbf{x}_t \cdot \varepsilon_{t-k})/\sigma^2.
+\label{eq:2.10.18}
+\end{equation}
+\end{proposition}
+
+The proof, though not very difficult, is relegated to Appendix~2.B. By the Ergodic
+Theorem, matrix $\mathbf{\Phi}$ is consistently estimated by its sample counterpart:
+%
+\begin{equation}
+\widehat{\mathbf{\Phi}} \equiv (\hat{\phi}_{jk}), \quad
+\hat{\phi}_{jk} \equiv \bar{\bm{\mu}}_j'\,\mathbf{S}_{\mathbf{xx}}^{-1}\,
+\bar{\bm{\mu}}_k / s^2
+\quad (j, k = 1, 2, \ldots, p),
+\label{eq:2.10.19}
+\end{equation}
+%
+where
+\[
+s^2 \equiv \frac{1}{n - K}\sum_{t=1}^{n} e_t^2, \quad
+\bar{\bm{\mu}}_j \equiv \frac{1}{n}\sum_{t=j+1}^{n}\mathbf{x}_t \cdot e_{t-j}.
+\]
+%
+It follows from this and Proposition~\ref{prop:2.10} that
+%
+\begin{equation}
+\text{modified Box--Pierce } Q
+\equiv n \cdot \hat{\bm{\rho}}'(\mathbf{I}_p - \widehat{\mathbf{\Phi}})^{-1}\hat{\bm{\rho}}
+\dto \chi^2(p).
+\label{eq:2.10.20}
+\end{equation}
+%
+As long as the regressors are predetermined and the error is conditionally homoskedastic in the sense of \eqref{eq:2.10.15} and \eqref{eq:2.10.16}, this modified $Q$ statistic can be
+used even when the regressors are not strictly exogenous.
+
+\subsection*{An Auxiliary Regression-Based Test}
+
+Although calculating this modified $Q$ statistic is straightforward with matrix-based
+software, it is useful to find an asymptotically equivalent statistic that can be calculated from regression packages. For this purpose, consider the following auxiliary
+regression:
+%
+\begin{equation}
+\text{regress } e_t \text{ on } \mathbf{x}_t, e_{t-1}, e_{t-2}, \ldots, e_{t-p}.
+\label{eq:2.10.21}
+\end{equation}
+%
+To run this auxiliary regression for $t = 1, 2, \ldots, n$, we need data on
+$(e_0, e_{-1}, \ldots, e_{-p+1})$. It does not matter asymptotically which particular numbers
+to assign to them, but it seems sensible to set them equal to 0, their expected
+value.\footnote{Another asymptotically equivalent choice is to run the auxiliary
+regression for $t = p+1, p+2, \ldots, n$.}
+From this auxiliary regression, we can calculate the $F$ statistic for the hypothesis
+that the $p$ coefficients of $e_{t-1}, e_{t-2}, \ldots, e_{t-p}$ are all zero. Given
+Proposition~2.5(c), it is only natural to wonder whether $p \cdot F$ is asymptotically
+$\chi^2(p)$. This conjecture is indeed true: under the hypothesis of Proposition~\ref{prop:2.10}, the modified $Q$ statistic \eqref{eq:2.10.20} is
+asymptotically equivalent to $p \cdot F$ (i.e., the difference between the two converges
+to zero in probability as $n \to \infty$), so $p \cdot F$, too, is asymptotically chi-squared
+(showing this is an analytical exercise).
+
+This $p \cdot F$ statistic, in turn, is asymptotically equivalent to $nR^2$ from the auxiliary regression. This can be shown as follows. Recall the algebraic result from
+Chapter~1 that the $F$-ratio can be calculated from the difference in the sum of
+squared residuals between the unrestricted and restricted regressions. The unrestricted regression in the present context is \eqref{eq:2.10.21} while the restricted regression is
+%
+\begin{equation}
+\text{regress } e_t \text{ on } \mathbf{x}_t.
+\label{eq:2.10.22}
+\end{equation}
+%
+Therefore, if $SSR_U$ and $SSR_R$ are SSRs from \eqref{eq:2.10.21} and \eqref{eq:2.10.22}, respectively,
+we have
+%
+\begin{equation}
+p \cdot F = \frac{SSR_R - SSR_U}{SSR_U/(n - \#\mathbf{x}_t - p)}
+= (n - \#\mathbf{x}_t - p)\,\frac{SSR_R - SSR_U}{SSR_U}
+\label{eq:2.10.23}
+\end{equation}
+%
+where $\#\mathbf{x}_t$ is the number of variables in $\mathbf{x}_t$. However, since $e_t$ is the residual from
+the original regression (a regression of $y_t$ on $\mathbf{x}_t$), the regressors $\mathbf{x}_t$ in \eqref{eq:2.10.22} have
+no explanatory power. So $SSR_R = \mathbf{e}'\mathbf{e}$ where $\mathbf{e}$ is the $n$-dimensional vector of
+residuals from the original regression, and \eqref{eq:2.10.23} is numerically identical to
+\[
+(n - \#\mathbf{x}_t - p)\,\frac{R_{uc}^2}{1 - R_{uc}^2},
+\]
+where $R_{uc}^2$ is the uncentered $R^2$ for the auxiliary regression \eqref{eq:2.10.21}.\footnote{Recall from (1.2.16) that the uncentered $R^2$ for a regression of $\mathbf{y}$ on $\mathbf{x}$ is defined as
+$R_{uc}^2 = (\mathbf{y}'\mathbf{y} - \mathbf{e}'\mathbf{e})/(\mathbf{y}'\mathbf{y})$.
+In the present context, the $\mathbf{y}'\mathbf{y}$ in this formula is $\mathbf{e}'\mathbf{e}$ while the $\mathbf{e}'\mathbf{e}$ in the formula is $SSR_U$.}
+But since the sample mean of $e_t$ is by construction zero (this is because $\mathbf{x}_t$ includes a constant), $R_{uc}^2$ is numerically identical to the $R^2$ for the auxiliary regression. Thus, we
+have proved the algebraic result that
+\[
+p \cdot F = (n - \#\mathbf{x}_t - p)\,\frac{R^2}{1 - R^2},
+\]
+where $R^2$ is equal to the $R^2$ for the auxiliary regression \eqref{eq:2.10.21}. Solving this
+equation for $R^2$ and multiplying both sides by $n$, we obtain
+\[
+nR^2 = \frac{n}{n - \#\mathbf{x}_t - p} \cdot
+\frac{1}{1 + \frac{p \cdot F}{n - \#\mathbf{x}_t - p}} \cdot p \cdot F.
+\]
+Since $\frac{p \cdot F}{n - \#\mathbf{x}_t - p} \pto 0$ as $n \to \infty$
+(an implication of Lemma~2.4(b)), this equation shows that $p \cdot F - nR^2 \pto 0$.
+Therefore, $nR^2$ from the auxiliary regression \eqref{eq:2.10.21} is asymptotically
+$\chi^2(p)$. The test based on $nR^2$ is called the
+\textbf{Breusch--Godfrey test for serial correlation}. When $p = 1$, the test statistic is
+asymptotically equivalent to the square of what is known as \textbf{Durbin's $h$}
+statistic.\footnote{See Breusch (1978) and Godfrey (1978). The Breusch--Godfrey test
+was originally derived as a Lagrange Multiplier test for the case where the error is
+normally distributed and $\mathbf{x}_t$ consists of fixed regressors and the lagged dependent
+variable. The discussion in the text shows that the test is applicable to the more general
+case considered in Proposition~\ref{prop:2.10}.}
+
+\bigskip
+\noindent\textsc{Questions for Review}
+\begin{enumerate}
+\item (Consistency of sample autocovariances)\quad
+Show: if $\{z_t\}$ is ergodic stationary,
+then the sample autocovariance $\hat{\gamma}_j$ given in \eqref{eq:2.10.1} is consistent for
+$\gamma_j$, the population autocovariance.
+\textbf{Hint:} $\gamma_j = \E(z_t z_{t-j}) - \E(z_t)\,\E(z_{t-j})$. Rewrite $\hat{\gamma}_j$ as
+\[
+\hat{\gamma}_j = \frac{1}{n}\sum_{t=j+1}^{n} z_t\,z_{t-j}
+- \bar{z}_n\,\frac{1}{n}\sum_{t=j+1}^{n}z_{t-j}
+- \bar{z}_n\,\frac{1}{n}\sum_{t=j+1}^{n}z_t
++ \frac{n-j}{n}\,(\bar{z}_n)^2.
+\]
+
+\item (Asymptotic equivalence of two $Q$'s)\quad
+Prove that the difference between the
+Box--Pierce $Q$ and the Ljung--Box $Q$ converges to 0 in probability as $n \to \infty$
+(so their asymptotic distributions are the same). \textbf{Hint:} Let
+\[
+\mathbf{x}_n \equiv \bigl((\sqrt{n}\,\hat{\rho}_1)^2, \ldots,
+(\sqrt{n}\,\hat{\rho}_p)^2\bigr)'.
+\]
+Find a $p$-dimensional vector $\mathbf{a}_n$ such that the difference between two $Q$'s is
+$\mathbf{a}_n'\mathbf{x}_n$. Show that $\mathbf{a}_n \to \mathbf{0}$. The asymptotic property to use is Lemma~2.4(b).
+
+\item Consider $\sqrt{n}\,\tilde{\rho}_j$ and $\sqrt{n}\,\hat{\rho}_j$ in \eqref{eq:2.10.11}.
+We have shown that $\hat{\gamma}_0 \pto \sigma^2$ and
+$\tilde{\gamma}_0 \pto \sigma^2$. By Proposition~\ref{prop:2.9},
+$\sqrt{n}\,\tilde{\gamma}_j \dto N(0, \sigma^4)$. Taking these for granted,
+show that $\sqrt{n}\,\hat{\rho}_j - \sqrt{n}\,\tilde{\rho}_j \pto 0$
+if $\sqrt{n}\,\hat{\gamma}_j - \sqrt{n}\,\tilde{\gamma}_j \pto 0$.
+\textbf{Hint:} If $\sqrt{n}\,\hat{\gamma}_j - \sqrt{n}\,\tilde{\gamma}_j \pto 0$,
+then by Lemma~2.4(a), $\sqrt{n}\,\hat{\gamma}_j \dto N(0, \sigma^4)$.
+\[
+\frac{\tilde{\gamma}_j}{\tilde{\gamma}_0}
+- \frac{\hat{\gamma}_j}{\hat{\gamma}_0}
+= \tilde{\gamma}_j \cdot \Bigl(\frac{1}{\tilde{\gamma}_0}
+- \frac{1}{\sigma^2}\Bigr)
+- \hat{\gamma}_j \cdot \Bigl(\frac{1}{\hat{\gamma}_0}
+- \frac{1}{\sigma^2}\Bigr)
++ \frac{1}{\sigma^2}\cdot(\tilde{\gamma}_j - \hat{\gamma}_j).
+\]
+Multiply both sides by $\sqrt{n}$ and apply Lemma~2.4(b).
+\end{enumerate}

@@ -1,0 +1,517 @@
+% sec1_2.tex — Section 1.2: The Algebra of Least Squares
+
+This section describes the computational procedure for obtaining the OLS estimate,
+$\vec{b}$, of the unknown coefficient vector $\bm{\beta}$ and introduces a few concepts that derive
+from~$\vec{b}$.
+
+%% ─── OLS Minimizes the Sum of Squared Residuals ──────────────────────────────
+\subsection*{OLS Minimizes the Sum of Squared Residuals}
+
+Although we do not observe the error term, we can calculate the value implied by
+a hypothetical value, $\widetilde{\bm{\beta}}$, of $\bm{\beta}$ as
+\[
+  y_i - \vec{x}_i' \widetilde{\bm{\beta}}.
+\]
+This is called the \textbf{residual} for observation~$i$.  From this, form the
+\textbf{sum of squared residuals (SSR)}:
+\[
+  SSR(\widetilde{\bm{\beta}})
+    \equiv \sum_{i=1}^{n} (y_i - \vec{x}_i' \widetilde{\bm{\beta}})^2
+    = (\vec{y} - \vec{X}\widetilde{\bm{\beta}})'
+      (\vec{y} - \vec{X}\widetilde{\bm{\beta}}).
+\]
+This sum is also called the \textbf{error sum of squares (ESS)} or the
+\textbf{residual sum of squares (RSS)}.  It is a function of
+$\widetilde{\bm{\beta}}$ because the residual depends on it.  The \textbf{OLS
+estimate}, $\vec{b}$, of $\bm{\beta}$ is the $\widetilde{\bm{\beta}}$ that
+minimizes this function:
+\begin{equation}
+  \vec{b} \equiv \argmin_{\widetilde{\bm{\beta}}} SSR(\widetilde{\bm{\beta}}).
+  \label{eq:1.2.1}
+\end{equation}
+
+The relationship among $\bm{\beta}$ (the unknown coefficient vector), $\vec{b}$
+(the OLS estimate of it), and $\widetilde{\bm{\beta}}$ (a hypothetical value of
+$\bm{\beta}$) is illustrated in Figure~\ref{fig:1.1} for $K = 1$.  Because
+$SSR(\widetilde{\bm{\beta}})$ is quadratic in $\widetilde{\bm{\beta}}$, its graph
+has the U~shape.  The value of $\widetilde{\bm{\beta}}$ corresponding to the bottom
+is~$\vec{b}$, the OLS estimate.  Since it depends on the sample
+$(\vec{y}, \vec{X})$, the OLS estimate $\vec{b}$ is in general different from the
+true value $\bm{\beta}$; if $\vec{b}$ equals $\bm{\beta}$, it is by sheer
+accident.
+
+By having squared residuals in the objective function, this method imposes a heavy
+penalty on large residuals; the OLS estimate is chosen to prevent large residuals
+for a few observations at the expense of tolerating relatively small residuals for
+many other observations.  We will see in the next section that this particular
+criterion brings about some desirable properties for the estimate.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.9\textwidth,trim=50 400 50 400,clip]{figures/fig_1_1.png}
+\caption{Hypothetical, True, and Estimated Values}
+\label{fig:1.1}
+\end{figure}
+
+%% ─── Normal Equations ─────────────────────────────────────────────────────────
+\subsection*{Normal Equations}
+
+A sure-fire way of solving the minimization problem is to derive the first-order
+conditions by setting the partial derivatives equal to zero.  To this end we seek a
+$K$-dimensional vector of partial derivatives,
+$\partial SSR(\widetilde{\bm{\beta}})/\partial \widetilde{\bm{\beta}}$.\footnote{If
+$h \colon \mathbb{R}^K \to \mathbb{R}$ is a scalar-valued function of a
+$K$-dimensional vector $\vec{x}$, the derivative of~$h$ with respect to $\vec{x}$
+is a $K$-dimensional vector whose $k$-th element is $\partial h(\vec{x})/\partial x_k$
+where $x_k$ is the $k$-th element of~$\vec{x}$.  (This $K$-dimensional vector is
+called the \textbf{gradient}.)  Here, the $\vec{x}$ is $\widetilde{\bm{\beta}}$
+and the function $h(\vec{x})$ is $SSR(\widetilde{\bm{\beta}})$.}
+The task is facilitated by writing $SSR(\widetilde{\bm{\beta}})$ as
+\begin{align}
+  SSR(\widetilde{\bm{\beta}})
+    &= (\vec{y} - \vec{X}\widetilde{\bm{\beta}})'
+       (\vec{y} - \vec{X}\widetilde{\bm{\beta}})
+    &&\text{(since the $i$-th element of
+       $\vec{y} - \vec{X}\widetilde{\bm{\beta}}$ is
+       $y_i - \vec{x}_i'\widetilde{\bm{\beta}}$)} \notag \\
+    &= (\vec{y}' - \widetilde{\bm{\beta}}'\vec{X}')
+       (\vec{y} - \vec{X}\widetilde{\bm{\beta}})
+    &&\text{(since
+       $(\vec{X}\widetilde{\bm{\beta}})' = \widetilde{\bm{\beta}}'\vec{X}'$)}
+       \notag \\
+    &= \vec{y}'\vec{y}
+       - \widetilde{\bm{\beta}}'\vec{X}'\vec{y}
+       - \vec{y}'\vec{X}\widetilde{\bm{\beta}}
+       + \widetilde{\bm{\beta}}'\vec{X}'\vec{X}\widetilde{\bm{\beta}}
+       \notag \\
+    &= \vec{y}'\vec{y}
+       - 2\vec{y}'\vec{X}\widetilde{\bm{\beta}}
+       + \widetilde{\bm{\beta}}'\vec{X}'\vec{X}\widetilde{\bm{\beta}}
+       \notag \\
+    &\qquad\text{(since the scalar
+       $\widetilde{\bm{\beta}}'\vec{X}'\vec{y}$ equals its transpose
+       $\vec{y}'\vec{X}\widetilde{\bm{\beta}}$)} \notag \\
+    &\equiv \vec{y}'\vec{y}
+       - 2\vec{a}'\widetilde{\bm{\beta}}
+       + \widetilde{\bm{\beta}}'\vec{A}\widetilde{\bm{\beta}}
+    \quad\text{with } \vec{a} \equiv \vec{X}'\vec{y}
+    \text{ and } \vec{A} \equiv \vec{X}'\vec{X}.
+  \label{eq:1.2.2}
+\end{align}
+
+The term $\vec{y}'\vec{y}$ does not depend on $\widetilde{\bm{\beta}}$ and so can
+be ignored in the differentiation of $SSR(\widetilde{\bm{\beta}})$.  Recalling from
+matrix algebra that
+\[
+  \frac{\partial(\vec{a}'\widetilde{\bm{\beta}})}
+       {\partial \widetilde{\bm{\beta}}} = \vec{a}
+  \quad\text{and}\quad
+  \frac{\partial(\widetilde{\bm{\beta}}'\vec{A}\widetilde{\bm{\beta}})}
+       {\partial \widetilde{\bm{\beta}}}
+    = 2\vec{A}\widetilde{\bm{\beta}}
+  \quad\text{for $\vec{A}$ symmetric},
+\]
+the $K$-dimensional vector of partial derivatives is
+\[
+  \frac{\partial SSR(\widetilde{\bm{\beta}})}
+       {\partial \widetilde{\bm{\beta}}}
+    = -2\vec{a} + 2\vec{A}\widetilde{\bm{\beta}}.
+\]
+
+The first-order conditions are obtained by setting this equal to zero.  Recalling
+from \eqref{eq:1.2.2} that $\vec{a}$ here is $\vec{X}'\vec{y}$ and $\vec{A}$ is
+$\vec{X}'\vec{X}$ and rearranging, we can write the first-order conditions as
+\begin{equation}
+  \underset{(K \times K)}{\vec{X}'\vec{X}} \;
+  \underset{(K \times 1)}{\vec{b}} = \vec{X}'\vec{y}.
+  \label{eq:1.2.3}
+\end{equation}
+
+Here, we have replaced $\widetilde{\bm{\beta}}$ by $\vec{b}$ because the OLS
+estimate $\vec{b}$ is the $\widetilde{\bm{\beta}}$ that satisfies the first-order
+conditions.  These $K$ equations are called the \textbf{normal equations}.
+
+The vector of residuals evaluated at $\widetilde{\bm{\beta}} = \vec{b}$,
+\begin{equation}
+  \underset{(n \times 1)}{\vec{e}} \equiv \vec{y} - \vec{X}\vec{b},
+  \label{eq:1.2.4}
+\end{equation}
+is called the vector of \textbf{OLS residuals}.  Its $i$-th element is
+$e_i \equiv y_i - \vec{x}_i'\vec{b}$.  Rearranging \eqref{eq:1.2.3} gives
+\begin{equation}
+  \vec{X}'(\vec{y} - \vec{X}\vec{b}) = \vec{0}
+  \quad\text{or}\quad
+  \vec{X}'\vec{e} = \vec{0}
+  \quad\text{or}\quad
+  \frac{1}{n}\sum_{i=1}^{n} \vec{x}_i \cdot e_i = \vec{0}
+  \quad\text{or}\quad
+  \frac{1}{n}\sum_{i=1}^{n} \vec{x}_i \cdot (y_i - \vec{x}_i'\vec{b}) = 0,
+  \tag{1.2.3\ensuremath{'}}
+  \label{eq:1.2.3prime}
+\end{equation}
+which shows that the normal equations can be interpreted as the sample analogue of
+the orthogonality conditions $\E(\vec{x}_i \cdot \varepsilon_i) = \vec{0}$.  This
+point will be pursued more fully in subsequent chapters.
+
+To be sure, the first-order conditions are just a necessary condition for
+minimization, and we have to check the second-order condition to make sure that
+$\vec{b}$ achieves the minimum, not the maximum.  Those who are familiar with the
+Hessian of a function of several variables\footnote{The \textbf{Hessian} of
+$h(\vec{x})$ is a square matrix whose $(k, \ell)$ element is
+$\partial^2 h(\vec{x})/\partial x_k \,\partial x_\ell$.} can immediately
+recognize that the second-order condition is satisfied because (as noted below)
+$\vec{X}'\vec{X}$ is positive definite.  There is, however, a more direct way to
+show that $\vec{b}$ indeed achieves the minimum.  It utilizes the
+``add-and-subtract'' strategy, which is effective when the objective function is
+quadratic, as here.  Application of the strategy to the algebra of least squares
+is left to you as an analytical exercise.
+
+%% ─── Two Expressions for the OLS Estimator ───────────────────────────────────
+\subsection*{Two Expressions for the OLS Estimator}
+
+Thus, we have obtained a system of $K$ linear simultaneous equations in $K$
+unknowns in~$\vec{b}$.  By Assumption~1.3 (no multicollinearity), the coefficient
+matrix $\vec{X}'\vec{X}$ is positive definite (see review question~1 below for a
+proof) and hence nonsingular.  So the normal equations can be solved uniquely for
+$\vec{b}$ by premultiplying both sides of \eqref{eq:1.2.3} by
+$(\vec{X}'\vec{X})^{-1}$:
+\begin{equation}
+  \vec{b} = (\vec{X}'\vec{X})^{-1}\vec{X}'\vec{y}.
+  \label{eq:1.2.5}
+\end{equation}
+
+Viewed as a function of the sample $(\vec{y}, \vec{X})$, \eqref{eq:1.2.5} is
+sometimes called the \textbf{OLS estimator}.  For any given sample
+$(\vec{y}, \vec{X})$, the value of this function is the \textbf{OLS estimate}.  In
+this book, as in most other textbooks, the two terms will be used almost
+interchangeably.
+
+Since $(\vec{X}'\vec{X})^{-1}\vec{X}'\vec{y}
+= (\vec{X}'\vec{X}/n)^{-1}\vec{X}'\vec{y}/n$, the OLS estimator can also be
+rewritten as
+\begin{equation}
+  \vec{b} = \vec{S}_{\vec{xx}}^{-1}\,\vec{s}_{\vec{xy}},
+  \tag{1.2.5\ensuremath{'}}
+  \label{eq:1.2.5prime}
+\end{equation}
+where
+\begin{align}
+  \vec{S}_{\vec{xx}}
+    &= \frac{1}{n}\vec{X}'\vec{X}
+     = \frac{1}{n}\sum_{i=1}^{n} \vec{x}_i \vec{x}_i'
+    \quad\text{(sample average of $\vec{x}_i\vec{x}_i'$)},
+  \label{eq:1.2.6a} \\
+  \vec{s}_{\vec{xy}}
+    &= \frac{1}{n}\vec{X}'\vec{y}
+     = \frac{1}{n}\sum_{i=1}^{n} \vec{x}_i \cdot y_i
+    \quad\text{(sample average of $\vec{x}_i \cdot y_i$)}.
+  \label{eq:1.2.6b}
+\end{align}
+
+The data matrix form \eqref{eq:1.2.5} is more convenient for developing the
+finite-sample results, while the sample average form \eqref{eq:1.2.5prime} is the
+form to be utilized for large-sample theory.
+
+%% ─── More Concepts and Algebra ───────────────────────────────────────────────
+\subsection*{More Concepts and Algebra}
+
+Having derived the OLS estimator of the coefficient vector, we can define a few
+related concepts.
+
+\begin{itemize}
+
+\item The \textbf{fitted value} for observation~$i$ is defined as
+  $\hat{y}_i \equiv \vec{x}_i'\vec{b}$.  The vector of fitted value, $\hat{\vec{y}}$,
+  equals $\vec{X}\vec{b}$.  Thus, the vector of OLS residuals can be written as
+  $\vec{e} = \vec{y} - \hat{\vec{y}}$.
+
+\item The \textbf{projection matrix}~$\vec{P}$ and the \textbf{annihilator}~$\vec{M}$
+  are defined as
+  \begin{align}
+    \underset{(n \times n)}{\vec{P}}
+      &\equiv \vec{X}(\vec{X}'\vec{X})^{-1}\vec{X}',
+    \label{eq:1.2.7} \\
+    \underset{(n \times n)}{\vec{M}}
+      &\equiv \vec{I}_n - \vec{P}.
+    \label{eq:1.2.8}
+  \end{align}
+  They have the following nifty properties (proving them is a review question):
+  \begin{align}
+    &\text{Both $\vec{P}$ and $\vec{M}$ are symmetric and
+      idempotent,}\footnote{A square matrix $\vec{A}$ is said to be
+      \textbf{idempotent} if $\vec{A} = \vec{A}^2$.}
+    \label{eq:1.2.9} \\
+    \vec{P}\vec{X} &= \vec{X}
+      \quad\text{(hence the term \textbf{projection} matrix)},
+    \label{eq:1.2.10} \\
+    \vec{M}\vec{X} &= \vec{0}
+      \quad\text{(hence the term \textbf{annihilator})}.
+    \label{eq:1.2.11}
+  \end{align}
+
+  Since $\vec{e}$ is the residual vector at
+  $\widetilde{\bm{\beta}} = \vec{b}$, the sum of squared OLS residuals, $SSR$,
+  equals $\vec{e}'\vec{e}$.  It can further be written as
+  \begin{equation}
+    SSR = \vec{e}'\vec{e} = \bm{\varepsilon}'\vec{M}\bm{\varepsilon}.
+    \label{eq:1.2.12}
+  \end{equation}
+  (Proving this is a review question.)  This expression, relating $SSR$ to the
+  true error term $\bm{\varepsilon}$, will be useful later on.
+
+\item The OLS estimate of $\sigma^2$ (the variance of the error term), denoted
+  $s^2$, is the sum of squared residuals divided by $n - K$:
+  \begin{equation}
+    s^2 \equiv \frac{SSR}{n - K} = \frac{\vec{e}'\vec{e}}{n - K}.
+    \label{eq:1.2.13}
+  \end{equation}
+  (The definition presumes that $n > K$; otherwise $s^2$ is not well-defined.)
+  As will be shown in Proposition~1.2 below, dividing the sum of squared residuals
+  by $n - K$ (called the \textbf{degrees of freedom}) rather than by~$n$ (the
+  sample size) makes this estimate unbiased for~$\sigma^2$.  The intuitive reason
+  is that $K$ parameters ($\bm{\beta}$) have to be estimated before obtaining the
+  residual vector~$\vec{e}$ used to calculate~$s^2$.  More specifically, $\vec{e}$
+  has to satisfy the $K$ normal equations \eqref{eq:1.2.3prime}, which limits the
+  variability of the residual.
+
+\item The square root of $s^2$, $s$, is called the \textbf{standard error of the
+  regression (SER)} or \textbf{standard error of the equation (SEE)}.  It is an
+  estimate of the standard deviation of the error term.
+
+\item The \textbf{sampling error} is defined as $\vec{b} - \bm{\beta}$.  It too
+  can be related to $\bm{\varepsilon}$ as follows.
+  \begin{align}
+    \vec{b} - \bm{\beta}
+      &= (\vec{X}'\vec{X})^{-1}\vec{X}'\vec{y} - \bm{\beta}
+      &&\text{(by \eqref{eq:1.2.5})} \notag \\
+      &= (\vec{X}'\vec{X})^{-1}\vec{X}'(\vec{X}\bm{\beta} + \bm{\varepsilon})
+         - \bm{\beta}
+      &&\text{(since $\vec{y} = \vec{X}\bm{\beta} + \bm{\varepsilon}$
+         by Assumption~1.1)} \notag \\
+      &= (\vec{X}'\vec{X})^{-1}(\vec{X}'\vec{X})\bm{\beta}
+         + (\vec{X}'\vec{X})^{-1}\vec{X}'\bm{\varepsilon}
+         - \bm{\beta} \notag \\
+      &= \bm{\beta} + (\vec{X}'\vec{X})^{-1}\vec{X}'\bm{\varepsilon}
+         - \bm{\beta}
+       = (\vec{X}'\vec{X})^{-1}\vec{X}'\bm{\varepsilon}.
+    \label{eq:1.2.14}
+  \end{align}
+
+\item \textbf{Uncentered $R^2$}.  One measure of the variability of the dependent
+  variable is the sum of squares, $\sum y_i^2 = \vec{y}'\vec{y}$.  Because the OLS
+  residual is chosen to satisfy the normal equations, we have the following
+  decomposition of $\vec{y}'\vec{y}$:
+  \begin{align}
+    \vec{y}'\vec{y}
+      &= (\hat{\vec{y}} + \vec{e})'(\hat{\vec{y}} + \vec{e})
+      &&\text{(since $\vec{e} = \vec{y} - \hat{\vec{y}}$)} \notag \\
+      &= \hat{\vec{y}}'\hat{\vec{y}} + 2\hat{\vec{y}}'\vec{e} + \vec{e}'\vec{e}
+         \notag \\
+      &= \hat{\vec{y}}'\hat{\vec{y}} + 2\vec{b}'\vec{X}'\vec{e} + \vec{e}'\vec{e}
+      &&\text{(since $\hat{\vec{y}} \equiv \vec{X}\vec{b}$)} \notag \\
+      &= \hat{\vec{y}}'\hat{\vec{y}} + \vec{e}'\vec{e}
+      &&\text{(since $\vec{X}'\vec{e} = \vec{0}$ by the normal equations;
+         see \eqref{eq:1.2.3prime})}.
+    \label{eq:1.2.15}
+  \end{align}
+
+  The \textbf{uncentered $R^2$} is defined as
+  \begin{equation}
+    R_{uc}^2 \equiv 1 - \frac{\vec{e}'\vec{e}}{\vec{y}'\vec{y}}.
+    \label{eq:1.2.16}
+  \end{equation}
+  Because of the decomposition \eqref{eq:1.2.15}, this equals
+  \[
+    \frac{\hat{\vec{y}}'\hat{\vec{y}}}{\vec{y}'\vec{y}}.
+  \]
+  Since both $\hat{\vec{y}}'\hat{\vec{y}}$ and $\vec{e}'\vec{e}$ are nonnegative,
+  $0 \le R_{uc}^2 \le 1$.  Thus, the uncentered~$R^2$ has the interpretation of the
+  fraction of the variation of the dependent variable that is attributable to the
+  variation in the explanatory variables.  The closer the fitted value tracks the
+  dependent variable, the closer the uncentered~$R^2$ to one.
+
+\item \textbf{(Centered) $R^2$, the coefficient of determination}.  If the only
+  regressor is a constant (so that $K = 1$ and $x_{i1} = 1$), then it is easy to
+  see from \eqref{eq:1.2.5} that $\vec{b}$ equals $\bar{y}$, the sample mean of
+  the dependent variable, which means that $\hat{y}_i = \bar{y}$ for all~$i$,
+  $\hat{\vec{y}}'\hat{\vec{y}}$ in \eqref{eq:1.2.15} equals $n\bar{y}^2$, and
+  $\vec{e}'\vec{e}$ equals $\sum_i (y_i - \bar{y})^2$.  If the regressors also
+  include nonconstant variables, then it can be shown (the proof is left as an
+  analytical exercise) that $\sum_i (y_i - \bar{y})^2$ is decomposed as
+  \begin{equation}
+    \sum_{i=1}^{n}(y_i - \bar{y})^2
+      = \sum_{i=1}^{n}(\hat{y}_i - \bar{y})^2
+        + \sum_{i=1}^{n} e_i^2
+    \quad\text{with}\quad
+    \bar{y} \equiv \frac{1}{n}\sum_{i=1}^{n} y_i.
+    \label{eq:1.2.17}
+  \end{equation}
+
+  The \textbf{coefficient of determination}, $R^2$, is defined as
+  \begin{equation}
+    R^2 \equiv 1 - \frac{\sum_{i=1}^{n} e_i^2}
+                        {\sum_{i=1}^{n}(y_i - \bar{y})^2}.
+    \label{eq:1.2.18}
+  \end{equation}
+  Because of the decomposition \eqref{eq:1.2.17}, this $R^2$ equals
+  \[
+    \frac{\sum_{i=1}^{n}(\hat{y}_i - \bar{y})^2}
+         {\sum_{i=1}^{n}(y_i - \bar{y})^2}.
+  \]
+  Therefore, provided that the regressors include a constant so that the
+  decomposition \eqref{eq:1.2.17} is valid, $0 \le R^2 \le 1$.  Thus, this $R^2$
+  as defined in \eqref{eq:1.2.18} is a measure of the explanatory power of the
+  nonconstant regressors.
+
+  If the regressors do not include a constant but (as some regression software
+  packages do) you nevertheless calculate $R^2$ by the formula \eqref{eq:1.2.18},
+  then the $R^2$ can be negative.  This is because, without the benefit of an
+  intercept, the regression could do worse than the sample mean in terms of
+  tracking the dependent variable.  On the other hand, some other regression
+  packages (notably STATA) switch to the formula \eqref{eq:1.2.16} for the $R^2$
+  when a constant is not included, in order to avoid negative values for the
+  $R^2$.  This is a mixed blessing.  Suppose that the regressors do not include a
+  constant but that a linear combination of the regressors equals a constant.
+  This occurs if, for example, the intercept is replaced by seasonal
+  dummies.\footnote{Dummy variables will be introduced in the empirical exercise
+  for this chapter.}  The regression is essentially the same when one of the
+  regressors in the linear combination is replaced by a constant.  Indeed, one
+  should obtain the same vector of fitted values.  But if the formula for the
+  $R^2$ is \eqref{eq:1.2.16} for regressions without a constant and
+  \eqref{eq:1.2.18} for those with a constant, the calculated $R^2$ declines
+  (see Review Question~7 below) after the replacement by a constant.
+
+\end{itemize}
+
+%% ─── Influential Analysis (optional) ─────────────────────────────────────────
+\subsection*{Influential Analysis (optional)}
+
+Since the method of least squares seeks to prevent a few large residuals at the
+expense of incurring many relatively small residuals, only a few observations can
+be extremely influential in the sense that dropping them from the sample changes
+some elements of $\vec{b}$ substantially.  There is a systematic way to find those
+\textbf{influential observations}.\footnote{See Krasker, Kuh, and Welsch (1983)
+for more details.}  Let $\vec{b}^{(i)}$ be the OLS estimate of $\bm{\beta}$ that
+would be obtained if OLS were used on a sample from which the $i$-th observation
+was omitted.  The key equation is
+\begin{equation}
+  \vec{b}^{(i)} - \vec{b}
+    = -\left(\frac{1}{1 - p_i}\right)
+      (\vec{X}'\vec{X})^{-1}\vec{x}_i \cdot e_i,
+  \label{eq:1.2.19}
+\end{equation}
+where $\vec{x}_i$ as before is the $i$-th row of $\vec{X}$, $e_i$ is the OLS
+residual for observation~$i$, and $p_i$ is defined as
+\begin{equation}
+  p_i \equiv \vec{x}_i'(\vec{X}'\vec{X})^{-1}\vec{x}_i,
+  \label{eq:1.2.20}
+\end{equation}
+which is the $i$-th diagonal element of the projection matrix~$\vec{P}$.
+(Proving \eqref{eq:1.2.19} would be a good exercise in matrix algebra, but we
+will not do it here.)  It is easy to show (see Review Question~7 of Section~1.3)
+that
+\begin{equation}
+  0 \le p_i \le 1
+  \quad\text{and}\quad
+  \sum_{i=1}^{n} p_i = K.
+  \label{eq:1.2.21}
+\end{equation}
+So $p_i$ equals $K/n$ on average.
+
+To illustrate the use of \eqref{eq:1.2.19} in a specific example, consider the
+relationship between equipment investment and economic growth for the world's
+poorest countries between 1960 and 1985.  Figure~\ref{fig:1.2} plots the average
+annual GDP-per-worker growth between 1960 and 1985 against the ratio of equipment
+investment to GDP over the same period for thirteen countries whose GDP per worker
+in 1965 was less than 10 percent of that of the United
+States.\footnote{The data are from the Penn World Table, reprinted in DeLong and
+Summers (1991).  To their credit, their analysis is based on the whole sample of
+sixty-one countries.}  It is clear visually from the plot that the position of the
+estimated regression line would depend very much on the single outlier (Botswana).
+Indeed, if Botswana is dropped from the sample, the estimated slope coefficient
+drops from 0.37 to 0.058.  In the present case of simple regression, it is easy to
+spot outliers by visually inspecting the plot such as Figure~\ref{fig:1.2}.  This
+strategy would not work if there were more than one nonconstant regressor.
+Analysis based on formula \eqref{eq:1.2.19} is not restricted to simple
+regressions.  Table~\ref{tab:1.1} displays the data along with the OLS residuals,
+the values of~$p_i$, and \eqref{eq:1.2.19} for each observation.  Botswana's
+$p_i$ of 0.7196 is well above the average of $0.154$ ($= K/n = 2/13$) and is
+highly \textbf{influential}, as the last two columns of the table indicate.  Note
+that we could not have detected the influential observation by looking at the
+residuals, which is not surprising because the algebra of least squares is designed
+to avoid large residuals at the expense of many small residuals for other
+observations.
+
+What should be done with influential observations?  It depends.  If the
+influential observations satisfy the regression model, they provide valuable
+information about the regression function unavailable from the rest of the sample
+and should definitely be kept in the sample.  But more probable is that the
+influential observations are atypical of the rest of the sample because they do
+not satisfy the model.  In this case they should definitely be dropped from the
+sample.  For the example just examined, there was a worldwide growth in the demand
+for diamonds, Botswana's main export, and production of diamonds requires heavy
+investment in drilling equipment.  If the reason to expect an association between
+growth and equipment investment is the beneficial effect on productivity of the
+introduction of new technologies through equipment, then Botswana, whose high GDP
+growth is demand-driven, should be dropped from the sample.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.9\textwidth,trim=50 400 50 400,clip]{figures/fig_1_2.png}
+\caption{Equipment Investment and Growth}
+\label{fig:1.2}
+\end{figure}
+
+\begin{table}[htbp]
+\centering
+\caption{Influential Analysis}
+\label{tab:1.1}
+\small
+\begin{tabular}{l r r r r r r}
+\toprule
+  & GDP/worker & Equipment/ & & & (1.2.19) & (1.2.19) \\
+Country & growth & GDP & Residual & $p_i$ & for $\beta_1$ & for $\beta_2$ \\
+\midrule
+Botswana    &  0.0676 & 0.1310 &  0.0119 & 0.7196 &  0.0104 & $-0.3124$ \\
+Cameroon    &  0.0458 & 0.0415 &  0.0233 & 0.0773 & $-0.0021$ &  0.0045 \\
+Ethiopia    &  0.0094 & 0.0212 & $-0.0056$ & 0.1193 &  0.0010 & $-0.0119$ \\
+India       &  0.0115 & 0.0278 & $-0.0059$ & 0.0980 &  0.0009 & $-0.0087$ \\
+Indonesia   &  0.0345 & 0.0221 &  0.0192 & 0.1160 & $-0.0034$ &  0.0394 \\
+Ivory Coast &  0.0278 & 0.0243 &  0.0117 & 0.1084 & $-0.0019$ &  0.0213 \\
+Kenya       &  0.0146 & 0.0462 & $-0.0096$ & 0.0775 &  0.0007 &  0.0023 \\
+Madagascar  & $-0.0102$ & 0.0219 & $-0.0254$ & 0.1167 &  0.0045 & $-0.0527$ \\
+Malawi      &  0.0153 & 0.0361 & $-0.0052$ & 0.0817 &  0.0006 & $-0.0036$ \\
+Mali        &  0.0044 & 0.0433 & $-0.0188$ & 0.0769 &  0.0016 & $-0.0006$ \\
+Pakistan    &  0.0295 & 0.0263 &  0.0126 & 0.1022 & $-0.0020$ &  0.0205 \\
+Tanzania    &  0.0184 & 0.0860 & $-0.0206$ & 0.2281 & $-0.0021$ &  0.0952 \\
+Thailand    &  0.0341 & 0.0395 &  0.0123 & 0.0784 & $-0.0012$ &  0.0047 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+%% ─── A Note on the Computation of OLS Estimates ──────────────────────────────
+\subsection*{A Note on the Computation of OLS Estimates}
+
+So far, we have focused on the conceptual aspects of the algebra of least squares.
+But for applied researchers who actually calculate OLS estimates using digital
+computers, it is important to be aware of a certain aspect of digital computing in
+order to avoid the risk of obtaining unreliable estimates without knowing it.  The
+source of a potential problem is that the computer approximates real numbers by
+so-called \textbf{floating-point numbers}.  When an arithmetic operation involves
+both very large numbers and very small numbers, floating-point calculation can
+produce inaccurate results.  This is relevant in the computation of OLS estimates
+when the regressors greatly differ in magnitude.  For example, one of the
+regressors may be the interest rate stated as a fraction, and another may be U.S.\
+GDP in dollars.  The matrix $\vec{X}'\vec{X}$ will then contain both very small
+and very large numbers, and the arithmetic operation of inverting this matrix by
+the digital computer will produce unreliable results.
+
+A simple solution to this problem is to choose the units of measurement so that
+the regressors are similar in magnitude.  For example, state the interest rate in
+percents and U.S.\ GDP in trillion dollars.  This sort of care would prevent the
+problem most of the time.  A more systematic transformation of the $\vec{X}$
+matrix is to subtract the sample means of all regressors and divide by the sample
+standard deviations before forming $\vec{X}'\vec{X}$ (and adjust the OLS estimates
+to undo the transformation).  Most OLS programs (such as TSP) take a more
+sophisticated transformation of the $\vec{X}$ matrix (called the
+\textbf{QR decomposition}) to produce accurate results.

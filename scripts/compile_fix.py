@@ -6,11 +6,11 @@ Reads .tex files, applies deterministic regex-based fixes for known error
 patterns, compiles with pdflatex, and repeats until 0 errors or max iterations.
 
 Usage:
-    python scripts/compile_fix.py                  # Full compile-fix loop
-    python scripts/compile_fix.py --fix-only       # Apply fixes without compiling
-    python scripts/compile_fix.py --compile-only   # Compile without fixing
-    python scripts/compile_fix.py --chapter 3      # Single chapter only
-    python scripts/compile_fix.py --max-iter 5     # Limit iterations (default: 10)
+    python scripts/compile_fix.py --book <name>                  # Full compile-fix loop
+    python scripts/compile_fix.py --book <name> --fix-only       # Apply fixes without compiling
+    python scripts/compile_fix.py --book <name> --compile-only   # Compile without fixing
+    python scripts/compile_fix.py --book <name> --chapter 3      # Single chapter only
+    python scripts/compile_fix.py --book <name> --max-iter 5     # Limit iterations (default: 10)
 """
 import argparse
 import glob
@@ -20,9 +20,49 @@ import subprocess
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-LATEX_DIR = os.path.join(ROOT, 'latex')
-BUILD_DIR = os.path.join(LATEX_DIR, 'build')
-BOOK_CONF = os.path.join(ROOT, 'book.conf')
+
+# Book-dependent paths are populated by _init_book(), which runs only when
+# this module is executed as a script (see the __main__ guard at the bottom).
+# Deferring this means `import compile_fix` — e.g. from test_compile_fix.py,
+# to reuse the pure fix_* functions — never requires a --book argument or a
+# books/ directory to exist, and never calls sys.exit() as a side effect of
+# import.
+BOOK_NAME = None
+BOOK_DIR = None
+LATEX_DIR = None
+BUILD_DIR = None
+BOOK_CONF = None
+
+
+def _validate_book_name(name):
+    """Reject book names that could escape books/ via a path-traversal component."""
+    if not name or '/' in name or '\\' in name or '..' in name:
+        raise SystemExit(
+            f"Error: invalid book name '{name}' "
+            "(must be a plain directory name — no '/', '\\', or '..')"
+        )
+
+
+def _init_book():
+    """Parse --book from sys.argv and populate the module-level path globals.
+
+    Only called when this module runs as __main__ — never at import time.
+    """
+    global BOOK_NAME, BOOK_DIR, LATEX_DIR, BUILD_DIR, BOOK_CONF
+
+    _book_parser = argparse.ArgumentParser(add_help=False)
+    _book_parser.add_argument('--book', required=True, help='Book name under books/')
+    _book_args, _ = _book_parser.parse_known_args()
+    _validate_book_name(_book_args.book)
+    BOOK_NAME = _book_args.book
+
+    BOOK_DIR = os.path.join(ROOT, 'books', BOOK_NAME)
+    LATEX_DIR = os.path.join(BOOK_DIR, 'latex')
+    BUILD_DIR = os.path.join(BOOK_DIR, 'build')
+    BOOK_CONF = os.path.join(BOOK_DIR, 'book.conf')
+
+    if not os.path.isdir(LATEX_DIR):
+        raise SystemExit(f'No such book: {BOOK_NAME} (expected {LATEX_DIR})')
 
 
 # ---------------------------------------------------------------------------
@@ -30,13 +70,7 @@ BOOK_CONF = os.path.join(ROOT, 'book.conf')
 # ---------------------------------------------------------------------------
 
 def get_book_name():
-    if os.path.exists(BOOK_CONF):
-        with open(BOOK_CONF) as f:
-            for line in f:
-                m = re.match(r'^BOOK_NAME\s*=\s*["\']?([^"\'#\n]+)', line)
-                if m:
-                    return m.group(1).strip()
-    return 'textbook'
+    return BOOK_NAME
 
 
 def read_tex(path):
@@ -71,12 +105,58 @@ def collect_tex_files(chapter=None):
 # Compilation
 # ---------------------------------------------------------------------------
 
+# Widths passed to TeX so it stops hard-wrapping the log (see _wide_log_flags).
+WIDE_MAX_PRINT_LINE = '1000'
+WIDE_ERROR_LINE = '254'
+WIDE_HALF_ERROR_LINE = '238'
+
+_wide_log_flags_cache = None
+
+
+def _wide_log_flags():
+    r"""Return the CLI flags that stop TeX hard-wrapping the log, if supported.
+
+    TeX wraps every log line at `max_print_line` (default 79) — mid-word, and
+    even mid-filename. An absolute `books/<slug>/latex/chNN/secNN_M.tex:LINE:`
+    prefix is already ~85 characters on this repo, so at the default width the
+    filename itself is split across two lines and no parser can recover it.
+
+    Raising the width is distribution-specific: web2c/TeX Live reads the
+    `max_print_line` environment variable, MiKTeX ignores the environment and
+    exposes `-max-print-line=N` on the command line instead. compile_latex()
+    sets both, but an unknown flag is fatal, so the flag is used only when
+    `pdflatex --help` advertises it.
+    """
+    global _wide_log_flags_cache
+    if _wide_log_flags_cache is None:
+        try:
+            help_text = subprocess.run(
+                ['pdflatex', '--help'], capture_output=True, text=True, timeout=30
+            ).stdout
+        except (OSError, subprocess.SubprocessError):
+            help_text = ''
+        if '-max-print-line' in help_text:
+            _wide_log_flags_cache = [
+                f'-max-print-line={WIDE_MAX_PRINT_LINE}',
+                f'-error-line={WIDE_ERROR_LINE}',
+                f'-half-error-line={WIDE_HALF_ERROR_LINE}',
+            ]
+        else:
+            _wide_log_flags_cache = []
+    return _wide_log_flags_cache
+
+
 def compile_latex(chapter=None):
     """Run pdflatex and return (success, error_count, errors_list)."""
     os.makedirs(BUILD_DIR, exist_ok=True)
 
     env = os.environ.copy()
     env['TEXINPUTS'] = f'{LATEX_DIR}//{os.pathsep}{BUILD_DIR}//{os.pathsep}'
+    # web2c/TeX Live honours these; MiKTeX ignores them and needs the flags
+    # added below instead. See _wide_log_flags().
+    env['max_print_line'] = WIDE_MAX_PRINT_LINE
+    env['error_line'] = WIDE_ERROR_LINE
+    env['half_error_line'] = WIDE_HALF_ERROR_LINE
 
     if chapter is not None:
         # Build standalone chapter wrapper
@@ -93,6 +173,7 @@ def compile_latex(chapter=None):
         'pdflatex',
         '-interaction=nonstopmode',
         '-file-line-error',
+    ] + _wide_log_flags() + [
         f'-output-directory={BUILD_DIR}',
         tex_file,
     ]
@@ -107,36 +188,213 @@ def compile_latex(chapter=None):
     # Parse errors from log file
     basename = os.path.splitext(os.path.basename(tex_file))[0]
     log_file = os.path.join(BUILD_DIR, f'{basename}.log')
-    errors = parse_log_errors(log_file) if os.path.exists(log_file) else []
+
+    if not os.path.exists(log_file):
+        # pdflatex died before it could even open a log. Reporting that as
+        # "0 errors" would be a silent green on a book that did not build.
+        return False, 1, [{
+            'message': f'pdflatex produced no log file ({log_file}); '
+                       f'exit code {result.returncode}. Last output: '
+                       + (output.strip().splitlines() or ['<none>'])[-1],
+            'file': None,
+            'line': None,
+            'context': output[-200:],
+        }]
+
+    errors = parse_log_errors(log_file)
 
     return len(errors) == 0, len(errors), errors
 
 
+# ---------------------------------------------------------------------------
+# Log parsing
+#
+# pdflatex reports an error in one of two shapes:
+#
+#   classic            "! LaTeX Error: File `foo' not found."
+#   -file-line-error   "ch01/sec01_1.tex:7: LaTeX Error: File `' not found."
+#
+# compile_latex() passes -file-line-error, and the engine then emits the SECOND
+# form *instead of* the first — a log from this repo contains no `^!` lines at
+# all. Matching only `^!` therefore found zero errors in every log and reported
+# every broken book as "Compilation successful (0 errors)". Both forms must be
+# matched: the file-line form for normal errors, the bang form for errors TeX
+# raises with no current file/line (`! Emergency stop.`) and for logs produced
+# without -file-line-error (scripts/build.sh does not pass it).
+# ---------------------------------------------------------------------------
+
+# Extensions TeX names in a file-line error. `aux`/`bbl` are generated but can
+# still carry errors, and they must be reported rather than swallowed.
+_SOURCE_EXT = r'(?:tex|sty|cls|clo|def|cfg|ltx|fd|aux|bbl|bst|toc|out)'
+
+# "<file>:<line>: <message>". The optional leading "X:" group is a Windows
+# drive letter — without it the colon in "D:\GitHub\..." ends the filename and
+# nothing on this platform parses.
+_FILE_LINE_ERROR_RE = re.compile(
+    r'^(?P<file>(?:[A-Za-z]:)?[^:\r\n]+?\.' + _SOURCE_EXT + r')'
+    r':(?P<line>\d+):\s*(?P<message>\S.*?)\s*$'
+)
+
+# "! <message>"
+_BANG_ERROR_RE = re.compile(r'^!\s*(?P<message>\S.*?)\s*$')
+
+# Shortest line length considered a plausible TeX wrap width. TeX's default
+# max_print_line is 79; nothing sane configures it below this.
+MIN_LOG_WRAP_WIDTH = 60
+
+
+def _detect_wrap_width(lengths):
+    """Return TeX's max_print_line for this log, or None if it is not wrapped.
+
+    A hard-wrapped log has one line length that repeats far more than any
+    other — every wrapped line is exactly `max_print_line` long — and almost
+    nothing longer, since TeX writes only a handful of lines (the banner, the
+    stack-usage summary) without wrapping. An unwrapped log has neither
+    property, and must be left alone: joining lines there could merge two
+    distinct error records and silently lose an error.
+    """
+    long_lengths = [n for n in lengths if n >= MIN_LOG_WRAP_WIDTH]
+    if not long_lengths:
+        return None
+
+    width = max(set(long_lengths), key=long_lengths.count)
+    if long_lengths.count(width) < 5:
+        return None
+
+    # Allow the few genuinely unwrapped lines TeX emits, and scale the
+    # allowance a little for very long logs.
+    longer = sum(1 for n in lengths if n > width)
+    if longer > max(3, len(lengths) // 50):
+        return None
+    return width
+
+
+def _starts_a_record(line):
+    """True if `line` is itself the start of an error record.
+
+    Such a line is never a wrap continuation, whatever the width heuristic
+    concluded. Without this guard, N consecutive errors that happen to be the
+    same length — the same undefined macro reported at the same path with
+    line numbers of equal digit count is exactly that — look like a wrapped
+    log and get merged into one, losing N-1 errors.
+    """
+    return bool(_FILE_LINE_ERROR_RE.match(line) or _BANG_ERROR_RE.match(line))
+
+
+def _unwrap_log_lines(log_content):
+    """Undo TeX's hard line wrapping when — and only when — the log is wrapped."""
+    lines = log_content.split('\n')
+    width = _detect_wrap_width([len(line) for line in lines])
+    if width is None:
+        return lines
+
+    unwrapped = []
+    for line in lines:
+        if unwrapped and len(unwrapped[-1]) == width and not _starts_a_record(line):
+            unwrapped[-1] += line
+        else:
+            unwrapped.append(line)
+    return unwrapped
+
+
+def _normalize_error_path(file_path):
+    """Make a TeX-reported path repo-relative with forward slashes when possible.
+
+    Phase 4 hands the `[file:line] message` list straight to a fixing agent, so
+    `books/x/latex/ch01/sec01_1.tex` is far more actionable than an absolute
+    `D:\\GitHub\\reTeX\\books\\x\\latex\\ch01/sec01_1.tex`.
+    """
+    if not file_path:
+        return file_path
+    normalized = file_path.replace('\\', '/')
+    try:
+        if os.path.isabs(file_path):
+            rel = os.path.relpath(file_path, ROOT)
+            if not rel.startswith('..'):
+                normalized = rel.replace('\\', '/')
+    except ValueError:
+        # Different drive on Windows — keep the absolute path.
+        pass
+    return normalized
+
+
 def parse_log_errors(log_path):
-    """Parse pdflatex log for errors. Returns list of dicts."""
-    errors = []
+    """Parse a pdflatex log for errors. Returns a list of dicts.
+
+    Each dict has 'message', 'file' (repo-relative, or None), 'line' (int or
+    None) and 'context'. Records identical in (file, line, message) are
+    reported once.
+    """
     with open(log_path, 'r', encoding='utf-8', errors='replace') as f:
         log_content = f.read()
 
-    # Match "! <error message>" lines
-    for m in re.finditer(r'^! (.+?)$', log_content, re.MULTILINE):
-        error_msg = m.group(1)
-        # Look for file:line info nearby
-        context_start = max(0, m.start() - 500)
-        context = log_content[context_start:m.end() + 200]
+    lines = _unwrap_log_lines(log_content)
 
-        file_match = re.search(r'([./\w]+\.tex):(\d+):', context)
-        file_path = file_match.group(1) if file_match else None
-        line_num = int(file_match.group(2)) if file_match else None
+    errors = []
+    seen = set()
+
+    for idx, line in enumerate(lines):
+        m = _FILE_LINE_ERROR_RE.match(line)
+        if m:
+            file_path = _normalize_error_path(m.group('file'))
+            line_num = int(m.group('line'))
+            message = m.group('message')
+        else:
+            m = _BANG_ERROR_RE.match(line)
+            if not m:
+                continue
+            message = m.group('message')
+            # A bang error carries no location; recover one from the nearest
+            # preceding "<file>:<line>:" or "l.<line>" marker if there is one.
+            file_path, line_num = _nearest_location(lines, idx)
+
+        key = (file_path, line_num, message)
+        if key in seen:
+            continue
+        seen.add(key)
 
         errors.append({
-            'message': error_msg,
+            'message': message,
             'file': file_path,
             'line': line_num,
-            'context': context[-200:],
+            'context': '\n'.join(lines[idx:idx + 6])[:200],
         })
 
     return errors
+
+
+# TeX announces every file it opens as "(<path>" somewhere in the log.
+_OPEN_FILE_RE = re.compile(r'\((?P<path>(?:[A-Za-z]:)?[^()\s]*?\.' + _SOURCE_EXT + r')\b')
+
+# The offending source line, echoed by TeX *after* the "! ..." message.
+_TEX_LINE_ECHO_RE = re.compile(r'^l\.(\d+)[\s.]')
+
+
+def _nearest_location(lines, idx, lookahead=10):
+    """Best-effort (file, line) for a `! ...` error, which carries no location.
+
+    Only reached for logs written without -file-line-error (scripts/build.sh)
+    and for the handful of errors TeX raises with no current file. TeX echoes
+    the offending source line as `l.<N> <text>` a few lines *below* the
+    message, and names the file it is reading in an earlier `(<path>` marker.
+    Both are heuristics; the file especially can be stale once TeX has closed
+    the file it names, so treat this as a hint, not a guarantee.
+    """
+    line_num = None
+    for ahead in range(idx + 1, min(len(lines), idx + 1 + lookahead)):
+        m = _TEX_LINE_ECHO_RE.match(lines[ahead])
+        if m:
+            line_num = int(m.group(1))
+            break
+
+    file_path = None
+    for back in range(idx - 1, -1, -1):
+        matches = _OPEN_FILE_RE.findall(lines[back])
+        if matches:
+            file_path = _normalize_error_path(matches[-1])
+            break
+
+    return file_path, line_num
 
 
 # ---------------------------------------------------------------------------
@@ -507,6 +765,7 @@ def run_inventory(chapter=None):
 
 def main():
     parser = argparse.ArgumentParser(description='LaTeX compile-fix loop')
+    parser.add_argument('--book', required=True, help='Book name under books/')
     parser.add_argument('--fix-only', action='store_true', help='Apply fixes without compiling')
     parser.add_argument('--compile-only', action='store_true', help='Compile without fixing')
     parser.add_argument('--chapter', type=int, default=None, help='Single chapter number')
@@ -600,4 +859,5 @@ def main():
 
 
 if __name__ == '__main__':
+    _init_book()
     main()

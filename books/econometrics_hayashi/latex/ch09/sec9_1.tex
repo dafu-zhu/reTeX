@@ -1,0 +1,232 @@
+% sec9_1.tex — Section 9.1: Modeling Trends
+
+There is no shortage of examples of time series with what could be reasonably
+described as trends in economics. Figure~9.1 displays the log of U.S.\ real GDP.
+The log GDP clearly has an upward trend in that its mean, instead of being constant
+as with stationary processes, increases steadily over time. The trend in the mean
+is called a \textbf{deterministic trend} or \textbf{time trend}. For the case of log U.S.\ GDP, the
+deterministic trend appears to be linear. Another kind of trend can be seen from
+Figure~6.3 on page~424, which graphs the log yen/dollar exchange rate. The log
+exchange rate does not have a trend in the mean, but its every change seems to have
+a permanent effect on its future values so that the best predictor of future values is
+its current value. A process with this property, which is not shared by stationary
+processes, is called a \textbf{stochastic trend}. If you recall the definition of a martingale,
+it fits this description of a stochastic trend. Stochastic trends and martingales are
+synonymous.
+
+\begin{figure}[htbp]
+\centering
+\framebox[\textwidth]{\rule{0pt}{2.5in}\parbox{0.8\textwidth}{\centering
+  Figure 9.1: Log U.S.\ Real GDP, Value for 1869 Set to 0}}
+\caption{Log U.S.\ Real GDP, Value for 1869 Set to 0}
+\label{fig:9.1}
+\end{figure}
+
+The basic premise of this chapter and the next is that economic time series can
+be represented as the sum of a linear time trend, a stochastic trend, and a stationary
+process.\footnote{A note on semantics. Processes with trends are often called
+``nonstationary processes.'' We will not use this term in the rest of this book
+because a process can be not stationary without containing a trend. For example,
+let $\varepsilon_t$ be an i.i.d.\ process with unit variance and let $d_t$ take a value of 1
+for $t$ odd and 2 for $t$ even. Then a process $\{u_t\}$ defined by
+$u_t = d_t \cdot \varepsilon_t$ is not stationary because its variance depends on $t$.
+Yet the process cannot be reasonably described as a process with a trend.}
+
+\subsection*{Integrated Processes}
+
+A random walk is an example of a class of trending processes known as \textbf{integrated
+processes}. To give a precise definition of integrated processes, we first define
+I(0) processes. An \textbf{I(0) process} is a (strictly) stationary process whose \textbf{long-run
+variance} (defined in the discussion following Proposition~6.8 of Section~6.5) is
+finite and positive. (We will explain why the long-run variance is required to be
+positive in a moment.) Following, e.g., Hamilton (1994, p.~435), we allow I(0)
+processes to have possibly nonzero means (some authors, e.g., Stock, 1994, require
+I(0) processes to have zero mean). Therefore, an I(0) process can be written as
+\begin{equation}
+\label{eq:9.1.1}
+\delta + u_t,
+\end{equation}
+where $\{u_t\}$ is zero-mean stationary with positive long-run variance.
+
+The definition of integrated processes follows from the definition of I(0) processes.
+Let $\Delta$ be the difference operator, so, for a sequence $\{\xi_t\}$,
+\begin{align}
+\Delta \xi_t &\equiv (1 - L)\xi_t = \xi_t - \xi_{t-1}, \notag \\
+\Delta^2 \xi_t &= (1 - L)^2 \xi_t = (\xi_t - \xi_{t-1}) - (\xi_{t-1} - \xi_{t-2}), \quad \text{etc.}
+\label{eq:9.1.2}
+\end{align}
+
+\begin{definition}[I($d$) processes]
+\label{def:9.1}
+A process is said to be integrated of order $d$
+$(\textbf{I}(\bm{d}))$ $(d = 1, 2, \ldots)$ if its $d$-th difference $\Delta^d \xi_t$ is I(0). In particular, a process
+$\{\xi_t\}$ is integrated of order 1 $(\textbf{I(1)})$ if the first difference, $\Delta \xi_t$, is I(0).
+\end{definition}
+
+The reason the long-run variance of an I(0) process is required to be positive is
+to rule out the following definitional anomaly. Consider the process $\{v_t\}$ defined by
+\begin{equation}
+\label{eq:9.1.3}
+v_t \equiv \varepsilon_t - \varepsilon_{t-1},
+\end{equation}
+where $\{\varepsilon_t\}$ is independent white noise. As we verified in Review Question~5 of
+Section~6.5, the long-run variance of $\{v_t\}$ is zero. If it were not for the requirement
+for the long-run variance, $\{v_t\}$ would be I(0). But then, since $\Delta \varepsilon_t = v_t$, the independent white noise process $\{\varepsilon_t\}$ would have to be I(1)! If a process $\{v_t\}$ is written
+as the first difference of an I(0) process, it is called an I($-1$) process. The long-run
+variance of an I($-1$) process is zero (proving this is Review Question~1).
+
+For the rest of this chapter, the integrated processes we deal with are of order
+1. A few comments about I(1) processes follow.
+
+\begin{itemize}
+\item (When did it start?) \enspace As is clear with random walks, the variance of an I(1) process increases linearly with time. Thus if the process had started in the infinite
+past, the variance would be infinite. To focus on I(1) processes with finite variance, we assume that the process began in the finite past, and without loss of
+generality we can assume that the starting date is $t = 0$. Since an I(0) process
+can be written as~\eqref{eq:9.1.1} and since by definition an I(1) process $\{\xi_t\}$ satisfies the
+relation $\Delta \xi_t = \delta + u_t$, we can write $\xi_t$ in levels as
+\begin{equation}
+\label{eq:9.1.4}
+\xi_t = \xi_0 + \delta \cdot t + (u_1 + u_2 + \cdots + u_t),
+\end{equation}
+where $\{u_t\}$ is zero-mean I(0). So the specification of the levels process $\{\xi_t\}$ must
+include an assumption about the initial condition. Unless otherwise stated, we
+assume throughout that $\E(\xi_0^2) < \infty$. So $\xi_0$ can be random.
+
+\item (The mean in I(0) is the trend in I(1)) \enspace As is clear from~\eqref{eq:9.1.4}, an I(1) process
+can have a linear trend, $\delta \cdot t$. This is a consequence of having allowed I(0)
+processes to have a nonzero mean $\delta$. If $\delta = 0$, then the I(1) process has no trend
+and is called a \textbf{driftless I(1) process}, while if $\delta \neq 0$, the process is called an
+\textbf{I(1) process with drift}. Evidently, an I(1) process with drift can be written as
+the sum of a linear trend and a driftless I(1) process.
+
+\item (Two other names of I(1) processes) \enspace An I(1) process has two other names. It is
+called a \textbf{difference-stationary process} because the first difference is stationary.
+It is also called a \textbf{unit-root process}. To see why it is so called, consider a model
+\begin{equation}
+\label{eq:9.1.5}
+(1 - \rho L) y_t = \delta + u_t,
+\end{equation}
+where $u_t$ is zero-mean I(0). It is an autoregressive model with possibly serially
+correlated errors represented by $u_t$. If the autoregressive root $\rho$ is unity, then the
+first difference of $y_t$ is I(0), so $\{y_t\}$ is I(1).
+\end{itemize}
+
+\subsection*{Why Is It Important to Know if the Process Is I(1)?}
+
+For the rest of this chapter, we will be concerned with distinguishing between
+\textbf{trend-stationary processes}, which can be written as the sum of a linear time trend
+(if there is one) and a stationary process, on one hand, and difference-stationary
+processes (i.e., I(1) processes with or without drift) on the other. As will be shown
+in Proposition~9.1, an I(1) process can be written as the sum of a linear trend (if
+any), a stationary process, and a stochastic trend. Therefore, the difference between
+the two classes of processes is the existence of a stochastic trend. There are at least
+two reasons why the distinction is important.
+
+\begin{enumerate}
+\item First, it matters a great deal in forecasting. To make the point, consider the
+following simple AR(1) process with trend:
+\begin{align}
+y_t &= \alpha + \delta \cdot t + z_t, \notag \\
+z_t &= \rho z_{t-1} + \varepsilon_t,
+\label{eq:9.1.6}
+\end{align}
+where $\{\varepsilon_t\}$ is independent white noise. The $s$-period-ahead forecast of $y_{t+s}$
+conditional on $(y_t, y_{t-1}, \ldots)$ can be written as
+\begin{align}
+\E(y_{t+s} \mid y_t, y_{t-1}, \ldots)
+&= \E[\alpha + \delta \cdot (t+s) \mid y_t, y_{t-1}, \ldots] + \E(z_{t+s} \mid y_t, y_{t-1}, \ldots) \notag \\
+&= \alpha + \delta \cdot (t+s) + \E(z_{t+s} \mid y_t, y_{t-1}, \ldots).
+\label{eq:9.1.7}
+\end{align}
+Both $(y_t, y_{t-1}, \ldots)$ and $(z_t, z_{t-1}, \ldots)$ contain the same information because
+there is a one-to-one mapping between the two. So the last term can be written
+as
+\begin{equation}
+\label{eq:9.1.8}
+\E(z_{t+s} \mid y_t, y_{t-1}, \ldots) = \E(z_{t+s} \mid z_t, z_{t-1}, \ldots) = \rho^s z_t
+\end{equation}
+since $z_{t+s} = \varepsilon_{t+s} + \rho \varepsilon_{t+s-1} + \cdots + \rho^{s-1}\varepsilon_{t+1} + \rho^s z_t$.
+Substituting~\eqref{eq:9.1.8} into~\eqref{eq:9.1.7}, we obtain the following expression for the
+$s$-period-ahead forecast:
+\begin{align}
+\E(y_{t+s} \mid y_t, y_{t-1}, \ldots)
+&= \alpha + \delta \cdot (t+s) + \rho^s z_t \notag \\
+&= \alpha + \delta \cdot (t+s) + \rho^s \cdot (y_t - \alpha - \delta \cdot t).
+\label{eq:9.1.9}
+\end{align}
+
+There are two cases to consider.
+
+\textbf{Case $|\rho| < 1$.} \enspace Now if $|\rho| < 1$, then $\{z_t\}$ is a stationary AR(1) process
+and thus is zero-mean I(0). So $\{y_t\}$ is trend stationary. In this case, since
+$\E(z_t^2) < \infty$, we have
+\[
+\E[(\rho^s z_t)^2] = \rho^{2s} \,\E(z_t^2) \to 0 \quad \text{as } s \to \infty.
+\]
+Therefore, the $s$-period-ahead forecast $\E(y_{t+s} \mid y_t, y_{t-1}, \ldots)$ converges in
+mean square to the linear time trend $\alpha + \delta \cdot (t+s)$ as $s \to \infty$. More precisely,
+\begin{equation}
+\label{eq:9.1.10}
+\E\!\Big\{\!\big[\E(y_{t+s} \mid y_t, y_{t-1}, \ldots) - \alpha - \delta \cdot (t+s)\big]^2\Big\} \to 0
+\quad \text{as } s \to \infty.
+\end{equation}
+That is, the current and past values of $y$ do not affect the forecast if the forecasting horizon $s$ is sufficiently long. In particular, if $\delta = 0$, then
+\begin{equation}
+\label{eq:9.1.11}
+\E(y_{t+s} \mid y_t, y_{t-1}, \ldots) \underset{\text{m.s.}}{\to} \E(y_t) \quad \text{as } s \to \infty.
+\end{equation}
+That is, a long-run forecast is the unconditional mean. This property, called
+\textbf{mean reversion}, holds for any linear stationary processes, not just for stationary AR(1) processes.\footnote{See, e.g., Hamilton (1994, p.~439) for a proof.}
+For this reason, a linear stationary process is sometimes
+called a \textbf{transitory component}.
+
+\textbf{Case $\rho = 1$.} \enspace Suppose, instead, that $\rho = 1$. Then $\{z_t\}$ is a driftless random
+walk (a particular stochastic trend), and $y_t$ can be written as
+\begin{equation}
+\label{eq:9.1.12}
+y_t = (\alpha + z_0) + \delta \cdot t + \varepsilon_1 + \varepsilon_2 + \cdots + \varepsilon_t,
+\end{equation}
+which shows that $\{y_t\}$ is a random walk with drift with the initial value of $z_0 + \alpha$
+(a particular I(1) or difference-stationary process). Setting $\rho = 1$ in~\eqref{eq:9.1.9}, we
+obtain
+\begin{equation}
+\label{eq:9.1.13}
+\E(y_{t+s} \mid y_t, y_{t-1}, \ldots) = \delta \cdot s + y_t.
+\end{equation}
+That is, a random walk with drift $\delta$ is expected to grow at a constant rate of
+$\delta$ per period from whatever its current value $y_t$ happens to be. Unlike in the
+trend-stationary case, the current value has a permanent effect on the forecast
+for all forecast horizons. This is because of the presence of a stochastic trend
+$z_t$. A stochastic trend is also called a \textbf{permanent component}.
+
+\item The second reason for distinguishing between trend-stationary and difference-stationary processes arises in the context of inference. For example, suppose
+you are interested in testing a hypothesis about $\beta$ in a regression equation
+\begin{equation}
+\label{eq:9.1.14}
+y_t = x_t \beta + u_t,
+\end{equation}
+where $u_t$ is a stationary error term. If the regressor $x_t$ is trend stationary, then,
+as was shown in Section~2.12, the $t$-value on the OLS estimate of $\beta$ is asymptotically standard normal. On the other hand, if $x_t$ is difference stationary, that
+is, if it has a stochastic trend, then the $t$-value has a nonstandard limiting distribution, so inference about $\beta$ cannot be made in the usual way. The regression in
+this case is called a ``cointegrating regression.'' Inference about a cointegrating
+regression will be studied in the next chapter.
+\end{enumerate}
+
+\subsection*{Other Approaches to Modeling Trends}
+
+In addition to stochastic trends and time trends, there are two other popular
+approaches to modeling trends: fractionally integration and broken trends with
+an unknown break date. They will not be covered in this book. For a survey of
+the former approach, see Baillie (1996). The literature on trend breaks is growing
+rapidly. Surveys can be found in Stock (1994, Section~5) and Maddala and Kim
+(1998, Chapter~13).
+
+\bigskip
+\noindent\textsc{question for review} \hrulefill
+
+\begin{enumerate}
+\item (Long-run variance of differences of I(0) processes) \enspace Let $\{u_t\}$ be I(0) with
+$\Var(u_t) < \infty$. Verify that $\{\Delta u_t\}$ is covariance stationary and that the long-run variance of $\{\Delta u_t\}$ is zero. \textbf{Hint:} The long-run variance of $\{v_t\}$ (where
+$v_t \equiv \Delta u_t$) is defined to be the limit as $T \to \infty$ of $\Var(\sqrt{T}\,\bar{v})$.
+$\sqrt{T}\,\bar{v} = (v_1 + v_2 + \cdots + v_T)/\sqrt{T} = (u_T - u_0)/\sqrt{T}$.
+\end{enumerate}

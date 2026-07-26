@@ -1,0 +1,169 @@
+% sec05_6.tex — Section 5.6: Rayleigh Quotient
+\section{Rayleigh Quotient}
+\label{sec:sl-rayleigh}
+
+The Rayleigh quotient can be derived from the Sturm--Liouville differential equation,
+\begin{equation}
+\label{eq:rq-sl}
+\frac{d}{d x}\left[p(x)\od{\phi}{x}\right] + q(x)\phi + \lambda\sigma(x)\phi = 0,
+\end{equation}
+by multiplying \eqref{eq:rq-sl} by $\phi$ and integrating:
+\begin{equation}
+\label{eq:rq-integrated}
+\int_a^b \left[\phi\frac{d}{d x}\left(p\od{\phi}{x}\right) + q\phi^2\right]\dx + \lambda\int_a^b \phi^2\sigma\dx = 0.
+\end{equation}
+Since $\int_a^b \phi^2\sigma\dx > 0$, we can solve for $\lambda$:
+\begin{equation}
+\label{eq:rq-form1}
+\lambda = \frac{\displaystyle -\int_a^b \left[\phi\frac{d}{d x}\!\left(p\od{\phi}{x}\right) + q\phi^2\right]\dx}{\displaystyle\int_a^b \phi^2\sigma\dx}.
+\end{equation}
+Integration by parts [$\int u\,dv = uv - \int v\,du$, where $u = \phi$, $dv = d/dx(p\,d\phi/dx)\dx$ and hence $du = d\phi/dx\dx$, $v = p\,d\phi/dx$] yields an expression involving the function $\phi$ evaluated at the boundary:
+\begin{equation}
+\label{eq:rayleigh-quotient-main}
+\boxed{\lambda = \frac{\displaystyle -p\phi\od{\phi}{x}\bigg|_a^b + \int_a^b \left[p\!\left(\od{\phi}{x}\right)^{\!2} - q\phi^2\right]\dx}{\displaystyle\int_a^b \phi^2\sigma\dx},}
+\end{equation}
+known as the \textbf{Rayleigh quotient}.  In Sections~\ref{sec:sl-eigenvalue} and \ref{sec:sl-heat-nonuniform} we have indicated some applications of this result.  Further discussion will be given in Section~\ref{sec:sl-vibrating-string}.
+
+\paragraph{Nonnegative eigenvalues.}
+Often in physical problems, the sign of $\lambda$ is quite important.  As shown in Section~\ref{subsec:nonuniform-rod}, $dh/dt + \lambda h = 0$ in certain heat flow problems.  Thus, positive $\lambda$ corresponds to exponential decay in time, while negative $\lambda$ corresponds to exponential growth.  On the other hand, in certain vibration problems (see Section~\ref{sec:sl-vibrating-string}), $d^2h/dt^2 = -\lambda h$.  There, only positive $\lambda$ corresponds to the ``usually'' expected oscillations.  Thus, in both types of problems we often expect $\lambda \ge 0$:
+
+\begin{center}
+\fbox{\parbox{0.8\textwidth}{
+\boxed{The Rayleigh quotient \eqref{eq:rayleigh-quotient-main} directly proves that $\lambda \ge 0$ if
+}}
+\end{center}
+\begin{enumerate}
+\item[(a)] $\displaystyle -p\phi\od{\phi}{x}\bigg|_a^b \ge 0$, and
+\item[(b)] $q \le 0$.
+\end{enumerate}}
+
+We claim that both (a) and (b) are physically reasonable conditions for nonnegative $\lambda$.  Consider the boundary constraint, $-p\phi\,d\phi/dx|_a^b \ge 0$.  The simplest types of homogeneous boundary conditions, $\phi = 0$ and $d\phi/dx = 0$, do not contribute to this boundary term, satisfying (a).  The condition $d\phi/dx = h\phi$ (for the physical cases of Newton's law of cooling or the elastic boundary condition) has $h > 0$ at the left end, $x = a$.  Thus, it will have a positive contribution at $x = a$.  The sign switch at the right end, which occurs for this type of boundary condition, will also cause a positive contribution.  The periodic boundary condition [e.g., $\phi(a) = \phi(b)$ and $p(a)\,d\phi/dx(a) = p(b)\,d\phi/dx(b)$] as well as the singularity condition [$\phi(a)$ bounded, if $p(a) = 0$] also do not contribute.  Thus, in all these cases $-p\phi\,d\phi/dx|_a^b \ge 0$.
+
+The source constraint $q \le 0$ also has a meaning in physical problems.  For heat flow problems, $q \le 0$ corresponds ($q = \alpha$, $Q = \alpha u$) to an energy-absorbing (endothermic) reaction, while for vibration problems, $q \le 0$ corresponds ($q = \alpha$, $Q = \alpha u$) to a restoring force.
+
+\paragraph{Minimization principle.}
+The Rayleigh quotient cannot be used to determine explicitly the eigenvalue (since $\phi$ is unknown).  Nonetheless, it can be quite useful in estimating the eigenvalues.  This is because of the following theorem: \textbf{The minimum value of the Rayleigh quotient for all continuous functions satisfying the boundary conditions} (but not necessarily the differential equation) \textbf{is the lowest eigenvalue:}
+\begin{equation}
+\label{eq:minimization}
+\boxed{\lambda_1 = \min \frac{\displaystyle -pu\,du/dx\big|_a^b + \int_a^b \left[p(du/dx)^2 - qu^2\right]\dx}{\displaystyle\int_a^b u^2\sigma\dx},}
+\end{equation}
+where $\lambda_1$ represents the smallest eigenvalue.  The minimization includes all continuous functions that satisfy the boundary conditions.  The minimum is obtained only for $u = \phi_1(x)$, the lowest eigenfunction.  For example, the lowest eigenvalue is important in heat flow problems (see Section~\ref{sec:sl-heat-nonuniform}).
+
+\paragraph{Trial functions.}
+Before proving \eqref{eq:minimization}, we will indicate how \eqref{eq:minimization} is applied to obtain bounds on the lowest eigenvalue.  Equation \eqref{eq:minimization} is difficult to apply directly since we do not know how to minimize over all functions.  However, let $u_T$ be \textit{any} continuous function satisfying the boundary conditions; $u_T$ is known as a \textbf{trial function}.  We compute the Rayleigh quotient of this trial function, $RQ[u_T]$:
+\begin{equation}
+\label{eq:trial-bound}
+\lambda_1 \le RQ[u_T] = \frac{\displaystyle -pu_T\,du_T/dx\big|_a^b + \int_a^b \left[p(du_T/dx)^2 - qu_T^2\right]\dx}{\displaystyle\int_a^b u_T^2\sigma\dx}.
+\end{equation}
+We have noted that $\lambda_1$ must be less than or equal to the quotient since $\lambda_1$ is the minimum of the ratio for all functions.  Equation \eqref{eq:trial-bound} gives an \textbf{upper bound} for the lowest eigenvalue.
+
+\paragraph{Example.}
+Consider the well-known eigenvalue problem
+\begin{align*}
+\odd{\phi}{x} + \lambda\phi &= 0 \\
+\phi(0) &= 0 \\
+\phi(1) &= 0.
+\end{align*}
+We already know that $\lambda = n^2\pi^2$ ($L = 1$), and hence the lowest eigenvalue is $\lambda_1 = \pi^2$.  For this problem, the Rayleigh quotient simplifies, and \eqref{eq:trial-bound} becomes
+\begin{equation}
+\label{eq:rq-simple-example}
+\lambda_1 \le \frac{\displaystyle\int_0^1 (du_T/dx)^2\dx}{\displaystyle\int_0^1 u_T^2\dx}.
+\end{equation}
+Trial functions must be continuous and satisfy the homogeneous boundary conditions, in this case, $u_T(0) = 0$ and $u_T(1) = 0$.  In addition, we claim that the closer the trial function is to the actual eigenfunction, the more accurate is the bound of the lowest eigenvalue.  Thus, we also choose trial functions with no zeros in the interior, since we already know theoretically that the lowest eigenfunction does not have a zero.  We will compute the Rayleigh quotient for three trial functions sketched in Fig.~\ref{fig:5.6.1}.  For
+\[
+u_T = \begin{cases} x, & x < \frac{1}{2} \\ 1 - x, & x > \frac{1}{2}, \end{cases}
+\]
+\eqref{eq:rq-simple-example} becomes
+\[
+\lambda_1 \le \frac{\int_0^{1/2} dx + \int_{1/2}^1 dx}{\int_0^{1/2} x^2\dx + \int_{1/2}^1 (1-x)^2\dx} = \frac{1}{\frac{1}{24} + \frac{1}{24}} = 12,
+\]
+a fair upper bound for the exact answer $\pi^2$ ($\pi^2 \approx 9.8696\ldots$).  For $u_T = x - x^2$, \eqref{eq:rq-simple-example} becomes
+\[
+\lambda_1 \le \frac{\int_0^1 (1 - 2x)^2\dx}{\int_0^1 (x - x^2)^2\dx} = \frac{\int_0^1 (1 - 4x + 4x^2)\dx}{\int_0^1 (x^2 - 2x^3 + x^4)\dx} = \frac{1 - 2 + \frac{4}{3}}{\frac{1}{3} - \frac{1}{2} + \frac{1}{5}} = 10,
+\]
+a more accurate bound.  Since $u_T = \sin\pi x$ is the actual lowest eigenfunction, the Rayleigh quotient for this trial function will exactly equal the lowest eigenvalue.  Other applications of the Rayleigh quotient will be shown in later sections.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch05/fig_5_6_1.png}
+\caption{Trial functions: are continuous, satisfy the boundary conditions, and are of one sign.}
+\label{fig:5.6.1}
+\end{figure}
+
+\paragraph{Proof.}
+It is usual to prove the minimization property of the Rayleigh quotient using a more advanced branch of applied mathematics known as the calculus of variations.  We do not have the space here to develop that material properly.  Instead, we will give a proof based on eigenfunction expansions.  We again calculate the Rayleigh quotient \eqref{eq:rayleigh-quotient-main} for any function $u$ that is \textit{continuous} and \textit{satisfies the homogeneous boundary conditions}.  In this derivation, the equivalent form of the Rayleigh quotient, \eqref{eq:rq-form1}, is more useful:
+\begin{equation}
+\label{eq:rq-operator}
+RQ[u] = \frac{\displaystyle -\int_a^b uL(u)\dx}{\displaystyle\int_a^b u^2\sigma\dx},
+\end{equation}
+where the operator notation is quite helpful.  We expand the rather arbitrary function $u$ in terms of the (usually unknown) eigenfunctions $\phi_n(x)$:
+\begin{equation}
+\label{eq:expand-u}
+u = \sum_{n=1}^{\infty} a_n\phi_n(x).
+\end{equation}
+$L$ is a linear differential operator.  We expect that
+\begin{equation}
+\label{eq:L-expand}
+L(u) = \sum_{n=1}^{\infty} a_n L(\phi_n(x)),
+\end{equation}
+since this is valid for finite series.  It is possible to show that \eqref{eq:L-expand} is valid \textit{if $u$ is continuous and satisfies the same homogeneous boundary conditions as the eigenfunctions} $\phi_n(x)$.  Here, $\phi_n$ are eigenfunctions, and hence $L(\phi_n) = -\lambda_n\sigma\phi_n$.  Thus, \eqref{eq:L-expand} becomes
+\begin{equation}
+\label{eq:L-eigen-expand}
+L(u) = -\sum_{n=1}^{\infty} a_n\lambda_n\sigma\phi_n,
+\end{equation}
+which can be thought of as the eigenfunction expansion of $L(u)$.  If \eqref{eq:L-eigen-expand} and \eqref{eq:expand-u} are substituted into \eqref{eq:rq-operator} and different dummy summation indices are utilized for the product of two infinite series, we obtain
+\begin{equation}
+\label{eq:rq-double-sum}
+RQ[u] = \frac{\displaystyle\int_a^b \left(\sum_{m=1}^{\infty}\sum_{n=1}^{\infty} a_m a_n\lambda_n\phi_n\phi_m\sigma\right)\dx}{\displaystyle\int_a^b \left(\sum_{m=1}^{\infty}\sum_{n=1}^{\infty} a_m a_n\phi_n\phi_m\sigma\right)\dx}.
+\end{equation}
+We now do the integration in \eqref{eq:rq-double-sum} before the summation.  We recall that the eigenfunctions are orthogonal ($\int_a^b \phi_n\phi_m\sigma\dx = 0$ if $n \neq m$), which implies that \eqref{eq:rq-double-sum} becomes
+\begin{equation}
+\label{eq:rq-simplified}
+RQ[u] = \frac{\displaystyle\sum_{n=1}^{\infty} a_n^2\lambda_n\int_a^b \phi_n^2\sigma\dx}{\displaystyle\sum_{n=1}^{\infty} a_n^2\int_a^b \phi_n^2\sigma\dx}.
+\end{equation}
+This is an exact expression for the Rayleigh quotient in terms of the generalized Fourier coefficients of $u$.  We denote $\lambda_1$ as the lowest eigenvalue ($\lambda_1 < \lambda_n$ for $n > 1$).  Thus,
+\begin{equation}
+\label{eq:rq-lower-bound}
+RQ[u] \ge \frac{\displaystyle\lambda_1\sum_{n=1}^{\infty} a_n^2\int_a^b \phi_n^2\sigma\dx}{\displaystyle\sum_{n=1}^{\infty} a_n^2\int_a^b \phi_n^2\sigma\dx} = \lambda_1.
+\end{equation}
+Furthermore, the equality in \eqref{eq:rq-lower-bound} holds only if $a_n = 0$ for $n > 1$ (i.e., only if $u = a_1\phi_1$).  We have shown that the smallest value of the Rayleigh quotient is the lowest eigenvalue $\lambda_1$.  Moreover, the Rayleigh quotient is minimized only when $u = a_1\phi_1$ (i.e., when $u$ is the lowest eigenfunction).
+
+We thus have a minimization theorem for the lowest eigenvalue $\lambda_1$.  We can ask if there are corresponding theorems for the higher eigenvalues.  Interesting generalizations immediately follow from \eqref{eq:rq-simplified}.  If we insist that $a_1 = 0$, then
+\begin{equation}
+\label{eq:rq-second}
+RQ[u] = \frac{\displaystyle\sum_{n=2}^{\infty} a_n^2\lambda_n\int_a^b \phi_n^2\sigma\dx}{\displaystyle\sum_{n=2}^{\infty} a_n^2\int_a^b \phi_n^2\sigma\dx}.
+\end{equation}
+This means that in addition we are restricting our function $u$ to be orthogonal to $\phi_1$, since $a_1 = \int_a^b u\phi_1\sigma\dx / \int_a^b \phi_1^2\sigma\dx$.  We now proceed in a similar way.  Since $\lambda_2 < \lambda_n$ for $n > 2$, it follows that
+\[
+RQ[u] \ge \lambda_2,
+\]
+and furthermore the equality holds only if $a_n = 0$ for $n > 2$ [i.e., $u = a_2\phi_2(x)$] since $a_1 = 0$ already.  We have just proved the following theorem: The minimum value for all continuous functions $u(x)$ \textit{that are orthogonal to the lowest eigenfunction} and satisfy the boundary conditions is the next-to-lowest eigenvalue.  Further generalizations also follow directly from \eqref{eq:rq-simplified}.
+
+\begin{exercises}{5.6}
+
+\item Use the Rayleigh quotient to obtain a (reasonably accurate) upper bound for the lowest eigenvalue of
+\begin{enumerate}
+\item $\displaystyle\odd{\phi}{x} + (\lambda - x^2)\phi = 0$ with $\displaystyle\od{\phi}{x}(0) = 0$ and $\phi(1) = 0$
+\item $\displaystyle\odd{\phi}{x} + (\lambda - x)\phi = 0$ with $\displaystyle\od{\phi}{x}(0) = 0$ and $\displaystyle\od{\phi}{x}(1) + 2\phi(1) = 0$
+\item\starred\ $\displaystyle\odd{\phi}{x} + \lambda\phi = 0$ with $\phi(0) = 0$ and $\displaystyle\od{\phi}{x}(1) + \phi(1) = 0$ (See Exercise~5.8.10.)
+\end{enumerate}
+
+\item Consider the eigenvalue problem
+\[
+\odd{\phi}{x} + (\lambda - x^2)\phi = 0
+\]
+subject to $\od{\phi}{x}(0) = 0$ and $\od{\phi}{x}(1) = 0$.  Show that $\lambda > 0$ (be sure to show that $\lambda \neq 0$).
+
+\item Prove that \eqref{eq:L-expand} is valid in the following way.  Assume $L(u)/\sigma$ is piecewise smooth so that
+\[
+\frac{L(u)}{\sigma} = \sum_{n=1}^{\infty} b_n\phi_n(x).
+\]
+Determine $b_n$.  [\textit{Hint}: Using Green's formula (5.5.8), show that $b_n = -a_n\lambda_n$ if $u$ and $du/dx$ are continuous and if $u$ satisfies the same homogeneous boundary conditions as the eigenfunctions $\phi_n(x)$.]
+
+\item Consider the eigenvalue problem $\frac{d}{d r}(r\od{\phi}{r}) + \lambda r\phi = 0$ $(0 < r < 1)$, subject to the boundary conditions $|\phi(0)| < \infty$ (you may also assume $\od{\phi}{r}$ is bounded) and $\od{\phi}{r}(1) = 0$.
+\begin{enumerate}
+\item Prove that $\lambda > 0$.
+\item Solve the initial value problem.  You may assume the eigenfunctions are known.  Derive coefficients using orthogonality.
+\end{enumerate}
+
+\end{exercises}

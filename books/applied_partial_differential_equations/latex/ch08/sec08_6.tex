@@ -1,0 +1,249 @@
+% sec08_6.tex — Section 8.6: Poisson's Equation
+\section{Poisson's Equation}
+\label{sec:poisson}
+
+We have applied the method of eigenfunction expansion to nonhomogeneous time-dependent boundary value problems for PDEs (with or without homogeneous boundary conditions).  In each case, the method of eigenfunction expansion,
+\[
+u = \sum_i a_i(t)\,\phi_i,
+\]
+yielded an \emph{initial value problem} for the coefficients $a_i(t)$, where $\phi_i$ are the related homogeneous eigenfunctions satisfying, for example,
+\[
+\odd{\phi}{x} + \lambda\phi = 0 \quad\text{or}\quad \laplacian\phi + \lambda\phi = 0.
+\]
+
+Time-independent nonhomogeneous problems must be solved in a slightly different way.  Consider the equilibrium temperature distribution with time-independent sources, which satisfies \textbf{Poisson's equation},
+\begin{equation}
+\label{eq:8.6.1}
+\boxed{\laplacian u = Q,}
+\end{equation}
+where $Q$ is related to the sources of thermal energy.  For now we do not specify the geometric region.  However, we assume the temperature is specified on the entire boundary,
+\[
+u = \alpha
+\]
+where $\alpha$ is given and usually \emph{not} constant.  This problem is nonhomogeneous in two ways: due to the forcing function $Q$ and the boundary condition $\alpha$.  We can decompose the equilibrium temperature into two parts, $u = u_1 + u_2$, one $u_1$ due to the forcing and the other $u_2$ due to the boundary condition:
+\begin{alignat*}{2}
+\laplacian u_1 &= Q &\qquad \laplacian u_2 &= 0 \\
+u_1 &= 0 \text{ on the boundary} &\qquad u_2 &= \alpha \text{ on the boundary.}
+\end{alignat*}
+It is easily checked that $u = u_1 + u_2$ satisfies Poisson's equation and the nonhomogeneous BC.  The problem for $u_2$ is the solution of Laplace's equation (with nonhomogeneous boundary conditions).  For simple geometries this can be solved by the method of separation of variables (where in Secs.~2.5.1 and 7.9.1 we showed how homogeneous boundary conditions could be introduced).
+
+Thus, at first in this section, we focus our attention on Poisson's equation
+\begin{equation}
+\label{eq:8.6.2}
+\boxed{\laplacian u_1 = Q,}
+\end{equation}
+with \emph{homogeneous} boundary conditions ($u_1 = 0$ on the boundary).  Since $u_1$ satisfies homogeneous BC, the method of eigenfunction expansion is appropriate.  The problem can be analyzed in two somewhat different ways: (1)~We can expand the solutions in eigenfunctions of the related homogeneous problem, coming from separation of variables of $\laplacian u_1 = 0$ (as we did for the time-dependent problems); or (2)~we can expand the solution in the eigenfunctions
+\[
+\laplacian\phi + \lambda\phi = 0.
+\]
+The two methods are different (but are related).
+
+\textbf{One-dimensional eigenfunctions.}
+To be specific, let us consider the two-dimensional Poisson's equation in a rectangle with zero boundary conditions:
+\[
+\laplacian u_1 = Q,
+\]
+as illustrated in Fig.~8.6.1.  We first describe the use of one-dimensional eigenfunctions.  The related homogeneous problem, $\laplacian u_1 = 0$, which is Laplace's equation, can be separated (in rectangular coordinates).  We may recall that the solution oscillates in one direction and is a combination of exponentials in the other direction.  Thus, eigenfunctions of the related homogeneous problem (needed for the method of eigenfunction expansion) might be $x$-eigenfunctions or $y$-eigenfunctions.  Since we have two homogeneous boundary conditions in \emph{both} directions, we can use either $x$-dependent or $y$-dependent eigenfunctions.  To be specific we use $x$-dependent eigenfunctions, which are $\sin n\pi x/L$ since $u_1 = 0$ at $x=0$ and $x = L$.  The method of eigenfunction expansion consists in expanding $u_1(x,y)$ in a series of these eigenfunctions:
+\begin{equation}
+\label{eq:8.6.3}
+\boxed{u_1 = \sum_{n=1}^{\infty} b_n(y)\sin\frac{n\pi x}{L},}
+\end{equation}
+where the sine coefficients $b_n(y)$ are functions of $y$.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch08/fig_8_6_1.png}
+\caption{Poisson equation in a rectangle.}
+\label{fig:8.6.1}
+\end{figure}
+
+Differentiating \eqref{eq:8.6.3} twice with respect to $y$ and substituting this into Poisson's equation, \eqref{eq:8.6.2}, yields
+\begin{equation}
+\label{eq:8.6.4}
+\sum_{n=1}^{\infty} \odd{b_n}{y}\sin\frac{n\pi x}{L} + \pdd{u_1}{x} = Q.
+\end{equation}
+$\partial^2 u_1/\partial x^2$ can be determined in two related ways (as we also showed for nonhomogeneous time-dependent problems): term-by-term differentiation with respect to $x$ of the series \eqref{eq:8.6.3}, which is more direct or by use of Green's formula.  In either way we obtain, from \eqref{eq:8.6.4},
+\begin{equation}
+\label{eq:8.6.5}
+\sum_{n=1}^{\infty} \left[\odd{b_n}{y} - \left(\frac{n\pi}{L}\right)^2 b_n\right]\sin\frac{n\pi x}{L} = Q,
+\end{equation}
+since both $u_1$ and $\sin n\pi x/L$ satisfy the same homogeneous boundary conditions.  Thus, the Fourier sine coefficients satisfy the following second-order ordinary differential equation:
+\begin{equation}
+\label{eq:8.6.6}
+\boxed{\odd{b_n}{y} - \left(\frac{n\pi}{L}\right)^2 b_n = \frac{2}{L}\int_0^L Q(x,y)\sin\frac{n\pi x}{L}\dx \equiv q_n(y),}
+\end{equation}
+where the right-hand side is the sine coefficient of $Q$,
+\begin{equation}
+\label{eq:8.6.7}
+Q = \sum_{n=1}^{\infty} q_n\sin\frac{n\pi x}{L}.
+\end{equation}
+We must solve \eqref{eq:8.6.6}.  Two conditions are needed.  We have satisfied Poisson's equation and the boundary condition at $x=0$ and $x=L$.  The boundary condition at $y=0$ (for all $x$), $u_1 = 0$, and at $y=H$ (for all $x$), $u_1 = 0$, imply that
+\begin{equation}
+\label{eq:8.6.8}
+b_n(0) = 0 \quad\text{and}\quad b_n(H) = 0.
+\end{equation}
+Thus, the unknown coefficients in the method of eigenfunction expansion [see \eqref{eq:8.6.6}] themselves solve a one-dimensional \emph{nonhomogeneous boundary value problem}.  Compare this result to the time-dependent nonhomogeneous PDE problems, in which the coefficients satisfied one-dimensional initial value problems.  One-dimensional boundary value problems are more difficult to satisfy than initial value problems.  Later we will discuss boundary value problems for ordinary differential equations.  We will find different ways to solve \eqref{eq:8.6.6} subject to the BC \eqref{eq:8.6.8}.  One form of the solution we can obtain using the method of variation of parameters (see Sec.~9.3.2) is
+\begin{equation}
+\label{eq:8.6.9}
+\boxed{b_n(y) = \sinh\frac{n\pi(H-y)}{L}\int_0^y q_n(\xi)\sinh\frac{n\pi\xi}{L}\,d\xi
++ \sinh\frac{n\pi y}{L}\int_y^H q_n(\xi)\sinh\frac{n\pi(H-\xi)}{L}\,d\xi.}
+\end{equation}
+Thus, we can solve Poisson's equation (with homogeneous boundary conditions) using the $x$-dependent related one-dimensional homogeneous eigenfunctions.  Problems with nonhomogeneous boundary conditions can be solved in the same way, introducing the appropriate modifications following from the use of Green's formula with nonhomogeneous boundary conditions.  In Exercise~8.6.1, the same problem is solved using the $y$-dependent related homogeneous eigenfunctions.
+
+\textbf{Two-dimensional eigenfunctions.}
+A somewhat different way to solve Poisson's equation,
+\begin{equation}
+\label{eq:8.6.10}
+\laplacian u_1 = Q,
+\end{equation}
+on a rectangle with zero BC is to consider the related two-dimensional eigenfunctions
+\[
+\laplacian\phi = -\lambda\phi
+\]
+with $\phi = 0$ on the boundary.  For a rectangle we know that this implies a sine series in $x$ \emph{and} a sine series in $y$:
+\begin{align*}
+\phi_{nm} &= \sin\frac{n\pi x}{L}\sin\frac{m\pi y}{H} \\
+\lambda_{nm} &= \left(\frac{n\pi}{L}\right)^2 + \left(\frac{m\pi}{H}\right)^2.
+\end{align*}
+The method of eigenfunction expansion consists of expanding the solution $u_1$ in terms of these two-dimensional eigenfunctions:
+\begin{equation}
+\label{eq:8.6.11}
+\boxed{u_1 = \sum_{n=1}^{\infty}\sum_{m=1}^{\infty} b_{nm}\sin\frac{n\pi x}{L}\sin\frac{m\pi y}{H}.}
+\end{equation}
+Here $b_{nm}$ are constants (not a function of another variable) since $u_1$ only depends on $x$ and $y$.  The substitution of \eqref{eq:8.6.11} into Poisson's equation \eqref{eq:8.6.10} yields
+\[
+\sum_{n=1}^{\infty}\sum_{m=1}^{\infty} -b_{nm}\lambda_{nm}\sin\frac{n\pi x}{L}\sin\frac{m\pi y}{H} = Q,
+\]
+since $\laplacian\phi_{nm} = -\lambda_{nm}\phi_{nm}$.  The Laplacian can be evaluated by term-by-term differentiation since both $u_1$ and $\phi_{nm}$ satisfy the same homogeneous boundary conditions.  The eigenfunctions $\phi_{nm}$ are orthogonal (in a two-dimensional sense) with weight~1.  Thus,
+\begin{equation}
+\label{eq:8.6.12}
+-b_{nm}\lambda_{nm} = \frac{\int_0^H\int_0^L Q\sin\frac{n\pi x}{L}\sin\frac{m\pi y}{H}\dx\dy}{\int_0^H\int_0^L \sin^2\frac{n\pi x}{L}\sin^2\frac{m\pi y}{H}\dx\dy},
+\end{equation}
+determining the $b_{nm}$.  The expression on the r.h.s.\ of \eqref{eq:8.6.12} is recognized as the generalized Fourier coefficients of~$Q$.  Dividing by $\lambda_{nm}$ to solve for $b_{nm}$ poses no difficulty since $\lambda_{nm} > 0$ (explicitly or by use of the Rayleigh quotient).  It is easier to obtain the solution using the expansion in terms of two-dimensional eigenfunctions than using one-dimensional ones.  However, doubly infinite series such as \eqref{eq:8.6.11} may converge quite slowly.  Numerical methods may be preferable except in simple cases.  In Exercise~8.6.2 we show that the Fourier sine coefficients in $y$ of $b_n(y)$ [see \eqref{eq:8.6.3}] equal $b_{nm}$ [see \eqref{eq:8.6.11}].  This shows the equivalence of the one- and two-dimensional eigenfunction expansion approaches.
+
+\textbf{Nonhomogeneous boundary conditions (any geometry).}
+The two-dimensional eigenfunctions can also be directly used for Poisson's equation subject to nonhomogeneous boundary conditions.  It is no more difficult to indicate the solution for a rather general geometry.  Suppose that
+\begin{equation}
+\label{eq:8.6.13}
+\boxed{\laplacian u = Q,}
+\end{equation}
+with $u=\alpha$ on the boundary.  Consider the eigenfunctions $\phi_i$ of $\laplacian\phi = -\lambda\phi$ with $\phi = 0$ on the boundary.  We represent $u$ in terms of these eigenfunctions:
+\begin{equation}
+\label{eq:8.6.14}
+\boxed{u = \sum_i b_i\,\phi_i.}
+\end{equation}
+Now, it is \emph{no longer} true that
+\[
+\laplacian u = \sum_i b_i\,\laplacian\phi_i,
+\]
+since $u$ does not satisfy homogeneous boundary conditions.  Instead, from \eqref{eq:8.6.14} we know that
+\begin{equation}
+\label{eq:8.6.15}
+b_i = \frac{\iint u\,\phi_i\dx\dy}{\iint \phi_i^2\dx\dy}
+= -\frac{1}{\lambda_i}\frac{\iint u\laplacian\phi_i\dx\dy}{\iint \phi_i^2\dx\dy},
+\end{equation}
+since $\laplacian\phi_i = -\lambda_i\phi_i$.  We can evaluate the numerator using Green's two-dimensional formula:
+\begin{equation}
+\label{eq:8.6.16}
+\iint (u\laplacian v - v\laplacian u)\dx\dy = \oint (u\nabla v - v\nabla u)\cdot\hat{\mathbf{n}}\ds.
+\end{equation}
+Letting $v = \phi_i$, we see
+\[
+\iint u\laplacian\phi_i\dx\dy = \iint \phi_i\laplacian u\dx\dy + \oint (u\nabla\phi_i - \phi_i\nabla u)\cdot\hat{\mathbf{n}}\ds.
+\]
+However, $\laplacian u = Q$ and $\phi_i = 0$ on the boundary and $u = \alpha$.  Thus,
+\begin{equation}
+\label{eq:8.6.17}
+\boxed{b_i = -\frac{1}{\lambda_i}\;\frac{\iint \phi_i Q\dx\dy + \oint \alpha\nabla\phi_i\cdot\hat{\mathbf{n}}\ds}{\iint \phi_i^2\dx\dy}.}
+\end{equation}
+This is the general expression for $b_i$, since $\lambda_i$, $\phi_i$, $\alpha$, and $Q$ are considered to be known.  Again, dividing by $\lambda_i$ causes no difficulty, since $\lambda_i > 0$ from the Rayleigh quotient.  For problems in which $\lambda_i = 0$, see Sec.~9.4.
+
+If $u$ also satisfies homogeneous boundary conditions, $\alpha = 0$, then \eqref{eq:8.6.17} becomes
+\[
+b_i = -\frac{1}{\lambda_i}\;\frac{\iint \phi_i Q\dx\dy}{\iint \phi_i^2\dx\dy},
+\]
+agreeing with \eqref{eq:8.6.12} in the case of a rectangular region.  This shows that \eqref{eq:8.6.11} may be term-by-term differentiated if $u$ and $\phi$ satisfy the same homogeneous boundary conditions.
+
+\begin{exercises}{8.6}
+
+\item Solve
+\[
+\laplacian u = Q(x,y)
+\]
+on a rectangle ($0 < x < L$, $0 < y < H$) subject to
+\begin{enumerate}
+\item[(a)] $u(0,y) = 0$, \quad $u(x,0) = 0$
+\par $u(L,y) = 0$, \quad $u(x,H) = 0$
+\par Use a Fourier sine series in $y$.
+\item[\starred(b)] $u(0,y) = 0$, \quad $u(x,0) = 0$
+\par $u(L,y) = 1$, \quad $u(x,H) = 0$
+\par Do not reduce to homogeneous boundary conditions.
+\item[(c)] Solve part~(b) by first reducing to homogeneous boundary conditions.
+\item[\starred(d)] $\pd{u}{x}(0,y) = 0$, \quad $\pd{u}{y}(x,0) = 0$
+\par $\pd{u}{x}(L,y) = 0$, \quad $\pd{u}{y}(x,H) = 0$
+\par In what situations are there solutions?
+\item[(e)] $\pd{u}{x}(0,y) = 0$, \quad $u(x,0) = 0$
+\par $\pd{u}{x}(L,y) = 0$, \quad $\pd{u}{y}(x,H) = 0$
+\end{enumerate}
+
+\item The solution of \eqref{eq:8.6.6},
+\[
+\odd{b_n}{y} - \left(\frac{n\pi}{L}\right)^2 b_n = q_n(y),
+\]
+subject to $b_n(0) = 0$ and $b_n(H) = 0$ is given by \eqref{eq:8.6.9}.
+\begin{enumerate}
+\item[(a)] Solve this instead by letting $b_n(y)$ equal a Fourier sine series.
+\item[(b)] Show that this series is equivalent to \eqref{eq:8.6.9}.
+\item[(c)] Show that this series is equivalent to the answer obtained by an expansion in the two-dimensional eigenfunctions, \eqref{eq:8.6.11}.
+\end{enumerate}
+
+\item Solve (using two-dimensional eigenfunctions) $\laplacian u = Q(r,\theta)$ inside a circle of radius~$a$ subject to the given boundary condition.  In what situations are there solutions?
+\begin{enumerate}
+\item[\starred(a)] $u(a,\theta) = 0$ \qquad (b) $\pd{u}{r}(a,\theta) = 0$
+\item[(c)] $u(a,\theta) = f(\theta)$ \qquad (d) $\pd{u}{r}(a,\theta) = g(\theta)$
+\end{enumerate}
+
+\item Solve Exercise~8.6.3 using one-dimensional eigenfunctions.
+
+\item Consider
+\[
+\laplacian u = Q(x,y)
+\]
+inside an unspecified region with $u=0$ on the boundary.  Suppose that the eigenfunctions $\laplacian\phi = -\lambda\phi$ subject to $\phi = 0$ on the boundary are known.  Solve for $u(x,y)$.
+
+\item[\starred 8.6.6.] Solve the following example of Poisson's equation:
+\[
+\laplacian u = e^{2y}\sin x
+\]
+subject to the following boundary conditions:
+\begin{alignat*}{2}
+u(0,y) &= 0 &\qquad u(x,0) &= 0 \\
+u(\pi,y) &= 0 &\qquad u(x,L) &= f(x).
+\end{alignat*}
+
+\item Solve
+\[
+\laplacian u = Q(x,y,z)
+\]
+inside a rectangular box ($0 < x < L$, $0 < y < H$, $0 < z < W$) subject to $u = 0$ on the six sides.
+
+\item Solve
+\[
+\laplacian u = Q(r,\theta,z)
+\]
+inside a circular cylinder ($0 < r < a$, $0 < \theta < 2\pi$, $0 < z < H$) subject to $u = 0$ on the sides.
+
+\item On a rectangle ($0 < x < L$, $0 < y < H$) consider
+\[
+\laplacian u = Q(x,y)
+\]
+with $\nabla u\cdot\hat{\mathbf{n}} = 0$ on the boundary.
+\begin{enumerate}
+\item[(a)] Show that a solution exists only if $\iint Q(x,y)\dx\dy = 0$.  Briefly explain, using physical reasoning.
+\item[(b)] Solve using the method of eigenfunction expansion.  Compare to part~(a).  (\textit{Hint:} $\lambda = 0$ is an eigenvalue.)
+\item[(c)] If $\iint Q\dx\dy = 0$, determine the arbitrary constant in the solution of part~(b) by consideration of the time-dependent problem $\pd{u}{t} = k(\laplacian u - Q)$, subject to the initial condition $u(x,y,0) = g(x,y)$.
+\end{enumerate}
+
+\item Reconsider Exercise~8.6.9 for an arbitrary two-dimensional region.
+
+\end{exercises}

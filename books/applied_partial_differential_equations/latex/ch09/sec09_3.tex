@@ -1,0 +1,486 @@
+% sec09_3.tex — Section 9.3: Green's Functions for Boundary Value Problems for ODEs
+\section{Green's Functions for Boundary Value Problems for Ordinary Differential Equations}
+\label{sec:greens-bvp-ode}
+
+%% ────────────────────────────────────────────────────────────────
+\subsection{One-Dimensional Steady-State Heat Equation}
+\label{sec:greens-1d-steady}
+
+We consider the nonhomogeneous boundary value problem
+\begin{equation}
+\label{eq:9.3.1}
+\odd{u}{x} = f(x),
+\end{equation}
+with homogeneous boundary conditions
+\begin{equation}
+\label{eq:9.3.2}
+u(0) = 0 \quad\text{and}\quad u(L) = 0.
+\end{equation}
+
+By the method of eigenfunction expansion, the solution can be written as
+\begin{equation}
+\label{eq:9.3.3}
+u(x) = \sum_{n=1}^{\infty} a_n \sin\frac{n\pi x}{L},
+\end{equation}
+where, by substitution and use of the orthogonality of $\sin n\pi x/L$,
+\[
+-a_n\left(\frac{n\pi}{L}\right)^2 = \frac{2}{L}\int_0^L f(x_0)\sin\frac{n\pi x_0}{L}\dx_0.
+\]
+Thus
+\begin{equation}
+\label{eq:9.3.4}
+u(x) = \int_0^L f(x_0)\,G(x,x_0)\dx_0,
+\end{equation}
+where we have interchanged the summation and integration and the Green's function is given by
+\begin{equation}
+\label{eq:9.3.5}
+\boxed{G(x,x_0) = -\frac{2}{L}\sum_{n=1}^{\infty} \frac{\sin n\pi x/L\;\sin n\pi x_0/L}{(n\pi/L)^2}.}
+\end{equation}
+This is the eigenfunction expansion of the Green's function.
+
+More generally, for the Sturm--Liouville problem $L(u) = f(x)$ with $L = \frac{d}{d x}\!\left(p\frac{d}{d x}\right) + q$ subject to homogeneous boundary conditions, the eigenfunction expansion of the Green's function is
+\begin{equation}
+\label{eq:9.3.6}
+\boxed{G(x,x_0) = \sum_{n=1}^{\infty} \frac{\phi_n(x)\,\phi_n(x_0)}{-\lambda_n \displaystyle\int_a^b \phi_n^2\,\sigma\dx},}
+\end{equation}
+where $\phi_n$ and $\lambda_n$ are the eigenfunctions and eigenvalues of the related homogeneous problem $L(\phi) = -\lambda\sigma\phi$ with the same homogeneous boundary conditions.  The Green's function does not exist if one of the eigenvalues is zero; this case will be treated in Sec.~9.4.
+
+The symmetry of the Green's function is explicitly shown:
+\begin{equation}
+\label{eq:9.3.7}
+G(x,x_0) = G(x_0,x).
+\end{equation}
+
+%% ────────────────────────────────────────────────────────────────
+\subsection{The Method of Variation of Parameters}
+\label{sec:greens-var-params}
+
+We can also derive the solution of \eqref{eq:9.3.1}--\eqref{eq:9.3.2} by the classical method of \textbf{variation of parameters}.  The general solution of the homogeneous equation $d^2u/dx^2 = 0$ is $u_h = c_1 + c_2 x$.  We seek a particular solution of the form $u_p = v_1(x) + v_2(x)\,x$, where $v_1$ and $v_2$ satisfy the standard conditions.
+
+By variation of parameters, one obtains
+\begin{equation}
+\label{eq:9.3.8}
+u(x) = -x\int_0^x f(x_0)\dx_0 + \int_0^x x_0\,f(x_0)\dx_0 + c_1 + c_2 x.
+\end{equation}
+Applying the boundary conditions $u(0)=0$ and $u(L)=0$ determines $c_1$ and $c_2$.  The result can be written in the form \eqref{eq:9.3.4} with
+\begin{equation}
+\label{eq:9.3.9}
+\boxed{G(x,x_0) = \begin{cases} -\dfrac{x}{L}(L-x_0) & x < x_0 \\[6pt] -\dfrac{x_0}{L}(L-x) & x > x_0. \end{cases}}
+\end{equation}
+Note the symmetry $G(x,x_0) = G(x_0,x)$.
+
+More generally, for $L(u) = f(x)$ with $L = d/dx(p\,d/dx) + q$ subject to two homogeneous boundary conditions, variation of parameters yields two linearly independent solutions $y_1(x)$ and $y_2(x)$ of $L(y)=0$ satisfying boundary conditions at $x=a$ and $x=b$, respectively.  The Green's function can be expressed in terms of $y_1$ and $y_2$; the Wronskian $W = y_1 y_2' - y_2 y_1'$ plays a key role.
+
+%% ────────────────────────────────────────────────────────────────
+\subsection{The Method of Eigenfunction Expansion}
+\label{sec:greens-eigexp}
+
+A third method of obtaining the Green's function uses the eigenfunction expansion directly.  We showed in Sec.~9.3.1 that the representation of the solution of $L(u) = f(x)$, $a < x < b$, subject to homogeneous boundary conditions, is
+\begin{equation}
+\label{eq:9.3.10}
+\boxed{u(x) = \int_a^b f(x_0)\,G(x,x_0)\dx_0,}
+\end{equation}
+where the Green's function is the influence function for the source $f(x)$.
+
+If $f(x) = \delta(x-x_s)$ is a concentrated source at $x = x_s$, then
+\[
+u(x) = \int_a^b \delta(x_0 - x_s)\,G(x,x_0)\dx_0 = G(x,x_s).
+\]
+This yields the fundamental interpretation: $G(\vec{x},\vec{x}_s)$ is the \textbf{response at $\vec{x}$ due to a concentrated source at $\vec{x}_s$}.
+
+%% ────────────────────────────────────────────────────────────────
+\subsection{The Dirac Delta Function and Its Relationship to Green's Functions}
+\label{sec:greens-dirac}
+
+\textbf{Dirac delta function.}
+To isolate the effect of each individual source point, we decompose $f(x)$ into a sum of concentrated pulses.  In the limit, the \textbf{Dirac delta function} $\delta(x - x_i)$ is defined by the property that for any continuous function $f(x)$:
+\begin{equation}
+\label{eq:9.3.11}
+\boxed{f(x) = \int_{-\infty}^{\infty} f(x_i)\,\delta(x - x_i)\dx_i.}
+\end{equation}
+The delta function ``sifts'' out the value at $x_i = x$.  It can be motivated as the limit of a sequence of concentrated pulses (the shape need not be rectangular).
+
+Important properties of the Dirac delta function include:
+\begin{equation}
+\label{eq:9.3.12}
+\boxed{1 = \int_{-\infty}^{\infty}\delta(x - x_i)\dx_i;}
+\end{equation}
+it operates like an even function:
+\begin{equation}
+\label{eq:9.3.13}
+\delta(x - x_i) = \delta(x_i - x);
+\end{equation}
+it is the derivative of the Heaviside unit step function $H(x-x_i)$:
+\begin{equation}
+\label{eq:9.3.14}
+\delta(x-x_i) = \frac{d}{d x}H(x-x_i), \qquad H(x-x_i) \equiv \begin{cases} 0 & x < x_i \\ 1 & x > x_i; \end{cases}
+\end{equation}
+\begin{equation}
+\label{eq:9.3.15}
+H(x-x_i) = \int_{-\infty}^{x} \delta(x_0 - x_i)\dx_0;
+\end{equation}
+and it has the scaling property:
+\begin{equation}
+\label{eq:9.3.16}
+\delta[c(x-x_i)] = \frac{1}{|c|}\,\delta(x-x_i).
+\end{equation}
+
+\textbf{Green's function.}
+The solution of the nonhomogeneous problem
+\begin{equation}
+\label{eq:9.3.17}
+\boxed{L(u) = f(x), \quad a < x < b}
+\end{equation}
+subject to two homogeneous boundary conditions is
+\begin{equation}
+\label{eq:9.3.18}
+\boxed{u(x) = \int_a^b f(x_0)\,G(x,x_0)\dx_0.}
+\end{equation}
+The Green's function satisfies
+\begin{equation}
+\label{eq:9.3.19}
+\boxed{L[G(x,x_s)] = \delta(x - x_s),}
+\end{equation}
+subject to the same homogeneous boundary conditions at $x=a$ and $x=b$.
+
+\textbf{Maxwell's reciprocity.}
+The symmetry of the Green's function can be proved directly from the defining differential equation using Green's formula.  Let $u = G(x,x_1)$ and $v = G(x,x_2)$.  Since both satisfy the same homogeneous boundary conditions, Green's formula gives
+\[
+\int_a^b [G(x,x_1)\,\delta(x-x_2) - G(x,x_2)\,\delta(x-x_1)]\dx = 0.
+\]
+By the fundamental property of the Dirac delta function,
+\begin{equation}
+\label{eq:9.3.20}
+\boxed{G(x_1,x_2) = G(x_2,x_1),}
+\end{equation}
+proving the symmetry.  This is called \textbf{Maxwell's reciprocity}: \textbf{the response at $\vec{x}_1$ due to a concentrated source at $\vec{x}_2$ is the same as the response at $\vec{x}_2$ due to a concentrated source at $\vec{x}_1$}.
+
+\textbf{Jump conditions.}
+The Green's function $G(x,x_s)$ may be determined from its defining differential equation \eqref{eq:9.3.19}.  For $x \neq x_s$, $G(x,x_s)$ satisfies the homogeneous equation and must also satisfy the homogeneous boundary conditions.  Jump conditions across $x = x_s$ are determined from the singularity in \eqref{eq:9.3.19}:
+\begin{enumerate}
+\item $G(x,x_s)$ is \textbf{continuous} at $x = x_s$.
+\item $dG/dx$ has a \textbf{jump discontinuity} obtained by integrating \eqref{eq:9.3.19} across $x = x_s$.
+\end{enumerate}
+
+\textbf{Example.}
+For the steady-state heat flow problem \eqref{eq:9.3.1}--\eqref{eq:9.3.2}, the Green's function satisfies
+\begin{equation}
+\label{eq:9.3.21}
+\boxed{\odd{G}{x} = \delta(x - x_0)}
+\end{equation}
+with $G(0,x_0) = 0$ and $G(L,x_0) = 0$.  For $x \neq x_0$, $d^2G/dx^2 = 0$, so $G$ is piecewise linear.  The boundary conditions give $G(0,x_0) = 0$ and $G(L,x_0) = 0$, while continuity and the jump condition
+\begin{equation}
+\label{eq:9.3.22}
+\boxed{G(x_0^-,x_0) = G(x_0^+,x_0)}
+\end{equation}
+\begin{equation}
+\label{eq:9.3.23}
+\boxed{\left.\od{G}{x}\right|_{x=x_0^+} - \left.\od{G}{x}\right|_{x=x_0^-} = 1}
+\end{equation}
+determine the constants, yielding \eqref{eq:9.3.9}.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch09/fig_9_3_4.png}
+\caption{Green's function before application of jump conditions at $x = x_0$.}
+\label{fig:9.3.4}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch09/fig_9_3_5.png}
+\caption{Green's function.}
+\label{fig:9.3.5}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch09/fig_9_3_6.png}
+\caption{Illustration of Maxwell's reciprocity.}
+\label{fig:9.3.6}
+\end{figure}
+
+%% ────────────────────────────────────────────────────────────────
+\subsection{Nonhomogeneous Boundary Conditions}
+\label{sec:greens-nonhomog-bc}
+
+We have shown how to use Green's functions to solve nonhomogeneous differential equations with homogeneous boundary conditions.  We now extend these ideas to include problems with \emph{nonhomogeneous} boundary conditions:
+\begin{equation}
+\label{eq:9.3.24}
+\boxed{\odd{u}{x} = f(x)}
+\end{equation}
+\begin{equation}
+\label{eq:9.3.25}
+\boxed{u(0) = \alpha \quad\text{and}\quad u(L) = \beta.}
+\end{equation}
+
+We use the \emph{same} Green's function as for the problem with homogeneous boundary conditions:
+\begin{equation}
+\label{eq:9.3.26}
+\boxed{\odd{G}{x} = \delta(x - x_0)}
+\end{equation}
+\begin{equation}
+\label{eq:9.3.27}
+\boxed{G(0,x_0) = 0 \quad\text{and}\quad G(L,x_0) = 0;}
+\end{equation}
+\textbf{the Green's function always satisfies the related homogeneous boundary conditions}.
+
+To obtain the representation of the solution, we use Green's formula with $v = G(x,x_0)$:
+\[
+\int_0^L \left[u(x)\odd{G}{x} - G(x,x_0)\odd{u}{x}\right]\dx = u\od{G}{x}\bigg|_0^L - G(x,x_0)\od{u}{x}\bigg|_0^L.
+\]
+Using the defining differential equations and boundary conditions, and interchanging $x$ and $x_0$ using the symmetry of the Green's function, we obtain
+\begin{equation}
+\label{eq:9.3.28}
+\boxed{u(x) = \int_0^L f(x_0)\,G(x,x_0)\dx_0 + \beta\left.\od{G(x,x_0)}{x_0}\right|_{x_0=L} - \alpha\left.\od{G(x,x_0)}{x_0}\right|_{x_0=0}.}
+\end{equation}
+
+For our problem, with $G(x,x_0)$ given by \eqref{eq:9.3.9}, we evaluate
+\[
+\left.\od{G(x,x_0)}{x_0}\right|_{x_0=L} = \frac{x}{L} \qquad\text{and}\qquad \left.\od{G(x,x_0)}{x_0}\right|_{x_0=0} = -\left(1 - \frac{x}{L}\right).
+\]
+Consequently,
+\begin{equation}
+\label{eq:9.3.29}
+u(x) = \int_0^L f(x_0)\,G(x,x_0)\dx_0 + \beta\frac{x}{L} + \alpha\left(1 - \frac{x}{L}\right).
+\end{equation}
+The solution is the sum of a particular solution satisfying homogeneous boundary conditions and a homogeneous solution satisfying the two required nonhomogeneous boundary conditions.
+
+%% ────────────────────────────────────────────────────────────────
+\subsection{Summary}
+\label{sec:greens-ode-summary}
+
+We have described three fundamental methods to obtain Green's functions:
+\begin{enumerate}
+\item Variation of parameters
+\item Method of eigenfunction expansion
+\item Using the defining differential equation for the Green's function
+\end{enumerate}
+
+In addition, steady-state Green's functions can be obtained as the limit as $t \to \infty$ of the solution with steady sources.  To obtain Green's functions for partial differential equations, we will discuss one important additional method, described in Sec.~9.5.
+
+%% ────────────────────────────────────────────────────────────────
+\subsection*{Appendix to 9.3: Establishing Green's Formula with Dirac Delta Functions}
+\label{sec:greens-appendix}
+
+Green's formula is very important when analyzing Green's functions.  However, our derivation of Green's formula requires integration by parts.  Here we show that Green's formula,
+\begin{equation}
+\label{eq:9.3.30}
+\int_a^b [uL(v) - vL(u)]\dx = p\left(u\od{v}{x} - v\od{u}{x}\right)\bigg|_a^b, \quad\text{where}\quad L = \frac{d}{d x}\!\left(p\frac{d}{d x}\right) + q,
+\end{equation}
+is valid even if $v$ is a Green's function, $L(v) = \delta(x - x_0)$.
+
+We divide the region into three parts: $\int_a^b = \int_a^{x_0^-} + \int_{x_0^-}^{x_0^+} + \int_{x_0^+}^b$.  In the regions excluding the singularity, $a \le x \le x_{0-}$ and $x_{0+} \le x \le b$, Green's formula can be used.  In addition, due to the property of the Dirac delta function,
+\[
+\int_{x_0^-}^{x_0^+} [uL(v) - vL(u)]\dx = \int_{x_0^-}^{x_0^+} [u\delta(x-x_0) - vL(u)]\dx = u(x_0),
+\]
+since $\int_{x_0^-}^{x_0^+} vL(u)\dx = 0$.  Thus we obtain
+\begin{equation}
+\label{eq:9.3.31}
+\int_a^b [uL(v) - vL(u)]\dx = p\left(u\od{v}{x} - v\od{u}{x}\right)\bigg|_a^b + p\left(u\od{v}{x} - v\od{u}{x}\right)\bigg|_{x_0^+}^{x_0^-} + u(x_0).
+\end{equation}
+Since $u$, $du/dx$, and $v$ are continuous at $x = x_0$, and since $p\,dv/dx|_{x_0^-}^{x_0^+} = 1$ from the defining equation, \eqref{eq:9.3.30} follows.  Green's formula may be utilized even if Green's functions are present.
+
+%% ────────────────────────────────────────────────────────────────
+\begin{exercises}{9.3}
+
+\item The Green's function for \eqref{eq:9.3.1} is given explicitly by \eqref{eq:9.3.5}.  The method of eigenfunction expansion yields \eqref{eq:9.3.5}.  Show that the Fourier sine series of \eqref{eq:9.3.9} yields \eqref{eq:9.3.5}.
+
+\item
+\begin{enumerate}
+\item[(a)] Derive \eqref{eq:9.3.11}.
+\item[(b)] Integrate \eqref{eq:9.3.11} by parts to derive \eqref{eq:9.3.5}.
+\item[(c)] Instead of part~(b), simplify the double integral in \eqref{eq:9.3.11} by interchanging the orders of integration.  Derive \eqref{eq:9.3.5} this way.
+\end{enumerate}
+
+\item Consider
+\[
+\pd{u}{t} = k\pdd{u}{x} + Q(x,t)
+\]
+subject to $u(0,t)=0$, $\pd{u}{x}(L,t)=0$, and $u(x,0)=g(x)$.
+\begin{enumerate}
+\item[(a)] Solve by the method of eigenfunction expansion.
+\item[(b)] Determine the Green's function for this time-dependent problem.
+\item[(c)] If $Q(x,t) = Q(x)$, take the limit as $t \to \infty$ of part~(b) in order to determine the Green's function for
+\[
+\odd{u}{x} = f(x) \quad\text{with}\quad u(0)=0 \quad\text{and}\quad \od{u}{x}(L) = 0.
+\]
+\end{enumerate}
+
+\item
+\begin{enumerate}
+\item[(a)] Derive \eqref{eq:9.3.12} from \eqref{eq:9.3.11}.  [\textit{Hint:} Let $f(x)=1$.]
+\item[(b)] Show that \eqref{eq:9.3.16} satisfies \eqref{eq:9.3.14}.
+\item[(c)] Derive \eqref{eq:9.3.13}.  [\textit{Hint:} Show for any continuous $f(x)$ that
+\[
+\int_{-\infty}^{\infty} f(x_0)\delta(x_0 - x)\dx_0 = \int_{-\infty}^{\infty} f(x_0)\delta(x_0 - x)\dx_0
+\]
+by letting $x_0 - x = s$ in the integral on the right.]
+\item[(d)] Derive \eqref{eq:9.3.16}.  [\textit{Hint:} Evaluate $\int_{-\infty}^{\infty} f(x)\delta[c(x-x_0)]\dx$ by making the change of variables $y = c(x-x_0)$.]
+\end{enumerate}
+
+\item Consider
+\[
+\odd{u}{x} = f(x) \quad\text{with}\quad u(0)=0 \quad\text{and}\quad \od{u}{x}(L) = 0.
+\]
+\begin{enumerate}
+\item[\starred(a)] Solve by direct integration.
+\item[\starred(b)] Solve by the method of variation of parameters.
+\item[\starred(c)] Determine $G(x,x_0)$ so that \eqref{eq:9.3.18} is valid.
+\item[(d)] Solve by the method of eigenfunction expansion.  Show that $G(x,x_0)$ is given by \eqref{eq:9.3.6}.
+\end{enumerate}
+
+\item Consider
+\[
+\odd{G}{x} = \delta(x - x_0) \quad\text{with}\quad G(0,x_0) = 0 \quad\text{and}\quad \od{G}{x}(L,x_0) = 0.
+\]
+\begin{enumerate}
+\item[\starred(a)] Solve directly.
+\item[\starred(b)] Graphically illustrate $G(x,x_0) = G(x_0,x)$.
+\item[(c)] Compare to Exercise~9.3.5.
+\end{enumerate}
+
+\item Redo Exercise~9.3.5 with the following change: $\od{u}{x}(L) + hu(L) = 0$, $h > 0$.
+
+\item Redo Exercise~9.3.6 with the following change: $\od{G}{x}(L) + hG(L) = 0$, $h > 0$.
+
+\item Consider
+\[
+\odd{u}{x} + u = f(x) \quad\text{with}\quad u(0)=0 \quad\text{and}\quad u(L) = 0.
+\]
+Assume that $(n\pi/L)^2 \neq 1$ (i.e., $L \neq n\pi$ for any $n$).
+\begin{enumerate}
+\item[(a)] Solve by the method of variation of parameters.
+\item[\starred(b)] Determine the Green's function so that $u(x)$ may be represented in terms of it [see \eqref{eq:9.3.18}].
+\end{enumerate}
+
+\item Redo Exercise~9.3.9 using the method of eigenfunction expansion.
+
+\item Consider
+\[
+\odd{G}{x} + G = \delta(x-x_0) \quad\text{with}\quad G(0,x_0) = 0 \quad\text{and}\quad G(L,x_0) = 0.
+\]
+\begin{enumerate}
+\item[\starred(a)] Solve for this Green's function directly.  Why is it necessary to assume that $L \neq n\pi$?
+\item[(b)] Show that $G(x,x_0) = G(x_0,x)$.
+\end{enumerate}
+
+\item For the following problems, determine a representation of the solution in terms of the Green's function.  Show that the nonhomogeneous boundary conditions can also be understood using homogeneous solutions of the differential equation:
+\begin{enumerate}
+\item[(a)] $\odd{u}{x} = f(x)$, $u(0) = A$, $\od{u}{x}(L) = B$.  (See Exercise~9.3.6.)
+\item[(b)] $\odd{u}{x} + u = f(x)$, $u(0) = A$, $u(L) = B$.  Assume $L \neq n\pi$.  (See Exercise~9.3.11.)
+\item[(c)] $\odd{u}{x} = f(x)$, $u(0) = A$, $\od{u}{x}(L) + hu(L) = 0$.  (See Exercise~9.3.8.)
+\end{enumerate}
+
+\item Consider the one-dimensional infinite space wave equation with a periodic source of frequency $\omega$:
+\begin{equation}
+\label{eq:9.3.32}
+\pdd{\phi}{t} = c^2\pdd{\phi}{x} + g(x)e^{-i\omega t}.
+\end{equation}
+\begin{enumerate}
+\item[(a)] Show that a particular solution $\phi = u(x)e^{-i\omega t}$ of \eqref{eq:9.3.32} is obtained if $u$ satisfies a nonhomogeneous Helmholtz equation
+\[
+\odd{u}{x} + k^2 u = f(x).
+\]
+\item[\starred(b)] The Green's function $G(x,x_0)$ satisfies
+\[
+\odd{G}{x} + k^2 G = \delta(x - x_0).
+\]
+Determine this infinite space Green's function so that the corresponding $\phi(x,t)$ is an outward-propagating wave.
+\item[(c)] Determine a particular solution of \eqref{eq:9.3.32}.
+\end{enumerate}
+
+\item Consider $L(u) = f(x)$ with $L = \frac{d}{d x}\!\left(p\frac{d}{d x}\right) + q$.  Assume that the appropriate Green's function exists.  Determine the representation of $u(x)$ in terms of the Green's function if the boundary conditions are nonhomogeneous:
+\begin{enumerate}
+\item[(a)] $u(0) = \alpha$ and $u(L) = \beta$
+\item[(b)] $\od{u}{x}(0) = \alpha$ and $\od{u}{x}(L) = \beta$
+\item[(c)] $u(0) = \alpha$ and $\od{u}{x}(L) = \beta$
+\item[\starred(d)] $u(0) = \alpha$ and $\od{u}{x}(L) + hu(L) = \beta$
+\end{enumerate}
+
+\item Consider $L(G) = \delta(x - x_0)$ with $L = \frac{d}{d x}\!\left(p\frac{d}{d x}\right) + q$ subject to the boundary conditions $G(0,x_0) = 0$ and $G(L,x_0) = 0$.  Introduce for all $x$ two homogeneous solutions, $y_1$ and $y_2$, such that each solves one of the homogeneous boundary conditions:
+\begin{alignat*}{2}
+L(y_1) &= 0, &\qquad L(y_2) &= 0 \\
+y_1(0) &= 0, &\qquad y_2(L) &= 0 \\
+\od{y_1}{x}(0) &= 1, &\qquad \od{y_2}{x}(L) &= 1.
+\end{alignat*}
+Even if $y_1$ and $y_2$ cannot be explicitly obtained, they can be easily calculated numerically on a computer as two initial value problems.  Any homogeneous solution must be a linear combination of the two.
+\begin{enumerate}
+\item[\starred(a)] Solve for $G(x,x_0)$ in terms of $y_1(x)$ and $y_2(x)$.  You may assume that $y_1(x) \neq cy_2(x)$.
+\item[(b)] What goes wrong if $y_1(x) = cy_2(x)$ for all $x$ and why?
+\end{enumerate}
+
+\item Reconsider \eqref{eq:9.3.21}, whose solution we have obtained, \eqref{eq:9.3.9}.  For \eqref{eq:9.3.21}, what are $y_1$ and $y_2$ in Exercise~9.3.15?  Show that $G(x,x_0)$ obtained in Exercise~9.3.15 reduces to \eqref{eq:9.3.9} for \eqref{eq:9.3.21}.
+
+\item Consider
+\[
+L(u) = f(x) \quad\text{with}\quad L = \frac{d}{d x}\!\left(p\frac{d}{d x}\right) + q
+\]
+\[
+u(0) = 0 \quad\text{and}\quad u(L) = 0.
+\]
+Introduce two homogeneous solutions $y_1$ and $y_2$, as in Exercise~9.3.15.
+\begin{enumerate}
+\item[(a)] Determine $u(x)$ using the method of variation of parameters.
+\item[(b)] Determine the Green's function from part~(a).
+\item[(c)] Compare to Exercise~9.3.15.
+\end{enumerate}
+
+\item Reconsider Exercise~9.3.17.  Determine $u(x)$ by the method of eigenfunction expansion.  Show that the Green's function satisfies \eqref{eq:9.3.6}.
+
+\item
+\begin{enumerate}
+\item[(a)] If a concentrated source is placed at a node of some mode (eigenfunction), show that the amplitude of the response of that mode is zero.  [\textit{Hint:} Use the result of the method of eigenfunction expansion and recall that a node $x^*$ of an eigenfunction means anyplace where $\phi_n(x^*)=0$.]
+\item[(b)] If the eigenfunctions are $\sin n\pi x/L$ and the source is located in the middle, $x_0 = L/2$, show that the response will have no even harmonics.
+\end{enumerate}
+
+\item Derive the eigenfunction expansion of the Green's function \eqref{eq:9.3.6} directly from the defining differential equation \eqref{eq:9.3.21} by letting
+\[
+G(x,x_0) = \sum_{n=1}^{\infty} a_n\phi_n(x).
+\]
+Assume that term-by-term differentiation is justified.
+
+\item[\starred 9.3.21.] Solve
+\[
+\od{G}{x} = \delta(x - x_0) \quad\text{with}\quad G(0,x_0) = 0.
+\]
+Show that $G(x,x_0)$ is not symmetric even though $\delta(x-x_0)$ is.
+
+\item Solve
+\[
+\od{G}{x} + G = \delta(x-x_0) \quad\text{with}\quad G(0,x_0) = 0.
+\]
+Show that $G(x,x_0)$ is not symmetric even though $\delta(x-x_0)$ is.
+
+\item Solve
+\begin{gather*}
+\frac{d^4G}{dx^4} = \delta(x-x_0) \\
+G(0,x_0) = 0 \qquad G(L,x_0) = 0 \\
+\od{G}{x}(0,x_0) = 0 \qquad \odd{G}{x}(L,x_0) = 0.
+\end{gather*}
+
+\item Use Exercise~9.3.23 to solve
+\begin{gather*}
+\frac{d^4u}{dx^4} = f(x) \\
+u(0) = 0 \qquad u(L) = 0 \\
+\od{u}{x}(0) = 0 \qquad \odd{u}{x}(L) = 0.
+\end{gather*}
+(\textit{Hint:} Exercise~5.5.8 is helpful.)
+
+\item Use the convolution theorem for Laplace transforms to obtain particular solutions of
+\begin{enumerate}
+\item[(a)] $\odd{u}{x} = f(x)$ (See Exercise~9.3.5.)
+\item[\starred(b)] $\frac{d^4u}{dx^4} = f(x)$ (See Exercise~9.3.24.)
+\end{enumerate}
+
+\item Determine the Green's function satisfying $\frac{d^2G}{dx^2} - G = \delta(x-x_0)$:
+\begin{enumerate}
+\item[(a)] Directly on the interval $0 < x < L$ with $G(0,x_0) = 0$ and $G(L,x_0) = 0$
+\item[(b)] Directly on the interval $0 < x < L$ with $G(0,x_0) = 0$ and $\od{G}{x}(L,x_0) = 0$
+\item[(c)] Directly on the interval $0 < x < L$ with $\od{G}{x}(0,x_0) = 0$ and $\od{G}{x}(L,x_0) = 0$
+\item[(d)] Directly on the interval $0 < x < \infty$ with $G(0,x_0) = 0$
+\item[(e)] Directly on the interval $0 < x < \infty$ with $\od{G}{x}(0,x_0) = 0$
+\item[(f)] Directly on the interval $-\infty < x < \infty$
+\end{enumerate}
+
+\end{exercises}

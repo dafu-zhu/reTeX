@@ -12,16 +12,8 @@ Convert scanned PDF textbooks into structured, multi-chapter LaTeX projects with
 
 ## Branch Structure
 
-- **`master`** — pipeline code, skills, scripts, and templates only. No converted content.
-- **`output/<book_name>`** — each conversion lives on its own branch (e.g., `output/applied_pde_solutions_manual`). Generated `.tex` files, figures, and build config go here.
-
-This keeps master lightweight. Output branches can be large (hundreds of `.tex` files + extracted PNGs), so clone only master unless you need a specific conversion:
-
-```bash
-# Clone master only (recommended) — skips all output branches
-git clone --single-branch https://github.com/dafu-zhu/reTeX.git
-
-```
+- **One branch: `master`.** Pipeline code, skills, scripts, and every converted book all live together — each book in its own `books/<book_name>/` directory.
+- Per-book `output/*` branches are retired — they all claimed the same flat `latex/ch01/` paths, so they could never merge and the working tree mixed chapters from different books.
 
 ## Quick Start
 
@@ -31,12 +23,12 @@ cp your_textbook.pdf pdfs/scanned.pdf
 
 # 2. Run the pipeline (in Claude Code)
 /pdf-to-latex pdfs/scanned.pdf
-# This auto-creates an output/<book_name> branch
+# Creates books/<book_name>/ on the current branch — never a new branch
 
 # 3. Build the PDF
-./scripts/build.sh              # Full book
-./scripts/build.sh 3            # Chapter 3 only
-./scripts/build.sh clean        # Remove build artifacts
+./scripts/build.sh <book_name>          # Full book
+./scripts/build.sh <book_name> 3        # Chapter 3 only
+./scripts/build.sh <book_name> clean    # Remove build artifacts
 ```
 
 ## Project Structure
@@ -44,31 +36,33 @@ cp your_textbook.pdf pdfs/scanned.pdf
 ```
 ├── pdfs/
 │   └── scanned.pdf              # Source PDF (user provides)
-├── latex/
-│   ├── main.tex                 # Master document
-│   ├── preamble.tex             # Packages, commands, geometry
-│   ├── frontmatter.tex          # Title page, copyright
-│   ├── ch01/ ... chNN/          # One directory per chapter
-│   │   ├── chXX.tex             # Chapter wrapper
-│   │   └── secXX_Y.tex          # One file per section
-│   ├── backmatter/              # Bibliography, answers, index
-│   ├── figures/ch01/ ... chNN/  # Extracted figure PNGs
-│   └── build/                   # Auxiliary files (not committed)
+├── books/
+│   └── <book_name>/
+│       ├── book.conf            # Chapter page ranges
+│       ├── progress.md          # Section-level progress tracker
+│       ├── latex/
+│       │   ├── main.tex         # Master document
+│       │   ├── preamble.tex     # Packages, commands, geometry
+│       │   ├── frontmatter.tex  # Title page (title, author, edition only)
+│       │   ├── ch01/ ... chNN/  # One directory per chapter
+│       │   ├── backmatter/      # Bibliography, answers, index
+│       │   └── figures/         # Extracted figure PNGs
+│       └── build/               # Auxiliary files (not committed)
 ├── scripts/
 │   ├── build.sh                 # Build full book or single chapter
 │   ├── pipeline.py              # Python-first pipeline orchestrator
 │   ├── compile_fix.py           # Deterministic compile→fix→recompile loop
 │   ├── extract_figures.py       # Extract figures from scanned PDF
 │   ├── inventory_check.py       # Count sections/equations/figures/exercises
+│   ├── check_repo_layout.py     # Validate books/ layout and copyright rules
+│   ├── import_book.sh           # Import one book's LaTeX tree into books/<name>/
 │   └── test_compile_fix.py      # Tests for compile_fix patterns
 ├── skills/                      # Claude Code skills (slash commands)
 │   ├── pdf-to-latex.md          # /pdf-to-latex — full pipeline
 │   ├── compile-fix.md           # /compile-fix — compile→fix loop
 │   └── extract-figures.md       # /extract-figures — figure extraction
 ├── docs/
-│   ├── plan.md                  # Conversion plan template
-│   └── progress.md              # Section-level progress tracker
-├── book.conf                    # Book name (auto-generated from PDF title)
+│   └── plan.md                  # Conversion plan template
 └── .gitignore
 ```
 
@@ -76,9 +70,9 @@ cp your_textbook.pdf pdfs/scanned.pdf
 
 | Command | Output | Aux files |
 |---------|--------|-----------|
-| `./scripts/build.sh` | `latex/<book_name>.pdf` | `latex/build/` |
-| `./scripts/build.sh N` | `latex/<book_name>_chNN.pdf` | `latex/build/` |
-| `./scripts/build.sh clean` | — | Removed |
+| `./scripts/build.sh <book_name>` | `books/<book_name>/<book_name>.pdf` | `books/<book_name>/build/` |
+| `./scripts/build.sh <book_name> N` | `books/<book_name>/<book_name>_chNN.pdf` | `books/<book_name>/build/` |
+| `./scripts/build.sh <book_name> clean` | — | Removed |
 
 ## Skills
 
@@ -105,10 +99,10 @@ python scripts/pipeline.py pdfs/scanned.pdf --phase 2    # Figures
 python scripts/pipeline.py pdfs/scanned.pdf --phase 4    # Verify
 
 # Standalone compile-fix loop
-python scripts/compile_fix.py                    # Full book
-python scripts/compile_fix.py --chapter 3        # Single chapter
-python scripts/compile_fix.py --fix-only         # Apply fixes without compiling
-python scripts/compile_fix.py --compile-only     # Compile without fixing
+python scripts/compile_fix.py --book <book_name>                  # Full book
+python scripts/compile_fix.py --book <book_name> --chapter 3      # Single chapter
+python scripts/compile_fix.py --book <book_name> --fix-only       # Apply fixes without compiling
+python scripts/compile_fix.py --book <book_name> --compile-only   # Compile without fixing
 ```
 
 | Phase | Task | Requires AI? |

@@ -1,0 +1,45 @@
+% sec10_2.tex — Section 10.2: Heat Equation on an Infinite Domain
+\section{Heat Equation on an Infinite Domain}
+\label{sec:heat-infinite}
+
+We wish to solve the heat equation on the entire real line:
+\begin{equation}
+\label{eq:heat-inf-pde}
+\pd{u}{t} = k\pdd{u}{x}, \quad -\infty < x < \infty
+\end{equation}
+subject to the initial condition
+\begin{equation}
+\label{eq:heat-inf-ic}
+u(x,0) = f(x).
+\end{equation}
+We will assume that $u(x,t) \to 0$ as $x \to \pm\infty$ (we will also need $f(x) \to 0$ as $x \to \pm\infty$).
+
+We attempt to use the method of separation of variables.  We look for product solutions of the form $u(x,t) = \phi(x)h(t)$.  The time-dependent part satisfies
+\begin{equation}
+\label{eq:heat-inf-time}
+\od{h}{t} = -\lambda k h,
+\end{equation}
+and the spatial part satisfies
+\begin{equation}
+\label{eq:heat-inf-space}
+\odd{\phi}{x} = -\lambda\phi.
+\end{equation}
+The boundedness conditions as $x \to \pm\infty$ replace the usual homogeneous boundary conditions.  Instead of a finite interval eigenvalue problem with a discrete spectrum, we obtain a continuous spectrum.
+
+For \eqref{eq:heat-inf-space}, the condition that $|\phi(x)| < \infty$ as $x \to \pm\infty$ is satisfied for all $\lambda > 0$.  Writing $\lambda = \omega^2$ (with $\omega > 0$), the bounded solutions are $\cos\omega x$ and $\sin\omega x$, or equivalently $e^{\pm i\omega x}$.  Since all positive values of $\lambda$ are allowed, the spectrum is continuous.
+
+The corresponding time-dependent part is
+\[
+h(t) = e^{-k\omega^2 t}.
+\]
+Product solutions are $e^{-i\omega x}e^{-k\omega^2 t}$ for all real $\omega$.  A generalized principle of superposition (integrating over the continuous parameter $\omega$ rather than summing over discrete eigenvalues) suggests the solution
+\begin{equation}
+\label{eq:heat-inf-superposition}
+u(x,t) = \int_{-\infty}^{\infty} c(\omega)\,e^{-i\omega x}\,e^{-k\omega^2 t}\,d\omega.
+\end{equation}
+The initial condition $u(x,0) = f(x)$ is satisfied if
+\begin{equation}
+\label{eq:heat-inf-ic-integral}
+f(x) = \int_{-\infty}^{\infty} c(\omega)\,e^{-i\omega x}\,d\omega.
+\end{equation}
+This is a Fourier integral representation of $f(x)$; the coefficient $c(\omega)$ is the Fourier transform of $f(x)$.  In the next section we derive the Fourier transform pair and show how $c(\omega)$ can be determined.

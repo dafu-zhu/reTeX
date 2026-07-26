@@ -1,0 +1,335 @@
+% sec10_3.tex — Section 10.3: Fourier Transform Pair
+\section{Fourier Transform Pair}
+\label{sec:ft-pair}
+
+%% ── 10.3.1 ──────────────────────────────────────────────────────
+\subsection{Motivation from Fourier Series}
+\label{subsec:ft-motivation}
+
+We motivate the Fourier transform by taking the limit of the complex form of the Fourier series as $L \to \infty$.  Recall from Sec.~3.6 that on $-L < x < L$,
+\begin{equation}
+\label{eq:complex-fourier-recall}
+f(x) = \sum_{n=-\infty}^{\infty} c_n\,e^{-in\pi x/L},
+\end{equation}
+where
+\begin{equation}
+\label{eq:complex-coeff-recall}
+c_n = \frac{1}{2L}\int_{-L}^{L} f(x)\,e^{in\pi x/L}\dx.
+\end{equation}
+Define the discrete wave numbers $\omega_n = n\pi/L$ so that the spacing is $\Delta\omega = \pi/L$.  Then \eqref{eq:complex-fourier-recall} becomes
+\[
+f(x) = \sum_{n=-\infty}^{\infty} \left[\frac{1}{2\pi}\int_{-L}^{L} f(\bar{x})\,e^{i\omega_n \bar{x}}\,d\bar{x}\right] e^{-i\omega_n x}\,\Delta\omega.
+\]
+As $L \to \infty$, the sum becomes an integral over $\omega$ from $-\infty$ to $+\infty$, and we arrive at the \textbf{Fourier integral representation}:
+\begin{equation}
+\label{eq:fourier-integral-rep}
+f(x) = \int_{-\infty}^{\infty}\left[\frac{1}{2\pi}\int_{-\infty}^{\infty} f(\bar{x})\,e^{i\omega\bar{x}}\,d\bar{x}\right]e^{-i\omega x}\,d\omega.
+\end{equation}
+
+We define the \textbf{Fourier transform} of $f(x)$ as
+\boxed{\begin{equation}
+\label{eq:ft-forward}
+F(\omega) = \frac{1}{2\pi}\int_{-\infty}^{\infty} f(x)\,e^{i\omega x}\dx
+\end{equation}}
+and the \textbf{inverse Fourier transform} as
+\boxed{\begin{equation}
+\label{eq:ft-inverse}
+f(x) = \int_{-\infty}^{\infty} F(\omega)\,e^{-i\omega x}\,d\omega.
+\end{equation}}
+Equations \eqref{eq:ft-forward} and \eqref{eq:ft-inverse} are called the \textbf{Fourier transform pair}.
+
+\textbf{Notation.}  We use the notation $\mathcal{F}[f(x)] = F(\omega)$ and $\mathcal{F}^{-1}[F(\omega)] = f(x)$.  The factor $1/2\pi$ can be distributed differently between the forward and inverse transforms; the choice above (with $1/2\pi$ in the forward transform) is a common convention.
+
+More generally, the Fourier transform pair may be written with an arbitrary constant $\gamma$:
+\begin{equation}
+\label{eq:ft-gamma}
+f(x) = \frac{1}{\gamma}\int_{-\infty}^{\infty} F(\omega)\,e^{-i\omega x}\,d\omega, \qquad
+F(\omega) = \frac{\gamma}{2\pi}\int_{-\infty}^{\infty} f(x)\,e^{i\omega x}\dx.
+\end{equation}
+For our convention, $\gamma = 1$.  Another popular choice is $\gamma = \sqrt{2\pi}$, which distributes the $2\pi$ symmetrically.
+
+%% ── 10.3.2 ──────────────────────────────────────────────────────
+\subsection{Fourier Transform of a Gaussian}
+\label{subsec:ft-gaussian}
+
+An important example is the Gaussian function $e^{-\alpha x^2}$ $(\alpha > 0)$, whose Fourier transform can be computed in closed form.  Let
+\begin{equation}
+\label{eq:gaussian-f}
+f(x) = e^{-\alpha x^2}.
+\end{equation}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch10/fig_gaussian-bell.png}
+\caption{Bell-shaped Gaussian.}
+\label{fig:gaussian-bell}
+\end{figure}
+
+The Fourier transform of the Gaussian is
+\begin{equation}
+\label{eq:ft-gaussian-forward}
+F(\omega) = \frac{1}{2\pi}\int_{-\infty}^{\infty} e^{-\alpha x^2}\,e^{i\omega x}\dx = \frac{1}{\sqrt{4\pi\alpha}}\,e^{-\omega^2/4\alpha}.
+\end{equation}
+The inverse Fourier transform of the Gaussian $G(\omega) = e^{-\alpha\omega^2}$ is
+\begin{equation}
+\label{eq:ft-gaussian-inverse}
+g(x) = \int_{-\infty}^{\infty} e^{-\alpha\omega^2}\,e^{-i\omega x}\,d\omega = \sqrt{\frac{\pi}{\alpha}}\,e^{-x^2/4\alpha}.
+\end{equation}
+
+\begin{center}
+\fbox{\parbox{0.8\textwidth}{
+The inverse Fourier transform of a Gaussian is itself a Gaussian.
+}}
+\end{center}
+
+\begin{table}[H]
+\centering
+\caption{Fourier Transform of a Gaussian}
+\label{tab:ft-gaussian}
+\begin{tabular}{ccc}
+\toprule
+$f(x) = \displaystyle\int_{-\infty}^{\infty} F(\omega)\,e^{-i\omega x}\,d\omega$ &
+$F(\omega) = \displaystyle\frac{1}{2\pi}\int_{-\infty}^{\infty} f(x)\,e^{i\omega x}\dx$ \\
+\midrule
+$e^{-\alpha x^2}$ & $\dfrac{1}{\sqrt{4\pi\alpha}}\,e^{-\omega^2/4\alpha}$ \\[6pt]
+$\sqrt{\dfrac{\pi}{\beta}}\,e^{-x^2/4\beta}$ & $e^{-\beta\omega^2}$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+This result can be used to obtain the Fourier transform $F(\omega)$ of a Gaussian $e^{-\beta x^2}$.  Due to the linearity of the Fourier transform pair, the Fourier transform of $e^{-x^2/4\alpha}$ is $\sqrt{\alpha/\pi}\,e^{-\alpha\omega^2}$.  Letting $\beta = 1/4\alpha$, the Fourier transform of $e^{-\beta x^2}$ is $1/\sqrt{4\pi\beta}\,e^{-\omega^2/4\beta}$.  Thus, the Fourier transform of a Gaussian is also a Gaussian.
+
+If $\beta$ is small, then $f(x)$ is a ``broadly spread'' Gaussian; its Fourier transform is ``sharply peaked'' near $\omega = 0$.  On the other hand, if $f(x)$ is a narrowly peaked Gaussian function corresponding to $\beta$ being large, its Fourier transform is broadly spread.
+
+%% ── 10.3.3 ──────────────────────────────────────────────────────
+\subsection{Appendix: Derivation of the Inverse Fourier Transform of a Gaussian}
+\label{subsec:ft-gaussian-derivation}
+
+The inverse Fourier transform of a Gaussian $e^{-\alpha\omega^2}$ is given by \eqref{eq:ft-gaussian-inverse}:
+\[
+g(x) = \int_{-\infty}^{\infty} e^{-\alpha\omega^2}\,e^{-i\omega x}\,d\omega.
+\]
+It turns out that $g(x)$ solves an elementary ordinary differential equation, since
+\[
+g'(x) = \int_{-\infty}^{\infty} -i\omega\,e^{-\alpha\omega^2}\,e^{-i\omega x}\,d\omega
+\]
+can be simplified using an integration by parts:
+\[
+g'(x) = \frac{i}{2\alpha}\int_{-\infty}^{\infty} \frac{d}{d \omega}(e^{-\alpha\omega^2})\,e^{-i\omega x}\,d\omega = -\frac{x}{2\alpha}\int_{-\infty}^{\infty} e^{-\alpha\omega^2}\,e^{-i\omega x}\,d\omega = -\frac{x}{2\alpha}\,g(x).
+\]
+The solution of this ordinary differential equation (by separation) is
+\[
+g(x) = g(0)\,e^{-x^2/4\alpha}.
+\]
+Here
+\[
+g(0) = \int_{-\infty}^{\infty} e^{-\alpha\omega^2}\,d\omega.
+\]
+The dependence on $\alpha$ in the preceding integral can be determined by the transformation $z = \sqrt{\alpha}\,\omega$ ($dz = \sqrt{\alpha}\,d\omega$), in which case
+\[
+g(0) = \frac{1}{\sqrt{\alpha}}\int_{-\infty}^{\infty} e^{-z^2}\,dz.
+\]
+This yields the desired result, \eqref{eq:ft-gaussian-inverse}, since it is well known (but we will show) that
+\begin{equation}
+\label{eq:gaussian-integral}
+I = \int_{-\infty}^{\infty} e^{-z^2}\,dz = \sqrt{\pi}.
+\end{equation}
+
+The integral $\int_{-\infty}^{\infty} e^{-z^2}\,dz$ can be evaluated by a remarkably unusual procedure.  We do not know yet how to evaluate $I$, but we will show that $I^2$ is easy.  Introducing different dummy integration variables for each $I$, we obtain
+\[
+I^2 = \int_{-\infty}^{\infty} e^{-x^2}\dx \int_{-\infty}^{\infty} e^{-y^2}\dy = \int_{-\infty}^{\infty}\int_{-\infty}^{\infty} e^{-(x^2+y^2)}\dx\dy.
+\]
+We will evaluate this double integral, although each single integral is unknown.  Polar coordinates are suggested:
+\[
+x = r\cos\theta, \quad y = r\sin\theta, \quad x^2+y^2 = r^2, \quad dx\,dy = r\,dr\,d\theta.
+\]
+The region of integration is the entire two-dimensional plane.  Thus,
+\[
+I^2 = \int_0^{2\pi}\int_0^{\infty} e^{-r^2}\,r\,dr\,d\theta = \int_0^{2\pi}d\theta\int_0^{\infty} r\,e^{-r^2}\,dr.
+\]
+Both of these integrals are easily evaluated; $I^2 = 2\pi \cdot \frac{1}{2} = \pi$, completing the proof of \eqref{eq:gaussian-integral}.
+
+\textbf{Derivation using complex variables.}  By completing the square, $g(x)$ becomes
+\begin{align*}
+g(x) &= \int_{-\infty}^{\infty} e^{-\alpha[\omega^2 + i(x/\alpha)\omega]}\,d\omega = \int_{-\infty}^{\infty} e^{-\alpha[\omega + i(x/2\alpha)]^2}\,e^{-x^2/4\alpha}\,d\omega.
+\end{align*}
+The change of variables $s = \omega + i(x/2\alpha)$ ($ds = d\omega$) appears to simplify the calculation,
+\begin{equation}
+\label{eq:gaussian-complex-sub}
+g(x) = e^{-x^2/4\alpha}\int_{-\infty}^{\infty} e^{-\alpha s^2}\,ds.
+\end{equation}
+However, although \eqref{eq:gaussian-complex-sub} is correct, we have not given the correct reasons.  Actually, the change of variables $s = \omega + i(x/2\alpha)$ introduces complex numbers into the calculation.  Since $\omega$ is being integrated ``along the real axis'' from $\omega = -\infty$ to $\omega = +\infty$, the variable $s$ has nonzero imaginary part and does not vary along the real axis as indicated by \eqref{eq:gaussian-complex-sub}.  Instead,
+\begin{equation}
+\label{eq:gaussian-complex-contour}
+g(x) = e^{-x^2/4\alpha}\int_{-\infty+i(x/2\alpha)}^{\infty+i(x/2\alpha)} e^{-\alpha s^2}\,ds.
+\end{equation}
+
+The full power of the theory of complex variables is necessary to show that \eqref{eq:gaussian-complex-sub} is equivalent to \eqref{eq:gaussian-complex-contour}.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch10/fig_complex-contour.png}
+\caption{Closed contour integral in the complex plane.}
+\label{fig:complex-contour}
+\end{figure}
+
+We use a rectangular contour, as sketched in Fig.~\ref{fig:complex-contour}.  The closed line integral is composed of four simpler integrals, and hence
+\[
+\int_{c_1} + \int_{c_2} + \int_{c_3} + \int_{c_4} = 0.
+\]
+It can be shown that in the limit as $a \to -\infty$ and $b \to +\infty$, both $\int_{c_2} = 0$ and $\int_{c_4} = 0$, since the integrand is exponentially vanishing on that path (and these paths are finite, of length $x/2\alpha$).  Thus,
+\[
+\int_{-\infty+i(x/2\alpha)}^{\infty+i(x/2\alpha)} e^{-\alpha s^2}\,ds + \int_{\infty}^{-\infty} e^{-\alpha\omega^2}\,d\omega = 0.
+\]
+This verifies that \eqref{eq:gaussian-complex-sub} is equivalent to \eqref{eq:gaussian-complex-contour} (where we use $\int_{\infty}^{-\infty} = -\int_{-\infty}^{\infty}$).
+
+\begin{exercises}{10.3}
+\item Show that the Fourier transform is a linear operator; that is, show that
+\begin{enumerate}
+\item[(a)] $\mathcal{F}[c_1 f(x) + c_2 g(x)] = c_1 F(\omega) + c_2 G(\omega)$
+\item[(b)] $\mathcal{F}[f(x)g(x)] \ne F(\omega)G(\omega)$
+\end{enumerate}
+
+\item Show that the inverse Fourier transform is a linear operator; that is, show that
+\begin{enumerate}
+\item[(a)] $\mathcal{F}^{-1}[c_1 F(\omega) + c_2 G(\omega)] = c_1 f(x) + c_2 g(x)$
+\item[(b)] $\mathcal{F}^{-1}[F(\omega)G(\omega)] \ne f(x)g(x)$
+\end{enumerate}
+
+\item Let $F(\omega)$ be the Fourier transform of $f(x)$.  Show that if $f(x)$ is real, then $F^*(\omega) = F(-\omega)$, where $*$ denotes the complex conjugate.
+
+\item Show that
+\[
+\mathcal{F}\left[\int f(x;a)\,da\right] = \int F(\omega;a)\,da.
+\]
+
+\item If $F(\omega)$ is the Fourier transform of $f(x)$, show that the inverse Fourier transform of $e^{i\omega\beta}F(\omega)$ is $f(x-\beta)$.  This result is known as the \textbf{shift theorem} for Fourier transforms.
+
+\item[\starred 10.3.6.] If
+\[
+f(x) = \begin{cases} 0 & |x| > a, \\ 1 & |x| < a, \end{cases}
+\]
+determine the Fourier transform of $f(x)$.  [The answer is given in the table of Fourier transforms in Section~10.4.4.]
+
+\item[\starred 10.3.7.] If $F(\omega) = e^{-|\omega|\alpha}$ $(\alpha > 0)$, determine the inverse Fourier transform of $F(\omega)$.  [The answer is given in the table of Fourier transforms in Section~10.4.4.]
+
+\item[\starred 10.3.8.] If $F(\omega)$ is the Fourier transform of $f(x)$, show that $-idF/d\omega$ is the Fourier transform of $xf(x)$.
+
+\item Multiply \eqref{eq:ft-gamma} (assuming that $\gamma = 1$) by $e^{-i\omega x}$ and integrate from $-L$ to $L$ to show that
+\begin{equation}
+\label{eq:ft-L-integral}
+\int_{-L}^{L} F(\omega)\,e^{-i\omega x}\,d\omega = \frac{1}{2\pi}\int_{-\infty}^{\infty} f(\bar{x})\,\frac{2\sin L(\bar{x}-x)}{\bar{x}-x}\,d\bar{x}.
+\end{equation}
+\begin{enumerate}
+\item[(a)] % Part (a)
+\item[(b)] Derive \eqref{eq:ft-inverse} from \eqref{eq:ft-forward}.  For simplicity, assume that $f(x)$ is continuous.  [\textit{Hints:} Let $f(\bar{x}) = f(x) + f(\bar{x}) - f(x)$.  Use the sine integral, $\int_0^{\infty}\frac{\sin s}{s}\,ds = \frac{\pi}{2}$.  Integrate \eqref{eq:ft-L-integral} by parts and then take the limit as $L \to \infty$.]
+\end{enumerate}
+
+\item[\starred 10.3.10.] Consider the circularly symmetric heat equation on an infinite two-dimensional domain:
+\[
+\pd{u}{t} = \frac{k}{r}\frac{\partial}{\partial r}\left(r\pd{u}{r}\right)
+\]
+with $u(0,t)$ bounded and $u(r,0) = f(r)$.
+\begin{enumerate}
+\item[(a)] Solve by separation.  It is usual to let
+\[
+u(r,t) = \int_0^{\infty} A(s)\,J_0(sr)\,e^{-s^2 kt}\,s\,ds
+\]
+in which case the initial condition is satisfied if
+\[
+f(r) = \int_0^{\infty} A(s)\,J_0(sr)\,s\,ds.
+\]
+$A(s)$ is called the \textbf{Fourier-Bessel} or \textbf{Hankel transform} of $f(r)$.
+\item[(b)] Use Green's formula to evaluate $\int_0^L J_0(sr)\,J_0(s_1 r)\,r\,dr$.  Determine an approximate expression for large $L$ using (7.8.3).
+\item[(c)] Apply the answer of part~(b) to part~(a) to derive $A(s)$ from $f(r)$.  (\textit{Hint:} See Exercise~10.3.9.)
+\end{enumerate}
+
+\item
+\begin{enumerate}
+\item[(a)] If $f(x)$ is a function with unit area, show that the scaled and stretched function $(1/\alpha)f(x/\alpha)$ also has unit area.
+\item[(b)] If $F(\omega)$ is the Fourier transform of $f(x)$, show that $F(\alpha\omega)$ is the Fourier transform of $(1/\alpha)f(x/\alpha)$.
+\item[(c)] Show that part~(b) implies that broadly spread functions have sharply peaked Fourier transforms near $\omega = 0$, and vice versa.
+\end{enumerate}
+
+\item Show that $\lim_{b\to\infty}\int_b^{b+iz/2\alpha} e^{-\alpha s^2}\,ds = 0$, where $s = b + iy$ $(0 < y < x/2\alpha)$.
+
+\item Evaluate $I = \int_0^{\infty} e^{-k\omega^2 t}\cos\omega x\,d\omega$ in the following way.  Determine $\partial I/\partial x$, and then integrate by parts.
+
+\item The gamma function $\Gamma(x)$ is defined as follows:
+\[
+\Gamma(x) = \int_0^{\infty} t^{x-1}\,e^{-t}\,dt.
+\]
+Show that
+\begin{enumerate}
+\item[(a)] $\Gamma(1) = 1$ \hfill (b) $\Gamma(x+1) = x\Gamma(x)$
+\item[(c)] $\Gamma(n+1) = n!$ \hfill (d) $\Gamma(\tfrac{1}{2}) = 2\int_0^{\infty} e^{-t^2}\,dt = \sqrt{\pi}$
+\item[(e)] What is $\Gamma(\tfrac{3}{2})$?
+\end{enumerate}
+
+\item
+\begin{enumerate}
+\item[(a)] Using the definition of the gamma function in Exercise~10.3.14, show that
+\[
+\Gamma(x) = 2\int_0^{\infty} u^{2x-1}\,e^{-u^2}\,du.
+\]
+\item[(b)] Using double integrals in polar coordinates, show that
+\[
+\Gamma(z)\Gamma(1-z) = \frac{\pi}{\sin\pi z}.
+\]
+[\textit{Hint:} It is known from complex variables that
+\[
+2\int_0^{\pi/2}(\tan\theta)^{2z-1}\,d\theta = \frac{\pi}{\sin\pi z}.\text{]}
+\]
+\end{enumerate}
+
+\item[\starred 10.3.16.] Evaluate
+\[
+\int_0^{\infty} y^p\,e^{-ky^n}\,dy
+\]
+in terms of the gamma function (see Exercise~10.3.14).
+
+\item From complex variables, it is known that
+\[
+\oint e^{-i\omega^3/3}\,d\omega = 0
+\]
+for any closed contour.  By considering the limit as $R \to \infty$ of the $30^\circ$ pie-shaped wedge (of radius $R$) sketched in Fig.~10.3.4, show that
+\begin{align*}
+\int_0^{\infty}\cos\left(\frac{\omega^3}{3}\right)\,d\omega &= \frac{\sqrt{3}}{2}\,3^{-2/3}\,\Gamma\!\left(\tfrac{1}{3}\right) \\
+\int_0^{\infty}\sin\left(\frac{\omega^3}{3}\right)\,d\omega &= \tfrac{1}{3}\,3^{-2/3}\,\Gamma\!\left(\tfrac{1}{3}\right).
+\end{align*}
+Exercise~10.3.16 may be helpful.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch10/fig_pie-wedge.png}
+\caption{Contour for Exercise 10.3.17.}
+\label{fig:pie-wedge}
+\end{figure}
+
+\item
+\begin{enumerate}
+\item[(a)] For what $\alpha$ does $\alpha e^{-\beta(x-x_0)^2}$ have unit area for $-\infty < x < \infty$?
+\item[(b)] Show that the limit as $\beta \to \infty$ of the resulting function in part~(a) satisfies the properties of the Dirac delta function $\delta(x-x_0)$.
+\item[(c)] Obtain the Fourier transform of $\delta(x-x_0)$ in two ways:
+\begin{enumerate}
+\item[1.] Take the transform of part~(a) and take the limit as $\beta \to \infty$.
+\item[2.] Use integration properties of the Dirac delta function.
+\end{enumerate}
+\item[(d)] Show that the transform of $\delta(x-x_0)$ is consistent with the following idea: ``Transforms of sharply peaked functions are spread out (contain a significant amount of many frequencies).''
+\item[(e)] Show that the Fourier transform representation of the Dirac delta function is
+\begin{equation}
+\label{eq:delta-ft-x}
+\delta(x-x_0) = \frac{1}{2\pi}\int_{-\infty}^{\infty} e^{-i\omega(x-x_0)}\,d\omega.
+\end{equation}
+Why is this not mathematically precise?  However, what happens if $x = x_0$?  Similarly,
+\begin{equation}
+\label{eq:delta-ft-omega}
+\delta(\omega-\omega_0) = \frac{1}{2\pi}\int_{-\infty}^{\infty} e^{-ix(\omega-\omega_0)}\dx.
+\end{equation}
+\item[(f)] Equation \eqref{eq:delta-ft-omega} may be interpreted as an orthogonality relation for the eigenfunctions $e^{-i\omega x}$.  If
+\[
+f(x) = \int_{-\infty}^{\infty} F(\omega)\,e^{-i\omega x}\,d\omega,
+\]
+determine the ``Fourier coefficient (transform)'' $F(\omega)$ using the orthogonality condition \eqref{eq:delta-ft-omega}.
+\end{enumerate}
+\end{exercises}

@@ -3,6 +3,7 @@ Extract figures from scanned PDF by finding "Figure X.Y.Z" captions.
 Crops the figure region (above the caption) and saves as PNG.
 """
 import sys
+import argparse
 import os
 import re
 import glob
@@ -13,9 +14,30 @@ except ImportError:
     import fitz as pymupdf  # older PyMuPDF versions
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-LATEX_DIR = os.path.join(ROOT, 'latex')
+
+
+def _validate_book_name(name):
+    """Reject book names that could escape books/ via a path-traversal component."""
+    if not name or '/' in name or '\\' in name or '..' in name:
+        raise SystemExit(
+            f"Error: invalid book name '{name}' "
+            "(must be a plain directory name — no '/', '\\', or '..')"
+        )
+
+
+_parser = argparse.ArgumentParser(description=__doc__)
+_parser.add_argument('--book', required=True, help='Book name under books/')
+_parser.add_argument('--pdf', default=os.path.join(ROOT, 'pdfs', 'scanned.pdf'),
+                     help='Source scanned PDF (default: pdfs/scanned.pdf)')
+_args = _parser.parse_args()
+_validate_book_name(_args.book)
+
+LATEX_DIR = os.path.join(ROOT, 'books', _args.book, 'latex')
 FIGURES_DIR = os.path.join(LATEX_DIR, 'figures')
-SCANNED_PDF = os.path.join(ROOT, 'pdfs', 'scanned.pdf')
+SCANNED_PDF = _args.pdf
+
+if not os.path.isdir(LATEX_DIR):
+    raise SystemExit(f'No such book: {_args.book} (expected {LATEX_DIR})')
 
 def find_all_figures_in_pdf(pdf_path):
     """Scan every page for 'Figure X.Y.Z' captions and extract figure regions."""

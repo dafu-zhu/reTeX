@@ -1,0 +1,251 @@
+% sec08_2.tex — Section 8.2: Heat Flow with Sources and Nonhomogeneous Boundary Conditions
+\section{Heat Flow with Sources and Nonhomogeneous Boundary Conditions}
+\label{sec:heat-nonhomog-bc}
+
+\textbf{Time-independent boundary conditions.}
+As an elementary example of a nonhomogeneous problem, consider the heat flow (without sources) in a uniform rod of length $L$ with the temperature fixed at the left end at $A^\circ$ and the right at $B^\circ$.  If the initial condition is prescribed, the mathematical problem for the temperature $u(x,t)$ is
+\begin{equation}
+\label{eq:8.2.1}
+\text{PDE:}\quad \pd{u}{t} = k\pdd{u}{x}
+\end{equation}
+\begin{equation}
+\label{eq:8.2.2}
+\text{BC1:}\quad u(0,t) = A
+\end{equation}
+\begin{equation}
+\label{eq:8.2.3}
+\text{BC2:}\quad u(L,t) = B
+\end{equation}
+\begin{equation}
+\label{eq:8.2.4}
+\text{IC:}\quad u(x,0) = f(x).
+\end{equation}
+The method of separation of variables cannot be used directly since even this simple example the boundary conditions are not homogeneous.
+
+\textbf{Equilibrium temperature.}
+To analyze this problem, we first obtain an equilibrium temperature distribution, $u_E(x)$.  If such a temperature distribution exists, it must satisfy the steady-state (time-independent) heat equation,
+\begin{equation}
+\label{eq:8.2.5}
+\boxed{\odd{u_E}{x} = 0,}
+\end{equation}
+as well as the given time-independent boundary conditions,
+\begin{align}
+\label{eq:8.2.6}
+u_E(0) &= A \\
+\label{eq:8.2.7}
+u_E(L) &= B.
+\end{align}
+We ignore the initial conditions in defining an equilibrium temperature distribution.  As shown in Sec.~1.4, \eqref{eq:8.2.5} implies that the temperature distribution is linear, and the unique one that satisfies \eqref{eq:8.2.2} and \eqref{eq:8.2.3} can be determined geometrically or algebraically:
+\begin{equation}
+\label{eq:8.2.8}
+\boxed{u_E(x) = A + \frac{B-A}{L}\,x,}
+\end{equation}
+which is sketched in Fig.~8.2.1.  Usually $u_E(x)$ will \emph{not} be the desired time-dependent solution, since it satisfies the initial conditions \eqref{eq:8.2.4} only if $f(x) = A + [(B-A)/L]\,x$.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch08/fig_8_2_1.png}
+\caption{Equilibrium temperature distribution.}
+\label{fig:8.2.1}
+\end{figure}
+
+\textbf{Displacement from equilibrium.}
+For more general initial conditions, we consider the temperature displacement from the equilibrium temperature,
+\begin{equation}
+\label{eq:8.2.9}
+\boxed{v(x,t) \equiv u(x,t) - u_E(x).}
+\end{equation}
+Instead of solving for $u(x,t)$, we will determine $v(x,t)$.  Since $\partial v/\partial t = \partial u/\partial t$ and $\partial^2 v/\partial x^2 = \partial^2 u/\partial x^2$ [note that $u_E(x)$ is linear in $x$], it follows that $v(x,t)$ also satisfies the heat equation
+\begin{equation}
+\label{eq:8.2.10}
+\pd{v}{t} = k\pdd{v}{x}.
+\end{equation}
+Furthermore, both $u(x,t)$ and $u_E(x)$ equal $A$ at $x=0$ and equal $B$ at $x=L$, and hence their difference is zero at $x=0$ and at $x=L$:
+\begin{align}
+\label{eq:8.2.11}
+v(0,t) &= 0 \\
+\label{eq:8.2.12}
+v(L,t) &= 0.
+\end{align}
+Initially, $v(x,t)$ equals the difference between the given initial temperature and the equilibrium temperature,
+\begin{equation}
+\label{eq:8.2.13}
+v(x,0) = f(x) - u_E(x).
+\end{equation}
+Fortunately, the mathematical problem for $v(x,t)$ is a linear homogeneous partial differential equation with linear homogeneous boundary conditions.  Thus, $v(x,t)$ can be determined by the method of separation of variables.  In fact, this problem is one we have encountered frequently.  Hence, we note that
+\begin{equation}
+\label{eq:8.2.14}
+v(x,t) = \sum_{n=1}^{\infty} a_n \sin\frac{n\pi x}{L}\,e^{-k(n\pi/L)^2 t},
+\end{equation}
+where the initial conditions imply that
+\begin{equation}
+\label{eq:8.2.15}
+f(x) - u_E(x) = \sum_{n=1}^{\infty} a_n \sin\frac{n\pi x}{L},
+\end{equation}
+Thus, $a_n$ equals the Fourier sine coefficients of $f(x) - u_E(x)$:
+\begin{equation}
+\label{eq:8.2.16}
+a_n = \frac{2}{L}\int_0^L [f(x) - u_E(x)]\sin\frac{n\pi x}{L}\dx.
+\end{equation}
+From \eqref{eq:8.2.9} we easily obtain the desired temperature, $u(x,t) = u_E(x) + v(x,t)$.  Thus,
+\begin{equation}
+\label{eq:8.2.17}
+\boxed{u(x,t) = u_E(x) + \sum_{n=1}^{\infty} a_n \sin\frac{n\pi x}{L}\,e^{-k(n\pi/L)^2 t},}
+\end{equation}
+where $a_n$ is given by \eqref{eq:8.2.16} and $u_E(x)$ is given by \eqref{eq:8.2.8}.  As $t\to\infty$, $u(x,t)\to u_E(x)$ irrespective of the initial conditions.  \textbf{The temperature approaches its equilibrium distribution for all initial conditions.}
+
+\textbf{Steady nonhomogeneous terms.}
+The previous method also works if there are steady sources of thermal energy:
+\begin{equation}
+\label{eq:8.2.18}
+\text{PDE:}\quad \pd{u}{t} = k\pdd{u}{x} + Q(x)
+\end{equation}
+\begin{equation}
+\label{eq:8.2.19}
+\text{BC:}\quad u(0,t) = A,\quad u(L,t) = B
+\end{equation}
+\begin{equation}
+\label{eq:8.2.20}
+\text{IC:}\quad u(x,0) = f(x).
+\end{equation}
+If an equilibrium solution exists (see Exercise~1.4.6 for a somewhat different example in which an equilibrium solution does \emph{not} exist), then we determine it and again consider the displacement from equilibrium,
+\[
+v(x,t) = u(x,t) - u_E(x).
+\]
+We can show that $v(x,t)$ satisfies a linear homogeneous partial differential equation \eqref{eq:8.2.10} with linear homogeneous boundary conditions \eqref{eq:8.2.11} and \eqref{eq:8.2.12}.  Thus, again $u(x,t) \to u_E(x)$ as $t\to\infty$.
+
+\textbf{Time-dependent nonhomogeneous terms.}
+Unfortunately, nonhomogeneous problems are not always as easy to solve as the previous examples.  In order to clarify the situation, we again consider the heat flow in a uniform rod of length $L$.  However, we make two substantial changes.  First, we introduce temperature-independent heat sources distributed in a prescribed way throughout the rod.  Thus, the temperature will solve the following nonhomogeneous partial differential equation:
+\begin{equation}
+\label{eq:8.2.21}
+\text{PDE:}\quad \boxed{\pd{u}{t} = k\pdd{u}{x} + Q(x,t).}
+\end{equation}
+Here the sources of thermal energy $Q(x,t)$ vary in space and time.  In addition, we allow the temperature at the ends to vary in time.  This yields time-dependent and nonhomogeneous linear boundary conditions,
+\begin{equation}
+\label{eq:8.2.22}
+\text{BC:}\quad u(0,t) = A(t),\quad u(L,t) = B(t)
+\end{equation}
+\begin{equation}
+\label{eq:8.2.23}
+\text{IC:}\quad u(x,0) = f(x).
+\end{equation}
+The mathematical problem defined by \eqref{eq:8.2.21}--\eqref{eq:8.2.23} consists of a nonhomogeneous partial differential equation with nonhomogeneous boundary conditions.
+
+\textbf{Related homogeneous boundary conditions.}
+We claim that we \emph{cannot} always reduce this problem to a homogeneous partial differential equation with homogeneous boundary conditions, as we did for the first example of this section.  Instead, we will find it quite useful to note that we can always transform our problem into one with homogeneous boundary conditions, although in general the partial differential equation will remain nonhomogeneous.  We consider any \textbf{reference temperature distribution} $r(x,t)$ (the simpler the better) with only the property that it satisfy the given nonhomogeneous boundary conditions.  In our example, this means only that
+\begin{align*}
+r(0,t) &= A(t) \\
+r(L,t) &= B(t).
+\end{align*}
+It is usually not difficult to obtain many candidates for $r(x,t)$.  Perhaps the simplest choice is
+\begin{equation}
+\label{eq:8.2.24}
+r(x,t) = A(t) + \frac{x}{L}[B(t)-A(t)],
+\end{equation}
+although there are other possibilities.\footnote{Other choices for $r(x,t)$ yield equivalent solutions to the original nonhomogeneous problem.}
+Again the difference between the desired solution $u(x,t)$ and the chosen function $r(x,t)$ (now \emph{not} necessarily an equilibrium solution) is employed:
+\begin{equation}
+\label{eq:8.2.25}
+v(x,t) \equiv u(x,t) - r(x,t).
+\end{equation}
+Since both $u(x,t)$ and $r(x,t)$ satisfy the same linear (although nonhomogeneous) boundary condition at both $x=0$ and $x=L$, it follows that $v(x,t)$ satisfies the related homogeneous boundary conditions:
+\begin{align}
+\label{eq:8.2.26}
+v(0,t) &= 0 \\
+\label{eq:8.2.27}
+v(L,t) &= 0.
+\end{align}
+The partial differential equation satisfied by $v(x,t)$ is derived by substituting
+\[
+u(x,t) = v(x,t) + r(x,t)
+\]
+into the heat equation with sources, \eqref{eq:8.2.21}.  Thus,
+\begin{equation}
+\label{eq:8.2.28}
+\pd{v}{t} = k\pdd{v}{x} + \left[Q(x,t) - \pd{r}{t} + k\pdd{r}{x}\right] \equiv k\pdd{v}{x} + \bar{Q},
+\end{equation}
+In general, the partial differential equation for $v(x,t)$ is of the same type as for $u(x,t)$, but with a different nonhomogeneous term, since $r(x,t)$ usually does not satisfy the homogeneous heat equation.  The initial condition is also usually altered:
+\begin{equation}
+\label{eq:8.2.29}
+v(x,0) = f(x) - r(x,0) = f(x) - A(0) - \frac{x}{L}[B(0)-A(0)] \equiv g(x).
+\end{equation}
+It can be seen that in general only the boundary conditions have been made homogeneous.  In Sec.~8.3 we will develop a method to analyze nonhomogeneous problems with homogeneous boundary conditions.
+
+\begin{exercises}{8.2}
+
+\item Solve the heat equation with time-independent sources and boundary conditions
+\begin{align*}
+\pd{u}{t} &= k\pdd{u}{x} + Q(x) \\
+u(x,0) &= f(x)
+\end{align*}
+if an equilibrium solution exists.  Analyze the limits as $t\to\infty$.  If no equilibrium exists, explain why and reduce the problem to one with homogeneous boundary conditions (but do not solve).  Assume
+\begin{enumerate}
+\item[\starred(a)] $Q(x) = 0$, \quad $u(0,t) = A$, \quad $\pd{u}{x}(L,t) = B$
+\item[(b)] $Q(x) = 0$, \quad $\pd{u}{x}(0,t) = 0$, \quad $\pd{u}{x}(L,t) = B \neq 0$
+\item[(c)] $Q(x) = 0$, \quad $\pd{u}{x}(0,t) = A \neq 0$, \quad $\pd{u}{x}(L,t) = A$
+\item[\starred(d)] $Q(x) = k$, \quad $u(0,t) = A$, \quad $u(L,t) = B$
+\item[(e)] $Q(x) = k$, \quad $\pd{u}{x}(0,t) = 0$, \quad $\pd{u}{x}(L,t) = 0$
+\item[(f)] $Q(x) = \sin\frac{2\pi x}{L}$, \quad $\pd{u}{x}(0,t) = 0$, \quad $\pd{u}{x}(L,t) = 0$
+\end{enumerate}
+
+\item Consider the heat equation with time-dependent sources and boundary conditions:
+\begin{align*}
+\pd{u}{t} &= k\pdd{u}{x} + Q(x,t) \\
+u(x,0) &= f(x).
+\end{align*}
+Reduce the problem to one with homogeneous boundary conditions if
+\begin{enumerate}
+\item[\starred(a)] $\pd{u}{x}(0,t) = A(t)$ \quad and \quad $\pd{u}{x}(L,t) = B(t)$
+\item[(b)] $u(0,t) = A(t)$ \quad and \quad $\pd{u}{x}(L,t) = B(t)$
+\item[\starred(c)] $\pd{u}{x}(0,t) = A(t)$ \quad and \quad $u(L,t) = B(t)$
+\item[(d)] $u(0,t) = 0$ \quad and \quad $\pd{u}{x}(L,t) + h(u(L,t) - B(t)) = 0$
+\item[(e)] $\pd{u}{x}(0,t) = 0$ \quad and \quad $\pd{u}{x}(L,t) + h(u(L,t) - B(t)) = 0$
+\end{enumerate}
+
+\item Solve the two-dimensional heat equation with circularly symmetric time-independent sources, boundary conditions, and initial conditions (inside a circle):
+\[
+\pd{u}{t} = \frac{k}{r}\frac{\partial}{\partial r}\left(r\pd{u}{r}\right) + Q(r)
+\]
+with
+\[
+u(r,0) = f(r) \quad\text{and}\quad u(a,t) = T.
+\]
+
+\item Solve the two-dimensional heat equation with time-independent boundary conditions:
+\[
+\pd{u}{t} = k\left(\pdd{u}{x} + \pdd{u}{y}\right)
+\]
+subject to the boundary conditions
+\begin{align*}
+u(0,y,t) &= 0 & \pd{u}{y}(x,0,t) &= 0 \\
+u(L,y,t) &= 0 & u(x,H,t) &= g(x)
+\end{align*}
+and the initial condition
+\[
+u(x,y,0) = f(x,y).
+\]
+Analyze the limit as $t\to\infty$.
+
+\item Solve the initial value problem for a two-dimensional heat equation inside a circle (of radius $a$) with time-independent boundary conditions:
+\begin{align*}
+\pd{u}{t} &= k\laplacian u \\
+u(a,\theta,t) &= g(\theta) \\
+u(r,\theta,0) &= f(r,\theta).
+\end{align*}
+
+\item Solve the wave equation with time-independent sources,
+\begin{align*}
+\pdd{u}{t} &= c^2\pdd{u}{x} + Q(x) \\
+u(x,0) &= f(x) \\
+\pd{u}{t}(x,0) &= g(x),
+\end{align*}
+if an ``equilibrium'' solution exists.  Analyze the behavior for large $t$.  If no equilibrium exists, explain why and reduce the problem to one with homogeneous boundary conditions.  Assume that
+\begin{enumerate}
+\item[\starred(a)] $Q(x) = 0$, \quad $u(0,t) = A$, \quad $u(L,t) = B$
+\item[(b)] $Q(x) = 1$, \quad $u(0,t) = 0$, \quad $u(L,t) = 0$
+\item[(c)] $Q(x) = 1$, \quad $u(0,t) = A$, \quad $u(L,t) = B$
+\par[\textit{Hint:} Add problems (a) and (b).]
+\item[\starred(d)] $Q(x) = \sin\frac{\pi x}{L}$, \quad $u(0,t) = 0$, \quad $u(L,t) = 0$
+\end{enumerate}
+
+\end{exercises}

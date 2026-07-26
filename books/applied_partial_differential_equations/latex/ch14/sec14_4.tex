@@ -1,0 +1,123 @@
+% sec14_4.tex — Section 14.4: Fiber Optics
+\section{Fiber Optics}
+\label{sec:fiber-optics}
+
+In wave guides of the previous section, energy is confined to one dimension by a hollow metallic conductor.  In this section we will show that energy can be confined to one dimension in a fundamentally different way.  Information in the form of electromagnetic waves can also be propagated in a wave guide made up of a non-conducting (dielectric) material such as glass.  Typically a fiber consists of a narrow glass core surrounded by a thicker glass clad with different optical properties with a protective jacket, as shown in Fig.~14.4.1.  To make the problem a little simpler, we assume the cladding is infinitely thick.  We will show that a small glass core can be designed so that most of the light energy propagates in the thin core.  To enable us to obtain interesting results quickly, we will assume incorrectly that the physics of fiber optics is described by the three-dimensional wave equation.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch14/fig_14_4_1.png}
+\caption{Fiber with circular cross-section.}
+\label{fig:14.4.1}
+\end{figure}
+
+A realistic problem with polar coordinates is analyzed in the Exercises.  Here, we simplify the problem further.  We imagine a two-dimensional region with an inner core (from $y = -L$ to $y = L$) and an outer core that extends to infinity in both directions $y \to \pm\infty$.  This geometric region is symmetric around $y = 0$.  We claim that all solutions can be made either symmetric or antisymmetric around $y = 0$.  We analyze here only one of these problems, namely the antisymmetric modes.  Thus we solve a two-dimensional wave guide for $y > 0$, subject to the antisymmetry boundary condition:
+\begin{equation}
+\label{eq:14.4.1}
+u = 0 \quad \text{at } y = 0.
+\end{equation}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch14/fig_14_4_2.png}
+\caption{Fiber with plane cross-section.}
+\label{fig:14.4.2}
+\end{figure}
+
+We assume the two-dimensional wave equation is valid in each region (as shown in Fig.~14.4.2) with different propagation constants, so that there is velocity for each region $c_1$ and $c_2$:
+\boxed{\begin{equation}
+\label{eq:14.4.2}
+\pdd{u}{t} = c_2^2\biggl(\pdd{u}{x} + \pdd{u}{y}\biggr), \quad y > L
+\end{equation}}
+\boxed{\begin{equation}
+\label{eq:14.4.3}
+\pdd{u}{t} = c_1^2\biggl(\pdd{u}{x} + \pdd{u}{y}\biggr), \quad L > y > 0.
+\end{equation}}
+
+Conditions depending on the physics occur on the boundary between the two different media.  We assume that
+\begin{equation}
+\label{eq:14.4.4}
+u \text{ and } \pd{u}{y} \text{ are both continuous at } y = L
+\end{equation}
+(often in electromagnetic wave propagation $\partial u/\partial y$ is not continuous, but some physical constant in each region times $\partial u/\partial y$ is continuous).
+
+We want waves to propagate in the $x$-direction, $e^{i(kx - \omega t)}$.  One of our goals is to determine the dispersion relation $\omega = \omega(k)$.  The boundary condition forces the horizontal and time structure of the solution to be the same in both materials:
+\begin{align}
+\label{eq:14.4.5}
+u &= B(y)e^{i(kx - \omega t)}, \quad y > L \\
+\label{eq:14.4.6}
+u &= A(y)e^{i(kx - \omega t)}, \quad L > y > 0.
+\end{align}
+
+Substituting the traveling wave assumption \eqref{eq:14.4.5} and \eqref{eq:14.4.6} into the wave equations, \eqref{eq:14.4.2} and \eqref{eq:14.4.3}, yields ordinary differential equations for the transverse structure of the wave guide:
+\begin{equation}
+\label{eq:14.4.7}
+\begin{aligned}
+-\omega^2 B &= c_2^2\Bigl(\odd{B}{y} - k^2B\Bigr) & y > L &\qquad \odd{B}{y} = \Bigl(k^2 - \frac{\omega^2}{c_2^2}\Bigr)B \\[4pt]
+-\omega^2 A &= c_1^2\Bigl(\odd{A}{y} - k^2A\Bigr) & L > y > 0 &\qquad \odd{A}{y} = \Bigl(k^2 - \frac{\omega^2}{c_1^2}\Bigr)A.
+\end{aligned}
+\end{equation}
+
+We want to investigate those frequencies for which most of the energy propagates in the core $0 < y < L$.  Thus, we assume that $\omega$ is such that the transverse behavior is oscillatory in the core and exponential in the ``cladding'':
+\begin{equation}
+\label{eq:14.4.8}
+k^2 - \frac{\omega^2}{c_1^2} < 0 \quad \text{but} \quad k^2 - \frac{\omega^2}{c_2^2} > 0.
+\end{equation}
+From \eqref{eq:14.4.8}, the frequency must satisfy
+\[
+c_1|k| < |\omega| < c_2|k|.
+\]
+To have this kind of wave guide, it is necessary (but not sufficient) that $c_1 < c_2$.  The wave speed in the core must be smaller than the wave speed in the cladding.
+
+Under conditions \eqref{eq:14.4.8}, the solutions of \eqref{eq:14.4.7} show that in the core and the cladding
+\begin{align*}
+u &= B_0\, e^{-\sqrt{k^2 - \omega^2/c_2^2}\,y}\, e^{i(kx - \omega t)}, \quad y > L \\
+u &= A_0\sin\sqrt{\frac{\omega^2}{c_1^2} - k^2}\,y\; e^{i(kx - \omega t)}, \quad L > y > 0,
+\end{align*}
+where $A_0$ and $B_0$ are constants, and we have assumed the solution exponentially decays in the cladding, and we have used the antisymmetric boundary condition \eqref{eq:14.4.1} at $y = 0$.
+
+The dispersion relation is determined by satisfying the two continuity conditions \eqref{eq:14.4.4} at the interface between the two media:
+\begin{align*}
+B_0\,e^{-\sqrt{k^2 - \omega^2/c_2^2}\,L} &= A_0\sin\sqrt{\frac{\omega^2}{c_1^2} - k^2}\,L \\[6pt]
+-B_0\sqrt{k^2 - \frac{\omega^2}{c_2^2}}\;e^{-\sqrt{k^2 - \omega^2/c_2^2}\,L} &= A_0\sqrt{\frac{\omega^2}{c_1^2} - k^2}\cos\sqrt{\frac{\omega^2}{c_1^2} - k^2}\,L.
+\end{align*}
+
+These are two linear homogeneous equations in two unknowns ($A_0$ and $B_0$).  By elimination or the determinant condition, the solution will usually be zero except when
+\begin{equation}
+\label{eq:14.4.9}
+\tan\sqrt{\frac{\omega^2}{c_1^2} - k^2}\,L = -\frac{\sqrt{\frac{\omega^2}{c_1^2} - k^2}}{\sqrt{k^2 - \frac{\omega^2}{c_2^2}}}.
+\end{equation}
+
+Solutions $\omega$ of \eqref{eq:14.4.9} for a given $k$ are the dispersion relation.
+
+In designing wave guides, we specify $\omega$ and determine $k$ from \eqref{eq:14.4.9}.  To determine solutions of \eqref{eq:14.4.9} we graph in Fig.~14.4.3 the ordinary tangent function as a function of $\beta \equiv \sqrt{\frac{\omega^2}{c_1^2} - k^2}\,L$ and the right-hand side of \eqref{eq:14.4.9} also as a function of $\beta$.  Intersections are solutions.  The qualitative features of the right-hand side are not difficult since the right-hand side is always negative.  In addition, the right-hand side is $0$ at $\beta = 0$, and the right-hand side is infinite at $k = \frac{\omega}{c_2}$ (which means $\beta = \omega L\sqrt{\frac{1}{c_1^2} - \frac{1}{c_2^2}}$), as graphed in Fig.~14.4.3.  From the figure, we conclude that if $\omega L\sqrt{\frac{1}{c_1^2} - \frac{1}{c_2^2}} < \frac{\pi}{2}$, there are no intersections so that there are no modes that propagate in the inner core.  This gives a cut-off frequency $\omega_c = \frac{\pi}{2L}\frac{1}{\sqrt{1/c_1^2 - 1/c_2^2}}$ below which there are no wave guide-type modes.  However, the desirable situation of only one mode propagating in the core of the fiber occurs
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch14/fig_14_4_3.png}
+\caption{Graphical solution of traveling wave modes in fiber.}
+\label{fig:14.4.3}
+\end{figure}
+
+if $\frac{\pi}{2} < \omega L\sqrt{\frac{1}{c_1^2} - \frac{1}{c_2^2}} < \frac{3\pi}{2}$ or $\frac{\pi}{2L}\frac{c_1c_2}{\sqrt{c_2^2-c_1^2}} < \omega < \frac{3\pi}{2L}\frac{c_1c_2}{\sqrt{c_2^2-c_1^2}}$.  It is interesting to note that if $c_2$ is only slightly greater than $c_1$, a large range of large frequencies will support one wave that travels with its energy focused in the core of the fiber.  All the other solutions will not be traveling waves along the fiber.
+
+\begin{exercises}{14.4}
+\item Determine the dispersion relation for materials described by \eqref{eq:14.4.2} and \eqref{eq:14.4.3} with the energy primarily in the core:
+\begin{enumerate}
+\item[(a)] For symmetric modes
+\item[(b)] For antisymmetric modes with the boundary conditions at the interface of the two materials that $u$ and $c\pd{u}{y}$ are continuous
+\item[(c)] For antisymmetric modes where the cladding goes to $y = H > L$ with $u = 0$ there
+\item[(d)] For symmetric modes where the cladding goes to $y = H > L$ with $u = 0$ there
+\end{enumerate}
+
+\item For antisymmetric modes, determine the dispersion relation for materials described by \eqref{eq:14.4.2} and \eqref{eq:14.4.3} with the energy distributed throughout the core and the cladding.
+
+\item Consider antisymmetric modes described by \eqref{eq:14.4.2} and \eqref{eq:14.4.3}.  For what frequencies will waves not propagate in the core and not propagate in the cladding.
+
+\item Determine the dispersion relation for a fiber with a circular cross section solving the three-dimensional wave equation with coefficient $c_1$ for $r < L$ and $c_2$ for $r > L$: (with $u$ and $\pd{u}{r}$ continuous at $r = L$) with energy primarily in the core:
+\begin{enumerate}
+\item[(a)] Assuming the solutions are circularly symmetric
+\item[(b)] Assuming the solutions are not circularly symmetric
+\item[(c)] Assuming the solutions are circularly symmetric but the cladding stops at $r = H$, where $u = 0$
+\end{enumerate}
+\end{exercises}

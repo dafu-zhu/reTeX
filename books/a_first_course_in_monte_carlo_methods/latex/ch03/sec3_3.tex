@@ -1,0 +1,167 @@
+%% Chapter 3, Section 3.3: Variance Reduction Techniques
+%% A First Course in Monte Carlo Methods — Sanz-Alonso & Al-Ghattas
+
+\section{Variance Reduction Techniques}
+\label{sec:3.3}
+
+We have seen in Theorem~\ref{thm:3.3} that importance sampling with an
+appropriate choice of proposal distribution---adapted to both the target and the
+test function---can have smaller variance than classical Monte Carlo. In this
+section, we describe two other variance reduction techniques: antithetic sampling
+and control variates. The general problem that we consider is again the
+estimation of $\calI_f[h] := \Expect_{X \sim f}[h(X)]$ by using $N$ queries of
+the p.d.f.\ $f$. Recall that the classical Monte Carlo estimator
+$\calI_f^{\mathrm{mc}}[h] = \tfrac{1}{N}\sum_{n=1}^{N} h(X^{(n)})$ is unbiased
+and has variance $\sigma^2/N$ with $\sigma^2 := \Var_{X \sim f}[h(X)]$.
+
+%% -----------------------------------------------------------------------
+\subsection{Antithetic Sampling}
+\label{sec:3.3.1}
+
+This method requires the target distribution to be symmetric with respect to
+some center $c$, so that $f(x) = f(2c - x)$ holds for all $x$. We let $N$ be
+an even integer and draw $N/2$ samples from $f$; symmetry is used to define the
+remaining $N/2$ samples.
+
+\begin{algorithm}[H]
+\caption{Antithetic Sampling}
+\label{alg:3.4}
+\begin{algorithmic}[1]
+\Require Target $f$ which is symmetric with respect to $c$, even sample size $N$.
+\State Sample $X^{(1)}, \ldots, X^{(N/2)} \iid f$.
+\State Compute symmetrized samples
+  $\tilde{X}^{(n)} := 2c - X^{(n)}$, $n = 1,\ldots,N/2$.
+\Ensure Antithetic estimator
+  $\calI_f^{\mathrm{as}}[h]
+   := \dfrac{1}{N}\displaystyle\sum_{n \leq N/2}
+      \bigl(h(X^{(n)}) + h(\tilde{X}^{(n)})\bigr)
+   \approx \calI_f[h]$.
+\end{algorithmic}
+\end{algorithm}
+
+The estimator $\calI_f^{\mathrm{as}}[h]$ is unbiased and has variance
+\begin{align*}
+  \Var\!\left[\calI_f^{\mathrm{as}}[h]\right]
+  &= \frac{N/2}{N^2}\,\Var\!\left[h(X) + h(\tilde{X})\right] \\
+  &= \frac{1}{2N}\left(
+       \Var[h(X)] + \Var[h(\tilde{X})] + 2\,\Cov(h(X), h(\tilde{X}))
+     \right) \\
+  &= \frac{\sigma^2}{N}(1 + \rho),
+\end{align*}
+where $\tilde{X} = 2c - X$, $\sigma^2 = \Var[h(X)] = \Var[h(\tilde{X})]$, and
+$\rho = \operatorname{Corr}(h(X), h(\tilde{X}))$. Note that when $h$ is linear,
+we have $\rho = -1$ and hence zero variance. Indeed, for any affine function
+$h(X) = AX + b$, the estimator $\calI_f^{\mathrm{as}}[h]$ is constant and
+agrees with the expectation of interest. In the general case where
+$-1 \leq \rho \leq 1$, we have
+$\Var\!\bigl[\calI_f^{\mathrm{as}}[h]\bigr] \leq \tfrac{2\sigma^2}{N}
+= 2\,\Var\!\bigl[\calI_f^{\mathrm{mc}}[h]\bigr]$,
+i.e.\ in the worst case antithetic estimation has twice the variance of
+classical Monte Carlo.
+
+In order to analyze the variance for different choices of test functions, we
+decompose $h$ into $h_o + h_e$, where
+\[
+  h_o(x) := \frac{h(x) - h(\bar{x})}{2}, \qquad
+  h_e(x) := \frac{h(x) + h(\bar{x})}{2}
+\]
+are odd and even components of $h$ with respect to the density $f$.\footnote{%
+  Recall that the definition of symmetry depends on the center of the target
+  distribution.}
+Note that $\Expect[h_e] = \Expect[h]$ and $\Expect[h_o] = 0$. Furthermore,
+$h_e$ and $h_o$ are uncorrelated:
+\begin{align*}
+  \Cov(h_e(X), h_o(X))
+  &= \Expect\!\left[
+       \left(\frac{h(X)+h(\tilde{X})}{2} - \Expect[h]\right)
+       \left(\frac{h(X)-h(\tilde{X})}{2}\right)
+     \right] \\
+  &= \frac{1}{4}\Expect\!\left[
+       \bigl(h(X)+h(\tilde{X})-2\Expect[h]\bigr)\bigl(h(X)-h(\tilde{X})\bigr)
+     \right] \\
+  &= \frac{1}{4}\Expect\!\left[
+       h(X)^2 - h(\tilde{X})^2 - 2\Expect[h]\bigl(h(X)-h(\tilde{X})\bigr)
+     \right] \\
+  &= 0.
+\end{align*}
+As a result, $\sigma^2 = \sigma_e^2 + \sigma_o^2$, where
+$\sigma_e^2 := \Var[h_e(X)]$ and $\sigma_o^2 := \Var[h_o(X)]$. Rewriting the
+variance of our estimators, we have
+\[
+  \Var\!\left[\calI_f^{\mathrm{mc}}[h]\right]
+  = \frac{1}{N}\sigma^2
+  = \frac{\sigma_e^2 + \sigma_o^2}{N}
+\]
+and
+\[
+  \Var\!\left[\calI_f^{\mathrm{as}}[h]\right]
+  = \frac{1}{2N}\,\Var\!\left[h(X)+h(\tilde{X})\right]
+  = \frac{1}{2N}\,\Var\!\left[2h_e(X)\right]
+  = \frac{2\sigma_e^2}{N}.
+\]
+Observe that antithetic sampling eliminates $\sigma_o^2$ but amplifies
+$\sigma_e^2$. In particular, any affine function is ``odd'' with respect to a
+symmetric density, which explains again our previous findings. Generally,
+antithetic sampling performs well when the ``odd'' part of the function has
+larger variance than the ``even'' part.
+
+\begin{example}[Integral Approximation with Antithetic Sampling]
+\label{ex:3.7}
+Suppose we want to approximate an integral
+\[
+  \int_0^1 h(x)\,dx = \Expect_{X \sim \Unif(0,1)}[h(X)].
+\]
+We can apply Algorithm~\ref{alg:3.4} since the uniform distribution is symmetric
+with respect to the center $c = \tfrac{1}{2}$. For instance, we can first draw
+$50$ samples $X^{(1)}, X^{(2)}, \ldots, X^{(50)}$ uniformly from $[0,1]$ and
+estimate the integral by
+$\tfrac{1}{100}\sum_{i=1}^{50}\bigl(h(X^{(i)}) + h(1-X^{(i)})\bigr)$.
+\end{example}
+
+%% -----------------------------------------------------------------------
+\subsection{Control Variates}
+\label{sec:3.3.2}
+
+If we have access to an approximation $\hat{h}$ of the test function $h$ along
+with its true mean $\mu := \Expect_{X \sim f}[\hat{h}(X)]$ we can apply control
+variates.
+
+\begin{algorithm}[H]
+\caption{Control Variates}
+\label{alg:3.5}
+\begin{algorithmic}[1]
+\Require Target $f$, test function $h$ and approximation $\hat{h}$,
+         $\mu := \Expect[\hat{h}(X)]$, sample size $N$.
+\State Sample $X^{(1)}, \ldots, X^{(N)} \iid f$.
+\Ensure Estimator
+  $\calI_f^{\mathrm{cv}}[h]
+   := \mu + \dfrac{1}{N}\displaystyle\sum_{n \leq N}
+      \bigl(h(X^{(n)}) - \hat{h}(X^{(n)})\bigr)
+   \approx \calI_f[h]$.
+\end{algorithmic}
+\end{algorithm}
+
+Note that the trivial approximation $\hat{h} = 0$ leads to the classical Monte
+Carlo estimator $\calI_f^{\mathrm{cv}}[h] \equiv \calI_f^{\mathrm{mc}}[h]$. On
+the other hand, the oracle approximation $\hat{h} = h$ gives
+$\calI_f^{\mathrm{cv}}[h] = \calI_f[h]$, which is unsurprising since control
+variates assumes access to the true mean of our approximation $\hat{h} = h$. In
+general, $\calI_f^{\mathrm{cv}}[h]$ is an unbiased estimator with variance
+\[
+  \Var\!\left[\calI_f^{\mathrm{cv}}[h]\right]
+  = \frac{1}{N}\,\Var\!\left[h(X) - \hat{h}(X)\right].
+\]
+Therefore, the performance of control variate estimation is determined by the
+quality of the approximation $\hat{h} \approx h$.
+
+\begin{example}[Integral Approximation with Control Variates]
+\label{ex:3.8}
+Suppose, as in Example~\ref{ex:3.7}, that we wish to approximate
+\[
+  \int_0^1 h(x)\,dx = \Expect_{X \sim \Unif(0,1)}[h(X)],
+\]
+where $h$ is a smooth test function which does not admit a closed-form
+primitive. We can use a polynomial approximation $\hat{h}$ (e.g.\ Taylor
+expansion) of $h$, compute $\mu = \int_0^1 \hat{h}(x)\,dx$ exactly, and use
+Algorithm~\ref{alg:3.5} by drawing uniform samples from the unit interval.
+\end{example}

@@ -1,0 +1,335 @@
+% sec5_1.tex — Section 5.1: The Error-Components Model
+
+\section{The Error-Components Model}
+\label{sec:5.1}
+
+Our point of departure is the multiple-equation model with common coefficients
+of Proposition~4.7. To simplify the discussion, we will assume that the sample is
+a random sample. This assumption is satisfied in most popular panels, such as the
+Panel Study of Income Dynamics (PSID) and the National Longitudinal Survey
+(NLS). In those panels, a large number --- hundreds or even thousands --- of cross-section
+units are randomly drawn from the population.
+
+For this case of random samples, the assumptions of Proposition~4.7 can be
+restated as (see (4.6.15) for the definition of $\mathbf{y}_i$ ($M \times 1$),
+$\mathbf{Z}_i$ ($M \times L$), $\boldsymbol{\varepsilon}_i$ ($M \times 1$)):
+\begin{align}
+  &\text{(system of $M$ linear equations)}
+  &\mathbf{y}_i &= \mathbf{Z}_i \boldsymbol{\delta} + \boldsymbol{\varepsilon}_i
+  \label{eq:5.1.1} \tag{5.1.1} \\
+  &\text{(random sample)}
+  &\{\mathbf{y}_i, \mathbf{Z}_i\} &\text{ is i.i.d.}
+  \label{eq:5.1.2} \tag{5.1.2} \\
+  &\text{(``SUR assumption'')}
+  &\E(\mathbf{z}_{im} \cdot \varepsilon_{ih}) &= \mathbf{0}
+  \quad \text{for } m, h = 1, 2, \ldots, M,
+  \label{eq:5.1.3} \tag{5.1.3}
+\end{align}
+i.e., $\E(\boldsymbol{\varepsilon}_i \otimes \mathbf{x}_i) = \mathbf{0}$ where
+$\mathbf{x}_i = \text{union of } (\mathbf{z}_{i1}, \ldots, \mathbf{z}_{iM})$,
+\begin{align}
+  &\text{(identification)}
+  &\E(\mathbf{Z}_i \otimes \mathbf{x}_i) &\text{ is of full column rank,}^{1}
+  \label{eq:5.1.4} \tag{5.1.4} \\
+  &\text{(conditional homoskedasticity)}
+  &\E(\boldsymbol{\varepsilon}_i \boldsymbol{\varepsilon}_i' \mid \mathbf{x}_i)
+  &= \E(\boldsymbol{\varepsilon}_i \boldsymbol{\varepsilon}_i') \equiv \boldsymbol{\Sigma}
+  \label{eq:5.1.5} \tag{5.1.5} \\
+  &\text{(nonsingularity of $\E(\mathbf{g}_i\mathbf{g}_i')$)}
+  &\E(\mathbf{g}_i\mathbf{g}_i') &\text{ is nonsingular, where }
+  \mathbf{g}_i \equiv \boldsymbol{\varepsilon}_i \otimes \mathbf{x}_i.
+  \label{eq:5.1.6} \tag{5.1.6}
+\end{align}
+
+\footnotetext[1]{The $\boldsymbol{\Sigma}_{\mathbf{xz}}$ in Assumption~4.4$'$
+can be written as $\E(\mathbf{Z}_i \otimes \mathbf{x}_i)$; see Review Question~4
+to Section~4.6.}
+
+As noted in Section~4.5, since
+$\E(\mathbf{g}_i\mathbf{g}_i') = \boldsymbol{\Sigma} \otimes \E(\mathbf{x}_i\mathbf{x}_i')$
+under conditional homoskedasticity, \eqref{eq:5.1.6} is equivalent to the condition
+\begin{equation}
+  \boldsymbol{\Sigma} \text{ and } \E(\mathbf{x}_i\mathbf{x}_i')
+  \text{ are nonsingular.}
+  \label{eq:5.1.6p} \tag{5.1.6$'$}
+\end{equation}
+
+Under these assumptions, the random-effects estimator $\hat{\boldsymbol{\delta}}_{\text{RE}}$,
+defined in (4.6.8$'$) on page~293, is the efficient GMM estimator.
+
+\subsection*{Error Components}
+
+This model, very frequently used for panel data, is one where the unobservable
+error term $\varepsilon_{im}$ is assumed to consist of two components:
+\begin{equation}
+  \varepsilon_{im} = \alpha_i + \eta_{im}.
+  \label{eq:5.1.7} \tag{5.1.7}
+\end{equation}
+
+The first unobservable component $\alpha_i$, without the $m$ subscript and hence common
+to all equations, is called the \textbf{individual effect}, the \textbf{individual heterogeneity}, or
+the \textbf{fixed effect}. If we define
+\[
+  \underset{(M \times 1)}{\boldsymbol{\eta}_i}
+  \equiv \begin{bmatrix} \eta_{i1} \\ \vdots \\ \eta_{iM} \end{bmatrix},
+\]
+the matrix representation of the $M$-equation system is
+\[
+  \begin{bmatrix} y_{i1} \\ \vdots \\ y_{iM} \end{bmatrix}
+  = \begin{bmatrix} \mathbf{z}_{i1}'\boldsymbol{\delta} \\ \vdots \\ \mathbf{z}_{iM}'\boldsymbol{\delta} \end{bmatrix}
+  + \begin{bmatrix} \alpha_i \\ \vdots \\ \alpha_i \end{bmatrix}
+  + \begin{bmatrix} \eta_{i1} \\ \vdots \\ \eta_{iM} \end{bmatrix}
+\]
+or
+\begin{equation}
+  \mathbf{y}_i = \mathbf{Z}_i \boldsymbol{\delta} + \mathbf{1}_M \cdot \alpha_i
+  + \boldsymbol{\eta}_i \quad (i = 1, 2, \ldots, n),
+  \label{eq:5.1.1p} \tag{5.1.1$'$}
+\end{equation}
+where $\mathbf{1}_M$ is the $M$-dimensional vector of ones.
+
+The orthogonality conditions \eqref{eq:5.1.3} are satisfied if the regressors of the system
+are orthogonal to both error components, that is, if
+\begin{align}
+  \E(\mathbf{z}_{im} \cdot \alpha_i) &= \mathbf{0}
+  \quad \text{for } m = 1, 2, \ldots, M,
+  \label{eq:5.1.8a} \tag{5.1.8a} \\
+  \E(\mathbf{z}_{im} \cdot \eta_{ih}) &= \mathbf{0}
+  \quad \text{for } m, h = 1, 2, \ldots, M.
+  \label{eq:5.1.8b} \tag{5.1.8b}
+\end{align}
+
+However, in many applications that utilize panel data, \eqref{eq:5.1.8a} is not a reasonable
+assumption to make. This is because the fixed effect represents some permanent
+characteristics of the individual economic unit, as illustrated by the following
+examples.
+
+\begin{example}[production function with firm heterogeneity]
+\label{ex:5.1}
+In the log-linear production function (3.2.13) of Section~3.2, suppose the firm's
+efficiency $u_i$ stays constant over time. Then the equation for year $m$ is
+\[
+  \log(Q_{im}) = \phi_0 + \phi_1 \log(L_{im}) + u_i + v_{im},
+\]
+where $Q_{im}$ is the output of firm $i$ in year $m$, $L_{im}$ is labor input in year $m$, and
+$v_{im}$ is the technology shock in year $m$. The equation can be written as \eqref{eq:5.1.1p}
+by setting
+\[
+  y_{im} = \log(Q_{im}),\;
+  \mathbf{z}_{im} = (1, \log(L_{im}))',\;
+  \boldsymbol{\delta} = (\phi_0, \phi_1)',\;
+  \alpha_i = u_i,\;
+  \eta_{im} = v_{im}.
+\]
+Also,
+\[
+  \mathbf{x}_i = (1, \log(L_{i1}), \ldots, \log(L_{iM}))'.
+\]
+
+Under perfect competition, the individual effect $u_i$ would be positively correlated
+with labor input because efficient firms, whose $u_i$ is higher than its
+mean value, would hire more labor to expand (see (3.2.14)). If $v_{im}$ represents
+unexpected shocks that are unforeseen by the firm when input choices are
+made, it is reasonable to assume that $v_{im}$ is uncorrelated with the regressors.
+\end{example}
+
+\begin{example}[wage equation]
+\label{ex:5.2}
+For simplicity, drop experience from the
+wage equation of Example~4.2 but suppose data for 1982, in addition to 1969
+and 1980, are available. Suppose also that the coefficient of schooling and
+that of IQ remain the same over time but that the intercept is time-dependent
+(due, for example, to business-cycle effects on wages). With the error decomposition
+\eqref{eq:5.1.7}, the three-equation system is
+\[
+  \begin{cases}
+    LW69_i = \phi_1 + \beta S69_i + \gamma IQ_i + \alpha_i + \eta_{i1}, \\
+    LW80_i = \phi_2 + \beta S80_i + \gamma IQ_i + \alpha_i + \eta_{i2}, \\
+    LW82_i = \phi_3 + \beta S82_i + \gamma IQ_i + \alpha_i + \eta_{i3}.
+  \end{cases}
+\]
+
+As noted at the end of Section~4.6, even if a subset of the coefficients differs
+across equations, the system can be written as multiple equations with
+common coefficients. In this example, this is accomplished with
+\begin{equation}
+  \mathbf{Z}_i = \begin{bmatrix}
+    \mathbf{z}_{i1}' \\ \mathbf{z}_{i2}' \\ \mathbf{z}_{i3}'
+  \end{bmatrix}
+  = \begin{bmatrix}
+    1 & 0 & 0 & S69_i & IQ_i \\
+    0 & 1 & 0 & S80_i & IQ_i \\
+    0 & 0 & 1 & S82_i & IQ_i
+  \end{bmatrix}, \quad
+  \boldsymbol{\delta}' = (\phi_1, \phi_2, \phi_3, \beta, \gamma).
+  \label{eq:5.1.9} \tag{5.1.9}
+\end{equation}
+Also,
+\[
+  \mathbf{x}_i = (1, S69_i, S80_i, S82_i, IQ_i)'.
+\]
+
+The error term includes the wage determinants not accounted for by schooling
+and IQ. It may be reasonable to assume that they are divided between
+permanent individual traits (denoted $\alpha_i$), which would affect the individual's
+choice of schooling, and other factors (denoted $\eta_{im}$) uncorrelated with the
+regressors, such as measurement error in the log wage rate.
+\end{example}
+
+\subsection*{Group Means}
+
+Fortunately, there is available a popular estimator, called the \textbf{fixed-effects estimator},
+that is robust to the failure of \eqref{eq:5.1.8a}, i.e., that is consistent even when the
+regressors are not orthogonal to the fixed effect $\alpha_i$. To anticipate the next section's
+discussion, the estimator is applied to an $M$-equation system transformed from the
+original system \eqref{eq:5.1.1p}. The matrix used for the transformation is the annihilator
+associated with $\mathbf{1}_M$:
+\begin{align}
+  \underset{(M \times M)}{\mathbf{Q}}
+  &\equiv \mathbf{I}_M - \mathbf{1}_M (\mathbf{1}_M' \mathbf{1}_M)^{-1} \mathbf{1}_M'
+  \notag \\
+  &= \mathbf{I}_M - \frac{1}{M} \mathbf{1}_M \mathbf{1}_M'
+  \notag \\
+  &= \mathbf{I}_M - \begin{bmatrix}
+    1/M & \cdots & 1/M \\
+    \vdots &        & \vdots \\
+    1/M & \cdots & 1/M
+  \end{bmatrix}.
+  \label{eq:5.1.10} \tag{5.1.10}
+\end{align}
+
+What this matrix does is to extract \textbf{deviations from group means}. For example,
+multiplying the $M$-dimensional vector $\mathbf{y}_i$ from left by $\mathbf{Q}$ results in
+\begin{equation}
+  \tilde{\mathbf{y}}_i \equiv \mathbf{Q}\mathbf{y}_i
+  = \begin{bmatrix} y_{i1} - \bar{y}_i \\ \vdots \\ y_{iM} - \bar{y}_i \end{bmatrix}
+  = \mathbf{y}_i - \mathbf{1}_M \cdot \bar{y}_i,
+  \label{eq:5.1.11} \tag{5.1.11}
+\end{equation}
+where
+\[
+  \bar{y}_i = \frac{1}{M} \mathbf{1}_M' \mathbf{y}_i
+  = \frac{1}{M} \sum_{m=1}^{M} y_{im}
+\]
+is the \textbf{group mean} for the dependent variable. Note that this mean is over $m$, \emph{not}
+over $i$; it is specific to each group ($i$). Similarly for the regressors, each column of
+$\mathbf{Q}\mathbf{Z}_i$ is the vector of deviations for the corresponding column of $\mathbf{Z}_i$.
+
+\subsection*{A Reparameterization}
+
+Not surprisingly, however, robustness to the failure of \eqref{eq:5.1.8a} comes at a price:
+some of the parameters of the model may no longer be identifiable after the transformation
+by $\mathbf{Q}$. To provide two examples,
+
+\begin{itemize}
+\item The obvious case is the coefficient of a variable common to all equations. For
+  example, $IQ_i$ in Example~5.2 is a common regressor (see \eqref{eq:5.1.9}), so the column
+  of $\mathbf{Z}_i$ corresponding to $IQ_i$ (the fifth column) is $\mathbf{1}_M \cdot IQ_i$ and the fifth
+  column of $\mathbf{Q}\mathbf{Z}_i$ is a vector of zeros. Consequently, the IQ coefficient, $\gamma$, cannot
+  be identified after transformation. To separate the coefficient of common
+  regressors from the rest, let $\mathbf{b}_i$ be the vector of common regressors and write
+  the $M \times L$ matrix of regressors, $\mathbf{Z}_i$, as
+  \begin{equation}
+    \mathbf{Z}_i = (\mathbf{F}_i \vdots \mathbf{1}_M \mathbf{b}_i')
+    \label{eq:5.1.12} \tag{5.1.12}
+  \end{equation}
+  and partition the coefficient vector $\boldsymbol{\delta}$ accordingly:
+  \[
+    \boldsymbol{\delta} = \begin{bmatrix} \boldsymbol{\beta} \\ \boldsymbol{\gamma} \end{bmatrix}.
+  \]
+  The coefficient vector $\boldsymbol{\gamma}$ cannot be identified after transformation.
+
+\item It may also be the case that, in addition to $\boldsymbol{\gamma}$, some of the coefficients in
+  $\boldsymbol{\beta}$ are unidentifiable and a reparameterization is needed. Consider Example~5.2
+  where each equation has a different intercept. One of the intercepts needs to be dropped
+  from $\mathbf{F}_i$ and included in $\mathbf{b}_i$, because a common intercept can be created by taking
+  a linear combination of the equation-specific intercepts. One reparameterization
+  is to define
+  \begin{equation}
+    \mathbf{F}_i = \begin{bmatrix}
+      1 & 0 & S69_i \\
+      0 & 1 & S80_i \\
+      0 & 0 & S82_i
+    \end{bmatrix}, \quad
+    \mathbf{b}_i = (1, IQ_i)',
+    \label{eq:5.1.13} \tag{5.1.13}
+  \end{equation}
+  so
+  \begin{equation}
+    \mathbf{Z}_i = \begin{bmatrix}
+      1 & 0 & S69_i & 1 & IQ_i \\
+      0 & 1 & S80_i & 1 & IQ_i \\
+      0 & 0 & S82_i & 1 & IQ_i
+    \end{bmatrix}, \quad
+    \boldsymbol{\beta} = (\phi_1 - \phi_3, \phi_2 - \phi_3, \beta)', \quad
+    \boldsymbol{\gamma} = (\phi_3, \gamma)'.
+    \label{eq:5.1.14} \tag{5.1.14}
+  \end{equation}
+\end{itemize}
+
+More generally, the identification condition for fixed-effects estimation is that
+$\mathbf{F}_i$ and $\mathbf{b}_i$ are defined so that
+\begin{equation}
+  \E(\mathbf{Q}\mathbf{F}_i \otimes \mathbf{x}_i) \text{ is of full column rank}
+  \label{eq:5.1.15} \tag{5.1.15}
+\end{equation}
+where $\mathbf{x}_i = \text{union of } (\mathbf{z}_{i1}, \ldots, \mathbf{z}_{iM})$.
+Why is this an identification condition?
+Because (as you will see more clearly in Analytical Exercise~2), the fixed-effects
+estimator is a specialization of (the) random-effects estimator applied to the transformed
+regression of $\mathbf{Q}\mathbf{y}$ on $\mathbf{Q}\mathbf{F}$. \eqref{eq:5.1.15} is just the adaptation of the identification
+condition \eqref{eq:5.1.4} to the transformed regression.
+
+With $\mathbf{Z}_i$ thus divided between $\mathbf{F}_i$ and $\mathbf{b}_i$, the system of $M$-equations \eqref{eq:5.1.1p} on
+page~325 can be rewritten as
+\begin{align}
+  \mathbf{y}_i &= \mathbf{F}_i \boldsymbol{\beta} + \mathbf{1}_M \cdot \mathbf{b}_i' \boldsymbol{\gamma}
+  + \mathbf{1}_M \cdot \alpha_i + \boldsymbol{\eta}_i
+  \quad (i = 1, 2, \ldots, n), \text{ or} \notag \\
+  y_{im} &= \mathbf{f}_{im}' \boldsymbol{\beta} + \mathbf{b}_i' \boldsymbol{\gamma}
+  + \alpha_i + \eta_{im}
+  \quad (i = 1, \ldots, n;\; m = 1, \ldots, M),
+  \label{eq:5.1.1pp} \tag{5.1.1$''$}
+\end{align}
+where $\mathbf{f}_{im}'$ is the $m$-th row of $\mathbf{F}_i$. The \textbf{error-components model} consists of assumptions
+\eqref{eq:5.1.1pp} ($M$ linear equations), \eqref{eq:5.1.2} (random samples), \eqref{eq:5.1.8} (SUR
+assumption with two error components), \eqref{eq:5.1.4} (identification), \eqref{eq:5.1.5} (conditional
+homoskedasticity), \eqref{eq:5.1.6} (nonsingular $\E(\mathbf{g}_i\mathbf{g}_i')$), and \eqref{eq:5.1.15} (fixed-effects
+identification). We include the additional identification condition \eqref{eq:5.1.15} for fixed-effects
+estimation, so that both the random-effects estimator and the fixed-effects
+estimator are well-defined for the same model.
+
+\bigskip
+\noindent\rule{\textwidth}{0.5pt}
+\textsc{Questions for Review}
+\medskip
+
+\begin{enumerate}
+\item (Verification of Proposition~4.7 assumptions)\quad
+  Verify that the conditions of
+  Proposition~4.7 are satisfied when \eqref{eq:5.1.1}--\eqref{eq:5.1.6} hold. Show that the identification
+  condition \eqref{eq:5.1.4} is satisfied when $\E(\mathbf{x}_i\mathbf{x}_i')$ is nonsingular.
+  \textbf{Hint:} $\mathbf{z}_{im}$ is a subset of $\mathbf{x}_i$. Thus, \eqref{eq:5.1.4} is redundant.
+
+\item (Nonuniqueness of reparameterization)\quad
+  \eqref{eq:5.1.13} is not the only reparameterization
+  for Example~5.2. If $\mathbf{F}_i$ is defined as
+  \[
+    \mathbf{F}_i = \begin{bmatrix}
+      0 & 0 & S69_i \\
+      1 & 0 & S80_i \\
+      0 & 1 & S82_i
+    \end{bmatrix},
+  \]
+  how should $\mathbf{b}_i$ and $\boldsymbol{\delta}$ be defined?
+
+\item Without reparameterization, the $\mathbf{F}_i$ for Example~5.2 is
+  \[
+    \mathbf{F}_i = \begin{bmatrix}
+      1 & 0 & 0 & S69_i \\
+      0 & 1 & 0 & S80_i \\
+      0 & 0 & 1 & S82_i
+    \end{bmatrix}
+  \]
+  with $\mathbf{b}_i = IQ_i$. Verify that \eqref{eq:5.1.15} is not satisfied.
+\end{enumerate}

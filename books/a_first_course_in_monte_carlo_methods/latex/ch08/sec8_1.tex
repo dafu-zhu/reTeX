@@ -1,0 +1,258 @@
+%% Chapter 8 — Section 8.1: Hamiltonian Dynamics
+%% Source: PDF pages 100–102 (book pages 87–89 + 90–91)
+
+\section{Hamiltonian Dynamics}
+\label{sec:8.1}
+
+This chapter is organized as follows. Hamiltonian dynamics are reviewed in Section~\ref{sec:8.1},
+emphasizing three properties that are important to the design of sampling algorithms. The HMC
+algorithm and an idealized version of it are introduced in Section~\ref{sec:8.2}. We focus on
+showing that these algorithms are exact, meaning that they leave the target distribution
+invariant. Section~\ref{sec:8.3} contains bibliographical remarks, including references that
+address the geometric ergodicity of HMC.
+
+\medskip
+Given a Hamiltonian $H(q,p)$, the corresponding Hamilton equations are
+\begin{equation}
+\label{eq:8.2}
+\begin{aligned}
+\frac{dq_i}{dt} &= \frac{\partial H}{\partial p_i}, & 1 \le i \le d, \\[4pt]
+\frac{dp_i}{dt} &= -\frac{\partial H}{\partial q_i}, & 1 \le i \le d.
+\end{aligned}
+\end{equation}
+
+We vectorize equations~\eqref{eq:8.2} as follows
+\[
+\frac{dx}{dt} = J^{-1}\nabla H(x), \qquad
+J := \begin{bmatrix} 0 & -I_{d\times d} \\ I_{d\times d} & 0 \end{bmatrix}
+\in \R^{2d\times 2d}, \quad
+x := \begin{bmatrix} q \\ p \end{bmatrix} \in \R^{2d},
+\]
+where
+\[
+\nabla H = \left[\frac{\partial H}{\partial q_1}, \ldots,
+\frac{\partial H}{\partial q_d},
+\frac{\partial H}{\partial p_1}, \ldots,
+\frac{\partial H}{\partial p_d}\right]^T, \qquad
+\frac{d}{dt}\begin{bmatrix}q\\p\end{bmatrix}
+= \left[\frac{dq_1}{dt},\ldots,\frac{dq_d}{dt},\frac{dp_1}{dt},\ldots,\frac{dp_d}{dt}\right]^T.
+\]
+
+The matrix $J$ plays a central role in the Hamiltonian formalism. Note that $J$ is
+skew-symmetric, meaning that $J^T = -J$. Later we will use the following properties of
+invertible skew-symmetric matrices:
+\begin{enumerate}
+  \item $J^{-1}$ is also skew-symmetric, since $J^{-1} = -(J^T)^{-1} = -(J^{-1})^T$.
+  \item The corresponding quadratic form is zero, since $x^T J x = x^T J^T x = -x^T J x$.
+\end{enumerate}
+
+Hamilton equations~\eqref{eq:8.2} define a flow in phase space: For $t \ge 0$, we denote by
+$\varphi_t : \R^{2d} \to \R^{2d}$ the $t$-flow map, so that $\varphi_t(x) \in \R^{2d}$ is
+the solution to Hamilton equations at time $t$ with initial condition $x \in \R^{2d}$. It
+follows directly from the definition that $\varphi_0(x) = x$, i.e.\ $\varphi_0$ is the
+identity map. Furthermore, for $t, s \ge 0$ we have that $\varphi_{s+t}(x) = \varphi_s \circ
+\varphi_t(x)$, since the solution at time $t + s$ with initial condition $x$ can be found by
+first solving up to time $t$ to obtain $x(t) := \varphi_t(x)$, and then solving Hamilton
+equations for an additional time $s$ with initial condition $x(t)$ to obtain
+$x(t+s) := \varphi_s(x(t)) = \varphi_s \circ \varphi_t(x)$. The concept of flow map of a
+dynamical system is helpful in exploring the qualitative behavior of numerical methods to solve
+them, since one can think of numerical methods as approximations of the flow map. In particular,
+we will see that in order to ensure that Hamiltonian Monte Carlo algorithms leave the extended
+target invariant, it is essential to use numerical solvers that preserve key properties of the
+flow map.
+
+\begin{example}[Harmonic Oscillator]
+Consider the case $d = 1$, $V(q) = \frac{q^2}{2}$, and $K(p) = \frac{p^2}{2}$. Then, the
+Hamilton equations are
+\[
+\frac{dq}{dt} = p, \qquad \frac{dp}{dt} = -q.
+\]
+The general solutions have the form
+\[
+q(t) = r\cos(a + t), \qquad p(t) = -r\sin(a + t),
+\]
+for some constants $a$ and $r$, which shows that $\varphi_t$ is a clockwise rotation in the
+$q-p$ plane.
+\end{example}
+
+Hamiltonian dynamics dovetail nicely with MCMC because they satisfy three important properties:
+conservation of the Hamiltonian, symplecticity, and reversibility. We next explain these
+properties and how they are relevant to the construction of MCMC algorithms.
+
+%% -------------------------------------------------------
+\subsection{Conservation of Hamiltonian}
+\label{sec:8.1.1}
+%% -------------------------------------------------------
+
+By the chain rule and the fact that $J$ is skew-symmetric, we have that
+\[
+\frac{dH}{dt} = \nabla H^T \frac{dx}{dt} = \nabla H^T J^{-1} \nabla H = 0, \qquad
+x = \begin{bmatrix}q\\p\end{bmatrix}.
+\]
+
+Recall the definition of $f^H$ in \eqref{eq:8.1}. The value of $f^H$ depends on $x = (q,p)$
+only through $H$. Therefore, conservation of the Hamiltonian implies that if we start at any
+$x_0 = (q_0, p_0)$ and move with Hamiltonian dynamics, we move along level sets of $f^H$. In
+other words, we have $H(x_0) = H(\varphi_s(x_0))$ for all $s > 0$. This property, together
+with the preservation of the canonical measure that we describe next, will allow us to use
+Hamiltonian dynamics to propose bold moves that are still likely to be accepted.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.60\textwidth]{figures/fig_08_1}
+\caption{\textit{Movement along a level set of $f^H$ starting from $(q_0, p_0)$.}}
+\label{fig:8.1}
+\end{figure}
+
+%% -------------------------------------------------------
+\subsection{Symplecticity and Preservation of the Canonical Measure}
+\label{sec:8.1.2}
+%% -------------------------------------------------------
+
+The flow map $x(s) \xrightarrow{\varphi_t} x(t+s)$ preserves volume. This is a direct
+consequence of the symplecticity of Hamiltonian dynamics. We next recall the definition of
+symplecticity and prove the symplecticity of Hamiltonian dynamics using a theorem by Poincar\'{e}.
+
+\begin{definition}[Symplectic Maps]
+A linear map $L : \R^{2d} \to \R^{2d}$ is symplectic if $L^T J L = J$. A continuously
+differentiable map $\psi : \R^{2d} \to \R^{2d}$ is symplectic if its Jacobian is symplectic
+everywhere. That is, if
+\[
+\psi'(x)^T J \psi'(x) = J, \qquad \forall x \in \R^{2d}.
+\]
+\end{definition}
+
+\begin{remark}
+In $\R^2$ symplecticity of linear maps is equivalent to area preservation of parallelograms;
+in $\R^{2d}$ it is equivalent to conservation of the oriented areas of the projections of
+parallelograms into the coordinate planes $(q_i, p_i)$.
+\end{remark}
+
+\begin{theorem}[Hamiltonian Flows are Symplectic]
+Let $H$ be a $\mathcal{C}^2$ Hamiltonian. Then the corresponding flow map $\varphi_t$ is
+symplectic for all $t$.
+\end{theorem}
+
+\begin{proof}
+Let $\varphi(x,t) := \varphi_t(x)$ denote the flow map of time $t$ starting from $x$. We
+need to show that, for any $t$ and arbitrary $x \in \R^{2d}$,
+\begin{equation}
+\label{eq:8.3}
+\frac{\partial}{\partial x}\varphi(x,t)^T J \frac{\partial}{\partial x}\varphi(x,t) = J.
+\end{equation}
+
+First, the equality holds for $t = 0$, since $\varphi(x,0)$ is the identity map on $\R^{2d}$.
+Therefore, the proof will be complete if we show that the left-hand side in
+equation~\eqref{eq:8.3} is constant in time. To that end, recall that
+$\frac{\partial}{\partial t}\varphi(x,t) = J^{-1}\nabla H(\varphi(x,t))$ and so, using that
+$H$ is twice continuously differentiable, we have
+\begin{align*}
+\frac{\partial^2}{\partial t \partial x}\varphi(x,t)
+&= \frac{\partial^2}{\partial x \partial t}\varphi(x,t) \\
+&= \frac{\partial}{\partial x} J^{-1}\nabla H(\varphi(x,t)) \\
+&= J^{-1}\nabla^2 H\!\left(\varphi(x,t)\right)\frac{\partial}{\partial x}\varphi(x,t),
+\end{align*}
+where $\nabla^2$ denotes the Hessian. This partial result and the skew-symmetry of $J$ give that
+\begin{align*}
+&\frac{\partial}{\partial t}\!\left(\frac{\partial}{\partial x}\varphi(x,t)^T J
+  \frac{\partial}{\partial x}\varphi(x,t)\right) \\
+&= \frac{\partial^2}{\partial t\partial x}\varphi(x,t)^T J
+  \frac{\partial}{\partial x}\varphi(x,t)
+  + \frac{\partial}{\partial x}\varphi(x,t)^T J
+  \frac{\partial}{\partial t\partial x}\varphi(x,t) \\
+&= \frac{\partial}{\partial x}\varphi(x,t)^T \nabla^2 H\!\left(\varphi(x,t)\right)
+  J^{-T} J \frac{\partial}{\partial x}\varphi(x,t)
+  + \frac{\partial}{\partial x}\varphi(x,t)^T J J J^{-1}\nabla^2 H\!\left(\varphi(x,t)\right)
+  \frac{\partial}{\partial x}\varphi(x,t) \\
+&= -\frac{\partial}{\partial x}\varphi(x,t)^T \nabla^2 H\!\left(\varphi(x,t)\right)
+  \frac{\partial}{\partial x}\varphi(x,t)
+  + \frac{\partial}{\partial x}\varphi(x,t)^T \nabla^2 H\!\left(\varphi(x,t)\right)
+  \frac{\partial}{\partial x}\varphi(x,t) \\
+&= 0,
+\end{align*}
+and the proof is complete.
+\end{proof}
+
+Taking the determinant at both sides of the equality
+\[
+\left(\varphi_t'\right)^T J \varphi_t = J
+\]
+shows that the Jacobian determinant of $\varphi_t$ has absolute value 1. Using this property
+and the conservation of the Hamiltonian, we obtain the following important result:
+
+\begin{theorem}[Preservation of Canonical Measure]
+The flow $\varphi_t$ preserves the canonical measure of $H$.
+\end{theorem}
+
+\begin{proof}
+Let $D$ be a Lebesgue measurable set. We have
+\begin{align*}
+\mu^H\!\left(\varphi_t^{-1}(D)\right)
+&= \int_{\varphi_{-t}(D)} \frac{1}{Z} e^{-H(x)}\,dx \\
+&= \int_D \frac{1}{Z} e^{-H(\varphi_{-t}(x))} \left|\varphi_{-t}'(x)\right| dx \\
+&= \int_D \frac{1}{Z} e^{-H(x)}\,dx \\
+&= \mu^H(D).
+\qedhere
+\end{align*}
+\end{proof}
+
+%% -------------------------------------------------------
+\subsection{Time Reversibility}
+\label{sec:8.1.3}
+%% -------------------------------------------------------
+
+The term time reversible comes from classical mechanics. Let $q(t)$ and $p(t)$ be the height
+and momentum of a pendulum of mass $m$ at time $t$. Suppose we release the pendulum at
+$q(0) = q_0$ with momentum $p(0) = v_0 m$ in a frictionless space. By conservation of energy,
+we know that the pendulum will come back to the same position $q_0$ at some time $t$, and its
+velocity will be $-v_0$. The $q-p$ time plot is symmetric i.e.\ the system is time reversible.
+Here we give a definition of time reversibility in the context of dynamical systems.
+
+\begin{definition}[Involution and Reversibility]
+A linear map $S$ is an involution if $S^2 = S \circ S$ is the identity map. A bijection
+$\varphi$ is called reversible with respect to an involution $S$ if $S \circ \varphi =
+\varphi^{-1} \circ S$. A differential equation is called reversible with respect to an
+involution $S$ if, for every fixed $t$, its flow $\varphi_t$ is reversible with respect to $S$.
+\end{definition}
+
+The inverse of the flow $\varphi_t$ of a differential equation $\frac{dx}{dt} = u(x)$ can be
+intuitively viewed as the flow map $\varphi_t$ of the system $\frac{dx}{dt} = -u(x)$. We can
+give an equivalent characterization of time reversibility:
+
+\begin{theorem}[Characterization of Reversibility]
+A system of differential equations $\frac{dx}{dt} = u(x)$ is time reversible with respect to
+an involution $S$ if and only if $S \circ u = -u \circ S$.
+\end{theorem}
+
+\begin{proof}
+Suppose $\frac{dx}{dt} = u(x)$ is time reversible with respect to $S$. Using linearity of
+$S$, we have
+\begin{align*}
+S \circ u(x)
+&= \lim_{\epsilon \to 0} \frac{1}{\epsilon}
+  \Bigl(S \circ \varphi_{t+\epsilon}(x) - S \circ \varphi_t(x)\Bigr) \\
+&= \lim_{\epsilon \to 0} \frac{1}{\epsilon}
+  \Bigl(\varphi_{t+\epsilon}^{-1} \circ S(x) - \varphi_t^{-1} \circ S(x)\Bigr) \\
+&= \frac{d}{dt}\varphi_t^{-1}\!\left(S(x)\right) \\
+&= (-u) \circ S(x).
+\end{align*}
+The other direction follows directly from the remark above.
+\end{proof}
+
+\begin{corollary}[Reversibility of Hamiltonian Systems]
+Hamiltonian systems with Hamiltonian $H(q,p) = V(q) + K(p)$ such that $K(p)$ is an even
+function are reversible with respect to the momentum flip involution
+$S : (q,p) \mapsto (q,-p)$.
+\end{corollary}
+
+\begin{example}[Gaussian Momentum Variables and Reversibility]
+The kinetic energy $K(p) = \frac{1}{2}p^T M^{-1} p$ is an even function, since
+\[
+K(-p) = \frac{1}{2}(-p)^T M^{-1}(-p) = \frac{1}{2}p^T M^{-1} p = K(p).
+\]
+Therefore, Corollary~8.8 implies that Hamiltonian systems with Hamiltonian
+$H(q,p) = V(q) + \frac{1}{2}p^T M^{-1}p$ are always time reversible with respect to
+momentum flip. Notice that with the choice of kinetic energy $K(p) = \frac{1}{2}p^T M^{-1}p$,
+the marginal of $f^H(q,p) \propto \exp(-H(q,p))$ over the momentum variables is
+Gaussian $\mathcal{N}(0, M)$.
+\end{example}

@@ -1,0 +1,50 @@
+\chapter{Hamiltonian Monte Carlo}
+\label{ch:hmc}
+
+% PDF pages 99--111 (book pages 87--98)
+
+The key idea of Hamiltonian Monte Carlo (HMC) is to extend the state space and exploit some
+properties of Hamiltonian dynamics to avoid the local behavior of RWMH and Langevin Monte
+Carlo. We write our target as
+\[
+f(q) \propto \exp\!\bigl(-V(q)\bigr), \qquad q \in \R^d,
+\]
+and introduce a distribution $f^H$ in extended space $\R^{2d}$
+\begin{equation}
+\label{eq:8.1}
+\begin{aligned}
+f^H(q,p) &:= \frac{1}{Z}\exp\!\bigl(-V(q)\bigr)\exp\!\bigl(-K(p)\bigr) \\
+          &= \frac{1}{Z}\exp\!\bigl(-H(q,p)\bigr),
+\end{aligned}
+\end{equation}
+where $K(p)$ satisfies $\int_{\R^d} \exp(-K(p))\,dp < \infty$ and
+\[
+H(q,p) := V(q) + K(p)
+\]
+is called the Hamiltonian. We call the measure $\mu^H$ with Lebesgue density $f^H$ the
+canonical measure of the Hamiltonian $H$. All the ingredients just introduced have both a
+physical and a statistical interpretation.
+\begin{itemize}
+  \item $q \in \R^d$ is interpreted as position $\equiv$ variables of interest.
+  \item $p \in \R^d$ is interpreted as momentum $\equiv$ artificial variables that are not
+    part of our statistical problem.
+  \item $V$ is interpreted as potential energy, and is determined by the unextended target $f$.
+  \item $K$ is interpreted as kinetic energy, and in HMC is part of the algorithmic design, a
+    standard choice being $K(p) = \frac{1}{2}p^T M^{-1}p$ for some symmetric positive definite
+    $M \in \R^{d\times d}$.
+  \item $\mu^H$ is interpreted as a Gibbs measure that governs the distribution of $(q,p)$
+    over an ensemble of many copies of the system in contact with a heat bath at a constant
+    temperature.
+\end{itemize}
+
+Notice that $f$ is the marginal of $f^H$ over the position variables, and therefore we can
+obtain samples from $f$ by sampling $f^H$ and throwing away the momentum variables. At first
+sight, it is not clear how sampling $f^H$ rather than directly sampling $f$ can help. The main
+idea is that extending the state space allows us to exploit several properties of Hamiltonian
+dynamics, proposing bolder moves in state space while not hindering the acceptance rate and the
+mixing of the chain.
+
+\input{ch08/sec8_1}
+\input{ch08/sec8_2}
+\input{ch08/sec8_3}
+\input{ch08/sec8_4}

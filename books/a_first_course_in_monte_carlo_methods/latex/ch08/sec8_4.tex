@@ -1,0 +1,66 @@
+%% Chapter 8 — Section 8.4: Exercises
+%% Source: PDF pages 109–110 (book pages 96–97)
+
+\section{Exercises}
+\label{sec:8.4}
+
+\begin{enumerate}
+
+\item[8.1] Prove Corollary~8.8.
+
+\item[8.2] Implement HMC to sample a bivariate Gaussian target $\mathcal{N}(\mu, \Sigma)$.
+Consider parameter values $\mu = (0,0)$, $\sigma_X = 1$, $\sigma_Y = 1$ and two different
+values of the correlation $\rho = 0$ and $\rho = 0.8$. Provide plots showing:
+\begin{enumerate}
+  \item The value of the Hamiltonian along trajectories of the leapfrog integrator for various
+    choices of the step-size $\epsilon$. The goal is to show that if $\epsilon$ is small these
+    trajectories are close to level-sets from the Gaussian target, but the accuracy deteriorates
+    if $\epsilon$ is too large.
+  \item A scatterplot of samples from HMC with different choices of step-size $\epsilon$ and
+    duration parameter $\lambda$.
+\end{enumerate}
+
+\item[8.3] Recall from Exercise~6.3 that a response random variable $Y$ given explanatory
+variables $(X_1, \ldots, X_d)$ follows a logistics regression model if
+\[
+Y = \begin{cases} 1 & \text{with probability}\quad \alpha, \\ 0 & \text{with probability}\quad 1 - \alpha, \end{cases}
+\]
+where
+\[
+\alpha = \frac{1}{1 + \exp\!\left(-(w_0 + w_1 X_1 + \ldots + w_d X_d)\right)}.
+\]
+\begin{enumerate}
+  \item \textbf{Setting and Preparation}: Same as in Exercise~6.3.
+  \item \textbf{Hamiltonian Monte Carlo}: Adopt a Bayesian formulation, specifying a Gaussian
+    prior $w \sim \mathcal{N}(0, \sigma^2 I)$.
+  \begin{enumerate}
+    \item[(b)] Based on the derivations in Exercise~6.3, write down the potential $V(w)$ needed
+      to implement HMC.
+    \item[(c)] Choose
+      \[
+        M = \begin{bmatrix} 10 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1 \end{bmatrix}
+      \]
+      and kinetic energy $K(p) = p^T M p$. Write down the leapfrog integrator applied to the
+      Hamiltonian $H(w,p) = V(w) + K(p)$. Plot leapfrog trajectories for different choices of
+      step-size.
+    \item[(d)] Implement HMC for posterior sampling, tuning the step-size and duration
+      parameters. Plot the value of the computed posterior mean of $w$ against the number of
+      HMC samples.
+  \end{enumerate}
+\end{enumerate}
+
+\item[8.4] Consider a 100-dimensional multivariate Gaussian with independent coordinates, mean
+vector $\mu = 0$, and variance vector $\sigma^2 = (0.01, 0.02, \ldots, 1)$.
+\begin{enumerate}
+  \item[(a)] Sample using RWMH and plot histograms for the coordinates with variance $0.98$,
+    $0.99$, and $1$.
+  \item[(b)] Sample using MALA tuning the step-size. Plot histograms for the coordinates with
+    variance $0.98$, $0.99$, and $1$.
+  \item[(c)] Sample using HMC with $\lambda = 150$ and tuning the step-size. Plot histograms
+    for the coordinates with variance $0.98$, $0.99$, and $1$.
+  \item[(d)] For each of the 100 coordinates, compute the sample mean and sample variance of
+    the samples you obtained with RWMH, MALA, and HMC. For each method, draw scatter plots of
+    the 100 sample means and variances.
+\end{enumerate}
+
+\end{enumerate}

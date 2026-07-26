@@ -1,0 +1,86 @@
+\section{Invariant Distributions: General Balance and Detailed Balance}
+\label{sec:A.2}
+
+In this section, we discuss the notion of statistical equilibrium, which is central to the theory of
+Markov chains.
+
+\begin{definition}[General Balance Equation; Invariant Distribution]
+\label{def:A.7}
+A Markov kernel $p(x, z)$ satisfies the general balance equation with respect to $\pi$ if
+\[
+  \pi(x) = \int_E \pi(z)\, p(z, x)\, dz.
+\]
+We then say that $\pi$ is an invariant distribution of the Markov kernel $p(x, z)$.
+\end{definition}
+
+Note that if $E$ is discrete, the general balance equation is simply $\pi = \pi P$.
+
+\begin{definition}[Ergodic Markov Chain]
+\label{def:A.8}
+A Markov chain $\mathbb{X}$ is called ergodic if there exists a distribution $\pi$ such that, for
+all $A \subset E$ and initial distributions $\pi_0$, it holds that
+\[
+  \lim_{n \to \infty} \Prob(X_n \in A) = \pi(A).
+\]
+We say that $\pi$ is the limit distribution of $\mathbb{X}$.
+\end{definition}
+
+\begin{lemma}
+\label{lem:A.9}
+Let $\mathbb{X}$ be an ergodic Markov chain with Markov kernel $p(x, z)$ and limit distribution
+$\pi$.  Then, $\pi$ is an invariant distribution for $p(x, z)$.  In particular, if $\mathbb{X}$ is
+initialized at statistical equilibrium ($X_0 \sim \pi$), then $X_n \sim \pi$ for all $n \geq 0$.
+\end{lemma}
+
+\begin{proof}
+We only give a sketch of the proof.  By the dominated convergence theorem
+\begin{align*}
+  \lim_{n \to \infty} \pi_{n+1}(x)
+    &= \lim_{n \to \infty} \int_E \pi_n(z)\, p(z, x)\, dz \\
+    &= \int_E \lim_{n \to \infty} \pi_n(z)\, p(z, x)\, dz,
+\end{align*}
+which shows that $\pi(x) = \int_E \pi(z)\, p(z, x)\, dz$.  The final claim of the lemma is proved
+by induction.
+\end{proof}
+
+The general balance equation implies that the transition probabilities of $\mathbb{X}$ preserve
+equilibrium.  For this reason, we call a distribution $\pi$ that satisfies the general balance
+equation~(\ref{def:A.7}) an invariant distribution of the chain $\mathbb{X}$.  If $\mathbb{X}$ is
+ergodic, we can use the general balance equation to show that $\pi$ is the equilibrium distribution
+of the chain.  However, given a distribution $\pi$, it is often difficult to find a Markov kernel
+for which $\pi$ satisfies the general balance equation.  It is actually easier to find a Markov
+kernel that satisfies a \emph{stronger} condition, known as detailed balance.
+
+\begin{definition}[Detailed Balance]
+\label{def:A.10}
+We say that a transition density $p(x, z)$ satisfies detailed balance with respect to $\pi$ if,
+for all $x, z \in E$, it holds that $\pi(x)\, p(x, z) = \pi(z)\, p(z, x)$.
+\end{definition}
+
+The Metropolis Hastings algorithm in Chapter~4 provides a general recipe to define a family of
+kernels that satisfy detailed balance with respect to a given distribution.  The following result
+shows that detailed balance implies general balance.
+
+\begin{theorem}[Detailed Balance Implies General Balance]
+\label{thm:A.11}
+Let $p(x, z)$ be a Markov kernel that satisfies detailed balance with respect to a distribution
+$\pi$.  Then, $\pi$ is an invariant distribution for $p(x, z)$.
+\end{theorem}
+
+\begin{proof}
+Using the assumption of detailed balance and that $p(x, z)$ is a Markov kernel (and so it
+integrates to one over its second argument) gives
+\[
+  \int_E \pi(z)\, p(z, x)\, dz
+  = \int_E \pi(x)\, p(x, z)\, dz
+  = \pi(x) \int_E p(x, z)\, dz
+  = \pi(x). \qedhere
+\]
+\end{proof}
+
+\begin{remark}
+\label{rem:A.12}
+Detailed balance is not \emph{necessary} for general balance.  Detailed balance implies that the
+chain is time reversible: in equilibrium the chain behaves the same whether it is run forward or
+backward in time.  However, there are many ergodic Markov chains that are not time reversible.
+\end{remark}

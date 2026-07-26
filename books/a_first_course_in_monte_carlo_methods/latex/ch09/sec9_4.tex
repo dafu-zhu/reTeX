@@ -1,0 +1,56 @@
+%% Chapter 9, Section 9.4 — Discussion and Bibliography
+%% A First Course in Monte Carlo Methods
+%% Sanz-Alonso & Al-Ghattas
+
+\section{Discussion and Bibliography}
+\label{sec:9.4}
+
+Sequential Monte Carlo methods are overviewed from an algorithmic viewpoint in
+\cite{58,59} and from a mathematical perspective in \cite{54,49}. The term ``bootstrap''
+particle filter was coined in the seminal work \cite{94} in reference to the bootstrap
+\cite{70}, a standard statistical procedure that also involves sampling with replacement.
+The optimal particle filter is discussed, and further references given, in \cite{59}; see
+section~IID. While the term ``optimal'' particle filter is common in the literature, the
+sense in which this filter is optimal is indeed rather weak. We refer to \cite{49}, Chapter~10,
+which utilizes instead the term ``guided'' particle filter, for further discussion on
+this topic; in particular, \cite{49}, Theorem~10.1, formalizes the criterion of
+\emph{local optimality} and the ensuing discussion provides compelling criticisms of this
+notion of optimality.
+
+The proof of convergence of the bootstrap particle filter presented here originates in
+\cite{190} and can also be found in \cite{208}. We refer to \cite{208}, Chapter~12, for a
+similar proof of convergence for a Gaussianized optimal particle filter, and to \cite{118}
+for a convergence analysis of the optimal particle filter. Throughout much of this
+chapter, we considered for simplicity the case of Gaussian additive noise and linear
+observation operator. More general convergence and stability results for sequential Monte
+Carlo methods can be found, for instance, in \cite{54} and \cite{49}, Chapter~11.
+
+For problems in which the dynamics model is nonlinear and the state space of the hidden
+process is low dimensional, particle filters are enormously successful. Generalizing them
+so that they work for the high-dimensional problems that arise, for example, in
+geophysical applications, provides a major challenge, since in those settings the particle
+weights typically concentrate on one, or a small number, of particles --- see for instance
+\cite{24, 216, 215, 3}. Weight collapse is intimately related to the fact that, as
+discussed in Chapter~3, importance sampling weights have large variance when the target
+and the proposal distributions are far apart. As noted in \cite{217, 3}, an advantage of
+the optimal particle filter over the bootstrap particle filter is that the optimal filter
+utilizes a proposal that is closer to the target, which helps alleviate weight collapse
+over each iteration of the filter. Resampling techniques to turn weighted samples into
+unweighted ones are essential to the success of particle filters over multiple iterations.
+We refer to \cite{49}, Chapter~9, for an in-depth exploration and comparison of resampling
+schemes in sequential Monte Carlo.
+
+An important algorithmic idea in sequential Monte Carlo, as in many other algorithms
+studied in these notes, is to introduce auxiliary variables to accelerate computation
+\cite{186, 118}. In addition, exploiting decay of correlations through \emph{localization}
+is often needed when implementing particle filters for online estimation of
+discretizations of spatial fields. A review of local particle filters can be found in
+\cite{73}. The paper \cite{190} investigates, from a theoretical viewpoint, whether
+localization can help to beat the curse of dimension. Attempts to bridge particle filters
+with ensemble Kalman filters to alleviate the curse of dimension include \cite{76, 218},
+and the relation between the collapse of ensemble and particle methods is investigated in
+the paper \cite{165}, which also emphasizes the importance of localization. Further
+theoretical investigations of localization for ensemble Kalman methods include \cite{6,
+5}. We close by pointing out that sequential Monte Carlo methods can be combined in
+several ways with algorithms studied in previous chapters, and we refer to \cite{10} for a
+representative, important example.

@@ -1,0 +1,181 @@
+\section{Transformation Methods}
+\label{sec:2.1}
+
+Let $X \sim f$ be a random variable taking values on a set $E \subset \R^d$ and let $U \sim \Unif(0,1)^d$ be a
+random variable uniformly distributed on the $d$-dimensional unit cube $(0,1)^d$. In this section, we
+seek to find a map $\mathcal{T} : (0,1)^d \to E$ so that the random variable $\mathcal{T}(U)$ has the same distribution
+as $X$, written $X \overset{d}{=} \mathcal{T}(U)$. Once we find such a \textit{push-forward} or \textit{transport} map $\mathcal{T}$, we can obtain
+a sample from the target distribution $f$ by:
+\begin{enumerate}
+  \item Sampling $U^{(1)}, \ldots, U^{(N)} \iid \Unif(0,1)^d$; and
+  \item Setting $X^{(n)} := \mathcal{T}(U^{(n)})$ for $1 \le n \le N$.
+\end{enumerate}
+
+It is natural to ask if such a transport map $\mathcal{T}$ is guaranteed to exist. We will provide an affirmative
+answer and an explicit construction in this section under the assumption that the target admits
+a positive p.d.f. For exposition purposes, we consider first the scalar case $d = 1$ in Subsection
+\ref{sec:2.1.1}, and then generalize to the $d$-dimensional case in Subsection~\ref{sec:2.1.2}.
+
+\subsection{Inverse Transformation Method}
+\label{sec:2.1.1}
+
+Let $X \sim f$ be a real-valued random variable, and denote by $F$ its c.d.f. The inverse transformation
+method relies on the (generalized) inverse c.d.f.\ of $X$, given by
+\[
+  F^-(u) := \inf\{x : F(x) \ge u\},
+\]
+to transform a uniform sample into a sample from $f$. The following result shows that the inverse
+c.d.f.\ is a valid transport map.
+
+\begin{theorem}[Transport: Uniform to Target]
+\label{thm:2.1}
+Let $X$ be a real-valued random variable with inverse c.d.f.\ $F^-$ and let $U \sim \Unif(0,1)$. It holds that $F^-(U) \overset{d}{=} X$.
+\end{theorem}
+
+\begin{proof}
+We only prove here the case where $F$ is a bijection from $\R$ to $(0,1)$. In such a case, it
+holds that $F^- = F^{-1}$, as illustrated in Figure~\ref{fig:2.1}. Then, for any $x \in \R$,
+\[
+  \Prob\bigl(F^-(U) \le x\bigr) = \Prob\bigl(F^{-1}(U) \le x\bigr) = \Prob\bigl(U \le F(x)\bigr) = F(x),
+\]
+which shows that $F$ is the c.d.f.\ of the random variable $F^-(U)$. The general case where the c.d.f.\
+$F$ may not be invertible is the content of Exercise~2.2.
+\end{proof}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.75\textwidth]{figures/fig_02_1}
+\caption{\textit{A strictly increasing c.d.f.\ and associated inverse c.d.f.}}
+\label{fig:2.1}
+\end{figure}
+
+The inverse transformation method produces a sample from the target distribution as follows:
+
+\begin{algorithm}[H]
+\caption{Inverse Transformation Method}
+\label{alg:2.1}
+\begin{algorithmic}[1]
+\Require Target distribution $f$ with inverse c.d.f.\ $F^-$, sample size $N$.
+\State Set $X^{(n)} := F^-(U^{(n)})$, \quad $1 \le n \le N$, \quad where $U^{(1)}, \ldots, U^{(N)} \iid \Unif(0,1)$.
+\Ensure Sample $\{X^{(n)}\}_{n=1}^N \iid f$.
+\end{algorithmic}
+\end{algorithm}
+
+\medskip
+\noindent\fbox{\parbox{\dimexpr\linewidth-2\fboxsep-2\fboxrule}{%
+\textbf{Pros and Cons}: The inverse transformation method is very efficient whenever $F^-$ has a
+closed form expression that can be evaluated cheaply. However, Algorithm~\ref{alg:2.1} is only applicable to sample real-valued random variables.}}
+\medskip
+
+\begin{example}[Inverse Transformation Method: Exponential Distribution]
+\label{ex:2.2}
+Suppose that $X \sim \Exp(\lambda)$, so that $F(x) = 1 - e^{-\lambda x}$, $x \ge 0$. Let $U \sim \Unif(0,1)$. Then,
+\[
+  -\frac{1}{\lambda}\log(1 - U) \sim \Exp(\lambda).
+\]
+Using that $1 - U \overset{d}{=} U$, we also have that
+\[
+  -\frac{1}{\lambda}\log(U) \sim \Exp(\lambda).
+\]
+Figure~\ref{fig:2.2} shows a histogram of $N = 10^5$ draws generated from an $\Exp(1)$ distribution
+using the inverse transformation method.
+\end{example}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.75\textwidth]{figures/fig_02_2}
+\caption{\textit{Inverse transformation method for sampling from an Exponential(1) distribution.
+Uniform samples (first row) are transformed into samples from the target distribution (second row).}}
+\label{fig:2.2}
+\end{figure}
+
+So far, we have discussed how to transform a uniform sample into a sample from a given
+target distribution. In some applications, it is important to use a proposal distribution that is not
+uniform. The following theorem provides a transport map from proposal to target.
+
+\begin{theorem}[Transport: Proposal to Target]
+\label{thm:2.3}
+Let $Z$ be a real-valued random variable with continuous and strictly increasing c.d.f.\ $F_Z$ and let $X$ be a real-valued random variable with inverse c.d.f.\ $F_X^-$. Then, it holds that $F_X^- \circ F_Z(Z) \overset{d}{=} X$.
+\end{theorem}
+
+\begin{proof}
+By Theorem~\ref{thm:2.1}, it suffices to show that $F_Z(Z) \sim \Unif(0,1)$. To that end, note that, for
+any $z \in (0,1)$,
+\[
+  \Prob\bigl(F_Z(Z) \le z\bigr) = \Prob\bigl(Z \le F_Z^{-1}(z)\bigr) = F_Z\bigl(F_Z^{-1}(z)\bigr) = z,
+\]
+as desired.
+\end{proof}
+
+Let $X \sim f$ and let $Z \sim g$, where $g$ is a strictly positive p.d.f. In view of Theorem~\ref{thm:2.3}, we
+can obtain a draw from $f$ by (1) drawing $Z^{(n)} \sim g$; and (2) setting $X^{(n)} := F_X^- \circ F_Z(Z^{(n)})$.
+
+\subsection{Knothe-Rosenblatt Rearrangement}
+\label{sec:2.1.2}
+
+We now generalize the inverse transformation method to target distributions on $\R^d$, $d \in \N$.
+For ease of exposition, let us consider first the case $d = 2$. Let $X = (X_1, X_2) \sim f$ and let
+$U = (U_1, U_2) \sim \Unif(0,1)^2$. The idea is to \textit{disintegrate} the target $f$ as the product of the
+marginal of $X_1$ times the conditional of $X_2$ given $X_1$:
+\[
+  f(x) = f_{X_1}(x_1) f_{X_2|X_1=x_1}(x_2|x_1), \quad x = (x_1, x_2) \in \R^2.
+\]
+
+We then sequentially apply the inverse transformation method to the one-dimensional targets
+$f_{X_1}$ and $f_{X_2|X_1=x_1}$ as will be detailed next.
+
+Denote by $F_{X_1}$ the marginal c.d.f.\ of $X_1$. By the inverse transformation method, we know
+that $F_{X_1}^-(U_1) \overset{d}{=} X_1$. Now, for any $x_1 \in \R$ denote by $F_{X_2|X_1=x_1}$ the c.d.f.\ of $X_2 | X_1 =
+x_1$. By the inverse transformation method, we know that $F_{X_2|X_1=x_1}^-(U_2) \overset{d}{=} X_2|X_1 = x_1$. To
+summarize, define recursively maps $\mathcal{T}^1$ and $\mathcal{T}^2$ by
+\begin{align*}
+  \mathcal{T}^1 : (0,1) \to \R, & \qquad \mathcal{T}^2 : (0,1)^2 \to \R, \\
+  u_1 \mapsto F_{X_1}^-(u_1), & \qquad (u_1, u_2) \mapsto F_{X_2|X_1=\mathcal{T}^1(u_1)}^-(u_2).
+\end{align*}
+
+Then, the triangular map $\mathcal{T} : (0,1)^2 \to \R^2$ given by
+\begin{equation}
+  \mathcal{T}(u) = \begin{bmatrix} \mathcal{T}^1(u_1) \\ \mathcal{T}^2(u_1, u_2) \end{bmatrix}, \qquad u = (u_1, u_2) \in \R^2,
+  \label{eq:2.1}
+\end{equation}
+satisfies that $\mathcal{T}(U) \overset{d}{=} X$. The map $\mathcal{T}$ defined in \eqref{eq:2.1} is called the \textit{Knothe-Rosenblatt rearrangement} from $\Unif(0,1)^2$ to $f$. The construction can be generalized to higher dimensions:
+
+\begin{theorem}[Transport via Triangular Maps]
+\label{thm:2.4}
+Let $f$ be a strictly positive p.d.f.\ on $\R^d$. Let $X \sim f$ and let $U \sim \Unif(0,1)^d$. For $1 \le i \le d$, define maps $\mathcal{T}^i$ as follows:\footnote{For vector $u = (u_1, \ldots, u_d) \in \R^d$ and $1 \le i \le d$, we denote by $u_{1:i} := (u_1, \ldots, u_i) \in \R^i$ the vector defined by the first $i$ coordinates of $u$. Likewise, for triangular map $\mathcal{T} : \R^d \to \R^d$, we denote by $\mathcal{T}^{1:i} : \R^i \to \R^i$ the map defined by the first $i$ components of $\mathcal{T}$.}
+\begin{align}
+  \mathcal{T}^1(u_1) &= F_{X_1}^-(u_1), \label{eq:2.2} \\
+  \mathcal{T}^i(u_{1:i}) &:= F_{X_i|X_{1:i-1}=\mathcal{T}^{1:i-1}(u_{1:i-1})}^-(u_i), \qquad 2 \le i \le d. \label{eq:2.3}
+\end{align}
+Then, the triangular map
+\begin{equation}
+  \mathcal{T}(u) = \begin{bmatrix} \mathcal{T}^1(u_1) \\ \mathcal{T}^2(u_1, u_2) \\ \vdots \\ \mathcal{T}^d(u_1, \ldots, u_d) \end{bmatrix}, \qquad u = (u_1, \ldots, u_d) \in \R^d,
+  \label{eq:2.4}
+\end{equation}
+satisfies that $X \overset{d}{=} \mathcal{T}(U)$. Moreover, for all $1 \le i \le d$, the components $\mathcal{T}^i : (0,1)^d \to \R$ are monotonically increasing in the $i$-th variable.
+\end{theorem}
+
+The map $\mathcal{T}$ defined in Theorem~\ref{thm:2.4} is called the Knothe-Rosenblatt (KR) rearrangement
+from $\Unif(0,1)^d$ to $f$. The map $\mathcal{T}$ is referred to as a \textit{triangular} map since its Jacobian is a
+(lower) triangular matrix. The KR rearrangement can be used for sampling, as summarized in
+the following algorithm:
+
+\begin{algorithm}[H]
+\caption{Sampling via the KR Rearrangement}
+\label{alg:2.2}
+\begin{algorithmic}[1]
+\Require KR rearrangement $\mathcal{T}$ from $\Unif(0,1)^d$ to $f$, sample size $N$.
+\State Set $X^{(n)} := \mathcal{T}(U^{(n)})$, \quad $1 \le n \le N$, \quad where $U_1, \ldots, U^{(N)} \iid \Unif(0,1)^d$.
+\Ensure Sample $\{X^{(n)}\}_{n=1}^N \iid f$.
+\end{algorithmic}
+\end{algorithm}
+
+\medskip
+\noindent\fbox{\parbox{\dimexpr\linewidth-2\fboxsep-2\fboxrule}{%
+\textbf{Pros and Cons}: As with other transformation methods, sampling via the KR rearrangement is
+very efficient if we can find and evaluate the KR map. However, computing the KR rearrangement can be expensive in high dimensions. Conditional independence of the target-reference pair leads to sparsity in the KR map that can be exploited when computing or estimating the KR map. We refer to Section~\ref{sec:2.3} for further discussion on this topic.}}
+\medskip
+
+Using Theorem~\ref{thm:2.3}, it is possible to generalize the construction of the KR rearrangement to
+transport a strictly positive proposal p.d.f.\ $g$ on $\R^d$ into a strictly positive target p.d.f.\ $f$. This is
+the content of Exercise~2.4.

@@ -1,0 +1,797 @@
+% sec06_3.tex — Section 6.3: Heat Equation
+\section{Heat Equation}
+\label{sec:fd-heat}
+
+\subsection{Introduction}
+\label{sec:fd-heat-intro}
+
+In this subsection we introduce a numerical finite difference method to solve the one-dimensional heat equation without sources on a finite interval $0 < x < L$:
+\begin{equation}
+\boxed{
+\begin{aligned}
+\pd{u}{t} &= k\,\pdd{u}{x} \\
+u(0,t) &= 0 \\
+u(L,t) &= 0 \\
+u(x,0) &= f(x).
+\end{aligned}
+}
+\label{eq:6.3.1}
+\end{equation}
+
+\subsection{A Partial Difference Equation}
+\label{sec:fd-heat-pde}
+
+We will begin by replacing the partial differential equation at the point $x = x_0$, $t = t_0$ by an approximation based on our finite difference formulas for the derivatives.  We can do this in many ways.  Eventually, we will learn why some ways are good and others bad.  Somewhat arbitrarily we choose a \textbf{forward difference in time} for $\partial u/\partial t$:
+\[
+\pd{u}{t}(x_0,t_0) = \frac{u(x_0, t_0 + \Delta t) - u(x_0,t_0)}{\Delta t} - \frac{\Delta t}{2}\,\pdd{u}{t}(x_0,\eta_1),
+\]
+where $t_0 < \eta_1 < t_0 + \Delta t$.  For spatial derivatives we introduce our \textbf{spatial centered difference} scheme
+\[
+\pdd{u}{x}(x_0,t_0) = \frac{u(x_0+\Delta x,t_0) - 2u(x_0,t_0) + u(x_0-\Delta x,t_0)}{(\Delta x)^2} - \frac{(\Delta x)^2}{12}\,\frac{\partial^4 u}{\partial x^4}(\xi_1,t_0),
+\]
+where $x_0 < \xi_1 < x_0 + \Delta x$.  The heat equation at any point $x = x_0$, $t = t_0$, becomes
+\begin{equation}
+\frac{u(x_0,t_0+\Delta t) - u(x_0,t_0)}{\Delta t} = k\,\frac{u(x_0+\Delta x,t_0) - 2u(x_0,t_0) + u(x_0-\Delta x,t_0)}{(\Delta x)^2} + E,
+\label{eq:6.3.2}
+\end{equation}
+\emph{exactly}, where the discretization (or truncation) error is
+\begin{equation}
+E = \frac{\Delta t}{2}\,\pdd{u}{t}(x_0,\eta_1) - \frac{k(\Delta x)^2}{12}\,\frac{\partial^4 u}{\partial x^4}(\xi_1,t_0).
+\label{eq:6.3.3}
+\end{equation}
+Since $E$ is unknown, we cannot solve \eqref{eq:6.3.2}.  Instead, we introduce the \emph{approximation} that results by ignoring the truncation error:
+\begin{equation}
+\frac{u(x_0,t_0+\Delta t) - u(x_0,t_0)}{\Delta t} \approx k\,\frac{u(x_0+\Delta x,t_0) - 2u(x_0,t_0) + u(x_0-\Delta x,t_0)}{(\Delta x)^2}.
+\label{eq:6.3.4}
+\end{equation}
+
+To be more precise, we introduce $\tilde{u}(x_0,t_0)$ an approximation at the point $x = x_0$, $t = t_0$ of the exact solution $u(x_0,t_0)$.  We let the approximation $\tilde{u}(x_0,t_0)$ solve \eqref{eq:6.3.4} exactly,
+\begin{equation}
+\frac{\tilde{u}(x_0,t_0+\Delta t) - \tilde{u}(x_0,t_0)}{\Delta t} = k\,\frac{\tilde{u}(x_0+\Delta x,t_0) - 2\tilde{u}(x_0,t_0) + \tilde{u}(x_0-\Delta x,t_0)}{(\Delta x)^2}.
+\label{eq:6.3.5}
+\end{equation}
+$\tilde{u}(x_0,t_0)$ is the exact solution of an equation that is only approximately correct.  We hope that the desired solution $u(x_0,t_0)$ is accurately approximated by $\tilde{u}(x_0,t_0)$.
+
+Equation~\eqref{eq:6.3.5} involves points separated a distance $\Delta x$ in space and $\Delta t$ in time.  We thus introduce a uniform mesh $\Delta x$ and a constant discretization time $\Delta t$.  A space-time diagram (Fig.~\ref{fig:6.3.1}) illustrates our mesh and time discretization on the domain of our initial boundary value problem.  We divide the rod of length $L$ into $N$ equal intervals, $\Delta x = L/N$.  We have $x_0 = 0, x_1 = \Delta x, x_2 = 2\Delta x, \ldots, x_N = N\Delta x = L$.  In general,
+\begin{equation}
+\boxed{x_j = j\Delta x.}
+\label{eq:6.3.6}
+\end{equation}
+Similarly, we introduce time step sizes $\Delta t$ such that
+\begin{equation}
+\boxed{t_m = m\Delta t.}
+\label{eq:6.3.7}
+\end{equation}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch06/fig_6_3_1.png}
+\caption{Space-time discretization.}
+\label{fig:6.3.1}
+\end{figure}
+
+The exact temperature at the mesh point $u(x_j, t_m)$ is approximately $\tilde{u}(x_j, t_m)$, which satisfies \eqref{eq:6.3.5}.  We introduce the following \emph{notation}:
+\begin{equation}
+\boxed{\tilde{u}(x_j, t_m) \equiv u_j^{(m)},}
+\label{eq:6.3.8}
+\end{equation}
+indicating the exact solution of \eqref{eq:6.3.5} at the $j$th mesh point at time $t_m$.  Equation~\eqref{eq:6.3.5} will be satisfied at each mesh point $x_0 = x_j$ at each time $t_0 = t_m$ (excluding the space-time boundaries).  Note that $x_0 + \Delta x$ becomes $x_j + \Delta x = x_{j+1}$ and $t_0 + \Delta t$ becomes $t_m + \Delta t = t_{m+1}$.  Thus,
+\begin{equation}
+\boxed{\frac{u_j^{(m+1)} - u_j^{(m)}}{\Delta t} = k\,\frac{u_{j+1}^{(m)} - 2u_j^{(m)} + u_{j-1}^{(m)}}{(\Delta x)^2},}
+\label{eq:6.3.9}
+\end{equation}
+for $j = 1, \ldots, N-1$ and $m$ starting from $1$.  We call \eqref{eq:6.3.9} a \textbf{partial difference equation}.  The local truncation error is given by \eqref{eq:6.3.3}; it is the larger of $O(\Delta t)$ and $O(\Delta x)^2$.  Since $E \to 0$ as $\Delta x \to 0$ and $\Delta t \to 0$, the approximation \eqref{eq:6.3.9} is said to be \textbf{consistent} with the partial differential equation \eqref{eq:6.3.1}.
+
+In addition, we insist that $u_j^{(m)}$ satisfies the initial conditions (at the mesh points)
+\begin{equation}
+u_j^{(0)} = u(x,0) = f(x) = f(x_j),
+\label{eq:6.3.10}
+\end{equation}
+where $x_j = j\Delta x$ for $j = 0, \ldots, N$.  Similarly, $u_j^{(m)}$ satisfies the boundary conditions (at each time step)
+\begin{align}
+u_0^{(m)} &= u(0,t) = 0 \label{eq:6.3.11} \\
+u_N^{(m)} &= u(L,t) = 0. \label{eq:6.3.12}
+\end{align}
+
+If there is a physical (and thus mathematical) discontinuity at the initial time at any boundary point, then we can analyze $u_0^{(0)}$ or $u_N^{(0)}$ in different numerical ways.
+
+\subsection{Computations}
+\label{sec:fd-heat-computations}
+
+Our finite difference scheme \eqref{eq:6.3.9} involves four points, three at the time $t_m$ and one at the advanced time $t_{m+1} = t_m + \Delta t$, as illustrated by Fig.~\ref{fig:6.3.2}.  We can ``march forward in time'' by solving for $u_j^{(m+1)}$, starred in Fig.~\ref{fig:6.3.2}:
+\begin{equation}
+\boxed{u_j^{(m+1)} = u_j^{(m)} + s\left(u_{j+1}^{(m)} - 2u_j^{(m)} + u_{j-1}^{(m)}\right),}
+\label{eq:6.3.13}
+\end{equation}
+where $s$ is a dimensionless parameter.
+\begin{equation}
+\boxed{s = k\,\frac{\Delta t}{(\Delta x)^2}.}
+\label{eq:6.3.14}
+\end{equation}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch06/fig_6_3_2.png}
+\caption{Marching forward in time.}
+\label{fig:6.3.2}
+\end{figure}
+
+$u_j^{(m+1)}$ is a linear combination of the specified three earlier values.  We begin our computation using the initial condition $u_j^{(0)} = f(x_j)$, for $j = 1, \ldots, N-1$.  Then \eqref{eq:6.3.13} specifies the solution $u_j^{(1)}$ at time $\Delta t$, and we continue the calculation.  For mesh points adjacent to the boundary (i.e., $j = 1$ or $j = N-1$), \eqref{eq:6.3.13} requires the solution on the boundary points ($j = 0$ or $j = N$).  We obtain these values from the boundary conditions.  In this way we can easily solve our discrete problem numerically.  Our proposed scheme is easily programmed for a personal computer (or programmable calculator or symbolic computation program).
+
+\paragraph{Propagation speed of disturbances.}
+As a simple example, suppose that the initial conditions at the mesh points are zero except for~$1$ at some interior mesh point far from the boundary.  At the first time step, \eqref{eq:6.3.13} will imply that the solution is zero everywhere except at the original nonzero mesh point and its two immediate neighbors.  This process continues as illustrated in Fig.~\ref{fig:6.3.3}.  Stars represent nonzero values.  The isolated initial nonzero value spreads out at a constant speed (until the boundary has been reached).  This disturbance propagates at velocity $\Delta x/\Delta t$.  However, for the heat equation, disturbances move at an infinite speed.  In some sense our numerical scheme poorly approximates this property of the heat equation.  However, if the parameter $s$ is fixed, then the numerical propagation speed is
+\[
+\frac{\Delta x}{\Delta t} = \frac{k\Delta x}{s(\Delta x)^2} = \frac{k}{s\Delta x}.
+\]
+As $\Delta x \to 0$ (with $s$ fixed), this speed approaches $\infty$ as is desired.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch06/fig_6_3_3.png}
+\caption{Propagation speed of disturbances.}
+\label{fig:6.3.3}
+\end{figure}
+
+\paragraph{Computed example.}
+To compute with \eqref{eq:6.3.13}, we must specify $\Delta x$ and $\Delta t$.  Presumably, our solution will be more accurate with smaller $\Delta x$ and $\Delta t$.  Certainly, the local truncation error will be reduced.  An obvious disadvantage of decreasing $\Delta x$ and $\Delta t$ will be the resulting increased time (and money) necessary for any numerical computation.  This trade-off usually occurs in numerical calculations.  However, there is a more severe difficulty that will need to analyze.  To indicate the problem, we will compute using \eqref{eq:6.3.13}.  First, we must choose $\Delta x$ and $\Delta t$.  In our calculations we fix $\Delta x = L/10$ (nine interior points and two boundary points).  Since our partial difference equation \eqref{eq:6.3.13} depends primarily on $s = k\Delta t/(\Delta x)^2$, we pick $\Delta t$ so that, as examples, $s = 1/4$ and $s = 1$.  In both cases we assume $u(x,0) = f(x)$ is the specific initial condition sketched in Fig.~\ref{fig:6.3.4}, and the zero boundary conditions \eqref{eq:6.3.11} and \eqref{eq:6.3.12}.  The exact solution of the partial differential equation is
+\begin{equation}
+\begin{aligned}
+u(x,t) &= \sum_{n=1}^{\infty} a_n \sin\frac{n\pi x}{L}\,e^{-k(n\pi/L)^2 t} \\
+a_n &= \frac{2}{L}\int_0^L f(x)\sin\frac{n\pi x}{L}\dx,
+\end{aligned}
+\label{eq:6.3.15}
+\end{equation}
+as described in Chapter~2.  It shows that the solution decays exponentially in time and approaches a simple sinusoidal ($\sin\pi x/L$) shape in space for large $t$.  Elementary computer calculations of our numerical scheme, \eqref{eq:6.3.13}, for $s = \frac{1}{4}$ and $s = 1$, are sketched in Fig.~\ref{fig:6.3.5} (with smooth curves sketched through the nine interior points at fixed values of $t$).  For $s = \frac{1}{4}$ these results seem quite reasonable, agreeing with our qualitative understanding of the exact solution.  On the other hand, the solution of \eqref{eq:6.3.13} for $s = 1$ is absurd.  Its most obvious difficulty is the negative temperatures.  The solution then grows wildly in time with rapid oscillations in space and time.  None of these phenomena are associated with the heat equation.  The finite difference approximation yields unusable results if $s = 1$.  In the next subsection we explain these results.  We must understand how to pick $s = k(\Delta t)/(\Delta x)^2$ so that we are able to obtain reasonable numerical solutions.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch06/fig_6_3_4.png}
+\caption{Initial condition.}
+\label{fig:6.3.4}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch06/fig_6_3_5.png}
+\caption{Computations for the heat equation $s = k(\Delta t)/(\Delta x)^2$: (a)~$s = \frac{1}{4}$ stable and (b)~$s = 1$ unstable.}
+\label{fig:6.3.5}
+\end{figure}
+
+\subsection{Fourier--von Neumann Stability Analysis}
+\label{sec:fd-heat-stability}
+
+\paragraph{Introduction.}
+In this subsection we analyze the finite difference scheme for the heat equation obtained by using a forward difference in time and a centered difference in space:
+\begin{equation}
+\text{pde\footnotemark:}\quad
+\boxed{u_j^{(m+1)} = u_j^{(m)} + s\left(u_{j+1}^{(m)} - 2u_j^{(m)} + u_{j-1}^{(m)}\right)}
+\label{eq:6.3.16}
+\end{equation}
+\footnotetext{pde here means partial \emph{difference} equation.}
+\begin{equation}
+\text{IC:}\quad \boxed{u_j^{(0)} = f(x_j) = f_j}
+\label{eq:6.3.17}
+\end{equation}
+\begin{equation}
+\text{BC:}\quad
+\boxed{
+\begin{aligned}
+u_0^{(m)} &= 0 \\
+u_N^{(m)} &= 0,
+\end{aligned}
+}
+\label{eq:6.3.18}
+\end{equation}
+where $s = k(\Delta t)/(\Delta x)^2$, $x_j = j\Delta x$, $t = m\Delta t$ and hopefully $u(x_j,t) \approx u_j^{(m)}$.  We will develop von Neumann's ideas of the 1940s based on Fourier-type analysis.
+
+\paragraph{Eigenfunctions and product solutions.}
+In Sec.~\ref{sec:fd-heat-separation} we show that the method of separation of variables can be applied to the partial difference equation.  There are special product solutions with wave number $\alpha$ of the form
+\begin{equation}
+u_j^{(m)} = e^{i\alpha x}Q^{t/\Delta t} = e^{i\alpha j\Delta x}Q^m.
+\label{eq:6.3.19}
+\end{equation}
+By substituting \eqref{eq:6.3.19} into \eqref{eq:6.3.16} and canceling $e^{i\alpha x}Q^m$, we obtain
+\begin{equation}
+Q = 1 + s(e^{i\alpha\Delta x} - 2 + e^{-i\alpha\Delta x}) = 1 - 2s[1 - \cos(\alpha\Delta x)].
+\label{eq:6.3.20}
+\end{equation}
+$Q$ is the same for positive and negative $\alpha$.  Thus a linear combination of $e^{\pm i\alpha x}$ may be used.  The boundary condition $u_0^{(m)} = 0$ implies that $\sin\alpha x$ is appropriate, while $u_N^{(m)} = 0$ implies that $\alpha = n\pi/L$.  Thus, there are solutions of \eqref{eq:6.3.16} with \eqref{eq:6.3.18} of the form
+\begin{equation}
+\boxed{u_j^{(m)} = \sin\frac{n\pi x}{L}\,Q^{t/\Delta t},}
+\label{eq:6.3.21}
+\end{equation}
+where $Q$ is determined from \eqref{eq:6.3.20},
+\begin{equation}
+\boxed{Q = 1 - 2s\left[1 - \cos\!\left(\frac{n\pi\Delta x}{L}\right)\right],}
+\label{eq:6.3.22}
+\end{equation}
+and $n = 1, 2, 3, \ldots, N-1$, as will be explained.  For partial \emph{differential} equations there are an infinite number of eigenfunctions ($\sin n\pi x/L$, $n = 1, 2, 3, \ldots$).  However, we will show that for our partial \emph{difference} equation there are only $N-1$ independent eigenfunctions ($\sin n\pi x/L$, $n = 1, 2, 3, \ldots, N-1$):
+\begin{equation}
+\phi_j = \sin\frac{n\pi x}{L} = \sin\frac{n\pi j\Delta x}{L} = \sin\frac{n\pi j}{N},
+\label{eq:6.3.23}
+\end{equation}
+\emph{the same eigenfunctions as for the partial differential equation (in this case)}.  For example, for $n = N$, $\phi_j = \sin n\pi j = 0$ (for all $j$).  Furthermore, $\phi_j$ for $n = N+1$ is equivalent to $\phi_j$ for $n = N-1$ since
+\[
+\sin\frac{(N+1)\pi j}{N} = \sin\!\left(\frac{\pi j}{N} + j\pi\right) = \sin\!\left(\frac{\pi j}{N} - j\pi\right) = -\sin\frac{(N-1)\pi j}{N}.
+\]
+In Fig.~\ref{fig:6.3.6} we sketch some of these ``eigenfunctions'' (for $N = 10$).  For the partial difference equation due to the discretization, the solution is composed of only $N-1$ waves.  This number of waves equals the number of independent mesh points (excluding the endpoints).  The wave with the smallest wavelength is
+\[
+\sin\frac{(N-1)\pi x}{L} = \sin\frac{(N-1)\pi j}{N} = (-1)^{j+1}\sin\frac{\pi j}{N},
+\]
+which alternates signs at every point.  The general solution is obtained by the principle of superposition, introducing $N-1$ constants $\beta_n$:
+\begin{equation}
+u_j^{(m)} = \sum_{n=1}^{N-1}\beta_n\sin\frac{n\pi x}{L}\left[1 - 2s\left(1 - \cos\frac{n\pi}{N}\right)\right]^{t/\Delta t},
+\label{eq:6.3.24}
+\end{equation}
+where
+\[
+s = \frac{k\Delta t}{(\Delta x)^2}.
+\]
+These coefficients can be determined from the $N-1$ initial conditions, using the discrete orthogonality of the eigenfunctions $\sin n\pi j/N$.  The analysis of this discrete Fourier series is described in Exercises~6.3.3 and 6.3.4.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch06/fig_6_3_6.png}
+\caption{Eigenfunctions for the discrete problem.}
+\label{fig:6.3.6}
+\end{figure}
+
+\paragraph{Comparison to partial differential equation.}
+The product solutions $u_j^{(m)}$ of the partial difference equation may be compared with the product solutions $u(x,t)$ of the partial differential equation:
+\begin{equation*}
+\begin{aligned}
+u_j^{(m)} &= \sin\frac{n\pi x}{L}\left[1 - 2s\left(1 - \cos\frac{n\pi}{N}\right)\right]^{t/\Delta t}, & n &= 1, 2, \ldots, N-1 \\
+u(x,t) &= \sin\frac{n\pi x}{L}\,e^{-k(n\pi/L)^2 t}, & n &= 1, 2, \ldots,
+\end{aligned}
+\end{equation*}
+where $s = k\Delta t/(\Delta x)^2$.  For the partial differential equation, each wave exponentially decays, $e^{-k(n\pi/L)^2 t}$.  For the partial difference equation, the time dependence (corresponding to the spatial part $\sin n\pi x/L$) is
+\begin{equation}
+Q^m = \left[1 - 2s\left(1 - \cos\frac{n\pi}{N}\right)\right]^{t/\Delta t}.
+\label{eq:6.3.25}
+\end{equation}
+
+\paragraph{Stability.}
+If $Q > 1$, there is exponential growth in time, while exponential decay occurs if $0 < Q < 1$.  The solution is constant in time if $Q = 1$.  However, in addition, it is possible for there to be a convergent oscillation in time ($-1 < Q < 0$), a pure oscillation ($Q = -1$), and a divergent oscillation ($Q < -1$).  These possibilities are discussed and sketched in Sec.~\ref{sec:fd-heat-separation}.  The value of $Q$ will determine stability.  If $|Q| \le 1$ for all solutions, we say that the numerical scheme is \textbf{stable}.  Otherwise, the scheme is \textbf{unstable}.
+
+We return to analyze $Q^m = Q^{t/\Delta t}$, where $Q = 1 - 2s(1 - \cos n\pi/N)$.  Here $Q \le 1$; the solution cannot be a purely growing exponential in time.  However, the solution may be a convergent or divergent oscillation as well as being exponentially decaying.  We do not want the numerical scheme to have divergent oscillations in time.  If $s$ is too large, $Q$ may become too negative.
+
+Since $Q \le 1$, the solution will be ``stable'' if $Q \ge -1$.  To be stable, $1 - 2s(1 - \cos n\pi/N) \ge -1$ for $n = 1, 2, 3, \ldots, N-1$, or, equivalently,
+\[
+s \le \frac{1}{1 - \cos n\pi/N} \quad \text{for } n = 1, 2, 3, \ldots, N-1.
+\]
+For stability, $s$ must be less than or equal to the smallest, $n = N-1$,
+\[
+s \le \frac{1}{1 - \cos(N-1)\pi/N}.
+\]
+To simplify the criteria, we note that $1 - \cos(N-1)\pi/N < 2$, and hence we are \emph{guaranteed} that the numerical solution will be stable if $s \le \frac{1}{2}$:
+\begin{equation}
+s \le \frac{1}{2} < \frac{1}{1 - \cos(N-1)\pi/N}.
+\label{eq:6.3.26}
+\end{equation}
+In practice, we cannot be stable with $s$ much larger than $\frac{1}{2}$, since $\cos(N-1)\pi/N = -\cos\pi/N$, and hence for $N$ large, $1 - \cos(N-1)\pi/N \approx 2$.
+
+If $s > \frac{1}{2}$, usually $Q < -1$ (but not necessarily) for some $n$.  Then the numerical solution will contain a divergent oscillation.  We call this a \textbf{numerical instability}.  If $s > \frac{1}{2}$, the most rapidly ``growing'' solution corresponds to a rapid oscillation ($n = N-1$) in space.  \textbf{The numerical instability is characterized by divergent oscillation in time ($Q < -1$) of a rapidly oscillatory ($n = N-1$) solution in space.}  Generally, if we observe computer output of this form, we probably have a numerical scheme that is unstable, and hence not reliable.  This is what we observed numerically when $s = 1$.  For $s = \frac{1}{4}$, the solution behaved quite reasonably.  However, for $s = 1$ a divergent oscillation was observed in time, rapidly varying in space.
+
+Since $s = k\Delta t/(\Delta x)^2$, the restriction $s \le \frac{1}{2}$ says that
+\begin{equation}
+\Delta t \le \frac{\frac{1}{2}(\Delta x)^2}{k}.
+\label{eq:6.3.27}
+\end{equation}
+This puts a practical constraint on numerical computations.  The time steps $\Delta t$ must not be too large (otherwise the scheme becomes unstable).  In fact, since $\Delta x$ must be small (for accurate computations), \eqref{eq:6.3.27} shows that the time step must be exceedingly small.  Thus, the forward time, centered spatial difference approximation for the heat equation is somewhat expensive to use.
+
+To minimize calculations, we make $\Delta t$ as large as possible (maintaining stability).  Here $s = \frac{1}{2}$ would be a good value.  In this case, the partial difference equation becomes
+\[
+u_j^{(m+1)} = \frac{1}{2}\left[u_{j+1}^{(m)} + u_{j-1}^{(m)}\right].
+\]
+The temperature at time $\Delta t$ later is the average of the temperatures to the left and right.
+
+\paragraph{Convergence.}
+As a further general comparison between the difference and differential equations, we consider the limits of the solution of the partial difference equation as $\Delta x \to 0$ ($N \to \infty$) and $\Delta t \to 0$.  We will show that the time dependence of the discretization converges to that of the heat equation if $n/N \ll 1$ (as though we fix $n$ and let $N \to \infty$).  If $n/N \ll 1$, then $\cos n\pi/N \approx 1 - \frac{1}{2}(n\pi/N)^2$ from its Taylor series, and hence
+\begin{equation}
+Q^{t/\Delta t} \approx \left[1 - s\left(\frac{n\pi}{N}\right)^2\right]^{t/\Delta t} = \left[1 - k\Delta t\left(\frac{n\pi}{L}\right)^2\right]^{t/\Delta t},
+\label{eq:6.3.28}
+\end{equation}
+where $N = L/\Delta x$.  Thus, as $\Delta t \to 0$,
+\begin{equation}
+Q^{t/\Delta t} \to e^{-k(n\pi/L)^2 t}
+\label{eq:6.3.29}
+\end{equation}
+since $e$ may be defined as $e = \lim_{z\to 0}(1+z)^{1/z}$.  If $n/N \ll 1$, then by more careful analysis [taking logs of \eqref{eq:6.3.28}], it can be shown that $Q^m - \exp(-k(n\pi/L)^2 t) = O(\Delta t)$.  It is usually computed with fixed $s$.  To improve a computation, we cut $\Delta x$ in half (and thus $\Delta t$ will be decreased by a factor of~4).  Thus, if $n/N \ll 1$ with $s$ fixed, numerical errors (at fixed $x$ and $t$) are cut by a factor of~4 if the discretization step size $\Delta x$ is halved (and time step $\Delta t$ is cut in four).  All computations should be done with $s$ satisfying the stability condition.
+
+However, difficulties may occur in practical computations if $n/N$ is not small.  \emph{These are the highly spatially oscillatory solutions of the partial difference equation.  For the heat equation these are the only waves that may cause difficulty.}
+
+\paragraph{Lax equivalency theorem.}
+The relationship between convergence and stability can be generalized.  The \textbf{Lax equivalency theorem} states that for \emph{consistent} finite difference approximations of time-dependent \emph{linear} partial differential equations that are well posed, the numerical scheme converges if it is stable and it is stable if it converges.
+
+\paragraph{A simplified determination of the stability condition.}
+It is often convenient to analyze the stability of a numerical method quickly.  From our analysis (based on the method of separation of variables), we have shown that there are special solutions to the difference equation that oscillate in $x$:
+\begin{equation}
+u_j^{(m)} = e^{i\alpha x}Q^{t/\Delta t},
+\label{eq:6.3.30}
+\end{equation}
+where
+\[
+x = j\Delta x \quad\text{and}\quad t = m\Delta t.
+\]
+From the boundary conditions $\alpha$ is restricted.  Often, to simplify the stability analysis, we ignore the boundary conditions and allow $\alpha$ to be any value.\footnote{Our more detailed stability analysis showed that the unstable waves occur only for very short wave lengths.  For these waves, the boundary is perhaps expected to have the least effect.}  In this case, stability follows from \eqref{eq:6.3.20} if $s \le \frac{1}{2}$.
+
+\paragraph{Random walk.}
+The partial difference equation \eqref{eq:6.3.16} may be put in the form
+\begin{equation}
+u_j^{(m+1)} = s\,u_{j-1}^{(m)} + (1-2s)\,u_j^{(m)} + s\,u_{j+1}^{(m)}.
+\label{eq:6.3.31}
+\end{equation}
+In the stable region, $s \le \frac{1}{2}$; this may be interpreted as a probability problem known as a \textbf{random walk}.  Consider a ``drunkard'' who in each unit of time $\Delta t$ stands still or walks randomly to the left or to the right one step $\Delta x$.  We do not know precisely where that person will be.  We let $u_j^{(m)}$ be the probability that a drunkard is located at point $j$ at time $m\Delta t$.  We suppose that the person is equally likely to move one step $\Delta x$ to the left or to the right in time $\Delta t$, with probability $s$ each.  Note that for this interpretation $s$ must be less than or equal to $\frac{1}{2}$.  The person cannot move further than $\Delta x$ in time $\Delta t$; thus, the person stays still with probability $1 - 2s$.  The probability that the person will be at $j\Delta x$ at the next time $(m+1)\Delta t$ is then given by \eqref{eq:6.3.31}: It is the sum of the probabilities of the three possible events.  For example, the person might have been there at the previous time with probability $u_j^{(m)}$ and did not move with probability $1 - 2s$; the probability of this compound event is $(1 - 2s)u_j^{(m)}$.  In addition, the person might have been one step to the left with probability $u_{j-1}^{(m)}$ [or right with probability $u_{j+1}^{(m)}$] and moved one step in the appropriate direction with probability $s$.
+
+The largest time step for stable computations $s = \frac{1}{2}$ corresponds to a random walk problem with zero probability of standing still.  If the initial position is known with certainty, then
+\[
+u_j^{(0)} = \begin{cases} 1 & j = \text{initial known location} \\ 0 & j = \text{otherwise.}\end{cases}
+\]
+Thereafter, the person moves to the left or right with probability $\frac{1}{2}$.  This yields the binomial probability distribution as illustrated by Pascal's triangle (see Fig.~\ref{fig:6.3.7}).
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch06/fig_6_3_7.png}
+\caption{Pascal's triangle.}
+\label{fig:6.3.7}
+\end{figure}
+
+\subsection{Separation of Variables for Partial Difference Equations and Analytic Solutions of Ordinary Difference Equations}
+\label{sec:fd-heat-separation}
+
+The partial difference equation can be analyzed by the same procedure we used for partial differential equations---we separate variables.  We begin by assuming that \eqref{eq:6.3.16} has special product solutions of the form
+\begin{equation}
+\boxed{u_j^{(m)} = \phi_j h_m.}
+\label{eq:6.3.32}
+\end{equation}
+By substituting \eqref{eq:6.3.19} into \eqref{eq:6.3.16}, we obtain
+\[
+\phi_j h_{m+1} = \phi_j h_m + s(\phi_{j+1}h_m - 2\phi_j h_m + \phi_{j-1}h_m).
+\]
+Dividing this by $\phi_j h_m$ separates the variables:
+\[
+\frac{h_{m+1}}{h_m} = 1 + s\left(\frac{\phi_{j+1} + \phi_{j-1}}{\phi_j} - 2\right) = +\lambda,
+\]
+where $\lambda$ is a separation constant.
+
+The partial difference equation thus yields two ordinary difference equations.  The difference equation in discrete time is of first order (meaning involving one difference):
+\begin{equation}
+\boxed{h_{m+1} = +\lambda h_m.}
+\label{eq:6.3.33}
+\end{equation}
+The separation constant $\lambda$ (as in partial differential equations) is determined by a boundary value problem, here a second-order difference equation,
+\begin{equation}
+\boxed{\phi_{j+1} + \phi_{j-1} = -\left(\frac{-\lambda + 1 - 2s}{s}\right)\phi_j,}
+\label{eq:6.3.34}
+\end{equation}
+with two homogeneous boundary conditions from \eqref{eq:6.3.18}:
+\begin{align}
+\phi_0 &= 0 \label{eq:6.3.35} \\
+\phi_N &= 0. \label{eq:6.3.36}
+\end{align}
+
+\paragraph{First-order difference equations.}
+First-order linear homogeneous difference equations with constant coefficients, such as \eqref{eq:6.3.33}, are easy to analyze.  Consider
+\begin{equation}
+h_{m+1} = \lambda h_m,
+\label{eq:6.3.37}
+\end{equation}
+where $\lambda$ is a constant.  We simply note that
+\[
+h_1 = \lambda h_0,\ h_2 = \lambda h_1 = \lambda^2 h_0,\ \text{and so on.}
+\]
+Thus, the solution is
+\begin{equation}
+h_m = \lambda^m h_0,
+\label{eq:6.3.38}
+\end{equation}
+where $h_0$ is an initial condition for the first-order difference equation.
+
+An alternative way to obtain \eqref{eq:6.3.38} is to assume that a homogeneous solution exists in the form $h_m = Q^m$.  Substitution of this into \eqref{eq:6.3.37} yields $Q^{m+1} = \lambda Q^m$ or $Q = \lambda$, rederiving \eqref{eq:6.3.38}.  This latter technique is analogous to the substitution of $e^{rt}$ into constant-coefficient homogeneous differential equations.
+
+The solution \eqref{eq:6.3.38} is sketched in Fig.~\ref{fig:6.3.8} for various values of $\lambda$.  Note that if $\lambda > 1$, then the solution exponentially grows [$\lambda^m = e^{m\log\lambda} = e^{(\log\lambda/\Delta t)t}$ since $m = t/\Delta t$].  If $0 < \lambda < 1$, the solution exponentially decays.  Furthermore, if $-1 < \lambda < 0$, the solution has an oscillatory (and exponential) decay, known as a \textbf{convergent oscillation}.  On the other hand, if $\lambda < -1$, the solution has a \textbf{divergent oscillation}.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch06/fig_6_3_8.png}
+\caption{Solutions of first-order difference equations.}
+\label{fig:6.3.8}
+\end{figure}
+
+In some situations we might even want to allow $\lambda$ to be complex.  Using the polar form of a complex number, $\lambda = re^{i\theta}$, $r = |\lambda|$ and $\theta = \arg\lambda$ (or angle), we obtain
+\begin{equation}
+\lambda^m = r^m e^{im\theta} = |\lambda|^m(\cos m\theta + i\sin m\theta).
+\label{eq:6.3.39}
+\end{equation}
+For example, the real part is $|\lambda|^m\cos m\theta$.  As a function of $m$, $\lambda^m$ oscillates (with period $m = 2\pi/\theta = 2\pi/\arg\lambda$).  The solution grows in discrete time $m$ if $|\lambda| > 1$ and decays if $|\lambda| < 1$.
+
+We now can summarize (including the complex case).  The solution $\lambda^m$ of $h_{m+1} = \lambda h_m$ remains bounded as $m$ increases ($t$ increases) if $|\lambda| \le 1$.  It grows if $|\lambda| > 1$.
+
+\paragraph{Second-order difference equations.}
+Difference equation \eqref{eq:6.3.34} has constant coefficients [since $(-\lambda + 1 - 2s)/s$ is independent of the step $j$].  An analytic solution can be obtained easily.  For any constant-coefficient difference equation, homogeneous solutions may be obtained by substituting $\phi_j = Q^j$, as we could do for first-order difference equations [see \eqref{eq:6.3.38}].
+
+The boundary conditions, $\phi_0 = \phi_N = 0$, suggest that the solution may oscillate.  This usually occurs if $Q$ is complex with $|Q| = 1$, in which case an equivalent substitution is
+\begin{equation}
+\phi_j = (|Q|e^{i\theta})^j = e^{i\theta j} = e^{i\theta(x/\Delta x)} = e^{i\alpha x},
+\label{eq:6.3.40}
+\end{equation}
+since $j = x/\Delta x$, defining $\alpha = \theta/\Delta x = (\arg Q)/\Delta x$.  In Exercise~6.3.2 it is shown that \eqref{eq:6.3.34} implies that $|Q| = 1$, so that \eqref{eq:6.3.40} may be used.  Substituting \eqref{eq:6.3.40} into \eqref{eq:6.3.34} yields an equation for the wave number $\alpha$:
+\[
+e^{i\alpha\Delta x} + e^{-i\alpha\Delta x} = \frac{\lambda - 1 + 2s}{s},
+\]
+or, equivalently,
+\begin{equation}
+\boxed{2\cos(\alpha\Delta x) = \frac{\lambda - 1 + 2s}{s}.}
+\label{eq:6.3.41}
+\end{equation}
+This yields two values of $\alpha$ (one the negative of the other), and thus instead of $\phi_j = e^{i\alpha x}$ we use a linear combination of $e^{\pm i\alpha x}$, or
+\begin{equation}
+\phi_j = c_1\sin\alpha x + c_2\cos\alpha x.
+\label{eq:6.3.42}
+\end{equation}
+The boundary conditions, $\phi_0 = \phi_N = 0$, imply that $c_2 = 0$ and $\alpha = n\pi/L$, where $n = 1, 2, 3, \ldots$\@.  Thus,
+\begin{equation}
+\boxed{\phi_j = \sin\frac{n\pi x}{L} = \sin\frac{n\pi j\Delta x}{L} = \sin\frac{n\pi j}{N}.}
+\label{eq:6.3.43}
+\end{equation}
+Further analysis follows that of the preceding subsection.
+
+\subsection{Matrix Notation}
+\label{sec:fd-heat-matrix}
+
+A matrix\footnote{This section requires some knowledge of linear algebra.}\ notation is often convenient for analyzing the discretization of partial differential equations.  For fixed $t$, $u(x,t)$ is only a function of $x$.  Its discretization $u_j^{(m)}$ is defined at each of the $N+1$ mesh points (at every time step).  We introduce a \emph{vector} $\vec{u}$ of dimension $N+1$ that changes at each time step; it is a function of $m$, $\vec{u}^{(m)}$.  The $j$th component of $\vec{u}^{(m)}$ is the value of $u(x,t)$ at the $j$th mesh point:
+\begin{equation}
+\left(\vec{u}^{(m)}\right)_j = u_j^{(m)}.
+\label{eq:6.3.44}
+\end{equation}
+
+The partial difference equation is
+\begin{equation}
+u_j^{(m+1)} = u_j^{(m)} + s\left(u_{j+1}^{(m)} - 2u_j^{(m)} + u_{j-1}^{(m)}\right).
+\label{eq:6.3.45}
+\end{equation}
+If we apply the boundary conditions, $u_0^{(m)} = u_N^{(m)} = 0$, then
+\[
+u_1^{(m+1)} = u_1^{(m)} + s\left(u_2^{(m)} - 2u_1^{(m)} + u_0^{(m)}\right) = (1-2s)u_1^{(m)} + su_2^{(m)}.
+\]
+A similar equation is valid for $u_{N-1}^{(m+1)}$.  At each time step there are $N-1$ unknowns.  We introduce the $N-1 \times N-1$ \textbf{tridiagonal matrix} $\vec{A}$ with all entries zero except the main diagonal (with entries $1-2s$) and neighboring diagonals (with entries $s$):
+\begin{equation}
+\vec{A} = \begin{bmatrix}
+1-2s & s & 0 & 0 & 0 & 0 \\
+s & 1-2s & s & 0 & 0 & 0 \\
+0 & s & 1-2s & s & 0 & 0 \\
+0 & 0 & \cdots & \cdots & \cdots & 0 \\
+0 & 0 & 0 & s & 1-2s & s \\
+0 & 0 & 0 & 0 & s & 1-2s
+\end{bmatrix}.
+\label{eq:6.3.46}
+\end{equation}
+The partial difference equation becomes the following vector equation:
+\begin{equation}
+\vec{u}^{(m+1)} = \vec{A}\vec{u}^{(m)}.
+\label{eq:6.3.47}
+\end{equation}
+The vector $\vec{u}$ changes in a straightforward way.  We start with $\vec{u}^{(0)}$ representing the initial condition.  By direct computation
+\begin{align*}
+\vec{u}^{(1)} &= \vec{A}\vec{u}^{(0)} \\
+\vec{u}^{(2)} &= \vec{A}\vec{u}^{(1)} = \vec{A}^2\vec{u}^{(0)},
+\end{align*}
+and thus
+\begin{equation}
+\vec{u}^{(m)} = \vec{A}^m\vec{u}^{(0)}.
+\label{eq:6.3.48}
+\end{equation}
+The matrix $\vec{A}$ raised to the $m$th power describes how the initial condition influences the solution at the $m$th time step ($t = m\Delta t$).
+
+To understand this solution, we introduce the \textbf{eigenvalues} $\mu$ of the matrix $\vec{A}$, the values $\mu$ such that there are nontrivial vector solutions $\boldsymbol{\xi}$:
+\begin{equation}
+\vec{A}\boldsymbol{\xi} = \mu\boldsymbol{\xi}.
+\label{eq:6.3.49}
+\end{equation}
+The eigenvalues satisfy
+\begin{equation}
+\det[\vec{A} - \mu\vec{I}] = 0,
+\label{eq:6.3.50}
+\end{equation}
+where $\vec{I}$ is the identity matrix.  Nontrivial vectors $\boldsymbol{\xi}$ that satisfy \eqref{eq:6.3.49} are called \textbf{eigenvectors} corresponding to $\mu$.  Since $\vec{A}$ is an $(N-1)\times(N-1)$ matrix, $\vec{A}$ has $N-1$ eigenvalues.  However, some of the eigenvalues may not be distinct, there may be multiple eigenvalues (or \textbf{degeneracies}).  For a distinct eigenvalue, there is a unique eigenvector (to within a multiplicative constant); in the case of a multiple eigenvalue (of multiplicity $k$), there may be at most $k$ linearly independent eigenvectors.  If for some eigenvalue there are less than $k$ eigenvectors, we say the matrix is \textbf{defective}.  If $\vec{A}$ is real and symmetric [as \eqref{eq:6.3.46} is], it is known that any possible multiple eigenvalues are \emph{not} defective.  Thus, the matrix $\vec{A}$ has $N-1$ eigenvectors (which can be shown to be linearly independent).  Furthermore, if $\vec{A}$ is real and symmetric, the eigenvalues (and consequently the eigenvectors) are real and the eigenvectors are orthogonal (see Sec.~5.5 Appendix).  We let $\mu_n$ be the $n$th eigenvalue and $\boldsymbol{\xi}_n$ the corresponding eigenvector.
+
+We can solve vector equation \eqref{eq:6.3.47} (equivalent to the partial difference equation) using the method of eigenvector expansion.  (This technique is analogous to using an eigenfunction expansion to solve the partial differential equation.)  Any vector can be expanded in a series of the eigenvectors:
+\begin{equation}
+\vec{u}^{(m)} = \sum_{n=1}^{N-1}c_n^{(m)}\boldsymbol{\xi}_n.
+\label{eq:6.3.51}
+\end{equation}
+The vector changes with $m$ (time), and thus the constants $c_n^{(m)}$ depend on $m$ (time):
+\begin{equation}
+\vec{u}^{(m+1)} = \sum_{n=1}^{N-1}c_n^{(m+1)}\boldsymbol{\xi}_n.
+\label{eq:6.3.52}
+\end{equation}
+However, from \eqref{eq:6.3.47},
+\begin{equation}
+\vec{u}^{(m+1)} = \vec{A}\vec{u}^{(m)} = \sum_{n=1}^{N-1}c_n^{(m)}\vec{A}\boldsymbol{\xi}_n = \sum_{n=1}^{N-1}c_n^{(m)}\mu_n\boldsymbol{\xi}_n,
+\label{eq:6.3.53}
+\end{equation}
+where \eqref{eq:6.3.51} and \eqref{eq:6.3.49} have been used.  By comparing \eqref{eq:6.3.52} and \eqref{eq:6.3.53}, we determine a first-order difference equation with constant coefficients for $c_n^{(m)}$:
+\begin{equation}
+c_n^{(m+1)} = \mu_n c_n^{(m)}.
+\label{eq:6.3.54}
+\end{equation}
+This is easily solved,
+\begin{equation}
+c_n^{(m)} = c_n^{(0)}(\mu_n)^m,
+\label{eq:6.3.55}
+\end{equation}
+and thus
+\begin{equation}
+\boxed{\vec{u}^{(m)} = \sum_{n=1}^{N-1}c_n^{(0)}(\mu_n)^m\boldsymbol{\xi}_n.}
+\label{eq:6.3.56}
+\end{equation}
+$c_n^{(0)}$ can be determined from the initial condition.
+
+From \eqref{eq:6.3.56}, the growth of the solution as $t$ increases ($m$ increases) depends on $(\mu_n)^m$, where $m = t/\Delta t$.  We recall that since $\mu_n$ is real,
+\[
+(\mu_n)^m = \begin{cases}
+\text{exponential growth} & \mu_n > 1 \\
+\text{exponential decay} & 0 < \mu_n < 1 \\
+\text{convergent oscillation} & -1 < \mu_n < 0 \\
+\text{divergent oscillation} & \mu_n < -1.
+\end{cases}
+\]
+This numerical solution is unstable if any eigenvalue $\mu_n > 1$ or any $\mu_n < -1$.
+
+We need to obtain the $N-1$ eigenvalues $\mu$ of $\vec{A}$:
+\begin{equation}
+\vec{A}\boldsymbol{\xi} = \mu\boldsymbol{\xi}.
+\label{eq:6.3.57}
+\end{equation}
+We let $\xi_j$ be the $j$th component of $\boldsymbol{\xi}$.  Since $\vec{A}$ is given by \eqref{eq:6.3.46}, we can rewrite \eqref{eq:6.3.57} as
+\begin{equation}
+s\xi_{j+1} + (1-2s)\xi_j + s\xi_{j-1} = \mu\xi_j
+\label{eq:6.3.58}
+\end{equation}
+with
+\begin{equation}
+\xi_0 = 0 \quad\text{and}\quad \xi_N = 0.
+\label{eq:6.3.59}
+\end{equation}
+Equation~\eqref{eq:6.3.58} is equivalent to
+\begin{equation}
+\xi_{j+1} + \xi_{j-1} = \left(\frac{\mu + 2s - 1}{s}\right)\xi_j.
+\label{eq:6.3.60}
+\end{equation}
+By comparing \eqref{eq:6.3.60} with \eqref{eq:6.3.34}, we observe that the eigenvalues $\mu$ of $\vec{A}$ are the eigenvalues $\lambda$ of the second-order difference equation obtained by separation of variables.  Thus [see \eqref{eq:6.3.20}],
+\begin{equation}
+\mu = 1 - 2s(1 - \cos(\alpha\Delta x)),
+\label{eq:6.3.61}
+\end{equation}
+where $\alpha = n\pi/L$ for $n = 1, 2, \ldots, N-1$.  As before, the scheme is usually unstable if $s > \frac{1}{2}$.  To summarize this simple case, the eigenvalues can be explicitly determined using Fourier-type analysis.
+
+In more difficult problems it is rare that the eigenvalues of large matrices can be obtained easily.  Sometimes the \textbf{Gershgorin circle theorem} (see Strang [1993] for an elementary proof) is useful: \textbf{Every eigenvalue of $\vec{A}$ lies in at least one of the circles $c_1, \ldots, c_{N-1}$ in the complex plane where $c_i$ has its center at the $i$th diagonal entry and its radius equal to the sum of the absolute values of the rest of that row.}  If $a_{ij}$ are the entries of $\vec{A}$, then all eigenvalues $\mu$ lie in at least one of the following circles:
+\begin{equation}
+|\mu - a_{ii}| \le \sum_{\substack{j=1 \\ (j \ne i)}}^{N-1} |a_{ij}|.
+\label{eq:6.3.62}
+\end{equation}
+For our matrix $\vec{A}$, the diagonal elements are all the same $1-2s$ and the rest of the row sums to $2s$ (except the first and last rows, which sum to $s$).  Thus, two circles are $|\mu - (1-2s)| < s$ and the other $N-3$ circles are
+\begin{equation}
+|\mu - (1-2s)| < 2s.
+\label{eq:6.3.63}
+\end{equation}
+All eigenvalues lie in the resulting regions [the biggest of which is given by \eqref{eq:6.3.63}], as sketched in Fig.~\ref{fig:6.3.9}.  Since the eigenvalues $\mu$ are also known to be real, Fig.~\ref{fig:6.3.9} shows that
+\[
+1 - 4s \le \mu \le 1.
+\]
+Stability is guaranteed if $-1 \le \mu \le 1$, and thus, the Gershgorin circle theorem implies that the numerical scheme is stable if $s \le \frac{1}{2}$.  If $s > \frac{1}{2}$, the Gershgorin circle theorem does \emph{not} imply the scheme is unstable.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch06/fig_6_3_9.png}
+\caption{Gershgorin circles for $\vec{A}$ corresponding to discretization of the heat equation.}
+\label{fig:6.3.9}
+\end{figure}
+
+\subsection{Nonhomogeneous Problems}
+\label{sec:fd-heat-nonhomogeneous}
+
+The heat equation with sources may be computed in the same way.  Consider
+\begin{align*}
+\pd{u}{t} &= k\,\pdd{u}{x} + Q(x,t) \\
+u(0,t) &= A(t) \\
+u(L,t) &= B(t) \\
+u(x,0) &= f(x).
+\end{align*}
+As before, we use a forward difference in time and a centered difference in space.  We obtain the following numerical approximation:
+\begin{align*}
+\frac{u_j^{(m+1)} - u_j^{(m)}}{\Delta t} &= \frac{k}{(\Delta x)^2}\left(u_{j+1}^{(m)} - 2u_j^{(m)} + u_{j-1}^{(m)}\right) + Q(j\,\Delta x, m\Delta t) \\
+u_0^{(m)} &= A(m\Delta t) \\
+u_N^{(m)} &= B(m\Delta t) \\
+u_j^{(0)} &= f(j\Delta x).
+\end{align*}
+The solution is easily computed by solving for $u_j^{(m+1)}$.  We claim that our stability analysis for homogeneous problems is valid for nonhomogeneous problems.  Thus, we compute with $s = k\Delta t/(\Delta x)^2 \le \frac{1}{2}$.
+
+\subsection{Other Numerical Schemes}
+\label{sec:fd-heat-other}
+
+The numerical scheme for the heat equation, which uses the centered difference in space and forward difference in time, is stable if $s = k\Delta t/(\Delta x)^2 \le \frac{1}{2}$.  The time step is small [being proportional to $(\Delta x)^2$].  We might desire a less expensive scheme.  The truncation error is the sum of terms, one proportional to $\Delta t$ and the other to $(\Delta x)^2$.  If $s$ is fixed (for example, $s = \frac{1}{2}$), both errors are $O(\Delta x)^2$ since $\Delta t = s(\Delta x)^2/k$.
+
+\paragraph{Richardson's scheme.}
+For a less expensive scheme, we might try a more accurate time difference.  Using centered differences in both space and time was first proposed by Richardson in 1927:
+\begin{equation}
+\frac{u_j^{(m+1)} - u_j^{(m-1)}}{\Delta t} = \frac{k}{(\Delta x)^2}\left(u_{j+1}^{(m)} - 2u_j^{(m)} + u_{j-1}^{(m)}\right)
+\label{eq:6.3.64}
+\end{equation}
+or
+\begin{equation}
+u_j^{(m+1)} = u_j^{(m-1)} + s\left(u_{j+1}^{(m)} - 2u_j^{(m)} + u_{j-1}^{(m)}\right),
+\label{eq:6.3.65}
+\end{equation}
+where again $s = k\Delta t/(\Delta x)^2$.  Here the truncation error is the sum of a $(\Delta t)^2$ and $(\Delta x)^2$ terms.  Although in some sense this scheme is more accurate than the previous one, \eqref{eq:6.3.65} should never be used.  Exercise~6.3.12(a) shows that this numerical method is always unstable.
+
+\paragraph{Crank--Nicolson scheme.}
+Crank and Nicolson (in 1947) suggested an alternative way to utilize centered differences.  The forward difference in time
+\[
+\pd{u}{t} \approx \frac{u(t+\Delta t) - u(t)}{\Delta t}
+\]
+may be interpreted as the centered difference around $t + \Delta t/2$.  The error in approximating $\partial u/\partial t(t + \Delta t/2)$ is $O(\Delta t)^2$.  Thus, we discretize the second derivative at $t + \Delta t/2$ with a centered difference scheme.  Since this involves functions evaluated at this in-between time, we take the average at $t$ and $t + \Delta t$.  This yields the Crank--Nicolson scheme,
+\begin{equation}
+\frac{u_j^{(m+1)} - u_j^{(m)}}{\Delta t} = \frac{k}{2}\left[\frac{u_{j+1}^{(m)} - 2u_j^{(m)} + u_{j-1}^{(m)}}{(\Delta x)^2} + \frac{u_{j+1}^{(m+1)} - 2u_j^{(m+1)} + u_{j-1}^{(m+1)}}{(\Delta x)^2}\right].
+\label{eq:6.3.66}
+\end{equation}
+It is not obvious, but nevertheless true (Exercise~6.3.13), that the truncation error remains the sum of two terms, one $(\Delta x)^2$ and the other $(\Delta t)^2$.  The advantage of the Crank--Nicolson method is that the scheme is stable for all $s = k\Delta t/(\Delta x)^2$, as is shown in Exercise~6.3.12(b).  $\Delta t$ can be as large as desired.  We can choose $\Delta t$ to be proportional to $\Delta x$ [rather than $(\Delta x)^2$].  The error is then $O(\Delta x)^2$, an equivalent accuracy as the earlier scheme with much less work (computing).  Crank--Nicolson is a practical method.  However, the Crank--Nicolson scheme (see Fig.~\ref{fig:6.3.10}) involves six points (rather than four for the simpler stable method), three of which are at the advanced time.  We cannot directly march forward in time with \eqref{eq:6.3.66}.  Instead, to advance one time step, \eqref{eq:6.3.66} requires the solution of a linear system of $N-1$ equations.  The scheme \eqref{eq:6.3.66} is called \textbf{implicit} [while \eqref{eq:6.3.13} is called \textbf{explicit}].  The matrices involved are tridiagonal, and thus the linear system may be solved using Gauss elimination easily (and relatively inexpensively) even if $N$ is large.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch06/fig_6_3_10.png}
+\caption{Implicit Crank--Nicolson scheme.}
+\label{fig:6.3.10}
+\end{figure}
+
+\subsection{Other Types of Boundary Conditions}
+\label{sec:fd-heat-bc}
+
+If $\partial u/\partial x = g(t)$ at $x = 0$ (rather than $u$ being given at $x = 0$), then we must introduce a numerical approximation for the boundary condition.  Since the discretization of the partial differential equation has an $O(\Delta x)^2$ truncation error, we may introduce an equal error in the boundary condition by using a centered difference in space:
+\[
+\pd{u}{x} \approx \frac{u(x + \Delta x, t) - u(x - \Delta x, t)}{2\Delta x}.
+\]
+In this case the boundary condition $\partial u/\partial x = g(t)$ at $x = 0$ becomes
+\begin{equation}
+\frac{u_1^{(m)} - u_{-1}^{(m)}}{2\Delta x} = g(t) = g(m\Delta t) = g_m.
+\label{eq:6.3.67}
+\end{equation}
+We use \eqref{eq:6.3.67} to obtain an expression for the temperature at the \emph{fictitious} point ($x_{-1} = -\Delta x$):
+\begin{equation}
+u_{-1}^{(m)} = u_1^{(m)} - 2\Delta x\,g_m.
+\label{eq:6.3.68}
+\end{equation}
+In this way we determine the value at the fictitious point initially, $u_{-1}^{(0)}$.  This fictitious point is needed to compute the boundary temperature at later times via the partial difference equation.  If we use forward difference in time and centered difference in space, \eqref{eq:6.3.16} can now be applied for $j = 0$ to $j = N-1$.  For example, at $x = 0$ ($j = 0$),
+\begin{align*}
+u_0^{(m+1)} &= u_0^{(m)} + s\left(u_1^{(m)} - 2u_0^{(m)} + u_{-1}^{(m)}\right) \\
+&= u_0^{(m)} + s\left(u_1^{(m)} - 2u_0^{(m)} + u_1^{(m)} - 2\Delta x\,g_m\right),
+\end{align*}
+where \eqref{eq:6.3.68} has been used.  In this way a partial differential equation can be solved numerically with boundary conditions involving the derivative.  (The fictitious point is eliminated between the boundary condition and the partial differential equation.)
+
+\begin{exercises}{6.3}
+\item
+\begin{enumerate}
+\item[(a)] Show that the truncation error for our numerical scheme, \eqref{eq:6.3.3}, becomes much smaller if $k(\Delta t)/(\Delta x)^2 = \frac{1}{6}$.  [\emph{Hint:} $u$ satisfies the partial differential equation in \eqref{eq:6.3.1}.]
+\item[(b)] If $k\Delta t/(\Delta x)^2 = \frac{1}{6}$, determine the order of magnitude of the truncation error.
+\end{enumerate}
+
+\item By letting $\phi_j = Q^j$, show that \eqref{eq:6.3.34} is only satisfied if $|Q| = 1$.  [\emph{Hint:} First show that
+\[
+Q^2 + \left(\frac{-\lambda + 1 - 2s}{s}\right)Q + 1 = 0.\bigg]
+\]
+
+\item Define $L(\phi) = \phi_{j+1} + \phi_{j-1} + \gamma\phi_j$.
+\begin{enumerate}
+\item[(a)] Show that $uL(v) - vL(u) = w_{j+1} - w_j$, where $w_j = u_{j-1}v_j - v_{j-1}u_j$.
+\item[(b)] Since summation is analogous to integration, derive the discrete version of Green's formula,
+\[
+\sum_{i=1}^{N-1}[uL(v) - vL(u)] = w_N - w_0.
+\]
+\item[(c)] Show that the right-hand side of part~(b) vanishes if both $u$ and $v$ satisfy the homogeneous boundary conditions \eqref{eq:6.3.18}.
+\item[(d)] Letting $\gamma = (1-2s)/s$, the eigenfunctions $\phi$ satisfy $L(\phi) = (\lambda/s)\phi$.  Show that eigenfunctions corresponding to different eigenvalues are orthogonal in the sense that
+\[
+\sum_{i=1}^{N-1}\phi_i\psi_i = 0.
+\]
+\end{enumerate}
+
+\item[\starred 6.3.4.]
+\begin{enumerate}
+\item[(a)] Using Exercise~6.3.3, determine $\beta_n$ in \eqref{eq:6.3.24} from the initial conditions $u_j^{(0)} = f_j$.
+\item[(b)] Evaluate the normalization constant
+\[
+\sum_{j=1}^{N-1}\sin^2\frac{n\pi j}{N}
+\]
+for each eigenfunction (i.e., fix $n$).  (\emph{Hint:} Use the double-angle formula and a geometric series.)
+\end{enumerate}
+
+\item Show that at each successive mesh point the sign of the solution alternates for the most unstable mode (of our numerical scheme for the heat equation, $s > \frac{1}{2}$).
+
+\item Evaluate $1/[1 - \cos(N-1)\pi/N]$.  What conclusions concerning stability do you reach?
+\begin{enumerate}
+\item[(a)] $N = 4$ \qquad (b) $N = 6$ \qquad (c) $N = 8$ \qquad \starred (d)~$N = 10$
+\end{enumerate}
+(e) Asymptotically for large $N$
+
+\item Numerically compute solutions to the heat equation with the temperature initially given in Fig.~\ref{fig:6.3.4}.  Use \eqref{eq:6.3.16}--\eqref{eq:6.3.18} with $N = 10$.  Do for various $s$ (discuss stability):
+\begin{enumerate}
+\item[(a)] $s = 0.49$ \qquad (b) $s = 0.50$ \qquad (c) $s = 0.51$ \qquad (d) $s = 0.52$
+\end{enumerate}
+
+\item Under what condition will an initially positive solution [$u(x,0) > 0$] remain positive [$u(x,t) > 0$] for our numerical scheme \eqref{eq:6.3.9} for the heat equation?
+
+\item Consider
+\[
+\odd{u}{x} = f(x) \quad\text{with}\quad u(0) = 0 \quad\text{and}\quad u(L) = 0.
+\]
+\begin{enumerate}
+\item[(a)] Using the centered difference approximation for the second-derivative and dividing the length L into three equal mesh lengths (see Sec.~6.3.2), derive a system of linear equations for an approximation to $u(x)$.  Use the notation $x_i = i\Delta x$, $f_i = f(x_i)$, and $u_i = u(x_i)$.  (\emph{Note:} $x_0 = 0$, $x_1 = \frac{1}{3}L$, $x_2 = \frac{2}{3}L$, $x_3 = L$.)
+\item[\starred (b)] Write the system as a matrix system $\vec{A}\vec{u} = \vec{f}$.  What is $A$?
+\item[(c)] Solve for $u_1$ and $u_2$.
+\item[(d)] Show that a ``Green's function'' matrix $\vec{G}$ can be defined:
+\[
+u_i = \sum_j G_{ij}f_j \quad (\vec{u} = \vec{G}\vec{f}).
+\]
+What is $\vec{G}$?  Show that it is symmetric, $G_{ij} = G_{ji}$.
+\end{enumerate}
+
+\item Suppose that in a random walk, at each $\Delta t$ the probability of moving to the right $\Delta x$ is $a$ and the probability of moving to the left $\Delta x$ is also $a$.  The probability of staying in place is $b$ ($2a + b = 1$).
+\begin{enumerate}
+\item[(a)] Formulate the difference equation for this problem.
+\item[\starred (b)] Derive a partial differential equation governing this process $\Delta x \to 0$ and $\Delta t \to 0$ such that
+\[
+\lim_{\substack{\Delta x \to 0 \\ \Delta t \to 0}}\frac{(\Delta x)^2}{\Delta t} = \frac{k}{s}.
+\]
+\item[(c)] Suppose that there is a wall (or cliff) on the right at $x = L$ with the property that \emph{after} the wall is reached, the probability of moving to the left is $a$, to the right $c$, and for staying in place $1 - a - c$.  Assume that no one returns from $x > L$.  What condition is satisfied at the wall?  What is the resulting boundary condition for the partial differential equation?  (Let $\Delta x \to 0$ and $\Delta t \to 0$ as before.)  Consider the two cases $c = 0$ and $c \ne 0$.
+\end{enumerate}
+
+\item Suppose that, in a two-dimensional random walk, at each $\Delta t$ it is equally likely to move right $\Delta x$ or left or up $\Delta y$ or down (as illustrated in Fig.~\ref{fig:6.3.11}).
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch06/fig_6_3_11.png}
+\caption{Figure for Exercise~6.3.11.}
+\label{fig:6.3.11}
+\end{figure}
+
+\begin{enumerate}
+\item[(a)] Formulate the difference equation for this problem.
+\item[(b)] Derive a partial differential equation governing this process if $\Delta x \to 0$, $\Delta y \to 0$, and $\Delta t \to 0$ such that
+\[
+\lim_{\substack{\Delta x \to 0 \\ \Delta t \to 0}}\frac{(\Delta x)^2}{\Delta t} = \frac{k_1}{s} \quad\text{and}\quad \lim_{\substack{\Delta y \to 0 \\ \Delta t \to 0}}\frac{(\Delta y)^2}{\Delta t} = \frac{k_2}{s}.
+\]
+\end{enumerate}
+
+\item Use a simplified determination of stability [i.e., substitute $u_j^{(m)} = e^{i\alpha x}Q^{t/\Delta t}$], to investigate the following:
+\begin{enumerate}
+\item[(a)] Richardson's centered difference in space and time scheme for the heat equation, \eqref{eq:6.3.65}
+\item[(b)] Crank--Nicolson scheme for the heat equation, \eqref{eq:6.3.66}
+\end{enumerate}
+
+\item Investigate the truncation error for the Crank--Nicolson method, \eqref{eq:6.3.66}.
+
+\item For the following matrices,
+\begin{enumerate}
+\item[1.] Compute the eigenvalue.
+\item[2.] Compute the Gershgorin row circles.
+\item[3.] Compare (1) and (2) according to the theorem.
+\end{enumerate}
+\begin{enumerate}
+\item[(a)] $\begin{bmatrix} 1 & 0 \\ \frac{1}{2} & 2\end{bmatrix}$ \qquad
+(b) $\begin{bmatrix} 1 & 0 \\ 3 & 2\end{bmatrix}$ \qquad
+\starred (c) $\begin{bmatrix} 1 & 2 & -3 \\ 2 & 4 & -6 \\ 0 & \frac{1}{3} & 2\end{bmatrix}$
+\end{enumerate}
+
+\item For the examples in Exercise~6.3.14, compute the Gershgorin (column) circles.  Show that a corresponding theorem is valid for them.
+
+\item Using forward differences in time and centered differences in space, analyze carefully the stability of the difference scheme if the boundary condition for the heat equation is
+\[
+\pd{u}{x}(0) = 0 \quad\text{and}\quad \pd{u}{x}(L) = 0.
+\]
+(\emph{Hint:} See Sec.~6.3.9.)  Compare your result to the one for the boundary conditions $u(0) = 0$ and $u(L) = 0$.
+
+\item Solve on a computer [using \eqref{eq:6.3.9}] the heat equation $\partial u/\partial t = \partial^2 u/\partial x^2$ with $u(0,t) = 0$, $u(1,t) = 0$, $u(x,0) = \sin\pi x$ with $\Delta x = 1/100$.  Compare to analytic solution at $x = 1/2$, $t = 1$ by computing the error there (the difference between the analytic solution and the numerical solution).  Pick $\Delta t$ so that
+\begin{enumerate}
+\item[(a)] $s = 0.4$ \qquad (c)~to improve the calculation in part~(a), let $\Delta x = 1/200$ but keep $s = 0.4$
+\item[(b)] $s = 0.6$ \qquad (d)~compare the errors in parts~(a) and~(c)
+\end{enumerate}
+\end{exercises}

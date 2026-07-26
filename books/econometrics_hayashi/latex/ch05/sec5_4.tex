@@ -1,0 +1,250 @@
+% sec5_4.tex — Section 5.4: Application: International Differences in Growth Rates
+
+\section{Application: International Differences in Growth Rates}
+\label{sec:5.4}
+
+Do poor economies grow faster than rich economies? If so, how much faster?
+These are the questions addressed in the recent burgeoning literature of growth.\footnote{A
+very extensive survey of the literature is Barro and Sala-i-Martin (1995).}
+This section derives the key equation that has been used to explain economic
+growth of nations and discusses ways to estimate it. Actual estimation of several
+specifications of the equation is relegated to the empirical exercise.
+
+\subsection*{Derivation of the Estimation Equation}
+
+In neoclassical growth theory, output per effective labor in period $t$, denoted $q(t)$
+and to be defined more precisely in \eqref{eq:5.4.4} below, converges to the steady-state
+level $q^*$. The log-linear approximation around the steady state gives
+\begin{equation}
+  \frac{\mathrm{d}\log(q(t))}{\mathrm{d}t}
+  = \lambda \cdot [\log(q^*) - \log(q(t))].
+  \label{eq:5.4.1} \tag{5.4.1}
+\end{equation}
+
+Estimating $\lambda$, the \textbf{speed of convergence}, has been the objective of the recent
+growth literature. \eqref{eq:5.4.1} implies that, for any two points, $t_{m-1}$ and $t_m$ in time,
+\begin{equation}
+  \log(q(t_m)) = (1 - \rho) \cdot \log(q^*) + \rho \cdot \log(q(t_{m-1})),
+  \label{eq:5.4.2} \tag{5.4.2}
+\end{equation}
+where
+\begin{equation}
+  \rho \equiv \exp[-\lambda \cdot (t_m - t_{m-1})].
+  \label{eq:5.4.3} \tag{5.4.3}
+\end{equation}
+
+(Since in our data $t_m$'s are equally spaced in time, $\rho$ will not depend on $m$.)
+Output per effective labor is defined as
+\begin{equation}
+  q(t) \equiv \frac{Y(t)}{A(t)\,L(t)},
+  \label{eq:5.4.4} \tag{5.4.4}
+\end{equation}
+where $Y(t)$ equals aggregate output, $L(t)$ equals aggregate hours worked, and $A(t)$
+equals level of labor-augmenting technical progress. Assuming $A(t)$ grows at a
+constant rate $g$ (so that $A(t) = A(0)\exp(gt)$), \eqref{eq:5.4.4} implies
+\begin{equation}
+  \log(q(t)) = \log\biggl(\frac{Y(t)}{L(t)}\biggr) - \log(A(0)) - g \cdot t.
+  \label{eq:5.4.5} \tag{5.4.5}
+\end{equation}
+
+Substituting this into \eqref{eq:5.4.2}, we obtain
+\begin{equation}
+  \log\biggl(\frac{Y(t_m)}{L(t_m)}\biggr)
+  = \rho \cdot \log\biggl(\frac{Y(t_{m-1})}{L(t_{m-1})}\biggr)
+  + (1-\rho) \cdot [\log(q^*) + \log(A(0))] + \phi_m,
+  \label{eq:5.4.6} \tag{5.4.6}
+\end{equation}
+where
+\begin{equation}
+  \phi_m \equiv g \cdot (t_m - \rho \cdot t_{m-1}).
+  \label{eq:5.4.7} \tag{5.4.7}
+\end{equation}
+
+An equivalent form of equation \eqref{eq:5.4.6} can be obtained by subtracting
+$\log\frac{Y(t_{m-1})}{L(t_{m-1})}$ from both sides:
+\begin{align}
+  \log\biggl(\frac{Y(t_m)}{L(t_m)}\biggr) - \log\biggl(\frac{Y(t_{m-1})}{L(t_{m-1})}\biggr)
+  &= (\rho - 1)\log\biggl(\frac{Y(t_{m-1})}{L(t_{m-1})}\biggr)
+  \notag \\
+  &\quad + (1-\rho)\cdot[\log(q^*) + \log(A(0))] + \phi_m.
+  \label{eq:5.4.6p} \tag{5.4.6$'$}
+\end{align}
+
+Since $\rho < 1$ as $\lambda > 0$, this equation says that the level of per capita output has a
+negative effect on subsequent growth. The country, when poor, should grow faster.
+This form of the equation is more intuitive, but for the purpose of choosing the
+correct estimation technique, \eqref{eq:5.4.6} rather than \eqref{eq:5.4.6p} is more instructive.
+
+Equation \eqref{eq:5.4.6} should hold for each country $i$.\footnote{We have derived the equation
+describing convergence assuming a closed economy. The assumption is hard
+to justify, but a similar equation can be derived under free mobility of physical capital
+if human capital is another
+factor of production and not freely mobile internationally. See, e.g., Barro and
+Sala-i-Martin (1995).}
+For the rest of this section, we
+assume that the speed of convergence ($\lambda$) and the growth rate of labor-augmenting
+technical progress ($g$) are the same across countries. Then \eqref{eq:5.4.6} for country $i$ can
+be written as
+\begin{equation}
+  y_{im} = \phi_m + \rho\, y_{i,m-1} + \alpha_i,
+  \label{eq:5.4.8} \tag{5.4.8}
+\end{equation}
+where
+\begin{align}
+  y_{im} &= \log\biggl(\frac{Y(t_m)}{L(t_m)}\biggr) \quad \text{for country } i,
+  \notag \\
+  \alpha_i &= (1-\rho) \times \{\log(q^*) + \log(A(0))\}
+  \quad \text{for country } i.
+  \label{eq:5.4.9} \tag{5.4.9}
+\end{align}
+
+\subsection*{Appending the Error Term}
+
+It is a fairly standard practice in applied econometrics to derive an equation without
+an error term from the theory and then append an error term for estimation. Growth
+empirics is not an exception; an error term $\eta_{im}$ is added to \eqref{eq:5.4.8} to obtain
+\begin{equation}
+  y_{im} = \phi_m + \rho\, y_{i,m-1} + \alpha_i + \eta_{im}.
+  \label{eq:5.4.10} \tag{5.4.10}
+\end{equation}
+
+One natural interpretation of $\eta_{im}$ is business cycles, which in macroeconomics are
+defined as the difference between actual output and potential output. Growth theory
+is about potential output. The discrepancy between potential output and actual
+output becomes the error term in the estimation equation derived from growth theory.
+But then there would be an errors-in-variables problem, which renders
+the regressors endogenous.\footnote{Let $x_{im}$ be the log potential output in year $t_m$
+for country $i$ that growth theory is purported to explain, so that
+(5.4.8) holds for $x_{im}$ rather than for $y_{im}$. Let log actual output be related to
+$x_{im}$ as $y_{im} = x_{im} + \eta_{im}$. Then
+(5.4.10) results, but with the error term $\eta_{im} - \rho\eta_{i,m-1}$.
+Not only would there be an errors-in-variables problem,
+but also the error term has a moving-average structure.}
+For the rest of this section, we follow the mainstream
+growth literature and ignore the endogeneity problem.
+
+Another problem is the possible correlation in $\eta_{im}$ between countries ($i$'s). This
+spatial (or geographical) correlation would not arise if the sample were a random
+sample. But the sample of nations is not a random sample; it is the universe.
+The phenomenon known as international business cycles implies that the spatial
+correlation would be positive. Statistical inference treating countries as if they were
+independent data points would overstate statistical significance. This problem, too,
+is largely ignored in the literature and will be ignored in our discussion.
+
+\subsection*{Treatment of $\alpha_i$}
+
+As is clear from \eqref{eq:5.4.9}, the term $\alpha_i$ in equation \eqref{eq:5.4.10} depends on the steady-state
+level $q^*$ and the initial level of technology $A(0)$. How you treat $\alpha_i$ in the
+estimation depends on which version of neoclassical growth theory you subscribe
+to. According to the Cass-Koopmans optimal growth model, the sole determinant
+of the steady-state level $q^*$ is the growth rate of labor. Thus, if technological
+knowledge freely flows internationally so that $A(0)$ is the same across countries,
+the international differences in $\alpha_i$ are completely explained by the labor growth
+rate. Therefore, leaving aside the endogeneity problem just mentioned, OLS estimation
+of \eqref{eq:5.4.10} delivers consistency if the labor growth rate is included as the
+additional regressor to control for $\alpha_i$. If you subscribe to the Solow-Swan growth
+theory, the saving rate is the other determinant of $q^*$, so the regression should
+include the saving rate along with the labor growth rate.
+
+A large fraction of the recent growth literature under the rubric of ``conditional
+convergence'' includes these and other variables that might affect $q^*$ or $A(0)$ ---
+such as measures of political stability and the degree of financial intermediation ---
+in order to control for $\alpha_i$. In the empirical exercise, you will be asked to estimate
+$\rho$, and hence the speed of convergence $\lambda$, using this conditional convergence
+approach.
+
+However, no matter how ingeniously the variables are selected to control for
+$\alpha_i$, some component of $\alpha_i$ having to do with features unique to the country would
+remain unexplained and find its way in the error term. Being part of $\alpha_i$, it is correlated
+with the regressor $y_{i,m-1}$ in \eqref{eq:5.4.10}. The OLS estimation, even if the equation
+includes a variety of variables to control for $\alpha_i$, will not provide consistency. The
+alternative approach is to treat $\alpha_i$ as an unobservable fixed effect.
+
+\subsection*{Consistent Estimation of Speed of Convergence}
+
+If output and other variables are observed at $M + 1$ points in time,
+$t_0, t_1, t_2, \ldots, t_M$,
+equation \eqref{eq:5.4.10} is available for $m = 1, \ldots, M$. The fixed-effects technique could
+be applied to this $M$-equation system, but it does not provide consistency. The reason
+is that the system is ``dynamic'' in that some of the regressors are the dependent
+variables for other equations of the system. To see this, look at the first two equations
+of the system:
+\begin{align*}
+  y_{i1} &= \phi_1 + \rho\, y_{i0} + \alpha_i + \eta_{i1}, \\
+  y_{i2} &= \phi_2 + \rho\, y_{i1} + \alpha_i + \eta_{i2}.
+\end{align*}
+
+Suppose the error term $\eta_{i1}$ is orthogonal to the regressors (which are a constant and
+$y_{i0}$) in the first equation, so that $\E(\eta_{i1}) = 0$ and $\E(y_{i0}\,\eta_{i1}) = 0$.
+If we further make
+the assumption that $\E(\alpha_i\,\eta_{i1}) = 0$, then from the first equation
+\[
+  \E(y_{i1}\,\eta_{i1}) = \Var(\eta_{i1}) \neq 0.
+\]
+
+But $y_{i1}$ is one of the regressors in the second equation. Therefore, if the error term
+$\eta_{im}$ is orthogonal to the regressors for each equation, the ``cross'' orthogonalities are
+necessarily violated.\footnote{This was first pointed out by Nickell (1981).}
+As emphasized in Section~5.2 (see Review Question~3), the
+fixed-effects estimator is not guaranteed to be consistent if the cross orthogonalities
+are not satisfied. For a precise expression for the bias, see Analytical Question~4 to
+this chapter.
+
+One way to obtain consistency is the following. Take the first differences of
+the $M$-equations to obtain $M - 1$ equations:
+\begin{align}
+  y_{i2} - y_{i1} &= \mu_1 + (y_{i1} - y_{i0})\rho + (\eta_{i2} - \eta_{i1}),
+  \notag \\
+  y_{i3} - y_{i2} &= \mu_2 + (y_{i2} - y_{i1})\rho + (\eta_{i3} - \eta_{i2}),
+  \notag \\
+  &\;\;\vdots \notag \\
+  y_{iM} - y_{i,M-1} &= \mu_{M-1} + (y_{i,M-1} - y_{i,M-2})\rho
+  + (\eta_{iM} - \eta_{i,M-1}),
+  \label{eq:5.4.11} \tag{5.4.11}
+\end{align}
+where
+\[
+  \mu_m \equiv \phi_{m+1} - \phi_m.
+\]
+
+The random-effects estimator and the equation-by-equation OLS do not provide
+consistency because the regressors are not orthogonal to the error term. For example,
+in the first equation, $y_{i1} - y_{i0}$ is not orthogonal to $\eta_{i2} - \eta_{i1}$
+because $\E(y_{i1} \cdot \eta_{i1}) \neq 0$ as just seen. Consistent estimation can be done by
+multiple-equation GMM, if
+there are valid instruments. In the optional empirical exercise to this chapter, you
+will be asked to use the saving rate as the instrument for the endogenous regressors.
+To the extent that the saving rate is uncorrelated with $\eta_{im}$, this estimator is robust
+to the endogeneity problem mentioned above.
+
+\bigskip
+\noindent\rule{\textwidth}{0.5pt}
+\textsc{Questions for Review}
+\medskip
+
+\begin{enumerate}
+\item The assumption that $g$ (growth rate of technical progress) is common to all
+  countries is needed to derive \eqref{eq:5.4.8}. Do we have to assume that $g$ is constant
+  over time? [Answer: No.]
+
+\item (Identification)\quad For simplicity, let $M = 3$ so that \eqref{eq:5.4.11} is a two-equation
+  system.
+  \begin{enumerate}[label=(\alph*)]
+  \item Write \eqref{eq:5.4.11} as a multiple-equation system with common coefficients by
+    properly defining the $y_{i1}$, $y_{i2}$, $\mathbf{z}_{i1}$, $\mathbf{z}_{i2}$,
+    $\boldsymbol{\delta}$ in (4.6.1). \textbf{Hint:}
+    $\mathbf{z}_{i2}$, for example, is $(0, 1, y_{i2} - y_{i1})'$.
+  \item If $s_{im}$ is the instrument for $y_{im} - y_{i,m-1}$, the instrument vector for
+    the $m$-th equation is $\mathbf{x}_{im} = (1, s_{im})'$ for $m = 1, 2$. Show that the system is
+    not identified if $\Cov(s_{im},\, y_{im} - y_{i,m-1}) = 0$ for all $m$.
+    \textbf{Hint:}
+    \[
+      \boldsymbol{\Sigma}_{\mathbf{xz}} = \begin{bmatrix}
+        1 & 0 & \E(y_{i1} - y_{i0}) \\
+        \E(s_{i1}) & 0 & \E[s_{i1}(y_{i1} - y_{i0})] \\
+        0 & 1 & \E(y_{i2} - y_{i1}) \\
+        0 & \E(s_{i1}) & \E[s_{i2}(y_{i2} - y_{i1})]
+      \end{bmatrix}.
+    \]
+  \end{enumerate}
+\end{enumerate}

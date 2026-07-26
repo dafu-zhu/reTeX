@@ -1,0 +1,705 @@
+% sec12_6.tex — Section 12.6: The Method of Characteristics for Quasilinear PDE
+\section{The Method of Characteristics for Quasilinear Partial Differential Equations}
+\label{sec:quasilinear}
+
+\subsection{Method of Characteristics}
+\label{sec:quasilinear-method}
+
+Most of this text describes methods for solving linear partial differential equations (separation of variables, eigenfunction expansions, Fourier and Laplace transforms, Green's functions) that cannot be extended to nonlinear problems.  However, the method of characteristics, used to solve the wave equation, can be applied to partial differential equations of the form
+\boxed{\begin{equation}
+\label{eq:12.6.1}
+\pd{\rho}{t} + c\pd{\rho}{x} = Q,
+\end{equation}}
+where $c$ and $Q$ may be functions of $x$, $t$, and $\rho$.  When $Q$ is not a linear function of $\rho$ or, more important to us, when the coefficient $c$ depends on the unknown solution $\rho$, then \eqref{eq:12.6.1} is not linear.  Superposition is not valid.  Nonetheless, \eqref{eq:12.6.1} is called a \textbf{quasilinear} partial differential equation, since it is linear in the first partial derivatives, $\partial\rho/\partial t$ and $\partial\rho/\partial x$.  To solve \eqref{eq:12.6.1}, we again consider an observer moving in some prescribed way $x(t)$.  By comparing \eqref{eq:12.2.7} and \eqref{eq:12.6.1}, we obtain
+\begin{equation}
+\label{eq:12.6.2}
+\od{\rho}{t} = Q(\rho, x, t),
+\end{equation}
+if
+\boxed{\begin{equation}
+\label{eq:12.6.3}
+\od{x}{t} = c(\rho, x, t),
+\end{equation}}
+The partial differential equation \eqref{eq:12.6.1} reduces to two coupled ordinary differential equations along the special trajectory or direction defined by \eqref{eq:12.6.3}, known as a \textbf{characteristic curve}, or simply a \textbf{characteristic} for short.  The velocity defined by \eqref{eq:12.6.3} is called the \textbf{characteristic velocity}, or \textbf{local wave velocity}.  A characteristic starting from $x = x_0$, as illustrated in Fig.~12.6.1, is determined from the coupled differential equations \eqref{eq:12.6.2} and \eqref{eq:12.6.3} using the initial conditions $\rho(x,0) = f(x)$.  Along the characteristic, the solution $\rho$ changes according to \eqref{eq:12.6.2}.  Other initial positions yield other characteristics, generating a family of characteristics.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch12/fig_12_6_1.png}
+\caption{Characteristic starting from $x = x_0$ at time $t = 0$.}
+\label{fig:12.6.1}
+\end{figure}
+
+\textbf{Example.}  If the local wave velocity $c$ is a constant $c_0$ and $Q = 0$, then the quasilinear partial differential equation \eqref{eq:12.6.1} becomes the linear one, \eqref{eq:12.2.6}, which arises in the analysis of the wave equation.  In this example, the characteristics may be obtained by directly integrating \eqref{eq:12.6.3} without using \eqref{eq:12.6.2}.  Each characteristic has the same constant velocity, $c_0$.  The family of characteristics are parallel straight lines, as sketched in Fig.~12.2.1.
+
+\textbf{Quasilinear in two-dimensional space.}  If the independent variables are $x$ and $y$ instead of $x$ and $t$, then a quasilinear first-order partial differential equation is usually written in the form
+\begin{equation}
+\label{eq:12.6.4}
+a\pd{\rho}{x} + b\pd{\rho}{y} = c,
+\end{equation}
+where $a$, $b$, $c$ may be functions of $x$, $y$, $\rho$.  The method of characteristics is
+\begin{equation}
+\label{eq:12.6.5}
+\od{\rho}{x} = \frac{c}{a},
+\end{equation}
+if
+\begin{equation}
+\label{eq:12.6.6}
+\od{y}{x} = \frac{b}{a}.
+\end{equation}
+This is written in the following (easy to memorize) equivalent form:
+\begin{equation}
+\label{eq:12.6.7}
+\frac{dx}{a} = \frac{dy}{b} = \frac{d\rho}{c}.
+\end{equation}
+
+\subsection{Traffic Flow}
+\label{sec:traffic-flow}
+
+\textbf{Traffic density and flow.}  As an approximation it is possible to model a congested one-directional highway by a quasilinear partial differential equation.  We introduce the \textbf{traffic density} $\rho(x,t)$, the number of cars per mile at time $t$ located at position $x$.  An easily observed and measured quantity is the \textbf{traffic flow} $q(x,t)$, the number of cars per hour passing a fixed place $x$ (at time $t$).
+
+\textbf{Conservation of cars.}  We consider an arbitrary section of roadway, between $x = a$ and $x = b$.  If there are neither entrances nor exits on this segment of the road, then the number of cars between $x = a$ and $x = b$ $[N = \int_a^b \rho(x,t)\,dx$, the definite integral of the density] might still change in time.  The rate of change of the number of cars, $dN/dt$, equals the number per unit time entering at $x = a$ [the traffic flow $q(a,t)$ there] minus the number of cars per unit time leaving at $x = b$ [the traffic flow $q(b,t)$ there]:
+\boxed{\begin{equation}
+\label{eq:12.6.8}
+\frac{d}{d t}\int_a^b \rho(x,t)\,dx = q(a,t) - q(b,t).
+\end{equation}}
+Equation \eqref{eq:12.6.8} is called the integral form of \textbf{conservation of cars}.  As with heat flow, a partial differential equation may be derived from \eqref{eq:12.6.8} in several equivalent ways.  One way is to note that the boundary contribution may be expressed as an integral over the region:
+\begin{equation}
+\label{eq:12.6.9}
+q(a,t) - q(b,t) = -\int_a^b \frac{\partial}{\partial x}q(x,t)\,dx.
+\end{equation}
+Thus, by taking the time-derivative inside the integral (making it a partial derivative) and using \eqref{eq:12.6.9}, it follows that
+\boxed{\begin{equation}
+\label{eq:12.6.10}
+\pd{\rho}{t} + \pd{q}{x} = 0,
+\end{equation}}
+since $a$ and $b$ are arbitrary (see Sec.~1.2).  We call \eqref{eq:12.6.10} \textbf{conservation of cars}.
+
+\textbf{Car velocity.}  The number of cars per hour passing a place equals the density times the velocity of cars.  By introducing $u(x,t)$ as the \textbf{car velocity}, we have
+\boxed{\begin{equation}
+\label{eq:12.6.11}
+q = \rho u.
+\end{equation}}
+In the mid-1950s, Lighthill and Whitman and, independently, Richards made a simplifying assumption, namely, that the car velocity depends only on the density, $u = u(\rho)$, with cars slowing down as the traffic density increases (i.e., $du/d\rho \le 0$).  For further discussion, the interested reader is referred to Whitham [1999] and Haberman [1998].  Under this assumption, the traffic flow is only a function of the traffic density, $q = q(\rho)$.  In this case, conservation of cars \eqref{eq:12.6.10} becomes
+\begin{equation}
+\label{eq:12.6.12}
+\pd{\rho}{t} + c(\rho)\pd{\rho}{x} = 0,
+\end{equation}
+where $c(\rho) = q'(\rho)$, a quasilinear partial differential equation with $Q = 0$ [see \eqref{eq:12.6.1}].  Here $c(\rho)$ is considered to be a known function of the unknown solution $\rho$.  In any physical problem in which a density $\rho$ is conserved and the flow $q$ is a function of density, $\rho$ satisfies \eqref{eq:12.6.12}.
+
+\textbf{Elementary traffic model.}  In general, the car velocity $u$ should be a decreasing function of $\rho$.  At zero density, cars move fastest, which we denote $u_{\max}$.  At some maximum density $\rho_{\max}$, the car velocity will be zero.  The simplest relationship which satisfies these properties is $u(\rho) = u_{\max}(1 - (\rho/\rho_{\max}))$, in which case from \eqref{eq:12.6.11} the flow is given by $q(\rho) = u_{\max}\rho(1 - (\rho/\rho_{\max})) = u_{\max}(\rho - (\rho^2/\rho_{\max}))$, and the density wave velocity satisfies $c(\rho) = q'(\rho) = u_{\max}(1 - (2\rho/\rho_{\max}))$.
+
+\subsection{Method of Characteristics ($Q = 0$)}
+\label{sec:char-Q-zero}
+
+The equations for the characteristics for \eqref{eq:12.6.12} are
+\begin{equation}
+\label{eq:12.6.13}
+\od{\rho}{t} = 0
+\end{equation}
+along
+\begin{equation}
+\label{eq:12.6.14}
+\od{x}{t} = c(\rho).
+\end{equation}
+The \textbf{characteristic velocity} $c$ is not constant but depends on the density $\rho$.  It is known as the \textbf{density wave velocity}.  From \eqref{eq:12.6.13}, it follows that the density $\rho$ remains constant along each as yet undetermined characteristic.  The velocity of each characteristic, $c(\rho)$, will be constant, since $\rho$ is constant.  Each characteristic is thus a straight line (as in the case in which $c(\rho)$ is a constant $c_0$).  However, different characteristics will move at different constant velocities because they may start with different densities.  The characteristics, though each is straight, are not parallel to one another.  Consider the characteristic that is initially at the position $x = x_0$.  Along the curve $dx/dt = c(\rho)$, $dp/dt = 0$ or $\rho$ is constant.  Initially $\rho$ equals the value at $x = x_0$ (i.e., at $t = 0$).  Thus, along this one characteristic,
+\begin{equation}
+\label{eq:12.6.15}
+\rho(x,t) = \rho(x_0,0) = f(x_0),
+\end{equation}
+which is a known constant.  The local wave velocity that determines the characteristic is a constant, $dx/dt = c(f(x_0))$.  Consequently, this characteristic is a straight line,
+\begin{equation}
+\label{eq:12.6.16}
+x = c(f(x_0))t + x_0,
+\end{equation}
+since $x = x_0$ at $t = 0$.  Different values of $x_0$ yield different straight-line characteristics, perhaps as illustrated in Fig.~12.6.2.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch12/fig_12_6_2.png}
+\caption{Possibly nonparallel straight-line characteristics.}
+\label{fig:12.6.2}
+\end{figure}
+
+\textbf{Graphical solution.}  In practice, it is often difficult and not particularly interesting actually to determine $x_0$ from \eqref{eq:12.6.16} as an explicit function of $x$ and $t$.  Instead, a graphical procedure may be used to determine $\rho(x,t)$.  Suppose the initial density is as sketched in Fig.~12.6.3.  We know that each density $\rho_0$ stays the same, moving at its own constant density wave velocity $c(\rho_0)$.  At time $t$, the density $\rho_0$ will have moved a distance $c(\rho_0)t$, as illustrated by the arrow in Fig.~12.6.3.  This process must be carried out for a large number of points (as is elementary to do on any computer).  In this way, we could obtain the density at time $t$.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch12/fig_12_6_3.png}
+\caption{Graphical solution.}
+\label{fig:12.6.3}
+\end{figure}
+
+\textbf{Fanlike characteristics.}  As an example of the method of characteristics, we consider the following initial value problem:
+\[
+\pd{\rho}{t} + 2\rho\pd{\rho}{x} = 0
+\]
+\[
+\rho(x,0) = \begin{cases} 3 & x < 0 \\ 4 & x > 0. \end{cases}
+\]
+The density $\rho(x,t)$ is constant moving with the characteristic velocity $2\rho$:
+\[
+\od{x}{t} = 2\rho.
+\]
+The characteristics are given by
+\begin{equation}
+\label{eq:12.6.17}
+x = 2\rho(x_0,0)t + x_0.
+\end{equation}
+If $x_0 > 0$, then $\rho(x_0,0) = 4$, while if $x_0 < 0$, then $\rho(x_0,0) = 3$.  The characteristics, sketched in Fig.~12.6.4, show that
+\[
+\rho(x,t) = \begin{cases} 4 & x > 8t \\ 3 & x < 6t, \end{cases}
+\]
+as illustrated in Fig.~12.6.5.  The distance between $\rho = 3$ and $\rho = 4$ is increasing; we refer to the solution as an \textbf{expansion wave}.  But what happens for $6t < x < 8t$?  The difficulty is caused by the initial density having a discontinuity at $x = 0$.  We imagine that all values of $\rho$ between 3 and 4 are present initially at $x = 0$.  There will be a straight line characteristic along which $\rho$ equals each value between 3 and 4.  Since these characteristics start from $x = 0$ at $t = 0$, it follows from \eqref{eq:12.6.17} that the equation for these characteristics is
+\[
+x = 2\rho t, \qquad \text{for } 3 < \rho < 4,
+\]
+also sketched in Fig.~12.6.4.  In this way, we obtain the density in the wedge-shaped region
+\[
+\rho = \frac{x}{2t} \qquad \text{for } 6t < x < 8t,
+\]
+which is linear in $x$ (for fixed $t$).  We note that the characteristics fan out from $x = 6t$ to $x = 8t$ and hence are called \textbf{fanlike characteristics}.  The resulting density is sketched in Fig.~12.6.5.  It could also be obtained by the graphical procedure.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch12/fig_12_6_4.png}
+\caption{Characteristics (including the fanlike ones).}
+\label{fig:12.6.4}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch12/fig_12_6_5.png}
+\caption{Expansion wave.}
+\label{fig:12.6.5}
+\end{figure}
+
+\textbf{Red light turning green.}  We assume the elementary model of traffic flow, so that the traffic density satisfies
+\[
+\pd{\rho}{t} + u_{\max}\!\left(1 - \frac{2\rho}{\rho_{\max}}\right)\pd{\rho}{x} = 0.
+\]
+Behind a red light ($x = 0$), the traffic density is maximum, while ahead of the light the traffic density is zero, so that at the moment ($t = 0$) the light turns green the initial conditions are
+\[
+\rho(x,0) = \begin{cases} \rho_{\max} & x < 0 \\ 0 & x > 0. \end{cases}
+\]
+The characteristic velocity is $\frac{dx}{dt} = u_{\max}(1 - \frac{2\rho}{\rho_{\max}})$.  The density is constant along the characteristics so that the characteristics satisfy
+\[
+x = u_{\max}\!\left(1 - \frac{2\rho}{\rho_{\max}}\right)t + x_0.
+\]
+The characteristic velocity is $u_{\max}$ for $\rho = 0$, while the characteristic velocity is $-u_{\max}$ for $\rho = \rho_{\max}$.  Thus
+\[
+\rho(x,t) = \begin{cases} \rho_{\max} & x < -u_{\max}t \\ 0 & x > u_{\max}t. \end{cases}
+\]
+The information that the traffic light has turned green propagates backward at density velocity $-u_{\max}$.  That is why you have to wait after a light turns green before you can move.  The characteristics are similar to Fig.~12.6.4.  To obtain the density elsewhere, we note that there is a family of fanlike characteristics that all start at $x_0 = 0$.  Thus, in this region, $x = u_{\max}(1 - \frac{2\rho}{\rho_{\max}})t$.  Given $x$ and $t$ in this region, we can solve for the density
+\[
+\rho(x,t) = \frac{\rho_{\max}}{2}\!\left(1 - \frac{x}{u_{\max}t}\right) \qquad \text{for } -u_{\max}t < x < u_{\max}t.
+\]
+The solution is similar to the expansion wave shown in Fig.~12.6.5, but for an expansion wave for traffic flow the higher density (slowly moving traffic) is behind the lower density (faster moving traffic), as a result of the traffic light turning green.
+
+\textbf{Conditions for shock formation.}  A shock forms if initially the characteristic velocity $c(\rho) = q'(\rho)$ is a decreasing function of $x$ (so that faster waves are behind slower waves).  Thus, a shock forms if initially $\frac{\partial}{\partial x}q'(\rho) = q''(\rho)\frac{\partial\rho}{\partial x} < 0$.  It follows that for traffic problems, where $q''(\rho) < 0$, shocks form when the density is an increasing function of $x$, and the density must increase with $x$ at a shock.  However, if $q''(\rho) > 0$, then shocks form only if $\frac{\partial\rho}{\partial x} < 0$ so that the density must decrease at a shock.  Otherwise, characteristics do not intersect, and discontinuous initial conditions correspond to expansion waves.  If $q''(\rho)$ does not change signs, then discontinuous initial conditions result in either a shock or an expansion wave.
+
+\subsection{Shock Waves}
+\label{sec:shock-waves}
+
+\textbf{Intersecting characteristics.}  The method of characteristics will not always work as we have previously described.  For quasilinear partial differential equations, it is quite usual for characteristics to intersect.  The resolution will require the introduction of moving discontinuities called \emph{shock waves}.  In order to make the mathematical presentation relatively simple, we restrict our attention to quasilinear partial differential equations with $Q = 0$, in which case
+\begin{equation}
+\label{eq:12.6.18}
+\pd{\rho}{t} + c(\rho)\pd{\rho}{x} = 0.
+\end{equation}
+In Fig.~12.6.6 two characteristics are sketched, one starting at $x = x_1$, with $\rho = f(x_1,0) \equiv \rho_1$ and the other starting at $x = x_2$ with $\rho = f(x_2,0) \equiv \rho_2$.  These characteristics intersect if $c(\rho_1) > c(\rho_2)$, the faster catching up to the slower.  The density is constant along characteristics.  As time increases, the distance between the densities $\rho_1$ and $\rho_2$ decreases.  Thus, this is called a \textbf{compression wave}.  We sketch the initial condition in Fig.~12.6.7(a).  The density distribution becomes steeper as time increases [Figs.~12.6.7(b) and (c)].  Eventually characteristics intersect; the theory predicts the density is simultaneously $\rho_1$ and $\rho_2$.  If we continue to apply the method of characteristics, the faster-moving characteristic passes the slower.  Then we obtain Fig.~12.6.7(d).  The method of characteristics predicts that the density becomes a ``multivalued'' function of position; that is, at some later time our mathematics predicts there will be three densities at some positions [as illustrated in Fig.~12.6.7(d)].  We say the density wave \emph{breaks}.  However, in many physical problems (such as traffic flow) it makes no sense to have three values of density at one place.  The density must be a single-valued function of position.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch12/fig_12_6_6.png}
+\caption{Intersecting characteristics.}
+\label{fig:12.6.6}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch12/fig_12_6_7.png}
+\caption{Density wave steepens (density becomes triple valued).}
+\label{fig:12.6.7}
+\end{figure}
+
+\textbf{Discontinuous solutions.}  On the basis of the quasilinear partial differential equation \eqref{eq:12.6.18}, we predicted the physically impossible phenomenon that the density becomes multivalued.  Since the method of characteristics is mathematically justified, it is the partial differential equation itself that must not be entirely valid.  Some approximation or assumption that we used must at times be invalid.  We will assume that the density (as illustrated in Fig.~12.6.8) and velocity have a jump discontinuity, which we call a \textbf{shock wave}, or simply a \textbf{shock}.  The shock occurs at some unknown position $x_s$ and propagates in time, so that $x_s(t)$.  We introduce the notation $x_{s-}$ and $x_{s+}$ for the position of the shock on the two sides of the discontinuity.  The shock velocity, $dx_s/dt$, is as yet unknown.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch12/fig_12_6_8.png}
+\caption{Density discontinuity at $x = x_s(t)$.}
+\label{fig:12.6.8}
+\end{figure}
+
+\textbf{Shock velocity.}  On either side of the shock, the quasilinear partial differential equation applies, $\partial\rho/\partial t + c(\rho)\,\partial\rho/\partial x = 0$, where $c(\rho) = dq(\rho)/d\rho$.  We need to determine how the discontinuity propagates.  If $\rho$ is conserved even at a discontinuity, then the flow relative to the moving shock on one side of the shock must equal the flow relative to the moving shock on the other side.  This statement of relative inflow equaling relative outflow becomes
+\begin{equation}
+\label{eq:12.6.19}
+\rho(x_{s-},t)\left[u(x_{s-},t) - \od{x_s}{t}\right] = \rho(x_{s+},t)\left[u(x_{s+},t) - \od{x_s}{t}\right],
+\end{equation}
+since flow equals density times velocity (here relative velocity).  Solving for the shock velocity from \eqref{eq:12.6.19} yields
+\boxed{\begin{equation}
+\label{eq:12.6.20}
+\od{x_s}{t} = \frac{q(x_{s+},t) - q(x_{s-},t)}{\rho(x_{s+},t) - \rho(x_{s-},t)} = \frac{[q]}{[\rho]},
+\end{equation}}
+where we recall that $q = \rho u$ and where we introduce the notation $[q]$ and $[\rho]$ for the jumps in $q$ and $\rho$, respectively.  In gas dynamics, \eqref{eq:12.6.20} is called the Rankine-Hugoniot condition.  \emph{In summary, for the conservation law $\partial\rho/\partial t + \partial q/\partial x = 0$ (if the quantity $\int\rho\,dx$ is actually conserved), \textbf{the shock velocity equals the jump in the flow divided by the jump in the density of the conserved quantity.}}  At points of discontinuity, this shock condition replaces the use of the partial differential equation, which is valid elsewhere.  However, we have not yet explained where shocks occur and how to determine $\rho(x_{s-},t)$ and $\rho(x_{s+},t)$.
+
+\textbf{Alternate derivation of the shock velocity.}  Let us consider the conservation law, conservation of cars, \eqref{eq:12.6.8}, for a finite region ($a < x < b$) that includes the moving shock, ($a < x_s(t) < b$), (see Fig.~12.6.8):
+\begin{equation}
+\label{eq:12.6.21}
+\frac{d}{d t}\int_a^b \rho\,dx = q(a,t) - q(b,t).
+\end{equation}
+Since there is a discontinuity in the density, it is best to break the integral up into two pieces:
+\[
+\frac{d}{d t}\left[\int_a^{x_s(t)} \rho(x,t)\,dx + \int_{x_s(t)}^b \rho(x,t)\,dx\right] = q(a,t) - q(b,t).
+\]
+Using Leibnitz's rule for the derivative of integrals with variable limits, we obtain
+\[
+\int_a^{x_s(t)}\pd{\rho}{t}\,dx + \od{x_s}{t}\rho(x_{s-},t) + \int_{x_s(t)}^b \pd{\rho}{t}\,dx - \od{x_s}{t}\rho(x_{s+},t) = q(a,t) - q(b,t).
+\]
+However, away from the shock the solution is smooth and the partial differential equation $\frac{\partial\rho}{\partial t} + \frac{\partial q}{\partial x} = 0$ is valid in each region $a < x < x_s$ and $x_s < x < b$.  The integrals $\int \frac{\partial\rho}{\partial t}\,dx$ are then easily computed so that
+\[
+q(a,t) - q(x_{s-},t) + \od{x_s}{t}[\rho(x_{s-},t) - \rho(x_{s+},t)] + q(x_{s+},t) - q(b,t) = q(a,t) - q(b,t).
+\]
+Canceling $q(a,t)$ and $q(b,t)$ then yields the fundamental equation for the shock velocity \eqref{eq:12.6.20}:
+\boxed{\begin{equation}
+\label{eq:12.6.22}
+\od{x_s}{t} = \frac{q(x_{s-},t) - q(x_{s+},t)}{\rho(x_{s-},t) - \rho(x_{s+},t)} = \frac{[q]}{[\rho]},
+\end{equation}}
+where $[\rho]$ and $[q]$ are notations for the jump in density and the jump in flow across the discontinuous shock.
+
+\textbf{Example.}  We consider the initial value problem
+\[
+\pd{\rho}{t} + 2\rho\pd{\rho}{x} = 0
+\]
+\[
+\rho(x,0) = \begin{cases} 4 & x < 0 \\ 3 & x > 0. \end{cases}
+\]
+We assume that $\rho$ is a conserved density.  Putting the partial differential equation in conservation form ($\partial\rho/\partial t + \partial q/\partial x = 0$) shows that the flow $q = \rho^2$.  Thus, if there is a discontinuity, the shock satisfies $dx/dt = [q]/[\rho] = [\rho^2]/[\rho]$.  The density $\rho(x,t)$ is constant moving at the characteristic velocity $2\rho$.  Therefore, the equation for the characteristics is
+\[
+x = 2\rho(x_0,0)t + x_0.
+\]
+If $x_0 < 0$, then $\rho(x_0,0) = 4$.  This parallel group of characteristics intersects those starting from $x_0 > 0$ (with $\rho(x_0,0) = 3$) in the cross-hatched region in Fig.~12.6.9a.  The method of characteristics yields a multivalued solution of the partial differential equation.  This difficulty is remedied by introducing a shock wave (Fig.~12.6.9b), a propagating wave indicating the path at which densities and velocities abruptly change (i.e., are discontinuous).  On one side of the shock, the method of characteristics suggests the density is constant $\rho = 4$, and on the other side, $\rho = 3$.  We do not know as yet the path of the shock.  The theory for such a discontinuous solution implies that the path for any shock must satisfy the shock condition, \eqref{eq:12.6.20}.  Substituting the jumps in flow and density yields the following equation for the shock velocity:
+\[
+\od{x_s}{t} = \frac{q(4) - q(3)}{4 - 3} = \frac{4^2 - 3^2}{4 - 3} = 7,
+\]
+since in this case $q = \rho^2$.  Thus, the shock moves at a constant velocity.  The initial position of the shock is known, giving a condition for this first-order ordinary differential equation.  In this case, the shock must initiate at $x_s = 0$ at $t = 0$.  Consequently, applying the initial condition results in the position of the shock,
+\[
+x_s = 7t.
+\]
+The resulting space-time diagram is sketched in Fig.~12.6.9c.  For any time $t > 0$, the traffic density is discontinuous, as shown in Fig.~12.6.10.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch12/fig_12_6_9.png}
+\caption{Shock caused by intersecting characteristics.}
+\label{fig:12.6.9}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch12/fig_12.6.10.png}
+\caption{Density shock wave.}
+\label{fig:12.6.10}
+\end{figure}
+
+\textbf{Entropy condition.}  We note that as shown in Fig.~12.6.9c, the characteristics must flow into the shock on both sides.  The characteristic velocity on the left ($2\rho = 8$) must be greater than the shock velocity ($\frac{dx_s}{dt} = 7$), and the characteristic velocity on the right ($2\rho = 6$) must be less than the shock velocity.  This is a general principle, called the \textbf{entropy condition},
+\begin{equation}
+\label{eq:12.6.23}
+c(\rho(x_{s-})) > \od{x_s}{t} > c(\rho(x_{s+})).
+\end{equation}
+
+\textbf{Nonuniqueness of shock velocity and its resolution.}  The shock velocity for $\frac{\partial\rho}{\partial t} + \frac{\partial q}{\partial x} = 0$, where $q = q(\rho)$ is $\frac{dx_s}{dt} = \frac{[q]}{[\rho]}$.  It is sometimes claimed that the shock velocity is not unique because mathematically the partial differential equation can be multiplied by any function of $\rho$ and the resulting shock velocity would be different.  For the previous example of a shock with $\rho = 4$ and $\rho = 3$, $\frac{dx_s}{dt} = \frac{[q]}{[\rho]} = \frac{[\rho^2]}{[\rho]} = 7$.  However, if we multiply the pde by $\rho$, we obtain $\frac{\partial(\frac{1}{2}\rho^2)}{\partial t} + \frac{\partial(\frac{2}{3}\rho^3)}{\partial x} = 0$ so that the shock velocity assuming $\rho^2$ is conserved would be different, $\frac{dx_s}{dt} = \frac{[q]}{[\rho^2]} = \frac{[\frac{2}{3}\rho^3]}{[\frac{1}{2}\rho^2]} = \frac{4}{3}\cdot\frac{4^3-3^3}{4^2-3^2} = \frac{148}{21}$.  However, the point of view we wish to take is that only one of the conservation laws is the correct conservation law from physical principles.  For example, for traffic flow problems $\rho$ not $\rho^2$ is the conserved quantity and the shock velocity formula can only be used for the density that is physically conserved.
+
+\textbf{Green light turns red.}  We assume that the traffic density satisfies the partial differential equation corresponding to the elementary model of traffic flow:
+\[
+\pd{\rho}{t} + u_{\max}\!\left(1 - \frac{2\rho}{\rho_{\max}}\right)\pd{\rho}{x} = 0.
+\]
+Before the light turns red, we assume a very simple traffic situation in which the traffic density is a constant $\rho = \rho_0$ so that all cars are moving at the same velocity $u = u_{\max}(1 - \frac{\rho_0}{\rho_{\max}})$.  We assume the green light ($x = 0$) turns red at $t = 0$.  Behind the light ($x < 0$), the traffic density is initially uniform $\rho = \rho_0$, but the density becomes $\rho = \rho_{\max}$ at the light itself since the cars are stopped there:
+\begin{align*}
+\rho(x,0) &= \rho_0 \quad \text{for } x < 0 \\
+\rho(0,t) &= \rho_{\max} \quad \text{for } t > 0.
+\end{align*}
+The two parallel families of characteristics will intersect because $u_{\max}(1 - \frac{2\rho_0}{\rho_{\max}}) > -u_{\max}$.  A shock will form separating $\rho = \rho_0$ from $\rho = \rho_{\max}$.  The shock velocity is determined from \eqref{eq:12.6.20}:
+\[
+\od{x_s}{t} = \frac{[q]}{[\rho]} = \frac{q(\rho_{\max}) - q(\rho_0)}{\rho_{\max} - \rho_0} = \frac{-q(\rho_0)}{\rho_{\max} - \rho_0},
+\]
+where we have noted that $q(\rho_{\max}) = 0$.  Since the shock starts ($t = 0$) at $x = 0$, the shock path is
+\[
+x_s = \frac{-q(\rho_0)}{\rho_{\max} - \rho_0}\,t.
+\]
+The shock velocity is negative since $q(\rho_0) > 0$, and the shock propagates backward.  In this case there is a formula $q(\rho_0) = u_{\max}(1 - \frac{\rho_0}{\rho_{\max}})\rho_0$, but we do not need it.  The traffic density is $\rho_0$ before the shock and increases to $\rho_{\max}$ at the shock.  The characteristics and the shock are qualitatively similar to Fig.~12.6.9c, but traffic shocks occur when faster moving traffic (lower density) is behind slower moving traffic (higher density).  Here the shock velocity represents the line of stopped cars due to the red light moving backward behind the light.  Many accidents are caused by the suddenness of traffic shock waves.
+
+\textbf{Example with a shock and an expansion wave.}  If $q''(\rho)$ does change sign at least once, then a discontinuous initial condition may result in both a shock and an expansion wave.  A simple mathematical example with this property is $q = \frac{1}{3}\rho^3$, so that $q' = \rho^2$ and $q'' = 2\rho$.  If $\rho < 0$, this is similar to a traffic problem, but we will assume initially that $\rho$ is both positive and negative.  As an example we assume the initial condition is increasing from negative to positive:
+\[
+\pd{\rho}{t} + \rho^2\pd{\rho}{x} = 0
+\]
+\[
+\rho(x,0) = \begin{cases} -1 & x < 0 \\ 2 & x > 0. \end{cases}
+\]
+Since $\rho$ will be an increasing function of $x$, shocks can occur where $q'' = 2\rho < 0$ (meaning $-1 < \rho < 0$) while an expansion wave occurs for $\rho > 0$.  In general, according to the method of characteristics, $\rho$ is constant moving at velocity $\rho^2$, so that characteristics satisfy
+\[
+x = \rho^2(x_0,0)t + x_0.
+\]
+Important characteristics that correspond to $\rho = -1$, $\rho = 2$, and (only at $t = 0$) $\rho = 0$ are graphed in Fig.~12.6.11.  The density $\rho = 2$ for $x > 4t$.  The expansion wave satisfies $x = \rho^2(x_0,0)t$, so that there
+\[
+\rho_{\text{fan}} = +\sqrt{\frac{x}{t}},
+\]
+where we have carefully noted that in this problem the expansion wave corresponds to $\rho > 0$.  (The characteristic $x = 0t$ corresponding to $\rho = 0$ in some subtle sense bounds the expansion wave ranging from $\rho = 0$ to $\rho = 2$.)  However, the characteristics from $x_0 < 0$ in which $\rho = -1$ moving at velocity $+1$ intersect characteristics in the region of the expansion wave.  A \textbf{nonuniform shock} (nonconstant velocity) will form, separating the region with constant density $\rho = -1$ from the expansion wave $\rho_{\text{fan}} = +\sqrt{x/t}$.  The path of the shock wave is determined from the shock condition
+\[
+\od{x}{t} = \frac{[q]}{[\rho]} = \frac{1}{3}\cdot\frac{1 + (x/t)^{3/2}}{1 + (x/t)^{1/2}}.
+\]
+It is somewhat complicated to solve exactly this ordinary differential equation.  In any event, the ordinary differential equation could be solved (with care) numerically (let $y = x/t$).  It can be shown that this nonuniform shock persists for these initial conditions.  In other problems (but not this one), this shock might no longer persist beyond some time, in which case it would be replaced by a simpler \textbf{uniform shock} (constant velocity) separating $\rho = -1$ and $\rho = 2$.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch12/fig_12_6_11.png}
+\caption{Characteristics for shock and expansion wave.}
+\label{fig:12.6.11}
+\end{figure}
+
+\textbf{Diffusive conservation law.}  Here we will introduce a different way to understand the relationship between the unique shock velocity and the unique conservation law.  Suppose the partial differential equation was diffusive, but only slightly different from the previously studied:
+\begin{equation}
+\label{eq:12.6.24}
+\pd{\rho}{t} + q'(\rho)\pd{\rho}{x} = \epsilon\pdd{\rho}{x},
+\end{equation}
+where $\epsilon$ is a very small positive parameter, $0 < \epsilon \ll 1$.  Note that $\rho$ is conserved in the sense that $\frac{\partial\rho}{\partial t} + \frac{\partial}{\partial x}(q - \epsilon\frac{\partial\rho}{\partial x}) = 0$.  Under most circumstances the partial differential equation can be accurately approximated by the equation with $\epsilon = 0$, which can be solved by the method of characteristics.  The term $\epsilon\frac{\partial^2\rho}{\partial x^2}$ would be important only where $\frac{\partial^2\rho}{\partial x^2}$ was large, near a region in which the density changes rapidly in a short distance, what we have called a shock.  This \eqref{eq:12.6.24} could be derived by assuming the car velocity satisfies $u = \frac{q}{\rho} - \epsilon\frac{\partial\rho/\partial x}{\rho}$, which corresponds to drivers slowing down if they see increased density ahead ($\frac{\partial\rho}{\partial x} > 0$).  We are interested in solving \eqref{eq:12.6.24} with initial conditions that approach two different constants $\rho_1$ and $\rho_2$ as $x \to \pm\infty$.  This would correspond to a transition wave between the two constant states, one corresponding to shocklike initial conditions and the other corresponding to expansion type initial conditions.  We will show that a traveling transition wave only exists for the shocklike case.
+
+\textbf{Velocity of traveling shock wave.}  There are no methods to find the general solution of such nonlinear partial differential equations, \eqref{eq:12.6.24}, so we look for very special traveling wave solutions with unknown traveling wave velocity $c$:
+\begin{equation}
+\label{eq:12.6.25}
+\rho = f(\xi) = f(x - ct),
+\end{equation}
+where $\xi$ is the spatial coordinate moving with velocity $c$.  Substituting \eqref{eq:12.6.25} into \eqref{eq:12.6.24} yields a second-order nonlinear ordinary differential equation:
+\begin{equation}
+\label{eq:12.6.26}
+(-c + q'(f))\od{f}{\xi} = \epsilon\odd{f}{\xi},
+\end{equation}
+which can be integrated to yield a first-order nonlinear differential equation:
+\begin{equation}
+\label{eq:12.6.27}
+-A - cf + q(f) = \epsilon\od{f}{\xi},
+\end{equation}
+where $-A$ a constant.  We will determine the two constants $c$ and $A$, though the velocity is more important.  To satisfy the condition that $f \to \rho_1$ and $\rho_2$ as $x \to \pm\infty$, it follows that
+\begin{align}
+\label{eq:12.6.28}
+-A - c\rho_1 + q(\rho_1) &= 0 \\
+\label{eq:12.6.29}
+-A - c\rho_2 + q(\rho_2) &= 0.
+\end{align}
+By subtracting \eqref{eq:12.6.28} from \eqref{eq:12.6.29}, we determine the traveling wave speed:
+\begin{equation}
+\label{eq:12.6.30}
+c = \frac{q(\rho_2) - q(\rho_1)}{\rho_2 - \rho_1} = \frac{[q]}{[\rho]}.
+\end{equation}
+Thus, \textbf{the traveling wave velocity equals the shock velocity}, but we will show that this is valid for the shock-like conditions and not valid for the expansion wave-like conditions.
+
+\textbf{Spatial structure of traveling shock wave.}  The first-order autonomous differential equation \eqref{eq:12.6.27} can be analyzed using a one-dimensional phase portrait.  We need to know properties of $q(\rho)$.  For the traffic flow problem we assume, as graphed in Fig.~12.6.12, that $q''(\rho) < 0$, since that corresponds to experiments for traffic flow as well as our simple example.  We are concerned with the difference between $q(f)$ and the straight line $A + cf$.  We adjust the constant $A$ so that there are two intersections which we call $\rho_1$ and $\rho_2$.  These are equilibrium solutions and must satisfy \eqref{eq:12.6.28} and \eqref{eq:12.6.29}.  It is very important we label the solutions such that $\rho_2 > \rho_1$.  For \eqref{eq:12.6.27} $\frac{df}{d\xi}$ is a known function of $f$, and it is graphed in the top portion of Fig.~12.6.12.  The \textbf{one-dimensional phase portrait} is graphed in the bottom portion of Fig.~12.6.12 for the autonomous first-order ordinary differential equation \eqref{eq:12.6.27}.  We note that in the upper half-plane $\frac{df}{d\xi} > 0$ and hence $f$ is an increasing function of $\xi$, and right arrows are introduced, indicating $f$ increases as $\xi$ increases.  Similarly, in the lower half-plane $f$ is a decreasing function of $\xi$.  Solutions with $f > \rho_2$ or $f < \rho_1$ explode either forward or backward in the traveling wave coordinate $\xi$ and are of no interest to us.  The only bounded traveling wave solutions correspond to $\rho_1 < f < \rho_2$.  Most important, $f$ is an increasing function of $\xi$ for $\rho_1 < f < \rho_2$, and thus it is graphed in Fig.~12.6.13 as a traveling wave with the property that $f \to \rho_1$ as $x - ct \to -\infty$ and $f \to \rho_2$ as $x - ct \to \infty$.  This is important as it corresponds to the case corresponding to the shock wave ($\rho_2 > \rho_1$) for traffic flow equations.  It can be shown that if $\epsilon$ is small, then the transition from $\rho_1$ to $\rho_2$ occurs in a thin region.  The moving discontinuity is a good approximation to the more precise continuous traveling wave.  We have shown that their velocities are the same.  Thus, the traveling wave corresponds to what we still call a shock wave.  In fact, as $\epsilon \to 0$, the spatial structure of the continuous traveling wave approaches the discontinuous shock wave.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch12/fig_12_6_12.png}
+\caption{Phase line for traveling shock wave.}
+\label{fig:12.6.12}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch12/fig_12_6_13.png}
+\caption{Spatial structure for traveling shock wave.}
+\label{fig:12.6.13}
+\end{figure}
+
+\textbf{Formation of a shock.}  We have described the propagation of shock waves.  In the examples previously considered, the density was initially discontinuous, and the shock wave formed immediately.  However, we will now show that shock waves take a finite time to form if the initial density is continuous, and we will compute this time.
+
+Suppose the initial condition is such that characteristics intersect as shown in Fig.~12.6.6 because faster moving characteristics are behind more slowly moving characteristics.  For the partial differential equation $\frac{\partial\rho}{\partial t} + c(\rho)\frac{\partial\rho}{\partial x} = 0$, where the density wave velocity is $c(\rho) = q'(\rho)$, the family of straight-line characteristics (determined from the given initial conditions) satisfies
+\begin{equation}
+\label{eq:12.6.31}
+x = c[f(x_0)]t + x_0 = F(x_0)t + x_0,
+\end{equation}
+where we have introduced a simplifying notation for the constant density wave velocity $F(x_0) = c[f(x_0)]$.  Any characteristic starting between the two intersecting characteristics shown in Fig.~12.6.6 will almost certainly intersect one of the other two characteristics at an earlier time.  Thus, it is usual for neighboring characteristics to intersect, and we first discuss that.
+
+\textbf{Caustic (envelope of a family of curves, rays, or characteristics).}  The family of characteristics \eqref{eq:12.6.31} for the quasilinear partial differential equation may converge as shown in Fig.~12.6.6.  We wish to explain the envelope of the characteristics shown in Fig.~12.6.14.  To be more general, we consider instead of \eqref{eq:12.6.31} any family of curves parameterized by $x_0$:
+\begin{equation}
+\label{eq:12.6.32}
+G(x,t,x_0) = 0.
+\end{equation}
+A \textbf{caustic} is an envelope of the family of curves, and we claim that it simultaneously satisfies \eqref{eq:12.6.32} and the partial derivative of \eqref{eq:12.6.32} with respect to the parameter $x_0$:
+\begin{equation}
+\label{eq:12.6.33}
+\frac{\partial}{\partial x_0}G(x,t,x_0) = 0.
+\end{equation}
+To prove that \eqref{eq:12.6.33} is valid, we consider the intersection of neighboring curves, namely, $G(x,t,x_0) = 0$ and $G(x,t,x_0 + \Delta x_0) = 0$.  Using the Taylor series, this becomes $G(x,t,x_0) + \Delta x_0\frac{\partial}{\partial x_0}G(x,t,x_0) + \cdots = 0$.  By using \eqref{eq:12.6.32}, dividing by $\Delta x_0$, and taking the limit $\Delta x_0 \to 0$, \eqref{eq:12.6.33} is proved.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch12/fig_12_6_14.png}
+\caption{Formation of caustic, envelope of characteristics.}
+\label{fig:12.6.14}
+\end{figure}
+
+\textbf{Caustic for the characteristics for the partial differential equation.}  In our example, the family of characteristics is straight lines, \eqref{eq:12.6.31}, $G(x,t,x_0) = 0 = F(x_0)t + x_0 - x$, where $F(x_0) = c[f(x_0)]$.  Thus, the caustic (envelope of the characteristics or rays) is formed by simultaneously solving $0 = F'(x_0)t + 1$.  This gives the parametric representation of the caustic (easily graphed numerically from given initial conditions):
+\begin{align}
+\label{eq:12.6.34}
+x &= -\frac{F(x_0)}{F'(x_0)} + x_0 \\
+\label{eq:12.6.35}
+t &= -\frac{1}{F'(x_0)}.
+\end{align}
+Characteristics will intersect ($t > 0$) only if $F'(x_0) < 0$.  Since $F(x_0) = c(f(x_0))$, we conclude that neighboring characteristics will intersect if they emanate from regions where the characteristic velocity is locally decreasing (faster moving characteristics behind slower characteristics).  The caustic is shown in Fig.~12.6.14.  It is shown in Sec.~14.6.2 that the caustic has a cusp.
+
+\textbf{Initiation of a shock.}  The solution stays continuous until the finite time at which the caustic appears.  A shock wave begins at this time.  The times for the caustic are given by \eqref{eq:12.6.35}.  To determine the first time that characteristics intersect, we must minimize the intersection times.  The absolute minimum of $t$ given by \eqref{eq:12.6.35} corresponds to an absolute minimum of $F'(x_0)$ since $F'(x_0) < 0$.  Hence, the shock starts at $t$ given by \eqref{eq:12.6.35}, where $x_0$ corresponds to the minimum of $F'(x_0)$ and satisfies $F''(x_0) = 0$.
+
+\textbf{Triple valuedness.}  Inside the caustic (after the caustic has formed), look carefully at Fig.~12.6.14 to see that three different characteristics go through each space-time point, corresponding to the solution of the partial differential equation being triple valued as shown in Figure~12.6.15 or 12.6.7(d).  Outside the caustic, a unique characteristic goes through each point, and the solution is single valued.  The caustic is the boundary between these two regions.  We will show that the slope of the solution is infinite (see Fig.~12.6.15) along the caustic.  Since $\rho(x,t) = f(x_0)$, we have
+\[
+\pd{\rho}{x} = f'(x_0)\pd{x_0}{x} = \frac{f'(x_0)}{F'(x_0)t + 1},
+\]
+using the partial derivative of \eqref{eq:12.6.31} with respect to $x$, $1 = [F'(x_0)t + 1]\frac{\partial x_0}{\partial x}$.  The slope is infinite at the caustic, satisfying \eqref{eq:12.6.35}.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch12/fig_12_6_15.png}
+\caption{Whitham's equal-area principle.}
+\label{fig:12.6.15}
+\end{figure}
+
+\textbf{Shock dynamics.}  The triple-valued folded-over solution (within the caustic) makes no sense.  Instead, as discussed earlier, a shock wave exists satisfying the shock condition $\frac{dx_s}{dt} = \frac{[q]}{[\rho]}$, but here the shock wave begins at the cusp of the caustic at a time determined by minimizing the time in \eqref{eq:12.6.35}.  This gives a differential equation for the position of the shock, but the shock does not necessarily have constant velocity.  The shock is located somewhere within the caustic.  Whitham [1999] has shown that the correct location of the shock may be determined by cutting off the lobes to form equal areas (Fig.~12.6.15).  The reason for this is that the method of characteristics conserves cars and that, when a shock is introduced, the number of cars (represented by the area $\int\rho\,dx$) must also be the same as it is initially.
+
+\subsection{Quasilinear Example}
+\label{sec:quasilinear-example}
+
+Consider the quasilinear example
+\begin{equation}
+\label{eq:12.6.36}
+\pd{\rho}{t} - \rho\pd{\rho}{x} = -2\rho,
+\end{equation}
+subject to the initial conditions
+\begin{equation}
+\label{eq:12.6.37}
+\rho(x,0) = f(x).
+\end{equation}
+This could model a traffic flow problem (with $\rho$ a scaled version of the density), where cars are not conserved but instead leave the roadway (at exits) at a rate proportional to the density (as though cars exit the highway to avoid congestion).
+
+The method of characteristics yields
+\begin{equation}
+\label{eq:12.6.38}
+\od{\rho}{t} = -2\rho,
+\end{equation}
+along the characteristic
+\begin{equation}
+\label{eq:12.6.39}
+\od{x}{t} = -\rho.
+\end{equation}
+These equations are sometimes written in the equivalent form
+\begin{equation}
+\label{eq:12.6.40}
+\frac{d\rho}{-2\rho} = \frac{dx}{-\rho} = dt.
+\end{equation}
+
+Sometimes the coupled system of ordinary differential equations for $\rho$ may be solved directly.  In this case the ordinary differential equation for $\rho$ may be solved first, and its solution used to determine the characteristic $x$.  Because of the initial condition \eqref{eq:12.6.37}, we introduce the parameter $x_0$ representing the characteristic that emanates from $x = x_0$ (at $t = 0$).  From \eqref{eq:12.6.38}, along the characteristic, we obtain
+\begin{equation}
+\label{eq:12.6.41}
+\rho(x,t) = \rho(x_0,0)e^{-2t} = f(x_0)e^{-2t}.
+\end{equation}
+The parameter $x_0$ is constant along each characteristic.  The solution (density) exponentially decays along each characteristic as time increases.  Thus, the characteristic velocity becomes
+\[
+\od{x}{t} = -f(x_0)e^{-2t}.
+\]
+By integrating the velocity, we obtain the position of the characteristic:
+\begin{equation}
+\label{eq:12.6.42}
+x = \frac{1}{2}f(x_0)e^{-2t} - \frac{1}{2}f(x_0) + x_0,
+\end{equation}
+since $x$ must equal $x_0$ at $t = 0$.  Here, the characteristics are not straight lines.  The parametric representation of the solution is obtained from \eqref{eq:12.6.41}, where $x_0$ should be considered as a function of $x$ and $t$ from \eqref{eq:12.6.42}.  Usually an explicit solution is impractical.
+
+\textbf{Explicit solution of an initial value problem.}  For the quasilinear partial differential equation \eqref{eq:12.6.36}, suppose the initial conditions are
+\[
+\rho(x,0) = f(x) = x.
+\]
+In this case, from \eqref{eq:12.6.42}, the characteristics satisfy
+\[
+x = \frac{1}{2}x_0 e^{-2t} + \frac{1}{2}x_0.
+\]
+Thus, an explicit solution can be obtained:
+\[
+x_0 = \frac{2x}{1 + e^{-2t}}.
+\]
+Note that for each $x$ and $t$ there is only one characteristic $x_0$ (because the initial condition was chosen such that the family of characteristics does not intersect itself).  From \eqref{eq:12.6.41}, the solution of the initial value problem for the partial differential equation is
+\[
+\rho(x,t) = \frac{2xe^{-2t}}{1 + e^{-2t}} = \frac{2x}{1 + e^{2t}}.
+\]
+
+\textbf{General solution.}  Quasilinear partial differential equations have general solutions (as with the linear wave equation).  Without specifying initial conditions, integrating \eqref{eq:12.6.38} and \eqref{eq:12.6.39} yields
+\begin{align*}
+\rho(x,t) &= c_1 e^{-2t} \\
+x &= c_1 e^{-2t} + c_2.
+\end{align*}
+In general, one constant can be an arbitrary function of the other constant.  Thus, we obtain the \textbf{general solution} of \eqref{eq:12.6.36},
+\[
+x = \rho + f(\rho e^{2t}).
+\]
+
+\begin{exercises}{12.6}
+
+\item \label{ex:12.6.1}
+Determine the solution $\rho(x,t)$ satisfying the initial condition $\rho(x,0) = f(x)$ if
+\begin{enumerate}
+\item[(a)]\starred\ $\frac{\partial\rho}{\partial t} = 0$ \hfill (b) $\frac{\partial\rho}{\partial t} = -3\rho + 4e^{7t}$
+\item[(c)]\starred\ $\frac{\partial\rho}{\partial t} = -3\rho$ \hfill (d) $\frac{\partial\rho}{\partial t} = x^2 t\rho$
+\end{enumerate}
+
+\item\starred \label{ex:12.6.2}
+Determine the solution of $\partial\rho/\partial t = \rho$ that satisfies $\rho(x,t) = 1 + \sin x$ along $x = -2t$.
+
+\item \label{ex:12.6.3}
+Suppose $\frac{\partial\rho}{\partial t} + c_0\frac{\partial\rho}{\partial x} = 0$ with $c_0$ constant.
+\begin{enumerate}
+\item[(a)]\starred\ Determine $\rho(x,t)$ if $\rho(x,0) = \sin x$.
+\item[(b)]\starred\ If $c_0 > 0$, determine $\rho(x,t)$ for $x > 0$ and $t > 0$, where $\rho(x,0) = f(x)$ for $x > 0$ and $\rho(0,t) = g(t)$ for $t > 0$.
+\item[(c)] Show that part (b) cannot be solved if $c_0 < 0$.
+\end{enumerate}
+
+\item\starred \label{ex:12.6.4}
+If $u(\rho) = \alpha + \beta\rho$, determine $\alpha$ and $\beta$ such that $u(0) = u_{\max}$ and $u(\rho_{\max}) = 0$.
+\begin{enumerate}
+\item[(a)] What is the flow as a function of density?  Graph the flow as a function of the density.
+\item[(b)] At what density is the flow maximum?  What is the corresponding velocity?  What is the maximum flow (called the \emph{capacity})?
+\end{enumerate}
+
+\item \label{ex:12.6.5}
+Redo Exercise~12.6.4 if $u(\rho) = u_{\max}(1 - \rho^3/\rho_{\max}^3)$.
+
+\item \label{ex:12.6.6}
+Consider the traffic flow problem
+\[
+\pd{\rho}{t} + c(\rho)\pd{\rho}{x} = 0.
+\]
+Assume $u(\rho) = u_{\max}(1 - \rho/\rho_{\max})$.  Solve for $\rho(x,t)$ if the initial conditions are
+\begin{enumerate}
+\item[(a)] $\rho(x,0) = \begin{cases} \rho_{\max} & x < 0 \\ 0 & x > 0 \end{cases}$
+
+This corresponds to the traffic density that results after an infinite line of stopped traffic is started by a red light turning green.
+
+\item[(b)] $\rho(x,0) = \begin{cases} \rho_{\max} & x < 0 \\ \rho_{\max}/2 & 0 < x < a \\ 0 & x > a \end{cases}$
+
+\item[(c)] $\rho(x,0) = \begin{cases} \frac{3}{5}\rho_{\max} & x < 0 \\ \frac{\rho_{\max}}{5} & x > 0 \end{cases}$
+\end{enumerate}
+
+\item \label{ex:12.6.7}
+Solve the following problems:
+\begin{enumerate}
+\item[(a)] $\frac{\partial\rho}{\partial t} + \rho^2\frac{\partial\rho}{\partial x} = 0$ \quad $\rho(x,0) = \begin{cases} 3 & x < 0 \\ 4 & x > 0 \end{cases}$
+
+\item[(b)] $\frac{\partial\rho}{\partial t} + 4\rho\frac{\partial\rho}{\partial x} = 0$ \quad $\rho(x,0) = \begin{cases} 2 & x < 1 \\ 3 & x > 1 \end{cases}$
+
+\item[(c)] $\frac{\partial\rho}{\partial t} + 3\rho\frac{\partial\rho}{\partial x} = 0$ \quad $\rho(x,0) = \begin{cases} 1 & x < 0 \\ 2 & 0 < x < 1 \\ 4 & x > 1 \end{cases}$
+
+\item[(d)] $\frac{\partial\rho}{\partial t} + 6\rho\frac{\partial\rho}{\partial x} = 0$ for $x > 0$ only. \quad $\rho(x,0) = 5$ for $x > 0$, $\rho(0,t) = 2$ for $t > 0$
+\end{enumerate}
+
+\item \label{ex:12.6.8}
+Solve subject to the initial condition $\rho(x,0) = f(x)$
+\begin{enumerate}
+\item[(a)]\starred\ $\frac{\partial\rho}{\partial t} + c\frac{\partial\rho}{\partial x} = e^{-3x}$ \hfill (b) $\frac{\partial\rho}{\partial t} + 3x\frac{\partial\rho}{\partial x} = 4$
+
+\item[(c)]\starred\ $\frac{\partial\rho}{\partial t} + t\frac{\partial\rho}{\partial x} = 5$ \hfill (d) $\frac{\partial\rho}{\partial t} + 5t\frac{\partial\rho}{\partial x} = 3\rho$
+
+\item[(e)]\starred\ $\frac{\partial\rho}{\partial t} - t^2\frac{\partial\rho}{\partial x} = -\rho$ \hfill (f) $\frac{\partial\rho}{\partial t} + t^2\frac{\partial\rho}{\partial x} = 0$
+
+\item[(g)]\starred\ $\frac{\partial\rho}{\partial t} + x\frac{\partial\rho}{\partial x} = t$
+\end{enumerate}
+
+\item \label{ex:12.6.9}
+Determine a parametric representation of the solution satisfying $\rho(x,0) = f(x)$:
+\begin{enumerate}
+\item[(a)]\starred\ $\frac{\partial\rho}{\partial t} - \rho^2\frac{\partial\rho}{\partial x} = 3\rho$ \hfill (b) $\frac{\partial\rho}{\partial t} + \rho\frac{\partial\rho}{\partial x} = t$
+
+\item[(c)]\starred\ $\frac{\partial\rho}{\partial t} + t^2\rho\frac{\partial\rho}{\partial x} = -\rho$ \hfill (d) $\frac{\partial\rho}{\partial t} + \rho\frac{\partial\rho}{\partial x} = -x\rho$
+\end{enumerate}
+
+\item \label{ex:12.6.10}
+Solve $\frac{\partial\rho}{\partial t} + t^2\frac{\partial\rho}{\partial x} = 4\rho$ for $x > 0$ and $t > 0$ with $\rho(0,t) = h(t)$ and $\rho(x,0) = 0$.
+
+\item \label{ex:12.6.11}
+Solve $\frac{\partial\rho}{\partial t} + (1+t)\frac{\partial\rho}{\partial x} = 3\rho$ for $t > 0$ and $x > -t/2$ with $\rho(x,0) = f(t)$ for $x > 0$ and $\rho(x,t) = g(t)$ along $x = -t/2$.
+
+\item \label{ex:12.6.12}
+Consider \eqref{eq:12.6.8} if there is a moving shock $x$, such that $a < x_s(t) < b$.  By differentiating the integral [with a discontinuous integrand at $x_s(t)$], \emph{derive} \eqref{eq:12.6.20}.
+
+\item \label{ex:12.6.13}
+Suppose that, instead of $u = U(\rho)$, a car's velocity $u$ is
+\[
+u = U(\rho) - \frac{\nu}{\rho}\pd{\rho}{x},
+\]
+where $\nu$ is a constant.
+\begin{enumerate}
+\item[(a)] What sign should $\nu$ have for this expression to be physically reasonable?
+\item[(b)] What equation now describes conservation of cars?
+\item[(c)] Assume that $U(\rho) = u_{\max}(1 - \rho/\rho_{\max})$.  Derive \textbf{Burgers' equation}:
+\[
+\pd{\rho}{t} + u_{\max}\left[1 - \frac{2\rho}{\rho_{\max}}\right]\pd{\rho}{x} = \nu\pdd{\rho}{x}.
+\]
+\end{enumerate}
+
+\item \label{ex:12.6.14}
+Consider Burgers' equation as derived in Exercise~11.6.13.  Suppose that a solution exists as a density wave moving without change of shape at velocity $V$, $\rho(x,t) = f(x - Vt)$.
+\begin{enumerate}
+\item[(a)]\starred\ What ordinary differential equation is satisfied by $f$?
+\item[(b)] Integrate this differential equation once.  By graphical techniques show that a solution exists such that $f \to \rho_2$ as $x \to +\infty$ and $f \to \rho_1$ as $x \to -\infty$ only if $\rho_2 > \rho_1$.  Roughly sketch this solution.  Give a physical interpretation of this result.
+\item[(c)]\starred\ Show that the velocity of wave propagation, $V$, is the same as the shock velocity separating $\rho = \rho_1$ from $\rho = \rho_2$ (occurring if $\nu = 0$).
+\end{enumerate}
+
+\item \label{ex:12.6.15}
+Consider Burgers' equation as derived in Exercise~11.6.13.  Show that the change of dependent variables
+\[
+\rho = \frac{\nu\rho_{\max}}{u_{\max}}\cdot\frac{\phi_x}{\phi},
+\]
+introduced independently by E.~Hopf in 1950 and J.~D.~Cole in 1951, transforms Burgers' equation into a diffusion equation, $\frac{\partial\phi}{\partial t} + u_{\max}\frac{\partial\phi}{\partial x} = \nu\frac{\partial^2\phi}{\partial x^2}$.  Use this to solve the initial value problem $\rho(x,0) = f(x)$ for $-\infty < x < \infty$.  [In Whitham [1999] it is shown that this exact solution can be asymptotically analyzed as $\nu \to 0$ using Laplace's method for exponential integrals to show that $\rho(x,t)$ approaches the solution obtained for $\nu = 0$ using the method of characteristics with shock dynamics.]
+
+\item \label{ex:12.6.16}
+Suppose the initial traffic density is $\rho(x,0) = \rho_0$ for $x < 0$ and $\rho(x,0) = \rho_1$ for $x > 0$.  Consider the two cases, $\rho_0 < \rho_1$ and $\rho_1 < \rho_0$.  For which of the preceding cases is a density shock necessary?  Briefly explain.
+
+\item \label{ex:12.6.17}
+Consider a traffic problem, with $u(\rho) = u_{\max}(1 - \rho/\rho_{\max})$.  Determine $\rho(x,t)$ if
+\begin{enumerate}
+\item[(a)]\starred\ $\rho(x,0) = \begin{cases} \rho_{\max} & x < 0 \\ \frac{3\rho_{\max}}{5} & x > 0 \end{cases}$ \hfill (b) $\rho(x,0) = \begin{cases} \rho_{\max} & x < 0 \\ \frac{2\rho_{\max}}{3} & x > 0 \end{cases}$
+\end{enumerate}
+
+\item \label{ex:12.6.18}
+Assume that $u(\rho) = u_{\max}(1 - \rho^2/\rho_{\max}^2)$.  Determine the traffic density $\rho$ (for $t > 0$) if $\rho(x,0) = \rho_1$ for $x < 0$ and $\rho(x,0) = \rho_2$ for $x > 0$.
+\begin{enumerate}
+\item[(a)] Assume that $\rho_2 > \rho_1$. \hfill \starred\ (b) Assume that $\rho_2 < \rho_1$.
+\end{enumerate}
+
+\item \label{ex:12.6.19}
+Solve the following problems (assuming $\rho$ is conserved):
+\begin{enumerate}
+\item[(a)] $\frac{\partial\rho}{\partial t} + \rho^2\frac{\partial\rho}{\partial x} = 0$ \quad $\rho(x,0) = \begin{cases} 4 & x < 0 \\ 3 & x > 0 \end{cases}$
+
+\item[(b)] $\frac{\partial\rho}{\partial t} + 4\rho\frac{\partial\rho}{\partial x} = 0$ \quad $\rho(x,0) = \begin{cases} 3 & x < 1 \\ 2 & x > 1 \end{cases}$
+
+\item[(c)] $\frac{\partial\rho}{\partial t} + 3\rho\frac{\partial\rho}{\partial x} = 0$ \quad $\rho(x,0) = \begin{cases} 4 & x < 0 \\ 2 & 0 < x < 1 \\ 1 & x > 1 \end{cases}$
+
+\item[(d)] $\frac{\partial\rho}{\partial t} + 6\rho\frac{\partial\rho}{\partial x} = 0$ for $x > 0$ only. \quad $\rho(x,0) = 2$ for $x > 0$, $\rho(0,t) = 5$ for $t > 0$
+\end{enumerate}
+
+\item \label{ex:12.6.20}
+Redo Exercise~12.6.19, assuming that $\rho^2$ is conserved.
+
+\item \label{ex:12.6.21}
+Compare Exercise~12.6.19(a) with 12.6.20(a).  Show that the shock velocities are different.
+
+\item \label{ex:12.6.22}
+Solve $\frac{\partial\rho}{\partial t} + \rho^2\frac{\partial\rho}{\partial x} = 0$.  If a nonuniform shock occurs, only give its differential equation.  Do you believe the nonuniform shock persists or is eventually replaced by a uniform shock?
+\begin{enumerate}
+\item[(a)] $\rho(x,0) = \begin{cases} -1 & x < 0 \\ 3 & x > 0 \end{cases}$ \hfill (b) $\rho(x,0) = \begin{cases} -1 & x < 0 \\ 4 & x > 0 \end{cases}$
+
+\item[(c)] $\rho(x,0) = \begin{cases} 1 & x < 0 \\ -3 & x > 0 \end{cases}$ \hfill (d) $\rho(x,0) = \begin{cases} 5 & x < 0 \\ -2 & x > 0 \end{cases}$
+\end{enumerate}
+
+\item \label{ex:12.6.23}
+Solve $\frac{\partial\rho}{\partial t} - \rho^2\frac{\partial\rho}{\partial x} = 0$.  If a nonuniform shock occurs, only give its differential equation.  Do you believe the nonuniform shock persists or is eventually replaced by a uniform shock?
+\begin{enumerate}
+\item[(a)] $\rho(x,0) = \begin{cases} -2 & x < 0 \\ 1 & x > 0 \end{cases}$ \hfill (b) $\rho(x,0) = \begin{cases} -1 & x < 0 \\ 4 & x > 0 \end{cases}$
+
+\item[(c)] $\rho(x,0) = \begin{cases} 1 & x < 0 \\ -3 & x > 0 \end{cases}$ \hfill (d) $\rho(x,0) = \begin{cases} 5 & x < 0 \\ -2 & x > 0 \end{cases}$
+\end{enumerate}
+
+\end{exercises}

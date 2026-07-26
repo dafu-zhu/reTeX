@@ -1,0 +1,1049 @@
+% problems1.tex — Problem Set and Answers for Chapter 1
+
+\begin{problemset}
+
+\subsection*{Analytical Exercises}
+
+\exercise[1] (Proof that $\vec{b}$ minimizes $SSR$)\quad
+Let $\vec{b}$ be the OLS estimator of $\bm{\beta}$. Prove that, for
+any hypothetical estimate, $\widetilde{\bm{\beta}}$, of $\bm{\beta}$,
+%
+\begin{equation}
+(\vec{y} - \vec{X}\widetilde{\bm{\beta}})'(\vec{y} - \vec{X}\widetilde{\bm{\beta}})
+\geq (\vec{y} - \vec{X}\vec{b})'(\vec{y} - \vec{X}\vec{b}).
+\label{eq:ps1.1}
+\end{equation}
+%
+In your proof, use the add-and-subtract strategy: take
+$\vec{y} - \vec{X}\widetilde{\bm{\beta}}$, add $\vec{X}\vec{b}$ to it and
+then subtract the same from it. It produces the decomposition of
+$\vec{y} - \vec{X}\widetilde{\bm{\beta}}$:
+%
+\[
+\vec{y} - \vec{X}\widetilde{\bm{\beta}}
+= (\vec{y} - \vec{X}\vec{b}) + (\vec{X}\vec{b} - \vec{X}\widetilde{\bm{\beta}}).
+\]
+%
+\textbf{Hint:}
+$(\vec{y} - \vec{X}\widetilde{\bm{\beta}})'(\vec{y} - \vec{X}\widetilde{\bm{\beta}})
+= [(\vec{y} - \vec{X}\vec{b}) + \vec{X}(\vec{b} - \widetilde{\bm{\beta}})]'
+[(\vec{y} - \vec{X}\vec{b}) + \vec{X}(\vec{b} - \widetilde{\bm{\beta}})]$.
+Using the normal equations, show that this equals
+%
+\[
+(\vec{y} - \vec{X}\vec{b})'(\vec{y} - \vec{X}\vec{b})
++ (\vec{b} - \widetilde{\bm{\beta}})'\vec{X}'\vec{X}(\vec{b} - \widetilde{\bm{\beta}}).
+\]
+
+\exercise[2] (The annihilator associated with the vector of ones)\quad
+Let $\vec{1}$ be the $n$-dimensional column vector of ones, and let
+$\vec{M}_1 \equiv \vec{I}_n - \vec{1}(\vec{1}'\vec{1})^{-1}\vec{1}'$.
+That is, $\vec{M}_1$ is the annihilator associated with $\vec{1}$.
+Prove the following:
+
+\begin{enumerate}[label=(\alph*)]
+\item $\vec{M}_1$ is symmetric and idempotent.
+
+\item $\vec{M}_1 \vec{1} = \vec{0}$.
+
+\item $\vec{M}_1 \vec{y} = \vec{y} - \bar{y} \cdot \vec{1}$ where
+\[
+\bar{y} = \frac{1}{n} \sum_{i=1}^{n} y_i.
+\]
+$\vec{M}_1 \vec{y}$ is the vector of \textbf{deviations from the mean}.
+
+\item $\vec{M}_1 \vec{X} = \vec{X} - \vec{1}\bar{\vec{x}}'$ where
+$\bar{\vec{x}} = \vec{X}'\vec{1}/n$. The $k$-th element of the
+$K \times 1$ vector $\bar{\vec{x}}$ is
+$\frac{1}{n}\sum_{i=1}^{n} x_{ik}$.
+\end{enumerate}
+
+\exercise[3] (Deviation-from-the-mean regression)\quad
+Consider a regression model with a constant. Let $\vec{X}$ be partitioned as
+%
+\[
+\underset{(n \times K)}{\vec{X}}
+= \begin{bmatrix}
+\underset{n \times 1}{\vec{1}} & \vdots & \underset{n \times (K-1)}{\vec{X}_2}
+\end{bmatrix}
+\]
+%
+so the first regressor is a constant. Partition $\bm{\beta}$ and $\vec{b}$ accordingly:
+%
+\[
+\bm{\beta} = \begin{bmatrix} \beta_1 \\ \bm{\beta}_2 \end{bmatrix}
+\begin{array}{l} \leftarrow \text{scalar} \\ \leftarrow (K-1) \times 1 \end{array}, \quad
+\vec{b} = \begin{bmatrix} b_1 \\ \vec{b}_2 \end{bmatrix}.
+\]
+%
+Also let $\widetilde{\vec{X}}_2 \equiv \vec{M}_1 \vec{X}_2$ and
+$\tilde{\vec{y}} \equiv \vec{M}_1 \vec{y}$. They are the deviations from the mean for
+the nonconstant regressors and the dependent variable. Prove the following:
+
+\begin{enumerate}[label=(\alph*)]
+\item The $K$ normal equations are
+%
+\[
+\bar{y} - b_1 - \bar{\vec{x}}_2'\vec{b}_2 = 0
+\]
+%
+where $\bar{\vec{x}}_2 = \vec{X}_2'\vec{1}/n$,
+%
+\[
+\vec{X}_2'\vec{y} - n \cdot b_1 \cdot \bar{\vec{x}}_2
+- \vec{X}_2'\vec{X}_2 \vec{b}_2
+= \underset{((K-1)\times 1)}{\vec{0}}.
+\]
+
+\item $\vec{b}_2 = (\widetilde{\vec{X}}_2'\widetilde{\vec{X}}_2)^{-1}
+\widetilde{\vec{X}}_2'\tilde{\vec{y}}$.
+\textbf{Hint:} Substitute the first normal equation into the other
+$K - 1$ equations to eliminate $b_1$ and solve for $\vec{b}_2$.
+This is a generalization of the result you proved in Review Question~3
+in Section~1.2.
+\end{enumerate}
+
+\exercise[4] (Partitioned regression, generalization of Exercise~3)\quad
+Let $\vec{X}$ be partitioned as
+%
+\[
+\underset{(n \times K)}{\vec{X}}
+= \begin{bmatrix}
+\underset{(n \times K_1)}{\vec{X}_1} & \vdots &
+\underset{(n \times K_2)}{\vec{X}_2}
+\end{bmatrix}.
+\]
+%
+Partition $\bm{\beta}$ accordingly:
+%
+\[
+\bm{\beta} = \begin{bmatrix} \bm{\beta}_1 \\ \bm{\beta}_2 \end{bmatrix}
+\begin{array}{l} \leftarrow K_1 \times 1 \\ \leftarrow K_2 \times 1 \end{array}.
+\]
+%
+Thus, the regression can be written as
+%
+\[
+\vec{y} = \vec{X}_1 \bm{\beta}_1 + \vec{X}_2 \bm{\beta}_2 + \bm{\varepsilon}.
+\]
+%
+Let $\vec{P}_1 \equiv \vec{X}_1(\vec{X}_1'\vec{X}_1)^{-1}\vec{X}_1'$,
+$\vec{M}_1 \equiv \vec{I} - \vec{P}_1$,
+$\widetilde{\vec{X}}_2 \equiv \vec{M}_1 \vec{X}_2$ and
+$\tilde{\vec{y}} \equiv \vec{M}_1 \vec{y}$.
+Thus, $\tilde{\vec{y}}$ is the residual vector from the regression of $\vec{y}$
+on $\vec{X}_1$, and the $k$-th column of $\widetilde{\vec{X}}_2$ is the residual
+vector from the regression of the corresponding $k$-th column of
+$\vec{X}_2$ on $\vec{X}_1$. Prove the following:
+
+\begin{enumerate}[label=(\alph*)]
+\item The normal equations are
+%
+\begin{align}
+\vec{X}_1'\vec{X}_1 \vec{b}_1 + \vec{X}_1'\vec{X}_2 \vec{b}_2
+&= \vec{X}_1'\vec{y}, \tag{$*$} \label{eq:ps1.4star}\\
+\vec{X}_2'\vec{X}_1 \vec{b}_1 + \vec{X}_2'\vec{X}_2 \vec{b}_2
+&= \vec{X}_2'\vec{y}. \tag{$**$} \label{eq:ps1.4starstar}
+\end{align}
+
+\item $\vec{b}_2 = (\widetilde{\vec{X}}_2'\widetilde{\vec{X}}_2)^{-1}
+\widetilde{\vec{X}}_2'\tilde{\vec{y}}$.
+That is, $\vec{b}_2$ can be obtained by regressing the residuals
+$\tilde{\vec{y}}$ on the matrix of residuals $\widetilde{\vec{X}}_2$.
+\textbf{Hint:} Derive $\vec{X}_1\bm{\beta}_1 = -\vec{P}_1\vec{X}_2\bm{\beta}_2
++ \vec{P}_1\vec{y}$ from~\eqref{eq:ps1.4star}. Substitute this
+into~\eqref{eq:ps1.4starstar} to obtain
+$\vec{X}_2'\vec{M}_1\vec{X}_2\bm{\beta}_2 = \vec{X}_2'\vec{M}_1\vec{y}$.
+Then use the fact that $\vec{M}_1$ is symmetric and idempotent.
+Or, if you wish, you can apply the brute force of the partitioned inverse
+formula~(A.10) of Appendix~A to the coefficient matrix
+%
+\[
+\vec{X}'\vec{X} = \begin{bmatrix}
+\vec{X}_1'\vec{X}_1 & \vec{X}_1'\vec{X}_2 \\
+\vec{X}_2'\vec{X}_1 & \vec{X}_2'\vec{X}_2
+\end{bmatrix}.
+\]
+%
+Show that the second diagonal block of $(\vec{X}'\vec{X})^{-1}$ is
+$(\widetilde{\vec{X}}_2'\widetilde{\vec{X}}_2)^{-1}$.
+
+\item The residuals from the regression of $\tilde{\vec{y}}$ on
+$\widetilde{\vec{X}}_2$ numerically equals $\vec{e}$, the residuals from the
+regression of $\vec{y}$ on $\vec{X}$ ($\equiv (\vec{X}_1 \vdots \vec{X}_2)$).
+\textbf{Hint:} If $\vec{e}$ is the residual from the regression of $\vec{y}$
+on $\vec{X}$,
+%
+\[
+\vec{y} = \vec{X}_1 \vec{b}_1 + \vec{X}_2 \vec{b}_2 + \vec{e}.
+\]
+%
+Premultiplying both sides by $\vec{M}_1$ and using
+$\vec{M}_1\vec{X}_1 = \vec{0}$, we obtain
+%
+\[
+\tilde{\vec{y}} = \widetilde{\vec{X}}_2 \vec{b}_2 + \vec{M}_1\vec{e}.
+\]
+%
+Show that $\vec{M}_1\vec{e} = \vec{e}$ and observe that $\vec{b}_2$ equals the
+OLS coefficient estimate in the regression of $\tilde{\vec{y}}$ on
+$\widetilde{\vec{X}}_2$.
+
+\item $\vec{b}_2 = (\widetilde{\vec{X}}_2'\widetilde{\vec{X}}_2)^{-1}
+\widetilde{\vec{X}}_2'\vec{y}$.
+Note the difference from~(b). Here, the vector of dependent variable is
+$\vec{y}$, not $\tilde{\vec{y}}$. Are the residuals from the regression of
+$\vec{y}$ on $\widetilde{\vec{X}}_2$ numerically the same as $\vec{e}$?
+[Answer: No.]\enspace
+Is the $SSR$ from the regression of $\vec{y}$ on $\widetilde{\vec{X}}_2$ the
+same as the $SSR$ from the regression of $\tilde{\vec{y}}$ on
+$\widetilde{\vec{X}}_2$? [Answer: No.]
+\end{enumerate}
+
+\noindent
+The results in (b)--(d) are known as the \textbf{Frisch--Waugh Theorem}.
+
+\begin{enumerate}[label=(\alph*),resume]
+\item Show:
+%
+\[
+\tilde{\vec{y}}'\tilde{\vec{y}} - \vec{e}'\vec{e}
+= \tilde{\vec{y}}'\vec{X}_2(\vec{X}_2'\vec{M}_1\vec{X}_2)^{-1}\vec{X}_2'\tilde{\vec{y}}.
+\]
+%
+\textbf{Hint:} Apply the general decomposition formula~(1.2.15) to the
+regression in~(c) to derive
+%
+\[
+\tilde{\vec{y}}'\tilde{\vec{y}}
+= \vec{b}_2'\widetilde{\vec{X}}_2'\widetilde{\vec{X}}_2\vec{b}_2 + \vec{e}'\vec{e}.
+\]
+%
+Then use~(b).
+
+\item Consider the following four regressions:
+\begin{enumerate}[label=(\arabic*)]
+\item regress $\tilde{\vec{y}}$ on $\vec{X}_1$.
+\item regress $\tilde{\vec{y}}$ on $\widetilde{\vec{X}}_2$.
+\item regress $\tilde{\vec{y}}$ on $\vec{X}_1$ and $\vec{X}_2$.
+\item regress $\tilde{\vec{y}}$ on $\vec{X}_2$.
+\end{enumerate}
+
+Let $SSR_j$ be the sum of squared residuals from regression $j$. Show:
+
+\begin{enumerate}[label=(\roman*)]
+\item $SSR_1 = \tilde{\vec{y}}'\tilde{\vec{y}}$.
+\textbf{Hint:} $\tilde{\vec{y}}$ is constructed so that
+$\vec{X}_1'\tilde{\vec{y}} = \vec{0}$, so $\vec{X}_1$ should have
+no explanatory power.
+
+\item $SSR_2 = \vec{e}'\vec{e}$. \textbf{Hint:} Use~(c).
+
+\item $SSR_3 = \vec{e}'\vec{e}$. \textbf{Hint:} Apply the Frisch--Waugh
+Theorem on regression~(3). $\vec{M}_1\tilde{\vec{y}} = \tilde{\vec{y}}$.
+
+\item Verify by numerical example that $SSR_4$ is not necessarily equal to
+$\vec{e}'\vec{e}$.
+\end{enumerate}
+\end{enumerate}
+
+\exercise[5] (Restricted regression and $F$)\quad
+In the restricted least squares, the sum of squared residuals is minimized
+subject to the constraint implied by the null hypothesis
+$\vec{R}\bm{\beta} = \vec{r}$. Form the Lagrangian as
+%
+\[
+\mathcal{L} = \frac{1}{2}(\vec{y} - \vec{X}\widetilde{\bm{\beta}})'
+(\vec{y} - \vec{X}\widetilde{\bm{\beta}})
++ \bm{\lambda}'(\vec{R}\widetilde{\bm{\beta}} - \vec{r}),
+\]
+%
+where $\bm{\lambda}$ here is the $\#\vec{r}$-dimensional vector of Lagrange
+multipliers (recall: $\vec{R}$ is $\#\vec{r} \times K$,
+$\widetilde{\bm{\beta}}$ is $K \times 1$, and $\vec{r}$ is
+$\#\vec{r} \times 1$). Let $\widehat{\bm{\beta}}$ be the restricted least
+squares estimator of $\bm{\beta}$. It is the solution to the constrained
+minimization problem.
+
+\begin{enumerate}[label=(\alph*)]
+\item Let $\vec{b}$ be the unrestricted OLS estimator. Show:
+%
+\begin{align}
+\widehat{\bm{\beta}} &= \vec{b} - (\vec{X}'\vec{X})^{-1}\vec{R}'
+[\vec{R}(\vec{X}'\vec{X})^{-1}\vec{R}']^{-1}(\vec{R}\vec{b} - \vec{r}),
+\label{eq:ps1.5a1} \\
+\bm{\lambda} &= [\vec{R}(\vec{X}'\vec{X})^{-1}\vec{R}']^{-1}
+(\vec{R}\vec{b} - \vec{r}). \label{eq:ps1.5a2}
+\end{align}
+%
+\textbf{Hint:} The first-order conditions are
+$\vec{X}'\vec{y} - (\vec{X}'\vec{X})\widehat{\bm{\beta}} = \vec{R}'\bm{\lambda}$
+or $\vec{X}'(\vec{y} - \vec{X}\widehat{\bm{\beta}}) = \vec{R}'\bm{\lambda}$.
+Combine this with the constraint
+$\vec{R}\widehat{\bm{\beta}} = \vec{r}$ to solve for $\bm{\lambda}$ and
+$\widehat{\bm{\beta}}$.
+
+\item Let $\hat{\bm{\varepsilon}} \equiv \vec{y} - \vec{X}\widehat{\bm{\beta}}$,
+the residuals from the restricted regression. Show:
+%
+\begin{align*}
+SSR_R - SSR_U
+&= (\vec{b} - \widehat{\bm{\beta}})' (\vec{X}'\vec{X})
+   (\vec{b} - \widehat{\bm{\beta}}) \\
+&= (\vec{R}\vec{b} - \vec{r})'
+   [\vec{R}(\vec{X}'\vec{X})^{-1}\vec{R}']^{-1}
+   (\vec{R}\vec{b} - \vec{r}) \\
+&= \bm{\lambda}'\vec{R}(\vec{X}'\vec{X})^{-1}\vec{R}'\bm{\lambda} \\
+&= \hat{\bm{\varepsilon}}'\vec{P}\hat{\bm{\varepsilon}},
+\end{align*}
+%
+where $\vec{P}$ is the projection matrix. \textbf{Hint:} For the first
+equality, use the add-and-subtract strategy:
+%
+\begin{align*}
+SSR_R &= (\vec{y} - \vec{X}\widehat{\bm{\beta}})'
+         (\vec{y} - \vec{X}\widehat{\bm{\beta}}) \\
+      &= [(\vec{y} - \vec{X}\vec{b})
+         + \vec{X}(\vec{b} - \widehat{\bm{\beta}})]'
+         [(\vec{y} - \vec{X}\vec{b})
+         + \vec{X}(\vec{b} - \widehat{\bm{\beta}})].
+\end{align*}
+%
+Use the normal equations $\vec{X}'(\vec{y} - \vec{X}\vec{b}) = \vec{0}$.
+For the second and third equalities, use~(a). To prove the fourth equality,
+the easiest way is to use the first-order condition mentioned in~(a) that
+$\vec{R}'\bm{\lambda} = \vec{X}'\hat{\bm{\varepsilon}}$.
+
+\item Verify that you have proved in~(b) that $(1.4.9) = (1.4.11)$.
+\end{enumerate}
+
+\exercise[6] (Proof of the decomposition~(1.2.17))\quad
+Take the unrestricted model to be a regression where one of the regressors
+is a constant, and the restricted model to be a regression where the only
+regressor is a constant.
+
+\begin{enumerate}[label=(\alph*)]
+\item Show that~(b) in the previous exercise is the
+decomposition~(1.2.17) for this case. \textbf{Hint:} What is
+$\widehat{\bm{\beta}}$ for this case? Show that
+$SSR_R = \sum_i (y_i - \bar{y})^2$ and
+$(\vec{b} - \widehat{\bm{\beta}})' (\vec{X}'\vec{X})
+(\vec{b} - \widehat{\bm{\beta}}) = \sum_i (\hat{y}_i - \bar{y})^2$.
+
+\item ($R^2$ as an $F$-ratio)\quad
+For a regression where one of the regressors is a constant, prove that
+%
+\[
+F = \frac{R^2/(K-1)}{(1 - R^2)/(n - K)}.
+\]
+\end{enumerate}
+
+\exercise[7] (Hausman principle in finite samples)\quad
+For the generalized regression model, prove the following. Here, it is
+understood that the expectations, variances, and covariances are all
+conditional on $\vec{X}$.
+
+\begin{enumerate}[label=(\alph*)]
+\item $\Cov(\widehat{\bm{\beta}}_{\text{GLS}},\,
+\vec{b} - \widehat{\bm{\beta}}_{\text{GLS}}) = \vec{0}$.
+\textbf{Hint:} Recall that, for any two random vectors $\vec{x}$ and
+$\vec{y}$,
+%
+\[
+\Cov(\vec{x}, \vec{y})
+\equiv \E\bigl[(\vec{x} - \E(\vec{x}))(\vec{y} - \E(\vec{y}))'\bigr].
+\]
+%
+So
+%
+\[
+\Cov(\vec{A}\vec{x}, \vec{B}\vec{y}) = \vec{A}\,\Cov(\vec{x},\vec{y})\,\vec{B}'.
+\]
+%
+Also, since $\bm{\beta}$ is nonrandom,
+%
+\[
+\Cov(\widehat{\bm{\beta}}_{\text{GLS}},\,
+\vec{b} - \widehat{\bm{\beta}}_{\text{GLS}})
+= \Cov(\widehat{\bm{\beta}}_{\text{GLS}} - \bm{\beta},\,
+\vec{b} - \widehat{\bm{\beta}}_{\text{GLS}}).
+\]
+
+\item Let $\widetilde{\bm{\beta}}$ be any unbiased estimator and define
+$\vec{q} \equiv \widetilde{\bm{\beta}} - \widehat{\bm{\beta}}_{\text{GLS}}$.
+Assume $\widetilde{\bm{\beta}}$ is such that
+$\vec{V}_{\vec{q}} \equiv \Var(\vec{q})$ is nonsingular. Prove:
+$\Cov(\widehat{\bm{\beta}}_{\text{GLS}}, \vec{q}) = \vec{0}$.
+(If we set $\widetilde{\bm{\beta}} = \vec{b}$, we are back to~(a).)
+\textbf{Hint:} Define:
+$\widehat{\bm{\beta}} \equiv \widehat{\bm{\beta}}_{\text{GLS}}
++ \vec{H}\vec{q}$ for some $\vec{H}$. Show:
+%
+\[
+\Var(\widehat{\bm{\beta}})
+= \Var(\widehat{\bm{\beta}}_{\text{GLS}})
++ \vec{C}\vec{H}' + \vec{H}\vec{C}'
++ \vec{H}\vec{V}_{\vec{q}}\vec{H}',
+\]
+%
+where $\vec{C} \equiv \Cov(\widehat{\bm{\beta}}_{\text{GLS}}, \vec{q})$.
+Show that, if $\vec{C} \neq \vec{0}$ then $\Var(\widehat{\bm{\beta}})$ can
+be made smaller than $\Var(\widehat{\bm{\beta}}_{\text{GLS}})$ by setting
+$\vec{H} = -\vec{C}\vec{V}_{\vec{q}}^{-1}$. Argue that this is in
+contradiction to Proposition~1.7(c).
+
+\item (Optional, only for those who are proficient in linear algebra)\quad
+Prove: if the $K$ columns of $\vec{X}$ are characteristic vectors of
+$\vec{V}$, then $\vec{b} = \widehat{\bm{\beta}}_{\text{GLS}}$, where
+$\vec{V}$ is the $n \times n$ variance-covariance matrix of the
+$n$-dimensional error vector $\bm{\varepsilon}$.
+(So not all unbiased estimators satisfy the requirement in~(b) that
+$\Var(\widetilde{\bm{\beta}} - \widehat{\bm{\beta}}_{\text{GLS}})$ be
+nonsingular.)
+\textbf{Hint:} For any $n \times n$ symmetric matrix $\vec{V}$, there
+exists an $n \times n$ matrix $\vec{H}$ such that
+$\vec{H}'\vec{H} = \vec{I}_n$ (so $\vec{H}$ is an orthogonal matrix) and
+$\vec{H}'\vec{V}\vec{H} = \bm{\Lambda}$, where $\bm{\Lambda}$ is a diagonal
+matrix with the characteristic roots (which are real since $\vec{V}$ is
+symmetric) of $\vec{V}$ in the diagonal. The columns of $\vec{H}$ are called
+the characteristic vectors of $\vec{V}$. Show that
+%
+\[
+\vec{H}^{-1} = \vec{H}', \quad
+\vec{H}'\vec{V}^{-1}\vec{H} = \bm{\Lambda}^{-1}, \quad
+\vec{H}'\vec{V}^{-1} = \bm{\Lambda}^{-1}\vec{H}'.
+\]
+%
+Without loss of generality, $\vec{X}$ can be taken to be the first $K$
+columns of $\vec{H}$. So $\vec{X} = \vec{H}\vec{F}$, where
+%
+\[
+\underset{(n \times K)}{\vec{F}}
+= \begin{bmatrix} \vec{I}_K \\ \vec{0} \end{bmatrix}.
+\]
+\end{enumerate}
+
+\subsection*{Empirical Exercises}
+
+Read Marc Nerlove, ``Returns to Scale in Electricity Supply'' (except
+paragraphs of equations~(6)--(9), the part of section~2 from p.~184 on,
+and Appendix~A and~C) before doing this exercise. For 145 electric utility
+companies in 1955, the file \texttt{NERLOVE.ASC} has data on the following:
+
+\medskip
+\noindent
+\begin{tabular}{@{}ll}
+Column 1: & total costs (call it $TC$) in millions of dollars \\
+Column 2: & output ($Q$) in billions of kilowatt hours \\
+Column 3: & price of labor ($PL$) \\
+Column 4: & price of fuels ($PF$) \\
+Column 5: & price of capital ($PK$).
+\end{tabular}
+\medskip
+
+\noindent
+They are from the data appendix of his article. There are 145 observations,
+and the observations are ordered in size, observation~1 being the smallest
+company and observation~145 the largest. Using the data transformation
+facilities of your computer software, generate for each of the 145 firms
+the variables required for estimation. To estimate~(1.7.4), for example,
+you need to generate $\log(TC)$, a constant, $\log(Q)$, $\log(PL)$,
+$\log(PK)$, and $\log(PF)$, for each of the 145 firms.
+
+\begin{enumerate}[label=(\alph*)]
+\item (Data question)\quad Does Nerlove's construction of the price of
+capital conform to the definition of the user cost of capital?
+\textbf{Hint:} Read Nerlove's Appendix~B.4.
+
+\item Estimate the unrestricted model~(1.7.4) by OLS\@. Can you replicate
+the estimates in the text?
+
+\item (Restricted least squares)\quad Estimate the restricted
+model~(1.7.6) by OLS\@. To do this, you need to generate a new set of
+variables for each of the 145 firms. For example, the dependent variable
+is $\log(TC/PF)$, not $\log(TC)$. Can you replicate the estimates in the
+text? Can you replicate Nerlove's results? Nerlove's estimate of
+$\beta_2$, for example, is 0.721 with a standard error of 0.0174 (the
+standard error in his paper is 0.175, but it is probably a typographical
+error). Where in Nerlove's paper can you find this estimate? What about the
+other coefficients? (Warning: You will not be able to replicate Nerlove's
+results precisely. One reason is that he used common rather than natural
+logarithms; however, this should affect only the estimated intercept term.
+The other reason: the data set used for his results is a corrected version
+of the data set published with his article.)
+
+As mentioned in the text, the plot of residuals suggests a nonlinear
+relationship between $\log(TC)$ and $\log(Q)$. Nerlove hypothesized that
+estimated returns to scale varied with the level of output. Following
+Nerlove, divide the sample of 145 firms into five subsamples or groups,
+each having 29 firms. (Recall that since the data are ordered by level of
+output, the first 29 observations will have the smallest output levels,
+whereas the last 29 observations will have the largest output levels.)
+Consider the following three generalizations of the model~(1.7.6):
+
+\medskip
+\noindent
+\textit{Model~1:}\enspace Both the coefficients ($\beta$'s) and the error
+variance in~(1.7.6) differ across groups.
+
+\noindent
+\textit{Model~2:}\enspace The coefficients are different, but the error
+variance is the same across groups.
+
+\noindent
+\textit{Model~3:}\enspace While each group has common coefficients for
+$\beta_3$ and $\beta_4$ (price elasticities) and common error variance, it
+has a different intercept term and a different $\beta_2$. Model~3 is what
+Nerlove called the hypothesis of neutral variations in returns to scale.
+
+\medskip
+For Model~1, the coefficients and error variances specific to groups can be
+estimated from
+%
+\[
+\vec{y}^{(j)} = \vec{X}^{(j)} \bm{\beta}^{(j)} + \bm{\varepsilon}^{(j)}
+\quad (j = 1, \ldots, 5),
+\]
+%
+where $\vec{y}^{(j)}$ ($29 \times 1$) is the vector of the values of the
+dependent variable for group~$j$, $\vec{X}^{(j)}$ ($29 \times 4$) is the
+matrix of the values of the four regressors for group~$j$,
+$\bm{\beta}^{(j)}$ ($4 \times 1$) is the coefficient vector for group~$j$,
+and $\bm{\varepsilon}^{(j)}$ ($29 \times 1$) is the error vector. The second
+column of $\vec{X}^{(5)}$, for example, is $\log(Q)$ for
+$i = 117, \ldots, 145$. Model~1 assumes conditional homoskedasticity
+$\E(\bm{\varepsilon}^{(j)}\bm{\varepsilon}^{(j)\prime} \mid \vec{X}^{(j)})
+= \sigma_j^2 \vec{I}_{29}$ within (but not necessarily across) groups.
+
+\item Estimate Model~1 by OLS\@. How well can you replicate Nerlove's
+reported results? On the basis of your estimates of $\beta_2$, compute the
+point estimates of returns to scale in each of the five groups. What is the
+general pattern of estimated scale economies as the level of output
+increases? What is the general pattern of the estimated error variance as
+output increases?
+
+\medskip
+Model~2 assumes for Model~1 that $\sigma_j^2 = \sigma^2$ for all $j$.
+This equivariance restriction can be incorporated by stacking vectors and
+matrices as follows:
+%
+\[
+\vec{y} = \vec{X}\bm{\beta} + \bm{\varepsilon},
+\]
+%
+where
+%
+\begin{equation}
+\underset{(145 \times 1)}{\vec{y}}
+= \begin{bmatrix} \vec{y}^{(1)} \\ \vdots \\ \vec{y}^{(5)} \end{bmatrix}, \quad
+\underset{(145 \times 20)}{\vec{X}}
+= \begin{bmatrix} \vec{X}^{(1)} & & \\ & \ddots & \\ & & \vec{X}^{(5)} \end{bmatrix}, \quad
+\underset{(145 \times 1)}{\bm{\varepsilon}}
+= \begin{bmatrix} \bm{\varepsilon}^{(1)} \\ \vdots \\ \bm{\varepsilon}^{(5)} \end{bmatrix}.
+\tag{$*$} \label{eq:ps1.emp.star}
+\end{equation}
+%
+In particular, $\vec{X}$ is now a block-diagonal matrix. The equivariance
+restriction can be expressed as
+$\E(\bm{\varepsilon}\bm{\varepsilon}' \mid \vec{X}) = \sigma^2 \vec{I}_{145}$.
+There are now 20 variables derived from the original four regressors. The
+145 dimensional vector corresponding to the second variable, for example,
+has $\log(Q_1), \ldots, \log(Q_{29})$ as the first 29 elements and zeros
+elsewhere. The vector corresponding to the 6th variable, which represents
+log output for the second group of firms, has $\log(Q_{30}), \ldots,
+\log(Q_{58})$ for the 30th through 58th elements and zeros elsewhere, and
+so on.
+
+The stacking operation needed to form the $\vec{y}$ and $\vec{X}$
+in~\eqref{eq:ps1.emp.star} can be done easily if your computer software is
+matrix-based. Otherwise, you trick your software into accomplishing the same
+thing by the use of dummy variables. Define the $j$-th dummy variable as
+%
+\[
+D_{ji} = \begin{cases}
+1 & \text{if firm } i \text{ belongs to the } j\text{-th group}, \\
+0 & \text{otherwise},
+\end{cases}
+\quad (i = 1, \ldots, 145).
+\]
+%
+Then the second regressor is $D_{1i} \cdot \log(Q_i)$. The 6th variable is
+$D_{2i} \cdot \log(Q_i)$, and so forth.
+
+\item Estimate Model~2 by OLS\@. Verify that the OLS coefficient estimates
+here are the same as those in~(d). Also verify that
+%
+\[
+\sum_{j=1}^{5} SSR_j = SSR,
+\]
+%
+where $SSR_j$ is the $SSR$ from the $j$-th group in your estimation of
+Model~1 in~(d) and $SSR$ is the $SSR$ from Model~2. This agreement is not
+by accident, i.e., not specific to the present data set. Prove that this
+agreement for the coefficients and the $SSR$ holds in general, temporarily
+assuming just two groups without loss of generality. \textbf{Hint:} First
+show that the coefficient estimate is the same between Model~1 and Model~2.
+Use formulas~(A.4), (A.5), and~(A.9) of Appendix~A.
+
+\item (Chow test)\quad Model~2 is more general than Model~(1.7.6) because
+the coefficients can differ across groups. Test the null hypothesis that the
+coefficients are the same across groups. How many equations (restrictions)
+are in the null hypothesis? This test is sometimes called the \textbf{Chow
+test for structural change}. Calculate the $p$-value of the $F$-ratio.
+\textbf{Hint:} This is a linear hypothesis about the coefficients of
+Model~2. So take Model~2 to be the maintained hypothesis and~(1.7.6) to be
+the restricted model. Use the formula~(1.4.11) for the $F$-ratio.
+
+\medskip
+\noindent
+\textit{Gauss Tip:}\enspace If $x$ is the $F$-ratio, the Gauss command
+\texttt{cdffc(x,df1,df2)} gives the area to the right of $F$ for the $F$
+distribution with $df1$ and $df2$ degrees of freedom.
+
+\medskip
+\noindent
+\textit{TSP Tip:}\enspace The TSP command to do the same is
+\texttt{cdf(f, df1=\textit{df1}, df2=\textit{df2}) x}. An output of TSP's
+OLS command, \texttt{OLSQ}, is \texttt{@SSR}, which is the $SSR$ for the
+regression.
+
+\medskip
+\noindent
+\textit{RATS Tip:}\enspace The RATS command is
+\texttt{cdf ftest x df1 df2}. An output of RATS's OLS command,
+\texttt{LINREG}, is \texttt{\%RSS}, which is the $SSR$ for the regression.
+
+\medskip
+The restriction in Model~3 that the price elasticities are the same across
+firm groups can be imposed on Model~2 by applying the dummy variable
+transformation only to the constant and log output. Thus, there are
+$12$ ($= 2 \times 5 + 2$) variables in $\vec{X}$. Now $\vec{X}$ looks like
+%
+\begin{equation}
+\vec{X} =
+\begin{bmatrix}
+1      & \log(Q_1)      & 0 & 0 & \log(PL_1/PF_1)       & \log(PK_1/PF_1) \\
+\vdots & \vdots         & \vdots & \vdots & \vdots        & \vdots \\
+1      & \log(Q_{29})   & 0 & 0 & \log(PL_{29}/PF_{29})  & \log(PK_{29}/PF_{29}) \\
+       &                & \ddots &        & \vdots        & \vdots \\
+0      & 0              & 1 & \log(Q_{117})  & \log(PL_{117}/PF_{117}) & \log(PK_{117}/PF_{117}) \\
+\vdots & \vdots         & \vdots & \vdots & \vdots        & \vdots \\
+0      & 0              & 1 & \log(Q_{145})  & \log(PL_{145}/PF_{145}) & \log(PK_{145}/PF_{145})
+\end{bmatrix}
+\tag{$**$} \label{eq:ps1.emp.starstar}
+\end{equation}
+
+\item Estimate Model~3. The model is a special case of Model~2, with the
+hypothesis that the two price elasticities are the same across the five
+groups. Test the hypothesis at a significance level of 5 percent, assuming
+normality. (Note: Nerlove's $F$-ratio on p.~183 is wrong.)
+
+\medskip
+As has become clear from the plot of residuals in Figure~1.7, the
+conditional second moment $\E(\varepsilon_i^2 \mid \vec{X})$ is likely to
+depend on log output, which is a violation of the conditional
+homoskedasticity assumption. This time we do not attempt to test conditional
+homoskedasticity, because to do so requires large sample theory and is
+postponed until the next chapter. Instead, we pretend to know the form of the
+function linking the conditional second moment to log output. The function,
+specified below, implies that the conditional second moment varies
+continuously with output, contrary to the three models we have considered
+above. Also contrary to those models, we assume that the degree of returns
+to scale varies continuously with output by including the square of log
+output.\footnote{We have derived the log-linear cost function from the
+Cobb--Douglas production function. Does there exist a production function
+from which this generalized cost function with a quadratic term in log output
+can be derived? This is a question of the ``integrability'' of cost functions
+and is discussed in detail in Christensen et al.\ (1973).}
+Model~4 is
+
+\medskip
+\noindent
+\textit{Model~4:}
+%
+\begin{align*}
+\log\!\left(\frac{TC_i}{p_{i3}}\right)
+&= \beta_1 + \beta_2\,\log(Q_i) + \beta_3\,[\log(Q_i)]^2 \\
+&\quad + \beta_4\,\log\!\left(\frac{p_{i1}}{p_{i3}}\right)
+       + \beta_5\,\log\!\left(\frac{p_{i2}}{p_{i3}}\right)
+       + \varepsilon_i \\[6pt]
+\E(\varepsilon_i^2 \mid \vec{X})
+&= \sigma^2 \cdot \left(0.0565 + \frac{2.1377}{Q_i}\right)
+\quad (i = 1, 2, \ldots, 145)
+\end{align*}
+%
+for some unknown $\sigma^2$.
+
+\item Estimate Model~4 by weighted least squares on the whole sample of
+145 firms. (Be careful about the treatment of the intercept; in the equation
+after weighting, none of the regressors is a constant.) Plot the residuals.
+Is there still evidence for conditional homoskedasticity or further
+nonlinearities?
+\end{enumerate}
+
+\subsection*{Monte Carlo Exercises}
+
+\textbf{Monte Carlo} analysis simulates a large number of samples from the
+model to study the finite-sample distribution of estimators. In this
+exercise, we use the technique to confirm the two finite-sample results of
+the text: the unbiasedness of the OLS coefficient estimator and the
+distribution of the $t$-ratio. The model is the following simple regression
+model satisfying Assumptions~1.1--1.5 with $n = 32$. The regression equation
+is
+%
+\begin{align*}
+y_i &= \beta_1 + \beta_2 x_i + \varepsilon_i
+\quad (i = 1, 2, \ldots, n) \\
+\text{or}\quad
+\vec{y} &= \vec{1} \cdot \beta_1 + \vec{x} \cdot \beta_2 + \bm{\varepsilon}
+= \vec{X}\bm{\beta} + \bm{\varepsilon}, \tag{$*$}
+\end{align*}
+%
+where $\vec{X} = (\vec{1} \vdots \vec{x})$ and
+$\bm{\beta} = (\beta_1, \beta_2)'$. The model parameters are
+$(\beta_1, \beta_2, \sigma^2)$. As mentioned in the text, a model is a set
+of joint distributions of $(\vec{y}, \vec{X})$. We pick a particular joint
+distribution by specifying the regression model as follows. Set
+$\beta_1 = 1$, $\beta_2 = 0.5$, and $\sigma^2 = 1$. The distribution of
+$\vec{x} = (x_1, x_2, \ldots, x_n)'$ is specified by the following AR(1)
+process:
+%
+\begin{equation}
+x_i = c + \phi\, x_{i-1} + \eta_i \quad (i = 1, 2, \ldots, n),
+\tag{$**$}
+\end{equation}
+%
+where $\{\eta_i\}$ is i.i.d.\ $N(0, 1)$ and
+%
+\[
+x_0 \sim N\!\left(\frac{c}{1 - \phi},\; \frac{1}{1 - \phi^2}\right),
+\quad c = 2, \quad \phi = 0.6.
+\]
+%
+This fixes the joint distribution of $(\vec{y}, \vec{X})$. From this
+distribution, a large number of samples will be drawn.
+
+In programming the simulation, the following expression for $\vec{x}$ will
+be useful. Solve the first-order difference equation~($**$) to obtain
+%
+\begin{align*}
+x_i &= \phi^i x_0 + (1 + \phi + \phi^2 + \cdots + \phi^{i-1})c \\
+    &\quad + (\eta_i + \phi\,\eta_{i-1} + \phi^2\,\eta_{i-2}
+       + \cdots + \phi^{i-1}\eta_1),
+\end{align*}
+%
+or, in matrix notation,
+%
+\begin{equation}
+\underset{(n \times 1)}{\vec{x}}
+= \underset{(n \times 1)}{\vec{r}} \cdot x_0
++ \underset{(n \times 1)}{\vec{d}}
++ \underset{(n \times n)}{\vec{A}}\;
+  \underset{(n \times 1)}{\bm{\eta}},
+\tag{$***$} \label{eq:ps1.mc.stars}
+\end{equation}
+%
+where $\vec{d} = (d_1, d_2, \ldots, d_n)'$ and
+%
+\[
+d_1 = c, \quad d_2 = (1 + \phi)c, \quad \ldots, \quad
+d_i = (1 + \phi + \phi^2 + \cdots + \phi^{i-1})c, \quad \ldots,
+\]
+%
+\[
+\vec{r} = \begin{bmatrix} \phi \\ \phi^2 \\ \vdots \\ \phi^n \end{bmatrix},
+\quad
+\vec{A} = \begin{bmatrix}
+1         & 0            & \cdots  & \cdots & 0 \\
+\phi      & 1            & 0       & \cdots & 0 \\
+\phi^2    & \phi         & 1       & \ddots & 0 \\
+\vdots    & \vdots       & \ddots  & \ddots & \vdots \\
+\phi^{n-1}& \phi^{n-2}   & \cdots  & \phi   & 1
+\end{bmatrix},
+\quad
+\bm{\eta} = \begin{bmatrix} \eta_1 \\ \eta_2 \\ \vdots \\ \eta_n \end{bmatrix}.
+\]
+%
+\textit{Gauss Tip:}\enspace To form the $\vec{r}$ matrix, use \texttt{seqm}.
+To form the $\vec{A}$ matrix, use \texttt{toeplitz} and \texttt{lowmat}.
+
+\begin{enumerate}[label=(\alph*)]
+\item Run two Monte Carlo simulations. The first simulation calculates
+$\E(\vec{b} \mid \vec{x})$ and the distribution of the $t$-ratio as a
+distribution conditional on $\vec{x}$. A computer program for the first
+simulation should consist of the following steps.
+
+\begin{enumerate}[label=(\arabic*)]
+\item (Generate $\vec{x}$ just once)\quad Using the random number generator,
+draw a vector $\bm{\eta}$ of $n$ i.i.d.\ random variables from $N(0, 1)$ and
+$x_0$ from $N(c/(1 - \phi),\; 1/(1 - \phi^2))$, and calculate $\vec{x}$
+by~\eqref{eq:ps1.mc.stars}. (Calculation of $\vec{x}$ can also be
+accomplished recursively by~($**$) with a do loop, but vector operations such
+as~\eqref{eq:ps1.mc.stars} consume less CPU time than do loops. This becomes
+a consideration in the second simulation, where $\vec{x}$ has to be generated
+in each replication.)
+
+\item Set a counter to zero. The counter will record the incidence that
+$|t| > t_{0.025}(n - 2)$. Also, set a two-dimensional vector at zero; this
+vector will be used for calculating the mean of the OLS estimator $\vec{b}$
+of $(\beta_1, \beta_2)'$.
+
+\item Start a do loop of a large number of replications (1 million, say).
+In each replication, do the following.
+
+\begin{enumerate}[label=(\roman*)]
+\item (Generate $\vec{y}$)\quad Draw an $n$ dimensional vector
+$\bm{\varepsilon}$ of $n$ i.i.d.\ random variables from $N(0, 1)$, and
+calculate $\vec{y} = (y_1, \ldots, y_n)'$ by~($*$). This $\vec{y}$ is
+paired with the same $\vec{x}$ from step~(1) to form a sample
+$(\vec{y}, \vec{x})$.
+
+\item From the sample, calculate the OLS estimator $\vec{b}$ and the
+$t$-value for $\mathrm{H}_0\colon \beta_2 = 0.5$.
+
+\item Increase the counter by one if $|t| > t_{0.025}(n - 2)$. Also, add
+$\vec{b}$ to the two-dimensional vector.
+\end{enumerate}
+
+\item After the do loop, divide the counter by the number of replications to
+calculate the frequency of rejecting the null. Also, divide the
+two-dimensional vector that has accumulated $\vec{b}$ by the number of
+replications. It should equal $\E(\vec{b} \mid \vec{x})$ if the number of
+replications is infinite.
+\end{enumerate}
+
+Note that in this first simulation, $\vec{x}$ is \textit{fixed} throughout
+the do loop for $\vec{y}$. The second simulation calculates the
+\textit{un}conditional distribution of the $t$-ratio. It should consist of
+the following steps.
+
+\begin{enumerate}[label=(\arabic*)]
+\item Set the counter to zero.
+
+\item Start a do loop of a large number of replications. In each
+replication, do the following.
+
+\begin{enumerate}[label=(\roman*)]
+\item (Generate $\vec{x}$)\quad Draw a vector $\bm{\eta}$ of $n$ i.i.d.\
+random variables from $N(0, 1)$ and $x_0$ from
+$N(c/(1 - \phi),\; 1/(1 - \phi^2))$, and calculate $\vec{x}$
+by~\eqref{eq:ps1.mc.stars}.
+
+\item (Generate $\vec{y}$)\quad Draw a vector $\bm{\varepsilon}$ of $n$
+i.i.d.\ random variables from $N(0, 1)$, and calculate
+$\vec{y} = (y_1, \ldots, y_n)'$ by~($*$).
+
+\item From a sample $(\vec{y}, \vec{x})$ thus generated, calculate the
+$t$-value for $\mathrm{H}_0\colon \beta_2 = 0.5$ from the sample
+$(\vec{y}, \vec{x})$.
+
+\item Increase the counter by one if $|t| > t_{0.025}(n - 2)$.
+\end{enumerate}
+
+\item After the do loop, divide the counter by the number of replications.
+\end{enumerate}
+
+For the two simulations, verify that, for a sufficiently large number of
+replications,
+
+\begin{enumerate}[label=\arabic*.]
+\item the mean of $\vec{b}$ from the first simulation is arbitrarily close
+to the true value $(1, 0.5)$;
+
+\item the frequency of rejecting the true hypothesis $\mathrm{H}_0$ (the
+type~I error) is arbitrarily close to 5 percent in either simulation.
+\end{enumerate}
+
+\item In those two simulations, is the (nonconstant) regressor strictly
+exogenous? Is the error conditionally homoskedastic?
+\end{enumerate}
+
+\end{problemset}
+
+%% ====================================================================
+
+\begin{answers}
+
+\subsection*{Analytical Exercises}
+
+\answer{1}
+$(\vec{y} - \vec{X}\widetilde{\bm{\beta}})'
+ (\vec{y} - \vec{X}\widetilde{\bm{\beta}})$
+
+$= [(\vec{y} - \vec{X}\vec{b}) + \vec{X}(\vec{b} - \widetilde{\bm{\beta}})]'
+   [(\vec{y} - \vec{X}\vec{b}) + \vec{X}(\vec{b} - \widetilde{\bm{\beta}})]$
+
+\hspace{2em}(by the add-and-subtract strategy)
+
+$= [(\vec{y} - \vec{X}\vec{b})' + (\vec{b} - \widetilde{\bm{\beta}})'\vec{X}']
+   [(\vec{y} - \vec{X}\vec{b}) + \vec{X}(\vec{b} - \widetilde{\bm{\beta}})]$
+
+$= (\vec{y} - \vec{X}\vec{b})'(\vec{y} - \vec{X}\vec{b})
+ + (\vec{b} - \widetilde{\bm{\beta}})'\vec{X}'(\vec{y} - \vec{X}\vec{b})$
+
+$\quad + (\vec{y} - \vec{X}\vec{b})'\vec{X}(\vec{b} - \widetilde{\bm{\beta}})
+ + (\vec{b} - \widetilde{\bm{\beta}})'\vec{X}'\vec{X}
+   (\vec{b} - \widetilde{\bm{\beta}})$
+
+$= (\vec{y} - \vec{X}\vec{b})'(\vec{y} - \vec{X}\vec{b})
+ + 2(\vec{b} - \widetilde{\bm{\beta}})'\vec{X}'(\vec{y} - \vec{X}\vec{b})
+ + (\vec{b} - \widetilde{\bm{\beta}})'\vec{X}'\vec{X}
+   (\vec{b} - \widetilde{\bm{\beta}})$
+
+\hspace{2em}(since $(\vec{b} - \widetilde{\bm{\beta}})'\vec{X}'
+(\vec{y} - \vec{X}\vec{b})
+= (\vec{y} - \vec{X}\vec{b})'\vec{X}(\vec{b} - \widetilde{\bm{\beta}})$)
+
+$= (\vec{y} - \vec{X}\vec{b})'(\vec{y} - \vec{X}\vec{b})
+ + (\vec{b} - \widetilde{\bm{\beta}})'\vec{X}'\vec{X}
+   (\vec{b} - \widetilde{\bm{\beta}})$
+
+\hspace{2em}(since $\vec{X}'(\vec{y} - \vec{X}\vec{b}) = \vec{0}$
+by the normal equations)
+
+$\geq (\vec{y} - \vec{X}\vec{b})'(\vec{y} - \vec{X}\vec{b})$
+
+\hspace{2em}(since $(\vec{b} - \widetilde{\bm{\beta}})'\vec{X}'\vec{X}
+(\vec{b} - \widetilde{\bm{\beta}}) = \vec{z}'\vec{z}
+= \sum_{i=1}^{n} z_i^2 \geq 0$ where
+$\vec{z} \equiv \vec{X}(\vec{b} - \widetilde{\bm{\beta}})$).
+
+\bigskip
+
+\answer{7a} $\widehat{\bm{\beta}}_{\text{GLS}} - \bm{\beta} = \vec{A}\bm{\varepsilon}$
+where $\vec{A} \equiv (\vec{X}'\vec{V}^{-1}\vec{X})^{-1}\vec{X}'\vec{V}^{-1}$
+and $\vec{b} - \widehat{\bm{\beta}}_{\text{GLS}} = \vec{B}\bm{\varepsilon}$
+where
+$\vec{B} \equiv (\vec{X}'\vec{X})^{-1}\vec{X}'
+- (\vec{X}'\vec{V}^{-1}\vec{X})^{-1}\vec{X}'\vec{V}^{-1}$.
+So
+%
+\begin{align*}
+\Cov(\widehat{\bm{\beta}}_{\text{GLS}} - \bm{\beta},\,
+     \vec{b} - \widehat{\bm{\beta}}_{\text{GLS}})
+&= \Cov(\vec{A}\bm{\varepsilon},\, \vec{B}\bm{\varepsilon}) \\
+&= \vec{A}\,\Var(\bm{\varepsilon})\,\vec{B}' \\
+&= \sigma^2 \vec{A}\vec{V}\vec{B}'.
+\end{align*}
+%
+It is straightforward to show that $\vec{A}\vec{V}\vec{B}' = \vec{0}$.
+
+\bigskip
+
+\answer{7b} For the choice of $\vec{H}$ indicated in the hint,
+%
+\[
+\Var(\widehat{\bm{\beta}}) - \Var(\widehat{\bm{\beta}}_{\text{GLS}})
+= -\vec{C}\vec{V}_q^{-1}\vec{C}'.
+\]
+%
+If $\vec{C} \neq \vec{0}$, then there exists a nonzero vector $\vec{z}$
+such that $\vec{C}'\vec{z} \equiv \vec{v} \neq \vec{0}$. For such $\vec{z}$,
+%
+\[
+\vec{z}'\bigl[\Var(\widehat{\bm{\beta}})
+- \Var(\widehat{\bm{\beta}}_{\text{GLS}})\bigr]\vec{z}
+= -\vec{v}'\vec{V}_q^{-1}\vec{v} < 0
+\quad \text{(since $\vec{V}_q$ is positive definite)},
+\]
+%
+which is a contradiction because $\widehat{\bm{\beta}}_{\text{GLS}}$ is
+efficient.
+
+\bigskip
+
+\subsection*{Empirical Exercises}
+
+\answer{a} Nerlove's description in Appendix~B.4 leads one to believe that
+he did not include the depreciation rate $\delta$ in his construction of the
+price of capital.
+
+\medskip
+
+\answer{b} Your estimates should agree with~(1.7.7).
+
+\medskip
+
+\answer{c} Our estimates differ from Nerlove's slightly. This would happen
+even if the data used by Nerlove were the same as those provided to you,
+because computers in his age were much less precise and had more frequent
+rounding errors.
+
+\medskip
+
+\answer{d} How well can you replicate Nerlove's reported results? Fairly
+well. The point estimates of returns to scale in each of the five subsamples
+are 2.5, 1.5, 1.1, 1.1, and .96. As the level of output increases, the
+returns to scale decline.
+
+\medskip
+
+\answer{e} Model~2 can be written as $\vec{y} = \vec{X}\bm{\beta} + \bm{\varepsilon}$,
+where $\vec{y}$, $\vec{X}$, and $\bm{\varepsilon}$ are as
+in~\eqref{eq:ps1.emp.star}. So (setting $j = 2$),
+%
+\[
+\vec{X}'\vec{X}
+= \begin{bmatrix}
+\vec{X}^{(1)\prime}\vec{X}^{(1)} & \vec{0} \\
+\vec{0} & \vec{X}^{(2)\prime}\vec{X}^{(2)}
+\end{bmatrix},
+\]
+%
+which means
+%
+\[
+(\vec{X}'\vec{X})^{-1}
+= \begin{bmatrix}
+\bigl(\vec{X}^{(1)\prime}\vec{X}^{(1)}\bigr)^{-1} & \vec{0} \\
+\vec{0} & \bigl(\vec{X}^{(2)\prime}\vec{X}^{(2)}\bigr)^{-1}
+\end{bmatrix}.
+\]
+%
+And
+%
+\[
+\vec{X}'\vec{y}
+= \begin{bmatrix}
+\vec{X}^{(1)\prime}\vec{y}^{(1)} \\
+\vec{X}^{(2)\prime}\vec{y}^{(2)}
+\end{bmatrix}.
+\]
+%
+Therefore,
+%
+\[
+(\vec{X}'\vec{X})^{-1}\vec{X}'\vec{y}
+= \begin{bmatrix}
+\bigl(\vec{X}^{(1)\prime}\vec{X}^{(1)}\bigr)^{-1}
+\vec{X}^{(1)\prime}\vec{y}^{(1)} \\[4pt]
+\bigl(\vec{X}^{(2)\prime}\vec{X}^{(2)}\bigr)^{-1}
+\vec{X}^{(2)\prime}\vec{y}^{(2)}
+\end{bmatrix}.
+\]
+%
+Thus, the OLS estimate of the coefficient vector for Model~2 is the same as
+that for Model~1. Since the estimate of the coefficient vector is the same,
+the sum of squared residuals, too, is the same.
+
+\medskip
+
+\answer{f} The number of restrictions is 16. $K = \text{\#coefficients in
+Model~2} = 20$. So the two degrees of freedom should be $(16, 125)$.
+$SSR_U = 12.262$ and $SSR_R = 21.640$. $F$-ratio $= 5.97$ with a $p$-value
+of 0.0000. So this can be rejected at any reasonable significance level.
+
+\medskip
+
+\answer{g} $SSR_U = 12.262$ and $SSR_R = 12.577$. So $F = .40$ with 8 and
+125 degrees of freedom. Its $p$-value is 0.92. So the restrictions can be
+accepted at any reasonable significance level. Nerlove's $F$-ratio (see
+p.~183, 8th line from bottom) is 1.576.
+
+\medskip
+
+\answer{h} The plot still shows that the conditional second moment is
+somewhat larger for smaller firms, but now there is no evidence for possible
+nonlinearities.
+
+\end{answers}

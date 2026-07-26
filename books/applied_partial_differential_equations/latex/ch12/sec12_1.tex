@@ -1,0 +1,31 @@
+% sec12_1.tex — Section 12.1: Introduction
+\section{Introduction}
+\label{sec:char-intro}
+
+In previous chapters, we obtained certain results concerning the one-dimensional wave equation,
+\begin{equation}
+\label{eq:12.1.1}
+\pdd{u}{t} = c^2 \pdd{u}{x},
+\end{equation}
+subject to the initial conditions
+\begin{equation}
+\label{eq:12.1.2}
+u(x,0) = f(x)
+\end{equation}
+\begin{equation}
+\label{eq:12.1.3}
+\pd{u}{t}(x,0) = g(x).
+\end{equation}
+For a vibrating string with zero displacement at $x = 0$ and $x = L$, we obtained a somewhat complicated Fourier sine series solution by the method of separation of variables in Chapter~4:
+\begin{equation}
+\label{eq:12.1.4}
+u(x,t) = \sum_{n=1}^{\infty} \sin\frac{n\pi x}{L} \left(a_n \cos\frac{n\pi ct}{L} + b_n \sin\frac{n\pi ct}{L}\right).
+\end{equation}
+Further analysis of this solution [see (4.4.14) and Exercises~4.4.7 and 4.4.8] shows that the solution can be represented as the sum of a forward- and backward-moving wave.  In particular,
+\begin{equation}
+\label{eq:12.1.5}
+u(x,t) = \frac{f(x-ct) + f(x+ct)}{2} + \frac{1}{2c}\int_{x-ct}^{x+ct} g(x_0)\,dx_0,
+\end{equation}
+where $f(x)$ and $g(x)$ are the odd periodic extensions of the functions given in \eqref{eq:12.1.2} and \eqref{eq:12.1.3}.  We also obtained \eqref{eq:12.1.5} in Chapter~11 for the one-dimensional wave equation without boundaries, using the infinite space Green's function.
+
+In this chapter we introduce the more powerful method of characteristics to solve the one-dimensional wave equation.  We will show in general that $u(x,t) = F(x-ct) + G(x+ct)$, where $F$ and $G$ are arbitrary functions.  We will show that \eqref{eq:12.1.5} follows for infinite space problems.  Then we will discuss modifications needed to solve semi-infinite and finite domain problems.  In Sec.~12.6, the method of characteristics will be applied to quasilinear partial differential equations.  Traffic flow models will be introduced in Sec.~12.6.2, and expansion waves will be discussed (Sec.~12.6.3).  When characteristics intersect, we will show that a shock wave must occur, and we will derive an expression for the shock velocity.  The dynamics of shock waves will be discussed in considerable depth (Sec.~12.6.4).  In Sec.~12.7, the method of characteristics will be used to solve the eikonal equation, which we will derive from the wave equation.

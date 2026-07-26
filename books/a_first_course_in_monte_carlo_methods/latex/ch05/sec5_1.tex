@@ -1,0 +1,84 @@
+%% Chapter 5 — Section 5.1: Motivating Example
+%% A First Course in Monte Carlo Methods
+%% D. Sanz-Alonso & O. Al-Ghattas
+
+\section{Motivating Example}
+\label{sec:5.1}
+
+Consider a dataset $y = (y^{(1)}, \ldots, y^{(K)})$ of $K$ observations that we model as i.i.d.\
+draws from a Gaussian distribution with mean $\mu$ and precision $\tau = \frac{1}{\sigma^2}$. We
+take a Bayesian approach and choose the following priors for the precision $\tau = \frac{1}{\sigma^2}$
+and mean $\mu$:
+\begin{align*}
+  \tau &\sim \GammaDist(\alpha, \beta),\\
+  \mu  &\sim \Normal(m, s^2).
+\end{align*}
+The posterior for $\mu, \tau$ is
+\[
+  f(\mu, \tau \mid y)
+  \propto
+  \exp\!\Bigl(-\tfrac{1}{2s^2}(\mu - m)^2\Bigr)
+  \exp\!\Bigl(-\tfrac{\tau}{2}\sum_{k=1}^{K}(y^{(k)} - \mu)^2\Bigr)
+  \exp(-\beta\tau)\,\tau^{\alpha - 1 + \frac{K}{2}}.
+\]
+There is no closed form expression for the normalizing constant. Note that:
+\begin{enumerate}
+  \item Conditional on $\tau$,
+    \[
+      \mu|\tau \sim \Normal\!\left(\frac{K\bar{y}\tau + ms^{-2}}{K\tau + s^{-2}},\;
+        \frac{1}{K\tau + s^{-2}}\right),
+    \]
+    where $\bar{y}$ is the sample average.
+
+  \item Conditional on $\mu$,
+    \[
+      \tau|\mu \sim \GammaDist\!\left(\alpha + \frac{K}{2},\;
+        \beta + \frac{1}{2}\sum_{k=1}^{K}(y^{(k)} - \mu)^2\right).
+    \]
+\end{enumerate}
+
+Since both of these conditional distributions are standard, it seems natural to use them as
+proposal distributions. Suppose that $(\mu^{(n)}, \tau^{(n)})$ are given. Inspired by the
+Metropolis Hastings algorithm studied in Chapter~4, a natural idea would be to obtain
+$(\mu^{(n+1)}, \tau^{(n+1)})$ as follows:
+\begin{enumerate}
+  \item Propose
+    \[
+      \mu^* \sim \Normal\!\left(\frac{K\bar{y}\tau^{(n)} + ms^{-2}}{K\tau^{(n)} + s^{-2}},\;
+        \frac{1}{K\tau^{(n)} + s^{-2}}\right).
+    \]
+
+  \item Accept $\mu^{(n+1)} = \mu^*$ with probability
+    $a\bigl((\tau^{(n)}, \mu^{(n)}),(\tau^{(n)}, \mu^*)\bigr)$.
+    Otherwise, set $\mu^{(n+1)} = \mu^{(n)}$.
+
+  \item Propose
+    \[
+      \tau^* \sim \GammaDist\!\left(\alpha + \frac{K}{2},\;
+        \beta + \frac{1}{2}\sum_{k=1}^{K}(y^{(k)} - \mu^{(n+1)})^2\right).
+    \]
+
+  \item Accept $\tau^{(n+1)} = \tau^*$ with probability
+    $a\bigl((\tau^{(n)}, \mu^{(n+1)}),(\tau^*, \mu^{(n+1)})\bigr)$.
+    Otherwise set $\tau^{(n+1)} = \tau^{(n)}$.
+\end{enumerate}
+
+The fact that the normalizing constant of the posterior is unknown does not obstruct the
+implementation of this natural scheme. Moreover, the theory we will develop in the next section
+will show that the acceptance probability in steps~2 and~4 is always~1. Therefore, we could
+simplify the algorithm as follows:
+\begin{enumerate}
+  \item Sample
+    \[
+      \mu^{(n+1)} \sim \Normal\!\left(\frac{K\bar{y}\tau^{(n)} + ms^{-2}}{K\tau^{(n)} + s^{-2}},\;
+        \frac{1}{K\tau^{(n)} + s^{-2}}\right).
+    \]
+
+  \item Sample
+    \[
+      \tau^{(n+1)} \sim \GammaDist\!\left(\alpha + \frac{K}{2},\;
+        \beta + \frac{1}{2}\sum_{k=1}^{K}(y^{(k)} - \mu^{(n+1)})^2\right).
+    \]
+\end{enumerate}
+
+We have derived a Gibbs sampler for the posterior distribution $f(\mu, \tau \mid y)$.

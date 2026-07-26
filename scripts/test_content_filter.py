@@ -53,6 +53,10 @@ except ImportError:
 
 @dataclass
 class TestResult:
+    # Not a pytest test class despite the name — a plain result record. The
+    # unannotated assignment below is not picked up as a dataclass field.
+    __test__ = False
+
     test_name: str
     suite: str
     model: str
@@ -507,6 +511,15 @@ SUITES = {
     'input_format': test_input_format,
     'content_type': test_content_type,
 }
+
+# These are live-API smoke-test suites driven manually via `main()`/SUITES,
+# not pytest tests — they take a `client` positional argument, need a real
+# API key, and hit the network. Their names match pytest's default
+# python_functions ("test*") pattern, so mark them non-collectible to keep
+# `python -m pytest scripts/` from treating `client` as a missing fixture.
+for _suite_fn in SUITES.values():
+    _suite_fn.__test__ = False
+del _suite_fn
 
 
 def save_results(results):

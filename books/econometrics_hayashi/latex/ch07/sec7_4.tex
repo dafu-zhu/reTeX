@@ -1,0 +1,320 @@
+% sec7_4.tex — Section 7.4: Hypothesis Testing
+
+As is well known for ML, there is a trio of statistics---the Wald, Lagrange multiplier (LM), and likelihood ratio (LR) statistics---that can be used for testing the null hypothesis. The three statistics are asymptotically equivalent in that they share the same asymptotic distribution (of $\chi^2$). In this section we show that the asymptotic equivalence of the trinity can be extended to GMM by developing an argument applicable to both ML and GMM. The key to the argument is the common format for the sampling error derived at the end of the previous section. On the first reading, you may wish to read the next subsection and then jump to the last subsection.
+
+\subsection*{The Null Hypothesis}
+
+We have already considered, in the context of the linear regression model, the problem of testing a set of $r$ possibly nonlinear restrictions (see Section~2.4). To recapitulate, let $\bm{\theta}_0$ be the $p$-dimensional model parameter. The null hypothesis can be expressed as
+\begin{equation}
+\label{eq:7.4.1}
+\text{H}_0: \quad \underset{(r \times 1)}{\mathbf{a}(\bm{\theta}_0)} = \mathbf{0}.
+\end{equation}
+
+We assume that $\mathbf{a}(\cdot)$ is continuously differentiable. Also, let
+\begin{equation}
+\label{eq:7.4.2}
+\underset{(r \times p)}{\mathbf{A}(\bm{\theta})} \equiv \frac{\partial\mathbf{a}(\bm{\theta})}{\partial\bm{\theta}'}
+\end{equation}
+be the Jacobian of $\mathbf{a}(\bm{\theta})$. We assume that
+\begin{equation}
+\label{eq:7.4.3}
+\underset{(r \times p)}{\mathbf{A}_0} \equiv \mathbf{A}(\bm{\theta}_0) \text{ is of full row rank.}
+\end{equation}
+
+This ensures that the $r$ restrictions are not redundant. This rank condition implies that $r \leq p$.
+
+Let $\hat{\bm{\theta}}$ be the extremum estimator in question. It is either ML or GMM. It solves the unconstrained optimization problem (\ref{eq:7.1.1}). The Wald statistic for testing the null hypothesis utilizes the unconstrained estimator. The LM statistic, in contrast, utilizes the \textbf{constrained estimator}, denoted $\tilde{\bm{\theta}}$, which solves
+\begin{equation}
+\label{eq:7.4.4}
+\max_{\bm{\theta} \in \Theta}\; Q_n(\bm{\theta}) \quad \text{s.t.} \quad \mathbf{a}(\bm{\theta}) = \mathbf{0}.
+\end{equation}
+
+As was shown in Section~7.2, the true parameter value $\bm{\theta}_0$ solves the ``limit unconstrained problem'' where $Q_n$ in the unconstrained optimization problem (\ref{eq:7.1.1}) is replaced by the limit function $Q_0$. It also solves the ``limit constrained problem'' where $Q_n$ in the above constrained optimization problem is replaced by $Q_0$, because $\bm{\theta}_0$ satisfies the constraint. It turns out that the uniform convergence in probability of $Q_n(\cdot)$ to $Q_0(\cdot)$ assures that the limit of the constrained estimator $\tilde{\bm{\theta}}$ is the solution to the limit constrained problem, which is $\bm{\theta}_0$. For a proof, see Newey and McFadden (1994, Theorem~9.1) for GMM and Gallant and White (1988, Lemma~7.3(b)) for general extremum estimators. It is also possible to show that, if all the conditions ensuring the asymptotic normality of the unconstrained estimator are satisfied, then $\tilde{\bm{\theta}}$, too, is asymptotically normal under the null. For a proof for GMM, see Newey and McFadden (1994, Theorem~9.2); for ML, see, e.g., Amemiya (1985, Section~4.5).%
+\footnote{If you are interested in the proof, it is just the mean value version of the discussion in the subsection on the LM statistic below, which is based on Taylor expansions.}
+
+\subsection*{The Working Assumptions}
+
+The argument for showing that the Wald, LM, and LR statistics are all asymptotically $\chi^2(r)$ is based on the truth of the following conditions.
+
+\begin{enumerate}[label=(\Alph*)]
+\item $\sqrt{n}(\hat{\bm{\theta}} - \bm{\theta}_0)$ admits the Taylor expansion (\ref{eq:7.3.43}), which is reproduced here
+\begin{equation}
+\label{eq:7.4.5}
+\sqrt{n}(\hat{\bm{\theta}} - \bm{\theta}_0) = -\bm{\Psi}^{-1}\sqrt{n}\,\frac{\partial Q_n(\bm{\theta}_0)}{\partial\bm{\theta}} + o_p.
+\end{equation}
+
+\item $\sqrt{n}\,\frac{\partial Q_n(\bm{\theta}_0)}{\partial\bm{\theta}} \dto N(\mathbf{0}, \bm{\Sigma})$, $\bm{\Sigma}$ positive definite.
+
+\item $\sqrt{n}(\tilde{\bm{\theta}} - \bm{\theta}_0)$ converges in distribution to a random variable.
+
+\item $\bm{\Sigma} = -\bm{\Psi}$.
+\end{enumerate}
+
+We have shown in the previous section that the first two conditions are satisfied for conditional ML under the hypothesis of Proposition~\ref{prop:7.9}, for unconditional ML under the hypothesis suitably modified, and for GMM under the hypothesis of Proposition~\ref{prop:7.10}. As just noted, under the same hypothesis, the constrained estimator $\tilde{\bm{\theta}}$ is consistent and asymptotically normal, ensuring condition~(C). So conditions (A)--(C) are implied by the hypothesis assuring the asymptotic normality of the extremum estimator.
+
+The Wald and LM statistics, if defined appropriately so as not to depend on condition~(D), are asymptotically $\chi^2(r)$. But their expressions can be simplified if condition~(D) is invoked. Furthermore, without the condition, the LR statistic would \emph{not} be asymptotically $\chi^2$. As was noted at the end of the previous section, condition~(D) is satisfied for ML and also for efficient GMM with $\mathbf{W} = \mathbf{S}^{-1}$. Therefore, the part of the discussion that relies on condition~(D) is not applicable to nonefficient GMM.
+
+\subsection*{The Wald Statistic}
+
+Throughout the book we have had several occasions to derive the Wald statistic using the ``delta method'' of Lemma~2.5. Here, we provide a slightly different derivation based on the Taylor expansion. Applying the Mean Value Theorem to $\mathbf{a}(\hat{\bm{\theta}})$ around $\bm{\theta}_0$ and noting that $\mathbf{a}(\bm{\theta}_0) = \mathbf{0}$ under the null, the mean value expansion of $\sqrt{n}\,\mathbf{a}(\hat{\bm{\theta}})$ is
+\begin{equation}
+\label{eq:7.4.6}
+\underset{(r \times 1)}{\sqrt{n}\,\mathbf{a}(\hat{\bm{\theta}})} = \underset{(r \times p)}{\mathbf{A}(\bar{\bm{\theta}})} \underset{(p \times 1)}{\sqrt{n}(\hat{\bm{\theta}} - \bm{\theta}_0)}.
+\end{equation}
+
+Derivation of the Taylor expansion from the mean value expansion is more transparent than in the previous section and proceeds as follows. Since $\bar{\bm{\theta}}$, lying between $\bm{\theta}_0$ and $\hat{\bm{\theta}}$, is consistent and since $\mathbf{A}(\cdot)$ is continuous, $\mathbf{A}(\bar{\bm{\theta}})$ converges in probability to $\mathbf{A}_0$ $(\equiv \mathbf{A}(\bm{\theta}_0))$. Furthermore, the term multiplying $\mathbf{A}(\bar{\bm{\theta}})$, $\sqrt{n}(\hat{\bm{\theta}} - \bm{\theta}_0)$, converges to a random variable. So $(\mathbf{A}(\bar{\bm{\theta}}) - \mathbf{A}_0)\sqrt{n}(\hat{\bm{\theta}} - \bm{\theta}_0)$ vanishes (converges to zero in probability) by Lemma~2.4(b). Denoting this term by $o_p$, the mean value expansion can be rewritten as a Taylor expansion:
+\begin{equation}
+\label{eq:7.4.7}
+\underset{(r \times 1)}{\sqrt{n}\,\mathbf{a}(\hat{\bm{\theta}})} = \underset{(r \times p)}{\mathbf{A}_0} \underset{(p \times 1)}{\sqrt{n}(\hat{\bm{\theta}} - \bm{\theta}_0)} + \underset{(r \times 1)}{o_p}.
+\end{equation}
+
+(Note that this argument would not be valid if $\sqrt{n}(\hat{\bm{\theta}} - \bm{\theta}_0)$ did not converge to a random variable.)
+
+Substituting the Taylor expansion (\ref{eq:7.4.5}) into this, we obtain an equation linking $\sqrt{n}\,\mathbf{a}(\hat{\bm{\theta}})$ to $\sqrt{n}\,\frac{\partial Q_n(\bm{\theta}_0)}{\partial\bm{\theta}}$:
+\begin{equation}
+\label{eq:7.4.8}
+\underset{(r \times 1)}{\sqrt{n}\,\mathbf{a}(\hat{\bm{\theta}})} = -\underset{(r \times p)}{\mathbf{A}_0}\underset{(p \times p)}{\bm{\Psi}^{-1}}\underset{(p \times 1)}{\sqrt{n}\,\frac{\partial Q_n(\bm{\theta}_0)}{\partial\bm{\theta}}} + o_p.
+\end{equation}
+
+(The $o_p$ here is $\mathbf{A}_0$ times the $o_p$ in (\ref{eq:7.4.5}) plus the $o_p$ in (\ref{eq:7.4.7}), but it still converges to zero in probability.) It immediately follows from this expression and the asymptotic normality of $\sqrt{n}\,\frac{\partial Q_n(\bm{\theta}_0)}{\partial\bm{\theta}}$ (condition~(B)) that $\sqrt{n}\,\mathbf{a}(\hat{\bm{\theta}})$ converges to a normal distribution with mean zero and
+\begin{equation}
+\label{eq:7.4.9}
+\begin{split}
+\underset{(r \times r)}{\avar(\mathbf{a}(\hat{\bm{\theta}}))} &= \mathbf{A}_0\bm{\Psi}^{-1}\bm{\Sigma}\bm{\Psi}^{-1}\mathbf{A}_0' \\
+&= \underset{(r \times p)}{\mathbf{A}_0}\underset{(p \times p)}{\bm{\Sigma}^{-1}}\underset{(p \times r)}{\mathbf{A}_0'} \quad (\text{if condition (D) is invoked}).
+\end{split}
+\end{equation}
+
+Since the $r \times p$ matrix $\mathbf{A}_0$ is of full row rank and $\bm{\Sigma}$ is positive definite (by condition~(B)), this $r \times r$ matrix is positive definite. Therefore, the associated quadratic form
+\begin{equation}
+\label{eq:7.4.10}
+n\mathbf{a}(\hat{\bm{\theta}})'\bigl[\mathbf{A}_0\bm{\Sigma}^{-1}\mathbf{A}_0'\bigr]^{-1}\mathbf{a}(\hat{\bm{\theta}})
+\end{equation}
+is asymptotically $\chi^2(r)$ under the null. As noted above, $\mathbf{A}(\hat{\bm{\theta}}) \pto \mathbf{A}_0$. So if there is available a consistent estimator $\hat{\bm{\Sigma}}$ of $\bm{\Sigma}$, then $\mathbf{A}(\hat{\bm{\theta}})\hat{\bm{\Sigma}}^{-1}\mathbf{A}(\hat{\bm{\theta}})'$ is consistent for $\mathbf{A}_0\bm{\Sigma}^{-1}\mathbf{A}_0'$, which implies by Lemma~2.4(d) that the Wald statistic defined by
+\begin{equation}
+\label{eq:7.4.11}
+W \equiv n\mathbf{a}(\hat{\bm{\theta}})'\bigl[\mathbf{A}(\hat{\bm{\theta}})\hat{\bm{\Sigma}}^{-1}\mathbf{A}(\hat{\bm{\theta}})'\bigr]^{-1}\mathbf{a}(\hat{\bm{\theta}})
+\end{equation}
+too is asymptotically $\chi^2(r)$ under the null.
+
+How the consistent estimator $\hat{\bm{\Sigma}}$ of $\bm{\Sigma}$ $(= -\bm{\Psi})$ is obtained depends on whether the extremum estimator is ML or efficient GMM. For ML, it is given by a consistent estimate of $-\bm{\Psi} = -\E[\mathbf{H}(\mathbf{w}_t; \bm{\theta}_0)]$:
+\begin{equation}
+\label{eq:7.4.12}
+-\frac{\partial^2 Q_n(\hat{\bm{\theta}})}{\partial\bm{\theta}\,\partial\bm{\theta}'} = -\frac{1}{n}\sum_{t=1}^{n}\mathbf{H}(\mathbf{w}_t; \hat{\bm{\theta}}),
+\end{equation}
+or by a consistent estimate of $\bm{\Sigma} = \E[\mathbf{s}(\mathbf{w}_t; \bm{\theta}_0)\,\mathbf{s}(\mathbf{w}_t; \bm{\theta}_0)']$:
+\begin{equation}
+\label{eq:7.4.13}
+\frac{1}{n}\sum_{t=1}^{n}\mathbf{s}(\mathbf{w}_t; \hat{\bm{\theta}})\,\mathbf{s}(\mathbf{w}_t; \hat{\bm{\theta}})'.
+\end{equation}
+
+For efficient GMM, $\bm{\Sigma} = \mathbf{G}'\mathbf{S}^{-1}\mathbf{G}$ (see (\ref{eq:7.3.49})), which is consistently estimated by
+\begin{equation}
+\label{eq:7.4.14}
+\hat{\bm{\Sigma}} = \hat{\mathbf{G}}'\hat{\mathbf{S}}^{-1}\hat{\mathbf{G}} \quad \text{with} \quad \underset{(K \times p)}{\hat{\mathbf{G}}} \equiv \mathbf{G}_n(\hat{\bm{\theta}}) = \frac{1}{n}\sum_{t=1}^{n}\frac{\partial\mathbf{g}(\mathbf{w}_t; \hat{\bm{\theta}})}{\partial\bm{\theta}'}.
+\end{equation}
+
+As already mentioned, $\hat{\mathbf{S}}$ is an estimate of the long-run variance matrix constructed from the estimated series $\{\mathbf{g}(\mathbf{w}_t; \hat{\bm{\theta}})\}$.
+
+\subsection*{The Lagrange Multiplier (LM) Statistic}
+
+Let $\bm{\gamma}_n$ $(r \times 1)$ be the Lagrange multiplier for the constrained problem (\ref{eq:7.4.4}). The constrained estimator $\tilde{\bm{\theta}}$ satisfies the first-order conditions
+\begin{equation}
+\label{eq:7.4.15}
+\sqrt{n}\,\frac{\partial Q_n(\tilde{\bm{\theta}})}{\partial\bm{\theta}} + \mathbf{A}(\tilde{\bm{\theta}})'\sqrt{n}\,\bm{\gamma}_n = \underset{(p \times 1)}{\mathbf{0}},
+\end{equation}
+\begin{equation}
+\label{eq:7.4.16}
+\sqrt{n}\,\mathbf{a}(\tilde{\bm{\theta}}) = \underset{(r \times 1)}{\mathbf{0}}.
+\end{equation}
+
+We seek the Taylor expansion of these first-order conditions. By condition~(C), $\sqrt{n}(\tilde{\bm{\theta}} - \bm{\theta}_0)$ converges to a random variable. So $\sqrt{n}\,\mathbf{a}(\tilde{\bm{\theta}})$ admits the Taylor expansion
+\begin{equation}
+\label{eq:7.4.17}
+\sqrt{n}\,\mathbf{a}(\tilde{\bm{\theta}}) = \mathbf{A}_0\sqrt{n}(\tilde{\bm{\theta}} - \bm{\theta}_0) + o_p.
+\end{equation}
+
+It is left as Review Question~2 to show that the following Taylor expansion holds for both ML and GMM:
+\begin{equation}
+\label{eq:7.4.18}
+\sqrt{n}\,\frac{\partial Q_n(\tilde{\bm{\theta}})}{\partial\bm{\theta}} = \sqrt{n}\,\frac{\partial Q_n(\bm{\theta}_0)}{\partial\bm{\theta}} + \bm{\Psi}\sqrt{n}(\tilde{\bm{\theta}} - \bm{\theta}_0) + o_p.
+\end{equation}
+
+An implication of this equation is that $\sqrt{n}\,\frac{\partial Q_n(\tilde{\bm{\theta}})}{\partial\bm{\theta}}$ converges to a random variable. So $\sqrt{n}\,\bm{\gamma}_n$, satisfying (\ref{eq:7.4.15}), converges to a random variable. Consequently, since $\mathbf{A}(\tilde{\bm{\theta}}) \pto \mathbf{A}_0$, we obtain
+\begin{equation}
+\label{eq:7.4.19}
+\mathbf{A}(\tilde{\bm{\theta}})'\sqrt{n}\,\bm{\gamma}_n = \mathbf{A}_0'\sqrt{n}\,\bm{\gamma}_n + (\mathbf{A}(\tilde{\bm{\theta}}) - \mathbf{A}_0)'\sqrt{n}\,\bm{\gamma}_n = \mathbf{A}_0'\sqrt{n}\,\bm{\gamma}_n + o_p.
+\end{equation}
+
+Substituting these three equations into the first-order conditions, we obtain
+\begin{equation}
+\label{eq:7.4.20}
+\begin{bmatrix} \underset{(p \times p)}{\bm{\Psi}} & \underset{(p \times r)}{\mathbf{A}_0'} \\[4pt] \underset{(r \times p)}{\mathbf{A}_0} & \underset{(r \times r)}{\mathbf{0}} \end{bmatrix} \begin{bmatrix} \sqrt{n}(\tilde{\bm{\theta}} - \bm{\theta}_0) \\[4pt] \sqrt{n}\,\bm{\gamma}_n \end{bmatrix} = \begin{bmatrix} -\sqrt{n}\,\frac{\partial Q_n(\bm{\theta}_0)}{\partial\bm{\theta}} \\[4pt] \mathbf{0} \end{bmatrix} + o_p.
+\end{equation}
+
+Using the formula for partitioned inverses, this can be solved to yield
+\begin{equation}
+\label{eq:7.4.21}
+\sqrt{n}\,\bm{\gamma}_n = -(\mathbf{A}_0\bm{\Psi}^{-1}\mathbf{A}_0')^{-1}\mathbf{A}_0\bm{\Psi}^{-1}\sqrt{n}\,\frac{\partial Q_n(\bm{\theta}_0)}{\partial\bm{\theta}} + o_p,
+\end{equation}
+\begin{equation}
+\label{eq:7.4.22}
+\sqrt{n}(\tilde{\bm{\theta}} - \bm{\theta}_0) = -\bigl[\bm{\Psi}^{-1} - \bm{\Psi}^{-1}\mathbf{A}_0'(\mathbf{A}_0\bm{\Psi}^{-1}\mathbf{A}_0')^{-1}\mathbf{A}_0\bm{\Psi}^{-1}\bigr]\sqrt{n}\,\frac{\partial Q_n(\bm{\theta}_0)}{\partial\bm{\theta}} + o_p.
+\end{equation}
+
+The rest is the same as in the derivation of the Wald statistic. From (\ref{eq:7.4.21}), $\sqrt{n}\,\bm{\gamma}_n$ converges to a normal distribution with mean zero and variance given by
+\begin{equation}
+\label{eq:7.4.23}
+\begin{split}
+\underset{(r \times r)}{\avar(\bm{\gamma}_n)} &= (\mathbf{A}_0\bm{\Psi}^{-1}\mathbf{A}_0')^{-1}\mathbf{A}_0\bm{\Psi}^{-1}\bm{\Sigma}\bm{\Psi}^{-1}\mathbf{A}_0'(\mathbf{A}_0\bm{\Psi}^{-1}\mathbf{A}_0')^{-1} \\
+&= (\mathbf{A}_0\bm{\Sigma}^{-1}\mathbf{A}_0')^{-1} \quad (\text{if condition (D) is invoked}).
+\end{split}
+\end{equation}
+
+Since this $r \times r$ matrix is positive definite, the associated quadratic form
+\begin{equation}
+\label{eq:7.4.24}
+n\bm{\gamma}_n'(\mathbf{A}_0\bm{\Sigma}^{-1}\mathbf{A}_0')\bm{\gamma}_n
+\end{equation}
+is asymptotically $\chi^2(r)$ under the null. If there is available a consistent estimator, denoted $\tilde{\bm{\Sigma}}$, of $\bm{\Sigma}$, then $\mathbf{A}(\tilde{\bm{\theta}})\tilde{\bm{\Sigma}}^{-1}\mathbf{A}(\tilde{\bm{\theta}})'$ is consistent for $\mathbf{A}_0\bm{\Sigma}^{-1}\mathbf{A}_0'$. So the LM statistic defined by the first line below is asymptotically $\chi^2(r)$ under the null. This statistic can be beautified by the first-order conditions (\ref{eq:7.4.15}):
+\begin{equation}
+\label{eq:7.4.25}
+\begin{split}
+LM &\equiv n\,\underset{(1 \times r)}{\bm{\gamma}_n'}\underbrace{\bigl[\mathbf{A}(\tilde{\bm{\theta}})\tilde{\bm{\Sigma}}^{-1}\mathbf{A}(\tilde{\bm{\theta}})'\bigr]}_{(r \times r)}\underset{(r \times 1)}{\bm{\gamma}_n} \\
+&= n(\mathbf{A}(\tilde{\bm{\theta}})'\bm{\gamma}_n)'\tilde{\bm{\Sigma}}^{-1}(\mathbf{A}(\tilde{\bm{\theta}})'\bm{\gamma}_n) \\
+&= n\!\left(\frac{\partial Q_n(\tilde{\bm{\theta}})}{\partial\bm{\theta}}\right)'\!\tilde{\bm{\Sigma}}^{-1}\!\left(\frac{\partial Q_n(\tilde{\bm{\theta}})}{\partial\bm{\theta}}\right) \quad (\text{since } \mathbf{A}(\tilde{\bm{\theta}})'\bm{\gamma}_n = -\frac{\partial Q_n(\tilde{\bm{\theta}})}{\partial\bm{\theta}} \text{ by } (\ref{eq:7.4.15})).
+\end{split}
+\end{equation}
+
+The last expression for the LM statistic is the reason why the statistic is also called the \textbf{score test statistic}. It is the distance from zero of the score evaluated at the constrained estimate $\tilde{\bm{\theta}}$. You should not be fooled by its beauty, however: despite being a quadratic form associated with a $p$-dimensional vector, the degrees of freedom of its $\chi^2$ asymptotic distribution are $r$, not $p$, as is clear from the derivation.
+
+For ML, $\tilde{\bm{\Sigma}}$ is given by (\ref{eq:7.4.12}) or (\ref{eq:7.4.13}), evaluated at $\tilde{\bm{\theta}}$. For GMM, $\bm{\Sigma}$ is consistently estimated by
+\begin{equation}
+\label{eq:7.4.26}
+\tilde{\bm{\Sigma}} = \tilde{\mathbf{G}}'\tilde{\mathbf{S}}^{-1}\tilde{\mathbf{G}} \quad \text{with} \quad \underset{(K \times p)}{\tilde{\mathbf{G}}} \equiv \mathbf{G}_n(\tilde{\bm{\theta}}) = \frac{1}{n}\sum_{t=1}^{n}\frac{\partial\mathbf{g}(\mathbf{w}_t; \tilde{\bm{\theta}})}{\partial\bm{\theta}'}.
+\end{equation}
+
+Here, $\tilde{\mathbf{S}}$ is an estimate of the long-run variance matrix constructed from the estimated series $\{\mathbf{g}(\mathbf{w}_t; \tilde{\bm{\theta}})\}$.
+
+\subsection*{The Likelihood Ratio (LR) Statistic}
+
+The LR statistic is defined as $2n$ times $Q_n(\hat{\bm{\theta}}) - Q_n(\tilde{\bm{\theta}})$. (For efficient GMM, calling this the likelihood ratio statistic is a slight abuse of the language because $Q_n$ for GMM is not the likelihood function, but we will continue to use the term for both ML and GMM.) It is not hard to show for ML and GMM (see Review Questions~6 and 7) that
+\begin{equation}
+\label{eq:7.4.27}
+LR \equiv 2n \cdot [Q_n(\hat{\bm{\theta}}) - Q_n(\tilde{\bm{\theta}})] = -n(\hat{\bm{\theta}} - \tilde{\bm{\theta}})'\bm{\Psi}(\hat{\bm{\theta}} - \tilde{\bm{\theta}}) + o_p.
+\end{equation}
+
+The validity of this expression does not depend on condition~(D).
+
+From this expression, it is easy to derive the asymptotic distribution of the LR statistic. Subtracting (\ref{eq:7.4.22}) from (\ref{eq:7.4.5}), we obtain
+\begin{equation}
+\label{eq:7.4.28}
+\sqrt{n}(\hat{\bm{\theta}} - \tilde{\bm{\theta}}) = -\bm{\Psi}^{-1}\mathbf{A}_0'(\mathbf{A}_0\bm{\Psi}^{-1}\mathbf{A}_0')^{-1}\mathbf{A}_0\bm{\Psi}^{-1}\sqrt{n}\,\frac{\partial Q_n(\bm{\theta}_0)}{\partial\bm{\theta}} + o_p.
+\end{equation}
+
+Substituting this into (\ref{eq:7.4.27}), the LR statistic can be written as
+\begin{equation}
+\label{eq:7.4.29}
+LR = -\!\left(\sqrt{n}\,\frac{\partial Q_n(\bm{\theta}_0)}{\partial\bm{\theta}}\right)'\!\bm{\Psi}^{-1}\mathbf{A}_0'(\mathbf{A}_0\bm{\Psi}^{-1}\mathbf{A}_0')^{-1}\mathbf{A}_0\bm{\Psi}^{-1}\!\left(\sqrt{n}\,\frac{\partial Q_n(\bm{\theta}_0)}{\partial\bm{\theta}}\right) + o_p.
+\end{equation}
+
+Now invoke assumption~(D). The LR statistic becomes
+\begin{equation}
+\label{eq:7.4.30}
+LR = \left(\sqrt{n}\,\frac{\partial Q_n(\bm{\theta}_0)}{\partial\bm{\theta}}\right)'\!\bm{\Sigma}^{-1}\mathbf{A}_0'\bigl[\mathbf{A}_0\bm{\Sigma}^{-1}\mathbf{A}_0'\bigr]^{-1}\mathbf{A}_0\bm{\Sigma}^{-1}\!\left(\sqrt{n}\,\frac{\partial Q_n(\bm{\theta}_0)}{\partial\bm{\theta}}\right) + o_p.
+\end{equation}
+
+This is asymptotically $\chi^2(r)$ because the variance of the limiting distribution of $\mathbf{A}_0\bm{\Sigma}^{-1}(\sqrt{n}\,\frac{\partial Q_n(\bm{\theta}_0)}{\partial\bm{\theta}})$ is the positive definite matrix in brackets.
+
+This completes the proof of the asymptotic equivalence of the trio of statistics. But it should be clear from the proof that something stronger than asymptotic equivalence (that the three statistics share the same asymptotic distribution) holds. We have shown in the proof that the difference between the Wald statistic and (\ref{eq:7.4.10}) is $o_p$. But by (\ref{eq:7.4.8}) the difference between the latter and the quadratic form in (\ref{eq:7.4.30}) is $o_p$ when $\bm{\Sigma} = -\bm{\Psi}$. So the numerical difference between the Wald statistic and the LR statistic is $o_p$ when $\bm{\Sigma} = -\bm{\Psi}$. The same applies to the LM statistic. The difference between it and (\ref{eq:7.4.24}) is $o_p$. But the difference between the latter and the quadratic form in (\ref{eq:7.4.30}) is again $o_p$ when $\bm{\Sigma} = -\bm{\Psi}$.
+
+\subsection*{Summary of the Trinity}
+
+To summarize the rather lengthy discussion of this section,
+
+\begin{proposition}[The trinity]
+\label{prop:7.11}
+Let $\hat{\bm{\theta}}$ be the extremum estimator defined in \emph{(\ref{eq:7.1.1})}. Consider the null hypothesis \emph{(\ref{eq:7.4.1})} where $\mathbf{a}(\cdot)$ is continuously differentiable (so the Jacobian $\mathbf{A}(\bm{\theta}) \equiv \frac{\partial\mathbf{a}(\bm{\theta})}{\partial\bm{\theta}'}$ is continuous) and the rank condition \emph{(\ref{eq:7.4.3})} is satisfied. Let $\tilde{\bm{\theta}}$ be the constrained extremum estimator defined in \emph{(\ref{eq:7.4.4})}. Assume:
+\begin{itemize}
+\item the hypothesis of Proposition~\ref{prop:7.9}, if the extremum estimator is conditional ML,
+\item the hypothesis appropriately modified as indicated right below Proposition~\ref{prop:7.9}, in the case of unconditional ML,
+\item the hypothesis of Proposition~\ref{prop:7.10} with $\mathbf{W} = \mathbf{S}^{-1}$ and that there is available a consistent estimator $\hat{\mathbf{S}}$ of $\mathbf{S}$ constructed from $\hat{\bm{\theta}}$ and $\tilde{\mathbf{S}}$ constructed from $\tilde{\bm{\theta}}$, in the case of efficient GMM.
+\end{itemize}
+
+Define the Wald, LM, and LR statistics as in Table~\ref{tab:7.2}. Then
+\begin{enumerate}[label=(\alph*)]
+\item the constrained extremum estimator $\tilde{\bm{\theta}}$ is consistent and asymptotically normal,
+\item the three statistics all converge in distribution to $\chi^2(r)$ under the null where $r$ is the number of restrictions in the null,
+\item moreover, the numerical difference between the three statistics converges in probability to zero under the null.
+\end{enumerate}
+\end{proposition}
+
+\begin{table}[t]
+\centering
+\caption{Trinity}
+\label{tab:7.2}
+\[
+\text{Wald: } n\mathbf{a}(\hat{\bm{\theta}})'\bigl[\mathbf{A}(\hat{\bm{\theta}})\hat{\bm{\Sigma}}^{-1}\mathbf{A}(\hat{\bm{\theta}})'\bigr]^{-1}\mathbf{a}(\hat{\bm{\theta}})
+\]
+\[
+\text{LM: } n\!\left(\frac{\partial Q_n(\tilde{\bm{\theta}})}{\partial\bm{\theta}}\right)'\!\tilde{\bm{\Sigma}}^{-1}\!\left(\frac{\partial Q_n(\tilde{\bm{\theta}})}{\partial\bm{\theta}}\right)
+\]
+\[
+\text{LR: } 2n \cdot [Q_n(\hat{\bm{\theta}}) - Q_n(\tilde{\bm{\theta}})]
+\]
+\medskip
+\begin{tabular}{@{}lcc@{}}
+\toprule
+Terms for substitution & Conditional ML & Efficient GMM \\
+\midrule
+$Q_n(\bm{\theta})$ & $\frac{1}{n}\sum_{t=1}^{n}\log f(y_t \mid \mathbf{x}_t; \bm{\theta})$ & $-\frac{1}{2}\mathbf{g}_n(\bm{\theta})'\hat{\mathbf{S}}^{-1}\mathbf{g}_n(\bm{\theta})$ \\[8pt]
+$\hat{\bm{\Sigma}}$ & $-\frac{\partial^2 Q_n(\hat{\bm{\theta}})}{\partial\bm{\theta}\,\partial\bm{\theta}'}$ or $\frac{1}{n}\sum \mathbf{s}(\mathbf{w}_t;\hat{\bm{\theta}})\,\mathbf{s}(\mathbf{w}_t;\hat{\bm{\theta}})'$ & $\hat{\mathbf{G}}'\hat{\mathbf{S}}^{-1}\hat{\mathbf{G}}$ \\[8pt]
+$\tilde{\bm{\Sigma}}$ & replace $\hat{\bm{\theta}}$ by $\tilde{\bm{\theta}}$ in above & $\tilde{\mathbf{G}}'\tilde{\mathbf{S}}^{-1}\tilde{\mathbf{G}}$ \\
+\bottomrule
+\end{tabular}
+
+\medskip
+\footnotesize
+NOTE: See (\ref{eq:7.3.2}) and (\ref{eq:7.3.3}) for definitions of $\mathbf{s}(\mathbf{w}_t;\bm{\theta})$ and $\mathbf{H}(\mathbf{w}_t;\bm{\theta})$. Also, $\mathbf{g}_n(\bm{\theta}) = \frac{1}{n}\sum_{t=1}^{n}\mathbf{g}(\mathbf{w}_t;\bm{\theta})$, $\mathbf{G}_n(\bm{\theta}) = \frac{\partial\mathbf{g}_n(\bm{\theta})}{\partial\bm{\theta}'}$, and $\mathbf{G} = \E\!\left[\frac{\partial\mathbf{g}(\mathbf{w}_t;\bm{\theta}_0)}{\partial\bm{\theta}'}\right]$.
+
+The same middle matrix is used in $Q_n(\tilde{\bm{\theta}})$ and $Q_n(\hat{\bm{\theta}})$ for GMM.
+\end{table}
+
+\subsection*{Questions for Review}
+
+\begin{enumerate}
+\item Verify that the LM statistic for ML can be written as
+\[
+n\!\left(\frac{1}{n}\sum_{t=1}^{n}\mathbf{s}(\mathbf{w}_t; \tilde{\bm{\theta}})\right)'\!\left\{\frac{1}{n}\sum_{t=1}^{n}\mathbf{s}(\mathbf{w}_t; \tilde{\bm{\theta}})\,\mathbf{s}(\mathbf{w}_t; \tilde{\bm{\theta}})'\right\}^{-1}\!\left(\frac{1}{n}\sum_{t=1}^{n}\mathbf{s}(\mathbf{w}_t; \tilde{\bm{\theta}})\right).
+\]
+
+\item Derive (\ref{eq:7.4.18}). \textbf{Hint:} For ML, replace $\hat{\bm{\theta}}$ by $\tilde{\bm{\theta}}$ in (\ref{eq:7.3.5}). For GMM, derive
+\[
+\sqrt{n}\,\frac{\partial Q_n(\tilde{\bm{\theta}})}{\partial\bm{\theta}} = -\mathbf{G}_n(\tilde{\bm{\theta}})'\widehat{\mathbf{W}}\frac{1}{\sqrt{n}}\sum_{t=1}^{n}\mathbf{g}(\mathbf{w}_t;\bm{\theta}_0) - \mathbf{G}_n(\tilde{\bm{\theta}})'\widehat{\mathbf{W}}\mathbf{G}_n(\bar{\bm{\theta}})\sqrt{n}(\tilde{\bm{\theta}} - \bm{\theta}_0),
+\]
+where $\bar{\bm{\theta}}$ lies between $\bm{\theta}_0$ and $\tilde{\bm{\theta}}$. The derivation of this should be as easy as the derivation of (\ref{eq:7.3.31}).
+
+\item Explain why the LR statistic would not be asymptotically $\chi^2$ if $\bm{\Sigma} = -\bm{\Psi}$ did not hold.
+
+\item For ML, suppose the trio of statistics are calculated as indicated in Table~\ref{tab:7.2}, but suppose $\mathbf{w}_t$ is actually serially correlated. Which one is still asymptotically $\chi^2$? [Answer: None.]
+
+\item Suppose $\bm{\Sigma} = -\bm{\Psi}$ does not hold but suppose that a consistent estimate $\hat{\bm{\Psi}}$ of $\bm{\Psi}$ is available along with the consistent estimate $\hat{\bm{\Sigma}}$ of $\bm{\Sigma}$. Propose an LM statistic that is asymptotically $\chi^2(r)$. \textbf{Hint:} Use the first equality in (\ref{eq:7.4.23}), which is valid without $\bm{\Sigma} = -\bm{\Psi}$. The answer is
+\begin{equation}
+\label{eq:7.4.31}
+n\!\left(\frac{\partial Q_n(\tilde{\bm{\theta}})}{\partial\bm{\theta}}\right)'\!\hat{\bm{\Psi}}^{-1}\mathbf{A}(\tilde{\bm{\theta}})'\bigl[\mathbf{A}(\tilde{\bm{\theta}})\hat{\bm{\Psi}}^{-1}\hat{\bm{\Sigma}}\hat{\bm{\Psi}}^{-1}\mathbf{A}(\tilde{\bm{\theta}})'\bigr]^{-1}\mathbf{A}(\tilde{\bm{\theta}})\hat{\bm{\Psi}}^{-1}\!\left(\frac{\partial Q_n(\tilde{\bm{\theta}})}{\partial\bm{\theta}}\right).
+\end{equation}
+
+\item (Optional, proof of (\ref{eq:7.4.27}) for M-estimators) \enspace Prove (\ref{eq:7.4.27}) for M-estimators. \textbf{Hint:} Take for granted the ``second-order'' mean value expansion around $\hat{\bm{\theta}}$,
+\begin{equation}
+\label{eq:7.4.32}
+Q_n(\tilde{\bm{\theta}}) = Q_n(\hat{\bm{\theta}}) + \frac{\partial Q_n(\hat{\bm{\theta}})}{\partial\bm{\theta}'}(\tilde{\bm{\theta}} - \hat{\bm{\theta}}) + \frac{1}{2}(\tilde{\bm{\theta}} - \hat{\bm{\theta}})'\frac{\partial^2 Q_n(\bar{\bm{\theta}})}{\partial\bm{\theta}\,\partial\bm{\theta}'}(\tilde{\bm{\theta}} - \hat{\bm{\theta}}),
+\end{equation}
+where $\bar{\bm{\theta}}$ lies between $\hat{\bm{\theta}}$ and $\tilde{\bm{\theta}}$. By the first-order condition, $\frac{\partial Q_n(\hat{\bm{\theta}})}{\partial\bm{\theta}} = \mathbf{0}$. Also, $\frac{\partial^2 Q_n(\bar{\bm{\theta}})}{\partial\bm{\theta}\,\partial\bm{\theta}'} \pto \E[\mathbf{H}(\mathbf{w}_t; \bm{\theta}_0)]$.
+
+\item (Optional, proof of (\ref{eq:7.4.27}) for GMM) \enspace Prove (\ref{eq:7.4.27}) for GMM. \textbf{Hint:} From the mean value expansion of $\mathbf{g}_n(\bm{\theta})$ around $\hat{\bm{\theta}}$, derive the Taylor expansion
+\begin{equation}
+\label{eq:7.4.33}
+\mathbf{g}_n(\tilde{\bm{\theta}}) = \mathbf{g}_n(\hat{\bm{\theta}}) + \mathbf{G}_n(\hat{\bm{\theta}})(\tilde{\bm{\theta}} - \hat{\bm{\theta}}) + o_p.
+\end{equation}
+Substitute this into $Q_n(\tilde{\bm{\theta}}) = -\frac{1}{2}\mathbf{g}_n(\tilde{\bm{\theta}})'\widehat{\mathbf{W}}\mathbf{g}_n(\tilde{\bm{\theta}})$. Then use the first-order condition that $\mathbf{G}_n(\hat{\bm{\theta}})'\widehat{\mathbf{W}}\mathbf{g}_n(\hat{\bm{\theta}}) = \mathbf{0}$.
+\end{enumerate}

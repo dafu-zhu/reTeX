@@ -1,0 +1,626 @@
+% sec14_8.tex — Section 14.8: Stability and Instability
+
+\section{Stability and Instability}
+\label{sec:14.8}
+
+\subsection{Brief Ordinary Differential Equations and Bifurcation Theory}
+\label{subsec:14.8.1}
+
+Equilibrium solutions of partial differential equations may be stable or unstable. We will briefly develop these ideas first for ordinary differential equations, which are more fully discussed in many recent books on \textbf{dynamical systems}, such as the ones by Glendinning [1994], Strogatz [1994], and Verhulst [1997].
+
+\paragraph{First-order ordinary differential equations.}
+The concepts of equilibrium and stability are perhaps simplest in the case of autonomous first-order ordinary differential equations:
+\begin{equation}
+\boxed{\od{x}{t} = f(x).}
+\label{eq:14.8.1}
+\end{equation}
+An \textbf{equilibrium} solution $x_0$ is a solution of \eqref{eq:14.8.1} independent of time:
+\begin{equation}
+\boxed{0 = f(x_0).}
+\label{eq:14.8.2}
+\end{equation}
+An equilibrium solution is \textbf{stable} if all nearby initial conditions stay near the equilibrium. If there exists a nearby initial condition for which the solution goes away from the equilibrium, we say the equilibrium is \textbf{unstable}.
+
+To analyze whether $x_0$ is stable or unstable requires only considering the differential equation \eqref{eq:14.8.1} near $x_0$. We approximate the differential equation using a Taylor series of $f(x)$ around $x_0$ [the linearization or tangent line approximation for $f(x)$ near $x_0$]:
+\[
+\od{x}{t} = f(x) = f(x_0) + (x - x_0)f'(x_0) + \cdots.
+\]
+We usually can ignore the nonlinear terms since we assume $x$ is near $x_0$. Since $x_0$ is an equilibrium, $f(x_0) = 0$, and the differential equation \eqref{eq:14.8.1} can be approximated by a linear differential equation (with constant coefficients):
+\begin{equation}
+\boxed{\od{x}{t} = (x - x_0)f'(x_0).}
+\label{eq:14.8.3}
+\end{equation}
+The solution of \eqref{eq:14.8.3} is straightforward: $x - x_0 = ce^{f'(x_0)t}$. We conclude that
+\begin{center}
+\fbox{\parbox{0.8\textwidth}{
+\boxed{the equilibrium $x_0$ is stable if $f'(x_0) < 0$\\
+}}
+\end{center}
+the equilibrium $x_0$ is unstable if $f'(x_0) > 0$.}
+If $f'(x_0) = 0$, the neglected nonlinear terms are needed to determine the stability of $x_0$.
+
+\paragraph{Example of bifurcation point.}
+We wish to study how solutions of differential equations depend on a parameter $R$. As a specific elementary example, we begin by considering
+\begin{equation}
+\od{x}{t} = R - x^2.
+\label{eq:14.8.4}
+\end{equation}
+For an equilibrium, $x^2 = R$. If $R > 0$, there are two equilibria $x = \pm\sqrt{R}$. These two equilibria coalesce to $x = 0$ when $R = 0$. If $R < 0$, there are no equilibria. $R = 0$ is called a \textbf{bifurcation point} because the number of equilibria changes there. In other examples, different kinds of bifurcations occur. Sometimes a \textbf{bifurcation diagram} (as in Fig.\ 14.8.1) is drawn in which the equilibria are graphed as a function of the parameter $R$. The stability of the equilibria can be determined using the linearization (see the Exercises). However, in the figure we illustrate the determination of stability using a \textbf{one-dimensional phase portrait}. We fix the parameter $R$ (drawing a vertical line). If $\od{x}{t} > 0$, we introduce upward arrows (and downward arrows if $\od{x}{t} < 0$). In this example \eqref{eq:14.8.4}, if $x$ is large and positive, then $\od{x}{t} < 0$ (and the sign of $\od{x}{t}$ changes each time an equilibria is reached since in this example the roots are simple roots). Thus we see in this example that the upper branch ($x > 0$) is stable and the lower branch ($x < 0$) is unstable.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch14/fig_14_8_1.png}
+\caption{One dimensional phase portrait and bifurcation diagram for an example of a saddle-node bifurcation.}
+\label{fig:14.8.1}
+\end{figure}
+
+\paragraph{Definition of a bifurcation point.}
+First-order differential equations which depend on a parameter $R$ may be written:
+\begin{equation}
+\boxed{\od{x}{t} = f(x, R).}
+\label{eq:14.8.5}
+\end{equation}
+First we just study equilibrium solutions $x_0$:
+\[
+0 = f(x_0, R).
+\]
+Generally, the equilibrium $x_0$ will depend on the parameter $R$. From our previous discussion, $x_0$ will be stable if $f_x(x_0, R) < 0$ and unstable if $f_x(x_0, R) > 0$.
+
+We wish to investigate how one specific equilibrium changes as the parameter changes a small amount. We assume there is a special value of the parameter of interest $R_c$ and we know an equilibrium corresponding to that value $x_c$, so that
+\[
+0 = f(x_c, R_c).
+\]
+If $R$ is near $R_c$, we assume that $x_0$ will be near $x_c$. Thus, we use a Taylor series as a function of two variables:
+\[
+0 = f(x_0, R) = f(x_c, R_c) + (x_0 - x_c)f_x(x_c, R_c) + (R - R_c)f_R(x_c, R_c) + \cdots.
+\]
+As an approximation, for $R$ near $R_c$ we conclude that usually the equilibrium is changed by a small amount:
+\begin{equation}
+x_0 - x_c = -\frac{f_R}{f_x}(R - R_c) + \cdots.
+\label{eq:14.8.6}
+\end{equation}
+This is guaranteed to occur if $f_x \neq 0$. Thus, the number of equilibria cannot change if $f_x \neq 0$. Equation \eqref{eq:14.8.6} is the tangent line approximation to the bifurcation diagram.
+
+The only \emph{interesting} things can happen when $f_x = 0$. A point $(x, R)$ is called a \textbf{bifurcation point} if
+\begin{equation}
+\boxed{f(x, R) = 0 \text{ at the same time } f_x(x, R) = 0.}
+\label{eq:14.8.7}
+\end{equation}
+The number of equilibria can only change at a bifurcation point. Also, stability of an equilibria may change at a bifurcation point since an equilibrium is stable if $f_x < 0$ and unstable if $f_x > 0$.
+
+We reconsider the previous example \eqref{eq:14.8.4}, in which $0 = f(x,R) = R - x^2$. The bifurcation point can be determined by insisting that simultaneously $f_x = -2x = 0$. We see the bifurcation point is $x = 0$ in which case $R = 0$.
+
+\paragraph{Saddle-node bifurcation.}
+In this subsection, we will show that the type of bifurcation illustrated by \eqref{eq:14.8.4} is typical. We consider the first-order problem depending on the parameter $R$:
+\begin{equation}
+\boxed{\od{x}{t} = f(x, R).}
+\label{eq:14.8.8}
+\end{equation}
+We assume that we have found a bifurcation point $(x_c, R_c)$ satisfying
+\begin{equation}
+\boxed{f(x_c, R_c) = 0 \text{ and } f_x(x_c, R_c) = 0.}
+\label{eq:14.8.9}
+\end{equation}
+Since we are interested in solving the differential equation if $R$ is near $R_c$, we will, in addition, assume that $x$ is near $x_c$. Thus, we approximate the differential equation using the Taylor series of $f(x,R)$ around $(x_c, R_c)$:
+\begin{align}
+\od{x}{t} &= f(x,R) \notag \\
+&= f(x_c, R_c) + (x - x_c)f_x(x_c, R_c) + (R - R_c)f_R(x_c, R_c) \notag \\
+&\quad + \frac{1}{2}(x - x_c)^2 f_{xx}(x_c, R_c) + \cdots.
+\end{align}
+This simplifies since $(x_c, R_c)$ is a bifurcation point satisfying \eqref{eq:14.8.9}:
+\begin{equation}
+\od{x}{t} = (R - R_c)f_R(x_c, R_c) + \frac{1}{2}(x - x_c)^2 f_{xx}(x_c, R_c) + \cdots.
+\label{eq:14.8.10}
+\end{equation}
+It can be shown that the other terms in the Taylor series are much smaller, such as terms containing $(R - R_c)^2$, $(x - x_c)(R - R_c)$, $(x - x_c)^3$ because we will be assuming $R$ is near $R_c$ and $x$ is near $x_c$ with $(x - x_c)^2 = O(R - R_c)$. Thus, we will be justified (as an approximation valid near the bifurcation point) in ignoring these other higher-order terms. The bifurcation diagram near $(x_c, R_c)$ will be approximately parabolic (similar to Fig.\ 14.8.1), which is derived by considering the equilibrium associated with the simple approximate differential equation \eqref{eq:14.8.10}. Here, the bifurcation point is $(x_c, R_c)$. The parabola can open to the left or right depending on the signs of $f_R$ and $f_{xx}$. For this to be a good approximation, we assume $f_R(x_c, R_c) \neq 0$ and $f_{xx}(x_c, R_c) \neq 0$. Whenever $f_R(x_c, R_c) \neq 0$ and $f_{xx}(x_c, R_c) \neq 0$, the bifurcation point is also known as a \textbf{saddle-node bifurcation} (for complicated reasons discussed briefly later). The stability of the equilibria can be determined in each case by a one-dimensional phase portrait. One branch (depending again on the signs of the Taylor coefficients) of equilibrium will be stable and the other branch unstable.
+
+\paragraph{Other bifurcations.}
+Other kinds of bifurcations such as \textbf{transcritical} (exchange of stabilities) and \textbf{pitchfork} will occur if $f_R(x_c, R_c) = 0$ or if $f_{xx}(x_c, R_c) = 0$.
+
+\paragraph{Systems of first-order differential equations.}
+Consider a system of first-order autonomous differential equations:
+\begin{equation}
+\boxed{\od{\vec{x}}{t} = \vec{f}(\vec{x}) = \begin{bmatrix} f(\vec{x}) \\ g(\vec{x}) \end{bmatrix}.}
+\label{eq:14.8.11}
+\end{equation}
+Equilibria $\vec{x}_0$ satisfy $\vec{f}(\vec{x}_0) = \vec{0}$. To analyze the stability of an equilibrium, we consider $\vec{x}$ near $\vec{x}_0$, and thus use a Taylor series. The displacement from equilibrium is introduced, $\vec{y} = \vec{x} - \vec{x}_0$, and we obtain the linear system instead of \eqref{eq:14.8.3} involving the \textbf{Jacobian matrix} $\boldsymbol{J}$ evaluated at the equilibrium
+\begin{equation}
+\boxed{\od{\vec{y}}{t} = \boldsymbol{J}\vec{y},}
+\label{eq:14.8.12}
+\end{equation}
+where
+\begin{equation}
+\boldsymbol{J} = \begin{bmatrix} J_{11} & J_{12} \\ J_{21} & J_{22} \end{bmatrix} = \begin{bmatrix} \pd{f}{x} & \pd{f}{y} \\ \pd{g}{x} & \pd{g}{y} \end{bmatrix}\bigg|_{\vec{x}=\vec{x}_0}.
+\label{eq:14.8.13}
+\end{equation}
+To solve the linear systems of differential equation, we substitute $\vec{y}(t) = e^{\lambda t}\vec{v}$, in which case
+\begin{equation}
+\boxed{\boldsymbol{J}\vec{v} = \lambda\vec{v} \quad \text{or} \quad (\boldsymbol{J} - \lambda \boldsymbol{I})\vec{v} = \vec{0},}
+\label{eq:14.8.14}
+\end{equation}
+so that $\lambda$ are the \textbf{eigenvalues of the Jacobian matrix $\boldsymbol{J}$} and $\vec{v}$ the corresponding eigenvectors. For nontrivial solutions, the eigenvalues are obtained from the determinant condition
+\begin{equation}
+\boxed{0 = \det(\boldsymbol{J} - \lambda\boldsymbol{I}) = \det\begin{bmatrix} J_{11} - \lambda & J_{12} \\ J_{21} & J_{22} - \lambda \end{bmatrix},}
+\label{eq:14.8.15}
+\end{equation}
+so that
+\begin{equation}
+\boxed{\lambda^2 - T\lambda + D = (\lambda - \lambda_1)(\lambda - \lambda_2) = \lambda^2 - (\lambda_1 + \lambda_2)\lambda + \lambda_1\lambda_2 = 0,}
+\label{eq:14.8.16}
+\end{equation}
+where the \textbf{trace} $\boldsymbol{J} = \boldsymbol{T} = J_{11} + J_{22}$ and \textbf{determinant} $\boldsymbol{J} = \boldsymbol{D} = J_{11}J_{22} - J_{12}J_{21}$ have been introduced and where the quadratic has been factored with two roots $\lambda_1$ and $\lambda_2$, which are the two eigenvalues. By comparing the two forms of the quadratic, the product of the eigenvalues equals the determinant and the sum of the eigenvalues equals the trace:
+\begin{equation}
+\boxed{\prod\lambda_i = \det\boldsymbol{J}}
+\label{eq:14.8.17}
+\end{equation}
+\begin{equation}
+\boxed{\sum\lambda_i = \text{tr}\,\boldsymbol{J}.}
+\label{eq:14.8.18}
+\end{equation}
+This is also valid for $n$-by-$n$ matrices.
+
+\paragraph{Stability for systems.}
+To be unstable, the displacement from the equilibrium must grow for \emph{some} initial condition. To be stable, the displacement should stay near the equilibrium for \emph{all} initial conditions. Since all solutions are proportional to $e^{\lambda t}$ and $\lambda$ may be real or complex:
+\begin{center}
+\fbox{\parbox{0.8\textwidth}{
+The equilibrium is unstable if one eigenvalue has the $\text{Re}(\lambda) > 0$.
+}}
+\end{center}
+\begin{center}
+\fbox{\parbox{0.8\textwidth}{
+The equilibrium is stable, if all eigenvalues satisfy $\text{Re}(\lambda) < 0$.
+}}
+\end{center}
+
+Furthermore, the trace and determinant are particularly useful to analyze the stability of the equilibrium for 2-by-2 matrices, as summarized in Fig.\ 14.8.2. The well-known result (as we will explain) is that the \textbf{equilibrium is stable if and only if both tr $\boldsymbol{J} < 0$ and det $\boldsymbol{J} > 0$}. This is particularly useful when we study the Turing bifurcation. For real eigenvalues the change from stable to unstable can only occur with one eigenvalue negative and other eigenvalue zero (changing from negative to positive), so that $\prod\lambda_i = \det\boldsymbol{J} = 0$ and $\sum\lambda_i = \text{tr}\,\boldsymbol{J} < 0$, which corresponds to a saddle-node (described later), transcritical, or pitchfork bifurcation. For complex eigenvalues, the change from stable to unstable can only occur with imaginary eigenvalues so that $\prod\lambda_i = \det\boldsymbol{J} > 0$ and $\sum\lambda_i = \text{tr}\,\boldsymbol{J} = 0$, which corresponds to the Hopf bifurcation described later.
+
+If the eigenvalues are real ($4D < T^2$), the stable case (both $\lambda$ negative) whose phase portrait is a \textbf{stable node} has $\prod\lambda_i = \det\boldsymbol{J} > 0$ and $\sum\lambda_i = \text{tr}\,\boldsymbol{J} < 0$, the \textbf{unstable node} (both $\lambda$ positive) has $\prod\lambda_i = \det\boldsymbol{J} > 0$ and $\sum\lambda_i = \text{tr}\,\boldsymbol{J} > 0$, and the \textbf{unstable saddle point} (one $\lambda$ positive and the other negative) has $\prod\lambda_i = \det\boldsymbol{J} < 0$ with
+
+If the eigenvalues are complex ($4D > T^2$), $\prod\lambda_i = |\lambda|^2 = \det\boldsymbol{J} > 0$, and \textbf{unstable spirals} have $\sum\lambda_i = \text{tr}\,\boldsymbol{J} > 0$ while \textbf{stable spirals} have $\sum\lambda_i = \text{tr}\,\boldsymbol{J} < 0$.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch14/fig_14_8_2.png}
+\caption{Stability (and phase portrait) of 2-by-2 matrices in terms of the determinant and trace.}
+\label{fig:14.8.2}
+\end{figure}
+
+\paragraph{Bifurcation theory for systems.}
+Suppose there is a first-order system that depends on a parameter $R$:
+\begin{equation}
+\boxed{\od{\vec{x}}{t} = \vec{f}(\vec{x}, R).}
+\label{eq:14.8.19}
+\end{equation}
+An equilibrium solution satisfies $\vec{f}(\vec{x}_0, R) = \vec{0}$ so that, in general, the equilibrium $\vec{x}_0$ depends on the parameter $R$. Suppose, at some value of the parameter $R = R_c = 0$, the equilibrium is known to be at $\vec{x}_c = \vec{0}$, for convenience, so that $\vec{f}(\vec{0},0) = \vec{0}$. We first ask how the equilibrium changes as we vary $R$ near 0. Using a Taylor series, we have $0 = R\vec{f}_R + \boldsymbol{J}\vec{x}_0$. We can solve for the equilibrium $\vec{x}_0$ uniquely, $\vec{x}_0 = -R\boldsymbol{J}^{-1}\vec{f}_R$ (known as the implicit function theorem), except if $\boldsymbol{J}^{-1}$ doesn't exist. The case in which $\boldsymbol{J}^{-1}$ doesn't exist corresponds to $\det\boldsymbol{J} = 0$, so that one eigenvalue ($\lambda = 0$) of the Jacobian matrix is zero. We analyze 2-by-2 systems, and we assume the second eigenvalue is negative. It can be shown that the two-dimensional system is reduced to a one-dimensional system because the solutions exponentially decay in one direction. The solutions decay to the other direction (called the center manifold), on which a first-order equation such as \eqref{eq:14.8.8} is valid. We assume a \textbf{turning point} occurs, but \textbf{transcritical and pitchfork bifurcations} are also possible. Each branch of the turning point bifurcation for our first-order differential equation represents an equilibrium, one stable (a negative growth rate) and one unstable (with a positive growth rate). For the two-dimensional problem, the stable branch of equilibria has two negative growth rates or eigenvalues (one hidden) and is called a stable \textbf{node}. An unstable equilibrium has one visible positive growth rate (and one hidden negative growth rate) and is called a \textbf{saddle} point (growing in one direction, decaying in the other direction). Thus, the turning point bifurcation is called a \textbf{saddle-node bifurcation} because the stable branch is a branch of (stable) nodes and the unstable branch is a branch of saddle points. The two branches coalesce at the bifurcation point. The importance of \eqref{eq:14.8.8} is that it describes bifurcation phenomena even for higher-order systems provided one eigenvalue is zero and the others have negative real parts.
+
+\paragraph{Hopf bifurcation.}
+For systems, at some value of the parameter $R_h$, called a \textbf{Hopf bifurcation}, it is possible that an equilibrium exists with the eigenvalues of the Jacobian matrix purely imaginary $\lambda = \pm i\omega$, corresponding to a frequency $\omega$. According to the implicit function theorem, the equilibrium will exist for $R$ near $R_h$ since $\lambda \neq 0$. In general the equilibrium changes from being stable to unstable since the growth rate ($e^{\lambda t}$) is complex ($\lambda = s \pm i\omega$) with the real part changing from negative ($s < 0$) to positive ($s > 0$). The careful nonlinear analysis of Hopf bifurcation is too involved to divert us from our main purposes. Hopf bifurcation is similar to the stability problem for the partial differential equation, which we will discuss shortly. We only give a crude analysis of the nonlinearity in Subsection 14.8.6, to which we refer the reader. There are two cases of Hopf bifurcation (see Fig.\ 14.8.5). In one case, called supercritical Hopf bifurcation, a stable periodic solution exists ($R > R_h$) only when the equilibrium is unstable, and for subcritical Hopf bifurcation, an unstable periodic solution only exists ($R < R_h$) when the equilibrium is stable.
+
+\subsection{Elementary Example of a Stable Equilibrium for a Partial Differential Equation}
+\label{subsec:14.8.2}
+
+In this book, all the equilibrium solutions of partial differential equations that have been considered so far are stable. For example, consider the heat equation
+\[
+\pd{u}{t} = K\pdd{u}{x}
+\]
+with prescribed nonzero temperature at two ends, $u(0,t) = A$ and $u(L,t) = B$. The equilibrium solution is $u_e(x) = A + (B-A)\frac{x}{L}$. To determine whether the equilibrium is stable, we consider initial conditions that are near to this: $u(x,0) = u_e(x) + g(x)$, where $g(x)$ is small. We let
+\[
+u(x,t) = u_e(x) + v(x,t),
+\]
+where $v(x,t)$ is the \textbf{displacement from the equilibrium}. We determine that $v(x,t)$ satisfies
+\[
+\pd{v}{t} = K\pdd{v}{x}, \quad \text{with } v(0,t) = 0, v(L,t) = 0, \text{ and } v(x,0) = g(x).
+\]
+Using our earlier results, we have
+\[
+v(x,t) = \sum_{n=1}^{\infty} a_n \sin\frac{n\pi x}{L} e^{-K(\frac{n\pi}{L})^2 t},
+\]
+where $a_n$ can be determined from the initial conditions (but we do not need it here). Since $v(x,t) \to 0$ as $t \to \infty$, it follows that $u(x,t) \to u_e(x)$ as $t \to \infty$. We say that the equilibrium solution $u_e(x)$ is (asymptotically) \textbf{stable}.
+
+If $u(x,t) - u_e(x)$ is bounded as $t \to \infty$ [and we assume initially $u$ is near $u_e(x)$], then we say the equilibrium solution is \textbf{stable}. If for some initial condition [near $u_e(x)$] $u(x,t) - u_e(x)$ is large as $t \to \infty$, then we say $u_e(x)$ is \textbf{unstable}.
+
+In general, the displacement from an equilibrium satisfies a linear partial differential equation that will have an infinite number of degrees of freedom (modes). If one or more of the modes exponentially increases in time, the equilibrium will be unstable. To be stable, all the modes must have time dependence that exponentially decays or oscillates.
+
+\subsection{Typical Unstable Equilibrium for a Partial Differential Equation and Pattern Formation}
+\label{subsec:14.8.3}
+
+One physical example of an instability is the heating from below of a fluid between two parallel plates. The interest for this type of problem is generated from meteorology in which much of the interesting weather phenomena are due to the sun's heating at the surface of the earth. For the simpler situation of heating the bottom plate, it can be observed in simple experiments that if the bottom plate is gently heated, then a simple state of conductive heat flow arises [solving the usual heat equation, so that the conductive state satisfies $u = u(0) + \frac{1}{L}(u(L) - u(0))$ if the bottom is $y = 0$ and the top $y = L$]. Heating the bottom of the fluid causes the bottom portions of the fluid to be less dense than the top. Due to buoyancy, there is a tendency for the fluid to move (the less dense hot fluid raising and the more dense cold falling). The partial differential equations that describe this must include Newton's laws for the velocity of the fluid in addition to the heat equation for the temperature. The gravitational force tends to destabilize the situation and the buoyant force tends to stabilize the situation. Experimentally it is observed that if the bottom is heated sufficiently, then the conductive state becomes unstable. The fluid tends to move more dramatically and rotating cells of fluid are formed between the plates (reminiscent of large-scale atmospheric motions). A preferred horizontal length scale of motion is observed when no horizontal length scales are present to begin with. This process of pattern formation is fundamental in physical and natural sciences. We wish to explain these types of features.
+
+We will analyze the following partial differential equation (which will have many desirable features), which is related to the linearized \textbf{Kuramoto-Sivashinsky} equation:
+\begin{equation}
+\boxed{\pd{u}{t} = -u - R\pdd{u}{x} - \frac{\partial^4 u}{\partial x^4}.}
+\label{eq:14.8.20}
+\end{equation}
+We note that $u = 0$ is considered to be an equilibrium solution of \eqref{eq:14.8.20}. We assume $R > 0$ is a parameter of interest. To understand this equation, we substitute $u = e^{\sigma t}e^{ikx}$ or $u = e^{\sigma t}e^{ikx}$. In either way, we find
+\begin{equation}
+\sigma = -1 + Rk^2 - k^4.
+\label{eq:14.8.21}
+\end{equation}
+The growth rate is a function of $R$ and $k$. In this example, the exponential growth rate $\sigma$ is real for all values of the wave number $k$ (for all wave lengths). It is very important to distinguish between $\sigma > 0$ (exponential growth) and $\sigma < 0$ (exponential decay). In Fig.\ 14.8.2, we graph regions of exponential growth and exponential decay by graphing $\sigma = 0$:
+
+This \textbf{neutral stability curve} that separates stable from unstable (see Fig.\ 14.8.3) has a vertical asymptote at $k = 0$ and for large $k$ is approximately the parabola
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch14/fig_14_8_3.png}
+\caption{Neutral stability curve.}
+\label{fig:14.8.3}
+\end{figure}
+
+$R = k^2$. There is only one critical point, an absolute minimum, where $\frac{dR}{dk} = 0$. To determine the minimum, we note that $0 = -2\frac{1}{k^3} + 2k$ yields $k_c = 1$, in which case $R_c = 1 + 1 = 2$. If $R < R_c$, then we say $u = 0$ is stable because the time dependence of all modes (all values of $k$) exponentially decays. If any of these wave numbers occurs, then we say $u = 0$ is unstable. For example, if the partial differential equation \eqref{eq:14.8.20} is to be solved on the infinite interval, then all values of $k$ are relevant (from the Fourier transform), and we say that $u = 0$ is unstable if $R > R_c$. Typically experiments are performed in which $R$ is gradually increased from a value in which $u = 0$ is stable to a value in which $u = 0$ is unstable. If $R$ is slightly greater than the critical value $R_c$, then we expect waves to grow for wave numbers in a small band surrounding $k_c = 1$, a preferred wave length. This is the way that patterns form in nature from arbitrary initial conditions.
+
+However (this is a little subtle), if the boundary conditions (after separation) are $u(0) = u'(0) = 0$ and $u(L) = u'(L) = 0$, then it can be shown that the eigenfunctions are $\sin\frac{n\pi x}{L}$. If $R$ is not much greater than $R_c$, then there is only a thin band of unstable wave numbers, and it is possible that $u = 0$ is stable. The first instability could occur when $R$ is some specific value greater than $R_c$ and would correspond to specific value of $n = n_c$. Patterns would be expected to be formed with this different wave length $\frac{2L}{n_c}$. In the rest of this chapter we will assume we are solving partial differential equations on the infinite interval.
+
+In Fig.\ 14.8.4, an alternate method is used to illustrate the growth rate. We graph the growth rate $\sigma = \sigma(k, R)$ given by \eqref{eq:14.8.21} for fixed $R$. We note that $\sigma < 0$ for all $k$ if $R < R_c = 2$. At $R = R_c = 2$, the growth rate first becomes zero at $k = k_c = 1$:
+\begin{align}
+\sigma(k_c, R_c) &= 0 \label{eq:14.8.22} \\
+\sigma_k(k_c, R_c) &= 0 \label{eq:14.8.23} \\
+\sigma_{kk}(k_c, R_c) &< 0. \label{eq:14.8.24}
+\end{align}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch14/fig_14_8_4.png}
+\caption{Growth rate as a function of wave number.}
+\label{fig:14.8.4}
+\end{figure}
+
+If $R$ is slightly greater than $R_c$, then there is a band of wave numbers near $k_c$ in which $\sigma > 0$. This is the same band of unstable wave numbers shown in Fig.\ 14.8.3. This band of unstable wave numbers can be estimated (if $R$ is slightly greater than $R_c$) using the Taylor series of a function of two variables for $\sigma(k,R)$ around $k = k_c$ and $R = R_c$:
+\begin{equation}
+\sigma(k, R) = \frac{1}{2}\sigma_{kk}(k_c, R_c)(k - k_c)^2 + \sigma_R(k_c, R_c)(R - R_c) + \cdots.
+\label{eq:14.8.25}
+\end{equation}
+It can be shown that other terms in the Taylor series can be neglected. Since the band of wave numbers terminates at $\sigma(k, R) = 0$, we have as an approximation that unstable wave numbers satisfy for $R > R_c$
+\[
+|k - k_c| < \sqrt{\frac{-2\sigma_R}{\sigma_{kk}}(R - R_c)}.
+\]
+We also need to assume that
+\begin{equation}
+\sigma_R(k_c, R_c) > 0,
+\label{eq:14.8.26}
+\end{equation}
+since (at fixed $k = k_c$) we want $\sigma$ to be increasing at $R = R_c$ (from $\sigma < 0$ to $\sigma > 0$).
+
+In other linear partial differential equations, the exponential time dependence is complex, $e^{st} = e^{(\sigma - i\omega)t}$. Since $\sigma$ is the real part of $s$ and $-\omega$ is the imaginary part of $s$, where $\omega(k)$ is a frequency.
+
+\subsection{Ill posed Problems}
+\label{subsec:14.8.4}
+
+A linear time-dependent partial differential equation is said to be \textbf{ill posed} if the largest exponential growth rate is positive but \textbf{unbounded} for allowable wave numbers. When a problem is ill posed, it suggests that the partial differential equation does not correctly model some physical phenomena. Instead some important physics has been ignored or incorrectly modeled.
+
+We show that the backward (in time) heat equation
+\begin{equation}
+\pd{u}{t} = -\pdd{u}{x}
+\label{eq:14.8.27}
+\end{equation}
+is ill posed because the exponential growth rate ($u = e^{\sigma t}e^{ikx}$) is
+\[
+\sigma = k^2.
+\]
+$u = 0$ is unstable because $\sigma > 0$ for values of $k$ of interest. However, the growth rate is positive and unbounded as $k \to \infty$, and thus \eqref{eq:14.8.27} is ill posed. This difficulty occurs when $k \to \infty$, which corresponds to indefinitely short waves (the wave lengths approaching zero). The backward heat equation is even ill posed with zero boundary conditions at $x = 0$ and $x = L$, since then $k = \frac{n\pi}{L}$ and the growth rate is positive and unbounded as $n \to \infty$. (If indefinitely short wave lengths could be excluded, then the backward heat equation would not be ill posed.)
+
+Without the fourth derivative, \eqref{eq:14.8.20} would be ill posed like the backward heat equation. However, the fourth derivative term in \eqref{eq:14.8.20} prevents short waves from growing. Although $u = 0$ is unstable for \eqref{eq:14.8.20}, for fixed $R > R_c = 2$ the largest growth rate is $\sigma_{\max} = -1 + \frac{1}{4}R^2$ (which is finite).
+
+\subsection{Slightly Unstable Dispersive Waves and the Linearized Complex Ginzburg-Landau Equation}
+\label{subsec:14.8.5}
+
+For linear purely dispersive waves, solutions of the partial differential equation are in the form $e^{i(kx - \omega t)}$, where the frequency $\omega$ is real and said to satisfy the dispersion relation $\omega = \omega(k)$. For other partial differential equations, the frequency is not real. We prefer to analyze these more general problems using the complex growth rate $s = \sigma - i\omega$: $e^{ikx}e^{st} = e^{ikx}e^{(\sigma - i\omega)t}$. If $\sigma > 0$ for some allowable $k$, we say that $u = 0$ is unstable. Often the partial differential equation depends on a parameter $R$ in which the solution $u = 0$ is stable for $R < R_c$ and becomes unstable at $R = R_c$. As in Sec.\ 14.7, we assume there is a preferred wave number $k_c$ such that the real exponential growth rate $\sigma(k,R)$ satisfies \eqref{eq:14.8.22}, \eqref{eq:14.8.23}, \eqref{eq:14.8.24}, and \eqref{eq:14.8.26} near $k = k_c$ and $R = R_c$. We have discussed (in Sec.\ 14.6) the nearly monochromatic assumption $u(x,t) = A(x,t)e^{i[k_c x - \omega(k_c, R_c)t]}$. We wish to generalize that result to the case of slightly unstable waves, where the time dependence is oscillatory and exponential, $e^{st} = e^{(\sigma - i\omega)t}$.
+
+There are elementary solutions for $u$ of the form $u = e^{ikx}e^{[\sigma(k,R) - i\omega(k,R)]t}$. If we apply our earlier ideas concerning spatial and temporal derivatives, \eqref{eq:14.7.2} and \eqref{eq:14.7.3}, we have here
+\begin{align}
+-i\frac{\partial}{\partial x} &\iff (k - k_c) \label{eq:14.8.29} \\
+\frac{\partial}{\partial t} &\iff s(k, R) - s(k_c, R_c) = s(k, R) + i\omega(k_c, R_c). \label{eq:14.8.30}
+\end{align}
+
+We can derive a partial differential equation that the amplitude $A(x,t)$ satisfies by considering the Taylor expansion of $s(k,R)$ around $k = k_c$ and $R = R_c$:
+\begin{equation}
+s(k, R) = s(k_c, R_c) + s_k(k - k_c) + \frac{s_{kk}}{2!}(k - k_c)^2 + \cdots + s_R(R - R_c) + \cdots. \quad
+\label{eq:14.8.31}
+\end{equation}
+All partial derivatives are to be evaluated at $k = k_c$ and $R = R_c$. We will assume $(k - k_c)^2 = O(R - R_c)$, so that it can be shown that other terms in the Taylor series are smaller than the ones kept. Recall that $s(k, R)$ is complex, so that $s_R$ and $s_{kk}$ are complex. However, $s_k = \sigma_k - i\omega_k$. Since $\sigma_k = 0$ at $k = k_c$ and $R = R_c$ from \eqref{eq:14.8.23}. From \eqref{eq:14.8.31}, using \eqref{eq:14.8.29} and \eqref{eq:14.8.30}, we obtain
+\[
+\pd{A}{t} = -is_k\pd{A}{x} - \frac{s_{kk}}{2}\pdd{A}{x} + s_R(R - R_c)A.
+\]
+Since $is_k = i\omega_k$ is the usual real group velocity, the complex wave amplitude solves a partial differential equation known as the \textbf{linearized complex Ginzburg-Landau} (LCGL) equation:
+\begin{equation}
+\boxed{\pd{A}{t} + \omega_k\pd{A}{x} = -\frac{s_{kk}}{2}\pdd{A}{x} + s_R(R - R_c)A.}
+\label{eq:14.8.32}
+\end{equation}
+
+The diffusion coefficient (the coefficient in front of the second derivative) is complex since $s_{kk} = \sigma_{kk} - i\omega_{kk}$. In order for LCGL \eqref{eq:14.8.32} to be well posed, the real part of the diffusion coefficient $-\sigma_{kk}/2$ must be positive. This occurs because the real growth rate $\sigma$ has a local maximum there \eqref{eq:14.8.24}. Equation \eqref{eq:14.8.32} is the wave envelope equation that generalizes the linear Schr\"odinger equation to virtually any physical situation (in any discipline) where $u = 0$ is slightly unstable. Wavelike solutions of \eqref{eq:14.8.32} grow exponentially in time.
+
+\paragraph{Two spatial dimensions.}
+It can be shown that in two-dimensional problems, $s(k_1, k_2, R)$, so that \eqref{eq:14.8.29} is generalized to $k_1 - k_{10} = -i\frac{\partial}{\partial x}$ and $k_2 - k_{20} = -i\frac{\partial}{\partial y}$. We can orient our coordinate system so that the basic wave is in the $x$-direction, in which case $k_{20} = 0$ and thus $k_{10} = k_c$:
+\begin{align}
+k_1 - k_c &= -i\frac{\partial}{\partial x} \label{eq:14.8.33} \\
+k_2 &= -i\frac{\partial}{\partial y}. \label{eq:14.8.34}
+\end{align}
+It can be shown that very little change is needed in \eqref{eq:14.8.32}. The linear term $s_k(k-k_c)$ in \eqref{eq:14.8.31} yields the group velocity term in \eqref{eq:14.8.32} so that $\omega_k\pd{A}{x}$ in one dimension becomes $\omega_{k1}\pd{A}{x} + \omega_{k2}\pd{A}{y}$ in two dimensions. We must be more careful with the quadratic term. We assume the original physical partial differential equation has no preferential direction, so that $s(k)$ where $k = |\vec{k}| = \sqrt{k_1^2 + k_2^2}$. The Taylor series in \eqref{eq:14.8.31} remains valid. We must only evaluate the quadratic term $(k - k_c)^2$, where from \eqref{eq:14.8.33} and \eqref{eq:14.8.34} $k_1$ is near $k_c$ but $k_2$ is near zero. Using the Taylor series of two variables $(k_1, k_2)$ around $(k_c, 0)$ as an approximation,
+\[
+k = \sqrt{k_1^2 + k_2^2} = k_c + \frac{1}{2}(k_1 - k_c) + \frac{1}{2k_c}k_2^2 + \cdots.
+\]
+It is perhaps easier to first derive an expression for $k^2$. In particular, we are assuming $(k_1 - k_c)$ has the same small size as $k_2^2$. In particular, we are assuming $(k_1 - k_c)^2 = O(k_2^4) = O(R - R_c)$. In this way, we derive the equation known as the \textbf{linearized Newell-Whitehead-Segel} equation:
+\begin{equation}
+\pd{A}{t} + \omega_{k1}\pd{A}{x} + \omega_{k2}\pd{A}{y} = -\frac{s_{kk}}{2}\left(\frac{\partial}{\partial x} - \frac{i}{2k_c}\pdd{}{y}\right)^2 A.
+\label{eq:14.8.35}
+\end{equation}
+
+\subsection{Nonlinear Complex Ginzburg-Landau Equation}
+\label{subsec:14.8.6}
+
+The LCGL \eqref{eq:14.8.32} describes the wave amplitude of a solution to a linear partial differential equation when the solution $u = 0$ is slightly unstable. Linear partial differential equations are often small amplitude approximations of the real nonlinear partial differential equations of nature. Since solutions of \eqref{eq:14.8.32} grow exponentially in time, eventually the solution is sufficiently large so that the linearization approximation is no longer valid. Using perturbation methods, it can be shown that for most physical problems with a slightly unstable solution, \eqref{eq:14.8.32} must be modified to account for small nonlinear terms. In this way $u(x,t)$ can be approximated by $A(x,t)e^{i[k_c x - \omega(k_c, R_c)t]}$ as before, but $A(x,t)$ satisfies the \textbf{complex Ginzburg-Landau} (CGL) equation:
+\begin{equation}
+\boxed{\pd{A}{t} + \omega_k\pd{A}{x} = -\frac{s_{kk}}{2}\pdd{A}{x} + s_R(R - R_c)A + \gamma A|A|^2,}
+\label{eq:14.8.36}
+\end{equation}
+where $\gamma = \alpha + i\beta$ is an important complex coefficient that can be derived with considerable effort for specific physical problems using perturbation methods. Note that the CGL equation \eqref{eq:14.8.36} generalizes the NLS equation \eqref{eq:14.7.5} by having a complex coefficient ($s_{kk} = \sigma_{kk} - i\omega_{kk}$ with $\sigma_{kk} < 0$) in front of the second derivative instead of an imaginary coefficient, by having the instability term $s_R(R - R_c)A$, and by the nonlinear coefficient being complex. As with nearly all nonlinear partial differential equations, a complete analysis of the initial value problem for CGL \eqref{eq:14.8.36} is impossible. We will only discuss some simpler results.
+
+\paragraph{Bifurcation diagrams and the Landau equation.}
+The amplitude equation \eqref{eq:14.8.36} has no spatial dependence if the original unstable problem is an ordinary differential equation or if the wave number is fixed at $k_c$ (as would occur if the partial differential equation was solved in a finite geometry). With no spatial dependence the CGL amplitude becomes an ordinary differential equation, the \textbf{Landau equation},
+\begin{equation}
+\boxed{\od{A}{t} = s_R(R - R_c)A + \gamma A|A|^2}
+\label{eq:14.8.37}
+\end{equation}
+The solution $u = 0$ becomes unstable $[u(x,t) = A(t)e^{i[k_c x - \omega(k_c, R_c)t]}]$ with the frequency $\omega(k_c, R_c)$ at $R = R_c$. This is characteristic of a phenomenon in ordinary differential equations known as \textbf{Hopf bifurcation}. We should recall that the coefficients $s_R = \sigma_R - i\omega_R$ and $\gamma = \alpha + i\beta$ are complex with $\sigma_R > 0$ [see \eqref{eq:14.8.26}]. The Landau equation can be solved by introducing polar coordinates $A(t) = r(t)e^{i\theta(t)}$. Since $\od{A}{t} = e^{i\theta(t)}(\od{r}{t} + ir\od{\theta}{t})$, it follows by appropriately taking real and imaginary parts that \eqref{eq:14.8.37} becomes two equations for the magnitude $r$ and phase $\theta$:
+\begin{align}
+\od{r}{t} &= \sigma_R(R - R_c)r + \alpha r^3 \label{eq:14.8.38} \\
+\od{\theta}{t} &= -\omega_R(R - R_c) + \beta r^2. \label{eq:14.8.39}
+\end{align}
+We assume $\sigma_R > 0$ corresponding to the solution $u = 0$ being stable for $R < R_c$ and unstable for $R > R_c$. The radial equation \eqref{eq:14.8.38} is most important and can be solved independently of the phase equation. First we look for equilibrium solutions $r_e$ of the radial equation \eqref{eq:14.8.38}:
+\[
+0 = \sigma_R(R - R_c)r_e + \alpha r_e^3.
+\]
+The equilibrium $r_e = 0$ corresponds to $A = 0$ or $u = 0$. We will shortly verify what we should already know that $u = 0$ is stable for $R < R_c$ and unstable for $R > R_c$. There is another important (nearby) equilibrium satisfying
+\[
+0 = \sigma_R(R - R_c) + \alpha r_e^2.
+\]
+For this nonzero equilibrium to exist, $\frac{\sigma_R(R - R_c)}{\alpha} < 0$. If $\alpha < 0$, the nonzero equilibrium exists if $R > R_c$ (and vice versa). We graph two cases (depending on whether $\alpha > 0$ or $\alpha < 0$) in Fig.\ 14.8.5; the equilibrium $r_e$ as a function of the parameter $R$ is known as a \textbf{bifurcation diagram}. Since $r = |A|$, we restrict our attention to $r \geq 0$. However, these are only equilibria of the first-order nonlinear differential equation \eqref{eq:14.8.38}.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch14/fig_14_8_5.png}
+\caption{Bifurcation diagram and one-dimensional phase portrait (including stability) for Hopf bifurcation.}
+\label{fig:14.8.5}
+\end{figure}
+
+To determine all solutions (not just equilibrium solutions) and whether these equilibrium solutions are stable or unstable, we graph \textbf{one-dimensional phase portraits}. We fix the parameter $R$ (drawing a vertical line). If $r$ is increasing ($\od{r}{t} > 0$) and arrows upward if $r$ is decreasing ($\od{r}{t} < 0$). The sign of $\od{r}{t}$ is determined from the differential equation \eqref{eq:14.8.38}. There are two cases depending on the sign of $\alpha$ (the real part of $\gamma$). In words, we describe only the case in which $\alpha < 0$, but both figures are presented. We note from \eqref{eq:14.8.38} that $\od{r}{t} < 0$ (and introduce downward arrows) if $r$ is sufficiently large in the case $\alpha < 0$. The direction of the arrows changes at the equilibria (if the equilibria are a simple root). We now see that $r = 0$ (corresponding to $u = 0$) is stable if $R < R_c$ since all nearby solutions approach the equilibria as time increases, and $r = 0$ is unstable if $R > R_c$. The bifurcated nonzero equilibria (which coalesce on $r = 0$ as $R \to R_c$) only exist for $R > R_c$ and are stable (if $\alpha < 0$). If $\alpha < 0$ ($\alpha > 0$), this is called \textbf{supercritical} (subcritical) Hopf bifurcation because the nonzero equilibria exist for $R$ greater (less) than $R_c$. It is usual in bifurcation diagrams to mark unstable equilibria with dashed lines (and stable with solid lines), and we have done so in Fig.\ 14.8.6. The nonlinearity has two possible effects: If the nonlinearity is stabilizing ($\alpha < 0$), then a stable solution is created for $R > R_c$. This stable solution has small amplitude since $r_e$ is proportional to $(R - R_c)^{1/2}$ consistent with our analysis based on Taylor series assuming $R - R_c$ is small and $r$ is near zero. If the nonlinearity is destabilizing ($\alpha > 0$), then an unstable solution is created for $R < R_c$. In this case the linear dynamics are unstable, but the nonlinear terms do not stabilize the solution. Instead it can be shown that the solution explodes (goes to infinity in a finite time). If $R > R_c$ (and $\alpha > 0$), there are no stable solutions with small amplitudes amenable to a linear or weakly nonlinear analysis; we must understand the original fully nonlinear problem.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch14/fig_14_8_6.png}
+\caption{Bifurcation diagram (including stability) for Hopf bifurcation.}
+\label{fig:14.8.6}
+\end{figure}
+
+The bifurcated equilibrium solution (stable or unstable) has $r_e$ equalling a specific constant (depending on $R - R_c$). From \eqref{eq:14.8.39} the bifurcated equilibrium solution is actually a periodic solution with frequency $\omega_R(R - R_c) - \beta\sigma_R/\alpha$. For the original partial differential equation $[u = A(x,t)e^{i[k_c x - \omega(k_c, R_c)t]}]$ the frequency is $\omega(k_c, R_c) + (R - R_c)(\omega_R - \beta\sigma_R/\alpha)$ corresponding to dependence on the wave number, the parameter $R$, and the equilibrium amplitude $|A|^2 = r_e^2$.
+
+\paragraph{Bifurcated solutions for complex Ginzburg-Landau equation.}
+We will show that the CGL equation \eqref{eq:14.8.36} has elementary nonzero plane traveling wave solutions
+\begin{equation}
+A(x,t) = A_0 e^{i[Kx - \Omega t + \phi_0]},
+\label{eq:14.8.40}
+\end{equation}
+where $A_0$ and $\phi_0$ are real constants. Since $u = A(x,t)e^{i[k_c x - \omega(k_c, R_c)t]}$, it follows that the wave number for $u(x,t)$ is $k_c + K$. Previously we have called $k$ the wave number for $u(x,t)$, and thus
+\[
+K = k - k_c.
+\]
+and the frequency is $\omega(k_c, R_c) + \Omega$. For CGL \eqref{eq:14.8.36} to be valid, $K$ must be small. Since $s_{kk}$ (with $\sigma_{kk} < 0$), $s_R = \sigma_R - i\omega_R$ (with $\sigma_R > 0$), and $\gamma = \alpha + i\beta$ are complex, we must take real and imaginary parts:
+\begin{align}
+\alpha A_0^2 &= -[\frac{\sigma_{kk}}{2}K^2 + \sigma_R(R - R_c)] \label{eq:14.8.41} \\
+\Omega &= \omega_k K + \frac{\omega_{kk}}{2}K^2 + \omega_R(R - R_c) + \beta A_0^2. \label{eq:14.8.42}
+\end{align}
+Solutions of the form \eqref{eq:14.8.40} exist only if the right-hand side of \eqref{eq:14.8.41} has the same sign as $\alpha$. In \eqref{eq:14.8.41}, we recognize $\frac{\sigma_{kk}}{2}K^2 + \sigma_R(R - R_c)$ as the Taylor expansion \eqref{eq:14.8.25} of the growth rate $\sigma(k,\tau)$. As before, there are two completely different cases depending on the sign of $\alpha$, the real part of the nonlinear coefficient $\gamma$. If $\alpha < 0$ (the case in which the nonlinearity is stabilizing for the simpler Landau equation), solutions exist only if $\frac{\sigma_{kk}}{2}K^2 + \sigma_R(R - R_c) > 0$ which corresponds to the growth rate being positive (the small band of exponentially growing wave numbers near $k_c$ that only occurs for $R > R_c$). If $\alpha > 0$ (the case in which the nonlinearity is destabilizing for the simpler Landau equation), solutions exist if $\frac{\sigma_{kk}}{2}K^2 + \sigma_R(R - R_c) < 0$ (excluding the small band of exponentially growing wave numbers near $k_c$, that that occurs for $R > R_c$). However, it is not easy to determine whether these solutions are stable. We will briefly comment on this in the next subsection.
+
+We should comment on \eqref{eq:14.8.42} though it is probably less important than \eqref{eq:14.8.41}. Equation \eqref{eq:14.8.42} shows that the frequency for solutions \eqref{eq:14.8.40} changes because the frequency depends on the wave number, the parameter $R$, and the amplitude.
+
+\paragraph{Stability of bifurcated solutions for complex Ginzburg-Landau equation.}
+It is difficult to determine the stability of these elementary traveling wave solutions of the CGL equation \eqref{eq:14.8.36}. First we derive the modulational instability for the nonlinear Schr\"odinger equation (the CGL when the coefficients are purely imaginary) and then outline some results for the case in which the coefficients are real.
+
+\paragraph{Modulational (Benjamin-Feir) instability.}
+When the coefficients of the CGL equation are purely imaginary ($s_{kk} = -i\omega_{kk}$ with $\sigma_{kk} = 0$, $s_R = \sigma_R$ with $\omega_R = 0$, and $\gamma = i\beta$ with $\alpha = 0$), the CGL equation reduces to the nonlinear Schr\"odinger equation (NLS):
+\begin{equation}
+\pd{A}{t} + \omega_k\pd{A}{x} = i\frac{\omega_{kk}}{2}\pdd{A}{x} + i\beta A|A|^2.
+\label{eq:14.8.43}
+\end{equation}
+Actually there is an additional term $-i\omega_R(R - R_c)A$ on the right-hand side of \eqref{eq:14.8.43}, but we ignore it since that term can be shown to only contribute a frequency shift corresponding to changing the parameter $R$. This does not correspond to the instability of $u = 0$ but instead describes a situation in which energy is focused in one wave number $k_0$. The elementary traveling wave solution $A(x,t) = A_0 e^{i[Kx - \Omega t + \phi_0]}$ always exists for arbitrary $A_0$. Equation \eqref{eq:14.8.41} becomes $0 = 0$, so that the amplitude $A_0$ is arbitrary, while \eqref{eq:14.8.42} determines the frequency $\Omega$.
+
+To investigate the stability of this solution, we linearize the nonlinear system by letting $k = k_0 = \phi_x$ and $r = r_0 + \mu k_1$, where $\mu$ is small, and obtain (after dropping the subscripts 1)
+\begin{equation}
+r_t + \frac{\omega_{kk}}{2}k_{xx}r_0 = 0 \label{eq:14.8.46}
+\end{equation}
+\begin{equation}
+k_t - \frac{\omega_{kk}}{2}\frac{r_{xx}}{r_0} - 2\beta r_0 r_x = 0. \label{eq:14.8.47}
+\end{equation}
+Eliminating $k_{xt}$ yields the linear constant coefficient dispersive partial differential equation
+\begin{equation}
+r_{tt} = \frac{\omega_{kk}}{2}\left(-\frac{\omega_{kk}}{2}r_{xxxx} - 2\beta r_0^2 r_{xx}\right).
+\label{eq:14.8.48}
+\end{equation}
+We analyze \eqref{eq:14.8.48} in the usual way by letting $r = e^{i(\alpha x - \Omega_1 t)}$, where $\alpha$ corresponds to a sideband wave number. The dispersion relation for \eqref{eq:14.8.48} is
+\[
+\Omega_1^2 = \left(\frac{\omega_{kk}}{2}\right)^2\alpha^4 - \omega_{kk}\beta r_0^2\alpha^2.
+\]
+If $\omega_{kk}$ and $\beta$ have opposite signs, the frequency $\Omega_1$ is real for all $\alpha$, and this solution is stable (to sidebands). The \textbf{Benjamin-Feir sideband instability} occurs when $\omega_{kk}$ and $\beta$ have the same sign (called the focusing nonlinear Schr\"odinger) in which waves are unstable for wave numbers satisfying $0 < \alpha < 2\sqrt{\frac{\beta}{\omega_{kk}}}|r_0|$. Sufficiently long wave sideband perturbations are unstable.
+
+\paragraph{Stable and unstable finite amplitude waves.}
+If $u = 0$ becomes unstable at $R = R_c$ with a preferred wave number $k_c$ but the growth rate is real ($s_{kk} = \sigma_{kk}$ with $\omega_{kk} = 0$, $s_R = \sigma_R$ with $\omega_R = 0$, and the nonlinear coefficient is real $\gamma = \alpha$), then the CGL \eqref{eq:14.8.36} becomes
+\[
+\pd{A}{t} = -\frac{\sigma_{kk}}{2}\pdd{A}{x} + \sigma_R(R - R_c)A + \alpha A|A|^2,
+\]
+where we have also assumed $\omega_k = 0$. The elementary traveling wave solution $A(x,t) = A_0 e^{i[Kx - \Omega t + \phi_0]}$ corresponds to $K = k - k_c$. Using our earlier result \eqref{eq:14.8.41} and \eqref{eq:14.8.42}, solutions exist if
+\begin{align}
+\alpha A_0^2 &= -[\frac{\sigma_{kk}}{2}K^2 + \sigma_R(R - R_c)] \label{eq:14.8.49} \\
+\Omega &= 0. \label{eq:14.8.50}
+\end{align}
+This solution is periodic in space and constant in time. As in the general case, if $\alpha < 0$, solutions only exist in the small band of exponentially growing wave numbers ($|k - k_c| < \sqrt{\frac{2\sigma_R(R-R_c)}{-\sigma_{kk}}}$) that occur for $R > R_c$. However, Eckhaus in 1965 showed that these waves are only stable in the smaller bandwidth $|k - k_c| < \frac{1}{\sqrt{3}}\sqrt{\frac{2\sigma_R(R-R_c)}{-\sigma_{kk}}}$.
+
+\subsection{Long Wave Instabilities}
+\label{subsec:14.8.7}
+
+We again consider linear partial differential equations with solutions of the form $u(x,t) = e^{ikx}e^{(\sigma - i\omega)t}$, allowing for unstable growth ($\sigma > 0$) or decay ($\sigma < 0$). If waves first become unstable with wave number $k \neq 0$, then usually the complex Ginzburg-Landau equation \eqref{eq:14.8.32} or \eqref{eq:14.8.36} is valid. However, long waves $k = 0$ usually become unstable in a different manner. Usually the growth rate $\sigma(0) = 0$ for $k = 0$. Otherwise, a spatially uniform solution would grow or decay exponentially. The simplest way that long waves can become unstable, as we vary a parameter $R$, is for $\sigma_{kk}$ to change signs at $R_c$. It is best to include the next term in the Taylor series $\sigma(k,R) \sim \frac{\sigma_{Rkk}}{2}k^2(R - R_c) + \frac{\sigma_{kkkk}}{4!}k^4$,
+
+with $\sigma_{Rkk} > 0$. If the fourth-order term is stabilizing $\sigma_{kkkk} < 0$, then we see that for $R > R_c$ there is a band of unstable ($\sigma < 0$) long waves ($|k - k_c| < \sqrt{\frac{2\sigma_{Rkk}(R-R_c)}{-\sigma_{kkkk}}}$) that occur for $R > R_c$. Since $\omega$ is an odd function of $k$ (for the phase velocity to be even), the corresponding partial differential equation is
+\begin{equation}
+u_t = -\frac{\sigma_{Rkk}}{2}(R - R_c)u_{xx} + \frac{\sigma_{kkkk}}{4!}u_{xxxx} + \frac{\omega_{kkk}}{3!}u_{xxx}.
+\label{eq:14.8.53}
+\end{equation}
+Using perturbations methods, the appropriate nonlinear term may be as simple as in the Korteweg-de Vries equation \eqref{eq:14.7.15} or more complicated, as in the long wave instability of thin liquid films, as shown by Benney [1966].
+
+\subsection{Pattern Formation for Reaction-Diffusion Equations and the Turing Instability}
+\label{subsec:14.8.8}
+
+In 1952 Turing (also known for breaking the German code for England in World War II and Turing machine in computer science) suggested that patterns in biological organisms (morphogenesis) might emerge from an instability of spatially dependent chemical concentrations described by partial differential equations. Particularly extensive and well-written presentations are given by Murray [1993] and Nicolis [1995]. General theory exists, but we prefer to add spatial diffusion to a well-known example with two reacting chemicals, known as the Brusselator due to Prigogine and Lefever [1968]:
+\begin{align}
+\pd{u}{t} &= 1 - (b+1)u + au^2v + D_1\laplacian u \label{eq:14.8.54} \\
+\pd{v}{t} &= bu - au^2v + D_2\laplacian v. \label{eq:14.8.55}
+\end{align}
+There are four parameters, $a > 0, b > 0, D_1 > 0, D_2 > 0$, but we wish only to vary $b$. We first determine all spatially uniform steady state equilibria, which must satisfy both $1 - u[(b+1) - auv] = 0$ and $u(b - auv) = 0$. The second equation suggests $u = 0$, but that cannot satisfy the first equation. Thus, the second now yields $auv = b$, and the first now yields $u = 1$. For this example, there is a unique uniform steady state $u = 1$ and $v = \frac{b}{a}$, corresponding to a chemical balance.
+
+\paragraph{Linearization.}
+To analyze the stability of the uniform steady state, we approximate the system of partial differential equations near the steady state. We introduce small displacements from the uniform steady state: $u - 1 = u_1$ and $v - \frac{b}{a} = v_1$. As in the stability analysis of equilibria for systems of ordinary differential equations (see subsection 14.8.1), we \textbf{linearize} each chemical reaction, including the linear terms of the Taylor series for functions of two variables. We must include the diffusive term, but that is elementary since the equilibria are spatially constant. In this way we obtain a linear system of partial differential equations:
+\begin{equation}
+\pd{\vec{u}_1}{t} = \boldsymbol{J}\vec{u}_1 + \begin{bmatrix} D_1 & 0 \\ 0 & D_2 \end{bmatrix}\laplacian\vec{u}_1,
+\label{eq:14.8.56}
+\end{equation}
+where $\boldsymbol{J}$ is the usual Jacobian matrix evaluated at the uniform steady state,
+\begin{equation}
+\boldsymbol{J} = \begin{bmatrix} \pd{f}{u} & \pd{f}{v} \\ \pd{g}{u} & \pd{g}{v} \end{bmatrix} = \begin{bmatrix} (b+1) + 2auv & au^2 \\ b - 2auv & -au^2 \end{bmatrix} = \begin{bmatrix} b-1 & a \\ -b & -a \end{bmatrix}.
+\label{eq:14.8.57}
+\end{equation}
+
+\paragraph{Spatial and time dependence.}
+The linear partial differential equation \eqref{eq:14.8.56} has constant coefficients, so elementary Fourier analysis based on separation of variables is valid:
+\begin{equation}
+\vec{u}_1 = e^{i\vec{k}\cdot\vec{x}}\,\vec{w}(t).
+\label{eq:14.8.58}
+\end{equation}
+If there are no boundaries, $\vec{k}$ is arbitrary, corresponding to using a Fourier transform. Note that $\laplacian e^{i\vec{k}\cdot\vec{x}} = -k^2 e^{i\vec{k}\cdot\vec{x}}\vec{w}(t)$, where $k = |\vec{k}|$. In this way the time-dependent part satisfies a linear system of ordinary differential equations with constant coefficients:
+\begin{equation}
+\od{\vec{w}}{t} = \boldsymbol{A}\vec{w},
+\label{eq:14.8.59}
+\end{equation}
+where the matrix $\boldsymbol{A}$ is related to the Jacobian:
+\begin{equation}
+\boldsymbol{A} = \boldsymbol{J} - \begin{bmatrix} D_1 k^2 & 0 \\ 0 & D_2 k^2 \end{bmatrix} = \begin{bmatrix} b - 1 - D_1 k^2 & a \\ -b & -a - D_2 k^2 \end{bmatrix}.
+\label{eq:14.8.60}
+\end{equation}
+
+\paragraph{Linear system.}
+The linear system \eqref{eq:14.8.59} is solved by letting $\vec{w}(t) = e^{\lambda t}\vec{v}$, so that $\lambda$ are the eigenvalues of the matrix $\boldsymbol{A}$ and $\vec{v}$ the corresponding eigenvectors. The eigenvalues are determined from
+\begin{equation}
+0 = \det(\boldsymbol{A} - \lambda\boldsymbol{I}) = \det\begin{bmatrix} b - 1 - D_1 k^2 - \lambda & a \\ -b & -a - D_2 k^2 - \lambda \end{bmatrix}.
+\label{eq:14.8.61}
+\end{equation}
+The two eigenvalues satisfy
+\begin{equation}
+\lambda^2 + \lambda(a - b + 1 + (D_1 + D_2)k^2) + a + aD_1 k^2 - (b-1)D_2 k^2 + D_1 D_2 k^4. \quad
+\label{eq:14.8.62}
+\end{equation}
+
+The goal is to determine when the uniform state is stable or unstable as a function of the four parameters and a function of the wave number $k$. The stability of the uniform state is determined by the eigenvalues $\lambda$ since solutions are proportional to $e^{\lambda t}$. The uniform state is unstable if one eigenvalue is positive or has positive real part $\text{Re}(\lambda) > 0$. The uniform state is stable if all eigenvalues have negative real parts $\text{Re}(\lambda) < 0$. For $2 \times 2$ matrices $\boldsymbol{A}$, it is best to note (see subsection 14.8.1) that the solution is stable if and only if both its trace $< 0$ and its determinant $> 0$. However, we first do a somewhat easier procedure (which can also be used in higher-order problems but which has serious limitations). There are two ways in which stability can change from stable to unstable.
+
+\paragraph{One eigenvalue with $\lambda = 0$ (and all other eigenvalues with Re$(\lambda) < 0$).}
+If $\lambda = 0$, then from \eqref{eq:14.8.62} it follows that we think of $b$ being a function of the wave number $k$:
+\begin{equation}
+b = D_1 k_c^2 + 1 + \frac{aD_1}{D_2} + \frac{a}{D_2 k^2}.
+\label{eq:14.8.63}
+\end{equation}
+The parameter $b$ is graphed as function of the wave number $k$ in Fig.\ 14.8.7 (note the asymptotic behavior as $k \to 0$ and $k \to \infty$). The function has a minimum $b_{\min} = D_1 k_c^2 + 1 + \frac{aD_1}{D_2} + \frac{a}{D_2 k_c^2}$ at a critical wave number $k_c^4 = \frac{a}{D_1 D_2}$.
+\begin{equation}
+k_c^4 = \frac{a}{D_1 D_2}.
+\label{eq:14.8.64}
+\end{equation}
+Along this curve, so that this curve may not be on the boundary of stability if the other eigenvalue is positive. Another important question is which side of this curve is stable and which side unstable. It is not easy to answer these questions. First determine (perhaps numerically) the other eigenvalue at one point on this curve. Stability will remain the same until this curve intersects any other curve for which stability changes. For the portion of the curve in which stability changes, determine stability everywhere by computing (perhaps numerically) all the eigenvalues at one point on each side of the curve.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch14/fig_14_8_7.png}
+\caption{Turing instability.}
+\label{fig:14.8.7}
+\end{figure}
+
+\paragraph{Necessary and sufficient (trace and determinant) condition for stability.}
+We will be careful in determining where the uniform state is stable. As shown in Fig.\ 14.8.2, an equilibrium is stable if and only if for the matrix both its trace $< 0$ and its determinant $> 0$. To be stable, both inequalities must be satisfied:
+\begin{align}
+\text{tr}\,\boldsymbol{A} &= b - a - 1 - (D_1 + D_2)k^2 < 0 \label{eq:14.8.66} \\
+\det\boldsymbol{A} &= a + aD_1 k^2 - (b-1)D_2 k^2 + D_1 D_2 k^4 > 0. \label{eq:14.8.67}
+\end{align}
+This is more accurate than \eqref{eq:14.8.63} and \eqref{eq:14.8.65}. (The determinant condition relates to $\lambda = 0$ while the trace condition relates to complex eigenvalues.) By solving each inequality in \eqref{eq:14.8.66} and \eqref{eq:14.8.67} for $b$, we see that the stable region is below the intersection of the two curves \eqref{eq:14.8.63} and \eqref{eq:14.8.65}.
+
+\paragraph{Pattern formation.}
+There is a competition between these two minimums $a + 1$ and $b_{\min}$. If the parameter $b$ is less than both, then the uniform state is stable. We assume that we gradually increase $b$ from the stable region. If the first instability occurs at $k = 0$ (infinite wave length, corresponding to an instability in the ordinary differential equation identical to the ordinary differential equation in which the uniform state becomes unstable without developing any spatial structure. If the first instability occurs at $k = k_c$ given by \eqref{eq:14.8.64}, there is a preferred wave number (preferred wave length $\frac{2\pi}{k_c}$). From a uniform state, \textbf{a pattern emerges with predictable wave length from the theory of the instability of the uniform state}, and this would be called a \textbf{Turing instability}. The case of a Turing instability is philosophically significant since the spatial wave length of patterns is predicted from the mathematical equations for arbitrary initial conditions without spatial structure, explaining spatial structures observed in nature.
+
+\paragraph{Two-dimensional patterns.}
+In two-dimensional instability problems, there is a preferred wave number $|\vec{k}| = k_c$. Since $\vec{k}$ is a vector, waves with any direction are possible, though they are all characterized by the same wave length. This is a difficult subject, and we only make a few brief remarks. The linear theory predicts that the solution can be a complicated superposition of many of these waves. \textbf{Hexagonal patterns} are observed in nature in a variety of different disciplines, and it is believed that they result from the superposition of six $\vec{k}$ differing each by $60^\circ$. The wave length of the hexagonal patterns is predicted from the linear instability theory. Three-dimensional generalizations (see Scott [1999]) are called \textbf{scroll waves} and \textbf{scroll rings}. According to Winfree [1987], human cardiac arrhythmias preceding heart attacks are characterized by waves with electrical activity like scroll rings. The study of spiral and scroll wave solutions of partial differential equations and their stability is an area of contemporary research.
+
+\begin{exercises}{14.8}
+\item The (nonlinear) pendulum satisfies the ordinary differential equation $\frac{d^2x}{dt^2} + \sin x = 0$, where $x$ is the angle. Equilibrium solutions satisfy $\sin x_0 = 0$. The natural position is $x_0 = 0$ and the inverted position is $x_0 = \pi$. Determine whether an equilibrium solution is stable or unstable by considering initial conditions near the equilibrium and approximating the differential equation around $x = x_0$. [\emph{Hint}: Since $x$ is near $x_0$, we use the Taylor series of $\sin x$ around $x = x_0$.]
+
+\item \begin{enumerate}
+\item[(a)] Graph four bifurcation diagrams for saddle-node bifurcation at $(x_c, R_c) = (0, 0)$ corresponding to different choices of signs of $f_R$ and $f_{xx}$.
+\item[(b)] Determine stability using one-dimensional phase diagrams.
+\end{enumerate}
+
+\item Assume that at a bifurcation point $(x_c, R_c) = (0, 0)$, in addition to the usual criteria for a bifurcation point, $f_R = 0$ and $f_{xx} \neq 0$. Using a Taylor series analysis, show that as an approximation
+\[
+\od{x}{t} = \frac{f_{xx}}{2}x^2 + f_{xR}Rx + \frac{f_{RR}}{2}R^2.
+\]
+\begin{enumerate}
+\item[(a)] If $f_{xR}^2 > f_{xx}f_{RR}$, then the bifurcation is called \textbf{transcritical}. Analyze stability using one-dimensional phase diagrams (assuming $f_{xx} > 0$). Explain why the transcritical bifurcation is also called \textbf{exchange of stabilities}.
+\item[(b)] If $f_{xR}^2 < f_{xx}f_{RR}$, then show that the equilibrium is isolated to $R = R_c$ only.
+\end{enumerate}
+
+\item Assume that at a bifurcation point $(x_c, R_c) = (0, 0)$, in addition to the usual criteria for a bifurcation point, $f_R = 0$ and $f_{xx} = 0$. Using a Taylor series analysis, show that as an approximation,
+\[
+\od{x}{t} = f_{xR}Rx + \frac{f_{RRR}}{6}R^3 + \cdots.
+\]
+Assume $f_{xR} > 0$. Show there are two cases depending on the sign of $f_{RRR}$. Analyze stability using one-dimensional phase diagram (assuming $f_{xx} > 0$). Explain why this bifurcation is called \textbf{pitchfork bifurcation}.
+
+\item For the following examples, draw bifurcation diagrams examples and determine stability using one-dimensional phase portraits:
+\begin{enumerate}
+\item[(a)] $\od{x}{t} = 2x + 5R$ \hfill (g) $\od{x}{t} = Rx - x^3$
+\item[(b)] $\od{x}{t} = -5x + 2R$ \hfill (h) $\od{x}{t} = Rx + x^3$
+\item[(c)] $\od{x}{t} = 2x^2 + 5R$ \hfill (i) $\od{x}{t} = -(x-4)(x-e^R)$
+\item[(d)] $\od{x}{t} = -2x^2 - 5R$ \hfill (j) $\od{x}{t} = 1 + (R-1)x + x^2$\\
+\hfill (graph $R$ as a function of $x$ first)
+\item[(e)] $\od{x}{t} = xR + x^2$ \hfill (k) $\od{x}{t} = R^2 + Rx + x^2$
+\item[(f)] $\od{x}{t} = -(x - 3R)(x - 5R)$ \hfill (l) $\od{x}{t} = R^2 + 4Rx + x^2$
+\end{enumerate}
+
+\item Find ($e^{st} = e^{(\sigma - i\omega)t}$) the exponential decay rate $\sigma$ and the frequency $\omega$ for the following partial differential equations:
+\begin{enumerate}
+\item[(a)] $\pd{u}{t} = -u - R\pdd{u}{x} - \frac{\partial^4 u}{\partial x^4} - c\frac{\partial^3 u}{\partial x^3}$
+\item[\starred (b)] $\pd{u}{t} = -u - R\pdd{u}{x} - \frac{\partial^4 u}{\partial x^4} + \frac{\partial^3 u}{\partial x^3}$
+\item[(c)] $\pd{u}{t} = u + \frac{1}{R}\pdd{u}{x}$
+\end{enumerate}
+
+\item Find ($e^{st} = e^{(\sigma - i\omega)t}$) the exponential decay rate $\sigma$ and the frequency $\omega$. Briefly explain why the following partial differential equations are ill posed or not:
+\begin{enumerate}
+\item[(a)] $\pd{u}{t} = 4\pdd{u}{x}$
+\item[(b)] $\pd{u}{t} = i\pdd{u}{x}$
+\item[\starred (c)] $\pd{u}{t} = -i\pdd{u}{x}$
+\item[(d)] $\pd{u}{t} = i\frac{\partial^3 u}{\partial x^3}$
+\item[(e)] $\pd{u}{t} + i\pdd{u}{x} = i\frac{\partial^3 u}{\partial x^3}$
+\item[(f)] $\pd{u}{t} - i\pdd{u}{x} = \frac{\partial^3 u}{\partial x^3}$
+\item[(g)] $\pd{u}{t} = \frac{\partial^4 u}{\partial x^4}$
+\item[(h)] $\pd{u}{t} = -\frac{\partial^4 u}{\partial x^4}$
+\end{enumerate}
+
+\item Derive \eqref{eq:14.8.20} and \eqref{eq:14.8.21}.
+
+\item Determine the dispersion relation for the linearized complex Ginzburg-Landau equation.
+
+\item Draw bifurcation diagrams and determine the stability of the solutions using a one-dimensional phase portrait for $\od{r}{t} = \sigma_R(R - R_c)r + \alpha r^3$:
+\begin{enumerate}
+\item[(a)] Assume $\sigma_R < 0$ and $\alpha > 0$.
+\item[(b)] Assume $\sigma_R < 0$ and $\alpha < 0$.
+\end{enumerate}
+
+\item Under what circumstances (parameters) does the Turing bifurcation occur for lower $b$ than the bifurcation of the uniform state?
+
+\item Consider the dynamical system that arises by ignoring diffusion in the model that exhibits the Turing bifurcation.
+\begin{enumerate}
+\item[(a)] Show that a Hopf bifurcation occurs at $b = 1 + a$.
+\item[(b)] Investigate numerically the dynamical system.
+\end{enumerate}
+\end{exercises}

@@ -1,0 +1,126 @@
+% sec13_8.tex — Section 13.8: Solving the Wave Equation Using Laplace Transforms (with Complex Variables)
+\section{Solving the Wave Equation Using Laplace Transforms (with Complex Variables)}
+\label{sec:13.8}
+
+In Sec.~13.6 we showed that
+\begin{align}
+\text{PDE:}\quad &
+\begin{array}{|c|}
+\hline
+\displaystyle\pdd{u}{t} = c^2\pdd{u}{x} \\[4pt]
+\hline
+\end{array}
+\label{eq:13.8.1} \\[8pt]
+\text{BC:}\quad &
+\begin{array}{|c|}
+\hline
+u(0,t) = 0 \\
+u(L,t) = b(t) \\
+\hline
+\end{array}
+\label{eq:13.8.2} \\[8pt]
+\text{IC:}\quad &
+\begin{array}{|c|}
+\hline
+u(x,0) = 0 \\[2pt]
+\displaystyle\pd{u}{t}(x,0) = 0 \\
+\hline
+\end{array}
+\label{eq:13.8.3}
+\end{align}
+could be analyzed by introducing $\overline{U}(x,s)$, the Laplace transform in $t$ of $u(x,t)$.  We obtained $u(x,t)$,
+\begin{equation}
+u(x,t) = -c^2\int_0^t b(t_0)\,\pd{G}{x_0}(x,t;L,t_0)\,dt_0,
+\label{eq:13.8.4}
+\end{equation}
+in terms of the Green's function.  The Laplace transform of this influence function was known [see \eqref{eq:13.6.15}]:
+\begin{equation}
+\pd{\overline{G}}{x_0}(x,s;L,0) = F(s) = -\frac{\sinh(x/c)s}{c^2\sinh(L/c)s}.
+\label{eq:13.8.5}
+\end{equation}
+
+In this section we use the complex inversion integral for the Laplace transform:
+\begin{equation}
+\pd{G}{x_0}(x,t;L,0) = \frac{1}{2\pi i}\int_{\gamma-i\infty}^{\gamma+i\infty}
+-\frac{\sinh(x/c)s}{c^2\sinh(L/c)s}\,e^{st}\ds.
+\label{eq:13.8.6}
+\end{equation}
+The singularities of $F(s)$ only are simple poles $s_n$, located at the zeros of the denominator:
+\begin{equation}
+\sinh\frac{L}{c}\,s_n = 0.
+\label{eq:13.8.7}
+\end{equation}
+However, $s = 0$ is not a pole since, near $s = 0$, $F(s) \approx -(x/c)s/[c^2(L/c)s] \ne \infty$.  There is an infinite number of these poles located on the imaginary axis:
+\begin{equation}
+\frac{L}{c}\,s_n = in\pi, \qquad n = \pm 1, \pm 2, \pm 3, \dots.
+\label{eq:13.8.8}
+\end{equation}
+The location of the poles, $s_n = ic(n\pi/L)$, corresponds to the eigenvalues, $\lambda = (n\pi/L)^2$.  This follows from the singularity property of Laplace transforms (see Sec.~13.2).  The singularity of the Laplace transform [$s = ic(n\pi/L)$] corresponds to a complex exponential solution [$e^{ic(n\pi/L)t}$].
+
+The residue at each pole may be evaluated:
+\[
+\operatorname{res}(s_n) = \frac{R(s_n)}{Q'(s_n)}
+= \frac{-\sinh(x/c)s_n\,e^{s_n t}}{cL\cosh(L/c)s_n}
+= \frac{-i\sin n\pi x/L\,e^{i(n\pi ct/L)}}{cL\cos n\pi},
+\]
+since $\sinh ix = i\sin x$ and $\cosh ix = \cos x$.  Thus, the influence function for this problem is
+\begin{align}
+\frac{\partial}{\partial x_0}G(x,t;L,0)
+&= \sum_{\substack{n=-\infty \\ (n\ne 0)}}^{\infty}
+   \frac{-i\sin n\pi x/L\,e^{i(n\pi ct/L)}}{cL\cos n\pi} \notag\\
+&= \frac{2}{cL}\sum_{n=1}^{\infty}(-1)^n\sin\frac{n\pi x}{L}\sin\frac{n\pi ct}{L},
+\label{eq:13.8.9}
+\end{align}
+where the positive and negative $n$ contributions have been combined into one term.
+Finally, using \eqref{eq:13.8.4}, we obtain
+\[
+u(x,t) = \sum_{n=1}^{\infty} A_n(t)\sin\frac{n\pi x}{L},
+\quad\text{where}\quad
+A_n(t) = -(-1)^n\frac{2c}{L}\int_0^t b(t_0)\sin\frac{n\pi c}{L}(t-t_0)\,dt_0,
+\]
+the same result as would be obtained by the method of eigenfunction expansion.
+
+The influence function is an infinite series of the eigenfunctions.  For homogeneous problems with homogeneous boundary conditions, inverting the Laplace transform using an infinite sequence of poles also will yield a series of eigenfunctions, the same result as obtained by separation of variables.  In fact, it is the Laplace transform method that is often used to \emph{prove} the validity of the method of separation of variables.
+
+%% ── Exercises 13.8 ──────────────────────────────────────────────
+\begin{exercises}{13.8}
+
+\item[\starred 13.8.1.] Solve for $u(x,t)$ using Laplace transforms
+\[
+\pdd{u}{t} = c^2\pdd{u}{x}
+\]
+\[
+u(x,0) = f(x) \qquad \pd{u}{t}(x,0) = 0 \qquad u(0,t) = 0 \qquad u(L,t) = 0.
+\]
+Invert the Laplace transform of $u(x,t)$ using the residue theorem for contour integrals in the $s$-plane.  Show that this yields the same result as derivable by separation of variables.
+
+\item Modify Exercise~13.8.1 if instead
+\begin{enumerate}
+\item[(a)] $u(x,0) = 0$ \quad and\quad $\pd{u}{t}(x,0) = g(x)$
+\item[(b)] $u(0,t) = 0$ \quad and\quad $\pd{u}{x}(L,t) = 0$
+\item[(c)] $\pd{u}{x}(0,t) = 0$ \quad and\quad $\pd{u}{x}(L,t) = 0$
+\end{enumerate}
+
+\item Solve for $u(x,t)$ using Laplace transforms
+\[
+\pd{u}{t} = k\pdd{u}{x}
+\]
+subject to $u(x,0) = f(x)$, $u(0,t) = 0$, and $u(L,t) = 0$.
+Invert the Laplace transform of $u(x,t)$ using the residue theorem for contour integrals in the complex $s$-plane.  By what other method can this representation of the solution be obtained?  (Compare to Exercise~13.5.6.)
+
+\item Consider
+\[
+\pdd{u}{t} = c^2\pdd{u}{x} + \sin\sigma_0 t
+\]
+\[
+u(x,0) = 0 \qquad u(0,t) = 0
+\]
+\[
+\pd{u}{t}(x,0) = 0 \qquad u(L,t) = 0.
+\]
+\begin{enumerate}
+\item[(a)] Solve using Laplace transforms (with contour inversion) if $\sigma_0 \ne c(m\pi/L)$.
+\item[(b)] Solve if $\sigma_0 = c(3\pi/L)$.  Show that resonance occurs (see Sec.~8.5).
+\end{enumerate}
+
+\end{exercises}

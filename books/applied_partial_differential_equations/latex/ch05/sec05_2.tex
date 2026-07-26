@@ -1,0 +1,105 @@
+% sec05_2.tex — Section 5.2: Examples
+\section{Examples}
+\label{sec:sl-examples}
+
+\subsection{Heat Flow in a Nonuniform Rod}
+\label{subsec:nonuniform-rod}
+
+The temperature $u$ in a nonuniform rod solves the following partial differential equation:
+\begin{equation}
+\label{eq:nonuniform-heat}
+\boxed{c\rho\pd{u}{t} = \frac{\partial}{\partial x}\left(K_0\pd{u}{x}\right) + Q,}
+\end{equation}
+where $Q$ represents any possible sources of heat energy.  Here, in order to consider the case of a \textit{nonuniform} rod, we allow the thermal coefficients $c$, $\rho$, and $K_0$ to depend on $x$.
+
+The method of separation of variables can be applied only if \eqref{eq:nonuniform-heat} is linear and \textit{homogeneous}.  Usually, to make \eqref{eq:nonuniform-heat} homogeneous, we consider only situations without sources, $Q = 0$.  However, we will be slightly more general.  We will allow the heat source $Q$ to be proportional to the temperature $u$,
+\begin{equation}
+\label{eq:Q-alpha-u}
+\boxed{Q = \alpha u,}
+\end{equation}
+in which case
+\begin{equation}
+\label{eq:heat-alpha}
+c\rho\pd{u}{t} = \frac{\partial}{\partial x}\left(K_0\pd{u}{x}\right) + \alpha u.
+\end{equation}
+
+We also allow $\alpha$ to depend on $x$ (but not on $t$), as though the specific types of sources depend on the material.  Although $Q \neq 0$, \eqref{eq:heat-alpha} is still a linear and homogeneous partial differential equation.  To understand the effect of this source $Q$, we present a plausible physical situation in which terms such as $Q = \alpha u$ might arise.  Suppose that a chemical reaction generates heat (called an \textit{exothermic} reaction) corresponding to $Q > 0$.  Conceivably, this reaction could be more intense at higher temperatures.  In this way the heat energy generated might be proportional to the temperature and thus $\alpha > 0$ (assuming that $u > 0$).  Other types of chemical reactions (known as \textit{endothermic}) would remove heat energy from the rod and also could be proportional to the temperature.  For positive temperatures ($u > 0$), this corresponds to $\alpha < 0$.  In our problem, $\alpha = \alpha(x)$, and hence it is possible that $\alpha > 0$ in some parts of the rod and $\alpha < 0$ in other parts.  We summarize these results by noting that if $\alpha(x) < 0$ for all $x$, then heat energy is being taken out of the rod, and vice versa.  Later in our mathematical analysis, we will correspondingly discuss the special case $\alpha(x) < 0$.
+
+Equation \eqref{eq:heat-alpha} is suited for the method of separation of variables if, in addition, we assume that there is one homogeneous boundary condition (as yet unspecified) at each end, $x = 0$ and $x = L$.  We have already analyzed cases in which $\alpha = 0$ and $c$, $\rho$, and $K_0$ are constant.  In separating variables, we substitute the product form,
+\begin{equation}
+\label{eq:product-form}
+u(x,t) = \phi(x)h(t),
+\end{equation}
+into \eqref{eq:heat-alpha}, which yields
+\[
+c\rho\phi(x)\od{h}{t} = h(t)\frac{d}{d x}\left(K_0\od{\phi}{x}\right) + \alpha\phi(x)h(t).
+\]
+Dividing by $\phi(x)h(t)$ does not necessarily separate variables since $c\rho$ may depend on $x$.  However, dividing by $c\rho\phi(x)h(t)$ is always successful:
+\begin{equation}
+\label{eq:separated}
+\frac{1}{h}\od{h}{t} = \frac{1}{c\rho\phi}\frac{d}{d x}\left(K_0\od{\phi}{x}\right) + \frac{\alpha}{c\rho} = -\lambda.
+\end{equation}
+
+The separation constant $-\lambda$ has been introduced with a minus sign because in this form the time-dependent equation [following from \eqref{eq:separated}],
+\begin{equation}
+\label{eq:time-ode}
+\od{h}{t} = -\lambda h,
+\end{equation}
+has exponentially decaying solutions if $\lambda > 0$.  Solutions to \eqref{eq:time-ode} exponentially grow if $\lambda < 0$ (and are constant if $\lambda = 0$).  Solutions exponentially growing in time are not usually encountered in physical problems.  However, for problems in which $\alpha > 0$ for at least part of the rod, thermal energy is being put into the rod by the exothermic reaction, and hence it is possible for there to be some negative eigenvalues ($\lambda < 0$).
+
+The spatial differential equation implied by separation of variables is
+\begin{equation}
+\label{eq:spatial-sl}
+\boxed{\frac{d}{d x}\left(K_0\od{\phi}{x}\right) + \alpha\phi + \lambda c\rho\phi = 0,}
+\end{equation}
+which forms a boundary value problem when complemented by two homogeneous boundary conditions.  This differential equation is not $d^2\phi/dx^2 + \lambda\phi = 0$.  Neither does \eqref{eq:spatial-sl} have constant coefficients, because the thermal coefficients $K_0$, $c$, $\rho$, and $\alpha$ are not constant.  \textit{In general, one way in which nonconstant-coefficient differential equations occur is in situations where physical properties are nonuniform.}
+
+Note that we cannot decide on the appropriate convenient sign for the separation constant by quickly analyzing the spatial ordinary differential equation \eqref{eq:spatial-sl} with its homogeneous boundary conditions.  Usually we will be unable to solve \eqref{eq:spatial-sl} in the variable-coefficient case, other than by a numerical approximate solution on the computer.  Consequently, we will describe in Section~\ref{sec:sl-eigenvalue} three important qualitative properties of the solution of \eqref{eq:spatial-sl}.  Later, with a greater understanding of \eqref{eq:spatial-sl}, we will return to reinvestigate heat flow in a nonuniform rod.  For now, let us describe another boundary value problem with nonconstant coefficients.
+
+\subsection{Circularly Symmetric Heat Flow}
+\label{subsec:circular-heat}
+
+Nonconstant-coefficient differential equations can also arise if the physical parameters are constant.  If the temperature $u$ in some plane two-dimensional region is circularly symmetric (so that $u$ depends only on time $t$ and on the radial distance $r$ from the origin), then $u$ solves the linear and homogeneous partial differential equation
+\begin{equation}
+\label{eq:circular-heat}
+\boxed{\pd{u}{t} = k\frac{1}{r}\frac{\partial}{\partial r}\left(r\pd{u}{r}\right),}
+\end{equation}
+under the assumption that all the thermal coefficients are constant.
+
+We apply the method of separation of variables by seeking solutions in the form of a product:
+\[
+u(r,t) = \phi(r)h(t).
+\]
+Equation \eqref{eq:circular-heat} then implies that
+\[
+\phi(r)\od{h}{t} = \frac{kh(t)}{r}\frac{d}{d r}\left(r\od{\phi}{r}\right).
+\]
+Dividing by $\phi(r)h(t)$ separates the variables, but also dividing by the constant $k$ is convenient since it eliminates this constant from the resulting boundary value problem:
+\begin{equation}
+\label{eq:circular-separated}
+\frac{1}{k}\frac{1}{h}\od{h}{t} = \frac{1}{r\phi}\frac{d}{d r}\left(r\od{\phi}{r}\right) = -\lambda.
+\end{equation}
+The two ordinary differential equations implied by \eqref{eq:circular-separated} are
+\begin{equation}
+\label{eq:circular-time}
+\od{h}{t} = -\lambda k h
+\end{equation}
+\begin{equation}
+\label{eq:circular-spatial}
+\boxed{\frac{d}{d r}\left(r\od{\phi}{r}\right) + \lambda r\phi = 0.}
+\end{equation}
+
+The separation constant is denoted $-\lambda$ since we expect solutions to exponentially decay in time, as is implied by \eqref{eq:circular-time} if $\lambda > 0$.  The nonconstant coefficients in \eqref{eq:circular-spatial} are due to geometric factors introduced by the use of polar coordinates.  It is to be noted that solutions to \eqref{eq:circular-spatial} can be found using Bessel functions.  However, the general discussions in the remainder of this chapter will be quite valuable in our understanding of this problem.
+
+Let us consider the appropriate homogeneous boundary conditions for circularly symmetric heat flow in two different geometries: inside a circular annulus (as illustrated in Fig.~\ref{fig:5.2.1}a) and inside a circle (as illustrated in Fig.~\ref{fig:5.2.1}b).  In both cases we assume that all boundaries are fixed at zero temperature.  For the annulus, the boundary conditions for \eqref{eq:circular-spatial} are that the temperature should be zero at the inner ($r = a$) and outer ($r = b$) concentric circular walls:
+\[
+u(a,t) = 0 \quad \text{and} \quad u(b,t) = 0.
+\]
+Both of these boundary conditions are exactly of the type we have already studied.  However, for the circle, the same second-order differential equation \eqref{eq:circular-spatial} has only one boundary condition, $u(b,t) = 0$.  Since the physical variable $r$ ranges from $r = 0$ to $r = b$, we need a homogeneous boundary condition at $r = 0$ for mathematical reasons.  (This is the same problem that occurred in studying Laplace's equation inside a cylinder.  However, in that situation a nonhomogeneous condition was given at $r = b$.)  On the basis of physical reasoning, we expect that the condition at $r = 0$ is that the temperature is bounded there, $|u(0,t)| < \infty$.  This is an example of a \textbf{singularity condition}.  It is homogeneous; it is the boundary condition that we apply at $r = 0$.  Thus, we have homogeneous conditions at both $r = 0$ and $r = b$ for the circle.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch05/fig_5_2_1.png}
+\caption{(a) Circular annulus; (b) circle.}
+\label{fig:5.2.1}
+\end{figure}

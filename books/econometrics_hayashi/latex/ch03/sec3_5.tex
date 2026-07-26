@@ -1,0 +1,505 @@
+% sec3_5.tex — Section 3.5: Large-Sample Properties of GMM
+
+The GMM formula \eqref{eq:3.4.8} defines GMM estimators, which are a set of estimators,
+each indexed by the weighting matrix $\hat{\mathbf{W}}$.  You will be delighted to know that
+\emph{every} estimator to be introduced in the next few chapters is a GMM estimator for some
+choice of $\hat{\mathbf{W}}$.  The task of this section is to develop the large-sample theory for the
+GMM estimator for any given choice of $\hat{\mathbf{W}}$, which can be carried out quite easily
+with the techniques of the previous chapter.  The first half of this section extends
+Propositions~2.1--2.4 of Chapter~2 to GMM estimators.  One issue that did not arise
+in those propositions is which GMM estimators should be preferred to other GMM
+estimators.  This is a question of choosing $\hat{\mathbf{W}}$ optimally and will be taken up in the
+latter part of this section.
+
+%% ─── Asymptotic Distribution of the GMM Estimator ──────────────────────────
+\subsection*{Asymptotic Distribution of the GMM Estimator}
+
+The large-sample theory for $\hat{\boldsymbol{\delta}}(\hat{\mathbf{W}})$ valid for any given choice of
+$\hat{\mathbf{W}}$ is
+
+\begin{proposition}[asymptotic distribution of the GMM estimator]
+\label{prop:3.1}
+\begin{enumerate}[label=(\alph*)]
+\item \emph{(Consistency)} Under Assumptions~3.1--3.4,
+  $\plim_{n\to\infty} \hat{\boldsymbol{\delta}}(\hat{\mathbf{W}}) = \boldsymbol{\delta}$.
+
+\item \emph{(Asymptotic Normality)} If Assumption~3.3 is strengthened as
+  Assumption~3.5, then
+  \[
+    \sqrt{n}\,(\hat{\boldsymbol{\delta}}(\hat{\mathbf{W}}) - \boldsymbol{\delta})
+    \dto N\bigl(\mathbf{0},\; \avar(\hat{\boldsymbol{\delta}}(\hat{\mathbf{W}}))\bigr)
+    \quad \text{as } n \to \infty,
+  \]
+  where
+  \begin{equation}
+    \avar(\hat{\boldsymbol{\delta}}(\hat{\mathbf{W}}))
+    = (\boldsymbol{\Sigma}_{\mathbf{xz}}' \mathbf{W} \boldsymbol{\Sigma}_{\mathbf{xz}})^{-1}\,
+      \boldsymbol{\Sigma}_{\mathbf{xz}}' \mathbf{W} \mathbf{S} \mathbf{W}
+      \boldsymbol{\Sigma}_{\mathbf{xz}}\,
+      (\boldsymbol{\Sigma}_{\mathbf{xz}}' \mathbf{W} \boldsymbol{\Sigma}_{\mathbf{xz}})^{-1}.
+    \label{eq:3.5.1}
+  \end{equation}
+  (Recall: $\boldsymbol{\Sigma}_{\mathbf{xz}} \equiv \E(\mathbf{x}_i \mathbf{z}_i')$,
+  $\mathbf{S} = \E(\mathbf{g}_i \mathbf{g}_i') = \E(\varepsilon_i^2\, \mathbf{x}_i \mathbf{x}_i')$,
+  $\mathbf{W} \equiv \plim\, \hat{\mathbf{W}}$.)
+
+\item \emph{(Consistent Estimate of $\avar(\hat{\boldsymbol{\delta}}(\hat{\mathbf{W}}))$)}
+  Suppose there is available a consistent estimator, $\hat{\mathbf{S}}$, of $\mathbf{S}$
+  $(K \times K)$.  Then, under Assumption~3.2,
+  $\avar(\hat{\boldsymbol{\delta}}(\hat{\mathbf{W}}))$ is consistently estimated by
+  \begin{equation}
+    \widehat{\avar(\hat{\boldsymbol{\delta}}(\hat{\mathbf{W}}))}
+    \equiv (\mathbf{S}_{\mathbf{xz}}' \hat{\mathbf{W}} \mathbf{S}_{\mathbf{xz}})^{-1}\,
+      \mathbf{S}_{\mathbf{xz}}' \hat{\mathbf{W}} \hat{\mathbf{S}} \hat{\mathbf{W}}
+      \mathbf{S}_{\mathbf{xz}}\,
+      (\mathbf{S}_{\mathbf{xz}}' \hat{\mathbf{W}} \mathbf{S}_{\mathbf{xz}})^{-1},
+    \label{eq:3.5.2}
+  \end{equation}
+  where $\mathbf{S}_{\mathbf{xz}}$ is the sample mean of $\mathbf{x}_i \mathbf{z}_i'$:
+  \[
+    \underset{(K \times L)}{\mathbf{S}_{\mathbf{xz}}}
+    \equiv \frac{1}{n} \sum_{i=1}^{n} \mathbf{x}_i \mathbf{z}_i'.
+  \]
+\end{enumerate}
+\end{proposition}
+
+The ugly looking expression for the asymptotic variance will become much prettier
+when we choose the weighting matrix optimally.  If you have gone through the
+proof of Proposition~2.1, you should find it a breeze to prove Proposition~3.1.  The
+key observations are:
+
+\begin{enumerate}
+\item[(1)] $\mathbf{S}_{\mathbf{xz}} \pto \boldsymbol{\Sigma}_{\mathbf{xz}}$
+  \quad (by ergodic stationarity)
+
+\item[(2)] $\bar{\mathbf{g}}$
+  $\bigl(\equiv \frac{1}{n} \sum_{i=1}^{n} \mathbf{g}_i\bigr) \pto \mathbf{0}$
+  \quad (by ergodic stationarity and the orthogonality conditions)
+
+\item[(3)] $\sqrt{n}\, \bar{\mathbf{g}} \dto N(\mathbf{0}, \mathbf{S})$
+  \quad (by Assumption~3.5).
+\end{enumerate}
+
+Consistency immediately follows if you use (1), (2), and Lemma~2.3(a) on the
+expression for the sampling error \eqref{eq:3.4.11}.  To prove asymptotic normality, multiply
+both sides of \eqref{eq:3.4.11} by $\sqrt{n}$ to obtain
+\begin{equation}
+  \sqrt{n}\,(\hat{\boldsymbol{\delta}}(\hat{\mathbf{W}}) - \boldsymbol{\delta})
+  = (\mathbf{S}_{\mathbf{xz}}' \hat{\mathbf{W}} \mathbf{S}_{\mathbf{xz}})^{-1}\,
+    \mathbf{S}_{\mathbf{xz}}' \hat{\mathbf{W}}\, \sqrt{n}\, \bar{\mathbf{g}}
+  \label{eq:3.5.3}
+\end{equation}
+and use (3), Lemma~2.3(a), and Lemma~2.4(c).  Part~(c) of Proposition~3.1 follows
+immediately from Lemma~2.3(a).
+
+%% ─── Estimation of Error Variance ──────────────────────────────────────────
+\subsection*{Estimation of Error Variance}
+
+In Section~2.3, we proved the consistency of the OLS estimator, $s^2$, of the error
+variance.  As was noted there, the result holds as long as the residual is from some
+consistent estimator of the coefficient vector.  The same is true here.
+
+\begin{proposition}[consistent estimation of error variance]
+\label{prop:3.2}
+\emph{For any consistent estimator, $\hat{\boldsymbol{\delta}}$, of $\boldsymbol{\delta}$, define
+$\hat{\varepsilon}_i \equiv y_i - \mathbf{z}_i' \hat{\boldsymbol{\delta}}$.  Under Assumptions~3.1, 3.2,
+plus the assumption that $\E(\mathbf{z}_i \mathbf{z}_i')$ (second moments of the regressors) exists
+and is finite,}
+\[
+  \frac{1}{n} \sum_{i=1}^{n} \hat{\varepsilon}_i^2 \pto \E(\varepsilon_i^2),
+\]
+\emph{provided $\E(\varepsilon_i^2)$ exists and is finite.}
+\end{proposition}
+
+The proof is very similar to the proof of Proposition~2.2.  The relationship between
+$\hat{\varepsilon}_i$ and $\varepsilon_i$ is given by
+\begin{equation}
+  \hat{\varepsilon}_i \equiv y_i - \mathbf{z}_i' \hat{\boldsymbol{\delta}}
+  = \varepsilon_i - \mathbf{z}_i'(\hat{\boldsymbol{\delta}} - \boldsymbol{\delta}),
+  \label{eq:3.5.4}
+\end{equation}
+so that
+\begin{equation}
+  \hat{\varepsilon}_i^2 = \varepsilon_i^2
+  - 2(\hat{\boldsymbol{\delta}} - \boldsymbol{\delta})' \mathbf{z}_i \cdot \varepsilon_i
+  + (\hat{\boldsymbol{\delta}} - \boldsymbol{\delta})' \mathbf{z}_i \mathbf{z}_i'
+    (\hat{\boldsymbol{\delta}} - \boldsymbol{\delta}).
+  \label{eq:3.5.5}
+\end{equation}
+Summing over $i$, we obtain
+\begin{equation}
+  \frac{1}{n} \sum_{i=1}^{n} \hat{\varepsilon}_i^2
+  = \frac{1}{n} \sum_{i=1}^{n} \varepsilon_i^2
+  - 2(\hat{\boldsymbol{\delta}} - \boldsymbol{\delta})'
+    \frac{1}{n} \sum_{i=1}^{n} \mathbf{z}_i \cdot \varepsilon_i
+  + (\hat{\boldsymbol{\delta}} - \boldsymbol{\delta})'
+    \Bigl(\frac{1}{n} \sum_{i=1}^{n} \mathbf{z}_i \mathbf{z}_i'\Bigr)
+    (\hat{\boldsymbol{\delta}} - \boldsymbol{\delta}).
+  \label{eq:3.5.6}
+\end{equation}
+As usual, $\frac{1}{n} \sum_i \varepsilon_i^2 \pto \E(\varepsilon_i^2)$.
+Since $\hat{\boldsymbol{\delta}}$ is consistent and
+$\frac{1}{n} \sum_i \mathbf{z}_i \mathbf{z}_i'$ converges in probability to some finite matrix by assumption,
+the last term vanishes.  It is easy to show that $\E(\mathbf{z}_i \cdot \varepsilon_i)$ exists and is
+finite.\footnote{By the Cauchy--Schwarz inequality,
+$\E(|z_{i\ell}\,\varepsilon_i|) \leq \sqrt{\E(z_{i\ell}^2) \cdot \E(\varepsilon_i^2)}$,
+where $z_{i\ell}$ is the $\ell$-th element of $\mathbf{z}_i$.  Both $\E(z_{i\ell}^2)$ and
+$\E(\varepsilon_i^2)$ are finite by assumption.}  Then, by ergodic stationarity,
+\[
+  \frac{1}{n} \sum_i \mathbf{z}_i \cdot \varepsilon_i \pto \text{some finite vector.}
+\]
+So the second term on the RHS of \eqref{eq:3.5.6}, too, vanishes.
+
+%% ─── Hypothesis Testing ────────────────────────────────────────────────────
+\subsection*{Hypothesis Testing}
+
+It should now be routine to derive from Proposition~3.1(b) and 3.1(c) the following.
+
+\begin{proposition}[robust $t$-ratio and Wald statistics]
+\label{prop:3.3}
+\emph{Suppose Assumptions~3.1--3.5 hold, and suppose there is available a consistent estimate
+$\hat{\mathbf{S}}$ of $\mathbf{S}$ $(\equiv \avar(\bar{\mathbf{g}}) = \E(\mathbf{g}_i \mathbf{g}_i'))$.
+Let}
+\[
+  \widehat{\avar(\hat{\boldsymbol{\delta}}(\hat{\mathbf{W}}))}
+  \equiv (\mathbf{S}_{\mathbf{xz}}' \hat{\mathbf{W}} \mathbf{S}_{\mathbf{xz}})^{-1}\,
+    \mathbf{S}_{\mathbf{xz}}' \hat{\mathbf{W}} \hat{\mathbf{S}} \hat{\mathbf{W}}
+    \mathbf{S}_{\mathbf{xz}}\,
+    (\mathbf{S}_{\mathbf{xz}}' \hat{\mathbf{W}} \mathbf{S}_{\mathbf{xz}})^{-1}.
+\]
+\emph{Then:}
+\begin{enumerate}[label=(\alph*)]
+\item \emph{Under the null hypothesis $\mathrm{H}_0\colon \delta_\ell = \bar{\delta}_\ell$,}
+  \[
+    t_\ell
+    = \frac{\sqrt{n}\,(\hat{\delta}_\ell(\hat{\mathbf{W}}) - \bar{\delta}_\ell)}
+           {\sqrt{\bigl(\widehat{\avar(\hat{\boldsymbol{\delta}}(\hat{\mathbf{W}}))}\bigr)_{\!\ell\ell}}}
+    = \frac{\hat{\delta}_\ell(\hat{\mathbf{W}}) - \bar{\delta}_\ell}{SE_\ell^*}
+    \dto N(0,1),
+  \]
+  \emph{where
+  $\bigl(\widehat{\avar(\hat{\boldsymbol{\delta}}(\hat{\mathbf{W}}))}\bigr)_{\!\ell\ell}$
+  is the $(\ell,\ell)$ element of
+  $\widehat{\avar(\hat{\boldsymbol{\delta}}(\hat{\mathbf{W}}))}$
+  [which is $\avar(\hat{\delta}_\ell(\hat{\mathbf{W}}))$] and}
+  \begin{equation}
+    SE_\ell^* \text{ (robust standard error)}
+    \equiv \sqrt{\frac{1}{n} \cdot
+      \bigl(\widehat{\avar(\hat{\boldsymbol{\delta}}(\hat{\mathbf{W}}))}\bigr)_{\!\ell\ell}}.
+    \label{eq:3.5.7}
+  \end{equation}
+
+\item \emph{Under the null hypothesis $\mathrm{H}_0\colon
+  \mathbf{R}\boldsymbol{\delta} = \mathbf{r}$ where $\#\mathbf{r}$ is the number of restrictions
+  (the dimension of $\mathbf{r}$) and $\mathbf{R}$ $(\#\mathbf{r} \times L)$ is of full row rank,}
+  \begin{equation}
+    W \equiv n \cdot (\mathbf{R}\hat{\boldsymbol{\delta}}(\hat{\mathbf{W}}) - \mathbf{r})'\,
+    \bigl\{\mathbf{R}\bigl[\widehat{\avar(\hat{\boldsymbol{\delta}}(\hat{\mathbf{W}}))}\bigr]
+    \mathbf{R}'\bigr\}^{-1}
+    (\mathbf{R}\hat{\boldsymbol{\delta}}(\hat{\mathbf{W}}) - \mathbf{r})
+    \dto \chi^2(\#\mathbf{r}).
+    \label{eq:3.5.8}
+  \end{equation}
+
+\item \emph{Under the null hypothesis $\mathrm{H}_0\colon
+  \mathbf{a}(\boldsymbol{\delta}) = \mathbf{0}$ such that $\mathbf{A}(\boldsymbol{\delta})$, the
+  $\#\mathbf{a} \times L$ matrix of first derivatives of $\mathbf{a}$ (where $\#\mathbf{a}$ is the dimension
+  of $\mathbf{a}$), is continuous and of full row rank,}
+  \begin{equation}
+    W \equiv n \cdot \mathbf{a}(\hat{\boldsymbol{\delta}}(\hat{\mathbf{W}}))'\,
+    \bigl\{\mathbf{A}(\hat{\boldsymbol{\delta}}(\hat{\mathbf{W}}))\,
+    \bigl[\widehat{\avar(\hat{\boldsymbol{\delta}}(\hat{\mathbf{W}}))}\bigr]\,
+    \mathbf{A}(\hat{\boldsymbol{\delta}}(\hat{\mathbf{W}}))'\bigr\}^{-1}\,
+    \mathbf{a}(\hat{\boldsymbol{\delta}}(\hat{\mathbf{W}}))
+    \dto \chi^2(\#\mathbf{a}).
+    \label{eq:3.5.9}
+  \end{equation}
+\end{enumerate}
+\end{proposition}
+
+For the Wald statistic for the nonlinear hypothesis, the same comment that we
+made for Proposition~2.3 applies here: the numerical value of the Wald statistic is
+not invariant to how the nonlinear restriction is represented by $\mathbf{a}(\cdot)$.
+
+%% ─── Estimation of S ──────────────────────────────────────────────────────
+\subsection*{Estimation of S}
+
+We have already studied the estimation of
+$\mathbf{S}$ $(= \E(\mathbf{g}_i \mathbf{g}_i') = \E(\varepsilon_i^2\, \mathbf{x}_i \mathbf{x}_i'))$
+in Section~2.5.  The proposed estimator was, if adapted to the present estimation equation
+$y_i = \mathbf{z}_i' \boldsymbol{\delta} + \varepsilon_i$,
+\begin{equation}
+  \hat{\mathbf{S}} \equiv \frac{1}{n} \sum_{i=1}^{n}
+  \hat{\varepsilon}_i^2\, \mathbf{x}_i \mathbf{x}_i',
+  \label{eq:3.5.10}
+\end{equation}
+where $\hat{\varepsilon}_i \equiv y_i - \mathbf{z}_i' \hat{\boldsymbol{\delta}}$ and
+$\hat{\boldsymbol{\delta}}$ is consistent for $\boldsymbol{\delta}$.  The fourth-moment assumption
+needed for this to be consistent for $\mathbf{S}$ is a generalization of Assumption~2.6.
+
+\begin{assumption}[finite fourth moments]
+\label{ass:3.6}
+$\E[(x_{ik}\, z_{i\ell})^2]$ \emph{exists is finite for all}
+$k$ $(= 1, \ldots, K)$ \emph{and} $\ell$ $(= 1, \ldots, L)$.
+\end{assumption}
+
+It is left as an analytical exercise to prove
+
+\begin{proposition}[consistent estimation of S]
+\label{prop:3.4}
+\emph{Suppose the coefficient estimate $\hat{\boldsymbol{\delta}}$
+used for calculating the residual $\hat{\varepsilon}_i$ for $\hat{\mathbf{S}}$ in \eqref{eq:3.5.10} is
+consistent, and suppose $\mathbf{S} = \E(\mathbf{g}_i \mathbf{g}_i')$ exists and is finite.  Then,
+under Assumptions~3.1, 3.2, and 3.6, $\hat{\mathbf{S}}$ given in \eqref{eq:3.5.10} is consistent
+for $\mathbf{S}$.}
+\end{proposition}
+
+%% ─── Efficient GMM Estimator ──────────────────────────────────────────────
+\subsection*{Efficient GMM Estimator}
+
+Naturally, we wish to choose from the GMM estimators indexed by $\hat{\mathbf{W}}$ one that has
+the least asymptotic variance.  The next proposition provides a choice of $\mathbf{W}$ that
+minimizes the asymptotic variance.
+
+\begin{proposition}[optimal choice of the weighting matrix]
+\label{prop:3.5}
+\emph{A lower bound for the asymptotic variance of the GMM estimators \eqref{eq:3.4.8}
+indexed by $\hat{\mathbf{W}}$ is given by
+$(\boldsymbol{\Sigma}_{\mathbf{xz}}' \mathbf{S}^{-1} \boldsymbol{\Sigma}_{\mathbf{xz}})^{-1}$.
+The lower bound is achieved if $\hat{\mathbf{W}}$ is such that
+$\mathbf{W}$ $(\equiv \plim\, \hat{\mathbf{W}}) = \mathbf{S}^{-1}$.\footnote{The condition that
+$\mathbf{W} = \mathbf{S}^{-1}$ is sufficient but not necessary for efficiency.  A necessary and
+sufficient condition is that there exists a matrix $\mathbf{C}$ such that
+$\boldsymbol{\Sigma}_{\mathbf{xz}}' \mathbf{W} = \mathbf{C}\, \boldsymbol{\Sigma}_{\mathbf{xz}}' \mathbf{S}^{-1}$.
+See Newey and McFadden (1994, p.~2165).}}
+\end{proposition}
+
+Because the asymptotic variance for any given $\hat{\mathbf{W}}$ is \eqref{eq:3.5.1}, this proposition
+is proved if we can show that
+\begin{equation}
+  (\boldsymbol{\Sigma}_{\mathbf{xz}}' \mathbf{W} \boldsymbol{\Sigma}_{\mathbf{xz}})^{-1}\,
+  \boldsymbol{\Sigma}_{\mathbf{xz}}' \mathbf{W} \mathbf{S} \mathbf{W}
+  \boldsymbol{\Sigma}_{\mathbf{xz}}\,
+  (\boldsymbol{\Sigma}_{\mathbf{xz}}' \mathbf{W} \boldsymbol{\Sigma}_{\mathbf{xz}})^{-1}
+  \;\geq\;
+  (\boldsymbol{\Sigma}_{\mathbf{xz}}' \mathbf{S}^{-1} \boldsymbol{\Sigma}_{\mathbf{xz}})^{-1}
+  \label{eq:3.5.11}
+\end{equation}
+for any symmetric positive definite matrix $\mathbf{W}$.  Proving this algebraic result is left
+as an analytical exercise.
+
+A GMM estimator satisfying the efficiency condition that
+$\plim\, \hat{\mathbf{W}} = \mathbf{S}^{-1}$ will be called the \textbf{efficient} (or \textbf{optimal})
+\textbf{GMM estimator}.  Simply by replacing $\hat{\mathbf{W}}$ by $\hat{\mathbf{S}}^{-1}$ (which is
+consistent for $\mathbf{S}^{-1}$) in the formulas of Proposition~3.1, we obtain
+\begin{align}
+  &\text{Efficient GMM estimator:} \quad
+  \hat{\boldsymbol{\delta}}(\hat{\mathbf{S}}^{-1})
+  = (\mathbf{S}_{\mathbf{xz}}' \hat{\mathbf{S}}^{-1} \mathbf{S}_{\mathbf{xz}})^{-1}\,
+    \mathbf{S}_{\mathbf{xz}}' \hat{\mathbf{S}}^{-1} \mathbf{s}_{\mathbf{xy}},
+  \label{eq:3.5.12} \\
+  &\avar(\hat{\boldsymbol{\delta}}(\hat{\mathbf{S}}^{-1}))
+  = (\boldsymbol{\Sigma}_{\mathbf{xz}}' \mathbf{S}^{-1}
+     \boldsymbol{\Sigma}_{\mathbf{xz}})^{-1},
+  \label{eq:3.5.13} \\
+  &\widehat{\avar(\hat{\boldsymbol{\delta}}(\hat{\mathbf{S}}^{-1}))}
+  = (\mathbf{S}_{\mathbf{xz}}' \hat{\mathbf{S}}^{-1}
+     \mathbf{S}_{\mathbf{xz}})^{-1}.
+  \label{eq:3.5.14}
+\end{align}
+With $\hat{\mathbf{W}} = \hat{\mathbf{S}}^{-1}$, the formulas for the robust $t$ and the Wald statistics
+in Proposition~3.3 become
+\begin{equation}
+  t_\ell = \frac{\hat{\delta}_\ell(\hat{\mathbf{S}}^{-1}) - \bar{\delta}_\ell}
+                 {SE_\ell^*},
+  \label{eq:3.5.15}
+\end{equation}
+where $SE_\ell^*$ is the robust standard error given by
+\[
+  SE_\ell^* = \sqrt{\frac{1}{n} \cdot
+    \bigl((\mathbf{S}_{\mathbf{xz}}' \hat{\mathbf{S}}^{-1}
+    \mathbf{S}_{\mathbf{xz}})^{-1}\bigr)_{\!\ell\ell}},
+\]
+and
+\begin{equation}
+  W = n \cdot \mathbf{a}(\hat{\boldsymbol{\delta}}(\hat{\mathbf{S}}^{-1}))'\,
+  \bigl\{\mathbf{A}(\hat{\boldsymbol{\delta}}(\hat{\mathbf{S}}^{-1}))\,
+  (\mathbf{S}_{\mathbf{xz}}' \hat{\mathbf{S}}^{-1} \mathbf{S}_{\mathbf{xz}})^{-1}\,
+  \mathbf{A}(\hat{\boldsymbol{\delta}}(\hat{\mathbf{S}}^{-1}))'\bigr\}^{-1}\,
+  \mathbf{a}(\hat{\boldsymbol{\delta}}(\hat{\mathbf{S}}^{-1})).
+  \label{eq:3.5.16}
+\end{equation}
+
+To calculate the efficient GMM estimator, we need the consistent estimator
+$\hat{\mathbf{S}}$.  But Proposition~3.4 assures us that the $\hat{\mathbf{S}}$ based on any consistent
+estimator of $\boldsymbol{\delta}$ is consistent for $\mathbf{S}$.  This leads us to the following
+\textbf{two-step efficient GMM procedure}:
+
+\medskip
+\noindent\emph{Step~1:} Choose a matrix $\hat{\mathbf{W}}$ that converges in probability to a symmetric and positive
+definite matrix, and minimize $J(\tilde{\boldsymbol{\delta}}, \hat{\mathbf{W}})$ over
+$\tilde{\boldsymbol{\delta}}$ to obtain $\hat{\boldsymbol{\delta}}(\hat{\mathbf{W}})$.  There
+is no shortage of such matrices $\hat{\mathbf{W}}$ (e.g., $\hat{\mathbf{W}} = \mathbf{I}$), but
+usually we set $\hat{\mathbf{W}} = \mathbf{S}_{\mathbf{xx}}^{-1}$.  The resulting estimator
+$\hat{\boldsymbol{\delta}}(\mathbf{S}_{\mathbf{xx}}^{-1})$ is the celebrated two-stage least
+squares (as we will see in Section~3.8).  Use this to calculate the residual
+$\hat{\varepsilon}_i \equiv y_i - \mathbf{z}_i' \hat{\boldsymbol{\delta}}(\hat{\mathbf{W}})$ and obtain
+a consistent estimator $\hat{\mathbf{S}}$ of $\mathbf{S}$ by \eqref{eq:3.5.10}.
+
+\medskip
+\noindent\emph{Step~2:} Minimize
+$J(\tilde{\boldsymbol{\delta}}, \hat{\mathbf{S}}^{-1})$ over $\tilde{\boldsymbol{\delta}}$.
+The minimizer is the efficient GMM estimator.
+
+%% ─── Asymptotic Power ──────────────────────────────────────────────────────
+\subsection*{Asymptotic Power}
+
+Like the coefficient estimator, the $t$ and Wald statistics depend on the choice of
+$\mathbf{W}$.  It seems intuitively obvious that those statistics associated with the efficient GMM
+estimator should be preferred in large samples.  This intuition can be formalized in
+terms of asymptotic power introduced in Section~2.4.  Take, for example, the $t$-ratio
+for testing $\mathrm{H}_0\colon \delta_\ell = \bar{\delta}_\ell$.  The $t$-ratio is written (reproducing
+\eqref{eq:3.5.7}) as
+\begin{equation}
+  t_\ell = \frac{\sqrt{n}\,(\hat{\delta}_\ell(\hat{\mathbf{W}})
+    - \bar{\delta}_\ell)}
+    {\sqrt{\bigl(\widehat{\avar(\hat{\boldsymbol{\delta}}(\hat{\mathbf{W}}))}\bigr)_{\!\ell\ell}}}.
+  \label{eq:3.5.17}
+\end{equation}
+The denominator converges to some finite number even when the null is false.
+In contrast, the numerator explodes (its plim is infinite) when the null is false.
+So the power under any fixed alternative approaches unity.  That is, the test is
+consistent.  This is true for any choice of $\mathbf{W}$, so test consistency cannot be a basis
+for choosing $\mathbf{W}$.
+
+Next, consider a sequence of local alternatives subject to Pitman drift:
+\begin{equation}
+  \delta_\ell^{(n)} = \bar{\delta}_\ell + \frac{\gamma}{\sqrt{n}}
+  \label{eq:3.5.18}
+\end{equation}
+for some given $\gamma \neq 0$.  Substituting \eqref{eq:3.5.18} into \eqref{eq:3.5.17}, the
+$t$-ratio above can be rewritten as
+\begin{equation}
+  t_\ell = \frac{\sqrt{n}\,(\hat{\delta}_\ell(\hat{\mathbf{W}})
+    - \delta_\ell^{(n)})}
+    {\sqrt{\bigl(\widehat{\avar(\hat{\boldsymbol{\delta}}(\hat{\mathbf{W}}))}\bigr)_{\!\ell\ell}}}
+  + \frac{\gamma}
+    {\sqrt{\bigl(\widehat{\avar(\hat{\boldsymbol{\delta}}(\hat{\mathbf{W}}))}\bigr)_{\!\ell\ell}}}.
+  \label{eq:3.5.19}
+\end{equation}
+Applying the same argument for deriving the asymptotic distribution of the $t$-ratio
+in (2.4.4), we can show that $t_\ell \dto N(\mu, 1)$, where
+\begin{equation}
+  \mu \equiv \frac{\gamma}
+    {\sqrt{\bigl(\avar(\hat{\boldsymbol{\delta}}(\hat{\mathbf{W}}))\bigr)_{\!\ell\ell}}}.
+  \label{eq:3.5.20}
+\end{equation}
+If the significance level is $\alpha$, the asymptotic power is given by
+$\Pr(|x| > t_{\alpha/2})$, where $x \sim N(\mu, 1)$ and $t_{\alpha/2}$ is the level-$\alpha$ critical
+value.  Evidently, the larger is $|\mu|$, the higher is the asymptotic power.  And $|\mu|$
+decreases with the asymptotic variance.  Therefore, the asymptotic power against local
+alternatives is maximized by the efficient GMM estimator.
+
+%% ─── Small-Sample Properties ──────────────────────────────────────────────
+\subsection*{Small-Sample Properties}
+
+Do these desirable asymptotic properties of the efficient GMM estimator and associated
+test statistics carry over to their finite-sample distributions?  The efficient
+GMM estimator uses $\hat{\mathbf{S}}^{-1}$, a function of estimated fourth moments, for
+$\hat{\mathbf{W}}$.  Generally, it takes a substantially larger sample size to estimate fourth moments
+reliably than to estimate first and second moments.  So we would expect the efficient GMM
+estimator to have poorer small-sample properties than the GMM estimators that do
+not use fourth moments for $\hat{\mathbf{W}}$.  The July 1996 issue of the \emph{Journal of Business
+and Economic Statistics} has a number of papers examining the small-sample distribution
+of GMM estimators and associated test statistics for various DGPs.  Their
+overall conclusion is that the equally weighted GMM estimator with $\hat{\mathbf{W}} = \mathbf{I}$
+generally outperforms the efficient GMM in terms of the bias and variance in finite
+samples.  They also find that the size of the efficient Wald statistic in small samples
+far exceeds the assumed significance level.  That is, if $\alpha$ is the assumed significance
+level and $c_\alpha$ is the associated critical value so that
+$\Pr(\chi^2 > c_\alpha) = \alpha$, the probability in finite samples that the Wald statistic is
+greater than $c_\alpha$ far exceeds $\alpha$; the test rejects the null too often.  Unfortunately,
+however, like most other small-sample studies, those studies fail to produce clear
+quantitative guidance which the empirical researcher could follow.
+
+%% ─── Questions for Review ──────────────────────────────────────────────────
+\bigskip
+\begin{center}\rule{0.6\textwidth}{0.4pt}\end{center}
+\noindent\textsc{Questions for Review}
+\medskip
+
+\begin{enumerate}
+\item Verify that all the results of Sections~2.3--2.5 are special cases of those of this
+  section.  In particular, verify that \eqref{eq:3.5.1} reduces to (2.3.4).
+  \textbf{Hint:} $\boldsymbol{\Sigma}_{\mathbf{xz}}$ is square if $\mathbf{z}_i = \mathbf{x}_i$.
+
+\item (Singular $\mathbf{W}$) \; Suppose $\mathbf{W}$ is singular but
+  $\boldsymbol{\Sigma}_{\mathbf{xz}}' \mathbf{W} \boldsymbol{\Sigma}_{\mathbf{xz}}$ is nonsingular.
+  Verify that all the results of this section (except Proposition~3.5) remain valid.
+
+\item (Asymptotically equivalent choice of $\hat{\mathbf{W}}$) \; Suppose
+  $\hat{\mathbf{W}}_1 - \hat{\mathbf{W}}_2 \pto \mathbf{0}$.  Show that
+  \[
+    \sqrt{n}\,\hat{\boldsymbol{\delta}}(\hat{\mathbf{W}}_1)
+    - \sqrt{n}\,\hat{\boldsymbol{\delta}}(\hat{\mathbf{W}}_2) \pto \mathbf{0}.
+  \]
+  \textbf{Hint:}
+  \begin{align*}
+    &\sqrt{n}\,\hat{\boldsymbol{\delta}}(\hat{\mathbf{W}}_1)
+    - \sqrt{n}\,\hat{\boldsymbol{\delta}}(\hat{\mathbf{W}}_2) \\
+    &\quad = \bigl[(\mathbf{S}_{\mathbf{xz}}' \hat{\mathbf{W}}_1 \mathbf{S}_{\mathbf{xz}})^{-1}
+      \mathbf{S}_{\mathbf{xz}}' \hat{\mathbf{W}}_1
+      - (\mathbf{S}_{\mathbf{xz}}' \hat{\mathbf{W}}_2 \mathbf{S}_{\mathbf{xz}})^{-1}
+      \mathbf{S}_{\mathbf{xz}}' \hat{\mathbf{W}}_2\bigr]\, \sqrt{n}\, \bar{\mathbf{g}}.
+  \end{align*}
+  $\sqrt{n}\, \bar{\mathbf{g}}$ converges in distribution to a random variable.
+  Use Lemma~2.4(b).
+
+\item (Three-step GMM) \; Consider adding to the efficient two-step GMM procedure
+  the following third step: Recompute $\hat{\mathbf{S}}$ by \eqref{eq:3.5.10}, but this time using
+  the residual from the second step.  Calculate the GMM estimator with this
+  recomputed $\hat{\mathbf{S}}$.  Is this estimator consistent?  Asymptotically normal?  Efficient?
+  \textbf{Hint:} Verify by Proposition~3.4 that the recalculated $\hat{\mathbf{S}}$ is consistent for
+  $\mathbf{S}$.  Does the asymptotic distribution of the GMM estimator depend on the choice of
+  $\hat{\mathbf{W}}$ if $\plim_{n\to\infty} \hat{\mathbf{W}}$ is the same?
+
+\item (When $\mathbf{z}_i$ is a strict subset of $\mathbf{x}_i$) \; Suppose $\mathbf{z}_i$
+  is a strict subset of $\mathbf{x}_i$.  So $\mathbf{x}_i$ includes, in addition to the regressors
+  (which are all predetermined), some other predetermined variables.  Are the efficient
+  two-step GMM estimator and the OLS estimator numerically the same?
+  [Answer: No.]
+
+\item (Data matrix representation of efficient GMM) \; Let $\mathbf{B}$ be the $n \times n$
+  diagonal matrix whose $i$-th element is $\hat{\varepsilon}_i^2$, where $\hat{\varepsilon}_i$ is the
+  residual from the first-step consistent estimation.  That is,
+  \[
+    \mathbf{B} \equiv \begin{bmatrix} \hat{\varepsilon}_1^2 & & \\ & \ddots & \\
+    & & \hat{\varepsilon}_n^2 \end{bmatrix}.
+  \]
+  Verify that
+  \[
+    \hat{\boldsymbol{\delta}}(\hat{\mathbf{S}}^{-1})
+    = [\mathbf{Z}'\mathbf{X}(\mathbf{X}'\mathbf{B}\mathbf{X})^{-1}\mathbf{X}'\mathbf{Z}]^{-1}\,
+      \mathbf{Z}'\mathbf{X}(\mathbf{X}'\mathbf{B}\mathbf{X})^{-1}\mathbf{X}'\mathbf{y},
+  \]
+  where $\mathbf{X}$, $\mathbf{y}$, and $\mathbf{Z}$ are data matrices for the instruments, the dependent
+  variable, and the regressors (they are defined in Section~3.8 below).
+
+\item (GLS interpretation of efficient GMM) \; Let $\mathbf{X}$, $\mathbf{Z}$, and $\mathbf{y}$ be as in
+  the previous question.  Then the estimation equation can be written as
+  $\mathbf{y} = \mathbf{Z}\boldsymbol{\delta} + \boldsymbol{\varepsilon}$.  Premultiply both sides by
+  $\mathbf{X}'$ to obtain
+  \[
+    \mathbf{X}'\mathbf{y} = \mathbf{X}'\mathbf{Z}\boldsymbol{\delta}
+    + \mathbf{X}'\boldsymbol{\varepsilon}.
+  \]
+  Taking $\mathbf{S}$ to be the variance matrix of $\mathbf{X}'\boldsymbol{\varepsilon}$ and
+  $\hat{\mathbf{S}}$ to be its consistent estimate, apply FGLS.  Verify that the FGLS estimator is
+  the efficient GMM estimator (the FGLS estimator was defined in Section~1.6).
+
+\item (Linear combination of orthogonality conditions) \; Derive the efficient GMM
+  estimator that exploits a linear combination of orthogonality conditions,
+  \[
+    \mathbf{A}\,\E(\mathbf{g}_i) = \mathbf{0},
+  \]
+\end{enumerate}

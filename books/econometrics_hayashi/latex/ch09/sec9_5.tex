@@ -1,0 +1,72 @@
+% sec9_5.tex — Section 9.5: Which Unit-Root Test to Use?
+
+Besides the DF and ADF tests, a number of other unit-root tests are available (see
+Maddala and Kim, 1998, Chapter~3, for a catalogue). The most prominent among
+them are the Phillips (1987) test for case~(4) (mentioned at the end of the previous
+section) and the Phillips-Perron (1988) test, a generalization of the Phillips test
+to cover cases~(5) and~(6). (The Phillips tests are derived in Analytical Exercise~6.)
+Their tests are based on the OLS estimate of the $y_{t-1}$ coefficient in an AR(1)
+equation, rather than an augmented autoregression, with the long-run variance of
+$\{\Delta y_t\}$ estimated from the residuals of the AR(1) equation. We did not present
+them in the text because the finite-sample properties of the tests are rather poor
+(see below). There is a new generation of unit-root tests with reasonably low size
+distortions and good power. They include the ADF-GLS test of Elliott, Rothenberg,
+and Stock (1996) and the $M$-tests of Perron and Ng (1996).
+
+\subsection*{Local-to-Unity Asymptotics}
+
+These and most other unit-root tests are consistent against all fixed I(0) alternatives.\footnote{That the DF tests are consistent against general I(0) alternatives was verified in Review Question~5 to Section~9.3. For the consistency of the ADF tests, see, e.g., Stock (1994, p.~2770).} Which consistent test should be chosen over the other? Recall that in
+Section~2.4 we defined the asymptotic power against a sequence of local alternatives that drift toward the null at rate $\sqrt{T}$. It turns out that in the unit-root context
+the appropriate rate is $T$ rather than $\sqrt{T}$ (see, e.g., Stock, 1994, pp.~2772--2773).
+That is, the probability of rejecting the null of $\rho = 1$ when the true DGP is
+\begin{equation}
+\label{eq:9.5.1}
+\rho = 1 + \frac{c}{T}
+\end{equation}
+has a limit between 0 and 1 as $T$ goes to infinity. This limit is the asymptotic
+power. The sequence of alternatives described by~\eqref{eq:9.5.1} is called \textbf{local-to-unity
+alternatives}. By definition, the asymptotic power equals the nominal size when
+$c = 0$. It can be shown that the DF or ADF $\rho$ tests are more powerful than the
+DF or ADF $t$ tests against local-to-unity alternatives (see Stock, 1994, pp.~2774--2776). That is, for any nominal size and $c$, the asymptotic power of the DF or ADF
+$\rho$ statistic is greater than that of the DF or ADF $t$-statistic. On this score, we should
+prefer the $\rho$-based test to the $t$-based test, but the verdict gets overturned when we
+examine their finite-sample properties.
+
+\subsection*{Small-Sample Properties}
+
+Turning to the issue of testing an I(1) null against a fixed, rather than drifting, I(0)
+alternative, the two desirable finite-sample properties of a test are a reasonably low
+size distortion and high power against I(0) alternatives. There is a large body of
+Monte Carlo evidence on the finite-sample properties of the DF, ADF, and other
+unit-root tests (for a reference, see the papers cited on p.~2777 of Stock, 1994, and
+see Ng and Perron, 1998, for a comparison of the ADF-GLS and the $M$-tests).
+Major findings are the following.
+
+\begin{itemize}
+\item Virtually all tests suffer from size distortions, particularly when the null is in a
+sense close to being I(0). The $M$-test generally has the smallest size distortion,
+followed by the ADF $t$. The size distortion of the ADF $\rho$ is much larger than
+that of the ADF $t$. For example, the I(1) null considered by Schwert (1989) is
+\begin{equation}
+\label{eq:9.5.2}
+y_t - y_{t-1} = \varepsilon_t + \theta \varepsilon_{t-1}, \quad
+\{\varepsilon_t\} \text{ Gaussian i.i.d.}
+\end{equation}
+When $\theta$ is close to $-1$, this I(1) process is very close to a white noise process,
+because the AR root of unity nearly equals the MA root of $-\theta$. Simulations by
+Schwert (1989) show that the ADF $\rho$ and Phillips-Perron $Z_\rho$ and $Z_t$ tests (see
+Analytical Exercise~6) reject the I(1) null far too often in finite samples when $\theta$
+is close to $-1$. In particular, for the Phillips-Perron tests, the actual size when
+the nominal size is 5 percent is more than 90 percent even for sample sizes as
+large as 1,000 when $\theta = -0.8$.
+
+\item In the case of ADF tests, how the lag length $\hat{p}$ is selected affects the finite-sample size and power. For a given rule for choosing $\hat{p}$, the power is generally
+higher for the ADF $\rho$-test than for the ADF $t$-test.
+
+\item The power is generally much higher for the ADF-GLS and the $M$-tests than for
+the ADF $t$- and $\rho$-tests.
+\end{itemize}
+
+Unlike the $M$-statistic, the ADF-GLS statistic can be calculated easily by standard
+regression packages. In the empirical exercise of this chapter, you will be asked to
+use the ADF-GLS to test an I(1) null.

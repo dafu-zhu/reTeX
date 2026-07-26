@@ -1,0 +1,80 @@
+%% Chapter 9, Section 9.1 — Bayesian Filtering
+%% A First Course in Monte Carlo Methods
+%% Sanz-Alonso & Al-Ghattas
+
+\section{Bayesian Filtering}
+\label{sec:9.1}
+
+Hidden Markov models arise in applications where a latent or ``hidden'' Markov process
+$\{X_j\}_{j=0}^{\infty}$ needs to be estimated based on an \emph{observed} process
+$\{Y_j\}_{j=1}^{J}$. For concreteness, we assume that the hidden and observed processes
+are specified as follows:
+\begin{alignat*}{3}
+  \text{(Initial condition)}  &\quad& X_0 &\sim f_0, \\
+  \text{(Dynamics model)}     &\quad& X_{j+1} &= a(X_j) + \xi_{j+1}, &\quad
+    \xi_{j+1} &\sim \Normal(0, \Sigma),\quad j = 0, 1, \ldots, \\
+  \text{(Observation model)}  &\quad& Y_{j+1} &= b(X_{j+1}) + \eta_{j+1}, &\quad
+    \eta_{j+1} &\sim \Normal(0, \Gamma),\quad j = 0, 1, \ldots,
+\end{alignat*}
+where $X_0$, $\{\xi_j\}$, and $\{\eta_j\}$ are all independent; see Figure~\ref{fig:9.1}
+for a representation of the resulting dependence structure of the hidden and observed
+processes. The initial distribution $f_0$, the dynamics map $a : \R^d \to \R^d$, the
+observation map $b : \R^d \to \R^k$, and the positive definite covariances $\Sigma$ and
+$\Gamma$ are all assumed to be known. We assume Gaussianity of $\xi_j$ and $\eta_j$ for
+pedagogical reasons, as it leads to concrete and familiar expressions for the Markov
+kernel and likelihood function implicitly defined, respectively, by the dynamics and
+observation models.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.65\textwidth]{figures/fig_09_1}
+  \caption{\textit{Graphical representation of the assumed dependence structure.}}
+  \label{fig:9.1}
+\end{figure}
+
+We are interested in estimating $X_j$ given the observations $Y_{1:j} :=
+\{Y_i\}_{i=1}^{j}$ available up to time $j$. In the Bayesian framework, inference is
+carried out via the posterior or \emph{filtering distribution} of $X_j | Y_{1:j}$,
+denoted by $f_j$. We will study two sequential Monte Carlo algorithms to approximate
+$f_j$: the bootstrap particle filter and the optimal particle filter. An important feature
+of these algorithms is that they are \emph{sequential}: at time $j+1$ they approximate
+the distribution $f_{j+1}$ using an approximation of $f_j$ and the new observation
+$Y_{j+1}$. To obtain a particle approximation of the filtering distribution, each
+algorithm relies on a different conceptual decomposition of the filtering step:
+
+\begin{enumerate}
+  \item Bootstrap decomposition: in the bootstrap particle filter, particles are propagated
+    through the dynamics model, and then Bayes' formula is applied to assimilate the new
+    observation, leading to the following decomposition of the filtering step:
+    $X_j | Y_{1:j} \longrightarrow X_{j+1} | Y_{1:j} \longrightarrow X_{j+1} | Y_{1:j+1}$.
+
+  \item Optimal decomposition: in the optimal particle filter, Bayes' formula is applied
+    to particles before they are propagated through the dynamics, leading to the following
+    decomposition of the filtering step:
+    $X_j | Y_{1:j} \longrightarrow X_j | Y_{1:j+1} \longrightarrow X_{j+1} | Y_{1:j+1}$.
+\end{enumerate}
+
+Throughout the chapter, we will use the notation
+\[
+  \pi(x) = \frac{1}{N} \sum_{n=1}^{N} \delta\bigl(x - X^{(n)}\bigr)
+\]
+to represent the empirical measure defined by a sample $\{X^{(n)}\}_{n=1}^{N}$, so that,
+for sufficiently smooth test function $h$,
+\[
+  \calI_\pi[h] = \mathbb{E}_\pi[h] = \frac{1}{N} \sum_{n=1}^{N} h\bigl(X^{(n)}\bigr).
+\]
+
+We informally treat a distribution of this form as a p.d.f. Likewise, given normalized
+weights $\{w^{(n)}\}_{n=1}^{N}$ and a sample $\{X^{(n)}\}_{n=1}^{N}$, we will use the
+notation
+\[
+  \pi_w(x) = \sum_{n=1}^{N} w^{(n)} \delta\bigl(x - X^{(n)}\bigr)
+\]
+to represent the weighted empirical measure defined by the requirement that, for
+sufficiently smooth test function $h$,
+\[
+  \calI_{\pi_w}[h] = \mathbb{E}_{\pi_w}[h] = \sum_{n=1}^{N} w^{(n)} h\bigl(X^{(n)}\bigr).
+\]
+
+Finally, for positive definite matrix $A$ and vector $v$, we will denote by
+$|v|_A^2 := v^T A^{-1} v$ the Mahalanobis norm.

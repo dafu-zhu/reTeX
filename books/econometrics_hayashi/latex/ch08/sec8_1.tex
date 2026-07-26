@@ -1,0 +1,225 @@
+% sec8_1.tex — Section 8.1: Qualitative Response (QR) Models
+
+In many applications in economics and other sciences, the dependent variable is
+a categorical variable. For example, a person may be in the labor force or not;
+a commuter chooses a particular mode of transportation; a patient may die or not;
+and so on. Regression models in which the dependent variable takes on discrete
+values are called \textbf{qualitative response (QR) models}. A QR model is described
+by a parameterized density function $f(y_t \mid \mathbf{x}_t; \boldsymbol{\theta})$ representing a family of \emph{discrete}
+probability distributions of $y_t$ given $\mathbf{x}_t$, indexed by $\boldsymbol{\theta}$.
+
+A QR model is called a \textbf{binary response model} if the dependent variable can
+take on only two values (which can be taken to be 0 and 1 without loss of generality)
+and is called a \textbf{multinomial response model} if the dependent variable can
+take on more than two values. Only binary models are treated in this subsection.
+For a thorough treatment of binary and multinomial models, see Amemiya (1985,
+Chapter~9).
+
+The most popular binary model is the probit model, which has already
+been presented in Example~7.3. Another popular binary model is the \textbf{logit model}:
+\begin{equation}
+  \begin{cases}
+    f(y_t = 1 \mid \mathbf{x}_t; \boldsymbol{\theta}_0) = \Lambda(\mathbf{x}_t'\boldsymbol{\theta}_0), \\
+    f(y_t = 0 \mid \mathbf{x}_t; \boldsymbol{\theta}_0) = 1 - \Lambda(\mathbf{x}_t'\boldsymbol{\theta}_0),
+  \end{cases}
+  \label{eq:8.1.1} \tag{8.1.1}
+\end{equation}
+where $\Lambda$ is the cumulative density function of the logistic distribution:
+\begin{equation}
+  \Lambda(v) \equiv \frac{\exp(v)}{1 + \exp(v)}.
+  \label{eq:8.1.2} \tag{8.1.2}
+\end{equation}
+This density $f(y_t \mid \mathbf{x}_t; \boldsymbol{\theta}_0)$ can be written as
+\begin{equation}
+  f(y_t \mid \mathbf{x}_t; \boldsymbol{\theta}_0)
+  = \Lambda(\mathbf{x}_t'\boldsymbol{\theta}_0)^{y_t}
+    \times [1 - \Lambda(\mathbf{x}_t'\boldsymbol{\theta}_0)]^{1-y_t}.
+  \label{eq:8.1.3} \tag{8.1.3}
+\end{equation}
+Taking logs of both sides and replacing the true parameter value $\boldsymbol{\theta}_0$ by its
+hypothetical value $\boldsymbol{\theta}$, we obtain the log likelihood for observation~$t$:
+\begin{equation}
+  \log f(y_t \mid \mathbf{x}_t; \boldsymbol{\theta})
+  = y_t \log \Lambda(\mathbf{x}_t'\boldsymbol{\theta})
+    + (1 - y_t) \log[1 - \Lambda(\mathbf{x}_t'\boldsymbol{\theta})].
+  \label{eq:8.1.4} \tag{8.1.4}
+\end{equation}
+
+The logit objective function $Q_n(\boldsymbol{\theta})$ is $1/n$ times the log likelihood of the sample
+$(y_1, \mathbf{x}_1, y_2, \mathbf{x}_2, \ldots, y_n, \mathbf{x}_n)$. Under the assumption that
+$\{y_t, \mathbf{x}_t\}$ is i.i.d., the log likelihood of the sample is the sum of the log likelihood
+for observation~$t$ over~$t$. Therefore,
+\begin{equation}
+  Q_n(\boldsymbol{\theta})
+  = \frac{1}{n} \sum_{t=1}^{n}
+    \bigl\{ y_t \log \Lambda(\mathbf{x}_t'\boldsymbol{\theta})
+    + (1 - y_t) \log[1 - \Lambda(\mathbf{x}_t'\boldsymbol{\theta})] \bigr\}.
+  \label{eq:8.1.5} \tag{8.1.5}
+\end{equation}
+For probit, we have proved that its log likelihood function is concave (Example~7.6),
+and that the ML estimator is consistent (Example~7.9) and asymptotically
+normal (Example~7.11) under the assumption that $\E(\mathbf{x}_t\mathbf{x}_t')$ is nonsingular. You
+are about to find out that doing the same for logit is easier. (On the first reading,
+however, you may wish to skip the discussion on consistency and asymptotic
+normality.)
+
+\subsection*{Score and Hessian for Observation \texorpdfstring{$t$}{t}}
+
+The logistic cumulative density function has the convenient property that
+\begin{equation}
+  \Lambda'(v) = \Lambda(v)(1 - \Lambda(v)), \quad
+  \Lambda''(v) = [1 - 2\Lambda(v)]\Lambda(v)[1 - \Lambda(v)].
+  \label{eq:8.1.6} \tag{8.1.6}
+\end{equation}
+Using this, it is easy to derive (see Review Question~1(a)) the following expressions
+for the score and the Hessian for observation~$t$:
+\begin{align}
+  \mathbf{s}(\mathbf{w}_t; \boldsymbol{\theta})
+  \;\biggl(\equiv \frac{\partial \log f(y_t \mid \mathbf{x}_t; \boldsymbol{\theta})}
+    {\partial \boldsymbol{\theta}}\biggr)
+  &= [y_t - \Lambda(\mathbf{x}_t'\boldsymbol{\theta})]\,\mathbf{x}_t,
+  \label{eq:8.1.7} \tag{8.1.7} \\[6pt]
+  \mathbf{H}(\mathbf{w}_t; \boldsymbol{\theta})
+  \;\biggl(\equiv \frac{\partial \mathbf{s}(\mathbf{w}_t; \boldsymbol{\theta})}
+    {\partial \boldsymbol{\theta}'}\biggr)
+  &= -\Lambda(\mathbf{x}_t'\boldsymbol{\theta})
+     [1 - \Lambda(\mathbf{x}_t'\boldsymbol{\theta})]\,
+     \mathbf{x}_t \mathbf{x}_t',
+  \label{eq:8.1.8} \tag{8.1.8}
+\end{align}
+where $\mathbf{w}_t = (y_t, \mathbf{x}_t')'$.
+
+\subsection*{Consistency}
+
+Since $\mathbf{x}_t \mathbf{x}_t'$ is positive semidefinite, it immediately follows from its expression that
+$\mathbf{H}(\mathbf{w}_t; \boldsymbol{\theta})$ is negative semidefinite and hence $Q_n(\boldsymbol{\theta})$ is concave.
+The relevant consistency theorem, therefore, is Proposition~7.6. We show here that the conditions
+of the proposition are satisfied under the nonsingularity of $\E(\mathbf{x}_t\mathbf{x}_t')$.
+Condition~(a) of the proposition is the (conditional) density identification:
+$f(y_t \mid \mathbf{x}_t; \boldsymbol{\theta}) \neq f(y_t \mid \mathbf{x}_t; \boldsymbol{\theta}_0)$
+with positive probability for $\boldsymbol{\theta} \neq \boldsymbol{\theta}_0$.\footnote{In other words, let
+$X = f(y_t \mid \mathbf{x}_t; \boldsymbol{\theta})$ and
+$Y = f(y_t \mid \mathbf{x}_t; \boldsymbol{\theta}_0)$. $X$ and $Y$ are random variables because they
+are functions of $\mathbf{w}_t = (y_t, \mathbf{x}_t')'$. The condition can be stated simply as
+$\text{Prob}(X \neq Y) > 0$ for $\boldsymbol{\theta} \neq \boldsymbol{\theta}_0$.}
+Since a logarithm is a strictly monotone transformation, this condition is equivalent to
+\begin{equation}
+  \log f(y_t \mid \mathbf{x}_t; \boldsymbol{\theta})
+  \neq \log f(y_t \mid \mathbf{x}_t; \boldsymbol{\theta}_0)
+  \text{ with positive probability for }
+  \boldsymbol{\theta} \neq \boldsymbol{\theta}_0,
+  \label{eq:8.1.9} \tag{8.1.9}
+\end{equation}
+where $\boldsymbol{\theta}_0$ is the true parameter value and the density $f$ is given in \eqref{eq:8.1.3}.
+Verification of this condition is the same as in the probit example in Example~7.9 and
+proceeds as follows. The discussion in Example~7.8 has established that
+\begin{equation}
+  \E(\mathbf{x}_t\mathbf{x}_t') \text{ nonsingular}
+  \;\Rightarrow\;
+  \mathbf{x}_t'\boldsymbol{\theta} \neq \mathbf{x}_t'\boldsymbol{\theta}_0
+  \text{ with positive probability for }
+  \boldsymbol{\theta} \neq \boldsymbol{\theta}_0.
+  \label{eq:8.1.10} \tag{8.1.10}
+\end{equation}
+Since the logit function $\Lambda(v)$ is a strictly monotone function of~$v$, we have
+$\Lambda(\mathbf{x}_t'\boldsymbol{\theta}) \neq \Lambda(\mathbf{x}_t'\boldsymbol{\theta}_0)$
+when $\mathbf{x}_t'\boldsymbol{\theta} \neq \mathbf{x}_t'\boldsymbol{\theta}_0$.
+Thus, condition~(a) is implied by the nonsingularity of $\E(\mathbf{x}_t\mathbf{x}_t')$.
+Turning to condition~(b) (that
+$\E\bigl[|\log f(y_t | \mathbf{x}_t; \boldsymbol{\theta})|\bigr] < \infty$ for
+all $\boldsymbol{\theta}$), it is easy to show that
+\begin{equation}
+  |\log \Lambda(v)| \leq |\log \Lambda(0)| + |v|.
+  \label{eq:8.1.11} \tag{8.1.11}
+\end{equation}
+Condition~(b) can then be verified in a way analogous to the verification of the
+same condition for probit in Example~7.9. Thus, as in probit, the nonsingularity of
+$\E(\mathbf{x}_t\mathbf{x}_t')$ ensures that logit ML is consistent.
+
+\subsection*{Asymptotic Normality}
+
+To prove asymptotic normality under the same condition, we verify the conditions
+of Proposition~7.9. Condition~(1) of the proposition is satisfied if the parameter
+space $\Theta$ is taken to be $\mathbb{R}^p$. Condition~(2) is obviously satisfied. Condition~(3) can be
+checked easily as follows. Since $\E(y_t \mid \mathbf{x}_t) = \Lambda(\mathbf{x}_t'\boldsymbol{\theta}_0)$, we have
+$\E[\mathbf{s}(\mathbf{w}_t; \boldsymbol{\theta}_0) \mid \mathbf{x}_t] = \mathbf{0}$
+from \eqref{eq:8.1.7}. Hence,
+$\E[\mathbf{s}(\mathbf{w}_t; \boldsymbol{\theta}_0)] = \mathbf{0}$ by the Law of Total Expectations. It is left
+as Review Question~1(b) to derive the conditional information matrix equality
+\begin{equation}
+  \E\bigl[\mathbf{s}(\mathbf{w}_t; \boldsymbol{\theta}_0)\,
+    \mathbf{s}(\mathbf{w}_t; \boldsymbol{\theta}_0)' \mid \mathbf{x}_t\bigr]
+  = -\,\E\bigl[\mathbf{H}(\mathbf{w}_t; \boldsymbol{\theta}_0) \mid \mathbf{x}_t\bigr].
+  \label{eq:8.1.12} \tag{8.1.12}
+\end{equation}
+Hence, (3) is satisfied by the Law of Total Expectations. The local dominance
+condition (condition~(4)) is easy to verify for logit because, since
+$|\Lambda(\mathbf{x}_t'\boldsymbol{\theta})[1 - \Lambda(\mathbf{x}_t'\boldsymbol{\theta})]| < 1$,
+we have: $\|\mathbf{H}_t(\mathbf{w}_t; \boldsymbol{\theta})\| \leq \|\mathbf{x}_t\mathbf{x}_t'\|$ for all
+$\boldsymbol{\theta}$. The expectation of $\|\mathbf{x}_t\mathbf{x}_t'\|^2$
+(the sum of squares of the elements of $\mathbf{x}_t\mathbf{x}_t'$) is finite if
+$\E(\mathbf{x}_t\mathbf{x}_t')$ is nonsingular (and hence finite).
+So $\E(\|\mathbf{x}_t\mathbf{x}_t'\|)$ is finite. Regarding condition~(5), the argument in
+footnote~29 of Newey and McFadden (1994) used for verifying the same condition
+for probit can be used for logit as well.\footnote{Only for interested readers, here's
+the argument. For any $\bar{v} > 0$, there exists a $C$ such that
+$\Lambda(v)[1 - \Lambda(v)] \geq C > 0$ for $|v| \leq \bar{v}$. So
+$\E\bigl[\Lambda(\mathbf{x}'\boldsymbol{\theta})[1 - \Lambda(\mathbf{x}'\boldsymbol{\theta})]\mathbf{x}\mathbf{x}'\bigr]
+\geq \E\bigl[\mathbf{1}(|\mathbf{x}'\boldsymbol{\theta}| \leq \bar{v})
+\Lambda(\mathbf{x}'\boldsymbol{\theta})[1 - \Lambda(\mathbf{x}'\boldsymbol{\theta})]\mathbf{x}\mathbf{x}'\bigr]
+\geq C\,\E\bigl[\mathbf{1}(|\mathbf{x}'\boldsymbol{\theta}| \leq \bar{v})\mathbf{x}\mathbf{x}'\bigr]$
+in the matrix inequality sense, where $\mathbf{1}(|\mathbf{x}'\boldsymbol{\theta}| \leq \bar{v})$ is the
+indicator function. The last term is positive definite (not just positive semi-definite)
+for large enough $\bar{v}$ by non-singularity of $\E(\mathbf{x}\mathbf{x}')$.}
+
+Thus, we conclude that if $\{y_t, \mathbf{x}_t\}$ is i.i.d.\ and $\E(\mathbf{x}_t\mathbf{x}_t')$ is nonsingular, then the
+logit ML estimator $\hat{\boldsymbol{\theta}}$ of $\boldsymbol{\theta}_0$ is consistent and asymptotically normal, with the asymptotic variance consistently estimated by
+\begin{equation}
+  \widehat{\avar}(\hat{\boldsymbol{\theta}})
+  = -\biggl[\frac{1}{n}\sum_{t=1}^{n}
+    \mathbf{H}(\mathbf{w}_t; \hat{\boldsymbol{\theta}})\biggr]^{-1},
+  \label{eq:8.1.13} \tag{8.1.13}
+\end{equation}
+where $\mathbf{w}_t = (y_t, \mathbf{x}_t')'$ and $\mathbf{H}(\mathbf{w}_t; \boldsymbol{\theta})$ is given in \eqref{eq:8.1.8}.
+
+\bigskip
+\noindent\rule{\textwidth}{0.4pt}
+\textbf{QUESTIONS FOR REVIEW}
+\medskip
+
+\begin{enumerate}
+\item (Score and Hessian for observation~$t$ for general densities)\quad
+  In \eqref{eq:8.1.1}, replace the logit cumulative density function (c.d.f.)
+  $\Lambda(\mathbf{x}_t'\boldsymbol{\theta}_0)$ by a general c.d.f.\ $F(\mathbf{x}_t'\boldsymbol{\theta}_0)$.
+
+  \begin{enumerate}[label=(\alph*)]
+  \item Verify that the score and Hessian for observation~$t$ are given by
+    \[
+      \mathbf{s}(\mathbf{w}_t; \boldsymbol{\theta})
+      = \frac{y_t - F_t}{F_t \cdot (1 - F_t)}\,f_t\,\mathbf{x}_t,
+    \]
+    \[
+      \mathbf{H}(\mathbf{w}_t; \boldsymbol{\theta})
+      = -\biggl[\frac{y_t - F_t}{F_t \cdot (1 - F_t)}\biggr]^2
+        f_t^2\,\mathbf{x}_t\mathbf{x}_t'
+        + \biggl[\frac{y_t - F_t}{F_t \cdot (1 - F_t)}\biggr]
+        f_t'\,\mathbf{x}_t\mathbf{x}_t',
+    \]
+    where $F_t = F(\mathbf{x}_t'\boldsymbol{\theta})$,
+    $f_t = f(\mathbf{x}_t'\boldsymbol{\theta})$, and
+    $f(\cdot) = F'(\cdot)$ is the density function.
+
+  \item Verify the conditional information matrix equality \eqref{eq:8.1.12} for the general
+    c.d.f.\ $F$. \textbf{Hint:} Show that the expected value of the second term in the
+    expression for the Hessian in the previous question is zero.
+  \end{enumerate}
+
+\item Verify \eqref{eq:8.1.7} and \eqref{eq:8.1.8}.
+
+\item (Logit for serially correlated observations)\quad
+  Suppose $\{y_t, \mathbf{x}_t\}$ is ergodic stationary but not necessarily i.i.d.
+  Is the logit ML estimator described in the text consistent?
+  [Answer: Yes, because the relevant consistency theorem, Proposition~7.6,
+  does not require a random sample. However, the expression for
+  $\avar(\hat{\boldsymbol{\theta}})$ is not given by the negative of the inverse of the sample Hessian.]
+\end{enumerate}

@@ -1,0 +1,221 @@
+% sec3_2.tex — Section 3.2: More Examples
+
+Endogeneity bias arises in a wide variety of situations.  We examine a few more
+examples.
+
+%% ─── A Simple Macroeconomic Model ─────────────────────────────────────────
+\subsection*{A Simple Macroeconomic Model}
+
+Haavelmo's (1943) illustrative model is an extremely simple macroeconomic
+model:
+\begin{align*}
+  C_i &= \alpha_0 + \alpha_1 Y_i + u_i, \quad 0 < \alpha_1 < 1
+  \quad \text{(consumption function)} \\
+  Y_i &= C_i + I_i \quad \text{(GNP identity)},
+\end{align*}
+where $C_i$ is aggregate consumption in year $i$, $Y_i$ is GNP, $I_i$ is investment, and
+$\alpha_1$ is the Marginal Propensity to Consume out of income (the MPC).  As is familiar from
+introductory macroeconomics, GNP in equilibrium is
+\begin{equation}
+  Y_i = \frac{\alpha_0}{1 - \alpha_1}
+      + \frac{I_i}{1 - \alpha_1}
+      + \frac{u_i}{1 - \alpha_1}.
+  \label{eq:3.2.1}
+\end{equation}
+If investment is predetermined in that $\Cov(I_i, u_i) = 0$, it follows from \eqref{eq:3.2.1}
+that
+\[
+  \Cov(Y_i, u_i) = \frac{\Var(u_i)}{1 - \alpha_1} > 0,
+  \qquad
+  \Cov(I_i, Y_i) = \frac{\Var(I_i)}{1 - \alpha_1} > 0.
+\]
+So income is endogenous in the consumption function, but investment is a valid
+instrument for the endogenous regressor.  A straightforward calculation similar to
+the one we used to derive \eqref{eq:3.1.7} shows that the OLS estimator of the MPC obtained
+from regressing consumption on a constant and income is asymptotically biased:
+\begin{equation}
+  \plim\, \hat{\alpha}_{1,\text{OLS}} - \alpha_1
+  = \frac{\Cov(Y_i, u_i)}{\Var(Y_i)}
+  = \frac{1 - \alpha_1}{1 + \frac{\Var(I_i)}{\Var(u_i)}} > 0.
+  \label{eq:3.2.2}
+\end{equation}
+
+This is perhaps the clearest example of simultaneity bias.  The difference from
+Working's example of market equilibrium is that here the second equation is an
+identity, which only makes it easier to see the endogeneity of the regressor.  The
+asymptotic bias can be corrected for by the use of investment as the instrument
+for income in the consumption function.  The role played by the observable supply
+shifter in Working's example is played here by investment.
+
+%% ─── Errors-in-Variables ──────────────────────────────────────────────────
+\subsection*{Errors-in-Variables}
+
+The term \textbf{errors-in-variables} refers to the phenomenon that an otherwise predetermined
+regressor necessarily becomes endogenous when measured with error.  This
+problem is ubiquitous, particularly in micro data on households.  For example, in
+the Panel Study of Income Dynamics (PSID), information on variables such as
+food consumption and income is collected over the telephone.  It is perhaps too
+much to hope that the respondent can recall on the spot how much was spent on
+food over a specified period of time.
+
+The cross-section version of M.\ Friedman's (1957) Permanent Income Hypothesis
+can be formulated neatly as an errors-in-variables problem.  The hypothesis
+states that ``permanent consumption'' $C_i^*$ for household $i$ is proportional to ``permanent
+income'' $Y_i^*$:
+\begin{equation}
+  C_i^* = k \, Y_i^* \quad \text{with } 0 < k < 1.
+  \label{eq:3.2.3}
+\end{equation}
+It is assumed that measured consumption $C_i$ and measured income $Y_i$ are error-ridden
+measures of permanent consumption and income:
+\begin{equation}
+  C_i = C_i^* + c_i \quad \text{and} \quad Y_i = Y_i^* + y_i.
+  \label{eq:3.2.4}
+\end{equation}
+Measurement errors $c_i$ and $y_i$ are assumed to be zero mean and uncorrelated with
+permanent consumption and income:
+\begin{align}
+  &\E(c_i) = 0, \quad \E(y_i) = 0, \quad \E(c_i y_i) = 0,
+  \label{eq:3.2.5} \\
+  &\E(C_i^* c_i) = 0, \quad \E(Y_i^* y_i) = 0, \quad
+  \E(C_i^* y_i) = 0, \quad \E(Y_i^* c_i) = 0.
+  \label{eq:3.2.6}
+\end{align}
+Substituting \eqref{eq:3.2.4} into \eqref{eq:3.2.3}, the relationship can be expressed in
+terms of measured consumption and income:
+\begin{equation}
+  C_i = k \, Y_i + u_i \quad \text{with } u_i \equiv c_i - k \, y_i.
+  \label{eq:3.2.7}
+\end{equation}
+
+This example differs from the previous ones in that the equation does not
+include a constant.  So we should examine the cross moment $\E(Y_i u_i)$ rather than
+the covariance $\Cov(Y_i, u_i)$ to determine whether income is predetermined.  It is
+straightforward to derive from \eqref{eq:3.2.4}--\eqref{eq:3.2.7} that
+\[
+  \E(Y_i u_i) = -k\, \E(y_i^2) < 0.
+\]
+So measured income is endogenous in the consumption function \eqref{eq:3.2.7}.  Unlike
+in the previous examples, the endogeneity is due to measurement errors.  Using
+the fact that the OLS estimator of the $Y_i$ coefficient in \eqref{eq:3.2.7} is consistent for
+the corresponding least squares projection coefficient $\E(C_i Y_i)/\E(Y_i^2)$, we can also
+derive from \eqref{eq:3.2.4}--\eqref{eq:3.2.7} that
+\begin{equation}
+  \plim\, \hat{k}_{\text{OLS}}
+  = \frac{k\, \E[(Y_i^*)^2]}{\E[(Y_i^*)^2] + \E(y_i^2)} < k.
+  \label{eq:3.2.8}
+\end{equation}
+So the regression of measured consumption on measured income (without the intercept)
+underestimates $k$.  Friedman used this result to explain why the MPC from
+the cross-section regression of consumption on income is lower than the MPC estimated
+from aggregate time-series data.
+
+Let us suppose for a moment that there exists a valid instrument $x_i$.  So
+$\E(x_i u_i) = 0$ and $\E(x_i Y_i) \neq 0$.  A similar argument we used for deriving
+\eqref{eq:3.1.11} establishes that
+\begin{equation}
+  k = \frac{\E(x_i C_i)}{\E(x_i Y_i)}.
+  \label{eq:3.2.9}
+\end{equation}
+So a consistent IV estimator is
+\begin{equation}
+  \hat{k}_{\text{IV}}
+  = \frac{\text{sample mean of } x_i C_i}
+         {\text{sample mean of } x_i Y_i}.
+  \label{eq:3.2.10}
+\end{equation}
+But is there a valid instrument?  Yes, and it is a constant.  Substituting $x_i = 1$
+into \eqref{eq:3.2.10}, we obtain a consistent estimator of $k$ which is the ratio of the sample
+mean of measured consumption to the sample mean of measured income.  This is
+how Friedman estimated $k$.
+
+%% ─── Production Function ──────────────────────────────────────────────────
+\subsection*{Production Function}
+
+In many contexts, the error term includes factors that are observable to the economic
+agent under study but unobservable to the econometrician.  Endogeneity
+arises when regressors are decisions made by the agent on the basis of such factors.
+Consider a cross-sectional sample of firms choosing labor input to maximize
+profits.  The production function of the $i$-th firm is
+\begin{equation}
+  Q_i = A_i \cdot (L_i)^{\phi_1} \cdot \exp(v_i), \quad
+  0 < \phi_1 < 1,
+  \label{eq:3.2.11}
+\end{equation}
+where $Q_i$ is the firm's output, $L_i$ is labor input, $A_i$ is the firm's efficiency level
+known to the firm, and $v_i$ is the technology shock.  In contrast to $A_i$, $v_i$ is not
+observable to the firm when it chooses $L_i$.  Neither $A_i$ nor $v_i$ is observable to the
+econometrician.
+
+Assume that, for each firm $i$, $v_i$ is serially independent over time.  Therefore,
+$B \equiv \E[\exp(v_i)]$ is the same for all $i$,\footnote{If $v_i$ for firm $i$ were correlated
+over time, the firm would use past values of $v_i$ to forecast the current value of $v_i$
+when choosing labor input, and so $B$ would differ across firms.  Also, since the expected
+value of a nonlinear function of a random variable whose mean is zero is not necessarily
+zero, $B$ is not necessarily zero even if $\E(v_i) = 0$.} and the level of output the firm
+expects when it chooses $L_i$ is
+\[
+  A_i \cdot (L_i)^{\phi_1} \cdot B.
+\]
+Let $p$ be the output price and $w$ the wage rate.  For simplicity, assume that all the
+firms are from the same competitive industry so that $p$ and $w$ are constant across
+firms.  Firm $i$'s objective is to choose $L_i$ to maximize expected profits
+\[
+  p \cdot A_i \cdot (L_i)^{\phi_1} \cdot B - w \cdot L_i.
+\]
+Take the derivative of this with respect to $L_i$, set it equal to zero, and solve it for
+$L_i$, to obtain the profit-maximizing labor input level:
+\begin{equation}
+  L_i = \left(\frac{w}{p}\right)^{\frac{1}{\phi_1 - 1}}
+        (A_i \, B \phi_1)^{\frac{1}{1 - \phi_1}}.
+  \label{eq:3.2.12}
+\end{equation}
+
+Let $u_i$ be firm $i$'s deviation from the mean log efficiency: $u_i \equiv \log(A_i) -
+\E[\log(A_i)]$, and let $\phi_0 \equiv \E[\log(A_i)]$ (so $\E(u_i) = 0$ and
+$A_i = \exp(\phi_0 + u_i)$).  Then,
+the production function \eqref{eq:3.2.11} and the labor demand function \eqref{eq:3.2.12}
+in logs can be written as
+\begin{align}
+  \log(Q_i) &= \phi_0 + \phi_1 \log(L_i) + (v_i + u_i),
+  \label{eq:3.2.13} \\
+  \log(L_i) &= \beta_0 + \frac{1}{1 - \phi_1}\, u_i,
+  \label{eq:3.2.14}
+\end{align}
+where
+\[
+  \beta_0 = \frac{1}{\phi_1 - 1}\,[\log(w/p) - \phi_0 - \log(\phi_1 B)].
+\]
+Because all firms face the same prices, $\beta_0$ is constant across firms.
+Equation~\eqref{eq:3.2.14} shows that, in the log-linear production function
+\eqref{eq:3.2.13}, $\log(L_i)$ is an endogenous regressor positively correlated with the error
+term $(v_i + u_i)$ through $u_i$.  Thus, the OLS estimator of $\phi_1$ in the estimation of the
+log-linear production function confounds the contribution of output of $u_i$ with labor's
+contribution.  This example illustrates yet another source of endogeneity: a variable
+chosen by the agent taking into account some error component unobservable to the
+econometrician.
+
+%% ─── Questions for Review ──────────────────────────────────────────────────
+\bigskip
+\begin{center}\rule{0.6\textwidth}{0.4pt}\end{center}
+\noindent\textsc{Questions for Review}
+\medskip
+
+\begin{enumerate}
+\item In Friedman's Permanent Income Hypothesis, consider the regression of $C_i$ on
+  a constant and $Y_i$.  Derive the plim of the OLS estimator of the $Y_i$ coefficient in
+  this regression with a constant.  \textbf{Hint:} The plim equals the ratio of $\Cov(C_i, Y_i)$
+  to $\Var(Y_i)$.  Show that it equals
+  \[
+    \frac{k\,\Var(Y_i^*)}{\Var(Y_i^*) + \Var(y_i)}.
+  \]
+
+\item In the production function example, show that
+  $\plim_{n\to\infty} \hat{\phi}_{1,\text{OLS}} = 1$, where
+  $\hat{\phi}_{1,\text{OLS}}$ is the OLS estimate of $\phi_1$ from \eqref{eq:3.2.13}.
+  \textbf{Hint:} Eliminate $u_i$ from the log output equation \eqref{eq:3.2.13} by using the
+  labor demand equation \eqref{eq:3.2.14}.
+
+\item In the production function example, suppose the firm can observe $v_i$ as well
+  as $u_i$ before deciding on labor input.  How does the demand equation for labor
+\end{enumerate}

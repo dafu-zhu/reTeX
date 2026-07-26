@@ -1,0 +1,113 @@
+% sec7_5.tex — Section 7.5: Numerical Optimization
+
+So far, we have not been concerned about the computational aspect of extremum estimators. In the ML estimation of the linear regression model, for example, the objective function $Q_n(\bm{\theta})$ is quadratic in $\bm{\theta}$, so there is a closed-form formula for the maximizer, which is the OLS estimator. The objective function is quadratic for linear GMM also, with the linear GMM estimator being the closed-form formula. In most other cases, however, no such closed-form formulas are available, and some numerical algorithm must be employed to locate the maximum. A number of algorithms are available, but this section covers only the two most important ones. More details can be found in, e.g., Judge et al.\ (1985, Appendix~B). The first is used for calculating M-estimators, while the second is used for GMM.
+
+\subsection*{Newton-Raphson}
+
+We first consider M-estimators, whose objective function $Q_n(\bm{\theta})$ is (\ref{eq:7.1.2}). Since $Q_n(\bm{\theta})$ is twice continuously differentiable for M-estimators, there is a second-order Taylor expansion
+\begin{equation}
+\label{eq:7.5.1}
+Q_n(\bm{\theta}) \cong Q_n(\hat{\bm{\theta}}_j) + \mathbf{s}_n(\hat{\bm{\theta}}_j)'(\bm{\theta} - \hat{\bm{\theta}}_j) + \frac{1}{2}(\bm{\theta} - \hat{\bm{\theta}}_j)'\mathbf{H}_n(\hat{\bm{\theta}}_j)(\bm{\theta} - \hat{\bm{\theta}}_j),
+\end{equation}
+where $\hat{\bm{\theta}}_j$ is the estimate in the $j$-th round of the iterative procedure to be described in a moment, and $\mathbf{s}_n$ and $\mathbf{H}_n$ are the gradient and the Hessian of the objective function:
+\begin{equation}
+\label{eq:7.5.2}
+\mathbf{s}_n(\bm{\theta}) \equiv \frac{\partial Q_n(\bm{\theta})}{\partial\bm{\theta}'}, \quad \mathbf{H}_n(\bm{\theta}) \equiv \frac{\partial^2 Q_n(\bm{\theta})}{\partial\bm{\theta}\,\partial\bm{\theta}'}.
+\end{equation}
+
+The $(j+1)$-th round estimator $\hat{\bm{\theta}}_{j+1}$ is the maximizer of the quadratic function on the right-hand side of (\ref{eq:7.5.1}). It is given by
+\begin{equation}
+\label{eq:7.5.3}
+\hat{\bm{\theta}}_{j+1} = \hat{\bm{\theta}}_j - [\mathbf{H}_n(\hat{\bm{\theta}}_j)]^{-1}\mathbf{s}_n(\hat{\bm{\theta}}_j).
+\end{equation}
+
+This iterative procedure is called the \textbf{Newton-Raphson algorithm}. If the objective function is concave, the algorithm often converges quickly to the global maximum.
+
+For ML estimators, when the global maximum $\hat{\bm{\theta}}$ is thus obtained, the estimate of $\avar(\hat{\bm{\theta}})$ is obtained as $-\mathbf{H}_n(\hat{\bm{\theta}})^{-1}$ (recall that $\mathbf{H}_n(\bm{\theta}) \equiv \frac{1}{n}\sum\mathbf{H}(\mathbf{w}_t; \bm{\theta})$).
+
+\subsection*{Gauss-Newton}
+
+Now turn to GMM, whose objective function is $Q_n(\bm{\theta}) = -\frac{1}{2}\mathbf{g}_n(\bm{\theta})'\widehat{\mathbf{W}}\mathbf{g}_n(\bm{\theta})$ (see (\ref{eq:7.1.3})). As in the derivation of the asymptotic distribution, we work with a linearization of the $\mathbf{g}_n(\bm{\theta})$ function. The first-order Taylor expansion of $\mathbf{g}_n(\bm{\theta})$ around $\hat{\bm{\theta}}_j$ is
+\begin{equation}
+\label{eq:7.5.4}
+\begin{split}
+\underset{(K \times 1)}{\mathbf{g}_n(\bm{\theta})} &\cong \mathbf{g}_n(\hat{\bm{\theta}}_j) + \underset{(K \times p)}{\mathbf{G}_n(\hat{\bm{\theta}}_j)}\underset{(p \times 1)}{(\bm{\theta} - \hat{\bm{\theta}}_j)} \\
+&= [\mathbf{g}_n(\hat{\bm{\theta}}_j) - \mathbf{G}_n(\hat{\bm{\theta}}_j)\hat{\bm{\theta}}_j] - [-\mathbf{G}_n(\hat{\bm{\theta}}_j)]\bm{\theta} \\
+&= \mathbf{v}_j - \mathbf{G}_j\bm{\theta},
+\end{split}
+\end{equation}
+where
+\begin{equation}
+\label{eq:7.5.5}
+\mathbf{v}_j \equiv \mathbf{g}_n(\hat{\bm{\theta}}_j) - \mathbf{G}_n(\hat{\bm{\theta}}_j)\hat{\bm{\theta}}_j, \quad \mathbf{G}_j \equiv -\mathbf{G}_n(\hat{\bm{\theta}}_j).
+\end{equation}
+
+(Recall that $\mathbf{G}_n(\bm{\theta}) \equiv \frac{\partial\mathbf{g}_n(\bm{\theta})}{\partial\bm{\theta}'}$.) If the $\mathbf{g}_n(\bm{\theta})$ function in the expression for the GMM objective function were this linear function $\mathbf{v}_j - \mathbf{G}_j\bm{\theta}$, then the objective function would be quadratic in $\bm{\theta}$ and the maximizer (or the minimizer of the GMM distance) would be the linear GMM estimator:
+\begin{equation}
+\label{eq:7.5.6}
+\hat{\bm{\theta}}_{j+1} = (\mathbf{G}_j'\widehat{\mathbf{W}}\mathbf{G}_j)^{-1}\mathbf{G}_j'\widehat{\mathbf{W}}\mathbf{v}_j.
+\end{equation}
+
+This is the $(j+1)$-th round estimate in the \textbf{Gauss-Newton algorithm}.%
+\footnote{The Gauss-Newton algorithm was originally developed for nonlinear least squares. See Review Question~2 for how Gauss-Newton is applied to NLS. The algorithm presented here is therefore its GMM adaptation.}
+Unlike in Newton-Raphson, there is no need to calculate second-order derivatives.
+
+\subsection*{Writing Newton-Raphson and Gauss-Newton in a Common Format}
+
+There are also similarities between Gauss-Newton and Newton-Raphson. Substituting (\ref{eq:7.5.5}) into (\ref{eq:7.5.6}) and rearranging, we obtain
+\begin{equation}
+\label{eq:7.5.7}
+\hat{\bm{\theta}}_{j+1} = \hat{\bm{\theta}}_j - \bigl[-\mathbf{G}_n(\hat{\bm{\theta}}_j)'\widehat{\mathbf{W}}\mathbf{G}_n(\hat{\bm{\theta}}_j)\bigr]^{-1}\bigl[-\mathbf{G}_n(\hat{\bm{\theta}}_j)'\widehat{\mathbf{W}}\mathbf{g}_n(\hat{\bm{\theta}}_j)\bigr].
+\end{equation}
+
+The second bracketed term is none other than the gradient evaluated at $\hat{\bm{\theta}}_j$ for the GMM objective function $Q_n(\bm{\theta}) = -\frac{1}{2}\mathbf{g}_n(\bm{\theta})'\widehat{\mathbf{W}}\mathbf{g}_n(\bm{\theta})$. The role played by the Hessian of the objective function in (\ref{eq:7.5.3}) is played here by the first bracketed term, which is the estimate based on $\hat{\bm{\theta}}_j$ of the $-\mathbf{G}'\mathbf{W}\mathbf{G}$ in Table~\ref{tab:7.1}. Therefore, the analogy between M-estimators and GMM noted in Table~\ref{tab:7.1} also holds here. Furthermore, if $\mathbf{g}_n$ is linear, then the Hessian equivalent (the first bracketed term in (\ref{eq:7.5.7})) \emph{is} the Hessian of the GMM objective function. So the analogy is exact: the Gauss-Newton algorithm coincides with the Newton-Raphson algorithm.
+
+\subsection*{Equations Nonlinear in Parameters Only}
+
+In the Gauss-Newton algorithm (\ref{eq:7.5.7}), when $\mathbf{g}_n(\bm{\theta})$ $(\equiv \frac{1}{n}\sum\mathbf{g}(\mathbf{w}_t; \bm{\theta}))$ is not linear in $\bm{\theta}$, it is generally necessary to take averages over observations to evaluate the gradient and the Hessian equivalent in each iteration. (This is also generally true in Newton-Raphson if the objective function is not quadratic in $\bm{\theta}$.) For large data sets it is a very CPU time-intensive operation. There is, however, one case where the averaging over observations in each iteration is not needed. That occurs in a class of generalized nonlinear instrumental variable estimation (a special case of nonlinear GMM where $\mathbf{g}(y_t, \mathbf{z}_t, \bm{\theta})$ can be written as $a(y_t, \mathbf{z}_t; \bm{\theta})\mathbf{x}_t$). Suppose that the equation $a(y_t, \mathbf{z}_t; \bm{\theta})$ takes the form
+\begin{equation}
+\label{eq:7.5.8}
+a(y_t, \mathbf{z}_t; \bm{\theta}) = a_0(y_t, \mathbf{z}_t) + \underset{(1 \times q)}{\mathbf{a}_1(y_t, \mathbf{z}_t)'}\underset{(q \times 1)}{\bm{\alpha}(\bm{\theta})},
+\end{equation}
+where $a_0(\cdot)$ and $\mathbf{a}_1(\cdot)$ are known functions of $(y_t, \mathbf{z}_t)$ (but not functions of $\bm{\theta}$). A function of this form is said to be \textbf{nonlinear in parameters only} or \textbf{linear in variables}. It can be easily seen that
+\begin{equation}
+\label{eq:7.5.9}
+\begin{split}
+\mathbf{g}_n(\bm{\theta}) &\equiv \frac{1}{n}\sum_{t=1}^{n}\mathbf{g}(y_t, \mathbf{z}_t; \bm{\theta}) = \frac{1}{n}\sum_{t=1}^{n}a(y_t, \mathbf{z}_t; \bm{\theta}) \cdot \mathbf{x}_t \\
+&= \left(\frac{1}{n}\sum_{t=1}^{n}a_0(y_t, \mathbf{z}_t) \cdot \mathbf{x}_t\right) + \left(\frac{1}{n}\sum_{t=1}^{n}\mathbf{x}_t\mathbf{a}_1(y_t, \mathbf{z}_t)'\right)\underset{(q \times 1)}{\bm{\alpha}(\bm{\theta})},
+\end{split}
+\end{equation}
+\begin{equation}
+\label{eq:7.5.10}
+\mathbf{G}_n(\bm{\theta}) = \frac{\partial\mathbf{g}_n(\bm{\theta})}{\partial\bm{\theta}'} = \left(\frac{1}{n}\sum_{t=1}^{n}\mathbf{x}_t\mathbf{a}_1(y_t, \mathbf{z}_t)'\right)\underset{(q \times p)}{\frac{\partial\bm{\alpha}(\bm{\theta})}{\partial\bm{\theta}'}}.
+\end{equation}
+
+These equations make it clear that the sample averages need to be calculated just once, before the start of iterations.
+
+\subsection*{Questions for Review}
+
+\begin{enumerate}
+\item (Does $Q_n$ increase during iterations?) \enspace Set $\bm{\theta} = \hat{\bm{\theta}}_{j+1}$ in (\ref{eq:7.5.1}) and rewrite it as
+\[
+Q_n(\hat{\bm{\theta}}_{j+1}) - Q_n(\hat{\bm{\theta}}_j) \cong \mathbf{s}_n(\hat{\bm{\theta}}_j)'(\hat{\bm{\theta}}_{j+1} - \hat{\bm{\theta}}_j) + \frac{1}{2}(\hat{\bm{\theta}}_{j+1} - \hat{\bm{\theta}}_j)'\mathbf{H}_n(\hat{\bm{\theta}}_j)(\hat{\bm{\theta}}_{j+1} - \hat{\bm{\theta}}_j).
+\]
+Consider the Newton-Raphson algorithm (\ref{eq:7.5.3}). Suppose that $\hat{\bm{\theta}}_{j+1}$ is sufficiently close to $\hat{\bm{\theta}}_j$ so that the sign of $Q_n(\hat{\bm{\theta}}_{j+1}) - Q_n(\hat{\bm{\theta}}_j)$ is the same as that of the right hand side of the equation. Show that $Q_n(\hat{\bm{\theta}}_{j+1}) \geq Q_n(\hat{\bm{\theta}}_j)$ if $Q_n(\bm{\theta})$ is concave. \textbf{Hint:} Using (\ref{eq:7.5.3}), the right-hand side can be written as
+\[
+-\frac{1}{2}(\hat{\bm{\theta}}_{j+1} - \hat{\bm{\theta}}_j)'\mathbf{H}_n(\hat{\bm{\theta}}_j)(\hat{\bm{\theta}}_{j+1} - \hat{\bm{\theta}}_j).
+\]
+
+\item (Gauss-Newton for NLS) \enspace In NLS (nonlinear least squares), the objective function is given by (\ref{eq:7.1.19}). Let $\hat{\bm{\theta}}_j$ be the estimate in the $j$-th round and consider the linear approximation
+\begin{equation}
+\label{eq:7.5.11}
+\begin{split}
+\varphi(\mathbf{x}_t; \bm{\theta}) &\cong \varphi(\mathbf{x}_t; \hat{\bm{\theta}}_j) + \left(\frac{\partial\varphi(\mathbf{x}_t; \hat{\bm{\theta}}_j)}{\partial\bm{\theta}}\right)'\!(\bm{\theta} - \hat{\bm{\theta}}_j) \\
+&= \left[\varphi(\mathbf{x}_t; \hat{\bm{\theta}}_j) - \left(\frac{\partial\varphi(\mathbf{x}_t; \hat{\bm{\theta}}_j)}{\partial\bm{\theta}}\right)'\!\hat{\bm{\theta}}_j\right] + \left(\frac{\partial\varphi(\mathbf{x}_t; \hat{\bm{\theta}}_j)}{\partial\bm{\theta}}\right)'\!\bm{\theta}.
+\end{split}
+\end{equation}
+
+Replace $\varphi(\mathbf{x}_t; \bm{\theta})$ in the $m$ function by this linear function in $\bm{\theta}$. Show that the maximizer of this linearized problem is
+\begin{equation}
+\label{eq:7.5.12}
+\hat{\bm{\theta}}_{j+1} = \hat{\bm{\theta}}_j + \left[\frac{1}{n}\sum_{t=1}^{n}\left(\frac{\partial\varphi(\mathbf{x}_t; \hat{\bm{\theta}}_j)}{\partial\bm{\theta}}\right)\!\left(\frac{\partial\varphi(\mathbf{x}_t; \hat{\bm{\theta}}_j)}{\partial\bm{\theta}}\right)'\right]^{-1}\!\left\{\frac{1}{n}\sum_{t=1}^{n}\underset{(p \times 1)}{\left(\frac{\partial\varphi(\mathbf{x}_t; \hat{\bm{\theta}}_j)}{\partial\bm{\theta}}\right)} \cdot [y_t - \varphi(\mathbf{x}_t; \hat{\bm{\theta}}_j)]\right\}.
+\end{equation}
+\end{enumerate}

@@ -1,0 +1,401 @@
+% sec14_10.tex — Section 14.10: Singular Perturbation Methods: Boundary Layers
+
+\section{Singular Perturbation Methods: Boundary Layers Method of Matched Asymptotic Expansions}
+\label{sec:14.10}
+
+A large variety of significant physical problems [see Kevorkian and Cole (1996)] is described by ordinary or partial differential equations, where different approximations are valid in different regions (of space and/or time). Often one of the regions is much smaller than another and is located at a boundary, and thus this thin region is referred to as a \textbf{boundary layer}. Perturbation expansions can be determined in each region, but they must be related by a procedure called the \textbf{method of matched asymptotic expansions}. We begin with an elementary example of an ordinary differential equation to explain the method of matched asymptotic expansions in its simplest context. Our second (and last) example is a partial differential equation representing the convection of a pollutant where diffusion is only important near a boundary.
+
+\subsection{Boundary Layer in an Ordinary Differential Equation}
+\label{subsec:14.10.1}
+
+As an example to motivate the method of matched asymptotic expansions, we consider the boundary value problem for the following \emph{second-order} ordinary differential equation:
+\begin{equation}
+\boxed{\varepsilon\odd{u}{x} - \od{u}{x} + 2xu = 0,}
+\label{eq:14.10.1}
+\end{equation}
+subject to the \emph{two} boundary conditions $u(0) = 3$ and $u(1) = 2$. We assume $\varepsilon$ is a small positive parameter, $0 < \varepsilon \ll 1$. Even this elementary problem cannot be solved analytically because of the variable coefficient. Numerical methods are difficult to apply if $\varepsilon$ is small (and impossible if $\varepsilon$ is sufficiently small). In addition, numerical methods often do not add any insight into the boundary layer behavior we will derive.
+
+\paragraph{Reduced problem.}
+Intuitively, we expect that if $\varepsilon$ is very small ($10^{-8}$, for example), then for all practical purposes the \textbf{reduced} \emph{first-order} differential equation should be a very good approximation:
+\begin{equation}
+\boxed{-\od{u}{x} + 2xu = 0.}
+\label{eq:14.10.2}
+\end{equation}
+The general solution of the reduced equation \eqref{eq:14.10.2} (by separation or by an integrating factor) has one arbitrary constant:
+\begin{equation}
+\boxed{u = ce^{x^2}.}
+\label{eq:14.10.3}
+\end{equation}
+Unfortunately, this solution has one arbitrary constant, which cannot be used to solve these two boundary conditions (see Fig.\ 14.10.1). We will show that this solution is approximately valid almost everywhere. The constant $c$ can be determined from one of the boundary conditions, and we will determine which of the two boundary conditions should be used to determine $c$. There is a thin region near one of the boundaries (called a \textbf{boundary layer}) where \eqref{eq:14.10.3} is not a good approximation.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch14/fig_14_10_1.png}
+\caption{(a) Solution of reduced equation can only satisfy one boundary condition; (b) boundary layer at $x = 1$.}
+\label{fig:14.10.1}
+\end{figure}
+
+\paragraph{Boundary layer location and thickness.}
+We are in trouble if $\varepsilon$ is small since neglecting the $\varepsilon\odd{u}{x}$ term reduces the differential equation to first order. Somewhere $\varepsilon\odd{u}{x}$ cannot be neglected even though $\varepsilon$ is small. We conclude that our simplifying approximation \eqref{eq:14.10.2} or \eqref{eq:14.10.3} may fail if somewhere $\odd{u}{x}$ is large. There are many possibilities, some of which are that: $\odd{u}{x}$ is large only near the left boundary $x = 0$, large only near the right boundary $x = 1$, large only near some interior point, large near both boundaries, or large everywhere. The main idea of a boundary layer will be a region where the derivatives are large. Derivatives can be large if the solution $u$ changes by an order one amount in a short distance $x - x_0$ near some (unknown) point $x_0$. The small distance near $x_0$ is called the \textbf{boundary layer thickness}, which we assume is $O(\varepsilon^p)$, where $p > 0$ in order for the distance to be small:
+\begin{equation}
+x - x_0 = \varepsilon^p X,
+\label{eq:14.10.4}
+\end{equation}
+or, equivalently,
+\begin{equation}
+X = \frac{x - x_0}{\varepsilon^p}.
+\label{eq:14.10.5}
+\end{equation}
+Here, we are rescaling the independent variable $x$. The new variable $X$ is called the \textbf{boundary layer variable}. Derivatives will be large because of the chain rule $\od{u}{x} = \varepsilon^{-p}\od{u}{X}$, where we assume $\od{u}{X}$ is $O(1)$ in the boundary layer. Using the boundary layer variable \eqref{eq:14.10.5}, the differential equation \eqref{eq:14.10.1} becomes
+\begin{equation}
+\varepsilon^{1-2p}\odd{u}{X} - \varepsilon^{-p}\od{u}{X} + 2(x_0 + \varepsilon^p X)u = 0.
+\label{eq:14.10.6}
+\end{equation}
+Since $\varepsilon$ is small, the middle term is large $O(\varepsilon^{-p})$, much larger than the remaining term $2(x_0 + \varepsilon^p X)u$. In order for the differential equation to have nontrivial balance, in this example, the first and second terms must have the same order of magnitude:
+\begin{equation}
+1 - 2p = -p.
+\label{eq:14.10.7}
+\end{equation}
+We therefore conclude \emph{in this example} that
+\begin{equation}
+p = 1,
+\label{eq:14.10.8}
+\end{equation}
+so that in this example the boundary layer thickness is $O(\varepsilon^1)$, $x - x_0 = \varepsilon X$.
+
+However, we need to determine the location of the boundary layer. In the boundary layer the first and second terms are both $O(\varepsilon^{-1})$ larger than the remaining term. Roughly (we will improve this later), the leading-order boundary layer equation is
+\begin{equation}
+\odd{u}{X} - \od{u}{X} = 0.
+\label{eq:14.10.9}
+\end{equation}
+The general solution of \eqref{eq:14.10.9} is
+\begin{equation}
+\boxed{u = A + Be^X,}
+\label{eq:14.10.10}
+\end{equation}
+which is valid in the boundary layer, a thin region near $x_0$ with very large growth rate $O(\frac{1}{\varepsilon})$ on the $x$-scale. If $x$ is more than $O(\varepsilon)$ greater than $x_0$, the exponential term will be so large it cannot connect to the solution of the reduced equation. This kind of nearly unlimited exponential growth of the solution in a boundary layer must be prevented. One way to prevent this fast exponential growth is to let $B = 0$. If $B = 0$, the solution in the boundary layer is a constant, which is not acceptable since derivatives of the solution are usually large in a boundary layer. Thus, we must include $Be^{\frac{x-x_0}{\varepsilon}}$ in the boundary layer solution. In this problem, $x_0$ cannot be some interior point (or the left endpoint $x_0 = 0$) since the solution in the boundary layer exponentially grows too large if $x > x_0$. Only if the boundary layer is located at the right endpoint $x_0 = 1$ will the undesirable large exponential growth not occur:
+\begin{equation}
+x - 1 = \varepsilon X.
+\label{eq:14.10.11}
+\end{equation}
+In this case, the leading-order boundary layer solution (near $x = 1$) is
+\begin{equation}
+u = A + Be^{\frac{x-1}{\varepsilon}},
+\label{eq:14.10.12}
+\end{equation}
+and decays exponentially (not grows) as the solution leaves the boundary layer. If $x - 1$ is negative, then $e^{\frac{x-1}{\varepsilon}}$ is transcendentally small. The solution varies quickly in a small region, desirable for a boundary layer. Now that we know that the boundary layer in this problem is located at the right end, we can proceed with the mathematical solution.
+
+\paragraph{Outer expansion.}
+We begin by determining an asymptotic expansion of the solution of the differential equation away from any boundary layer. We introduce a perturbation expansion (which we assume is in the following elementary form):
+\begin{equation}
+u(x, \varepsilon) = u_0(x) + \varepsilon u_1(x) + \cdots.
+\label{eq:14.10.13}
+\end{equation}
+We call this the \textbf{outer expansion}, since it is valid away from a boundary layer.
+Substituting the perturbation expansion \eqref{eq:14.10.13} into the differential equation \eqref{eq:14.10.1} yields
+\begin{align}
+O(\varepsilon^0): \quad &-\od{u_0}{x} - 2xu_0 = 0 \label{eq:14.10.14} \\
+O(\varepsilon^1): \quad &-\od{u_1}{x} - 2xu_1 = \odd{u_0}{x}. \label{eq:14.10.15}
+\end{align}
+We will restrict our attention to the leading-order inner equation \eqref{eq:14.10.14}, whose solution (as before) is
+\begin{equation}
+u_0(x) = ce^{x^2}.
+\label{eq:14.10.16}
+\end{equation}
+However, now we know there is a boundary layer at $x = 1$, so that the outer solution must solve the boundary condition at $x = 0$:
+\begin{equation}
+u_0(0) = c = 3.
+\label{eq:14.10.17}
+\end{equation}
+The leading-order outer solution
+\begin{equation}
+u_0(x) = 3e^{x^2}
+\label{eq:14.10.18}
+\end{equation}
+satisfies the boundary condition at $x = 0$ but does not satisfy the boundary condition at $x = 1$.
+
+\paragraph{Inner (boundary layer) expansion.}
+In the boundary layer near $x = 1$, we introduce the inner variable $x = 1 + \varepsilon X$ \eqref{eq:14.10.11}. The exact inner (boundary layer) equation follows by multiplying \eqref{eq:14.10.6} by $\varepsilon$:
+\begin{equation}
+\odd{u}{X} - \od{u}{X} + 2\varepsilon(1 + \varepsilon X)u = 0.
+\label{eq:14.10.19}
+\end{equation}
+We can introduce a perturbation expansion of the solution valid in the boundary layer. This is called the \textbf{inner expansion} or \textbf{boundary layer expansion}:
+\begin{equation}
+u = U_0(X) + \varepsilon U_1(X) + \cdots.
+\label{eq:14.10.20}
+\end{equation}
+As we obtained earlier, the solution of the leading-order equation \eqref{eq:14.10.21} is
+\begin{equation}
+U_0(X) = A + Be^X,
+\label{eq:14.10.23}
+\end{equation}
+when expressed in terms of the usual inner variable $x$. The boundary layer equation should satisfy the boundary condition at $x = 1$: $u(x = 1) = 2$ becomes $U_0(X = 0) = 2$:
+\begin{equation}
+2 = A + B.
+\label{eq:14.10.24}
+\end{equation}
+In this example the boundary layer equation is a second-order equation with two arbitrary constants. In this example, one condition is a boundary condition, while the second condition will be that the outer solution must match to the inner (boundary layer) solution.
+
+\paragraph{Matching.}
+We have obtained an outer expansion valid away from the boundary layer
+\[
+u = 3e^{x^2} + \varepsilon u_1(x) + \cdots
+\]
+and an inner expansion valid in the boundary layer
+\[
+u = A + Be^X + \varepsilon U_1(X) + \cdots,
+\]
+where from the boundary condition $2 = A + B$. These two asymptotic expansions must be expansions of the same solution of the differential equation. We assume there is an overlap region where both expansions are simultaneously valid. Thus, we equate the two expansions in a manner that is called the \textbf{method of matched asymptotic expansions}. The overlap region is near to the boundary layer (from the point of view of the outer solution) and far from the boundary layer (from the point of view of the scales in the boundary layer). In simple examples (such as this one), the \textbf{matching principle} states that
+\begin{equation}
+\boxed{\text{the inner limit of the outer solution} = \text{the outer limit of the inner solution.}}
+\label{eq:14.10.27}
+\end{equation}
+From the point of view of the outer solution, the inner limit is the limit as $x \to 1$. In this example, the outer limit means $X \to -\infty$.
+\begin{equation}
+\lim_{x \to 1} u_0(x) + \varepsilon u_1(x) = \lim_{X \to -\infty} U_0(X) + \varepsilon U_1(X).
+\label{eq:14.10.28}
+\end{equation}
+Using only the leading-order terms, we have
+\begin{equation}
+\lim_{x \to 1} 3e^{x^2} = \lim_{X \to -\infty} A + Be^X.
+\label{eq:14.10.29}
+\end{equation}
+Thus $3e = A$. Since $A + B = 2$, we also have $B = 2 - 3e$. Consequently, in summary
+\begin{itemize}
+\item Leading-order outer solution (away from $x = 1$): $u = 3e^{x^2}$
+\item Leading-order inner solution (near $x = 1$): $u = 3e + (2 - 3e)e^X$,
+\end{itemize}
+which is graphed in Fig.\ 14.10.1.
+
+Often these inner and outer limits do not exist, and must be replaced by the corresponding asymptotic expansions:
+\begin{center}
+\fbox{\parbox{0.8\textwidth}{
+\boxed{the inner asymptotic expansion of the outer solution $=$\\
+}}
+\end{center}
+the outer asymptotic expansion of the inner solution.}
+\begin{equation}
+\label{eq:14.10.30}
+\end{equation}
+These are two very different calculations that must be the same. In the case where $x - 1 = \varepsilon X$, the two expansions are as follows:
+\begin{enumerate}
+\item Fixing $x$ and letting $\varepsilon \to 0$. (This means $X \to -\infty$, the outer expansion of the inner solution.)
+\item Fixing $X$ and letting $\varepsilon \to 0$. (This means $x \to 1$, the inner expansion of the outer solution.)
+\end{enumerate}
+
+There are practical procedures that take into account that often only the first few terms are worth the effort of computation. Remember that $\varepsilon$ is very small and higher-order terms are often negligible.
+
+The form of the inner and outer expansions may have to be adjusted in other problems. Higher-order terms can be included and matched, but more effort is required than in the elementary example here. The asymptotic expansions of the inner and outer solutions are often doable, but more effort is required than in the elementary example here. Nonlinear problems can be more difficult and interesting.
+
+\subsection{Diffusion of a Pollutant Dominated by Convection}
+\label{subsec:14.10.2}
+
+We will analyze one elementary example of a singular perturbation problem for a partial differential equation by the boundary layer method (the method of matched asymptotic expansions). We consider a pollutant with unknown chemical concentration $u(x,y,t)$. Without convection (the motion of a fluid) the concentration satisfies the diffusion equation $\pd{u}{t} = k(\pdd{u}{x} + \pdd{u}{y})$. If the fluid moves at a known velocity $\vec{v}$  (where in fluid dynamics it is shown that usually $\nabla\cdot\vec{v} = 0$), then the time derivative in the diffusion equation should be replaced by the \textbf{convective derivative} (the time derivative moving with the fluid) $\pd{u}{t} + \vec{v}\cdot\nabla u$:
+\begin{equation}
+\pd{u}{t} + \vec{v}\cdot\nabla u = k\left(\pdd{u}{x} + \pdd{u}{y}\right).
+\label{eq:14.10.31}
+\end{equation}
+
+We consider an idealized situation in which the pollution is caused by a series of smoke stacks (industrial parks), where we assume each smoke stack produces a known (but perhaps different) level of pollution that does not change in time. Thus we know the level of pollution on the boundary of some region, and we wish to determine the steady-state level of pollution inside the large region:
+\begin{equation}
+\vec{v}\cdot\nabla u = k\left(\pdd{u}{x} + \pdd{u}{y}\right).
+\label{eq:14.10.32}
+\end{equation}
+We first assume the convective atmospheric velocity is constant and in a somewhat general direction $\vec{v} = a\hat{i} + b\hat{j}$. In this case the steady equation for diffusion becomes
+\begin{equation}
+a\pd{u}{x} + b\pd{u}{y} = \varepsilon\left(\pdd{u}{x} + \pdd{u}{y}\right),
+\label{eq:14.10.33}
+\end{equation}
+where (for the convenience of singular perturbation methods) we have introduced $\varepsilon$ as a small (in some sense) diffusion coefficient. This is not an easy mathematical problem especially if the geometric region is not a rectangle.
+
+\paragraph{Outer expansion.}
+If $\varepsilon$ is a very small parameter, we expect (as a good approximation) that the following reduced first-order partial differential equation should be important:
+\begin{equation}
+a\pd{u_0}{x} + b\pd{u_0}{y} = 0.
+\label{eq:14.10.34}
+\end{equation}
+We justify this by introducing into \eqref{eq:14.10.33} a regular perturbation expansion:
+\begin{equation}
+u = u_0 + \varepsilon u_1 + \cdots,
+\label{eq:14.10.35}
+\end{equation}
+whose leading-order term satisfies \eqref{eq:14.10.34}. Equation \eqref{eq:14.10.34} can be solved by the method of characteristics. If $\od{y}{x} = \frac{b}{a}$, then $\pd{u_0}{x} = 0$ or $u_0 = $ constant. The characteristics of the reduced equation \eqref{eq:14.10.34} are $ay - bx = $ constant. Thus,
+\begin{equation}
+u_0 = f(ay - bx),
+\label{eq:14.10.36}
+\end{equation}
+where the arbitrary function $f$ should be determined from one boundary condition. However, for the diffusion equation we have two boundary conditions (determined by the manner in which the characteristics divide the boundary of the closed two-dimensional region, as will be clearer by the specific example to follow). We will show that \eqref{eq:14.10.35} the leading-order outer expansion and \eqref{eq:14.10.36} the \textbf{outer solution} since it is valid away from the boundary layer.
+
+\paragraph{Simple example.}
+For the rest of this subsection, we assume the fluid velocity is in the positive $y$-direction $\vec{v} = (0,1)$ so that the partial differential equation \eqref{eq:14.10.33} for steady diffusion becomes
+\begin{equation}
+\pd{u}{y} = \varepsilon\left(\pdd{u}{x} + \pdd{u}{y}\right).
+\label{eq:14.10.37}
+\end{equation}
+The solution of the leading-order outer equation $\pd{u_0}{y} = 0$ is
+\begin{equation}
+u_0 = f(x),
+\label{eq:14.10.38}
+\end{equation}
+an arbitrary function of $x$. We assume the characteristics ($x = $ constant divide the boundary of the geometric region into two pieces, which we call the top $y = y_T(x)$ and bottom $y = y_B(x)$ (see Fig.\ 14.10.2). The boundary condition for the diffusive partial differential equation is that the level of pollution is specified on the entire boundary. We introduce two functions, the level of pollution on the top
+\begin{equation}
+u = u_T(x) \text{ on } y = y_T(x)
+\label{eq:14.10.39}
+\end{equation}
+and the level of pollution on the bottom
+\begin{equation}
+u = u_B(x) \text{ on } y = y_B(x).
+\label{eq:14.10.40}
+\end{equation}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch14/fig_14_10_2.png}
+\caption{(a) Characteristics; (b) convection dominates (boundary layer at the top).}
+\label{fig:14.10.2}
+\end{figure}
+
+The one arbitrary function can satisfy one but not both of these conditions. On the basis of physical intuition, we expect that since the atmosphere is moving in the positive vertical direction, the wind carries the pollutant upward. We expect that the solution of the reduced problem satisfies the boundary condition on the bottom:
+\begin{equation}
+u_0 = f(x) = u_B(x).
+\label{eq:14.10.41}
+\end{equation}
+Since this does not solve the boundary condition on the top, we expect that there is a thin region near the top where derivatives are large and cannot be neglected. In the next subsection, we show mathematically that the boundary layer is located on the top and determine its thickness.
+
+\paragraph{Boundary layer (inner) expansion.}
+We want to develop a procedure to determine where a boundary layer is allowed (and determine its thickness). We first analyze the possibility that the boundary layer is located near the top. However, our mathematical analysis will be general enough to show that the boundary layer cannot be located on the bottom.
+
+We introduce as a scaled set of independent spatial variables $(\xi, \eta)$ with unknown thickness $O(\varepsilon^p)$ with $p > 0$:
+\begin{equation}
+\boxed{\begin{aligned}
+\xi &= x \\
+\eta &= \frac{y - y_T(x)}{\varepsilon^p}.
+\end{aligned}}
+\label{eq:14.10.42}
+\end{equation}
+Since the boundary is not necessarily straight, both $x$- and $y$-derivatives are large:
+\begin{equation}
+\boxed{\begin{aligned}
+\pd{u}{x} &= \pd{u}{\xi} - \frac{y_T'(x)}{\varepsilon^p}\pd{u}{\eta} \\
+\pd{u}{y} &= \frac{1}{\varepsilon^p}\pd{u}{\eta}.
+\end{aligned}}
+\end{equation}
+Second derivatives are needed:
+\begin{align}
+\pdd{u}{x} &= \left(\frac{\partial}{\partial \xi} - \frac{y_T'(x)}{\varepsilon^p}\frac{\partial}{\partial \eta}\right)\left(\pd{u}{\xi} - \frac{y_T'(x)}{\varepsilon^p}\pd{u}{\eta}\right) = \frac{[y_T'(x)]^2}{\varepsilon^{2p}}\pdd{u}{\eta} + \cdots \label{eq:14.10.43} \\
+\pdd{u}{y} &= \frac{1}{\varepsilon^{2p}}\pdd{u}{\eta}. \label{eq:14.10.44}
+\end{align}
+If only the leading-order terms are needed (in the boundary layer), we can avoid the more complicated expressions for the second derivative. Substituting these expressions \eqref{eq:14.10.43} and \eqref{eq:14.10.44} into our example \eqref{eq:14.10.37}, we obtain the leading-order equation $U_0(\xi, \eta)$ in a boundary layer:
+\begin{equation}
+\frac{1}{\varepsilon^p}\pd{U_0}{\eta} = \varepsilon^{1-2p} k_T(\xi)\pdd{U_0}{\eta},
+\label{eq:14.10.45}
+\end{equation}
+where the important coefficient is positive:
+\begin{equation}
+k_T(\xi) = 1 + [y_T'(x)]^2.
+\label{eq:14.10.46}
+\end{equation}
+By balancing order of magnitudes of the largest terms in \eqref{eq:14.10.45}, we obtain
+\begin{equation}
+p = 1,
+\label{eq:14.10.47}
+\end{equation}
+so that the \textbf{thickness of the boundary layer} is $O(\varepsilon^1)$. Because derivatives are largest in one direction, the partial differential equation reduces to leading order to an ordinary differential equation:
+\begin{equation}
+\boxed{\pd{U_0}{\eta} = k_T(\xi)\pdd{U_0}{\eta}.}
+\label{eq:14.10.48}
+\end{equation}
+The general solution of \eqref{eq:14.10.48} is
+\begin{equation}
+U_0(\xi, \eta) = A(\xi) + B(\xi)e^{\frac{\eta}{k_T(\xi)}},
+\label{eq:14.10.49}
+\end{equation}
+where $A(\xi)$ and $B(\xi)$ are arbitrary functions of $\xi$ since $\frac{\partial}{\partial \eta}$ involves $\xi$ fixed. Now it is possible to determine whether or not a boundary layer exists at the top (or the bottom). Since
+\begin{equation}
+\eta = \frac{y - y_T(x)}{\varepsilon},
+\label{eq:14.10.50}
+\end{equation}
+the interior is approached by the limit process:
+\[
+\eta \to \begin{cases} -\infty & \text{if the boundary layer is at the top} \\ +\infty & \text{if the boundary layer is at the bottom.} \end{cases}
+\]
+Fast exponential growth ($e^{\frac{\eta}{k_T(\xi)}}$) in a boundary layer is not allowed as the solution becomes transcendentally large. Since $k_T(\xi) > 0$ and the corresponding $k_B(\xi) > 0$, in this example we must prevent $\eta \to +\infty$ as one leaves a boundary layer. This can only be prevented if the boundary layer for this problem is located at the top. This is the same conclusion we reached based on physical intuition that the pollution levels are convected into the interior of the region by the given upward atmospheric velocity.
+
+In this way we have obtained the leading-order solution in the boundary layer located at the top:
+\begin{equation}
+U_0(\xi, \eta) = A(\xi) + B(\xi)e^{\frac{\eta}{k_T(\xi)}},
+\label{eq:14.10.51}
+\end{equation}
+If the boundary layer is at the top, then the solution in the boundary layer should satisfy the top boundary condition at the top, which is $u = u_T(x)$ at $y = y_T(x)$. Since $y = y_T(x)$ corresponds to $\eta = 0$, we satisfy the top boundary condition with
+\begin{equation}
+A(\xi) + B(\xi) = u_T(\xi).
+\label{eq:14.10.52}
+\end{equation}
+The top boundary condition prescribes one condition for the two arbitrary functions $A(\xi)$ and $B(\xi)$. The second condition (needed to determine the boundary layer solution) is that the inner and outer solutions must match.
+
+\paragraph{Matching of the inner and outer expansions.}
+In summary, the leading-order (outer) solution is valid away from a thin boundary layer near the top portion of the boundary:
+\begin{equation}
+u_0 = u_B(x).
+\label{eq:14.10.53}
+\end{equation}
+The leading-order (inner) solution in the boundary layer near the top is
+\begin{equation}
+U_0 = A(\xi) + B(\xi)e^{\frac{\eta}{k_T(\xi)}},
+\label{eq:14.10.54}
+\end{equation}
+where the boundary layer variable is $\eta = \frac{y - y_T(x)}{\varepsilon}$ and where $A(\xi) + B(\xi) = u_T(\xi)$ to satisfy the top boundary condition. The method of matched asymptotic expansions states that the boundary layer solution must match to the interior (outer) solution. Since
+\begin{equation}
+\eta = \frac{y - y_T(x)}{\varepsilon},
+\label{eq:14.10.55}
+\end{equation}
+the interior is approached by $\eta \to -\infty$. Thus, matching the leading-order inner and outer solutions yields
+\begin{equation}
+u_B(x) = A(x).
+\label{eq:14.10.56}
+\end{equation}
+Since $A(x) + B(x) = u_T(x)$, we have $B(x) = u_T(x) - u_B(x)$. The leading-order solution in the boundary layer is
+\begin{equation}
+U_0 = u_B(x) + [u_T(x) - u_B(x)]e^{\frac{y - y_T(x)}{\varepsilon k_T(x)}}.
+\label{eq:14.10.57}
+\end{equation}
+
+The concentration of the pollutant is convected from the bottom into the interior, as described by the leading-order outer solution \eqref{eq:14.10.53}. The leading-order inner solution \eqref{eq:14.10.57} shows that a thin boundary layer exists at the top (illustrated in Fig.\ 14.10.2) in which diffusion dominates and the level of pollution suddenly changes from level in the interior (convected from the bottom) to the level specified by the top boundary condition.
+
+These two asymptotic expansions represent a good approximation to the solution of the original partial differential equation in different regions. Since there is an overlap region where both expansions are valid, the \textbf{matching principle} states that
+\begin{center}
+\fbox{\parbox{0.8\textwidth}{
+the inner limit of the outer solution $=$ the outer limit of the inner solution.
+}}
+\end{center}
+
+\begin{exercises}{14.10}
+In Exercises 14.10.1--14.10.7, find one term of the inner and outer expansions and match them:
+
+\item $\varepsilon\odd{u}{x} - 2\od{u}{x} + 3u = 0$ with $u(0) = 1$ and $u(1) = 2$
+
+\item $\varepsilon\odd{u}{x} + 2\od{u}{x} - 3u = 0$ with $u(0) = 1$ and $u(1) = 2$
+
+\item[\starred] $\varepsilon\odd{u}{x} - 4u = x$ with $u(0) = 1$ and $u(1) = 2$
+
+\item $\varepsilon\odd{u}{x} + \varepsilon\od{u}{x} - 9u = 0$ with $u(0) = 1$ and $u(1) = 2$
+
+\item $\varepsilon\odd{u}{x} + 2e^{-x}u = 8$ with $u(0) = 1$ and $u(1) = 2$
+
+\item[\starred] $\varepsilon\odd{u}{x} + (2x+1)\od{u}{x} + 2u = 0$ with $u(0) = 1$ and $u(1) = 2$
+
+\item $\varepsilon\odd{u}{x} + 2e^{-x}u = 8$ with $u(0) = 1$ and $u(1) = 2$
+
+\item Find an exact solution of Exercise 14.10.1 (and graph using software).
+
+\item Sometimes there can be a boundary layer. Consider for $0 < x < 1$ with $0 < \varepsilon \ll 1$:
+\[
+\varepsilon^4\odd{y}{x} + x^2\od{y}{x} - \varepsilon y = 0 \quad \text{with } y(0) = 1 \text{ and } y(1) = 2.
+\]
+You may assume (without verifying) that there is no boundary layer at $x = 1$. Solve this problem, including two terms of the outer expansion. Show that two different scalings near $x = 0$ are valid, a thin and thick one. Determine only one term of each of these two other expansions. Match the outer solution to the thicker inner solution and match the thicker inner solution to the thinner inner solution.
+
+\item Consider $\varepsilon(\pdd{u}{x} + \pdd{u}{y}) = 4\pd{u}{x} + \pd{u}{y}$, with $u$ specified on the boundaries of the square $0 < x < 1$, $0 < y < 1$. Using physical reasoning, where will there be a boundary layer?
+
+\item $\varepsilon(\pdd{u}{x} + \pdd{u}{y}) = u - f(x,y)$ with boundary conditions on the unit square: $u(x,0) = g(x)$, $u(x,1) = h(x)$, $u(0,y) = r(y)$, and $u(1,y) = s(y)$. Determine the leading-order outer solution. Determine the leading-order inner solution in one boundary layer (since the others are quite similar). Match these.
+\end{exercises}

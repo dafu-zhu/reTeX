@@ -1,0 +1,212 @@
+% sec01_4.tex — Section 1.4: Equilibrium Temperature Distribution
+
+\section{Equilibrium Temperature Distribution}
+\label{sec:1.4}
+
+\subsection{Prescribed Temperature}
+\label{sec:1.4.1}
+
+Let us now formulate a simple, but typical, problem of heat flow. If the thermal coefficients are constant and there are no sources of thermal energy, then the temperature $u(x,t)$ in a one-dimensional rod $0 \le x \le L$ satisfies
+\begin{equation}
+\pd{u}{t} = k\pdd{u}{x}.
+\label{eq:1.4.1}
+\end{equation}
+The solution of this partial differential equation must satisfy the initial condition
+\begin{equation}
+u(x,0) = f(x)
+\label{eq:1.4.2}
+\end{equation}
+and one boundary condition at each end. For example, each end might be in contact with different large baths, such that the temperature at each end is prescribed:
+\begin{equation}
+\begin{aligned}
+u(0,t) &= T_1(t). \\
+u(L,t) &= T_2(t).
+\end{aligned}
+\label{eq:1.4.3}
+\end{equation}
+One aim of this text is to enable the reader to solve the problem specified by \eqref{eq:1.4.1}--\eqref{eq:1.4.3}.
+
+\paragraph{Equilibrium temperature distribution.}
+Before we begin to attack such an initial and boundary value problem for partial differential equations, we discuss a physically related question for ordinary differential equations. Suppose that the boundary conditions at $x = 0$ and $x = L$ were \textbf{steady} (i.e., independent of time),
+\[
+u(0,t) = T_1 \qquad \text{and} \qquad u(L,t) = T_2,
+\]
+where $T_1$ and $T_2$ are given constants. We define an \textbf{equilibrium} or \textbf{steady-state} solution to be a temperature distribution that does not depend on time, that is, $u(x,t) = u(x)$. Since $\partial/\partial t\; u(x) = 0$, the partial differential equation becomes $k(d^2u/dx^2) = 0$, but partial derivatives are not necessary, and thus
+\begin{equation}
+\boxed{\odd{u}{x} = 0.}
+\label{eq:1.4.4}
+\end{equation}
+
+The boundary conditions are
+\begin{equation}
+\boxed{\begin{aligned}
+u(0) &= T_1 \\
+u(L) &= T_2.
+\end{aligned}}
+\label{eq:1.4.5}
+\end{equation}
+
+In doing steady-state calculations, the initial conditions are usually ignored. Equation~\eqref{eq:1.4.4} is a rather trivial second-order ordinary differential equation (ODE). Its general solution may be obtained by integrating twice. Integrating \eqref{eq:1.4.4} yields $du/dx = C_1$, and integrating a second time shows that
+\begin{equation}
+u(x) = C_1 x + C_2.
+\label{eq:1.4.6}
+\end{equation}
+We recognize \eqref{eq:1.4.6} as the general equation of a straight line. Thus, from the boundary conditions \eqref{eq:1.4.5} the equilibrium temperature distribution is the straight line that equals $T_1$ at $x = 0$ and $T_2$ at $x = L$, as sketched in Fig.~\ref{fig:1.4.1}. Geometrically there is a unique equilibrium solution for this problem. Algebraically, we can determine the two arbitrary constants, $C_1$ and $C_2$, by applying the boundary conditions, $u(0) = T_1$ and $u(L) = T_2$:
+\begin{equation}
+\begin{aligned}
+u(0) = T_1 \quad &\text{implies} \quad T_1 = C_2 \\
+u(L) = T_2 \quad &\text{implies} \quad T_2 = C_1 L + C_2.
+\end{aligned}
+\label{eq:1.4.7}
+\end{equation}
+It is easy to solve \eqref{eq:1.4.7} for the constants $C_2 = T_1$ and $C_1 = (T_2 - T_1)/L$. Thus, the unique equilibrium solution for the steady-state heat equation with these fixed boundary conditions is
+\begin{equation}
+\boxed{u(x) = T_1 + \frac{T_2 - T_1}{L}\,x.}
+\label{eq:1.4.8}
+\end{equation}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch01/fig_1_4_1.png}
+\caption{Equilibrium temperature distribution.}
+\label{fig:1.4.1}
+\end{figure}
+
+\paragraph{Approach to equilibrium.}
+For the time-dependent problem, \eqref{eq:1.4.1} and \eqref{eq:1.4.2}, with steady boundary conditions \eqref{eq:1.4.5}, we expect the temperature distribution $u(x,t)$ to change in time; it will not remain equal to its initial distribution $f(x)$. If we wait a very, very long time, we would imagine that the influence of the two ends should dominate. The initial conditions are usually forgotten. Eventually, the temperature is physically expected to approach the equilibrium temperature distribution, since the boundary conditions are independent of time:
+\begin{equation}
+\lim_{t \to \infty} u(x,t) = u(x) = T_1 + \frac{T_2 - T_1}{L}\,x.
+\label{eq:1.4.9}
+\end{equation}
+In Sec.~8.2 we will solve the time-dependent problem and show that \eqref{eq:1.4.9} is satisfied. However, if a steady state is approached, it is more easily obtained by directly solving the equilibrium problem.
+
+\subsection{Insulated Boundaries}
+\label{sec:1.4.2}
+
+As a second example of a steady-state calculation, we consider a one-dimensional rod again with no sources and with constant thermal properties, but this time with insulated boundaries at $x = 0$ and $x = L$. The formulation of the time-dependent problem is
+\begin{alignat}{3}
+&\text{PDE:} &\qquad \pd{u}{t} &= k\pdd{u}{x} \label{eq:1.4.10}\\
+&\text{IC:}  &\qquad u(x,0) &= f(x) \label{eq:1.4.11}\\
+&\text{BC1:} &\qquad \pd{u}{x}(0,t) &= 0 \label{eq:1.4.12}\\
+&\text{BC2:} &\qquad \pd{u}{x}(L,t) &= 0. \label{eq:1.4.13}
+\end{alignat}
+The equilibrium problem is derived by setting $\partial u/\partial t = 0$. The equilibrium temperature distribution satisfies
+\begin{equation}
+\text{ODE:}\quad \boxed{\odd{u}{x} = 0}
+\label{eq:1.4.14}
+\end{equation}
+\begin{equation}
+\text{BC1:}\quad \boxed{\od{u}{x}(0) = 0}
+\label{eq:1.4.15}
+\end{equation}
+\begin{equation}
+\text{BC2:}\quad \boxed{\od{u}{x}(L) = 0,}
+\label{eq:1.4.16}
+\end{equation}
+where the initial condition is neglected (for the moment). The general solution of $d^2u/dx^2 = 0$ is again an arbitrary straight line,
+\begin{equation}
+u = C_1 x + C_2.
+\label{eq:1.4.17}
+\end{equation}
+The boundary conditions imply that the slope must be zero at both ends. Geometrically, any straight line that is flat (zero slope) will satisfy \eqref{eq:1.4.15} and \eqref{eq:1.4.16}, as illustrated in Fig.~\ref{fig:1.4.2}.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch01/fig_1_4_2.png}
+\caption{Various constant equilibrium temperature distributions (with insulated ends).}
+\label{fig:1.4.2}
+\end{figure}
+
+The solution is any constant temperature. Algebraically, from \eqref{eq:1.4.17}, both boundary conditions imply $C_1 = 0$. Thus,
+\begin{equation}
+u(x) = C_2
+\label{eq:1.4.18}
+\end{equation}
+for any constant $C_2$. Unlike the first example (with fixed temperatures at both ends), here there is not a unique equilibrium temperature. Any constant temperature is an equilibrium temperature distribution for insulated boundary conditions. Thus, for the time-dependent initial value problem, we expect
+\[
+\lim_{t \to \infty} u(x,t) = C_2;
+\]
+if we wait long enough, a rod with insulated ends should approach a constant temperature. This seems physically quite reasonable. However, it does not make sense that the solution should approach an arbitrary constant; we ought to know what constant it approaches. In this case, the lack of uniqueness was caused by the complete neglect of the initial condition. In general, the equilibrium solution will not satisfy the initial condition for the time-dependent problem \eqref{eq:1.4.11}. However, the particular constant equilibrium solution is determined by considering the initial condition for the time-dependent problem. Since both ends are insulated, the total thermal energy is constant. This follows from the integral conservation of thermal energy of the entire rod [see \eqref{eq:1.2.4}]:
+\begin{equation}
+\frac{d}{d t}\int_0^L c\rho u\dx = -K_0\pd{u}{x}(0,t) + K_0\pd{u}{x}(L,t).
+\label{eq:1.4.19}
+\end{equation}
+Since both ends are insulated,
+\begin{equation}
+\int_0^L c\rho u\dx = \text{constant}.
+\label{eq:1.4.20}
+\end{equation}
+One implication of \eqref{eq:1.4.20} is that the initial thermal energy must equal the final ($\lim_{t\to\infty}$) thermal energy. The initial thermal energy is $c\rho\int_0^L f(x)\dx$ since $u(x,0) = f(x)$, while the equilibrium thermal energy is $c\rho\int_0^L C_2\dx = c\rho C_2 L$ since the equilibrium temperature distribution is a constant $u(x,t) = C_2$. The constant $C_2$ is determined by equating these two expressions for the constant total thermal energy, $c\rho\int_0^L f(x)\dx = c\rho C_2 L$. Solving for $C_2$ shows that the desired unique steady-state solution should be
+\begin{equation}
+\boxed{u(x) = C_2 = \frac{1}{L}\int_0^L f(x)\dx,}
+\label{eq:1.4.21}
+\end{equation}
+the \textbf{average} of the initial temperature distribution. It is as though the initial condition is not entirely forgotten. Later we will find a $u(x,t)$ that satisfies (\ref{eq:1.4.10}--\ref{eq:1.4.13}) and show that $\lim_{t\to\infty} u(x,t)$ is given by \eqref{eq:1.4.21}.
+
+\begin{exercises}{1.4}
+
+\item Determine the equilibrium temperature distribution for a one-dimensional rod with constant thermal properties with the following sources and boundary conditions:
+\begin{enumerate}
+\item[\starred (a)] $Q = 0$, \quad $u(0) = 0$, \quad $u(L) = T$
+\item[(b)] $Q = 0$, \quad $u(0) = T$, \quad $u(L) = 0$
+\item[(c)] $Q = 0$, \quad $\displaystyle\pd{u}{x}(0) = 0$, \quad $u(L) = T$
+\item[\starred (d)] $Q = 0$, \quad $u(0) = T$, \quad $\displaystyle\pd{u}{x}(L) = \alpha$
+\item[(e)] $\displaystyle\frac{Q}{K_0} = 1$, \quad $u(0) = T_1$, \quad $u(L) = T_2$
+\item[\starred (f)] $\displaystyle\frac{Q}{K_0} = x^2$, \quad $u(0) = T$, \quad $\displaystyle\pd{u}{x}(L) = 0$
+\item[(g)] $Q = 0$, \quad $u(0) = T$, \quad $\displaystyle\pd{u}{x}(L) + u(L) = 0$
+\item[\starred (h)] $Q = 0$, \quad $\displaystyle\pd{u}{x}(0) - [u(0) - T] = 0$, \quad $\displaystyle\pd{u}{x}(L) = \alpha$
+\end{enumerate}
+In these you may assume that $u(x,0) = f(x)$.
+
+\item Consider the equilibrium temperature distribution for a uniform one-dimensional rod with sources $Q/K_0 = x$ of thermal energy, subject to the boundary conditions $u(0) = 0$ and $u(L) = 0$.
+\begin{enumerate}
+\item[\starred (a)] Determine the heat energy generated per unit time inside the entire rod.
+\item[(b)] Determine the heat energy flowing out of the rod per unit time at $x = 0$ and at $x = L$.
+\item[(c)] What relationships should exist between the answers in parts (a) and (b)?
+\end{enumerate}
+
+\item Determine the equilibrium temperature distribution for a one-dimensional rod composed of two different materials in perfect thermal contact at $x = 1$. For $0 < x < 1$, there is one material ($c\rho = 1$, $K_0 = 1$) with a constant source ($Q = 1$), whereas for the other $1 < x < 2$ there are no sources ($Q = 0$, $c\rho = 2$, $K_0 = 2$) (see Exercise~1.3.2) with $u(0) = 0$ and $u(2) = 0$.
+
+\item If both ends of a rod are insulated, derive \emph{from the partial differential equation} that the total thermal energy in the rod is constant.
+
+\item Consider a one-dimensional rod $0 \le x \le L$ of known length and known constant thermal properties without sources. Suppose that the temperature is an \emph{unknown} constant $T$ at $x = L$. Determine $T$ if we know (in the steady state) both the temperature and the heat flow at $x = 0$.
+
+\item The two ends of a uniform rod of length $L$ are insulated. There is a constant source of thermal energy $Q_0 \neq 0$, and the temperature is initially $u(x,0) = f(x)$.
+\begin{enumerate}
+\item[(a)] Show mathematically that there does not exist any equilibrium temperature distribution. Briefly explain physically.
+\item[(b)] Calculate the total thermal energy in the entire rod.
+\end{enumerate}
+
+\item For the following problems, determine an equilibrium temperature distribution (if one exists). For what values of $\beta$ are there solutions? Explain physically.
+\begin{enumerate}
+\item[\starred (a)] $\displaystyle\pd{u}{t} = \pdd{u}{x} + 1$, \quad $u(x,0) = f(x)$, \quad $\displaystyle\pd{u}{x}(0,t) = 1$, \quad $\displaystyle\pd{u}{x}(L,t) = \beta$
+\item[(b)] $\displaystyle\pd{u}{t} = \pdd{u}{x}$, \quad $u(x,0) = f(x)$, \quad $\displaystyle\pd{u}{x}(0,t) = 1$, \quad $\displaystyle\pd{u}{x}(L,t) = \beta$
+\item[(c)] $\displaystyle\pd{u}{t} = \pdd{u}{x} + x - \beta$, \quad $u(x,0) = f(x)$, \quad $\displaystyle\pd{u}{x}(0,t) = 0$, \quad $\displaystyle\pd{u}{x}(L,t) = 0$
+\end{enumerate}
+
+\item Express the integral conservation law for the entire rod with constant thermal properties. Assume the heat flow is known at both ends. By integrating with respect to time, determine the total thermal energy in the rod.
+\begin{enumerate}
+\item[(a)] Assume there are no sources.
+\item[(b)] Assume the sources of thermal energy are constant.
+\end{enumerate}
+
+\item Derive the integral conservation law for the entire rod with constant thermal properties by integrating the heat equation \eqref{eq:1.2.10} (assuming no sources). Show the result is equivalent to \eqref{eq:1.2.4}.
+
+\item Suppose $\pd{u}{t} = \pdd{u}{x} + 4$, $u(x,0) = f(x)$, $\pd{u}{x}(0,t) = 5$, $\pd{u}{x}(L,t) = 6$. Calculate the total thermal energy in the one-dimensional rod (as a function of time).
+
+\item Suppose $\pd{u}{t} = \pdd{u}{x} + x$, $u(x,0) = f(x)$, $\pd{u}{x}(0,t) = \beta$, $\pd{u}{x}(L,t) = 7$.
+\begin{enumerate}
+\item[(a)] Calculate the total thermal energy in the one-dimensional rod (as a function of time).
+\item[(b)] From part (a), determine a value of $\beta$ for which an equilibrium exists. For this value of $\beta$, determine $\lim_{t\to\infty} u(x,t)$.
+\end{enumerate}
+
+\item Suppose that $u(x,t)$ of a chemical satisfies Fick's law \eqref{eq:1.2.13}, and the initial concentration is given $u(x,0) = f(x)$. Consider a region $0 < x < L$ in which the flow is specified at both ends $-k\pd{u}{x}(0,t) = \alpha$ and $-k\pd{u}{x}(L,t) = \beta$. Assume $\alpha$ and $\beta$ are constants.
+\begin{enumerate}
+\item[(a)] Express the conservation law for the entire region.
+\item[(b)] Determine the total amount of chemical in the region as a function of time (using the initial condition).
+\item[(c)] Under what conditions is there an equilibrium chemical concentration and what is it?
+\end{enumerate}
+
+\item Do Exercise~1.4.12 if $\alpha$ and $\beta$ are functions of time.
+
+\end{exercises}
