@@ -6,11 +6,11 @@ Reads .tex files, applies deterministic regex-based fixes for known error
 patterns, compiles with pdflatex, and repeats until 0 errors or max iterations.
 
 Usage:
-    python scripts/compile_fix.py                  # Full compile-fix loop
-    python scripts/compile_fix.py --fix-only       # Apply fixes without compiling
-    python scripts/compile_fix.py --compile-only   # Compile without fixing
-    python scripts/compile_fix.py --chapter 3      # Single chapter only
-    python scripts/compile_fix.py --max-iter 5     # Limit iterations (default: 10)
+    python scripts/compile_fix.py --book <name>                  # Full compile-fix loop
+    python scripts/compile_fix.py --book <name> --fix-only       # Apply fixes without compiling
+    python scripts/compile_fix.py --book <name> --compile-only   # Compile without fixing
+    python scripts/compile_fix.py --book <name> --chapter 3      # Single chapter only
+    python scripts/compile_fix.py --book <name> --max-iter 5     # Limit iterations (default: 10)
 """
 import argparse
 import glob
@@ -20,9 +20,19 @@ import subprocess
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-LATEX_DIR = os.path.join(ROOT, 'latex')
-BUILD_DIR = os.path.join(LATEX_DIR, 'build')
-BOOK_CONF = os.path.join(ROOT, 'book.conf')
+
+_book_parser = argparse.ArgumentParser(add_help=False)
+_book_parser.add_argument('--book', required=True, help='Book name under books/')
+_book_args, _ = _book_parser.parse_known_args()
+BOOK_NAME = _book_args.book
+
+BOOK_DIR = os.path.join(ROOT, 'books', BOOK_NAME)
+LATEX_DIR = os.path.join(BOOK_DIR, 'latex')
+BUILD_DIR = os.path.join(BOOK_DIR, 'build')
+BOOK_CONF = os.path.join(BOOK_DIR, 'book.conf')
+
+if not os.path.isdir(LATEX_DIR):
+    raise SystemExit(f'No such book: {BOOK_NAME} (expected {LATEX_DIR})')
 
 
 # ---------------------------------------------------------------------------
@@ -30,13 +40,7 @@ BOOK_CONF = os.path.join(ROOT, 'book.conf')
 # ---------------------------------------------------------------------------
 
 def get_book_name():
-    if os.path.exists(BOOK_CONF):
-        with open(BOOK_CONF) as f:
-            for line in f:
-                m = re.match(r'^BOOK_NAME\s*=\s*["\']?([^"\'#\n]+)', line)
-                if m:
-                    return m.group(1).strip()
-    return 'textbook'
+    return BOOK_NAME
 
 
 def read_tex(path):
@@ -507,6 +511,7 @@ def run_inventory(chapter=None):
 
 def main():
     parser = argparse.ArgumentParser(description='LaTeX compile-fix loop')
+    parser.add_argument('--book', required=True, help='Book name under books/')
     parser.add_argument('--fix-only', action='store_true', help='Apply fixes without compiling')
     parser.add_argument('--compile-only', action='store_true', help='Compile without fixing')
     parser.add_argument('--chapter', type=int, default=None, help='Single chapter number')

@@ -1,9 +1,19 @@
 """Quantitative inventory check: count sections, equations, figures, exercises per chapter."""
+import argparse
 import re
 import glob
 import os
 
-ROOT = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'latex')
+_parser = argparse.ArgumentParser(description=__doc__)
+_parser.add_argument('--book', required=True, help='Book name under books/')
+_args = _parser.parse_args()
+
+ROOT = os.path.join(
+    os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+    'books', _args.book, 'latex',
+)
+if not os.path.isdir(ROOT):
+    raise SystemExit(f'No such book: {_args.book} (expected {ROOT})')
 
 # Auto-detect chapters
 chapters = sorted(set(
