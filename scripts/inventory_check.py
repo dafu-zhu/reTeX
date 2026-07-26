@@ -4,9 +4,19 @@ import re
 import glob
 import os
 
+def _validate_book_name(name):
+    """Reject book names that could escape books/ via a path-traversal component."""
+    if not name or '/' in name or '\\' in name or '..' in name:
+        raise SystemExit(
+            f"Error: invalid book name '{name}' "
+            "(must be a plain directory name — no '/', '\\', or '..')"
+        )
+
+
 _parser = argparse.ArgumentParser(description=__doc__)
 _parser.add_argument('--book', required=True, help='Book name under books/')
 _args = _parser.parse_args()
+_validate_book_name(_args.book)
 
 ROOT = os.path.join(
     os.path.dirname(os.path.dirname(os.path.abspath(__file__))),

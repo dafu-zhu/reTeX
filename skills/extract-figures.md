@@ -8,11 +8,16 @@ description: "Extract all figures from a scanned PDF textbook by finding 'Figure
 Find every figure in a scanned PDF by its caption index, crop the figure region, save as PNG, and wire into LaTeX.
 
 ## Input
-- Scanned PDF path (e.g., `pdfs/scanned.pdf`)
-- LaTeX directory (e.g., `latex/`)
+- Required: `--book <BOOK_NAME>` — the book under `books/<BOOK_NAME>/`
+- Scanned PDF path (`--pdf`, default: `pdfs/scanned.pdf`)
+
+```bash
+python scripts/extract_figures.py --book <BOOK_NAME>
+python scripts/extract_figures.py --book <BOOK_NAME> --pdf <PDF_PATH>
+```
 
 ## Output
-- PNGs in `latex/figures/chNN/fig_X_Y_Z.png`
+- PNGs in `books/<BOOK_NAME>/latex/figures/chNN/fig_X_Y_Z.png`
 - Updated `.tex` files with `\includegraphics` pointing to extracted PNGs
 
 ---
@@ -49,7 +54,7 @@ pix = page.get_pixmap(matrix=pymupdf.Matrix(250/72, 250/72), clip=clip_rect)
 pix.save(output_path)
 ```
 
-Save to: `latex/figures/ch{NN}/fig_{X_Y_Z}.png`
+Save to: `books/<BOOK_NAME>/latex/figures/ch{NN}/fig_{X_Y_Z}.png`
 
 ## Step 3: Update .tex Files
 

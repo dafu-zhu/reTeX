@@ -21,18 +21,48 @@ import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-_book_parser = argparse.ArgumentParser(add_help=False)
-_book_parser.add_argument('--book', required=True, help='Book name under books/')
-_book_args, _ = _book_parser.parse_known_args()
-BOOK_NAME = _book_args.book
+# Book-dependent paths are populated by _init_book(), which runs only when
+# this module is executed as a script (see the __main__ guard at the bottom).
+# Deferring this means `import compile_fix` — e.g. from test_compile_fix.py,
+# to reuse the pure fix_* functions — never requires a --book argument or a
+# books/ directory to exist, and never calls sys.exit() as a side effect of
+# import.
+BOOK_NAME = None
+BOOK_DIR = None
+LATEX_DIR = None
+BUILD_DIR = None
+BOOK_CONF = None
 
-BOOK_DIR = os.path.join(ROOT, 'books', BOOK_NAME)
-LATEX_DIR = os.path.join(BOOK_DIR, 'latex')
-BUILD_DIR = os.path.join(BOOK_DIR, 'build')
-BOOK_CONF = os.path.join(BOOK_DIR, 'book.conf')
 
-if not os.path.isdir(LATEX_DIR):
-    raise SystemExit(f'No such book: {BOOK_NAME} (expected {LATEX_DIR})')
+def _validate_book_name(name):
+    """Reject book names that could escape books/ via a path-traversal component."""
+    if not name or '/' in name or '\\' in name or '..' in name:
+        raise SystemExit(
+            f"Error: invalid book name '{name}' "
+            "(must be a plain directory name — no '/', '\\', or '..')"
+        )
+
+
+def _init_book():
+    """Parse --book from sys.argv and populate the module-level path globals.
+
+    Only called when this module runs as __main__ — never at import time.
+    """
+    global BOOK_NAME, BOOK_DIR, LATEX_DIR, BUILD_DIR, BOOK_CONF
+
+    _book_parser = argparse.ArgumentParser(add_help=False)
+    _book_parser.add_argument('--book', required=True, help='Book name under books/')
+    _book_args, _ = _book_parser.parse_known_args()
+    _validate_book_name(_book_args.book)
+    BOOK_NAME = _book_args.book
+
+    BOOK_DIR = os.path.join(ROOT, 'books', BOOK_NAME)
+    LATEX_DIR = os.path.join(BOOK_DIR, 'latex')
+    BUILD_DIR = os.path.join(BOOK_DIR, 'build')
+    BOOK_CONF = os.path.join(BOOK_DIR, 'book.conf')
+
+    if not os.path.isdir(LATEX_DIR):
+        raise SystemExit(f'No such book: {BOOK_NAME} (expected {LATEX_DIR})')
 
 
 # ---------------------------------------------------------------------------
@@ -605,4 +635,5 @@ def main():
 
 
 if __name__ == '__main__':
+    _init_book()
     main()

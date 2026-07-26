@@ -31,6 +31,11 @@ def test(name, fix_fn, input_str, expected, expected_count=None):
             print(f'    Expected count: {expected_count}, got: {count}')
     return ok
 
+# pytest's default python_functions pattern ("test*") matches this bare
+# helper too, and pytest would try to collect it as a test item and inject
+# its positional args as fixtures. It is a helper, not a test — exclude it.
+test.__test__ = False
+
 passed = 0
 failed = 0
 
@@ -41,102 +46,123 @@ def run(name, fix_fn, inp, exp, cnt=None):
     else:
         failed += 1
 
-print('Testing fix patterns...\n')
 
-# boxed environment
-run('boxed env basic',
-    fix_boxed_environment,
-    r'\begin{boxed}x^2 + y^2\end{boxed}',
-    r'\boxed{x^2 + y^2}', 1)
+def main():
+    """Drive all checks and return a process exit code.
 
-run('boxed env no match',
-    fix_boxed_environment,
-    r'\boxed{x}',
-    r'\boxed{x}', 0)
+    Guarded by `if __name__ == "__main__":` below so that importing this
+    module (as pytest does during collection, since it matches test_*.py)
+    never runs the checks or calls sys.exit() as a side effect — it only
+    defines functions.
+    """
+    global passed, failed
+    passed = 0
+    failed = 0
 
-# defbox in math
-run('defbox basic',
-    fix_defbox_in_math,
-    r'\begin{defbox}E[X] = \mu\end{defbox}',
-    r'\boxed{E[X] = \mu}', 1)
+    print('Testing fix patterns...\n')
 
-# double math boxed
-run('double math $',
-    fix_double_math_boxed,
-    r'\boxed{$a+b$}',
-    r'\boxed{a+b}', 1)
+    _run_checks()
 
-# boxed display math
-run('boxed \\[\\]',
-    fix_boxed_display_math,
-    r'\boxed{\[a+b\]}',
-    r'\[\boxed{a+b}\]', 1)
+    print(f'\n{passed} passed, {failed} failed')
+    return 1 if failed else 0
 
-# missing partial
-run('missing \\partial',
-    fix_missing_partial_backslash,
-    r'\frac{partial}{partial x}',
-    r'\frac{\partial}{\partial x}', 1)
 
-run('correct \\partial unchanged',
-    fix_missing_partial_backslash,
-    r'\frac{\partial}{\partial x}',
-    r'\frac{\partial}{\partial x}', 0)
+def _run_checks():
+    # boxed environment
+    run('boxed env basic',
+        fix_boxed_environment,
+        r'\begin{boxed}x^2 + y^2\end{boxed}',
+        r'\boxed{x^2 + y^2}', 1)
 
-# duplicate QED
-run('\\qed in proof',
-    fix_duplicate_qed,
-    '\\begin{proof}\nSome proof.\n\\qed\n\\end{proof}',
-    '\\begin{proof}\nSome proof.\n\\end{proof}', 1)
+    run('boxed env no match',
+        fix_boxed_environment,
+        r'\boxed{x}',
+        r'\boxed{x}', 0)
 
-run('\\qedhere preserved',
-    fix_duplicate_qed,
-    '\\begin{proof}\nSome proof.\n\\qedhere\n\\end{proof}',
-    '\\begin{proof}\nSome proof.\n\\qedhere\n\\end{proof}', 0)
+    # defbox in math
+    run('defbox basic',
+        fix_defbox_in_math,
+        r'\begin{defbox}E[X] = \mu\end{defbox}',
+        r'\boxed{E[X] = \mu}', 1)
 
-run('\\hfill$\\blacksquare$ removed',
-    fix_duplicate_qed,
-    '\\begin{proof}\nDone.\n\\hfill$\\blacksquare$\n\\end{proof}',
-    '\\begin{proof}\nDone.\n\\end{proof}', 1)
+    # double math boxed
+    run('double math $',
+        fix_double_math_boxed,
+        r'\boxed{$a+b$}',
+        r'\boxed{a+b}', 1)
 
-# undefined control sequences
-run('\\textup → \\textrm',
-    fix_undefined_control_sequences,
-    r'\textup{hello}',
-    r'\textrm{hello}', 1)
+    # boxed display math
+    run('boxed \\[\\]',
+        fix_boxed_display_math,
+        r'\boxed{\[a+b\]}',
+        r'\[\boxed{a+b}\]', 1)
 
-run('\\bold → \\mathbf',
-    fix_undefined_control_sequences,
-    r'\bold{x}',
-    r'\mathbf{x}', 1)
+    # missing partial
+    run('missing \\partial',
+        fix_missing_partial_backslash,
+        r'\frac{partial}{partial x}',
+        r'\frac{\partial}{\partial x}', 1)
 
-# double superscript
-run('double superscript',
-    fix_double_superscript,
-    'x^2^3',
-    'x^{2^{3}}', 1)
+    run('correct \\partial unchanged',
+        fix_missing_partial_backslash,
+        r'\frac{\partial}{\partial x}',
+        r'\frac{\partial}{\partial x}', 0)
 
-# double subscript
-run('double subscript',
-    fix_double_subscript,
-    'a_i_j',
-    'a_{i_{j}}', 1)
+    # duplicate QED
+    run('\\qed in proof',
+        fix_duplicate_qed,
+        '\\begin{proof}\nSome proof.\n\\qed\n\\end{proof}',
+        '\\begin{proof}\nSome proof.\n\\end{proof}', 1)
 
-# file paths should NOT be touched
-run('subscript in file path preserved',
-    fix_double_subscript,
-    r'\includegraphics[width=0.8\textwidth]{figures/ch01/fig_1_2_1.png}',
-    r'\includegraphics[width=0.8\textwidth]{figures/ch01/fig_1_2_1.png}', 0)
+    run('\\qedhere preserved',
+        fix_duplicate_qed,
+        '\\begin{proof}\nSome proof.\n\\qedhere\n\\end{proof}',
+        '\\begin{proof}\nSome proof.\n\\qedhere\n\\end{proof}', 0)
 
-run('subscript in label preserved',
-    fix_double_subscript,
-    r'\label{fig:1_2_3}',
-    r'\label{fig:1_2_3}', 0)
+    run('\\hfill$\\blacksquare$ removed',
+        fix_duplicate_qed,
+        '\\begin{proof}\nDone.\n\\hfill$\\blacksquare$\n\\end{proof}',
+        '\\begin{proof}\nDone.\n\\end{proof}', 1)
 
-run('superscript in file path preserved',
-    fix_double_superscript,
-    r'\input{ch01/sec01_2}',
-    r'\input{ch01/sec01_2}', 0)
+    # undefined control sequences
+    run('\\textup → \\textrm',
+        fix_undefined_control_sequences,
+        r'\textup{hello}',
+        r'\textrm{hello}', 1)
 
-print(f'\n{passed} passed, {failed} failed')
-sys.exit(1 if failed else 0)
+    run('\\bold → \\mathbf',
+        fix_undefined_control_sequences,
+        r'\bold{x}',
+        r'\mathbf{x}', 1)
+
+    # double superscript
+    run('double superscript',
+        fix_double_superscript,
+        'x^2^3',
+        'x^{2^{3}}', 1)
+
+    # double subscript
+    run('double subscript',
+        fix_double_subscript,
+        'a_i_j',
+        'a_{i_{j}}', 1)
+
+    # file paths should NOT be touched
+    run('subscript in file path preserved',
+        fix_double_subscript,
+        r'\includegraphics[width=0.8\textwidth]{figures/ch01/fig_1_2_1.png}',
+        r'\includegraphics[width=0.8\textwidth]{figures/ch01/fig_1_2_1.png}', 0)
+
+    run('subscript in label preserved',
+        fix_double_subscript,
+        r'\label{fig:1_2_3}',
+        r'\label{fig:1_2_3}', 0)
+
+    run('superscript in file path preserved',
+        fix_double_superscript,
+        r'\input{ch01/sec01_2}',
+        r'\input{ch01/sec01_2}', 0)
+
+
+if __name__ == "__main__":
+    sys.exit(main())

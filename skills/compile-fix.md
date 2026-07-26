@@ -12,34 +12,34 @@ Compile a LaTeX project, diagnose errors, fix them programmatically, and recompi
 **For deterministic fixes, use the Python script directly — no AI needed:**
 
 ```bash
-python scripts/compile_fix.py                    # Full compile-fix loop
-python scripts/compile_fix.py --chapter 3        # Single chapter
-python scripts/compile_fix.py --fix-only         # Apply fixes without compiling
+python scripts/compile_fix.py --book <BOOK_NAME>                  # Full compile-fix loop
+python scripts/compile_fix.py --book <BOOK_NAME> --chapter 3      # Single chapter
+python scripts/compile_fix.py --book <BOOK_NAME> --fix-only       # Apply fixes without compiling
 ```
 
 The script handles all the patterns below automatically. Only invoke this skill via Claude Code when the Python script reports errors it can't fix (novel patterns requiring judgment).
 
 ## Input
-- Optional: path to latex directory (default: `latex/`)
+- Required: `--book <BOOK_NAME>` — the book under `books/<BOOK_NAME>/`
 
 ## Output
-- Compiled PDF at `latex/<book_name>.pdf`
+- Compiled PDF at `books/<BOOK_NAME>/<BOOK_NAME>.pdf`
 - Inventory report (sections, equations, figures, exercises)
 
 ---
 
 ## Build Convention
 
-All auxiliary files go in `latex/build/`. The `latex/` root stays clean.
+All auxiliary files go in `books/<BOOK_NAME>/build/`. The `books/<BOOK_NAME>/latex/` tree stays clean.
 
 ```bash
-cd latex/
-export TEXINPUTS="$(pwd)//:build//:"
-mkdir -p build
-pdflatex -interaction=nonstopmode -file-line-error -output-directory=build main.tex
+cd books/<BOOK_NAME>/latex/
+export TEXINPUTS="$(pwd)//:../build//:"
+mkdir -p ../build
+pdflatex -interaction=nonstopmode -file-line-error -output-directory=../build main.tex
 ```
 
-Read `BOOK_NAME` from `book.conf`. Copy `build/main.pdf` → `latex/<BOOK_NAME>.pdf`.
+Read `BOOK_NAME` from `books/<BOOK_NAME>/book.conf`. Copy `build/main.pdf` → `books/<BOOK_NAME>/<BOOK_NAME>.pdf`.
 
 ---
 

@@ -35,6 +35,14 @@ if [ -z "$1" ]; then
 fi
 
 BOOK_NAME="$1"
+
+case "$BOOK_NAME" in
+    */*|*\\*|*..*|"")
+        echo "Error: invalid book name '$BOOK_NAME' (must be a plain directory name — no '/', '\\', or '..')"
+        exit 1
+        ;;
+esac
+
 BOOK_DIR="$BOOKS_DIR/$BOOK_NAME"
 LATEX_DIR="$BOOK_DIR/latex"
 BUILD_DIR="$BOOK_DIR/build"

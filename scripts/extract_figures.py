@@ -15,11 +15,22 @@ except ImportError:
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+
+def _validate_book_name(name):
+    """Reject book names that could escape books/ via a path-traversal component."""
+    if not name or '/' in name or '\\' in name or '..' in name:
+        raise SystemExit(
+            f"Error: invalid book name '{name}' "
+            "(must be a plain directory name — no '/', '\\', or '..')"
+        )
+
+
 _parser = argparse.ArgumentParser(description=__doc__)
 _parser.add_argument('--book', required=True, help='Book name under books/')
 _parser.add_argument('--pdf', default=os.path.join(ROOT, 'pdfs', 'scanned.pdf'),
                      help='Source scanned PDF (default: pdfs/scanned.pdf)')
 _args = _parser.parse_args()
+_validate_book_name(_args.book)
 
 LATEX_DIR = os.path.join(ROOT, 'books', _args.book, 'latex')
 FIGURES_DIR = os.path.join(LATEX_DIR, 'figures')
