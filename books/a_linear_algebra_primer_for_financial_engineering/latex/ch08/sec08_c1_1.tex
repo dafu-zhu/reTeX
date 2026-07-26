@@ -1,0 +1,61 @@
+% PAGES: 243-243
+% First chunk of Chapter 8. Nothing open from Chapter 7 (sec07_c4_3.tex ended
+% cleanly with the last exercise of ch07's exercise list; PDF page 243 /
+% folio 227 opens Chapter 8 fresh). The orchestrator writes chNN.tex with the
+% \chapter{} and \label{} commands itself (matching the ch01-ch06 pattern,
+% e.g. ch06/sec06_c1_1.tex), so this file does not repeat them -- ch07 is the
+% one outlier that duplicated \chapter{} in both files; not reproduced here.
+
+\noindent Ordinary least squares (OLS).
+\medskip
+
+\noindent Least squares for implied volatility computation.
+\medskip
+
+\noindent Linear regression: ordinary least squares for time series data.
+\medskip
+
+\noindent Ordinary least squares for random variables.
+\medskip
+
+\noindent The intuition behind ordinary least squares for time series data.
+\medskip
+
+\section{Ordinary least squares}
+
+Let $A$ be an $m \times n$ matrix with more rows than columns, i.e., with $m > n$, and
+assume that the column vectors of the matrix $A$ are linearly independent. Let $y$ be
+a column vector of size $m$.
+
+% Verified at 600 dpi: throughout Section 8.1, A, x, y (and later PVF, disc,
+% vega, etc.) are set in plain italic, NOT bold -- unlike the \bfX-style
+% vectors/matrices used in earlier chapters. Reproduced as printed.
+A solution $x \in \R^n$ to the linear system $Ax = y$ exists if and only if the vector
+$y$ is a linear combination of the column vectors of $A$, which is rarely the case in
+practice.
+
+The ordinary least squares method (OLS) provides an alternative to solving $Ax = y$
+exactly, and requires finding a vector $x \in \R^n$ with smallest approximation error
+$y - Ax$, i.e., such that $||y - Ax||$ is minimal, where $||\cdot||$ denotes the
+Euclidean norm; see (5.8). This can be stated formally as follows:
+\begin{equation}
+\text{Given } y \in \R^m, \text{ find } x \in \R^n \text{ such that } ||y - Ax|| \text{
+is minimal.}
+\end{equation}
+
+Note that we will also refer to (8.1) as solving the least squares problem
+\begin{equation}
+y \;\approx\; Ax.
+\end{equation}
+
+Problem (8.1) is equivalent to finding the global minimum point of the function
+$f : \R^n \to \R$ given by
+\begin{equation}
+f(x) \;=\; ||y - Ax||^2.
+\end{equation}
+
+Recall from (5.8) that $||w||^2 = (w,w) = w^tw$ for any vector $w$. Then,
+\begin{align}
+||y-Ax||^2 \;&=\; (y-Ax)^t(y-Ax) \;=\; (y^t - x^tA^t)(y-Ax) \notag\\
+&=\; y^ty \;-\; x^tA^ty \;-\; y^tAx \;+\; x^tA^tAx.
+\end{align}

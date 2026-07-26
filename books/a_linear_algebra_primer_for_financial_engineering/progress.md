@@ -115,13 +115,13 @@ offset.
 
 ## Chapter 8 — Ordinary least squares (OLS). Linear regression. (PDF 243–266)
 
-- [ ] 8.1 Ordinary least squares
-- [ ] 8.1.1 Least squares for implied volatility computation
-- [ ] 8.2 Linear regression: ordinary least squares for time series data
-- [ ] 8.3 Ordinary least squares for random variables
-- [ ] 8.4 The intuition behind ordinary least squares for time series data
-- [ ] 8.5 References
-- [ ] 8.6 Exercises
+- [x] 8.1 Ordinary least squares
+- [x] 8.1.1 Least squares for implied volatility computation
+- [x] 8.2 Linear regression: ordinary least squares for time series data
+- [x] 8.3 Ordinary least squares for random variables
+- [x] 8.4 The intuition behind ordinary least squares for time series data
+- [x] 8.5 References
+- [x] 8.6 Exercises
 
 ## Chapter 9 — Efficient portfolios. Value at Risk. (PDF 267–302)
 

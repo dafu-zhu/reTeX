@@ -1,0 +1,141 @@
+% PAGES: 257-258
+
+Also, let $\widehat\sigma_{Y,\bfx}$ be the sample covariance vector of $Y$ and $X_1,
+\ldots, X_n$ given by
+\begin{equation}
+\widehat\sigma_{Y,\bfx} \;=\; \begin{pmatrix} \widehat{\cov}(Y,X_1) \\ \vdots \\
+\widehat{\cov}(Y,X_n) \end{pmatrix}.
+\end{equation}
+
+Let $\overline{T}_Y$ and $\overline{T}_{X_k}$ be the column vectors of the time series
+data for the random variables $Y$ and $X_k$ normalized to mean equal to $0$, for
+$k=1:n$, respectively, i.e.,
+\begin{align}
+\overline{T}_Y &= (Y(t_i)-\widehat\mu_Y)_{i=1:N} \;=\; T_Y - \widehat\mu_Y\bfone;\\
+\overline{T}_{X_k} &= (X_k(t_i)-\widehat\mu_{X_k})_{i=1:N} \;=\; T_{X_k} -
+\widehat\mu_{X_k}\bfone,
+\end{align}
+and let
+\begin{equation}
+\overline{T}_{\bfx} \;=\; col\left(\overline{T}_{X_k}\right)_{k=1:n}.
+\end{equation}
+
+\begin{lemma}
+Let $Y$ and $X_1, X_2, \ldots, X_n$ be random variables given by the $N\times1$ time
+series data vectors $T_Y$ and $T_{X_1}, T_{X_2}, \ldots, T_{X_n}$, respectively. Let
+$T_{\bfx} = col(T_{X_k})_{k=1:n}$. Assume that the sample covariance matrix
+$\widehat\Sigma_{\bfx}$ corresponding to the time series data for $X_1, X_2, \ldots,
+X_n$ is nonsingular.
+
+The solution $a$ and $\bfb = (b_i)_{i=1:n}$ to the linear regression problem
+\begin{align}
+T_Y &\approx (\bfone\ \ T_{X_1}\ \ \ldots\ \ T_{X_n})\begin{pmatrix} a \\ \bfb
+\end{pmatrix}\\
+&= a\bfone + b_1T_{X_1} + b_2T_{X_2} + \ldots + b_nT_{X_n}, \notag
+\end{align}
+where $\bfone$ is the $N\times1$ column vector with all entries equal to $1$, is
+\begin{align}
+\bfb &= \left(\overline{T}_{\bfx}^t\overline{T}_{\bfx}\right)^{-1}\overline{T}_{\bfx}^t
+\overline{T}_Y;\\
+a &= \widehat\mu_Y - \widehat\mu_{\bfx}^t\left(\overline{T}_{\bfx}^t
+\overline{T}_{\bfx}\right)^{-1}\overline{T}_{\bfx}^t\overline{T}_Y,
+\end{align}
+where $\overline{T}_Y$ and $\overline{T}_{\bfx}$ are given by (8.74) and (8.76),
+respectively.
+
+Moreover, (8.78) and (8.79) can be written as
+\begin{align}
+\bfb &= \left(\widehat\Sigma_{\bfx}\right)^{-1}\widehat\sigma_{Y,\bfx}.\\
+a &= \widehat\mu_Y - \widehat\mu_{\bfx}^t\left(\widehat\Sigma_{\bfx}\right)^{-1}
+\widehat\sigma_{Y,\bfx},
+\end{align}
+where $\widehat\mu_Y$, $\widehat\mu_{\bfx}$, and $\widehat\sigma_{Y,\bfx}$ are given by
+(8.70), (8.72), and (8.73), respectively, and $\widehat\Sigma_{\bfx}$ is the sample
+covariance matrix given by (7.42).
+\end{lemma}
+
+The results of Lemma 8.2 connect the linear regression ordinary least squares solution
+for time series data to the ordinary least squares solution for random variables from
+section 8.3; see (8.57) and (8.58).
+
+\begin{proof}
+% The "Since ..." clause below is printed with an overline, $\overline{T}_\bfx$, even
+% though the equation (8.82) it introduces uses the plain (non-overlined) $T_\bfx =
+% col(T_{X_k})_{k=1:n}$ notation for the ORIGINAL, non-mean-centered data -- matching
+% (8.77) and the $T_\bfx$ notation from section 8.4's opening. This mismatch is exactly
+% as printed on the page (verified at 1200 dpi); transcribed as-is per the fidelity
+% rule rather than silently "corrected."
+Since $\overline{T}_{\bfx} = col\left(\overline{T}_{X_k}\right)_{k=1:n}$, the ordinary
+least squares problem (8.77) can also be written as follows:
+\begin{equation}
+T_Y \;\approx\; (\bfone\ \ T_{\bfx})\begin{pmatrix} a \\ \bfb \end{pmatrix}.
+\end{equation}
+
+Recall from section 8.1 that the solution to the least squares problem $y\approx Ax$
+requires solving the linear system $A^ty = A^tAx$. Problem (8.82) corresponds to
+\[
+y \approx Ax \quad \text{with} \quad y = T_Y,\ A = (\bfone\ \ T_{\bfx}),\ x =
+\begin{pmatrix} a \\ \bfb \end{pmatrix},
+\]
+and therefore $A^ty = A^tAx$ can be written as
+\begin{equation}
+\begin{pmatrix} \bfone^t \\ T_{\bfx}^t \end{pmatrix}T_Y \;=\; \begin{pmatrix} \bfone^t \\
+T_{\bfx}^t \end{pmatrix}(\bfone\ \ T_{\bfx})\begin{pmatrix} a \\ \bfb \end{pmatrix}.
+\end{equation}
+
+By looking only at the first row of (8.83), we obtain that
+\begin{align}
+\bfone^tT_Y &= \bfone^t(\bfone\ \ T_{\bfx})\begin{pmatrix} a \\ \bfb \end{pmatrix} \;=\;
+\bfone^t(\bfone a + T_{\bfx}\bfb) \notag\\
+&= \bfone^t\bfone a + \bfone^tT_{\bfx}\bfb.
+\end{align}
+
+From (8.70), we find that
+\begin{equation}
+\bfone^tT_Y \;=\; N\widehat\mu_Y.
+\end{equation}
+
+Also, note that
+\begin{equation}
+\bfone^t\bfone \;=\; \sum_{i=1}^N 1 \;=\; N.
+\end{equation}
+
+Recall that $T_{\bfx} = col(T_{X_k})_{k=1:n}$. From (8.71), it follows that
+$\bfone^tT_{X_k} = N\widehat\mu_{X_k}$ for all $k=1:n$, and therefore $\bfone^tT_{\bfx}$
+is the following row vector:
+\begin{align}
+\bfone^tT_{\bfx} &= \left(\bfone^tT_{X_1}\ \ \bfone^tT_{X_2}\ \ \ldots\ \
+\bfone^tT_{X_n}\right) \notag\\
+&= \left(N\widehat\mu_{X_1}\ \ N\widehat\mu_{X_2}\ \ \ldots\ \ N\widehat\mu_{X_n}\right)
+\notag\\
+&= N\left(\widehat\mu_{X_1}\ \ \widehat\mu_{X_2}\ \ \ldots\ \ \widehat\mu_{X_n}\right)
+\notag\\
+&= N\widehat\mu_{\bfx}^t,
+\end{align}
+where $\widehat\mu_{\bfx}^t = \left(\widehat\mu_{X_1}\ \ \widehat\mu_{X_2}\ \ \ldots\ \
+\widehat\mu_{X_n}\right)$; see (8.72).
+
+From (8.85), (8.86), and (8.87), we obtain that (8.84) can be written as
+\begin{equation}
+N\widehat\mu_Y \;=\; Na + N\widehat\mu_{\bfx}^t\bfb.
+\end{equation}
+
+By solving (8.88) for $a$, we obtain that
+\begin{equation}
+a \;=\; \widehat\mu_Y - \widehat\mu_{\bfx}^t\bfb.
+\end{equation}
+
+Note that the ordinary least squares problem (8.82) can be written as
+\begin{equation}
+T_Y \;\approx\; (\bfone\ \ T_{\bfx})\begin{pmatrix} a \\ \bfb \end{pmatrix} \;=\;
+a\bfone + T_{\bfx}\bfb.
+\end{equation}
+
+By substituting the expression (8.89) for $a$ into (8.90), we find that
+\begin{align}
+T_Y &\approx a\bfone + T_{\bfx}\bfb \notag\\
+&\iff T_Y \approx \widehat\mu_Y\bfone - \left(\widehat\mu_{\bfx}^t\bfb\right)\bfone +
+T_{\bfx}\bfb \notag\\
+&\iff T_Y - \widehat\mu_Y\bfone \approx T_{\bfx}\bfb -
+\left(\widehat\mu_{\bfx}^t\bfb\right)\bfone.
+\end{align}

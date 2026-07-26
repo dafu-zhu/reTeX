@@ -1,0 +1,80 @@
+% PAGES: 252-252
+% Opens the "Answer:" run-in block (\begin{answerx}) at the end of this file;
+% it is a genuine environment (unlike the manual "Example:" label just above
+% it, per the book's Example:/Answer: convention -- see sec04_c2_1.tex) and
+% is closed with \hfill$\square$ inside \end{answerx} in sec08_c1_11.tex
+% (PDF page 253), the closing square printed there. check_env_balance.py can
+% track this pair normally since answerx is a real \newenvironment.
+
+\begin{equation}
+T_{X_k} \;=\; (X_k(t_i))_{i=1:N}, \quad \forall\, k = 1:n,
+\end{equation}
+and denote by
+\begin{equation}
+T_{\bfx} \;=\; col(T_{X_k})_{k=1:n}
+\end{equation}
+% "col" is set as plain italic math text, matching the existing convention
+% for this column-block matrix-assembly notation (cf. ch04/sec04_c2_2.tex:
+% "$V = col(v_k)_{k=1:n}$"), not wrapped in \operatorname or \text{}.
+the $N \times n$ matrix of time series data for $X_1, X_2, \ldots, X_n$. Denote by
+$\bfb = (b_i)_{i=1:n}$ the $n \times 1$ coefficients vector, and by $\bfone$ the column
+vector of size $N$ with all entries equal to 1.
+
+Then, (8.50) can be written as follows:
+\begin{equation}
+T_Y \;\approx\; \begin{pmatrix} \bfone & T_{X_1} & \dots & T_{X_n} \end{pmatrix}
+\begin{pmatrix} a \\ \bfb \end{pmatrix}
+\;=\;
+\begin{pmatrix} \bfone & T_{\bfx} \end{pmatrix}
+\begin{pmatrix} a \\ \bfb \end{pmatrix}.
+\end{equation}
+
+Note that (8.54) is a least square problem of the form
+\begin{equation}
+y \;\approx\; Ax \quad \text{with} \quad y = T_Y; \quad A = \begin{pmatrix} \bfone &
+T_{\bfx} \end{pmatrix} \quad x = \begin{pmatrix} a \\ \bfb \end{pmatrix}.
+\end{equation}
+
+Since the sample covariance matrix corresponding to the time series data for $X_1,
+X_2, \ldots, X_n$ is nonsingular, it follows from Theorem 7.2 that the columns of
+$T_{\bfx}$ and the vector $\bfone$ are linearly independent. Then, the least squares
+problem (8.55) has a unique solution $x = (A^tA)^{-1}A^ty$, see (8.16), and therefore
+\begin{equation}
+\begin{pmatrix} a \\ \bfb \end{pmatrix} \;=\; (A^tA)^{-1}A^tT_Y, \quad \text{where}
+\quad A = \begin{pmatrix} \bfone & T_{\bfx} \end{pmatrix}.
+\end{equation}
+
+\par\medskip\noindent\textit{Example:}\ For 15 consecutive trading days, the yields of
+the 2-year, 3-year, 5-year, and 10-year treasury bonds were, respectively:
+\begin{center}
+\begin{tabular}{cccc}
+2-year & 3-year & 5-year & 10-year \\
+4.69 & 4.58 & 4.57 & 4.63 \\
+4.81 & 4.71 & 4.69 & 4.73 \\
+4.81 & 4.72 & 4.70 & 4.74 \\
+4.79 & 4.78 & 4.77 & 4.81 \\
+4.79 & 4.77 & 4.77 & 4.80 \\
+4.83 & 4.75 & 4.73 & 4.79 \\
+4.81 & 4.71 & 4.72 & 4.76 \\
+4.81 & 4.72 & 4.74 & 4.77 \\
+4.83 & 4.76 & 4.77 & 4.80 \\
+4.81 & 4.73 & 4.75 & 4.77 \\
+4.82 & 4.75 & 4.77 & 4.80 \\
+4.82 & 4.75 & 4.76 & 4.80 \\
+4.80 & 4.73 & 4.75 & 4.78 \\
+4.78 & 4.71 & 4.72 & 4.73 \\
+4.79 & 4.71 & 4.71 & 4.73 \\
+\end{tabular}
+\end{center}
+
+Find a linear regression for the yield of the 3-year bond in terms of the yields of the
+2-year, 5-year, and 10-year bonds.
+
+\begin{answerx}
+Denote by $T_2$, $T_3$, $T_5$, and $T_{10}$ the $15 \times 1$ time series column
+vectors for the 2-year, 3-year, 5-year, and 10-year yields from the data above,
+respectively. We are looking for coefficients $a, b_1, b_2, b_3$ corresponding to the
+solution to the ordinary least squares problem
+\[
+T_3 \;\approx\; a\bfone \;+\; b_1T_2 \;+\; b_2T_5 \;+\; b_3T_{10},
+\]

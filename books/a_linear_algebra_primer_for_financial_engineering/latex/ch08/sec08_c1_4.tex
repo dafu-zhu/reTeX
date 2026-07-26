@@ -1,0 +1,78 @@
+% PAGES: 246-246
+
+respectively, where $N(z)$ is the cumulative distribution of the standard normal
+variable, i.e.,
+\[
+N(z) \;=\; \frac{1}{\sqrt{2\pi}} \int_{-\infty}^{z} e^{-\frac{x^2}{2}} \, dx,
+\]
+and
+\begin{equation}
+d_1 \;=\; \frac{\ln\left(\frac{S}{K}\right) + \left(r-q+\frac{\sigma^2}{2}\right)T}
+{\sigma\sqrt{T}}; \quad d_2 \;=\; d_1 - \sigma\sqrt{T}.
+\end{equation}
+
+For any plain vanilla European option, the option price $C_m$ or $P_m$, the maturity
+$T$, the strike $K$, and the spot price $S$ of the underlying asset are known. However,
+a continuous dividend yield $q$ for the underlying asset is very rarely quoted in the
+markets and the interest rate $r$ could be chosen from several different discount
+curves. As seen below,\footnote{This method was implemented in 2010 in Bloomberg
+terminals, providing a tenfold improvement in the accuracy of implied volatility
+calculations over the prior method.} the least squares method and Put--Call parity can
+be used to overcome these issues and find the implied volatility using Newton's method.
+
+As an example of how implied volatilities are computed in practice, consider the
+snapshot from Table 8.2 of the mid prices\footnote{The mid price of an option is the
+average of the bid price and ask price of the option.} on March 9, 2012, of the S\&P
+500 options (ticker symbol SPX)\footnote{More information on SPX options can be found
+on the Chicago Board Options Exchange (CBOE); see
+http://www.cboe.com/products/indexopts/spx\_spec.aspx} maturing on December 22, 2012.
+These options are European options and therefore we can use the Black--Scholes
+framework. Although not needed for this method, the corresponding spot price of the
+index was $1,370$.
+
+\begin{table}[H]
+\centering
+\caption{Dec 2012 SPX option prices on 3/9/2012}
+\begin{tabular}{|c|c||c|c|}
+\hline
+Call Strike & Price & Put Strike & Price \\
+\hline
+C1175 & 225.40 & P1175 & 46.60 \\
+\hline
+C1200 & 205.55 & P1200 & 51.55 \\
+\hline
+C1225 & 186.20 & P1225 & 57.15 \\
+\hline
+C1250 & 167.50 & P1250 & 63.30 \\
+\hline
+C1275 & 149.15 & P1275 & 70.15 \\
+\hline
+C1300 & 131.70 & P1300 & 77.70 \\
+\hline
+C1325 & 115.25 & P1325 & 86.20 \\
+\hline
+C1350 & 99.55 & P1350 & 95.30 \\
+\hline
+C1375 & 84.90 & P1375 & 105.30 \\
+\hline
+C1400 & 71.10 & P1400 & 116.55 \\
+\hline
+C1425 & 58.70 & P1425 & 129.00 \\
+\hline
+C1450 & 47.25 & P1450 & 143.20 \\
+\hline
+C1500 & 29.25 & P1500 & 173.95 \\
+\hline
+C1550 & 15.80 & P1550 & 210.80 \\
+\hline
+C1575 & 11.10 & P1575 & 230.90 \\
+\hline
+C1600 & 7.90 & P1600 & 252.40 \\
+\hline
+\end{tabular}
+\end{table}
+
+Recall from Section 10.3 that the Put--Call parity states that taking a long position
+in a European call option and a short position in a European put option with the same
+strike $K$ and maturity $T$ is equivalent to taking a long position in a forward
+contract with delivery price $K$ and maturity $T$, and therefore the following

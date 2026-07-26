@@ -1,0 +1,66 @@
+% PAGES: 245-245
+
+Since the matrix $A^tA$ is symmetric positive definite, we obtain that the Hessian
+$D^2f(x_0)$ is symmetric positive definite, and therefore $x_0$ is a minimum point for
+the function $f(x)$. We conclude that the point $x_0$ is a global minimum point for
+$f(x)$, since $x_0$ is the only critical point of $f(x)$.
+
+Thus, the solution to the least squares problem (8.1) is given by (8.15), i.e.,
+\begin{equation}
+x \;=\; (A^tA)^{-1}A^ty.
+\end{equation}
+
+Note that the numerical value of $x$ from (8.16) is computed by solving the linear
+system $(A^tA)x = A^ty$ using the Cholesky solver from Table 6.2, since $A^tA$ is a
+symmetric positive definite matrix; see the pseudocode from Table 8.1 for details.
+
+\begin{table}[H]
+\centering
+\caption{Least squares implementation}
+\fbox{\begin{minipage}{0.85\linewidth}
+Function Call:\\
+$x = \text{least\_squares}(A,y)$
+\bigskip
+
+Input:\\
+$A = m \times n$ matrix; $m > n$\\
+$y = $ column vector of size $m$
+\bigskip
+
+Output:\\
+$x = $ solution to $\min ||y-Ax||$
+\bigskip
+
+$x = \text{linear\_solve\_cholesky}(A^tA,A^ty);$
+\end{minipage}}
+\end{table}
+
+\subsection{Least squares for implied volatility computation}
+
+Consider a European call or put option\footnote{See Section 10.3 for a brief overview
+of European options.} on an underlying asset whose price is assumed to follow a
+lognormal model. The implied volatility of the option is the unique value of the
+volatility parameter $\sigma$ from the lognormal model that makes the Black--Scholes
+value of the option equal to the market price of the option.
+
+More precisely, if $C_m$ and $P_m$ are the market prices of a European call option and
+of a European put option, respectively, with strike $K$ and maturity $T$ on an
+underlying asset with spot price $S$ paying dividends continuously at the rate $q$, and
+assuming that interest rates are constant and equal to $r$, the implied volatility
+$\sigma_{imp}$ corresponding to the price $C_m$ is, by definition, the solution
+$\sigma = \sigma_{imp}$ to
+\begin{equation}
+C_{BS}(S,K,T,\sigma,r,q) \;=\; C_m;
+\end{equation}
+the implied volatility $\sigma_{imp}$ corresponding to price $P_m$ is the solution
+$\sigma = \sigma_{imp}$ to
+\begin{equation}
+P_{BS}(S,K,T,\sigma,r,q) \;=\; P_m.
+\end{equation}
+
+Here, $C_{BS}(S,K,T,\sigma,r,q)$ and $P_{BS}(S,K,T,\sigma,r,q)$ are the Black--Scholes
+values of a call option and of a put option given by (10.93--10.96), i.e.,
+\begin{align}
+C_{BS}(S,K,T,\sigma,r,q) &= Se^{-qT}N(d_1) - Ke^{-rT}N(d_2); \\
+P_{BS}(S,K,T,\sigma,r,q) &= Ke^{-rT}N(-d_2) - Se^{-qT}N(-d_1),
+\end{align}

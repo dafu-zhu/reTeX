@@ -1,0 +1,60 @@
+% PAGES: 248-248
+
+Recall from (8.25) that $PVF = Fe^{-rT}$. Since $F = Se^{(r-q)T}$, it follows that
+\begin{align}
+PVF \;&=\; Fe^{-rT} \;=\; Se^{(r-q)T}\cdot e^{-rT} \notag\\
+&=\; Se^{-qT}.
+\end{align}
+
+Then, using (8.24) and (8.28), the Black--Scholes formulas (8.19) and (8.20) can be
+written as
+\begin{align}
+C_{BS} &= PVF \cdot N(d_1) - K \cdot disc \cdot N(d_2); \\
+P_{BS} &= K \cdot disc \cdot N(-d_2) - PVF \cdot N(-d_1).
+\end{align}
+
+Moreover,
+\begin{align}
+\ln\!\left(\frac{S}{K}\right) + (r-q)T \;&=\; \ln\!\left(\frac{S}{K}\right) +
+\ln\!\left(e^{(r-q)T}\right) \;=\; \ln\!\left(\frac{S}{K}\cdot e^{(r-q)T}\right) \\
+&=\; \ln\!\left(\frac{Se^{-qT}}{K}\cdot e^{rT}\right) \;=\;
+\ln\!\left(\frac{Se^{-qT}}{Ke^{-rT}}\right) \notag\\
+&=\; \ln\!\left(\frac{PVF}{K \cdot disc}\right),
+\end{align}
+where for (8.31) we used the facts that $\ln(e^x) = x$ for any $x$ and
+$\ln(a) + \ln(b) = \ln(ab)$ for any $a,b>0$, and for (8.32) we used (8.28) and (8.24),
+i.e., $Se^{-qT} = PVF$ and $e^{-rT} = disc$.
+
+Then, from (8.21) and (8.32), we obtain that
+\begin{align}
+d_1 &= \frac{\ln\left(\frac{S}{K}\right)+(r-q)T}{\sigma\sqrt{T}} +
+\frac{\frac{\sigma^2}{2}T}{\sigma\sqrt{T}} \;=\; \frac{\ln\left(\frac{PVF}{K\cdot
+disc}\right)}{\sigma\sqrt{T}} + \frac{\sigma\sqrt{T}}{2}; \\
+d_2 &= d_1 - \sigma\sqrt{T} \;=\; \frac{\ln\left(\frac{PVF}{K\cdot
+disc}\right)}{\sigma\sqrt{T}} - \frac{\sigma\sqrt{T}}{2}.
+\end{align}
+
+From (8.29), (8.30), (8.33), and (8.34), we conclude that the Black--Scholes option
+values can be written as functions of $PVF$, $disc$, $K$, $T$, and $\sigma$ as follows:
+\begin{align}
+C_{BS}(PVF,disc,K,T,\sigma) &= PVF \cdot N(d_1) - K \cdot disc \cdot N(d_2); \\
+P_{BS}(PVF,disc,K,T,\sigma) &= K \cdot disc \cdot N(-d_2) - PVF \cdot N(-d_1),
+\end{align}
+where
+\begin{align}
+d_1 = \frac{\ln\left(\frac{PVF}{K\cdot disc}\right)}{\sigma\sqrt{T}} +
+\frac{\sigma\sqrt{T}}{2}; \quad
+d_2 = \frac{\ln\left(\frac{PVF}{K\cdot disc}\right)}{\sigma\sqrt{T}} -
+\frac{\sigma\sqrt{T}}{2}.
+\end{align}
+
+Since $K$ and $T$ are known and $PVF$ and $disc$ have been computed using least
+squares, see (8.27), we can use Newton's method to solve either
+\begin{equation}
+C_{BS}(PVF,disc,T,\sigma) \;=\; C_m
+\end{equation}
+or
+\begin{equation}
+P_{BS}(PVF,disc,T,\sigma) \;=\; P_m
+\end{equation}
+for $\sigma = \sigma_{imp}$ for every option from Table 8.2.

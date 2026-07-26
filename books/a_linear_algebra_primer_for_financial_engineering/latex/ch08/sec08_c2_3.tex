@@ -1,0 +1,111 @@
+% PAGES: 259-260
+
+Recall from (8.74) that
+\begin{equation}
+T_Y - \widehat\mu_Y\bfone \;=\; (Y(t_i)-\widehat\mu_Y)_{i=1:N} \;=\; \overline{T}_Y.
+\end{equation}
+
+Also,
+\begin{align}
+T_{\bfx}\bfb - \left(\widehat\mu_{\bfx}^t\bfb\right)\bfone &= \sum_{k=1}^n b_kT_{X_k} -
+\left(\sum_{k=1}^n b_k\widehat\mu_{X_k}\right)\bfone \notag\\
+&= \sum_{k=1}^n b_kT_{X_k} - \sum_{k=1}^n b_k\widehat\mu_{X_k}\bfone \notag\\
+&= \sum_{k=1}^n b_k\left(T_{X_k}-\widehat\mu_{X_k}\bfone\right) \notag\\
+&= \sum_{k=1}^n b_k\overline{T}_{X_k}\\
+&= \overline{T}_{\bfx}\bfb,
+\end{align}
+where, for (8.93), we used (8.75), and, for (8.94), we used (1.7) with $A =
+\overline{T}_{\bfx} = col\left(\overline{T}_{X_k}\right)_{k=1:n}$ and $v = \bfb =
+(b_k)_{k=1:n}$.
+
+Thus,
+\begin{equation}
+T_{\bfx}\bfb - \widehat\mu_{\bfx}^t\bfb\bfone \;=\; \overline{T}_{\bfx}\bfb,
+\end{equation}
+and, from (8.92) and (8.95), it follows that the least squares problem (8.91) can be
+written as
+\begin{equation}
+\overline{T}_Y \;\approx\; \overline{T}_{\bfx}\bfb.
+\end{equation}
+
+Note that (8.96) is a least squares problem $y\approx Ax$ with $y=\overline{T}_Y$,
+$A=\overline{T}_{\bfx}$, and $x=\bfb$. Recall from (8.16) that the solution to this
+least squares problem is $x=(A^tA)^{-1}A^ty$, and therefore
+\begin{equation}
+\bfb \;=\; \left(\overline{T}_{\bfx}^t\overline{T}_{\bfx}\right)^{-1}
+\overline{T}_{\bfx}^t\overline{T}_Y.
+\end{equation}
+
+Note that the matrix $\overline{T}_{\bfx}^t\overline{T}_{\bfx}$ is nonsingular since the
+sample covariance matrix
+\begin{equation}
+\widehat\Sigma_{\bfx} \;=\; \frac{1}{N-1}\overline{T}_{\bfx}^t\overline{T}_{\bfx}
+\end{equation}
+corresponding to the time series data for $X_1, X_2, \ldots, X_n$ was assumed to be
+nonsingular; see (7.60).
+
+Also, note that
+\begin{align*}
+\widehat{\cov}(Y,X_k) &= \frac{1}{N-1}\sum_{i=1}^N
+(Y(t_i)-\widehat\mu_Y)(X_k(t_i)-\widehat\mu_{X_k}) \\
+&= \frac{1}{N-1}\sum_{i=1}^N \overline{T}_Y(i)\overline{T}_{X_k}(i) \\
+&= \frac{1}{N-1}\overline{T}_{X_k}^t\overline{T}_Y, \quad \forall\,k=1:n.
+\end{align*}
+
+Thus, the sample covariance vector $\widehat\sigma_{Y,\bfx}$ of $Y$ and $X_1, X_2,
+\ldots, X_n$ is
+\begin{align}
+\widehat\sigma_{Y,\bfx} &= \begin{pmatrix} \widehat{\cov}(Y,X_1) \\ \vdots \\
+\widehat{\cov}(Y,X_n) \end{pmatrix} \;=\; \begin{pmatrix} \frac{1}{N-1}
+\overline{T}_{X_1}^t\overline{T}_Y \\ \vdots \\ \frac{1}{N-1}
+\overline{T}_{X_n}^t\overline{T}_Y \end{pmatrix} \;=\; \frac{1}{N-1}\begin{pmatrix}
+\overline{T}_{X_1}^t \\ \vdots \\ \overline{T}_{X_n}^t \end{pmatrix}\overline{T}_Y
+\notag\\
+&= \frac{1}{N-1}\overline{T}_{\bfx}^t\overline{T}_Y,
+\end{align}
+since $\overline{T}_{\bfx} = col\left(\overline{T}_{X_k}\right)_{k=1:n}$, and therefore
+$\overline{T}_{\bfx}^t = \text{row}\left(\left(\overline{T}_{X_j}\right)^t\right)_{j=1:n}$.
+
+From (8.98), we obtain that $\overline{T}_{\bfx}^t\overline{T}_{\bfx} =
+(N-1)\widehat\Sigma_{\bfx}$, and therefore
+\begin{equation}
+\left(\overline{T}_{\bfx}^t\overline{T}_{\bfx}\right)^{-1} \;=\;
+\frac{1}{N-1}\left(\widehat\Sigma_{\bfx}\right)^{-1}.
+\end{equation}
+
+Also, from (8.99), it follows that
+\begin{equation}
+\overline{T}_{\bfx}^t\overline{T}_Y \;=\; (N-1)\widehat\sigma_{Y,\bfx}.
+\end{equation}
+
+From (8.97), (8.100), and (8.101), we obtain that
+\begin{equation}
+\bfb \;=\; \left(\overline{T}_{\bfx}^t\overline{T}_{\bfx}\right)^{-1}
+\overline{T}_{\bfx}^t\overline{T}_Y \;=\; \left(\widehat\Sigma_{\bfx}\right)^{-1}
+\widehat\sigma_{Y,\bfx},
+\end{equation}
+which is the same as (8.80), and, from (8.89) and (8.102), we obtain that
+\[
+a \;=\; \widehat\mu_Y - \widehat\mu_{\bfx}^t\left(\widehat\Sigma_{\bfx}\right)^{-1}
+\widehat\sigma_{Y,\bfx},
+\]
+which is the same as (8.81).
+\end{proof}
+
+The formulas (8.80) and (8.81) for the coefficients of ordinary least squares for time
+series data are the time series versions of the formulas (8.57) and (8.58).
+
+\section{References}
+
+The solution to a linear system associated to a least squares problem coming from
+linear regression with application to cartography motivated the introduction of the
+Cholesky decomposition by Andr\'e Cholesky early in the 20-th century; cf. Brezinski
+\cite{9}.
+
+A linear algebra treatment of least squares is included in Golub and Van Loan
+\cite{18}. A statistical approach to least squares can be found in Lai and Xing
+\cite{25}.
+
+A thorough treatment of implied volatility modeling and estimation can be found in
+Gatheral \cite{15}. For details on implied volatility and its connection to Put--Call
+parity see Stefanica \cite{36}.

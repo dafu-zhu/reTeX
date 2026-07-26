@@ -1,0 +1,94 @@
+% PAGES: 253-253
+% Closes the \begin{answerx} opened at the end of sec08_c1_10.tex (PDF page
+% 252): the printed closing square appears after eq. "0.5298 T_10." below.
+%
+% This is chunk c1's LAST file. Nothing is left open: the \answerx closes
+% below, "\section{Ordinary least squares for random variables}" (8.3) opens
+% cleanly, and the section's unnumbered intro display
+% "Y-(a+sum b_i X_i) has mean 0 and minimal variance." completes this file
+% and PDF page 253 in full.
+%
+% PDF page 254 (folio 238, Lemma 8.1 + the opening of its proof through eq.
+% (8.61)) is NOT included here even though it falls inside this chunk's
+% assigned 243-254 range. When I (chunk c1) re-listed ch08/ before finishing,
+% chunk c2's sec08_c2_1.tex (header "% PAGES: 254-256") had already appeared,
+% with its own note explaining that c2 found no c1 file covering page 254 at
+% the time c2 checked and transcribed it directly to close what looked like a
+% gap. I independently rendered and transcribed page 254 myself (verifying
+% the $\mu_{\bfx}$/$\Sigma_{\bfx}$/$\sigma_{Y,\bfx}$ bold-lowercase-x
+% notation at 600 dpi, 6x zoom) and cross-checked it against c2's version:
+% the two transcriptions agree. Rather than deliver a duplicate
+% \begin{lemma}...\end{lemma} and a second, independently-opened
+% \begin{proof} immediately after c2's already self-closed one (which would
+% double-number Lemma 8.1 and break the proof nesting), I am not delivering
+% a sec08_c1_12.tex for page 254 -- c2's sec08_c2_1.tex already covers it
+% correctly and completely. See my final report for the full detail of this
+% cross-chunk race condition; the orchestrator may want to relabel c2's
+% "% PAGES: 254-256" header or otherwise record that the true c1/c2 boundary
+% ended up falling at PDF page 253/254, not 254/255.
+
+where $\bfone$ is the $15 \times 1$ column vector with all entries equal to 1. This can
+be written in least squares form as $y \approx Ax$, with
+\[
+x \;=\; \begin{pmatrix} a \\ b_1 \\ b_2 \\ b_3 \end{pmatrix}; \quad y = T_3; \quad
+A = \begin{pmatrix} \bfone & T_2 & T_5 & T_{10} \end{pmatrix};
+\]
+in other words,
+\[
+y \;=\;
+\begin{pmatrix}
+4.58 \\ 4.71 \\ 4.72 \\ 4.78 \\ 4.77 \\ 4.75 \\ 4.71 \\ 4.72 \\ 4.76 \\ 4.73 \\ 4.75 \\
+4.75 \\ 4.73 \\ 4.71 \\ 4.71
+\end{pmatrix}
+\;;
+\quad
+A \;=\;
+\begin{pmatrix}
+1 & 4.69 & 4.57 & 4.63 \\
+1 & 4.81 & 4.69 & 4.73 \\
+1 & 4.81 & 4.70 & 4.74 \\
+1 & 4.79 & 4.77 & 4.81 \\
+1 & 4.79 & 4.77 & 4.80 \\
+1 & 4.83 & 4.73 & 4.79 \\
+1 & 4.81 & 4.72 & 4.76 \\
+1 & 4.81 & 4.74 & 4.77 \\
+1 & 4.83 & 4.77 & 4.80 \\
+1 & 4.81 & 4.75 & 4.77 \\
+1 & 4.82 & 4.77 & 4.80 \\
+1 & 4.82 & 4.76 & 4.80 \\
+1 & 4.80 & 4.75 & 4.78 \\
+1 & 4.78 & 4.72 & 4.73 \\
+1 & 4.79 & 4.71 & 4.73
+\end{pmatrix}
+\;.
+\]
+
+Recall from (8.16) that the solution to the least squares problem $y \approx Ax$ is
+$x = (A^tA)^{-1}A^ty$. By using the Cholesky solver $\text{linear\_solve\_cholesky}$
+from Table 6.2, we compute $x = \text{linear\_solve\_cholesky}(A^tA,A^ty)$ with $A$ and
+$y$ given above, we obtain that
+\[
+x \;=\; \begin{pmatrix} a \\ b_1 \\ b_2 \\ b_3 \end{pmatrix} \;=\; \begin{pmatrix}
+0.0123 \\ 0.1272 \\ 0.3340 \\ 0.5298 \end{pmatrix}.
+\]
+
+We conclude that the ordinary least square linear regression for the yield of the
+3-year bond in terms of the yields of the 2-year, 5-year, and 10-year bonds is
+\[
+T_3 \;\approx\; 0.0123 \cdot \bfone \;+\; 0.1272\,T_2 \;+\; 0.3340\,T_5 \;+\;
+0.5298\,T_{10}. \quad \square
+\]
+\end{answerx}
+
+\section{Ordinary least squares for random variables}
+
+The ordinary least squares problem for random variables requires finding the best
+approximation of a random variable by a linear combination of other random variables
+and a constant.
+
+We look for the best approximation of $Y$ by a linear combination of $X_1, X_2, \ldots,
+X_n$ plus a constant, i.e., we look for constants $a, b_1, b_2, \ldots, b_n$ such that
+\[
+Y \;-\; \left(a + \sum_{i=1}^n b_iX_i\right) \quad \text{has mean 0 and minimal
+variance.}
+\]

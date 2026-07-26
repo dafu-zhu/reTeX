@@ -1,0 +1,187 @@
+% PAGES: 254-256
+% GAP NOTICE: chunk c1's delivered files stop at PDF page 253 (sec08_c1_11.tex,
+% folio 237, closing an \answerx block); PDF page 254 (folio 238) was never
+% transcribed by c1 and ch08/ contained no file covering it. I (chunk c2,
+% assigned 255-266) rendered PDF page 254 directly via CropBox at 300 dpi and
+% confirmed it holds the Lemma 8.1 statement and the opening of its proof
+% (through eq. (8.61)), which flows directly into what was originally my
+% first assigned page, 255 (the "Let b = (b_i)..." paragraph below picks up
+% exactly where (8.61) leaves off). I am transcribing page 254 here to close
+% this gap -- as the last chunk of the chapter I must leave nothing broken --
+% which extends my file range from 255-266 to 254-266. Equation counter
+% cross-check: c1's last numbered equation (sec08_c1_10.tex) is (8.56)
+% ("The solution (8.56) from section 8.2..."), so the Lemma 8.1 statement
+% below correctly auto-numbers to (8.57)-(8.58), matching the printed page.
+% No theorem-like environment appears anywhere in c1's files, so this Lemma
+% is the first \begin{lemma} in the chapter and auto-numbers to "Lemma 8.1",
+% matching print.
+
+Let $\mu_Y$ and $\mu_{X_k}$ be the means of $Y$ and $X_k$, for $k=1:n$, respectively, and
+let $\mu_{\bfx}$ be the $n\times1$ column vector $\mu_{\bfx} = (\mu_{X_k})_{k=1:n}$.
+
+\begin{lemma}
+Let $X_1, X_2, \ldots, X_n$ be random variables on the same probability space with
+nonsingular covariance matrix $\Sigma_{\bfx}$, and let $Y$ be another random variable on
+the same probability space. The best approximation of $Y$ by a linear combination of
+$X_1, X_2, \ldots, X_n$ plus a constant, i.e., such that the random variable
+\[
+Y \;-\; \left(a+\sum_{i=1}^n b_iX_i\right) \quad \text{has mean $0$ and minimal
+variance,}
+\]
+where $a, b_1, b_2, \ldots, b_n$ are constants, is given by
+\begin{align}
+\bfb &= (\Sigma_{\bfx})^{-1}\sigma_{Y,\bfx}.\\
+a &= \mu_Y - \mu_{\bfx}^t(\Sigma_{\bfx})^{-1}\sigma_{Y,\bfx},
+\end{align}
+where $\bfb = (b_i)_{i=1:n}$ and $\sigma_{Y,\bfx} = (\cov(Y,X_i))_{i=1:n}$ is the
+covariance vector of $Y$ and $X_1, X_2, \ldots, X_n$.
+\end{lemma}
+
+\begin{proof}
+Denote by $\mu_Y$ and $\mu_{X_k}$ the mean of $Y$ and of $X_k$, respectively, for
+$k=1:n$. Then,
+\[
+\E{Y - \left(a+\sum_{i=1}^n b_iX_i\right)} \;=\; \mu_Y - a - \sum_{i=1}^n b_i\mu_{X_i},
+\]
+and therefore $\E{Y-\left(a+\sum_{i=1}^n b_iX_i\right)} = 0$ if and only if
+\begin{equation}
+a \;=\; \mu_Y - \sum_{i=1}^n b_i\mu_{X_i}.
+\end{equation}
+
+Note that
+\begin{align*}
+\var\left(Y-\left(a+\sum_{i=1}^n b_iX_i\right)\right) &= \var\left(\left(Y-\sum_{i=1}^n
+b_iX_i\right)-a\right)\\
+&= \var\left(Y-\sum_{i=1}^n b_iX_i\right),
+\end{align*}
+since $\var(X-a) = \var(X)$ for any random variable $X$ and for any constant $a$.
+
+Thus, we are looking for constants $b_i$, $i=1:n$, such that
+\begin{equation}
+\var\left(Y-\sum_{i=1}^n b_iX_i\right) \quad \text{is minimal.}
+\end{equation}
+
+Recall that, for any random variables $X$ and $Y$ over the same probability space,
+\[
+\var(Y-X) \;=\; \var(Y) - 2\cov(Y,X) + \var(X).
+\]
+Then,
+\begin{align}
+\var\left(Y-\sum_{i=1}^n b_iX_i\right) &= \var(Y) - 2\cov\left(Y,\sum_{i=1}^n
+b_iX_i\right) + \var\left(\sum_{i=1}^n b_iX_i\right) \notag\\
+&= \var(Y) - 2\sum_{i=1}^n b_i\cov(Y,X_i) + \var\left(\sum_{i=1}^n b_iX_i\right).
+\end{align}
+
+Let $\bfb = (b_i)_{i=1:n}$ be the coefficients column vector, and let
+\[
+\sigma_{Y,\bfx} \;=\; (\cov(Y,X_i))_{i=1:n} \;=\; \begin{pmatrix} \cov(Y,X_1) \\ \vdots \\
+\cov(Y,X_n) \end{pmatrix}
+\]
+be the covariance vector of $Y$ and $X_1, X_2, \ldots, X_n$.
+
+From (1.5), we find that
+\begin{equation}
+\sum_{i=1}^n b_i\cov(Y,X_i) \;=\; \sigma_{Y,\bfx}^t\bfb.
+\end{equation}
+
+Let $\Sigma_{\bfx}$ be the covariance matrix of the random variables $X_1, X_2, \ldots,
+X_n$, and recall from (7.25) that
+\begin{equation}
+\var\left(\sum_{i=1}^n b_iX_i\right) \;=\; \bfb^t\Sigma_{\bfx}\bfb.
+\end{equation}
+
+From (8.61--8.63), we obtain that
+\begin{equation}
+\var\left(Y-\sum_{i=1}^n b_iX_i\right) \;=\; \var(Y) - 2\sigma_{Y,\bfx}^t\bfb +
+\bfb^t\Sigma_{\bfx}\bfb.
+\end{equation}
+
+Thus, minimizing $\var\left(Y-\sum_{i=1}^n b_iX_i\right)$, see (8.60), is equivalent to
+finding a vector $\bfb\in\R^n$ such that
+\begin{equation}
+\var(Y) - 2\sigma_{Y,\bfx}^t\bfb + \bfb^t\Sigma_{\bfx}\bfb \quad \text{is minimal.}
+\end{equation}
+
+Let $f:\R^n\to\R$ be the function given by
+\[
+f(x) \;=\; \var(Y) - 2\sigma_{Y,\bfx}^tx + x^t\Sigma_{\bfx}x, \quad \forall\, x\in\R^n.
+\]
+Then, solving (8.65) is equivalent to finding a minimum point for $f(x)$.
+
+Recall from (10.43) and (10.47) the following gradient formulas:
+\[
+\begin{aligned}
+D(C^tx) &= C^t; \\
+D\left(x^tAx\right) &= 2(Ax)^t,
+\end{aligned}
+\]
+for any constant column vector $C$ of size $n$ and for any $n\times n$ symmetric matrix
+$A$.
+
+Then, the gradient $Df(x)$ of $f(x)$ is
+\begin{align}
+Df(x) &= D(\var(Y)) - 2D(\sigma_{Y,\bfx}^tx) + D(x^t\Sigma_{\bfx}x) \notag\\
+&= -2\sigma_{Y,\bfx}^t + 2(\Sigma_{\bfx}x)^t \notag\\
+&= 2(\Sigma_{\bfx}x - \sigma_{Y,\bfx})^t;
+\end{align}
+note that $D(\var(Y)) = 0$ since $\var(Y)$ is not a function of $x$.
+
+Any minimum point $x_0$ of $f(x)$ is also a critical point of $f(x)$, i.e., a solution to
+$Df(x_0) = 0$. From (8.66), we find that, if $Df(x_0) = 0$, then $\Sigma_{\bfx}x_0 =
+\sigma_{Y,\bfx}$, which, since we assumed that the covariance matrix $\Sigma_{\bfx}$ is
+nonsingular, has the unique solution
+\begin{equation}
+x_0 \;=\; (\Sigma_{\bfx})^{-1}\sigma_{Y,\bfx}.
+\end{equation}
+
+To classify the critical point $x_0$ given by (8.67), we compute the Hessian of $f(x)$.
+Recall from (10.45) and (10.48), respectively, that $D^2(C^tx) = 0$ and
+$D^2\left(x^tAx\right) = 2A$. Thus, $D^2f(x) = 2\Sigma_{\bfx}$, and therefore $D^2f(x_0)
+= 2\Sigma_{\bfx}$.
+
+The covariance matrix $\Sigma_{\bfx}$ is symmetric positive definite since it is
+nonsingular. Then, $x_0$ is a local minimum point for the function $f(x)$, and since
+$x_0$ is the only critical point of the function $f(x)$, we conclude that $x_0$ is a
+global minimum point for the function $f(x)$.
+
+Thus, the vector $\bfb$ minimizing (8.65) is $\bfb = x_0$ given by (8.67), i.e.,
+\begin{equation}
+\bfb \;=\; (\Sigma_{\bfx})^{-1}\sigma_{Y,\bfx}.
+\end{equation}
+
+Let $\mu_{\bfx} = (\mu_{X_i})_{i=1:n}$. Then, from (8.59) and (8.68), we find that
+\begin{align}
+a &= \mu_Y - \sum_{i=1}^n b_i\mu_i \;=\; \mu_Y - \mu_{\bfx}^t\bfb \notag\\
+&= \mu_Y - \mu_{\bfx}^t(\Sigma_{\bfx})^{-1}\sigma_{Y,\bfx}.
+\end{align}
+
+From (8.68) and (8.69), we conclude that the constants $a, b_1, b_2, \ldots, b_n$ such
+that the random variable $Y - \left(a+\sum_{i=1}^n b_iX_i\right)$ has mean $0$ and
+minimal variance are given by (8.57) and (8.58).
+\end{proof}
+
+Note that the formulas (8.57) and (8.58) for the coefficients of ordinary least squares
+for random variables are the random variable versions of the formulas (8.80) and (8.81)
+for time series data.
+
+\section{The intuition behind ordinary least squares for time series data}
+
+The solution (8.56) from section 8.2 for the linear regression of time series data,
+while applicable in practice, lacks intuition. We provide this intuition here by
+expressing $a$ and $\bfb$ from (8.56) in terms of the time series data for $Y$ and for
+$X_k$, $k=1:n$, and by highlighting the connection to the solution to the ordinary least
+squares problem for random variables; see Lemma 8.2 and Lemma 8.1.
+
+Let $\widehat\mu_Y$ and $\widehat\mu_{X_k}$ be the sample means of $Y$ and $X_k$, for
+$k=1:n$, respectively, i.e.,
+\begin{align}
+\widehat\mu_Y &= \frac1N\sum_{i=1}^N Y(t_i) \;=\; \frac1N\bfone^tT_Y;\\
+\widehat\mu_{X_k} &= \frac1N\sum_{i=1}^N X_k(t_i) \;=\; \frac1N\bfone^tT_{X_k}, \quad
+\forall\,k=1:n,
+\end{align}
+where $T_Y$ and $T_{X_k}$ are the column vectors of the time series data for $Y$ and
+$X_k$ given by (8.51) and (8.52), respectively, and let $\widehat\mu_{\bfx}$ be the
+$n\times1$ column vector
+\begin{equation}
+\widehat\mu_{\bfx} \;=\; (\widehat\mu_{X_k})_{k=1:n}.
+\end{equation}

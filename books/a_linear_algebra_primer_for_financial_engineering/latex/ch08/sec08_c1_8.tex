@@ -1,0 +1,63 @@
+% PAGES: 250-250
+
+Then, since $Se^{-qT} = PVF$, we obtain that
+\begin{equation}
+f_P'(x) \;=\; PVF\sqrt{\frac{T}{2\pi}}\,\exp\!\left(-\frac{(d_1(x))^2}{2}\right).
+\end{equation}
+
+Note that $f_P'(x) = f_C'(x)$, since $vega_P = vega_C$.
+
+The Newton's method recursion for solving (8.45) is
+\begin{equation}
+x_{k+1} \;=\; x_k \;-\; \frac{f_P(x_k)}{f_P'(x_k)},
+\end{equation}
+where the functions $f_P(x)$ and $f_P'(x)$ are given by (8.46) and (8.48),
+respectively.
+
+A good initial guess for Newton's method is 25\% volatility, i.e., $x_0 = 0.25$, and the
+algorithm is stopped when two consecutive approximations in Newton's method are within
+$10^{-6}$ of each other; see the pseudocode from Table 8.3 for finding the implied
+volatility for both call and put options, i.e., for solving either (8.44) or (8.49).
+
+\begin{table}[H]
+\centering
+\caption{Pseudocode for computing implied volatility}
+\fbox{\begin{minipage}{0.85\linewidth}
+Input:\\
+$V_m = $ option price\\
+\hspace*{1.5em}\textit{// $V_m = C_m$ for call implied vol; $V_m = P_m$ for put
+implied vol}\\
+$K = $ strike price of the option\\
+$T = $ maturity of the option\\
+$PVF = $ present value of the forward price of the underlying asset\\
+$disc = $ discount factor corresponding to time $T$\\
+$tol = $ tolerance for Newton's method convergence\\
+$f_{BS}(x) = $ Black--Scholes option value; $x = $ volatility\\
+\hspace*{1.5em}\textit{// $f_{BS}(x) = f_C(x)$ for calls; $f_{BS}(x) = f_P(x)$ for
+puts}\\
+\hspace*{1.5em}\textit{// $f_{BS}'(x) = f_C'(x) = f_P'(x)$}
+\bigskip
+
+Output:\\
+$x_{new} = $ implied volatility
+\bigskip
+
+$x_0 = 0.25;$ \hfill\textit{// initial guess: 25\% volatility}\\
+$x_{new} = x_0; x_{old} = x_0 - 1; tol = 10^{-6}$\\
+while ($|x_{new} - x_{old}| > tol$)\\
+\hspace*{1.5em}$x_{old} = x_{new}$\\
+\hspace*{1.5em}$x_{new} = x_{old} - \dfrac{f_{BS}(x_{old}) - V_m}{f_{BS}'(x_{old})}$\\
+end
+\end{minipage}}
+\end{table}
+
+For the options from Table 8.2, note that the options maturity is $T = \frac{199}{252}$,
+i.e., the ratio of 199, the number of trading days between March 9, 2012, and December
+22, 2012, and 252, the total number of trading days in a year. Using the values
+$PVF = 1349.54$ and $disc = 0.9964$ computed using least squares and the Newton's
+method from Table 8.3, we obtain the implied volatilities from Table 8.4.
+
+A consequence of the Put--Call parity is that the theoretical values of implied
+volatilities of calls and puts with the same strike are equal. Note that, indeed, the
+implied volatilities from Table 8.4 corresponding to calls and puts with the same
+strike are nearly identical.
