@@ -139,21 +139,21 @@ offset.
 
 ## Chapter 10 — Mathematical appendix and technical results (PDF 303–334)
 
-- [ ] 10.1 Numerical linear algebra tools
-- [ ] 10.1.1 Determinants
-- [ ] 10.1.2 Permutation matrices
-- [ ] 10.1.3 Orthogonality
-- [ ] 10.1.4 Quadratic forms
-- [ ] 10.2 Mathematical tools
-- [ ] 10.2.1 Multivariable functions
-- [ ] 10.2.2 Lagrange multipliers
-- [ ] 10.2.3 The "Big O" notation
-- [ ] 10.3 European options overview
-- [ ] 10.4 Eigenvalues of symmetric matrices
-- [ ] 10.5 Row rank equal to column rank
-- [ ] 10.6 Technical results for the Cholesky and LU decompositions
-- [ ] 10.7 More technical results
-- [ ] 10.8 Exercises
+- [x] 10.1 Numerical linear algebra tools
+- [x] 10.1.1 Determinants
+- [x] 10.1.2 Permutation matrices
+- [x] 10.1.3 Orthogonality
+- [x] 10.1.4 Quadratic forms
+- [x] 10.2 Mathematical tools
+- [x] 10.2.1 Multivariable functions
+- [x] 10.2.2 Lagrange multipliers
+- [x] 10.2.3 The "Big O" notation
+- [x] 10.3 European options overview
+- [x] 10.4 Eigenvalues of symmetric matrices
+- [x] 10.5 Row rank equal to column rank
+- [x] 10.6 Technical results for the Cholesky and LU decompositions
+- [x] 10.7 More technical results
+- [x] 10.8 Exercises
 
 ## Back matter (PDF 335–341)
 
