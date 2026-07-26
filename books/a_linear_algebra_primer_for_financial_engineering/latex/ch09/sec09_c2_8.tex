@@ -1,0 +1,88 @@
+% PAGES: 286-286
+% sec09_c2_7.tex ends with a fully-closed \end{align} for (9.66) (the comma
+% printed at the end of that align block is grammatical, not a LaTeX
+% construct left open): the compound sentence "we find that [[align]] ...
+% w_T, since, from (9.60), it follows that [[display]] ... = 1-w_{max,cash}."
+% splits across the page/file boundary between its \end{align} and the fresh
+% \[ display below. No environment is left open across that boundary. A new
+% \begin{answerx} opens near the bottom of this file and IS left OPEN at the
+% end -- it continues on PDF page 287 (folio 271), which closes it with the
+% printed square. sec09_c2_9.tex must NOT reopen it.
+%
+% SOURCE INCONSISTENCY: "the formulas (9.65) and (9.66)" below is printed
+% exactly that way, even though the two bulleted equations immediately above
+% it in this same paragraph are numbered (9.67) and (9.68), not (9.65)/(9.66)
+% (which are the unbulleted, page-285 versions of the same two formulas). The
+% analogous sentence in section 9.3 ("...computed using the formulas (9.40)
+% and (9.41)...", sec09_c2_1.tex) correctly cites the directly-preceding
+% bulleted pair, so this looks like a genuine numbering slip in the source,
+% not a deliberate cross-reference. Transcribed as printed.
+
+since, from (9.60), it follows that
+\[
+\sigma_P\frac{\bfone^t\Sigma_R^{-1}\bar\mu}{\sqrt{\bar\mu^t\Sigma_R^{-1}\bar\mu}} \;=\;
+1-w_{max,cash}.
+\]
+
+From (9.65) and (9.66), we conclude that the maximum expected return of a portfolio
+with variance of return equal to $\sigma_P^2$ is obtained for the following asset
+allocation:
+\begin{itemize}
+\item weight $w_{max,cash}$ of the cash position given by
+\begin{equation}
+w_{max,cash} \;=\; 1-\frac{\sigma_P}{\sqrt{w_T^t\Sigma_Rw_T}}\cdot
+\operatorname{sign}\!\left(\bfone^t\Sigma_R^{-1}\bar\mu\right);
+\end{equation}
+\item asset weights vector $w_{max}$ given by
+\begin{equation}
+w_{max} \;=\; (1-w_{max,cash})\,w_T.
+\end{equation}
+\end{itemize}
+
+The pseudocode for the asset allocation for the maximum return portfolio computed
+using the formulas (9.65) and (9.66) can be found in Table 9.4.
+
+We revisit below the example from section 9.4 and find the maximum return portfolio
+by using the tangency portfolio.
+
+\par\medskip\noindent\textit{Example:}\ Find the \$100 million maximum return
+portfolio with 27\% standard deviation of return invested in cash and four assets
+with expected returns equal to 2\%, 1.75\%, 2.5\%, and 1.5\%, and with the following
+covariance matrix of their returns:
+\[
+\begin{pmatrix}
+0.09 & 0.01 & 0.03 & -0.015 \\
+0.01 & 0.0625 & -0.02 & -0.01 \\
+0.03 & -0.02 & 0.1225 & 0.02 \\
+-0.015 & -0.01 & 0.02 & 0.0576
+\end{pmatrix}.
+\]
+
+Assume that the risk free rate is 1\%.
+
+\begin{answerx}
+% Left OPEN at the end of this file -- closes on PDF page 287 (folio 271).
+Let $\mu_1=0.02$, $\mu_2=0.0175$, $\mu_3=0.025$, $\mu_4=0.015$, and $r_f=0.01$. We
+look for the asset and cash allocation corresponding to the maximum return portfolio
+with standard deviation of return equal to $\sigma_P = 0.27$.
+
+Note that $\bar\mu=\mu-r_f\bfone$ and $\Sigma_R$ are given by
+\[
+\bar\mu \;=\; \begin{pmatrix} 0.01 \\ 0.0075 \\ 0.015 \\ 0.005 \end{pmatrix}; \quad
+\Sigma_R \;=\; \begin{pmatrix}
+0.09 & 0.01 & 0.03 & -0.015 \\
+0.01 & 0.0625 & -0.02 & -0.01 \\
+0.03 & -0.02 & 0.1225 & 0.02 \\
+-0.015 & -0.01 & 0.02 & 0.0576
+\end{pmatrix}.
+\]
+
+The vector $\Sigma_R^{-1}\bar\mu = \text{linear\_solve\_cholesky}(\Sigma_R,\bar\mu)$ is
+computed by using the Cholesky decomposition to solve the linear system corresponding
+to the matrix $\Sigma_R$ and to the right hand side $\bar\mu$.
+
+From (9.62), we find that the asset weights vector of the tangency portfolio is
+\[
+w_T \;=\; \frac{1}{\bfone^t\Sigma_R^{-1}\bar\mu}\Sigma_R^{-1}\bar\mu \;=\;
+\begin{pmatrix} 0.1587 \\ 0.3660 \\ 0.2650 \\ 0.2103 \end{pmatrix}.
+\]

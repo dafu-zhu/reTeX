@@ -1,0 +1,74 @@
+% PAGES: 277-277
+% Closes the \begin{itemize} opened at the end of sec09_c1_10.tex (PDF page
+% 276) with the second bullet below (weight w_{min,cash}, eq. 9.34).
+
+\item weight $w_{min,cash}$ of the cash position given by
+\begin{equation}
+w_{min,cash} \;=\; 1-\mathbf{1}^tw_{min} \;=\;
+1-(\mu_P-r_f)\frac{\mathbf{1}^t\Sigma_R^{-1}\bar\mu}{\bar\mu^t\Sigma_R^{-1}\bar\mu}.
+\end{equation}
+\end{itemize}
+
+The minimum standard deviation of the return of a portfolio with given expected return
+$\mu_P$ is
+\begin{align}
+\sigma_{min} &= \sqrt{w_{min}^t\Sigma_Rw_{min}} \;=\;
+\frac{\mu_P-r_f}{\bar\mu^t\Sigma_R^{-1}\bar\mu}
+\sqrt{(\Sigma_R^{-1}\bar\mu)^t\Sigma_R(\Sigma_R^{-1}\bar\mu)} \notag\\
+&= \frac{\mu_P-r_f}{\bar\mu^t\Sigma_R^{-1}\bar\mu}
+\sqrt{\bar\mu^t(\Sigma_R^{-1})^t(\Sigma_R\Sigma_R^{-1})\bar\mu} \;=\;
+\frac{\mu_P-r_f}{\bar\mu^t\Sigma_R^{-1}\bar\mu}\sqrt{\bar\mu^t\Sigma_R^{-1}\bar\mu} \notag\\
+&= \frac{\mu_P-r_f}{\sqrt{\bar\mu^t\Sigma_R^{-1}\bar\mu}};
+\end{align}
+here, we used the facts that $(\Sigma_R^{-1})^t = \Sigma_R^{-1}$, since $\Sigma_R$ is a
+symmetric matrix; see Lemma 1.9. Note that $\bar\mu^t\Sigma_R^{-1}\bar\mu > 0$ since
+$\Sigma_R$ is a symmetric positive definite matrix, and therefore $\Sigma_R^{-1}$ is
+also symmetric positive definite; cf. Lemma 5.4.
+
+The pseudocode for the asset allocation for the minimum variance portfolio computed
+using the formulas (9.33--9.35) can be found in Table 9.1.
+
+\par\medskip\noindent\textit{Example:}\ Find the \$100 million minimum variance
+portfolio with expected return equal to 2.25\% and invested in cash and four assets
+with expected returns equal to 2\%, 1.75\%, 2.5\%, and 1.5\%, and with the following
+covariance matrix of their returns:
+\[
+\begin{pmatrix}
+0.09 & 0.01 & 0.03 & -0.015 \\
+0.01 & 0.0625 & -0.02 & -0.01 \\
+0.03 & -0.02 & 0.1225 & 0.02 \\
+-0.015 & -0.01 & 0.02 & 0.0576
+\end{pmatrix}.
+\]
+
+Assume that the risk free rate is 1\%.
+
+\begin{answerx}
+% Left OPEN at the end of this file: the derivation continues onto PDF page
+% 278 (folio 262), which closes it with "...respectively." followed by the
+% printed square. sec09_c1_12.tex must NOT reopen \begin{answerx}.
+Let $\mu_1 = 0.02$, $\mu_2 = 0.0175$, $\mu_3 = 0.025$, $\mu_4 = 0.015$, and $r_f =
+0.01$. We look for the asset and cash allocation corresponding to the minimum variance
+portfolio with expected return $\mu_P = 0.0225$.
+
+Note that $\bar\mu = \mu - r_f\mathbf{1}$ and $\Sigma_R$ are given by
+\[
+\bar\mu \;=\; \begin{pmatrix} 0.01 \\ 0.0075 \\ 0.015 \\ 0.005 \end{pmatrix}; \quad
+\Sigma_R \;=\; \begin{pmatrix}
+0.09 & 0.01 & 0.03 & -0.015 \\
+0.01 & 0.0625 & -0.02 & -0.01 \\
+0.03 & -0.02 & 0.1225 & 0.02 \\
+-0.015 & -0.01 & 0.02 & 0.0576
+\end{pmatrix}.
+\]
+
+The vector $\Sigma_R^{-1}\bar\mu$ is computed by using the Cholesky decomposition to
+solve the linear system corresponding to the matrix $\Sigma_R$ and to the right hand
+side $\bar\mu$, i.e., $\Sigma_R^{-1}\bar\mu =
+\text{linear\_solve\_cholesky}(\Sigma_R,\bar\mu)$; see Table 6.2 and the pseudocode
+from Table 9.1. From (9.33) and (9.34), we find that the asset weights vector
+corresponding to the minimum variance portfolio is
+\[
+w_{min} \;=\; \frac{\mu_P-r_f}{\bar\mu^t\Sigma_R^{-1}\bar\mu}\Sigma_R^{-1}\bar\mu \;=\;
+\begin{pmatrix} 0.2120 \\ 0.4888 \\ 0.3540 \\ 0.2808 \end{pmatrix},
+\]

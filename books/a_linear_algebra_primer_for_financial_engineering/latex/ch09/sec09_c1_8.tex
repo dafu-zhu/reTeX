@@ -1,0 +1,62 @@
+% PAGES: 274-274
+
+\noindent\textbf{Maximum return portfolio using tangency portfolio:} If
+\[
+w_T \;=\; \frac{1}{\mathbf{1}^t\Sigma_R^{-1}\bar\mu}\Sigma_R^{-1}\bar\mu
+\]
+is the weight of the $n$ assets in the tangency portfolio, then the asset weights
+vector $w_{max}$ and the weight $w_{max,cash}$ of the cash position given by (9.17) and
+(9.18) can also be computed as follows:
+\begin{equation}
+w_{max,cash} \;=\; 1 - \frac{\sigma_P}{\sqrt{w_T^t\Sigma_Rw_T}}\cdot
+\text{sign}(\mathbf{1}^t\Sigma_R^{-1}\bar\mu);
+\end{equation}
+\begin{equation}
+w_{max} \;=\; (1-w_{max,cash})w_T;
+\end{equation}
+in (9.19), $\text{sign}(\mathbf{1}^t\Sigma_R^{-1}\bar\mu) = 1$, if
+$\mathbf{1}^t\Sigma_R^{-1}\bar\mu > 0$, and
+$\text{sign}(\mathbf{1}^t\Sigma_R^{-1}\bar\mu) = -1$, if
+$\mathbf{1}^t\Sigma_R^{-1}\bar\mu < 0$.
+
+The expected return of the maximum return portfolio is
+\[
+\mu_{max} \;=\; r_f+\bar\mu^tw_{max}.
+\]
+
+The asset allocation for the maximum return portfolio computed using the tangency
+portfolio can be found using the pseudocode from Table 9.4.
+
+\begin{table}[H]
+\centering
+\caption{Asset allocation of maximum return portfolio from tangency portfolio}
+\fbox{\begin{minipage}{0.85\linewidth}
+Input:\\
+$\Sigma_R = n\times n$ covariance matrix of the returns of $n$ assets\\
+$\mu = n\times 1$ vector of expected values of the returns of $n$ assets\\
+$r_f = $ risk--free rate\\
+$\sigma_P = $ required standard deviation of the return of the portfolio
+\bigskip
+
+Output:\\
+$w_{max} = $ asset weights vector for the maximum return portfolio\\
+$w_{max,cash} = $ weight of cash position for the maximum return portfolio\\
+$\mu_{max} = $ expected return of the maximum return portfolio
+\bigskip
+
+$\bar\mu = \mu - r_f\mathbf{1}$\\
+$x = \text{linear\_solve\_cholesky}(\Sigma_R,\bar\mu)$ \hfill\textit{// compute $x =
+\Sigma_R^{-1}\bar\mu$}\\
+$w_T = \dfrac{1}{\mathbf{1}^tx}x$\\
+if $\mathbf{1}^t\Sigma_R^{-1}\bar\mu > 0$\\
+\hspace*{1.5em}$w_{max,cash} = 1 - \dfrac{\sigma_P}{\sqrt{w_T^t\Sigma_Rw_T}}$\\
+else\\
+\hspace*{1.5em}$w_{max,cash} = 1 + \dfrac{\sigma_P}{\sqrt{w_T^t\Sigma_Rw_T}}$\\
+end\\
+$w_{max} = (1-w_{max,cash})w_T$\\
+$\mu_{max} = r_f + \bar\mu^tw_{max}$
+\end{minipage}}
+\end{table}
+
+Note that the asset allocation formulas (9.17--9.18) and (9.19--9.20) will be derived
+in section 9.4.

@@ -1,0 +1,65 @@
+% PAGES: 276-276
+
+Recall that $\Sigma_R$ is a nonsingular matrix, since we assumed that the return of
+none of the assets can be replicated by using the other $n-1$ assets and cash; see
+section 9.1. Then, from (9.26), we find that
+\begin{equation}
+w_0 \;=\; \frac{\lambda_0}{2}\Sigma_R^{-1}\bar\mu.
+\end{equation}
+
+By substituting formula (9.28) for $w_0$ in (9.27), we obtain that
+\[
+\frac{\lambda_0}{2}\bar\mu^t\Sigma_R^{-1}\bar\mu \;=\; \mu_P-r_f,
+\]
+and therefore
+\begin{equation}
+\lambda_0 \;=\; \frac{2(\mu_P-r_f)}{\bar\mu^t\Sigma_R^{-1}\bar\mu}.
+\end{equation}
+
+From (9.28) and (9.29), we find that
+\begin{equation}
+w_0 \;=\; \frac{\mu_P-r_f}{\bar\mu^t\Sigma_R^{-1}\bar\mu}\Sigma_R^{-1}\bar\mu.
+\end{equation}
+
+Let $F_0 : \R^n \to \R$ given by $F_0(w) = F(w,\lambda_0)$, where $\lambda_0$ is given
+by (9.29), i.e.,
+\begin{align*}
+F_0(w) &= w^t\Sigma_Rw + \lambda_0(\mu_P-r_f-\bar\mu^tw) \\
+&= w^t\Sigma_Rw + \frac{2(\mu_P-r_f)}{\bar\mu^t\Sigma_R^{-1}\bar\mu}(\mu_P-r_f-\bar\mu^tw).
+\end{align*}
+
+Note that $D^2\left(w^t\Sigma_Rw\right) = 2\Sigma_R$, since $\Sigma_R$ is a symmetric
+matrix, and $D^2(\bar\mu^tw) = 0$; cf. (10.48) and (10.45), respectively. Also,
+$D^2(\mu_P-r_f) = 0$, since $\mu_P-r_f$ is a constant. Thus, the Hessian of $F_0(w)$ is
+\begin{align*}
+D^2F_0(w) &= D^2\left(w^t\Sigma_Rw\right) +
+\frac{2(\mu_P-r_f)}{\bar\mu^t\Sigma_R^{-1}\bar\mu}D^2(\mu_P-r_f-\bar\mu^tw) \\
+&= 2\Sigma_R.
+\end{align*}
+
+Since $\Sigma_R$ is a symmetric positive definite matrix, it follows that $D^2F_0(w_0)$
+is symmetric positive definite. From Theorem 10.7, we find that $w_0$ given by (9.30)
+is a constrained minimum point, and therefore $w_{min} = w_0$, i.e.,
+\begin{equation}
+w_{min} \;=\; \frac{\mu_P-r_f}{\bar\mu^t\Sigma_R^{-1}\bar\mu}\Sigma_R^{-1}\bar\mu
+\end{equation}
+is the solution to the minimum variance portfolio problem (9.21).
+
+Moreover, recall from (9.7) that the cash position $w_{min,cash}$ in a portfolio with
+asset weights vector $w_{min}$ is
+\begin{equation}
+w_{min,cash} \;=\; 1-\mathbf{1}^tw_{min}.
+\end{equation}
+
+We conclude from (9.31) and (9.32) that the minimum variance portfolio with expected
+return $\mu_P$ is obtained for the following asset allocation:
+\begin{itemize}
+\item asset weights vector $w_{min}$ given by
+\begin{equation}
+w_{min} \;=\; \frac{\mu_P-r_f}{\bar\mu^t\Sigma_R^{-1}\bar\mu}\Sigma_R^{-1}\bar\mu;
+\end{equation}
+% \begin{itemize} left OPEN here on purpose: the second bullet (weight
+% w_{min,cash} of the cash position, eq. 9.34) is the first content on PDF
+% page 277 / folio 261, transcribed at the top of sec09_c1_11.tex, which
+% closes this \end{itemize}. Both files are chunk c1's own, so
+% check_env_balance.py sees them in order and balances normally.

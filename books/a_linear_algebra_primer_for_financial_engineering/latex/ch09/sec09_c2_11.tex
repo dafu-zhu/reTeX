@@ -1,0 +1,70 @@
+% PAGES: 289-289
+% Straightforward continuation; no environments open or close on this page.
+% "asscts" (below, "for $n=2$ asscts") is printed exactly that way in the
+% source (missing "e") -- transcribed as printed, not corrected.
+% "(10.7)" here is the same 2x2-matrix-inverse cross-reference already
+% flagged as genuine in sec09_c2_2.tex.
+
+Since $\Sigma_R$ is a symmetric positive definite matrix, it follows that
+$D^2F_0(w_0)$ is symmetric positive definite. From Theorem 10.7, we find that $w_0$
+given by (9.75) is a constrained minimum point.
+
+We conclude that the portfolio with asset allocation $w_m = w_0$, i.e., with
+\begin{equation}
+w_m \;=\; \frac{1}{\bfone^t\Sigma_R^{-1}\bfone}\Sigma_R^{-1}\bfone,
+\end{equation}
+is the minimum variance portfolio. Its variance is
+\begin{align}
+\sigma_m^2 \;=\; w_m^t\Sigma_Rw_m &=
+\frac{1}{\left(\bfone^t\Sigma_R^{-1}\bfone\right)^2}\left(\Sigma_R^{-1}\bfone\right)^t
+\Sigma_R\left(\Sigma_R^{-1}\bfone\right) \notag\\
+&= \frac{1}{\left(\bfone^t\Sigma_R^{-1}\bfone\right)^2}
+\bfone^t\left(\Sigma_R^{-1}\right)^t\left(\Sigma_R\Sigma_R^{-1}\right)\bfone \;=\;
+\frac{1}{\left(\bfone^t\Sigma_R^{-1}\bfone\right)^2}\bfone^t\Sigma_R^{-1}\bfone
+\notag\\
+&= \frac{1}{\bfone^t\Sigma_R^{-1}\bfone};
+\end{align}
+here, we used the fact that $\left(\Sigma_R^{-1}\right)^t = \Sigma_R^{-1}$, since
+$\Sigma_R$ is a symmetric matrix; see (9.50).
+
+We conclude this section by deriving the asset allocation for the minimum variance
+portfolio made of two assets by using formula (9.76) for $n=2$ asscts.
+
+For $n=2$, the covariance matrix $\Sigma_R$ of the returns of two assets is given by
+\[
+\Sigma_R \;=\; \begin{pmatrix} \sigma_1^2 & \sigma_1\sigma_2\rho_{1,2} \\
+\sigma_1\sigma_2\rho_{1,2} & \sigma_2^2 \end{pmatrix};
+\]
+see (7.12). From (10.7), it follows that
+\begin{equation}
+\Sigma_R^{-1} \;=\; \frac{1}{\sigma_1^2\sigma_2^2(1-\rho_{1,2}^2)}
+\begin{pmatrix} \sigma_2^2 & -\sigma_1\sigma_2\rho_{1,2} \\ -\sigma_1\sigma_2\rho_{1,2}
+& \sigma_1^2 \end{pmatrix}.
+\end{equation}
+
+Let $\bfone = \begin{pmatrix} 1 \\ 1 \end{pmatrix}$. Then,
+\[
+\Sigma_R^{-1}\bfone \;=\; \frac{1}{\sigma_1^2\sigma_2^2(1-\rho_{1,2}^2)}
+\begin{pmatrix} \sigma_2^2-\sigma_1\sigma_2\rho_{1,2} \\
+\sigma_1^2-\sigma_1\sigma_2\rho_{1,2} \end{pmatrix},
+\]
+and therefore we find that
+\begin{equation}
+\bfone^t\Sigma_R^{-1}\bfone \;=\; \frac{\sigma_1^2-2\sigma_1\sigma_2\rho_{1,2}+
+\sigma_2^2}{\sigma_1^2\sigma_2^2(1-\rho_{1,2}^2)}.
+\end{equation}
+
+From (9.76) for $n=2$, and using (9.78) and (9.79), we obtain that
+\begin{align*}
+w_m \;=\; \begin{pmatrix} w_1 \\ w_2 \end{pmatrix} &=
+\frac{1}{\bfone^t\Sigma_R^{-1}\bfone}\Sigma_R^{-1}\bfone \\
+&= \frac{1}{\sigma_1^2-2\sigma_1\sigma_2\rho_{1,2}+\sigma_2^2}
+\begin{pmatrix} \sigma_2^2-\sigma_1\sigma_2\rho_{1,2} \\
+\sigma_1^2-\sigma_1\sigma_2\rho_{1,2} \end{pmatrix} \\
+&= \begin{pmatrix}
+\dfrac{\sigma_2^2-\sigma_1\sigma_2\rho_{1,2}}{\sigma_1^2-2\sigma_1\sigma_2\rho_{1,2}+
+\sigma_2^2} \\[2ex]
+\dfrac{\sigma_1^2-\sigma_1\sigma_2\rho_{1,2}}{\sigma_1^2-2\sigma_1\sigma_2\rho_{1,2}+
+\sigma_2^2}
+\end{pmatrix}.
+\end{align*}

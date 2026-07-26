@@ -1,0 +1,138 @@
+% PAGES: 291-292
+% Chunk c3 (pages 291-302, folios 275-286), file 1 of 5.
+% ch09/ was completely empty when this chunk started (re-listed immediately
+% before beginning this file); chunks c1 (267-278) and c2 (279-290) had not
+% yet written anything at that point. Both had finished by the time this
+% chunk was ready to submit (re-listed again per the standing brief), and
+% c2's last file, sec09_c2_12.tex, explicitly confirms a clean close: "The
+% file ends cleanly at a paragraph boundary (...is $1-C$.) with no open
+% \begin{...}, no open \[, and no open non-environment example block". That
+% matches what page 291 (folio 275) itself shows: a fresh paragraph ("A
+% frequent assumption is that the return of a portfolio is normally
+% distributed.") that is not mid-sentence and does not continue an open
+% display or environment. Nothing needs to be closed here. This file
+% continues inside section 9.6 "Value at Risk (VaR). Portfolio VaR." (opened
+% by c2), referencing c2's formulas (9.84) and (9.85) by number.
+
+A frequent assumption is that the return of a portfolio is normally
+distributed. Note that this would indeed be the case if the returns of the
+portfolio components have a joint multivariate normal distribution. Then, any
+linear combination of their returns, including the weighted average of the
+portfolio returns that gives the portfolio return, see (9.2), would be
+normally distributed; cf. Theorem 7.7.
+
+If a portfolio is assumed to have normally distributed returns, then the
+formulas (9.84) and (9.85) for the $N$ day $C\%$ VaR of the portfolio hold. If
+$\mu_{R_V}$ and $\sigma_{R_V}$ are the annualized expected return and the
+standard deviation of the return of the portfolio over a small time period
+$t$, then
+\begin{equation}
+\frac{V(t)-V(0)}{V(0)} \;=\; \mu_{R_V} t \;+\; \sigma_{R_V}\sqrt{t}\,Z.
+\end{equation}
+
+For an $N$ day horizon, let $t = \frac{N}{252}$ in (9.86) and obtain that
+\begin{equation}
+\frac{V(N)-V(0)}{V(0)} \;=\; \mu_{R_V}\frac{N}{252} \;+\; \sigma_{R_V}\sqrt{\frac{N}{252}}\,Z,
+\end{equation}
+where $V(N)$ is a simplified notation for $V\left(\frac{N}{252}\right)$, the
+value of the portfolio in $N$ days.
+
+From (9.85) and (9.87), it follows that\footnote{The assumption that the
+portfolio has positive initial value, i.e., $V(0) > 0$, was made and used
+implicitly in (9.88).}
+\begin{align}
+&P\bigl(V(N) - V(0) \;\le\; -\VaR(N,C)\bigr) \;=\; 1 - C \notag\\
+\Longleftrightarrow\quad &P\left(\frac{V(N)-V(0)}{V(0)} \;\le\; -\frac{\VaR(N,C)}{V(0)}\right) \;=\; 1-C \\
+\Longleftrightarrow\quad &P\left(\mu_{R_V}\frac{N}{252} + \sigma_{R_V}\sqrt{\frac{N}{252}}\,Z \;\le\; -\frac{\VaR(N,C)}{V(0)}\right) \;=\; 1-C \notag\\
+\Longleftrightarrow\quad &P\left(\sigma_{R_V}\sqrt{\frac{N}{252}}\,Z \;\le\; -\frac{\VaR(N,C)}{V(0)} - \mu_{R_V}\frac{N}{252}\right) \;=\; 1-C \notag\\
+\Longleftrightarrow\quad &P\left(Z \;\le\; -\sqrt{\frac{252}{N}}\,\frac{\VaR(N,C)}{\sigma_{R_V}V(0)} - \sqrt{\frac{N}{252}}\,\frac{\mu_{R_V}}{\sigma_{R_V}}\right) \;=\; 1-C \notag\\
+\Longleftrightarrow\quad &P\left(Z \;\le\; -\left(\sqrt{\frac{252}{N}}\,\frac{\VaR(N,C)}{\sigma_{R_V}V(0)} + \sqrt{\frac{N}{252}}\,\frac{\mu_{R_V}}{\sigma_{R_V}}\right)\right) \;=\; 1-C.
+\end{align}
+
+Let $z_C$ be the $z$--score of the standard normal distribution corresponding
+to $C$, i.e., $P(Z \le z_C) = C$. Note that
+\[
+\begin{aligned}
+z_{99} &= 2.3263, & \text{since}\quad & P(Z \le 2.3263) = 0.99 = 99\%\\
+z_{98} &= 2.0537, & \text{since}\quad & P(Z \le 2.0537) = 0.98 = 98\%;\\
+z_{95} &= 1.6449, & \text{since}\quad & P(Z \le 1.6449) = 0.95 = 95\%;\\
+z_{90} &= 1.2816, & \text{since}\quad & P(Z \le 1.2816) = 0.90 = 90\%.
+\end{aligned}
+\]
+
+Recall that $P(Z \le -a) = 1 - P(Z\le a)$ for any $a\in\R$; see Lemma 10.19 for
+a proof of this result. Then,
+\begin{equation}
+P(Z \le -z_C) \;=\; 1-C.
+\end{equation}
+
+From (9.89) and (9.90), we obtain that
+\begin{equation}
+z_C \;=\; \sqrt{\frac{252}{N}}\,\frac{\VaR(N,C)}{\sigma_{R_V}V(0)} \;+\; \sqrt{\frac{N}{252}}\,\frac{\mu_{R_V}}{\sigma_{R_V}}.
+\end{equation}
+
+By solving (9.91) for $\VaR(N,C)$, we find that
+\begin{equation}
+\VaR(N,C) \;=\; \sqrt{\frac{N}{252}}\,\sigma_{R_V} z_C V(0) \;-\; \frac{N}{252}\mu_{R_V}V(0).
+\end{equation}
+
+For small values of $N$, e.g., for $N \le 10$ corresponding to time horizons
+of less than two weeks, $\frac{N}{252}$ is much smaller\footnote{For example,
+for $N=10$, $\sqrt{\frac{N}{252}} = \sqrt{\frac{10}{252}} \approx 0.20$ and
+$\frac{N}{252} = \frac{10}{252} \approx 0.04$.} than $\sqrt{\frac{N}{252}}$.
+Thus, from (9.92), we obtain the following approximation:
+\begin{equation}
+\VaR(N,C) \;\approx\; \sqrt{\frac{N}{252}}\,\sigma_{R_V} z_C V(0).
+\end{equation}
+
+From (9.93), it can be inferred that the Value at Risk of a portfolio with
+normally distributed return is proportional to the square root of the time
+horizon, which provides the following simple way to scale the Value at Risk
+of a portfolio to different time horizons and confidence levels:
+\[
+\frac{\VaR(N_2,C_2)}{\VaR(N_1,C_1)} \;\approx\; \frac{z_{C_2}\sqrt{N_2}}{z_{C_1}\sqrt{N_1}},
+\]
+which can also be written as
+\begin{equation}
+\VaR(N_2,C_2) \;\approx\; \frac{z_{C_2}\sqrt{N_2}}{z_{C_1}\sqrt{N_1}}\,\VaR(N_1,C_1).
+\end{equation}
+
+\par\medskip\noindent\textit{Example:}\ What is the ten--day 99\% VaR of a
+portfolio with a five--day 98\% VaR of \$10 million?
+
+\begin{answerx}
+Assuming that the returns of the portfolio are normally distributed, we
+obtain from (9.94) that
+\[
+\begin{aligned}
+\VaR(10\text{ days},99\%) &\approx \frac{z_{99}\sqrt{10}}{z_{98}\sqrt{5}}\,\VaR(5\text{ days},98\%) \;=\; \frac{2.3263\sqrt{10}}{2.0537\sqrt{5}}\cdot\$10{,}000{,}000\\
+&= \$16{,}019{,}307.
+\end{aligned}
+\]
+\hfill$\square$
+\end{answerx}
+
+\par\medskip\noindent\textit{Example:}\ Consider two assets with multivariate
+normal distribution of their returns. Their returns have standard deviations
+of 25\% and 35\%, and a correlation of -25\%.
+
+(i) Use formula (9.93) to find approximate values for the 10--day 98\% VaR of
+a \$100 million portfolio if the portfolio is invested in the first asset,
+invested in the second asset, or invested in the minimum variance portfolio
+fully invested in the two assets.
+
+(ii) Assume that the returns of the two assets have expected values of 3\%
+and 6\%, respectively. Use formula (9.92) to find approximate values for the
+10--day 98\% VaR of a \$100 million portfolio if the portfolio is invested in
+the first asset, invested in the
+% --- END OF FILE: mid-sentence, no environment open ---
+% Page 292 (folio 276) ends here mid-sentence, in the middle of part (ii) of
+% this Example's plain-text (not \begin{examplex}) question. No LaTeX
+% environment is open at this point (the manual "Example:" run-in above is
+% plain prose, not an environment, per the established book convention --
+% see e.g. ch04/sec04_c2_1.tex -- since the source's "Example:" here has no
+% closing square of its own; only the "Answer:" that follows on page 293
+% closes with one, via \answerx). sec09_c3_2.tex continues this exact
+% sentence verbatim ("second asset, or invested in the minimum variance
+% portfolio...") and finishes part (ii) and (iii) as plain text, followed by
+% \begin{answerx}...\end{answerx}.

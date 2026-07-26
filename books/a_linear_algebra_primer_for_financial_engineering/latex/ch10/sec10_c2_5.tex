@@ -1,0 +1,226 @@
+% PAGES: 331-334
+
+Note that, by definition, $L_1, L_2, U_1$, and $U_2$ are nonsingular matrices; see
+Definition 2.1. Multiply (10.143) by $L_2^{-1}$ on the left and by $U_1^{-1}$ on the
+right and obtain
+\begin{align}
+L_2^{-1}\cdot(L_1U_1)\cdot U_1^{-1} &= L_2^{-1}\cdot(L_2U_2)\cdot U_1^{-1} \notag \\
+\iff (L_2^{-1}L_1)\cdot(U_1U_1^{-1}) &= (L_2^{-1}L_2)\cdot(U_2U_1^{-1}) \notag \\
+\iff L_2^{-1}L_1 &= U_2U_1^{-1},
+\end{align}
+since $U_1U_1^{-1} = I$ and $L_2^{-1}L_2 = I$.
+
+Recall from Lemma 1.17 that the inverse of a lower triangular matrix is lower
+triangular, and the inverse of an upper triangular matrix is upper triangular, and,
+from Lemma 1.15, that the product of two lower triangular matrices is lower
+triangular, and the product of two upper triangular matrices is upper triangular.
+Thus, the matrix $L_2^{-1}$ is lower triangular and therefore the matrix
+$L_2^{-1}L_1$ is also lower triangular. Similarly, the matrix $U_1^{-1}$ is upper
+triangular and therefore the matrix $U_2U_1^{-1}$ is also upper triangular. Since
+the matrices $L_2^{-1}L_1$ and $U_2U_1^{-1}$ are equal, see (10.144), it follows
+that they must be diagonal matrices.
+
+Let $D = \diag(d_k)_{k=1:n}$ be a diagonal matrix such that
+\begin{equation}
+D \;=\; L_2^{-1}L_1 \;=\; U_2U_1^{-1}.
+\end{equation}
+
+By multiplying $D = L_2^{-1}L_1$ to the left by $L_2$, we find that
+\begin{equation}
+L_2D \;=\; L_2\cdot(L_2^{-1}L_1) \;=\; (L_2^{-1}L_2)\cdot L_1 \;=\; L_1.
+\end{equation}
+
+Let $L_2 = \mathrm{col}\left(l_k^{(2)}\right)_{k=1:n}$. From Lemma 1.10, we obtain
+that
+\begin{equation}
+L_2D \;=\; \mathrm{col}\left(d_kl_k^{(2)}\right)_{k=1:n}.
+\end{equation}
+
+Recall that all the diagonal entries of the matrices $L_1$ and $L_2$ are equal to
+1. From (10.147), it follows that the $k$-th diagonal entry of the matrix $L_2D$ is
+$d_k$, for all $k=1:n$. Since $L_2D = L_1$, see (10.146), and since all the diagonal
+entries of $L_1$ are equal to 1, we obtain that $d_k=1$ for all $k=1:n$, and
+therefore the matrix $D$ is the identity matrix, i.e., $D = I$.
+
+Then, from (10.145), we find that
+\[
+I \;=\; L_2^{-1}L_1 \;=\; U_2U_1^{-1}.
+\]
+
+Thus, $L_1 = L_2$ and $U_1 = U_2$, and we conclude that the LU decomposition of the
+matrix $A$ is unique.
+\end{proof}
+
+\section{More technical results}
+
+We include here the proof of Lemma 1.17 stating that the inverse of a triangular
+matrix is triangular of the same type:
+
+\begin{lemma}
+(i) The inverse of an upper triangular matrix is upper triangular.
+
+(ii) The inverse of a lower triangular matrix is lower triangular.
+\end{lemma}
+
+\begin{proof}
+(i) Let $U = \mathrm{col}(u_k)_{k=1:n}$ be a nonsingular upper triangular matrix and
+let $B = \mathrm{col}(b_k)_{k=1:n}$ be the inverse matrix of $U$. Then,
+\begin{equation}
+BU \;=\; UB \;=\; I.
+\end{equation}
+
+From (1.11), we obtain that $BU = \mathrm{col}(Bu_k)_{k=1:n}$. Since $I =
+\mathrm{col}(e_k)_{k=1:n}$, we find from (10.148) that
+\begin{equation}
+Bu_k \;=\; e_k, \quad \forall\, k = 1:n.
+\end{equation}
+
+Let $k=1$ in (10.149). Then, $Bu_1 = e_1$. Since $U$ is upper triangular, it
+follows from (1.107) that $u_1(i) = 0$, for all $2 \le i \le n$. Thus,
+\[
+e_1 \;=\; Bu_1 \;=\; \sum_{i=1}^n u_1(i)b_i \;=\; u_1(1)b_1,
+\]
+and therefore
+\[
+b_1 \;=\; \frac{1}{u_1(1)}\,e_1.
+\]
+
+Note that $u_1(1) = U(1,1) \ne 0$ since $U$ is nonsingular; cf. Lemma 1.16.
+
+We conclude that all the entries of the first column of the matrix $B$ with the
+exception of the first entry are equal to 0, i.e., the first column of the matrix
+$B$ satisfies the equivalent definition (1.107) of an upper triangular matrix.
+
+We show by (complete) induction that all the columns of the matrix $B$ satisfy
+property (1.107).
+
+Let $k$ such that $2 \le k \le n$. Assume that the columns $b_1, \ldots, b_{k-1}$
+satisfy property (1.107), i.e.,
+\begin{equation}
+b_i(j) \;=\; 0, \quad \forall\, i = 1:(k-1), \quad \forall\, i+1 \le j \le n.
+\end{equation}
+Since $U$ is upper triangular, we also find from (1.107) that
+\begin{equation}
+u_k(i) \;=\; 0, \quad \forall\, k+1 \le i \le n.
+\end{equation}
+
+Recall from (10.149) that $Bu_k = e_k$. From (1.7) and (10.151), it follows that
+\begin{align}
+e_k &= Bu_k \;=\; \sum_{i=1}^n u_k(i)b_i \;=\; \sum_{i=1}^k u_k(i)b_i \notag \\
+&= u_k(k)b_k \;+\; \sum_{i=1}^{k-1} u_k(i)b_i,
+\end{align}
+and therefore
+\begin{equation}
+b_k \;=\; \frac{1}{u_k(k)}\left(e_k - \sum_{i=1}^{k-1} u_k(i)b_i\right).
+\end{equation}
+
+Note that $u_k(k) = U(k,k) \ne 0$ since $U$ is nonsingular; cf. Lemma 1.16.
+
+Let $j$ such that $k+1 \le j \le n$. Then, $e_k(j) = 0$, and, for any $1 \le i \le
+k-1$, $b_i(j) = 0$ as well, from the induction hypothesis (10.150).
+
+Then, from (10.152), it follows that $b_k(j) = 0$ for any $k+1 \le j \le n$, and
+therefore that the column $b_k$ also satisfies property (1.107).
+
+By induction, we conclude that all the columns of the matrix $B$ satisfy property
+(1.107), and therefore that $B$ is an upper triangular matrix.
+
+(ii) Let $L$ be a nonsingular lower triangular matrix, and let $L^{-1}$ be the
+inverse matrix of $L$. Then, by definition,
+\begin{equation}
+LL^{-1} \;=\; L^{-1}L \;=\; I.
+\end{equation}
+
+By transposing (10.153) and using (1.24), we obtain that
+\[
+(L^{-1})^tL^t \;=\; L^t(L^{-1})^t \;=\; I.
+\]
+
+Thus, $(L^{-1})^t$ is the inverse matrix of $L^t$, which is an upper triangular
+matrix.
+
+We already proved that the inverse of an upper triangular matrix is upper
+triangular. It then follows that $(L^{-1})^t$ is an upper triangular matrix, and we
+therefore conclude that $L^{-1}$ is a lower triangular matrix.
+\end{proof}
+
+The result below was used to establish (9.90) in section 9.6:
+
+\begin{lemma}
+If $Z$ is a standard normal variable, then
+\[
+P(Z \le -a) \;=\; 1 - P(Z \le a), \quad \forall\, a \in \R.
+\]
+\end{lemma}
+
+\begin{proof}
+Recall that
+\begin{equation}
+P(Z \le -a) \;=\; \frac{1}{\sqrt{2\pi}}\int_{-\infty}^{-a} e^{-\frac{x^2}{2}}\,dx,
+\end{equation}
+since the probability density function of the standard normal variable $Z$ is
+$\frac{1}{\sqrt{2\pi}}e^{-\frac{x^2}{2}}$; see (7.109). Using the substitution $x =
+-y$ in (10.154), we find that
+\begin{align}
+P(Z \le -a) &= \frac{1}{\sqrt{2\pi}}\int_\infty^a e^{-\frac{(-y)^2}{2}}(-dy)
+\;=\; \frac{1}{\sqrt{2\pi}}\int_a^\infty e^{-\frac{y^2}{2}}\,dy \notag \\
+&= 1 \;-\; \frac{1}{\sqrt{2\pi}}\int_{-\infty}^a e^{-\frac{y^2}{2}}\,dy \notag \\
+&= 1 \;-\; P(Z \le a),
+\end{align}
+which is what we wanted to show. Note that, for the third equality above, we used
+the fact that
+\[
+\frac{1}{\sqrt{2\pi}}\int_{-\infty}^a e^{-\frac{y^2}{2}}\,dy \;+\;
+\frac{1}{\sqrt{2\pi}}\int_a^\infty e^{-\frac{y^2}{2}}\,dy \;=\;
+\frac{1}{\sqrt{2\pi}}\int_{-\infty}^\infty e^{-\frac{y^2}{2}}\,dy \;=\; 1,
+\]
+since the integral over $(-\infty,\infty)$ of the probability density
+$\frac{1}{\sqrt{2\pi}}e^{-\frac{y^2}{2}}$ of $Z$ is equal to 1.
+\end{proof}
+
+\section{Exercises}
+
+\begin{exercises}
+
+\item Show that
+\[
+\det\begin{pmatrix} 1 & a & a^2 \\ 1 & b & b^2 \\ 1 & c & c^2 \end{pmatrix}
+\;=\; (c-a)(c-b)(b-a),
+\]
+where $a,b,c \in \R$.
+
+Note: A matrix of the form
+\[
+\begin{pmatrix} 1 & c_1 & c_1^2 & \ldots & c_1^{n-1} \\
+1 & c_2 & c_2^2 & \ldots & c_2^{n-1} \\
+\vdots & \vdots & \vdots & \ddots & \vdots \\
+1 & c_n & c_n^2 & \ldots & c_n^{n-1} \end{pmatrix},
+\]
+where $c_1, c_2, \ldots, c_n$ are constants, is called a Vandermonde matrix. The
+determinant of the Vandermonde matrix is equal to
+\[
+\prod_{1 \le k < j \le n} (c_j - c_k).
+\]
+
+\item Show that any orthogonal matrix has determinant 1 or $-1$. In other words,
+show that, for any orthogonal matrix $Q$, either $\det(Q) = 1$, or $\det(Q) = -1$.
+
+\item Let $M_1$ and $M_2$ be $n \times n$ symmetric matrices. Show that, if
+\[
+x^tM_1x \;=\; x^tM_2x, \quad \forall\, x \in \R^n,
+\]
+then $M_1 = M_2$.
+
+\item Show that the quadratic form of a matrix is 0 if and only if the matrix is
+skew--symmetric, i.e., show that
+\[
+q_A(x) = 0 \quad \text{if and only if} \quad A^t = -A.
+\]
+
+\end{exercises}
+
+% This is the last chunk of Chapter 10 (the book's final chapter). PDF page 334
+% (folio 318) is the true end of the chapter: after Exercise 4 the page is blank
+% down to the bottom margin, and PDF page 335 opens the book's bibliography
+% (out of scope for this chunk). No environment, display math, or non-environment
+% example/answer/remark block is left open at the end of this file.

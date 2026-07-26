@@ -1,0 +1,70 @@
+% PAGES: 280-280
+% Closes the \begin{answerx} opened at the end of sec09_c2_1.tex (PDF page
+% 279): the printed closing square appears after "...24%, respectively."
+% below. Section 9.3 (min-variance/tangency portfolio) then closes with the
+% two-asset tangency-portfolio derivation; section 9.4 has not started yet at
+% the end of this file -- it opens at the top of PDF page 281 (folio 265).
+%
+% "(10.7)" below is a genuine forward cross-reference, not a transcription
+% error: the same 2x2-matrix-inverse formula is cited again as "(10.7)" on
+% PDF page 289 (folio 273), and this chapter repeatedly cites chapter 10
+% (e.g. Theorem 10.7, (10.66), (10.67), section 10.2.2 on the following
+% pages) for Lagrange-multiplier and matrix-calculus background material.
+
+and, from (9.41), we find that the asset weights vector corresponding to the minimum
+variance portfolio is
+\[
+w_{min} \;=\; (1-w_{min,cash})\,w_T \;=\;
+\begin{pmatrix} 0.2120 \\ 0.4888 \\ 0.3540 \\ 0.2808 \end{pmatrix}.
+\]
+
+Thus, the \$100 million minimum variance portfolio with expected return equal to
+2.25\% is obtained by borrowing \$33.56 million and investing \$21.20 million in asset
+1, \$48.88 million in asset 2, \$35.40 million in asset 3, and \$28.08 million in asset
+4.
+
+From (9.35), we find that the standard deviation of the return of the minimum
+variance portfolio is $\sigma_{min} = 0.1949$, i.e., 19.49\%, which is smaller than
+the standard deviation of the returns of each of the four assets, which are
+$\sqrt{0.09} = 0.3 = 30\%$, $\sqrt{0.0625} = 0.25 = 25\%$, $\sqrt{0.1225} = 0.35 =
+35\%$, $\sqrt{0.0576} = 0.24 = 24\%$, respectively. \hfill$\square$
+\end{answerx}
+
+We conclude this section by deriving the formulas for the weights of the tangency
+portfolio made of two assets by using formula (9.36) for $n=2$ assets.
+
+For $n=2$, the covariance matrix $\Sigma_R$ of the returns of two assets and the
+vector $\bar\mu$ of the excess returns of the assets over the risk--free rate are
+\begin{equation}
+\Sigma_R \;=\; \begin{pmatrix} \sigma_1^2 & \sigma_1\sigma_2\rho_{1,2} \\
+\sigma_1\sigma_2\rho_{1,2} & \sigma_2^2 \end{pmatrix} \quad \text{and} \quad
+\bar\mu \;=\; \begin{pmatrix} \mu_1-r_f \\ \mu_2-r_f \end{pmatrix},
+\end{equation}
+respectively; see (7.12) and (9.4). From (10.7), we find that
+\begin{equation}
+\Sigma_R^{-1} \;=\; \frac{1}{\sigma_1^2\sigma_2^2(1-\rho_{1,2}^2)}
+\begin{pmatrix} \sigma_2^2 & -\sigma_1\sigma_2\rho_{1,2} \\ -\sigma_1\sigma_2\rho_{1,2}
+& \sigma_1^2 \end{pmatrix}.
+\end{equation}
+
+From (9.42) and (9.43), we obtain that
+\begin{align*}
+\Sigma_R^{-1}\bar\mu &= \frac{1}{\sigma_1^2\sigma_2^2(1-\rho_{1,2}^2)}
+\begin{pmatrix} \sigma_2^2(\mu_1-r_f)-\sigma_1\sigma_2\rho_{1,2}(\mu_2-r_f) \\
+\sigma_1^2(\mu_2-r_f)-\sigma_1\sigma_2\rho_{1,2}(\mu_1-r_f) \end{pmatrix}; \\
+\bfone^t\Sigma_R^{-1}\bar\mu &= \frac{\sigma_1^2(\mu_2-r_f) -
+\rho_{1,2}\sigma_1\sigma_2(\mu_1+\mu_2-2r_f) + \sigma_2^2(\mu_1-r_f)}
+{\sigma_1^2\sigma_2^2(1-\rho_{1,2}^2)},
+\end{align*}
+and, from (9.36), we conclude that
+\begin{align*}
+w_T \;=\; \begin{pmatrix} w_{1,T} \\ w_{2,T} \end{pmatrix} &= \frac{\Sigma_R^{-1}\bar\mu}
+{\bfone^t\Sigma_R^{-1}\bar\mu} \\
+&= \begin{pmatrix}
+\dfrac{\sigma_2^2(\mu_1-r_f)-\sigma_1\sigma_2\rho_{1,2}(\mu_2-r_f)}
+{\sigma_1^2(\mu_2-r_f)-\rho_{1,2}\sigma_1\sigma_2(\mu_1+\mu_2-2r_f)+\sigma_2^2(\mu_1-r_f)}
+\\[2ex]
+\dfrac{\sigma_1^2(\mu_2-r_f)-\sigma_1\sigma_2\rho_{1,2}(\mu_1-r_f)}
+{\sigma_1^2(\mu_2-r_f)-\rho_{1,2}\sigma_1\sigma_2(\mu_1+\mu_2-2r_f)+\sigma_2^2(\mu_1-r_f)}
+\end{pmatrix}.
+\end{align*}

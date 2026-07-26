@@ -1,0 +1,76 @@
+% PAGES: 275-275
+% Section 9.2 closed cleanly at the end of sec09_c1_8.tex. This file opens
+% section 9.3 fresh.
+
+\section{Minimum variance portfolios}
+
+The minimum variance portfolio invested in $n$ assets and with a cash position is the
+portfolio which has the smallest variance of its return of all the portfolios with a
+given expected return $\mu_P$.
+
+In other words, given $\mu_P$, we are looking for a weights vector $w = (w_i)_{i=1:n}$
+such that $\mu_R = \mu_P$ and $\sigma_R^2$ is minimal. From (9.6) and (9.8), it follows
+that we want to minimize $\sigma_R^2 = w^t\Sigma_Rw$ subject to $\mu_R = r_f +
+\bar\mu^tw = \mu_P$, i.e.,
+\begin{equation}
+\min_{r_f+\bar\mu^tw=\mu_P} w^t\Sigma_Rw.
+\end{equation}
+
+We use Lagrange multipliers to solve this problem; see section 10.2.2 for details. The
+associated Lagrangian function $F : \R^{n+1} \to \R$ is given by
+\[
+F(w,\lambda) \;=\; w^t\Sigma_Rw \;+\; \lambda(\mu_P-r_f-\bar\mu^tw),
+\]
+where $\lambda \in \R$ is the Lagrange multiplier.\footnote{Lagrange multipliers can be
+used to solve this constrained optimization problem since the condition (10.66), i.e.,
+$\rank(Dg(w)) = 1$, is satisfied for the constraint function $g(w) = \mu_P - r_f -
+\bar\mu^tw$. From (10.43), we find that
+\[
+Dg(w) \;=\; D(\mu_P-r_f-\bar\mu^tw) \;=\; -D(\bar\mu^tw) \;=\; -\bar\mu^t,
+\]
+and therefore $\rank(Dg(w)) = 1$.}
+
+Since the covariance matrix $\Sigma_R$ is symmetric, we obtain from (10.47) that
+\begin{equation}
+D\left(w^t\Sigma_Rw\right) \;=\; 2\left(\Sigma_Rw\right)^t.
+% Printed with a second stray period immediately after this one, PDF page 275
+% (folio 259) -- almost certainly scan/print noise rather than deliberate
+% typesetting, consistent with other isolated ink specks on this page;
+% verified at 600 dpi. Not reproduced as a second punctuation mark; see also
+% the ch08 Put-Call-parity exercise note for this book's other stray-ink-dot
+% artifact.
+\end{equation}
+
+Also, from (10.43), it follows that
+\begin{equation}
+D(\bar\mu^tw) \;=\; \bar\mu^t.
+\end{equation}
+
+Then,
+\begin{align}
+D_wF(w,\lambda) &= D\left(w^t\Sigma_Rw\right) + \lambda D(\mu_P-r_f-\bar\mu^tw) \notag\\
+&= D\left(w^t\Sigma_Rw\right) - \lambda D(\bar\mu^tw) \notag\\
+&= 2\left(\Sigma_Rw\right)^t - \lambda\bar\mu^t \notag\\
+&= \left(2\Sigma_Rw-\lambda\bar\mu\right)^t.
+\end{align}
+
+Also, note that
+\begin{equation}
+D_\lambda F(w,\lambda) \;=\; \pd{F}{\lambda}(w,\lambda) \;=\; \mu_P-r_f-\bar\mu^tw.
+\end{equation}
+
+From (10.67), (9.24), and (9.25), we conclude that the gradient of the Lagrangian
+function is
+\[
+D_{(w,\lambda)}F(w,\lambda) \;=\;
+\begin{pmatrix} (D_wF(w,\lambda))^t \\ (D_\lambda F(w,\lambda))^t \end{pmatrix}^t
+\;=\;
+\begin{pmatrix} 2\Sigma_Rw-\lambda\bar\mu \\ \mu_P-r_f-\bar\mu^tw \end{pmatrix}^t.
+\]
+
+To find the critical point of the Lagrangian, we solve $D_{(w,\lambda)}F(w_0,\lambda_0)
+= 0$, which is equivalent to solving
+\begin{align}
+2\Sigma_Rw_0 &= \lambda_0\bar\mu; \\
+\bar\mu^tw_0 &= \mu_P-r_f.
+\end{align}

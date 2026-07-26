@@ -1,0 +1,111 @@
+% PAGES: 309-310
+
+\begin{lemma}
+Multiplying a vector by an orthogonal matrix does not change the Euclidean norm of
+the vector.
+
+In other words, if $Q$ is an $n \times n$ orthogonal matrix and $v$ is a column
+vector of size $n$, then
+\begin{equation}
+||Qv|| \;=\; ||v||.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Let $Q$ be an orthogonal matrix. Then, $Q^tQ = I$, see Theorem 10.2, and therefore
+\[
+||Qv||^2 \;=\; (Qv,Qv) \;=\; (Qv)^tQv \;=\; v^tQ^tQv \;=\; v^tv \;=\; ||v||^2.
+\qedhere
+\]
+\end{proof}
+
+\begin{lemma}
+Any eigenvalue of an orthogonal matrix has absolute value equal to $1$.
+\end{lemma}
+
+\begin{proof}
+Let $\lambda$ be an eigenvalue of the orthogonal matrix $Q$, and let $v \ne 0$ be the
+corresponding eigenvector; note that $\lambda$ could be a complex number. Then,
+$Qv = \lambda v$, and, from (10.18), we obtain that
+\[
+||v|| \;=\; ||Qv|| \;=\; ||\lambda v|| \;=\; |\lambda|\,||v||.
+\]
+
+Since $||v|| \ne 0$, it follows that $|\lambda| = 1$.
+\end{proof}
+
+\subsection{Quadratic forms}
+
+\begin{lemma}
+Let $A = (A(j,k))_{j,k=1:n}$ be a square matrix of size $n$, and let $x =
+(x_i)_{i=1:n}$ and $y = (y_i)_{i=1:n}$ be two column vectors of size $n$. Then,
+\begin{equation}
+y^tAx \;=\; \sum_{1\le j,k\le n} A(j,k)y_jx_k.
+\end{equation}
+
+Also,
+\begin{equation}
+x^tAx \;=\; \sum_{1\le j,k\le n} A(j,k)x_jx_k.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Let $A = \mathrm{col}(a_k)_{k=1:n}$ be the column form of $A$. Then,
+\begin{equation}
+Ax \;=\; \sum_{k=1}^n x_ka_k;
+\end{equation}
+see (1.7). Since $a_k = (A(j,k))_{j=1:n}$, we find from (1.5) that
+\begin{equation}
+y^ta_k \;=\; \sum_{j=1}^n y_jA(j,k).
+\end{equation}
+
+From (10.21) and (10.22), we obtain that
+\begin{align}
+y^tAx \;&=\; y^t\left(\sum_{k=1}^n x_ka_k\right) \;=\; \sum_{k=1}^n y^t\cdot(x_ka_k) \notag \\
+&=\; \sum_{k=1}^n x_k\cdot(y^ta_k),
+\end{align}
+where the equality from (10.23) comes from the fact that $x_k$ is scalar (i.e., a
+number) and $y^t$ and $a_k$ are vectors.
+
+From (10.22) and (10.23), we conclude that
+\begin{align*}
+y^tAx \;&=\; \sum_{k=1}^n x_k\left(\sum_{j=1}^n y_jA(j,k)\right) \\
+&=\; \sum_{k=1}^n\sum_{j=1}^n x_ky_jA(j,k) \\
+&=\; \sum_{1\le j,k\le n} A(j,k)y_jx_k.
+\end{align*}
+
+Thus, (10.19) is proved, and (10.20) follows from (10.19) by letting $y = x$.
+\end{proof}
+
+From (10.20), we obtain that
+\begin{equation}
+1^tA1 \;=\; \sum_{1\le j,k\le n} A(j,k),
+\end{equation}
+where $1$ is the $n \times 1$ column vector with all entries equal to $1$.
+% Verified at 600 dpi: the "1" here (both as the vector symbol and the scalar
+% entry value) is set in plain, non-bold type -- unlike \bfone in Chapter 9.
+% Reproduced as printed.
+
+Note that, if $D = \diag(d_k)_{k=1:n}$ is a diagonal matrix, it follows from (10.20)
+that
+\begin{equation}
+x^tDx \;=\; \sum_{k=1}^n d_kx_k^2, \quad \forall\, x \in \R^n.
+\end{equation}
+
+\begin{definition}
+Let $A = (A(j,k))_{j,k=1:n}$ be a square matrix of size $n$. The quadratic form
+$q_A : \R^n \to \R$ associated with the matrix $A$ is defined as
+\begin{equation}
+q_A(x) \;=\; x^tAx,
+\end{equation}
+or, equivalently, as
+\begin{equation}
+q_A(x) \;=\; \sum_{1\le j,k\le n} A(j,k)x_jx_k;
+\end{equation}
+cf. (10.20).
+\end{definition}
+
+From (10.27), it follows that the quadratic form $q_A(x)$ can also be written as
+\begin{equation}
+q_A(x) \;=\; \sum_{j=1}^n A(j,j)x_j^2 \;+\; \sum_{1\le j<k\le n} (A(j,k)+A(k,j))x_jx_k.
+\end{equation}

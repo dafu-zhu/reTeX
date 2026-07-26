@@ -1,0 +1,69 @@
+% PAGES: 281-281
+% Section 9.3 closed cleanly at the end of sec09_c2_2.tex. This file opens
+% section 9.4 fresh.
+%
+% "we assumes" (below, "since we assumes that the return of none of the
+% assets...") is printed exactly that way in the source (subject/verb
+% agreement error) -- transcribed as printed, not corrected.
+
+\section{Maximum return portfolios}
+
+The maximum return portfolio invested in $n$ assets and with a cash position is the
+portfolio which has the largest expected return of all the portfolios with given
+variance $\sigma_P^2$ of the portfolio return.
+
+In other words, given $\sigma_P^2 \neq 0$, we are looking for a weights vector $w =
+(w_i)_{i=1:n}$ such that $\sigma_R^2 = \sigma_P^2$ and $\mu_R$ is maximal. From (9.6)
+and (9.8), it follows that we want to maximize $\mu_R = r_f + \bar\mu^tw$ subject to
+$\sigma_R^2 = w^t\Sigma_Rw = \sigma_P^2$, i.e.,
+\begin{equation}
+\max_{w^t\Sigma_Rw=\sigma_P^2} \left(r_f+\bar\mu^tw\right).
+\end{equation}
+
+We use Lagrange multipliers to solve this problem; see section 10.2.2 for details.
+The associated Lagrangian function $F:\R^{n+1}\to\R$ is given by
+\[
+F(w,\lambda) \;=\; r_f+\bar\mu^tw \;+\; \lambda(w^t\Sigma_Rw-\sigma_P^2),
+\]
+where $\lambda\in\R$ is the Lagrange multiplier.\footnote{Lagrange multipliers can be
+used to solve this constrained optimization problem, since the condition (10.66),
+i.e., $\rank(Dg(w))=1$, is satisfied for the constraint function $g(w) =
+w^t\Sigma_Rw-\sigma_P^2$. From (9.22), we find that
+\[
+Dg(w) \;=\; D(w^t\Sigma_Rw-\sigma_P^2) \;=\; 2(\Sigma_Rw)^t.
+\]
+Thus, $\rank(Dg(w))=1$ for any vector satisfying the constraint $w^t\Sigma_Rw =
+\sigma_P^2$, unless $\Sigma_Rw = 0$. This would imply that $\sigma_P^2 = 0$, which
+would contradict the assumption that $\sigma_P \neq 0$.} Recall that
+$D(\bar\mu^tw)=\bar\mu^t$ and $D\left(w^t\Sigma_Rw\right) = 2(\Sigma_Rw)^t$; see
+(9.23) and (9.22). Then,
+\begin{align}
+D_wF(w,\lambda) &= D(r_f+\bar\mu^tw)+\lambda D(w^t\Sigma_Rw-\sigma_P^2) \notag\\
+&= D(\bar\mu^tw)+\lambda D\left(w^t\Sigma_Rw\right) \notag\\
+&= \bar\mu^t+2\lambda\left(\Sigma_Rw\right)^t \notag\\
+&= \left(\bar\mu+2\lambda\Sigma_Rw\right)^t; \\
+D_\lambda F(w,\lambda) &= \pd{F}{\lambda}(w,\lambda) \;=\; w^t\Sigma_Rw-\sigma_P^2.
+\end{align}
+
+From (10.67), (9.45), and (9.46), we conclude that the gradient of the Lagrangian
+function is
+\[
+D_{(w,\lambda)}F(w,\lambda) \;=\;
+\begin{pmatrix} (D_wF(w,\lambda))^t \\ (D_\lambda F(w,\lambda))^t \end{pmatrix}^t
+\;=\;
+\begin{pmatrix} \bar\mu+2\lambda\Sigma_Rw \\ w^t\Sigma_Rw-\sigma_P^2 \end{pmatrix}^t.
+\]
+
+To find the critical point of the Lagrangian, we solve $D_{(w,\lambda)}F(w_0,\lambda_0)
+= 0$, which is equivalent to solving
+\begin{align}
+2\lambda_0\Sigma_Rw_0 &= -\bar\mu; \\
+\sigma_P^2 &= w_0^t\Sigma_Rw_0.
+\end{align}
+
+Recall that $\Sigma_R$ is a nonsingular matrix, since we assumes that the return of
+none of the assets can be replicated by using the other $n-1$ assets and cash; see
+section 9.1. Then, from (9.47), we find that
+\begin{equation}
+w_0 \;=\; -\frac{1}{2\lambda_0}\Sigma_R^{-1}\bar\mu.
+\end{equation}

@@ -1,0 +1,186 @@
+% PAGES: 311-313
+
+\begin{theorem}
+(i) For any square matrix $A$,
+\[
+q_A(x) \;=\; q_{A^t}(x),
+\]
+i.e., the quadratic forms associated to a square matrix and its transpose are equal.
+
+Moreover,
+\begin{equation}
+q_A(x) \;=\; \frac12 x^t\left(A+A^t\right)x.
+\end{equation}
+
+(ii) If $A$ and $B$ are square matrices of the same size, then
+\begin{equation}
+q_A(x) = q_B(x) \quad \iff \quad A+A^t = B+B^t.
+\end{equation}
+
+(iii) For every square matrix $A$ of size $n$ there exists a unique symmetric matrix
+$M$ of size $n$ such that
+\[
+q_A(x) = q_M(x).
+\]
+\end{theorem}
+
+Note that, from (10.30), it follows that different matrices may have identical
+quadratic forms.
+
+\begin{proof}
+(i) For any $x \in \R^n$, the value of the quadratic form $q_A$ evaluated at $x$ is a
+number, i.e., $q_A(x) \in \R$. Then, $q_A(x) = (q_A(x))^t$, which can be written as
+\[
+q_A(x) \;=\; x^tAx \;=\; (q_A(x))^t \;=\; (x^tAx)^t \;=\; x^tA^tx \;=\; q_{A^t}(x).
+\]
+
+Thus, $q_A(x) = q_{A^t}(x)$ and therefore
+\begin{align*}
+q_A(x) \;&=\; \frac12\left(q_A(x)+q_{A^t}(x)\right) \\
+&=\; \frac12\left(x^tAx+x^tA^tx\right) \\
+&=\; \frac12 x^t\left(A+A^t\right)x.
+\end{align*}
+
+(ii) From (10.28), it follows that $q_A(x) = q_B(x)$ if and only if
+\begin{equation}
+\sum_{j=1}^n A(j,j)x_j^2 \;+\; \sum_{1\le j<k\le n} (A(j,k)+A(k,j))x_jx_k
+\end{equation}
+\begin{equation}
+=\; \sum_{j=1}^n B(j,j)x_j^2 \;+\; \sum_{1\le j<k\le n} (B(j,k)+B(k,j))x_jx_k, \quad \forall\, x \in \R^n.
+\end{equation}
+
+By identifying the coefficients of $x_jx_k$, for all $1 \le j < k \le n$ and of
+$x_j^2$, for all $j = 1:n$, from (10.31) and (10.32), we find that $q_A = q_B$ if and
+only if
+\begin{align}
+A(j,j) &= B(j,j), \quad \forall\, 1 \le j \le n; \\
+A(j,k)+A(k,j) &= B(j,k)+B(k,j), \quad \forall\, 1 \le j < k \le n.
+\end{align}
+
+Note that (10.33) and (10.34) are equivalent to saying that the matrices $A+A^t$ and
+$B+B^t$ are equal. We conclude that $q_A = q_B$ if and only if $A+A^t = B+B^t$.
+
+(iii) Let $M$ be a symmetric matrix. Then, $M^t = M$, and, using (10.30), we find
+that
+\begin{align*}
+q_A(x) = q_M(x) \quad &\iff \quad A+A^t = M+M^t \\
+&\iff \quad A+A^t = 2M \\
+&\iff \quad M = \frac{A+A^t}{2}.
+\end{align*}
+
+Thus, the only symmetric matrix $M$ such that $q_A = q_M$ is $M = \dfrac{A+A^t}{2}$.
+\end{proof}
+
+\begin{theorem}
+(i) The gradient and Hessian of the quadratic form $q_A : \R^n \to \R$ associated to
+the $n \times n$ matrix $A$ are
+\begin{align}
+D(q_A(x)) &= \left((A+A^t)x\right)^t; \\
+D^2(q_A(x)) &= A+A^t.
+\end{align}
+
+(ii) If $A$ is a symmetric matrix, then
+\begin{align}
+D(q_A(x)) &= 2(Ax)^t; \\
+D^2(q_A(x)) &= 2A.
+\end{align}
+\end{theorem}
+
+\begin{proof}
+A proof of this result can be found in section 10.2.1; see Theorem 10.5.
+\end{proof}
+
+\section{Mathematical tools}
+
+\subsection{Multivariable functions}
+
+The material in this section is adapted from Stefanica \cite{36}; see section 1.6
+therein for more details.
+
+\textit{Scalar Valued Functions}
+
+Let $f : \R^n \to \R$ be a function of $n$ variables $x_1,x_2,\ldots,x_n$ and let
+$x = (x_1,x_2,\ldots,x_n)$.
+
+If the function $f(x)$ is differentiable with respect to all the variables $x_i$,
+$i = 1:n$, then the gradient of $f(x)$ is the following $1 \times n$ row vector:
+\begin{equation}
+Df(x) \;=\; \left(\pd{f}{x_1}(x) \quad \pd{f}{x_2}(x) \quad \ldots \quad \pd{f}{x_n}(x)\right).
+\end{equation}
+
+If the function $f(x)$ is twice differentiable with respect to all variables $x_j,
+x_k$, with $1 \le j,k \le n$, then the Hessian of $f(x)$ is the following $n \times n$
+matrix:
+\begin{equation}
+D^2f(x) \;=\; \begin{pmatrix}
+\dfrac{\partial^2 f}{\partial x_1^2}(x) & \dfrac{\partial^2 f}{\partial x_2\partial x_1}(x) & \ldots & \dfrac{\partial^2 f}{\partial x_n\partial x_1}(x) \\[1.2ex]
+\dfrac{\partial^2 f}{\partial x_1\partial x_2}(x) & \dfrac{\partial^2 f}{\partial x_2^2}(x) & \ldots & \dfrac{\partial^2 f}{\partial x_n\partial x_2}(x) \\[1.2ex]
+\vdots & \vdots & \ddots & \vdots \\[0.6ex]
+\dfrac{\partial^2 f}{\partial x_1\partial x_n}(x) & \dfrac{\partial^2 f}{\partial x_2\partial x_n}(x) & \ldots & \dfrac{\partial^2 f}{\partial x_n^2}(x)
+\end{pmatrix}.
+\end{equation}
+
+In other words,
+\begin{equation}
+D^2f(x) \;=\; \left(\frac{\partial^2 f}{\partial x_k\partial x_j}(x)\right)_{1\le j,k\le n}.
+\end{equation}
+
+Note that, for all $j = 1:n$, it follows from (10.39) that
+\[
+D\left(\pd{f}{x_j}(x)\right) \;=\; \left(\frac{\partial^2 f}{\partial x_1x_j}(x) \quad \frac{\partial^2 f}{\partial x_2x_j}(x) \quad \ldots \quad \frac{\partial^2 f}{\partial x_nx_j}(x)\right),
+\]
+and therefore
+\begin{align}
+D^2f(x) \;&=\; \begin{pmatrix} D\left(\pd{f}{x_1}(x)\right) \\ D\left(\pd{f}{x_2}(x)\right) \\ \vdots \\ D\left(\pd{f}{x_n}(x)\right) \end{pmatrix}
+\;=\; D\begin{pmatrix} \pd{f}{x_1}(x) \\ \pd{f}{x_2}(x) \\ \vdots \\ \pd{f}{x_n}(x) \end{pmatrix} \notag \\
+&=\; D\left((Df(x))^t\right).
+\end{align}
+
+\begin{lemma}
+Let $C = (c_i)_{i=1:n}$ be an $n \times 1$ column vector of real constants, and let
+$x = (x_i)_{i=1:n}$ be a column vector of $n$ variables. Then,
+\begin{align}
+D(C^tx) &= C^t; \\
+D(x^tC) &= C^t; \\
+D^2(C^tx) &= \bfzero; \\
+D^2(x^tC) &= \bfzero,
+\end{align}
+where $\bfzero$ denotes an $n \times n$ matrix with all entries equal to $0$.
+\end{lemma}
+
+\begin{proof}
+Note that
+\[
+C^tx \;=\; x^tC \;=\; \sum_{i=1}^n c_ix_i;
+\]
+cf. (1.5), and let $f : \R^n \to \R$ given by
+\[
+f(x) \;=\; \sum_{i=1}^n c_ix_i.
+\]
+
+Then,
+\[
+\pd{f}{x_i}(x) = c_i, \quad \forall\, i = 1:n; \qquad \frac{\partial^2 f}{\partial x_jx_k} = 0. \quad \forall\, 1 \le j,k \le n.
+\]
+
+From (10.39) and (10.40), it follows that
+\[
+Df(x) \;=\; (c_1 \ c_2 \ \ldots \ c_n) \;=\; C^t; \quad D^2f(x) \;=\; \bfzero.
+\qedhere
+\]
+\end{proof}
+
+\begin{theorem}
+(i) Let $A$ be an $n \times n$ symmetric matrix and let $x = (x_i)_{i=1:n}$ be a
+column vector of $n$ variables. The gradient and Hessian of $x^tAx$ are
+\begin{align}
+D(x^tAx) &= 2(Ax)^t; \\
+D^2(x^tAx) &= 2A.
+\end{align}
+
+% This "theorem" (Theorem 10.5) is left OPEN at the end of this file: part (ii)
+% of the statement and the whole proof are on folio 298 (PDF page 314), the
+% first page of the next file (sec10_c1_5.tex). That file continues directly
+% with "(ii) Let A be a square matrix..." and eventually supplies
+% "\end{theorem}" -- do not reopen "\begin{theorem}" or reprint "Theorem
+% 10.5" there.

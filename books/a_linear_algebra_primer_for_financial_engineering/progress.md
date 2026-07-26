@@ -125,17 +125,17 @@ offset.
 
 ## Chapter 9 — Efficient portfolios. Value at Risk. (PDF 267–302)
 
-- [ ] 9.1 Efficient portfolios. Markowitz portfolio theory.
-- [ ] 9.2 Blueprints for finding efficient portfolios
-- [ ] 9.3 Minimum variance portfolios
-- [ ] 9.3.1 Minimum variance portfolios and the tangency portfolio
-- [ ] 9.4 Maximum return portfolios
-- [ ] 9.4.1 Maximum return portfolios and the tangency portfolio
-- [ ] 9.5 Minimum variance portfolio with no cash position
-- [ ] 9.6 Value at Risk (VaR). Portfolio VaR.
-- [ ] 9.6.1 VaR of combined portfolios and subadditivity
-- [ ] 9.7 References
-- [ ] 9.8 Exercises
+- [x] 9.1 Efficient portfolios. Markowitz portfolio theory.
+- [x] 9.2 Blueprints for finding efficient portfolios
+- [x] 9.3 Minimum variance portfolios
+- [x] 9.3.1 Minimum variance portfolios and the tangency portfolio
+- [x] 9.4 Maximum return portfolios
+- [x] 9.4.1 Maximum return portfolios and the tangency portfolio
+- [x] 9.5 Minimum variance portfolio with no cash position
+- [x] 9.6 Value at Risk (VaR). Portfolio VaR.
+- [x] 9.6.1 VaR of combined portfolios and subadditivity
+- [x] 9.7 References
+- [x] 9.8 Exercises
 
 ## Chapter 10 — Mathematical appendix and technical results (PDF 303–334)
 

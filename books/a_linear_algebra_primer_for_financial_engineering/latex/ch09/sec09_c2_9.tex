@@ -1,0 +1,63 @@
+% PAGES: 287-287
+% Closes the \begin{answerx} opened at the end of sec09_c2_8.tex (PDF page
+% 286): the printed closing square appears after "...four assets." below.
+% Section 9.4 then ends and section 9.5 opens on this same page. Footnote 8
+% is self-contained on this page (opens and closes here).
+
+From (9.67), we find that the weight of the cash position in the maximum return
+portfolio is
+\[
+w_{max,cash} \;=\; 1-\frac{\sigma_P}{\sqrt{w_T^t\Sigma_Rw_T}}\cdot
+\operatorname{sign}\!\left(\bfone^t\Sigma_R^{-1}\bar\mu\right) \;=\; -0.8507,
+\]
+and, from (9.68), we find that the asset weights vector corresponding to the maximum
+return portfolio is
+\[
+w_{max} \;=\; (1-w_{max,cash})\,w_T \;=\;
+\begin{pmatrix} 0.2938 \\ 0.6773 \\ 0.4905 \\ 0.3891 \end{pmatrix}.
+\]
+
+Thus, the \$100 million maximum return portfolio with 27\% standard deviation of
+return is obtained by borrowing \$85.07 million and investing \$29.38 million in
+asset 1, \$67.73 million in asset 2, \$49.05 million in asset 3, and \$38.91 million
+in asset 4.
+
+From (9.61), we find that the maximum expected return of this portfolio is
+$\mu_{max} = 0.0273$, i.e., 2.73\%, which is more than 2.5\%, the largest expected
+return of any of the four assets. \hfill$\square$
+\end{answerx}
+
+\section{Minimum variance portfolio with no cash position}
+
+In this section, we find the asset allocation for a minimum variance portfolio fully
+invested in $n$ assets. Note that this is different from the minimum variance
+portfolio found in Section 9.3, since we now require that no cash position is being
+held.
+
+Consider a portfolio fully invested in $n$ assets. Since there is no cash position in
+the portfolio, it follows that $\sum_{i=1}^n w_i = 1$, which can be written in vector
+form as $\bfone^tw = 1$, where $\bfone$ is the $n\times1$ column vector whose entries
+are all equal to 1.
+
+We look for a weights vector $w=(w_i)_{i=1:n}$ such that the variance $\sigma_R^2 =
+w^t\Sigma_Rw$ of the return of the portfolio is minimal and such that $\bfone^tw=1$.
+Thus, we have to solve the following constrained minimization problem:
+
+Find $w\in\R^n$ corresponding to
+\[
+\min_{\bfone^tw=1} w^t\Sigma_Rw.
+\]
+
+We use Lagrange multipliers to solve this problem.
+
+The associated Lagrangian function $F:\R^{n+1}\to\R$ is given by
+\[
+F(w,\lambda) \;=\; w^t\Sigma_Rw+\lambda(1-\bfone^tw),
+\]
+where $\lambda\in\R$ is a Lagrange multiplier.\footnote{Note that we can use Lagrange
+multipliers to solve this constrained optimization problem, since the condition
+(10.66) is satisfied for the constraint function $g(w)=1-\bfone^tw$:
+\[
+Dg(w) \;=\; D(1-\bfone^tw) \;=\; -D(\bfone^tw) \;=\; -\bfone^t,
+\]
+see (10.43), and therefore $\rank(Dg(w))=1$.}

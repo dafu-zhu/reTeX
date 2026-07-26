@@ -1,0 +1,52 @@
+% PAGES: 270-270
+% Continues the sentence ending at the bottom of sec09_c1_3.tex (folio 253):
+% "Let $V_i(0)$ be the value of the portfolio position in asset $i$ at time 0,
+% for" is immediately followed here by "$i = 1:n$, and let $V_{cash}(0)$..."
+% (folio 254). No LaTeX construct was left open across the boundary.
+
+$i = 1:n$, and let $V_{cash}(0)$ be the value of the cash position in the portfolio at
+time 0. Similarly, let $V(T)$ be the value of the portfolio at time $T$, let $V_i(T)$
+be the value of the portfolio position in asset $i$ at time $T$, for $i = 1:n$, and let
+$V_{cash}(T)$ be the value of the cash position in the portfolio at time $T$. Then,
+\begin{equation}
+V(0) \;=\; \sum_{i=1}^n V_i(0) + V_{cash}(0); \qquad V(T) \;=\; \sum_{i=1}^n V_i(T) +
+V_{cash}(T).
+\end{equation}
+
+Note that the weight $w_i$ of asset $i$ in the portfolio at time 0 and the weight
+$w_{cash}$ of the cash position in the portfolio at time 0 are given by
+\begin{equation}
+w_i \;=\; \frac{V_i(0)}{V(0)}, \quad \forall\, i = 1:n; \qquad w_{cash} \;=\;
+\frac{V_{cash}(0)}{V(0)}.
+\end{equation}
+
+The return $R$ of the portfolio between time 0 and time $T$ and the returns $R_i$,
+$i = 1:n$, of asset $i$ between time 0 and time $T$ are given by
+\begin{equation}
+R \;=\; \frac{V(T)-V(0)}{V(0)}; \qquad R_i \;=\; \frac{V_i(T)-V_i(0)}{V_i(0)}, \quad
+\forall\, i = 1:n.
+\end{equation}
+
+The return of the cash position is equal to the risk--free return $r_f$, i.e.,
+\begin{equation}
+r_f \;=\; \frac{V_{cash}(T)-V_{cash}(0)}{V_{cash}(0)}.
+\end{equation}
+
+From (9.11) and (9.9), we find that
+\begin{align*}
+R &= \frac{V(T)-V(0)}{V(0)} \\
+&= \frac{1}{V(0)}\left(\sum_{i=1}^n V_i(T) - \sum_{i=1}^n V_i(0)\right) \;+\;
+\frac{1}{V(0)}(V_{cash}(T)-V_{cash}(0)) \\
+&= \frac{1}{V(0)}\sum_{i=1}^n (V_i(T)-V_i(0)) \;+\; \frac{1}{V(0)}(V_{cash}(T)-V_{cash}(0)) \\
+&= \sum_{i=1}^n \frac{V_i(T)-V_i(0)}{V(0)} \;+\; \frac{V_{cash}(T)-V_{cash}(0)}{V(0)} \\
+&= \sum_{i=1}^n \frac{V_i(T)-V_i(0)}{V(0)}\cdot\frac{V_i(0)}{V_i(0)} \;+\;
+\frac{V_{cash}(T)-V_{cash}(0)}{V(0)}\cdot\frac{V_{cash}(0)}{V_{cash}(0)} \\
+&= \sum_{i=1}^n \frac{V_i(0)}{V(0)}\cdot\frac{V_i(T)-V_i(0)}{V_i(0)} \;+\;
+\frac{V_{cash}(0)}{V(0)}\cdot\frac{V_{cash}(T)-V_{cash}(0)}{V_{cash}(0)} \\
+&= \sum_{i=1}^n w_iR_i \;+\; w_{cash}r_f,
+\end{align*}
+where formulas (9.10), (9.11), and (9.12) were used for the last equality. Thus,
+\[
+R \;=\; \sum_{i=1}^n w_iR_i \;+\; w_{cash}r_f,
+\]
+and formula (9.2) is established.
