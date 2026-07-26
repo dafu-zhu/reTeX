@@ -1,26 +1,26 @@
 % PAGES: 237-238
 % Continues directly from sec07_c4_1.tex (PDF pages 235-236), which left the
 % \begin{proof} of Lemma 7.13 open across the file boundary: the align* block
-% ending "...= (C^{(1)})^t\Sigma_{\bfX}C^{(2)}," at the bottom of PDF page 236
+% ending "...= (C^{(1)})^t\Sigma_{\bfx}C^{(2)}," at the bottom of PDF page 236
 % is completed in prose by the "since Sigma_X = ..." clause that opens PDF
 % page 237 (folio 221) below -- closing that same sentence, not starting a
 % new one. The proof environment is closed in this file, not reopened.
 
-since $\Sigma_{\bfX} = \E{(\bfX-\E{\bfX})(\bfX-\E{\bfX})^t}$; see (7.131).
+since $\Sigma_{\bfx} = \E{(\bfX-\E{\bfX})(\bfX-\E{\bfX})^t}$; see (7.131).
 
-Since $\left(C^{(1)}\right)^t\Sigma_{\bfX}C^{(2)}$ is a number, it follows that
+Since $\left(C^{(1)}\right)^t\Sigma_{\bfx}C^{(2)}$ is a number, it follows that
 \[
-\left(C^{(1)}\right)^t\Sigma_{\bfX}C^{(2)} \;=\;
-\left(\left(C^{(1)}\right)^t\Sigma_{\bfX}C^{(2)}\right)^t;
+\left(C^{(1)}\right)^t\Sigma_{\bfx}C^{(2)} \;=\;
+\left(\left(C^{(1)}\right)^t\Sigma_{\bfx}C^{(2)}\right)^t;
 \]
 
 see also (7.28). Thus,
 \[
-\left(C^{(1)}\right)^t\Sigma_{\bfX}C^{(2)} \;=\; \left(C^{(2)}\right)^t\Sigma_{\bfX}^t
-\left(\left(C^{(1)}\right)^t\right)^t \;=\; \left(C^{(2)}\right)^t\Sigma_{\bfX}C^{(1)},
+\left(C^{(1)}\right)^t\Sigma_{\bfx}C^{(2)} \;=\; \left(C^{(2)}\right)^t\Sigma_{\bfx}^t
+\left(\left(C^{(1)}\right)^t\right)^t \;=\; \left(C^{(2)}\right)^t\Sigma_{\bfx}C^{(1)},
 \]
-since $\Sigma_{\bfX}$ is a symmetric matrix and therefore $\Sigma_{\bfX}^t =
-\Sigma_{\bfX}$.
+since $\Sigma_{\bfx}$ is a symmetric matrix and therefore $\Sigma_{\bfx}^t =
+\Sigma_{\bfx}$.
 \end{proof}
 
 \begin{theorem}[Linear Transformation Property; see also Theorem 7.3.]
@@ -32,9 +32,9 @@ variable given by
 \end{equation}
 then
 \begin{equation}
-\Sigma_{\bfY} \;=\; M\Sigma_{\bfX}M^t,
+\Sigma_{\bfY} \;=\; M\Sigma_{\bfx}M^t,
 \end{equation}
-where $\Sigma_{\bfX}$ and $\Sigma_{\bfY}$ are the covariance matrices of $\bfX$ and of
+where $\Sigma_{\bfx}$ and $\Sigma_{\bfY}$ are the covariance matrices of $\bfX$ and of
 $\bfY$, respectively.
 \end{theorem}
 
@@ -58,9 +58,9 @@ From (7.139--7.141), and using (7.127), we obtain that
 \begin{align*}
 \Sigma_{\bfY} &= \E{M(\bfX-\E{\bfX})(\bfX-\E{\bfX})^tM^t} \\
 &= M\,\E{(\bfX-\E{\bfX})(\bfX-\E{\bfX})^t}\,M^t \\
-&= M\Sigma_{\bfX}M^t,
+&= M\Sigma_{\bfx}M^t,
 \end{align*}
-since $\Sigma_{\bfX} = \E{(\bfX-\E{\bfX})(\bfX-\E{\bfX})^t}$; cf. (7.131).
+since $\Sigma_{\bfx} = \E{(\bfX-\E{\bfX})(\bfX-\E{\bfX})^t}$; cf. (7.131).
 \end{proof}
 
 \section{References}

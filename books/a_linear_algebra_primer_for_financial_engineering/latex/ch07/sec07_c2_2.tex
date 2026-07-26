@@ -14,13 +14,13 @@ this data.
 
 The weekly (percentage) returns are computed using the end of week closing prices
 for the eight stocks, which, using the notation from section 7.2, give the entries
-of the matrix $T_{\bfX}$. After computing the mean normalized time series matrix
-$\overline{T}_{\bfX}$ of the stock returns, the sample covariance matrix
-$\widehat{\Sigma}_{\bfX,week}$ and the sample correlation matrix
-$\widehat{\Omega}_{\bfX,week}$ are computed from the formulas (7.60) and (7.61),
+of the matrix $T_{\bfx}$. After computing the mean normalized time series matrix
+$\overline{T}_{\bfx}$ of the stock returns, the sample covariance matrix
+$\widehat{\Sigma}_{\bfx,week}$ and the sample correlation matrix
+$\widehat{\Omega}_{\bfx,week}$ are computed from the formulas (7.60) and (7.61),
 respectively.
 \[
-\widehat{\Sigma}_{\bfX,week} \;=\;
+\widehat{\Sigma}_{\bfx,week} \;=\;
 \begin{pmatrix}
 0.0010 & 0.0013 & 0.0010 & 0.0005 & 0.0007 & 0.0005 & 0.0006 & 0.0005 \\
 0.0013 & 0.0036 & 0.0021 & 0.0010 & 0.0011 & 0.0009 & 0.0009 & 0.0009 \\
@@ -33,7 +33,7 @@ respectively.
 \end{pmatrix}
 \]
 \[
-\widehat{\Omega}_{\bfX,week} \;=\;
+\widehat{\Omega}_{\bfx,week} \;=\;
 \begin{pmatrix}
 1      & 0.6875 & 0.6995 & 0.3727 & 0.3607 & 0.4847 & 0.5286 & 0.5497 \\
 0.6875 & 1      & 0.8068 & 0.4165 & 0.3253 & 0.4876 & 0.4517 & 0.4771 \\
@@ -49,13 +49,18 @@ Note that the rows and columns in the correlation and covariance matrices herein
 correspond to the companies in the following order: AXP; BAC; JPM; CSCO; HPQ; IBM;
 INTC; MSFT.
 
+% UNCLEAR: the weekly paragraph above sets these as $T_{\bfx}$ and
+% $\overline{T}_{\bfx}$ with a bold LOWERCASE x, but the monthly paragraph below
+% prints $T_X$ and $\overline{T}_X$ with a plain (non-bold) ITALIC CAPITAL X --
+% verified at 1600 dpi on PDF page 220 (folio 204). Reproduced as printed; this
+% is an author inconsistency, not an OCR artifact. Do not normalise either one.
 Similarly, the monthly returns are computed using the end of monthly closing
 prices for the eight stocks. This gives the entries of the matrix $T_X$, which can
 be used to compute the mean normalized time series matrix $\overline{T}_X$ of the
 stock returns. The following sample covariance matrix and sample correlation
 matrix are then computed by using formulas (7.60) and (7.61), respectively:
 \[
-\widehat{\Sigma}_{\bfX,month} \;=\;
+\widehat{\Sigma}_{\bfx,month} \;=\;
 \begin{pmatrix}
 0.0030 & 0.0053 & 0.0047 & 0.0029 & 0.0039 & 0.0012 & 0.0017 & 0.0022 \\
 0.0053 & 0.0201 & 0.0125 & 0.0058 & 0.0061 & 0.0022 & 0.0020 & 0.0047 \\
@@ -68,7 +73,7 @@ matrix are then computed by using formulas (7.60) and (7.61), respectively:
 \end{pmatrix}
 \]
 \[
-\widehat{\Omega}_{\bfX,month} \;=\;
+\widehat{\Omega}_{\bfx,month} \;=\;
 \begin{pmatrix}
 1      & 0.6843 & 0.7659 & 0.5991 & 0.5098 & 0.4781 & 0.5116 & 0.6890 \\
 0.6843 & 1      & 0.7923 & 0.4652 & 0.3100 & 0.3482 & 0.2269 & 0.5745 \\
@@ -97,19 +102,19 @@ Lemma 7.5 for random variables.
 
 \begin{theorem}
 Let $X_1$, $X_2$, \ldots, $X_n$ be $n$ random variables given by the $N \times n$
-time series data matrix $T_{\bfX} = \mathrm{col}(T_{X_k})_{k=1:n}$ at $N$ data
-points, with $N > n$. The sample covariance matrix $\widehat{\Sigma}_{\bfX}$ is
+time series data matrix $T_{\bfx} = \mathrm{col}(T_{X_k})_{k=1:n}$ at $N$ data
+points, with $N > n$. The sample covariance matrix $\widehat{\Sigma}_{\bfx}$ is
 nonsingular if and only if the vectors $T_{X_1}, T_{X_2}, \ldots, T_{X_n}, \bfone$
 are linearly independent, i.e.,
 \begin{equation}
-\widehat{\Sigma}_{\bfX} \text{ nonsingular} \quad \Longleftrightarrow \quad T_{X_1},T_{X_2},\ldots,T_{X_n},\bfone \text{ linearly independent},
+\widehat{\Sigma}_{\bfx} \text{ nonsingular} \quad \Longleftrightarrow \quad T_{X_1},T_{X_2},\ldots,T_{X_n},\bfone \text{ linearly independent},
 \end{equation}
 where $\bfone$ denotes the $N \times 1$ column vector with all entries equal to $1$.
 \end{theorem}
 
 \begin{proof}
-Recall from (7.60) that $\widehat{\Sigma}_{\bfX} = \frac{1}{N-1}\,\overline{T}^t_{\bfX}\overline{T}_{\bfX}$,
-where $\overline{T}_{\bfX} = \mathrm{col}\left(\overline{T}_{X_k}\right)_{k=1:n}$ is
+Recall from (7.60) that $\widehat{\Sigma}_{\bfx} = \frac{1}{N-1}\,\overline{T}^t_{\bfx}\overline{T}_{\bfx}$,
+where $\overline{T}_{\bfx} = \mathrm{col}\left(\overline{T}_{X_k}\right)_{k=1:n}$ is
 the mean--normalized $N \times n$ matrix of time series data for the $n$ random
 variables; see (7.48) and (7.49).
 
@@ -118,7 +123,7 @@ definite if and only if the columns of $M$ are linearly independent.
 
 Then, we conclude that
 \begin{equation}
-\widehat{\Sigma}_{\bfX} \text{ nonsingular} \quad \Longleftrightarrow \quad \overline{T}_{X_1},\overline{T}_{X_2},\ldots,\overline{T}_{X_n} \text{ linearly independent}.
+\widehat{\Sigma}_{\bfx} \text{ nonsingular} \quad \Longleftrightarrow \quad \overline{T}_{X_1},\overline{T}_{X_2},\ldots,\overline{T}_{X_n} \text{ linearly independent}.
 \end{equation}
 From (7.67), it follows that, in order to prove (7.66), it is enough to show that
 \begin{align}

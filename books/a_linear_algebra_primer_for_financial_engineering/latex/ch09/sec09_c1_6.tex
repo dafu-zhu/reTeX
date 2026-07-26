@@ -2,7 +2,7 @@
 
 \noindent\textbf{Minimum variance portfolio using tangency portfolio:} If
 \[
-w_T \;=\; \frac{1}{\mathbf{1}^t\Sigma_R^{-1}\bar\mu}\Sigma_R^{-1}\bar\mu
+w_T \;=\; \frac{1}{\bfone^t\Sigma_R^{-1}\bar\mu}\Sigma_R^{-1}\bar\mu
 \]
 is the weight of the $n$ assets in the tangency portfolio, then the asset weights
 vector $w_{min}$ and the weight $w_{min,cash}$ of the cash position given by (9.13) and
@@ -39,10 +39,10 @@ $w_{min,cash} = $ weight of cash position for the minimum variance portfolio\\
 $\sigma_{min} = $ standard deviation of the return of the minimum variance portfolio
 \bigskip
 
-$\bar\mu = \mu - r_f\mathbf{1}$\\
+$\bar\mu = \mu - r_f\bfone$\\
 $x = \text{linear\_solve\_cholesky}(\Sigma_R,\bar\mu)$ \hfill\textit{// compute $x =
 \Sigma_R^{-1}\bar\mu$}\\
-$w_T = \dfrac{1}{\mathbf{1}^tx}x$\\
+$w_T = \dfrac{1}{\bfone^tx}x$\\
 $w_{min,cash} = 1 - \dfrac{\mu_P-r_f}{\bar\mu^tw_T}$\\
 $w_{min} = (1-w_{min,cash})w_T$\\
 $\sigma_{min} = \sqrt{w_{min}^t\Sigma_Rw_{min}}$

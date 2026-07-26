@@ -11,8 +11,8 @@ w_{max} \;=\; \frac{\sigma_P}{\sqrt{\bar\mu^t\Sigma_R^{-1}\bar\mu}}\Sigma_R^{-1}
 \end{equation}
 \item weight of the cash position:
 \begin{equation}
-w_{max,cash} \;=\; 1-\mathbf{1}^tw_{max} \;=\;
-1-\sigma_P\frac{\mathbf{1}^t\Sigma_R^{-1}\bar\mu}{\sqrt{\bar\mu^t\Sigma_R^{-1}\bar\mu}}.
+w_{max,cash} \;=\; 1-\bfone^tw_{max} \;=\;
+1-\sigma_P\frac{\bfone^t\Sigma_R^{-1}\bar\mu}{\sqrt{\bar\mu^t\Sigma_R^{-1}\bar\mu}}.
 \end{equation}
 \end{itemize}
 
@@ -43,11 +43,11 @@ $w_{max,cash} = $ weight of cash position for the maximum return portfolio\\
 $\mu_{max} = $ expected return of the maximum return portfolio
 \bigskip
 
-$\bar\mu = \mu - r_f\mathbf{1}$\\
+$\bar\mu = \mu - r_f\bfone$\\
 $x = \text{linear\_solve\_cholesky}(\Sigma_R,\bar\mu)$ \hfill\textit{// compute $x =
 \Sigma_R^{-1}\bar\mu$}\\
 $w_{max} = \dfrac{\sigma_P}{\sqrt{\bar\mu^tx}}x$\\
-$w_{max,cash} = 1 - \mathbf{1}^tw_{max}$\\
+$w_{max,cash} = 1 - \bfone^tw_{max}$\\
 $\mu_{max} = r_f + \bar\mu^tw_{max}$
 \end{minipage}}
 \end{table}

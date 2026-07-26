@@ -20,7 +20,7 @@
 
 and the weight of the cash position is
 \[
-w_{min,cash} \;=\; 1-\mathbf{1}^tw_{min} \;=\; -0.3356.
+w_{min,cash} \;=\; 1-\bfone^tw_{min} \;=\; -0.3356.
 \]
 
 Thus, the \$100 million minimum variance portfolio with expected return equal to
@@ -48,9 +48,9 @@ weights vector $w_{min}$ given by (9.33) is a scalar multiple of the vector
 $\Sigma_R^{-1}\bar\mu$, i.e., $w_{min} = c\,\Sigma_R^{-1}\bar\mu$, where $c =
 \frac{\mu_P-r_f}{\bar\mu^t\Sigma_R^{-1}\bar\mu}$. Denote by
 \begin{equation}
-w_T \;=\; \frac{1}{\mathbf{1}^t\Sigma_R^{-1}\bar\mu}\Sigma_R^{-1}\bar\mu
+w_T \;=\; \frac{1}{\bfone^t\Sigma_R^{-1}\bar\mu}\Sigma_R^{-1}\bar\mu
 \end{equation}
-the asset weights vector in a portfolio with no cash, i.e., with $\mathbf{1}^tw_T = 1$,
+the asset weights vector in a portfolio with no cash, i.e., with $\bfone^tw_T = 1$,
 and with the $n$ assets allocated in the same proportions as the $\Sigma_R^{-1}\bar\mu$
 vector.
 
@@ -62,11 +62,11 @@ portfolio.
 
 From (9.36), we find that
 \[
-\bar\mu^tw_T \;=\; \frac{\bar\mu^t\Sigma_R^{-1}\bar\mu}{\mathbf{1}^t\Sigma_R^{-1}\bar\mu},
+\bar\mu^tw_T \;=\; \frac{\bar\mu^t\Sigma_R^{-1}\bar\mu}{\bfone^t\Sigma_R^{-1}\bar\mu},
 \]
 and therefore
 \begin{equation}
-\frac{\mathbf{1}^t\Sigma_R^{-1}\bar\mu}{\bar\mu^t\Sigma_R^{-1}\bar\mu} \;=\;
+\frac{\bfone^t\Sigma_R^{-1}\bar\mu}{\bar\mu^t\Sigma_R^{-1}\bar\mu} \;=\;
 \frac{1}{\bar\mu^tw_T}.
 \end{equation}
 
@@ -80,8 +80,8 @@ Moreover, from (9.33) and (9.36), we find that
 \begin{align}
 w_{min} &= \frac{\mu_P-r_f}{\bar\mu^t\Sigma_R^{-1}\bar\mu} \cdot \Sigma_R^{-1}\bar\mu
 \notag\\
-&= (\mu_P-r_f)\frac{\mathbf{1}^t\Sigma_R^{-1}\bar\mu}{\bar\mu^t\Sigma_R^{-1}\bar\mu}
-\cdot \frac{1}{\mathbf{1}^t\Sigma_R^{-1}\bar\mu}\Sigma_R^{-1}\bar\mu \notag\\
+&= (\mu_P-r_f)\frac{\bfone^t\Sigma_R^{-1}\bar\mu}{\bar\mu^t\Sigma_R^{-1}\bar\mu}
+\cdot \frac{1}{\bfone^t\Sigma_R^{-1}\bar\mu}\Sigma_R^{-1}\bar\mu \notag\\
 &= (1-w_{min,cash})\,w_T,
 \end{align}
 % Chunk c1 ends here (PDF page 278 / folio 262 is fully transcribed). The

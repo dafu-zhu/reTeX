@@ -22,8 +22,8 @@ w_{min} \;=\; \frac{\mu_P-r_f}{\bar\mu^t\Sigma_R^{-1}\bar\mu}\Sigma_R^{-1}\bar\m
 \end{equation}
 \item weight of the cash position:
 \begin{equation}
-w_{min,cash} \;=\; 1-\mathbf{1}^tw_{min} \;=\;
-1-(\mu_P-r_f)\frac{\mathbf{1}^t\Sigma_R^{-1}\bar\mu}{\bar\mu^t\Sigma_R^{-1}\bar\mu}.
+w_{min,cash} \;=\; 1-\bfone^tw_{min} \;=\;
+1-(\mu_P-r_f)\frac{\bfone^t\Sigma_R^{-1}\bar\mu}{\bar\mu^t\Sigma_R^{-1}\bar\mu}.
 \end{equation}
 \end{itemize}
 
@@ -54,11 +54,11 @@ $w_{min,cash} = $ weight of cash position for the minimum variance portfolio\\
 $\sigma_{min} = $ standard deviation of the return of the minimum variance portfolio
 \bigskip
 
-$\bar\mu = \mu - r_f\mathbf{1}$\\
+$\bar\mu = \mu - r_f\bfone$\\
 $x = \text{linear\_solve\_cholesky}(\Sigma_R,\bar\mu)$ \hfill\textit{// compute $x =
 \Sigma_R^{-1}\bar\mu$}\\
 $w_{min} = \dfrac{\mu_P-r_f}{\bar\mu^tx}x$\\
-$w_{min,cash} = 1 - \mathbf{1}^tw_{min}$\\
+$w_{min,cash} = 1 - \bfone^tw_{min}$\\
 $\sigma_{min} = \sqrt{w_{min}^t\Sigma_Rw_{min}}$
 \end{minipage}}
 \end{table}

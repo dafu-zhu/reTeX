@@ -10,7 +10,7 @@ T_{X_k} \;=\; (X_k(t_i))_{i=1:N}, \quad \forall\, k = 1:n,
 \end{equation}
 and denote by
 \begin{equation}
-T_{\bfX} \;=\; \mathrm{col}\,(T_{X_k})_{k=1:n}
+T_{\bfx} \;=\; \mathrm{col}\,(T_{X_k})_{k=1:n}
 \end{equation}
 the $N \times n$ matrix of time series data for the $n$ random variables.
 
@@ -25,28 +25,28 @@ and $X_k$ are given, respectively, by
 \widehat{\corr}(X_j,X_k) &= \frac{\widehat{\cov}(X_j,X_k)}{\widehat{\sigma}_j\widehat{\sigma}_k}, \quad \forall\, 1\le j,k\le n.
 \end{align}
 
-The sample covariance matrix $\widehat{\Sigma}_{\bfX}$ and the sample correlation
-matrix $\widehat{\Omega}_{\bfX}$ of the random variables $X_1, X_2, \ldots, X_n$ are
+The sample covariance matrix $\widehat{\Sigma}_{\bfx}$ and the sample correlation
+matrix $\widehat{\Omega}_{\bfx}$ of the random variables $X_1, X_2, \ldots, X_n$ are
 the $n \times n$ matrices given by
 \begin{align}
-\widehat{\Sigma}_{\bfX}(j,k) &= \widehat{\cov}(X_j,X_k), \quad \forall\, 1\le j,k\le n; \\
-\widehat{\Omega}_{\bfX}(j,k) &= \widehat{\corr}(X_j,X_k), \quad \forall\, 1\le j,k\le n.
+\widehat{\Sigma}_{\bfx}(j,k) &= \widehat{\cov}(X_j,X_k), \quad \forall\, 1\le j,k\le n; \\
+\widehat{\Omega}_{\bfx}(j,k) &= \widehat{\corr}(X_j,X_k), \quad \forall\, 1\le j,k\le n.
 \end{align}
 
 The following connections between the sample covariance matrix
-$\widehat{\Sigma}_{\bfX}$ and the sample correlation matrix $\widehat{\Omega}_{\bfX}$
+$\widehat{\Sigma}_{\bfx}$ and the sample correlation matrix $\widehat{\Omega}_{\bfx}$
 can be established as in Lemma 7.1:
 \begin{align}
-\widehat{\Sigma}_{\bfX} &= \widehat{D}_{\sigma_{\bfX}}\widehat{\Omega}_{\bfX}\widehat{D}_{\sigma_{\bfX}}; \\
-\widehat{\Omega}_{\bfX} &= (\widehat{D}_{\sigma_{\bfX}})^{-1}\widehat{\Sigma}_{\bfX}(\widehat{D}_{\sigma_{\bfX}})^{-1},
+\widehat{\Sigma}_{\bfx} &= \widehat{D}_{\sigma_{\bfx}}\widehat{\Omega}_{\bfx}\widehat{D}_{\sigma_{\bfx}}; \\
+\widehat{\Omega}_{\bfx} &= (\widehat{D}_{\sigma_{\bfx}})^{-1}\widehat{\Sigma}_{\bfx}(\widehat{D}_{\sigma_{\bfx}})^{-1},
 \end{align}
-where $\widehat{D}_{\sigma_{\bfX}} = \diag(\widehat{\sigma}_k)_{k=1:n}$ and
-$(\widehat{D}_{\sigma_{\bfX}})^{-1} =
+where $\widehat{D}_{\sigma_{\bfx}} = \diag(\widehat{\sigma}_k)_{k=1:n}$ and
+$(\widehat{D}_{\sigma_{\bfx}})^{-1} =
 \diag\!\left(\frac{1}{\widehat{\sigma}_k}\right)_{k=1:n}$. Note that (7.44) and
 (7.45) can also be written as follows:
 \begin{align}
-\widehat{\Sigma}_{\bfX} &= \diag(\widehat{\sigma}_k)_{k=1:n}\ \widehat{\Omega}_{\bfX}\ \diag(\widehat{\sigma}_k)_{k=1:n}; \\
-\widehat{\Omega}_{\bfX} &= \diag\!\left(\frac{1}{\widehat{\sigma}_k}\right)_{k=1:n} \widehat{\Sigma}_{\bfX} \diag\!\left(\frac{1}{\widehat{\sigma}_k}\right)_{k=1:n}.
+\widehat{\Sigma}_{\bfx} &= \diag(\widehat{\sigma}_k)_{k=1:n}\ \widehat{\Omega}_{\bfx}\ \diag(\widehat{\sigma}_k)_{k=1:n}; \\
+\widehat{\Omega}_{\bfx} &= \diag\!\left(\frac{1}{\widehat{\sigma}_k}\right)_{k=1:n} \widehat{\Sigma}_{\bfx} \diag\!\left(\frac{1}{\widehat{\sigma}_k}\right)_{k=1:n}.
 \end{align}
 
 Let $\overline{T}_{X_k}$ be the column vector of the time series data for the random

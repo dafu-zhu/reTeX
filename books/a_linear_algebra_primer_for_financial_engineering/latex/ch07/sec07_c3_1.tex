@@ -17,16 +17,20 @@
 % 194, Definition 7.1: "$\Sigma_\mathbf{x}$"), 227, 228, 231, 232, 233 and 234.
 % This is distinct from the bold CAPITAL vector symbols themselves (bfX, bfZ,
 % bfY are genuinely capital-bold where they denote the vector, e.g. in
-% "X = U^tZ"). Chunks c1, c2 and c4 all instead used a bold CAPITAL subscript
-% throughout (\Sigma_{\bfX}, \mu_{\bfX}, \Sigma_{\bfZ}, ...). This chunk's
-% files (c3) use the verified lowercase subscript (\bfx, \bfz, \bfy) to match
-% the source exactly, which means ch07 is currently inconsistent across
-% chunks. Recommend a chapter-wide (book-wide?) mechanical pass replacing
-% "_{\bfX}" -> "_{\bfx}", "_{\bfZ}" -> "_{\bfz}", "_{\bfY}" -> "_{\bfy}"
-% wherever \bfX/\bfZ/\bfY appears as a SUBSCRIPT on Sigma, mu, or Omega
-% (leaving standalone \bfX/\bfZ/\bfY, i.e. the vector symbols themselves,
-% untouched). Flagging rather than editing sec07_c1_*/sec07_c2_*/sec07_c4_*,
-% which are outside this chunk's ownership.
+% "X = U^tZ"). Chunks c1, c2 and c4 originally used a bold CAPITAL subscript
+% throughout, which made ch07 inconsistent across chunks.
+% RESOLVED by the chapter-wide proofreading pass: the source reading was
+% re-confirmed at 1200-2000 dpi on PDF pages 210 (Definition 7.1 and eq 7.8-
+% 7.15), 213 (".. since \Omega_x = \Omega_y .. since \Sigma_x \neq \Sigma_y",
+% where the subscript y carries a clear descender, so it cannot be a capital)
+% and 235 (".. let \mathbf{X} be the n-dimensional .. The expected value
+% \mu_x of \mathbf{X}", capital vector and lowercase subscript side by side).
+% "_{\bfX}" -> "_{\bfx}", "_{\bfZ}" -> "_{\bfz}", "_{\bfY}" -> "_{\bfy}" has
+% since been applied throughout sec07_c1_*, sec07_c2_* and sec07_c4_*
+% (303 substitutions); standalone \bfX/\bfZ/\bfY, i.e. the vector symbols
+% themselves, were left untouched. Chapter 7 is now internally consistent.
+% This convention is chapter-specific: ch09 sets the same subscripts plain
+% (unbolded), so it must NOT be propagated outward.
 
 \par\medskip\noindent\textit{Solution:}\ From (7.93), it follows that the matrix $\Omega$ is a
 correlation matrix if and only if $-1 \le \rho \le 1$ and

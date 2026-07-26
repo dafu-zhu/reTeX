@@ -5,14 +5,14 @@
 If $\bfX = (X_i)_{i=1:n}$ denotes the column vector of the random variables $X_i$,
 $i = 1:n$, then formula (7.24) from Lemma 7.3 can be written as follows:
 \begin{equation}
-\cov\!\left((C^{(1)})^t\bfX,(C^{(2)})^t\bfX\right) \;=\; (C^{(1)})^t\Sigma_{\bfX}C^{(2)} \;=\; (C^{(2)})^t\Sigma_{\bfX}C^{(1)}.
+\cov\!\left((C^{(1)})^t\bfX,(C^{(2)})^t\bfX\right) \;=\; (C^{(1)})^t\Sigma_{\bfx}C^{(2)} \;=\; (C^{(2)})^t\Sigma_{\bfx}C^{(1)}.
 \end{equation}
 Then, from (7.80) and using (7.81) it follows that
 \begin{align}
 \Sigma_{\bfY}(j,k) &= \cov(Y_j,Y_k) \;=\; \cov(r_j\bfX,r_k\bfX) \notag \\
-&= r_j\Sigma_{\bfX}r_k^t, \quad \forall\, 1\le j,k\le m.
+&= r_j\Sigma_{\bfx}r_k^t, \quad \forall\, 1\le j,k\le m.
 \end{align}
-From (7.79) and (7.82), we conclude that $\Sigma_{\bfY} = M\Sigma_{\bfX}M^t$.
+From (7.79) and (7.82), we conclude that $\Sigma_{\bfY} = M\Sigma_{\bfx}M^t$.
 \end{proof}
 
 \begin{examplex}
@@ -21,17 +21,17 @@ $X_2$, \ldots, $X_n$ be nonconstant random variables, and let $Y_1$, $Y_2$,
 \ldots, $Y_n$ be the random variables given by $Y_i = d_iX_i$, where $d_i \neq 0$,
 are constants, for $i = 1:n$. Let $\bfY = (Y_i)_{i=1:n}$ and $\bfX =
 (X_i)_{i=1:n}$. Then, $\bfY = D\bfX$, and, from the Linear Transformation Property
-(7.76), it follows that $\Sigma_{\bfY} = D\Sigma_{\bfX}D^t$. Since $D$ is a
+(7.76), it follows that $\Sigma_{\bfY} = D\Sigma_{\bfx}D^t$. Since $D$ is a
 diagonal matrix, $D^t = D$, we conclude that
 \begin{equation}
-\Sigma_{\bfY} \;=\; D\Sigma_{\bfX}D.
+\Sigma_{\bfY} \;=\; D\Sigma_{\bfx}D.
 \end{equation}
 \end{examplex}
 
 \begin{theorem}
 Let $X_1$, $X_2$, \ldots, $X_n$ be $n$ random variables, and let $\bfX =
-(X_i)_{i=1:n}$. Denote by $\mu_{\bfX}$ the mean vector of $\bfX$ and by
-$\Sigma_{\bfX}$ the covariance matrix of $\bfX$. Let $Y_1$, $Y_2$, \ldots, $Y_m$ be
+(X_i)_{i=1:n}$. Denote by $\mu_{\bfx}$ the mean vector of $\bfX$ and by
+$\Sigma_{\bfx}$ the covariance matrix of $\bfX$. Let $Y_1$, $Y_2$, \ldots, $Y_m$ be
 random variables given by
 \[
 \bfY \;=\; b + M\bfX,
@@ -42,25 +42,25 @@ $\Sigma_{\bfY}$ the covariance matrix of $\bfY$.
 
 Then,
 \begin{equation}
-\mu_{\bfY} \;=\; b + M\mu_{\bfX} \qquad \text{and} \qquad \Sigma_{\bfY} \;=\; M\Sigma_{\bfX}M^t.
+\mu_{\bfY} \;=\; b + M\mu_{\bfx} \qquad \text{and} \qquad \Sigma_{\bfY} \;=\; M\Sigma_{\bfx}M^t.
 \end{equation}
 \end{theorem}
 
 \begin{proof}
 From the linearity of expectation, it follows that
 \begin{equation}
-\E{M\bfX} \;=\; M\E{\bfX} \;=\; M\mu_{\bfX};
+\E{M\bfX} \;=\; M\E{\bfX} \;=\; M\mu_{\bfx};
 \end{equation}
 see (7.128). Then, from (7.85), we find that
 \[
-\mu_{\bfY} \;=\; \E{\bfY} \;=\; \E{b+M\bfX} \;=\; b + \E{M\bfX} \;=\; b + M\mu_{\bfX}.
+\mu_{\bfY} \;=\; \E{\bfY} \;=\; \E{b+M\bfX} \;=\; b + \E{M\bfX} \;=\; b + M\mu_{\bfx}.
 \]
 Moreover, since $b$ is a constant vector, the covariance matrix of $\bfY = b +
 M\bfX$ is the same as the covariance matrix of $M\bfX$, and therefore
-$\Sigma_{\bfY} = \Sigma_{M\bfX}$. Note that $\Sigma_{M\bfX} = M\Sigma_{\bfX}M^t$;
+$\Sigma_{\bfY} = \Sigma_{M\bfx}$. Note that $\Sigma_{M\bfx} = M\Sigma_{\bfx}M^t$;
 see (7.77). Thus, we conclude that
 \[
-\Sigma_{\bfY} \;=\; \Sigma_{M\bfX} \;=\; M\Sigma_{\bfX}M^t.
+\Sigma_{\bfY} \;=\; \Sigma_{M\bfx} \;=\; M\Sigma_{\bfx}M^t.
 \]
 \end{proof}
 
@@ -95,7 +95,7 @@ semidefinite.
 To prove that any symmetric positive semidefinite matrix is a covariance matrix,
 let $A$ be an $n \times n$ symmetric positive semidefinite matrix. We will find
 random variables $X_1$, $X_2$, \ldots, $X_n$ with covariance matrix
-$\Sigma_{\bfX} = A$.
+$\Sigma_{\bfx} = A$.
 
 Since the matrix $A$ is symmetric, it follows from Theorem 5.4 that there exists
 an orthogonal matrix $Q$ and a diagonal matrix $\Lambda$ such that
@@ -132,7 +132,7 @@ $X_1$, $X_2$, \ldots, $X_n$ be random variables\footnote{Note that $X_1$, $X_2$,
 \ldots, $X_n$ are, in fact, normal random variables, since they are linear
 combinations of independent normal variables.} given by $\bfX = M\bfZ$, where $M$
 is the matrix given by (7.89), $\bfX = (X_i)_{i=1:n}$ and $\bfZ = (Z_i)_{i=1:n}$.
-Let $\Sigma_{\bfX}$ be the covariance matrix of $X_1$,
+Let $\Sigma_{\bfx}$ be the covariance matrix of $X_1$,
 % CONTINUES: \begin{proof} of Theorem 7.5 part (i) (opened above) is left OPEN
 % here at the end of PDF page 225 (folio 209), mid-sentence right after "$X_1$,".
 % The next file (sec07_c2_5.tex, PAGES 226) picks up with "$X_2, \ldots, X_n$."

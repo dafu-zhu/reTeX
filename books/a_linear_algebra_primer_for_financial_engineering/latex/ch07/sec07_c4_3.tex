@@ -117,16 +117,21 @@ covariance and correlation matrices of the weekly and monthly percentage returns
 computed in an example in this chapter.
 \end{subparts}
 
+% UNCLEAR: exercise 12 prints the X-vector subscript as a bold LOWERCASE x and
+% the Y-vector subscript as a bold CAPITAL Y, side by side on the same lines --
+% verified at 1400 dpi on PDF pages 240-241 (folios 224-225), where
+% "\Sigma_Y = D\Sigma_x D" and "\Omega_Y = \Omega_x" both show a Y with no
+% descender. Reproduced as printed; do not normalise the Y to lowercase.
 \item Let $X_1, X_2, \ldots, X_n$ be nonconstant random variables, and let $Y_1, Y_2,
 \ldots, Y_n$ be the random variables given by $Y_i = d_iX_i$, $i = 1:n$, where $d_i \neq
-0$, $i = 1:n$, are constants. Denote by $\Sigma_{\bfX}$, $\Omega_{\bfX}$ and
+0$, $i = 1:n$, are constants. Denote by $\Sigma_{\bfx}$, $\Omega_{\bfx}$ and
 $\Sigma_{\bfY}$, $\Omega_{\bfY}$ the covariance and correlation matrices of $X_1, X_2,
 \ldots, X_n$ and of $Y_1, Y_2, \ldots, Y_n$, respectively, and let $D =
 \diag(d_i)_{i=1:n}$.
 
 \begin{subparts}
-\item Show that $\Sigma_{\bfY} = D\Sigma_{\bfX}D$.
-\item If $d_i > 0$ for all $i = 1:n$, show that $\Omega_{\bfY} = \Omega_{\bfX}$.
+\item Show that $\Sigma_{\bfY} = D\Sigma_{\bfx}D$.
+\item If $d_i > 0$ for all $i = 1:n$, show that $\Omega_{\bfY} = \Omega_{\bfx}$.
 \end{subparts}
 
 \item Let

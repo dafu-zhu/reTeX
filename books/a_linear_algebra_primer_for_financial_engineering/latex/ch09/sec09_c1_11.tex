@@ -4,8 +4,8 @@
 
 \item weight $w_{min,cash}$ of the cash position given by
 \begin{equation}
-w_{min,cash} \;=\; 1-\mathbf{1}^tw_{min} \;=\;
-1-(\mu_P-r_f)\frac{\mathbf{1}^t\Sigma_R^{-1}\bar\mu}{\bar\mu^t\Sigma_R^{-1}\bar\mu}.
+w_{min,cash} \;=\; 1-\bfone^tw_{min} \;=\;
+1-(\mu_P-r_f)\frac{\bfone^t\Sigma_R^{-1}\bar\mu}{\bar\mu^t\Sigma_R^{-1}\bar\mu}.
 \end{equation}
 \end{itemize}
 
@@ -51,7 +51,7 @@ Let $\mu_1 = 0.02$, $\mu_2 = 0.0175$, $\mu_3 = 0.025$, $\mu_4 = 0.015$, and $r_f
 0.01$. We look for the asset and cash allocation corresponding to the minimum variance
 portfolio with expected return $\mu_P = 0.0225$.
 
-Note that $\bar\mu = \mu - r_f\mathbf{1}$ and $\Sigma_R$ are given by
+Note that $\bar\mu = \mu - r_f\bfone$ and $\Sigma_R$ are given by
 \[
 \bar\mu \;=\; \begin{pmatrix} 0.01 \\ 0.0075 \\ 0.015 \\ 0.005 \end{pmatrix}; \quad
 \Sigma_R \;=\; \begin{pmatrix}

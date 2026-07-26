@@ -57,7 +57,7 @@ $k = 0:n$, which is what we wanted to show.
 
 Note that the linear independence of the time series data vectors $T_{X_1},
 T_{X_2}, \ldots, T_{X_n}$ is not sufficient for the sample covariance matrix
-$\widehat{\Sigma}_{\bfX}$ to be nonsingular; a counterexample can be found in an
+$\widehat{\Sigma}_{\bfx}$ to be nonsingular; a counterexample can be found in an
 exercise at the end of this chapter.
 
 \section{The Linear Transformation Property}
@@ -78,14 +78,14 @@ where $M$ is an $m \times n$ matrix, and $\bfY = (Y_i)_{i=1:m}$ and $\bfX =
 (X_i)_{i=1:n}$ denote the column vectors of the random variables $Y_i$, $i=1:m$,
 and $X_i$, $i=1:n$, respectively.
 
-Let $\Sigma_{\bfX}$ and $\Sigma_{\bfY}$ be the covariance matrices of $\bfX$ and
+Let $\Sigma_{\bfx}$ and $\Sigma_{\bfY}$ be the covariance matrices of $\bfX$ and
 $\bfY$, respectively. Then,
 \begin{equation}
-\Sigma_{\bfY} \;=\; M\Sigma_{\bfX}M^t.
+\Sigma_{\bfY} \;=\; M\Sigma_{\bfx}M^t.
 \end{equation}
 Note that (7.76) can also be written as
 \begin{equation}
-\Sigma_{M\bfX} \;=\; M\Sigma_{\bfX}M^t.
+\Sigma_{M\bfx} \;=\; M\Sigma_{\bfx}M^t.
 \end{equation}
 \end{theorem}
 
@@ -102,7 +102,7 @@ Let $M = \mathrm{row}(r_j)_{j=1:m}$ be the row form of $M$. Then, $M^t$ is an
 $n \times m$ matrix with column form $M^t = \mathrm{col}\left(r_k^t\right)_{k=1:m}$;
 see (1.18). From (7.78), it follows that
 \begin{equation}
-\left(M\Sigma_{\bfX}M^t\right)(j,k) \;=\; r_j\Sigma_{\bfX}r_k^t, \quad \forall\, j = 1:m,\ k = 1:m.
+\left(M\Sigma_{\bfx}M^t\right)(j,k) \;=\; r_j\Sigma_{\bfx}r_k^t, \quad \forall\, j = 1:m,\ k = 1:m.
 \end{equation}
 Note that, if $M = \mathrm{row}(r_j)_{j=1:m}$, then $M\bfX = (r_i\bfX)_{i=1:m}$; see
 (1.12). Since $\bfY = M\bfX$ and $\bfY = (Y_i)_{i=1:m}$, we find that

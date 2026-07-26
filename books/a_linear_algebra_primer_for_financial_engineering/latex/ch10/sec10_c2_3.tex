@@ -91,7 +91,9 @@ In other words, every row of the matrix $A$ is a linear combination of the $p$
 vectors $c_1, c_2, \ldots, c_p$. Then, by definition, the row rank of the matrix $A$
 is less than or equal to $p$, the column rank of $A$.
 
-We therefore showed that, for any matrix $A$,
+% Folio 310 at 1400 dpi prints a semicolon here, not a comma. Author typo,
+% preserved as printed.
+We therefore showed that; for any matrix $A$,
 \begin{equation}
 \mathrm{rowrank}(A) \;\le\; \mathrm{colrank}(A).
 \end{equation}
@@ -128,14 +130,17 @@ details.
 \begin{lemma}
 Let $A$ be an $n \times n$ matrix with $A(1,1) > 0$, and let $A_{n-1} =
 A(2:n,2:n)$. Then,
+% Textstyle fractions (as printed) bring this to ~365pt against a 338pt measure,
+% so it still needs a light \resizebox -- now ~0.93 rather than the 0.78 it used
+% with \dfrac. The source keeps all three matrices on one line.
 \[
-\resizebox{0.97\linewidth}{!}{$\displaystyle
+\resizebox{\linewidth}{!}{$\displaystyle
 A \;=\; \begin{pmatrix} \sqrt{A(1,1)} & \bfzero^t \\[0.6em]
-\dfrac{A(2:n,1)}{\sqrt{A(1,1)}} & I_{n-1} \end{pmatrix}
+\frac{A(2:n,1)}{\sqrt{A(1,1)}} & I_{n-1} \end{pmatrix}
 \begin{pmatrix} 1 & \bfzero^t \\[0.6em]
-\bfzero & A_{n-1} - \dfrac{A(2:n,1)A(1,2:n)}{A(1,1)} \end{pmatrix}
-\begin{pmatrix} \sqrt{A(1,1)} & \dfrac{A(1,2:n)}{\sqrt{A(1,1)}} \\[0.6em]
-0 & I_{n-1} \end{pmatrix}$}, \]
+\bfzero & A_{n-1} - \frac{A(2:n,1)A(1,2:n)}{A(1,1)} \end{pmatrix}
+\begin{pmatrix} \sqrt{A(1,1)} & \frac{A(1,2:n)}{\sqrt{A(1,1)}} \\[0.6em]
+\bfzero & I_{n-1} \end{pmatrix}$}, \]
 where $I_{n-1}$ is the $(n-1)\times(n-1)$ identity matrix, and $\mathbf{0}$ is the
 column vector of size $n-1$ with all entries equal to $0$.
 \end{lemma}
@@ -144,36 +149,35 @@ column vector of size $n-1$ with all entries equal to $0$.
 By using block matrix multiplication, we find that
 \begin{align*}
 &\begin{pmatrix} 1 & \bfzero^t \\[0.6em]
-\bfzero & A_{n-1} - \dfrac{A(2:n,1)A(1,2:n)}{A(1,1)} \end{pmatrix}
-\begin{pmatrix} \sqrt{A(1,1)} & \dfrac{A(1,2:n)}{\sqrt{A(1,1)}} \\[0.6em]
-0 & I_{n-1} \end{pmatrix} \\
-&= \begin{pmatrix} \sqrt{A(1,1)} & \dfrac{A(1,2:n)}{\sqrt{A(1,1)}} \\[0.6em]
-0 & A_{n-1} - \dfrac{A(2:n,1)A(1,2:n)}{A(1,1)} \end{pmatrix}.
+\bfzero & A_{n-1} - \frac{A(2:n,1)A(1,2:n)}{A(1,1)} \end{pmatrix}
+\begin{pmatrix} \sqrt{A(1,1)} & \frac{A(1,2:n)}{\sqrt{A(1,1)}} \\[0.6em]
+\bfzero & I_{n-1} \end{pmatrix} \\
+&= \begin{pmatrix} \sqrt{A(1,1)} & \frac{A(1,2:n)}{\sqrt{A(1,1)}} \\[0.6em]
+\bfzero & A_{n-1} - \frac{A(2:n,1)A(1,2:n)}{A(1,1)} \end{pmatrix}.
 \end{align*}
 
 Then, using block matrix multiplication once again, we obtain that
 \[
-\resizebox{\linewidth}{!}{$\displaystyle
 \begin{aligned}
 &\begin{pmatrix} \sqrt{A(1,1)} & \bfzero^t \\[0.6em]
-\dfrac{A(2:n,1)}{\sqrt{A(1,1)}} & I_{n-1} \end{pmatrix}
+\frac{A(2:n,1)}{\sqrt{A(1,1)}} & I_{n-1} \end{pmatrix}
 \begin{pmatrix} 1 & \bfzero^t \\[0.6em]
-\bfzero & A_{n-1} - \dfrac{A(2:n,1)A(1,2:n)}{A(1,1)} \end{pmatrix}
-\begin{pmatrix} \sqrt{A(1,1)} & \dfrac{A(1,2:n)}{\sqrt{A(1,1)}} \\[0.6em]
-0 & I_{n-1} \end{pmatrix} \\
+\bfzero & A_{n-1} - \frac{A(2:n,1)A(1,2:n)}{A(1,1)} \end{pmatrix}
+\begin{pmatrix} \sqrt{A(1,1)} & \frac{A(1,2:n)}{\sqrt{A(1,1)}} \\[0.6em]
+\bfzero & I_{n-1} \end{pmatrix} \\
 &= \begin{pmatrix} \sqrt{A(1,1)} & \bfzero^t \\[0.6em]
-\dfrac{A(2:n,1)}{\sqrt{A(1,1)}} & I_{n-1} \end{pmatrix}
-\begin{pmatrix} \sqrt{A(1,1)} & \dfrac{A(1,2:n)}{\sqrt{A(1,1)}} \\[0.6em]
-0 & A_{n-1} - \dfrac{A(2:n,1)A(1,2:n)}{A(1,1)} \end{pmatrix} \\
+\frac{A(2:n,1)}{\sqrt{A(1,1)}} & I_{n-1} \end{pmatrix}
+\begin{pmatrix} \sqrt{A(1,1)} & \frac{A(1,2:n)}{\sqrt{A(1,1)}} \\[0.6em]
+\bfzero & A_{n-1} - \frac{A(2:n,1)A(1,2:n)}{A(1,1)} \end{pmatrix} \\
 &= \begin{pmatrix} A(1,1) & A(1,2:n) \\[0.4em]
-A(2:n,1) & \dfrac{A(2:n,1)A(1,2:n)}{A(1,1)} + A_{n-1} -
-\dfrac{A(2:n,1)A(1,2:n)}{A(1,1)} \end{pmatrix}
-\end{aligned}$}
-\]
-\[
-\begin{pmatrix} A(1,1) & A(1,2:n) \\ A(2:n,1) & A_{n-1} \end{pmatrix}
-\;=\; \begin{pmatrix} A(1,1) & A(1,2:n) \\ A(2:n,1) & A(2:n,2:n) \end{pmatrix}
-\;=\; A,
+A(2:n,1) & \frac{A(2:n,1)A(1,2:n)}{A(1,1)} + A_{n-1} -
+\frac{A(2:n,1)A(1,2:n)}{A(1,1)} \end{pmatrix} \\
+% Folio 311: these rows continue the same aligned chain and each opens with "=".
+% They had been split off into a separate display, which dropped the leading "=".
+&= \begin{pmatrix} A(1,1) & A(1,2:n) \\ A(2:n,1) & A_{n-1} \end{pmatrix}
+\;=\; \begin{pmatrix} A(1,1) & A(1,2:n) \\ A(2:n,1) & A(2:n,2:n) \end{pmatrix} \\
+&= A,
+\end{aligned}
 \]
 which is what we wanted to prove.
 \end{proof}

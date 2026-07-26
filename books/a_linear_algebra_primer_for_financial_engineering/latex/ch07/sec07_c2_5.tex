@@ -2,11 +2,11 @@
 
 % CONTINUES: closes the \begin{proof} of Theorem 7.5 part (i) left open at the end
 % of sec07_c2_4.tex (PDF page 225, folio 209), mid-sentence right after "$X_1$,".
-$X_2, \ldots, X_n$. Note that the covariance matrix $\Sigma_{\bfZ}$ of $Z_1$,
-$Z_2$, \ldots, $Z_n$ is the identity matrix, i.e., $\Sigma_{\bfZ} = I$. Then, from
+$X_2, \ldots, X_n$. Note that the covariance matrix $\Sigma_{\bfz}$ of $Z_1$,
+$Z_2$, \ldots, $Z_n$ is the identity matrix, i.e., $\Sigma_{\bfz} = I$. Then, from
 the Linear Transformation Property (Theorem 7.3) and using (7.91), we find that
 \[
-\Sigma_{\bfX} \;=\; M\Sigma_{\bfZ}M^t \;=\; MM^t \;=\; A.
+\Sigma_{\bfx} \;=\; M\Sigma_{\bfz}M^t \;=\; MM^t \;=\; A.
 \]
 In other words, we found random variables $X_1$, $X_2$, \ldots, $X_n$ with
 covariance matrix equal to the matrix $A$. We conclude that any symmetric
@@ -18,13 +18,13 @@ semidefinite with main diagonal entries equal to $1$; see (7.11).
 To prove that any symmetric positive semidefinite matrix with main diagonal
 entries equal to $1$ is a correlation matrix, let $A$ be an $n \times n$
 symmetric positive semidefinite with $A(i,i) = 1$ for all $i = 1:n$. We will find
-random variables $X_1$, $X_2$, \ldots, $X_n$ with correlation matrix $\Omega_{\bfX}
+random variables $X_1$, $X_2$, \ldots, $X_n$ with correlation matrix $\Omega_{\bfx}
 = A$.
 
 We showed above that there exist random variables $X_1$, $X_2$, \ldots, $X_n$
-with covariance matrix $\Sigma_{\bfX} = A$. Since $A(i,i) = 1$ for all $i = 1:n$,
-it follows that $\Sigma_{\bfX}(i,i) = 1$ for all $i = 1:n$, and, from Lemma 7.2,
-we conclude that $\Omega_{\bfX} = \Sigma_{\bfX} = A$, which is what we wanted to
+with covariance matrix $\Sigma_{\bfx} = A$. Since $A(i,i) = 1$ for all $i = 1:n$,
+it follows that $\Sigma_{\bfx}(i,i) = 1$ for all $i = 1:n$, and, from Lemma 7.2,
+we conclude that $\Omega_{\bfx} = \Sigma_{\bfx} = A$, which is what we wanted to
 show.
 \end{proof}
 

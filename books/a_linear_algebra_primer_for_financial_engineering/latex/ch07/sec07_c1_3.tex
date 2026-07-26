@@ -5,17 +5,25 @@ X_n$ is given, the covariance matrix of $X_1, X_2, \ldots, X_n$ is not uniquely
 determined.
 
 % NOTE: source reads "Let X1, X2 random variables" (no "be") -- reproduced verbatim.
+% UNCLEAR: PDF page 213 (folio 197) mixes the two subscript cases within a single
+% example, and this is reproduced as printed. Verified at 2400 dpi: the X-vector
+% subscript is a bold LOWERCASE x (\Sigma_{\bfx}, \Omega_{\bfx}) while the
+% Y-vector subscript is a bold CAPITAL Y (\Sigma_{\bfY}, \Omega_{\bfY}) -- the Y
+% glyph sits on the baseline with no descender, in "Omega_x = Omega_Y" and
+% "Sigma_x != Sigma_Y" near the foot of the page as well as in the setup above.
+% This is an author inconsistency, not an OCR artifact; do NOT normalise the Y
+% to lowercase. The same x/Y split recurs on pages 224, 234, 237, 240 and 241.
 \begin{examplex}
-Let $X_1$, $X_2$ random variables with covariance matrix $\Sigma_{\bfX} =
+Let $X_1$, $X_2$ random variables with covariance matrix $\Sigma_{\bfx} =
 \begin{pmatrix} 4 & -3 \\ -3 & 9 \end{pmatrix}$,
 and let $Y_1$, $Y_2$ random variables with covariance matrix $\Sigma_{\bfY} =
 \begin{pmatrix} 1 & -2 \\ -2 & 16 \end{pmatrix}$.
 
-Then, $\sigma(X_1) = \sqrt{\Sigma_{\bfX}(1,1)} = 2$ and $\sigma(X_2) =
-\sqrt{\Sigma_{\bfX}(2,2)} = 3$, and, from (7.21), it follows that the correlation
+Then, $\sigma(X_1) = \sqrt{\Sigma_{\bfx}(1,1)} = 2$ and $\sigma(X_2) =
+\sqrt{\Sigma_{\bfx}(2,2)} = 3$, and, from (7.21), it follows that the correlation
 matrix of $X_1$ and $X_2$ is
 \[
-\Omega_{\bfX} \;=\; \begin{pmatrix} \frac12 & 0 \\ 0 & \frac13 \end{pmatrix}
+\Omega_{\bfx} \;=\; \begin{pmatrix} \frac12 & 0 \\ 0 & \frac13 \end{pmatrix}
 \begin{pmatrix} 4 & -3 \\ -3 & 9 \end{pmatrix}
 \begin{pmatrix} \frac12 & 0 \\ 0 & \frac13 \end{pmatrix}
 \;=\; \begin{pmatrix} 1 & -0.5 \\ -0.5 & 1 \end{pmatrix}.
@@ -30,24 +38,24 @@ matrix of $Y_1$ and $Y_2$ is
 \;=\; \begin{pmatrix} 1 & -0.5 \\ -0.5 & 1 \end{pmatrix}.
 \]
 Thus, $X_1$, $X_2$ and $Y_1$, $Y_2$ have the same correlation matrix, since
-$\Omega_{\bfX} = \Omega_{\bfY}$, although they have different covariance matrices,
-since $\Sigma_{\bfX} \neq \Sigma_{\bfY}$.
+$\Omega_{\bfx} = \Omega_{\bfY}$, although they have different covariance matrices,
+since $\Sigma_{\bfx} \neq \Sigma_{\bfY}$.
 \end{examplex}
 
 \begin{lemma}
 The correlation matrix of random variables with standard deviation equal to $1$ is
 equal to the covariance matrix of the random variables.
 
-In other words, let $\Sigma_{\bfX}$ and $\Omega_{\bfX}$ be the covariance and
+In other words, let $\Sigma_{\bfx}$ and $\Omega_{\bfx}$ be the covariance and
 correlation matrix of the random variables $X_1, X_2, \ldots, X_n$, respectively. If
-$\Sigma_{\bfX}(i,i) = 1$ for all $i = 1:n$, then $\Sigma_{\bfX} = \Omega_{\bfX}$.
+$\Sigma_{\bfx}(i,i) = 1$ for all $i = 1:n$, then $\Sigma_{\bfx} = \Omega_{\bfx}$.
 \end{lemma}
 
 \begin{proof}
-Recall from (7.9) that $\Sigma_{\bfX}(i,i) = \var(X_i) = \sigma_i^2$, for all $i =
-1:n$. If $\Sigma_{\bfX}(i,i) = 1$, it follows that $\sigma_i = 1$ for all $i = 1:n$.
-Then, $D_{\sigma_{\bfX}} = \diag(\sigma_i)_{i=1:n} = I$, and, from (7.16), we obtain
-that $\Omega_{\bfX} = \Sigma_{\bfX}$.
+Recall from (7.9) that $\Sigma_{\bfx}(i,i) = \var(X_i) = \sigma_i^2$, for all $i =
+1:n$. If $\Sigma_{\bfx}(i,i) = 1$, it follows that $\sigma_i = 1$ for all $i = 1:n$.
+Then, $D_{\sigma_{\bfx}} = \diag(\sigma_i)_{i=1:n} = I$, and, from (7.16), we obtain
+that $\Omega_{\bfx} = \Sigma_{\bfx}$.
 \end{proof}
 
 Note that the result of Lemma 7.2 can also be stated as follows: if all the entries
@@ -56,19 +64,19 @@ on the main diagonal of the covariance matrix of $n$ random variables are equal 
 equal.
 
 \begin{lemma}
-Let $\Sigma_{\bfX}$ be the covariance matrix of $n$ random variables $X_1, X_2,
+Let $\Sigma_{\bfx}$ be the covariance matrix of $n$ random variables $X_1, X_2,
 \ldots, X_n$. Let $C^{(1)} = \left(c_i^{(1)}\right)_{i=1:n}$ and $C^{(2)} =
 \left(c_i^{(2)}\right)_{i=1:n}$ be two column vectors of size $n$. Then,
 \begin{equation}
 \cov\!\left(\sum_{i=1}^n c_i^{(1)}X_i, \sum_{i=1}^n c_i^{(2)}X_i\right)
-\;=\; \left(C^{(1)}\right)^t\Sigma_{\bfX}C^{(2)}
-\;=\; \left(C^{(2)}\right)^t\Sigma_{\bfX}C^{(1)}.
+\;=\; \left(C^{(1)}\right)^t\Sigma_{\bfx}C^{(2)}
+\;=\; \left(C^{(2)}\right)^t\Sigma_{\bfx}C^{(1)}.
 \end{equation}
 
 In particular, for $C^{(1)} = C^{(2)} = C = (c_i)_{i=1:n}$, it follows from (7.24)
 that
 \begin{equation}
-\var\!\left(\sum_{i=1}^n c_iX_i\right) \;=\; C^t\Sigma_{\bfX}C.
+\var\!\left(\sum_{i=1}^n c_iX_i\right) \;=\; C^t\Sigma_{\bfx}C.
 \end{equation}
 \end{lemma}
 
@@ -84,8 +92,8 @@ Y^{(2)} - \E{Y^{(2)}} &= \sum_{i=1}^n c_i^{(2)}(X_i-\mu_i).
 \end{align*}
 Note that (7.24) is equivalent to
 \begin{equation}
-\cov\!\left(Y^{(1)},Y^{(2)}\right) \;=\; \left(C^{(1)}\right)^t\Sigma_{\bfX}C^{(2)}
-\;=\; \left(C^{(2)}\right)^t\Sigma_{\bfX}C^{(1)}.
+\cov\!\left(Y^{(1)},Y^{(2)}\right) \;=\; \left(C^{(1)}\right)^t\Sigma_{\bfx}C^{(2)}
+\;=\; \left(C^{(2)}\right)^t\Sigma_{\bfx}C^{(1)}.
 \end{equation}
 By definition,
 \begin{align*}
@@ -96,22 +104,22 @@ By definition,
 &= \E{\sum_{1\le j,k\le n} c_j^{(1)}c_k^{(2)}(X_j-\mu_j)(X_k-\mu_k)} \\
 &= \sum_{1\le j,k\le n} c_j^{(1)}c_k^{(2)}\,\E{(X_j-\mu_j)(X_k-\mu_k)} \\
 &= \sum_{1\le j,k\le n} c_j^{(1)}c_k^{(2)}\cov(X_j,X_k) \\
-&= \sum_{1\le j,k\le n} c_j^{(1)}c_k^{(2)}\Sigma_{\bfX}(j,k) \\
-&= \left(C^{(1)}\right)^t\Sigma_{\bfX}C^{(2)},
+&= \sum_{1\le j,k\le n} c_j^{(1)}c_k^{(2)}\Sigma_{\bfx}(j,k) \\
+&= \left(C^{(1)}\right)^t\Sigma_{\bfx}C^{(2)},
 \end{align*}
 where, for the last equality, we used formula (10.19), i.e.,
 \[
 y^tAx \;=\; \sum_{1\le j,k\le n} A(j,k)x_ky_j,
 \]
-for $A = \Sigma_{\bfX}$ and $x = C^{(2)}$, $y = C^{(1)}$.
+for $A = \Sigma_{\bfx}$ and $x = C^{(2)}$, $y = C^{(1)}$.
 
 Thus, the first equality of (7.24) is proven.
 
 To show that the second equality of (7.24) holds true as well, note that
 \begin{equation}
-\left(\left(C^{(1)}\right)^t\Sigma_{\bfX}C^{(2)}\right)^t
-\;=\; \left(C^{(2)}\right)^t\Sigma_{\bfX}^tC^{(1)}
-\;=\; \left(C^{(2)}\right)^t\Sigma_{\bfX}C^{(1)},
+\left(\left(C^{(1)}\right)^t\Sigma_{\bfx}C^{(2)}\right)^t
+\;=\; \left(C^{(2)}\right)^t\Sigma_{\bfx}^tC^{(1)}
+\;=\; \left(C^{(2)}\right)^t\Sigma_{\bfx}C^{(1)},
 \end{equation}
 % CONTINUES: \begin{proof} of Lemma 7.3 (opened above) is left OPEN here at the end
 % of PDF page 214 (folio 198). Eq. (7.27) above is itself complete and closed; only

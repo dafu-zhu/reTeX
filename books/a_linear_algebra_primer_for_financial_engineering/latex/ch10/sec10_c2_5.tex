@@ -105,10 +105,12 @@ u_k(i) \;=\; 0, \quad \forall\, k+1 \le i \le n.
 \end{equation}
 
 Recall from (10.149) that $Bu_k = e_k$. From (1.7) and (10.151), it follows that
-\begin{align}
-e_k &= Bu_k \;=\; \sum_{i=1}^n u_k(i)b_i \;=\; \sum_{i=1}^k u_k(i)b_i \notag \\
+% Folio 316: this chain carries no equation tag in the source; typesetting it as
+% a numbered align made every later number in the chapter one too high.
+\begin{align*}
+e_k &= Bu_k \;=\; \sum_{i=1}^n u_k(i)b_i \;=\; \sum_{i=1}^k u_k(i)b_i \\
 &= u_k(k)b_k \;+\; \sum_{i=1}^{k-1} u_k(i)b_i,
-\end{align}
+\end{align*}
 and therefore
 \begin{equation}
 b_k \;=\; \frac{1}{u_k(k)}\left(e_k - \sum_{i=1}^{k-1} u_k(i)b_i\right).
@@ -161,12 +163,14 @@ P(Z \le -a) \;=\; \frac{1}{\sqrt{2\pi}}\int_{-\infty}^{-a} e^{-\frac{x^2}{2}}\,d
 since the probability density function of the standard normal variable $Z$ is
 $\frac{1}{\sqrt{2\pi}}e^{-\frac{x^2}{2}}$; see (7.109). Using the substitution $x =
 -y$ in (10.154), we find that
-\begin{align}
+% Folio 317: this chain carries no equation tag in the source. (10.154), above,
+% is the last numbered equation of the chapter.
+\begin{align*}
 P(Z \le -a) &= \frac{1}{\sqrt{2\pi}}\int_\infty^a e^{-\frac{(-y)^2}{2}}(-dy)
-\;=\; \frac{1}{\sqrt{2\pi}}\int_a^\infty e^{-\frac{y^2}{2}}\,dy \notag \\
-&= 1 \;-\; \frac{1}{\sqrt{2\pi}}\int_{-\infty}^a e^{-\frac{y^2}{2}}\,dy \notag \\
+\;=\; \frac{1}{\sqrt{2\pi}}\int_a^\infty e^{-\frac{y^2}{2}}\,dy \\
+&= 1 \;-\; \frac{1}{\sqrt{2\pi}}\int_{-\infty}^a e^{-\frac{y^2}{2}}\,dy \\
 &= 1 \;-\; P(Z \le a),
-\end{align}
+\end{align*}
 which is what we wanted to show. Note that, for the third equality above, we used
 the fact that
 \[
@@ -193,7 +197,7 @@ Note: A matrix of the form
 \[
 \begin{pmatrix} 1 & c_1 & c_1^2 & \ldots & c_1^{n-1} \\
 1 & c_2 & c_2^2 & \ldots & c_2^{n-1} \\
-\vdots & \vdots & \vdots & \ddots & \vdots \\
+\vdots & \vdots & \vdots & \ldots & \vdots \\
 1 & c_n & c_n^2 & \ldots & c_n^{n-1} \end{pmatrix},
 \]
 where $c_1, c_2, \ldots, c_n$ are constants, is called a Vandermonde matrix. The

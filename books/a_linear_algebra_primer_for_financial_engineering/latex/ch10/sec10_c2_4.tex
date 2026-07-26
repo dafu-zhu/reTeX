@@ -29,22 +29,26 @@ is symmetric positive definite.
 \begin{proof}
 Note that, since $A$ is a symmetric matrix, $A(2:n,1) = (A(1,2:n))^t$. Then, from
 Lemma 10.15, we find that
+% Textstyle fractions (as printed) bring this to ~376pt against a 338pt measure,
+% so it still needs a light \resizebox -- now ~0.90 (approx 9.8pt type) rather
+% than the 0.76 it used with \dfrac. The source keeps all three matrices on one
+% line, so scaling is preferable to breaking the product.
 \[
 \resizebox{\linewidth}{!}{$\displaystyle
 A \;=\; \begin{pmatrix} \sqrt{A(1,1)} & \bfzero^t \\[0.6em]
-\dfrac{(A(1,2:n))^t}{\sqrt{A(1,1)}} & I_{n-1} \end{pmatrix}
+\frac{(A(1,2:n))^t}{\sqrt{A(1,1)}} & I_{n-1} \end{pmatrix}
 \begin{pmatrix} 1 & \bfzero^t \\[0.6em]
-\bfzero & A_{n-1} - \dfrac{(A(1,2:n))^tA(1,2:n)}{A(1,1)} \end{pmatrix}
-\begin{pmatrix} \sqrt{A(1,1)} & \dfrac{A(1,2:n)}{\sqrt{A(1,1)}} \\[0.6em]
-0 & I_{n-1} \end{pmatrix}$}
+\bfzero & A_{n-1} - \frac{(A(1,2:n))^tA(1,2:n)}{A(1,1)} \end{pmatrix}
+\begin{pmatrix} \sqrt{A(1,1)} & \frac{A(1,2:n)}{\sqrt{A(1,1)}} \\[0.6em]
+\bfzero & I_{n-1} \end{pmatrix}$}
 \]
 which can be written as
 \begin{equation}
 A \;=\; M^t \begin{pmatrix} 1 & \bfzero^t \\[0.6em]
-\bfzero & A_{n-1} - \dfrac{(A(1,2:n))^tA(1,2:n)}{A(1,1)} \end{pmatrix} M,
+\bfzero & A_{n-1} - \frac{(A(1,2:n))^tA(1,2:n)}{A(1,1)} \end{pmatrix} M,
 \end{equation}
-where $M = \begin{pmatrix} \sqrt{A(1,1)} & \dfrac{A(1,2:n)}{\sqrt{A(1,1)}} \\[0.6em]
-0 & I_{n-1} \end{pmatrix}$ and $\mathbf{0}$ denotes the column vector of size
+where $M = \begin{pmatrix} \sqrt{A(1,1)} & \frac{A(1,2:n)}{\sqrt{A(1,1)}} \\[0.6em]
+\bfzero & I_{n-1} \end{pmatrix}$ and $\mathbf{0}$ denotes the column vector of size
 $n-1$ with all entries equal to $0$. Note that $M$ is a nonsingular matrix, since
 $M$ is upper triangular and $\det(M) = A(1,1) \ne 0$; cf. (10.4).
 
@@ -52,14 +56,14 @@ Multiply (10.131) to the left by $(M^t)^{-1}$ and to the right by $M^{-1}$ and
 obtain that
 \begin{equation}
 (M^t)^{-1}AM^{-1} \;=\; \begin{pmatrix} 1 & \bfzero^t \\[0.6em]
-\bfzero & A_{n-1} - \dfrac{(A(1,2:n))^tA(1,2:n)}{A(1,1)} \end{pmatrix}.
+\bfzero & A_{n-1} - \frac{(A(1,2:n))^tA(1,2:n)}{A(1,1)} \end{pmatrix}.
 \end{equation}
 
 Recall from Lemma 1.8 that $(M^t)^{-1} = (M^{-1})^t$. Let $B = M^{-1}$. Then,
 (10.132) can be written as
 \begin{equation}
 B^tAB \;=\; \begin{pmatrix} 1 & \bfzero^t \\[0.6em]
-\bfzero & A_{n-1} - \dfrac{(A(1,2:n))^tA(1,2:n)}{A(1,1)} \end{pmatrix}.
+\bfzero & A_{n-1} - \frac{(A(1,2:n))^tA(1,2:n)}{A(1,1)} \end{pmatrix}.
 \end{equation}
 
 Let $x = \begin{pmatrix} 0 \\ x_{n-1} \end{pmatrix} \in \R^n$, where $x_{n-1} \in
@@ -67,7 +71,7 @@ Let $x = \begin{pmatrix} 0 \\ x_{n-1} \end{pmatrix} \in \R^n$, where $x_{n-1} \i
 \begin{align}
 x^tB^tABx & \\
 &= (0\ \ x_{n-1}^t) \begin{pmatrix} 1 & \bfzero^t \\[0.6em]
-\bfzero & A_{n-1} - \dfrac{(A(1,2:n))^tA(1,2:n)}{A(1,1)} \end{pmatrix}
+\bfzero & A_{n-1} - \frac{(A(1,2:n))^tA(1,2:n)}{A(1,1)} \end{pmatrix}
 \begin{pmatrix} 0 \\ x_{n-1} \end{pmatrix} \notag \\
 &= x_{n-1}^t\left(A_{n-1} - \frac{(A(1,2:n))^tA(1,2:n)}{A(1,1)}\right)x_{n-1}.
 \end{align}
@@ -109,13 +113,13 @@ matrix of size $n$ is also diagonalizable.
 Let $A$ be an $n \times n$ symmetric positive definite matrix. Then, $A(2:n,1) =
 (A(1,2:n))^t$, and, from Lemma 10.15, we find that
 \begin{equation}
-\resizebox{0.92\linewidth}{!}{$\displaystyle
+\resizebox{\linewidth}{!}{$\displaystyle
 A \;=\; \begin{pmatrix} \sqrt{A(1,1)} & \bfzero^t \\[0.6em]
-\dfrac{(A(1,2:n))^t}{\sqrt{A(1,1)}} & I_{n-1} \end{pmatrix}
+\frac{(A(1,2:n))^t}{\sqrt{A(1,1)}} & I_{n-1} \end{pmatrix}
 \begin{pmatrix} 1 & \bfzero^t \\[0.6em]
-\bfzero & A_{n-1} - \dfrac{(A(1,2:n))^tA(1,2:n)}{A(1,1)} \end{pmatrix}
-\begin{pmatrix} \sqrt{A(1,1)} & \dfrac{A(1,2:n)}{\sqrt{A(1,1)}} \\[0.6em]
-0 & I_{n-1} \end{pmatrix}$}
+\bfzero & A_{n-1} - \frac{(A(1,2:n))^tA(1,2:n)}{A(1,1)} \end{pmatrix}
+\begin{pmatrix} \sqrt{A(1,1)} & \frac{A(1,2:n)}{\sqrt{A(1,1)}} \\[0.6em]
+\bfzero & I_{n-1} \end{pmatrix}$}
 \end{equation}
 where $I_{n-1}$ is the $(n-1)\times(n-1)$ identity matrix, and $\mathbf{0}$ is the
 column vector of size $n-1$ with all entries equal to $0$.
@@ -131,7 +135,7 @@ A_{n-1} \;-\; \frac{(A(1,2:n))^tA(1,2:n)}{A(1,1)} \;=\; U_{n-1}^tU_{n-1}.
 Thus,
 \begin{align}
 \begin{pmatrix} 1 & \bfzero^t \\[0.6em]
-\bfzero & A_{n-1} - \dfrac{(A(1,2:n))^tA(1,2:n)}{A(1,1)} \end{pmatrix} & \\
+\bfzero & A_{n-1} - \frac{(A(1,2:n))^tA(1,2:n)}{A(1,1)} \end{pmatrix} & \\
 &= \begin{pmatrix} 1 & \bfzero^t \\ \bfzero & U_{n-1}^tU_{n-1} \end{pmatrix} \notag
 \\
 &= \begin{pmatrix} 1 & \bfzero^t \\ \bfzero & U_{n-1}^t \end{pmatrix}
@@ -141,36 +145,37 @@ Thus,
 Note that
 \begin{equation}
 \begin{pmatrix} \sqrt{A(1,1)} & \bfzero^t \\[0.6em]
-\dfrac{(A(1,2:n))^t}{\sqrt{A(1,1)}} & I_{n-1} \end{pmatrix}
+\frac{(A(1,2:n))^t}{\sqrt{A(1,1)}} & I_{n-1} \end{pmatrix}
 \begin{pmatrix} 1 & \bfzero^t \\ \bfzero & U_{n-1}^t \end{pmatrix}
 \;=\; \begin{pmatrix} \sqrt{A(1,1)} & \bfzero^t \\[0.6em]
-\dfrac{(A(1,2:n))^t}{\sqrt{A(1,1)}} & U_{n-1}^t \end{pmatrix};
+\frac{(A(1,2:n))^t}{\sqrt{A(1,1)}} & U_{n-1}^t \end{pmatrix};
 \end{equation}
 \begin{equation}
 \begin{pmatrix} 1 & \bfzero^t \\ \bfzero & U_{n-1} \end{pmatrix}
-\begin{pmatrix} \sqrt{A(1,1)} & \dfrac{A(1,2:n)}{\sqrt{A(1,1)}} \\[0.6em]
-0 & I_{n-1} \end{pmatrix}
-\;=\; \begin{pmatrix} \sqrt{A(1,1)} & \dfrac{A(1,2:n)}{\sqrt{A(1,1)}} \\[0.6em]
-0 & U_{n-1} \end{pmatrix}.
+\begin{pmatrix} \sqrt{A(1,1)} & \frac{A(1,2:n)}{\sqrt{A(1,1)}} \\[0.6em]
+\bfzero & I_{n-1} \end{pmatrix}
+\;=\; \begin{pmatrix} \sqrt{A(1,1)} & \frac{A(1,2:n)}{\sqrt{A(1,1)}} \\[0.6em]
+\bfzero & U_{n-1} \end{pmatrix}.
 \end{equation}
 
 From (10.138--10.142), we obtain that
-\begin{align}
-A &= \resizebox{0.85\linewidth}{!}{$\displaystyle
-\begin{pmatrix} \sqrt{A(1,1)} & \bfzero^t \\[0.6em]
-\dfrac{(A(1,2:n))^t}{\sqrt{A(1,1)}} & I_{n-1} \end{pmatrix}
+% Folio 314: this chain carries no equation tag in the source; typesetting it as
+% a numbered align made every later number in the chapter one too high.
+\begin{align*}
+A &= \begin{pmatrix} \sqrt{A(1,1)} & \bfzero^t \\[0.6em]
+\frac{(A(1,2:n))^t}{\sqrt{A(1,1)}} & I_{n-1} \end{pmatrix}
 \begin{pmatrix} 1 & \bfzero^t \\ \bfzero & U_{n-1}^t \end{pmatrix}
 \begin{pmatrix} 1 & \bfzero^t \\ \bfzero & U_{n-1} \end{pmatrix}
-\begin{pmatrix} \sqrt{A(1,1)} & \dfrac{A(1,2:n)}{\sqrt{A(1,1)}} \\[0.6em]
-0 & I_{n-1} \end{pmatrix}$} \notag \\
+\begin{pmatrix} \sqrt{A(1,1)} & \frac{A(1,2:n)}{\sqrt{A(1,1)}} \\[0.6em]
+\bfzero & I_{n-1} \end{pmatrix} \\
 &= \begin{pmatrix} \sqrt{A(1,1)} & \bfzero^t \\[0.6em]
-\dfrac{(A(1,2:n))^t}{\sqrt{A(1,1)}} & U_{n-1}^t \end{pmatrix}
-\begin{pmatrix} \sqrt{A(1,1)} & \dfrac{A(1,2:n)}{\sqrt{A(1,1)}} \\[0.6em]
-0 & U_{n-1} \end{pmatrix} \notag \\
+\frac{(A(1,2:n))^t}{\sqrt{A(1,1)}} & U_{n-1}^t \end{pmatrix}
+\begin{pmatrix} \sqrt{A(1,1)} & \frac{A(1,2:n)}{\sqrt{A(1,1)}} \\[0.6em]
+\bfzero & U_{n-1} \end{pmatrix} \\
 &= U_n^tU_n,
-\end{align}
-where $U_n = \begin{pmatrix} \sqrt{A(1,1)} & \dfrac{A(1,2:n)}{\sqrt{A(1,1)}} \\[0.6em]
-0 & U_{n-1} \end{pmatrix}$ is an $n \times n$ upper triangular matrix. Note that the
+\end{align*}
+where $U_n = \begin{pmatrix} \sqrt{A(1,1)} & \frac{A(1,2:n)}{\sqrt{A(1,1)}} \\[0.6em]
+\bfzero & U_{n-1} \end{pmatrix}$ is an $n \times n$ upper triangular matrix. Note that the
 main diagonal entries of $U_n$ are positive entries, since $U_{n-1}$ was assumed to
 have positive entries on the main diagonal.
 

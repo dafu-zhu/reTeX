@@ -18,9 +18,9 @@ $\bfX$ be the $n$-dimensional multivariate random variable
 \bfX \;=\; \begin{pmatrix} X_1 \\ X_2 \\ \vdots \\ X_n \end{pmatrix}.
 \end{equation}
 
-The expected value $\mu_{\bfX}$ of $\bfX$ is
+The expected value $\mu_{\bfx}$ of $\bfX$ is
 \[
-\mu_{\bfX} \;=\; \E{\bfX} \;=\; \begin{pmatrix} \E{X_1} \\ \E{X_2} \\ \vdots \\ \E{X_n}
+\mu_{\bfx} \;=\; \E{\bfX} \;=\; \begin{pmatrix} \E{X_1} \\ \E{X_2} \\ \vdots \\ \E{X_n}
 \end{pmatrix} \;=\; \begin{pmatrix} \mu_1 \\ \mu_2 \\ \vdots \\ \mu_n \end{pmatrix},
 \]
 where $\mu_i = \E{X_i}$ for all $i = 1:n$.
@@ -61,10 +61,10 @@ The covariance matrix of the random variables $X_1, X_2, \ldots, X_n$ can be exp
 compactly using the multivariate random variable $\bfX$ given by (7.126) as follows:
 
 \begin{lemma}
-Let $\Sigma_{\bfX}$ be the covariance matrix of the random variables $X_1, X_2, \ldots,
+Let $\Sigma_{\bfx}$ be the covariance matrix of the random variables $X_1, X_2, \ldots,
 X_n$. Then,
 \begin{equation}
-\Sigma_{\bfX} \;=\; \E{(\bfX - \E{\bfX})(\bfX - \E{\bfX})^t},
+\Sigma_{\bfx} \;=\; \E{(\bfX - \E{\bfX})(\bfX - \E{\bfX})^t},
 \end{equation}
 where $\bfX = (X_i)_{i=1:n}$ is the corresponding multivariate random variable.
 \end{lemma}
@@ -78,10 +78,10 @@ $\E{(\bfX-\E{\bfX})(\bfX-\E{\bfX})^t}$ is
 \begin{equation}
 \E{(X_j-\mu_j)(X_k-\mu_k)} \;=\; \cov(X_j,X_k),
 \end{equation}
-which is the same as the $(j,k)$-th entry of the covariance matrix $\Sigma_{\bfX}$; see
+which is the same as the $(j,k)$-th entry of the covariance matrix $\Sigma_{\bfx}$; see
 Definition 7.1.
 
-We conclude that $\Sigma_{\bfX} = \E{(\bfX-\E{\bfX})(\bfX-\E{\bfX})^t}$.
+We conclude that $\Sigma_{\bfx} = \E{(\bfX-\E{\bfX})(\bfX-\E{\bfX})^t}$.
 \end{proof}
 
 The formulas for the variance and the covariance of linear combinations of random
@@ -94,11 +94,11 @@ formula (7.131) for the covariance matrix as seen below:
 Let $X_1, X_2, \ldots, X_n$ be random variables on the same probability space. Then,
 \begin{equation}
 \cov\!\left(\sum_{i=1}^n c_i^{(1)}X_i, \sum_{i=1}^n c_i^{(2)}X_i\right) \;=\;
-\left(C^{(1)}\right)^t\Sigma_{\bfX}C^{(2)} \;=\; \left(C^{(2)}\right)^t\Sigma_{\bfX}C^{(1)},
+\left(C^{(1)}\right)^t\Sigma_{\bfx}C^{(2)} \;=\; \left(C^{(2)}\right)^t\Sigma_{\bfx}C^{(1)},
 \end{equation}
 where $C^{(1)} = \left(c_i^{(1)}\right)_{i=1:n}$ and $C^{(2)} =
 \left(c_i^{(2)}\right)_{i=1:n}$ are two column vectors of size $n$ with real entries,
-and $\Sigma_{\bfX}$ is the covariance matrix of the random variables $X_1, X_2, \ldots,
+and $\Sigma_{\bfx}$ is the covariance matrix of the random variables $X_1, X_2, \ldots,
 X_n$.
 \end{lemma}
 
@@ -131,7 +131,7 @@ From (7.134--7.136) and using (7.127), we conclude that
 \cov\!\left(\sum_{i=1}^n c_i^{(1)}X_i, \sum_{i=1}^n c_i^{(2)}X_i\right)
 &= \E{\left(C^{(1)}\right)^t(\bfX-\E{\bfX})(\bfX-\E{\bfX})^tC^{(2)}} \\
 &= \left(C^{(1)}\right)^t \E{(\bfX-\E{\bfX})(\bfX-\E{\bfX})^t}\, C^{(2)} \\
-&= \left(C^{(1)}\right)^t\Sigma_{\bfX}C^{(2)},
+&= \left(C^{(1)}\right)^t\Sigma_{\bfx}C^{(2)},
 \end{align*}
 % PDF page 236 (folio 220) ends here, immediately after this unnumbered
 % align* block (three-line derivation with no printed equation tag). The
