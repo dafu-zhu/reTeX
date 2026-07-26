@@ -372,11 +372,18 @@ page images. Typeset them (Chapter N) as LaTeX.
 
 ⚠ The reader may render each requested page as a two-page SPREAD, so asking for page
 60 and page 61 can return the same image showing two printed pages side by side. That
-is a rendering artifact, not duplicate content: the PDF is single pages, 1:1. Read the
-correct half of each spread — the lower index is the left page, the next is the right.
+is a rendering artifact, not duplicate content: the PDF is single pages, 1:1.
 NEVER conclude that pages are duplicated, never "deduplicate", and never skip a page
 because it looks like one you have already seen. A page skipped this way is silently
 lost content that surfaces only at final verification, after ~50 agents have run.
+
+The reliable fix is to render each page through its own CropBox, which resolves the
+shared spread image down to exactly that one printed page:
+
+    python -c "import pymupdf; d=pymupdf.open('<PDF_PATH>'); p=d[N-1];       p.set_cropbox(p.cropbox); p.get_pixmap(dpi=300).save('pageN.png')"
+
+then read `pageN.png`. Confirm you are on the right page by checking the printed
+folio against PDF index − PAGE_OFFSET.
 
 - Write ONLY section files: books/<BOOK_NAME>/latex/chNN/secNN_M.tex, one file per
   section your pages cover. Those are the only files you may create or edit.
