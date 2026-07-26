@@ -8,7 +8,17 @@ description: "Convert a scanned PDF textbook into a structured multi-chapter LaT
 Convert a scanned PDF textbook into a multi-chapter LaTeX project. Run non-stop from PDF input to compiled output.
 
 ## Input
-- Path to scanned PDF (e.g., `pdfs/scanned.pdf`)
+- **`<PDF_PATH>` — the path to the scanned PDF, supplied explicitly by the user.**
+  There is no default. If you were not given one, ask; do not assume a filename.
+
+  Every phase and every subagent prompt below takes `<PDF_PATH>` as a parameter.
+  Several scripts still *default* to `pdfs/scanned.pdf` — always pass `--pdf`
+  explicitly rather than relying on that default.
+
+  **Give each book its own PDF filename** (`pdfs/<book_slug>.pdf` is a good rule).
+  Multiple books sharing one path is what makes `SOURCE_PDF` in `book.conf` useless as
+  an identity, and it is how a run comes to point at an existing book's tree. If the
+  PDF you were given sits at a generic shared path, rename it before starting.
 
 ## Output
 - Complete LaTeX project under `books/<BOOK_NAME>/`, committed on the **current branch**. Never create a per-book branch — every book lives side by side in `books/`.
@@ -84,7 +94,7 @@ BOOK_NAME="a_first_course_in_monte_carlo_methods"
 TITLE="A First Course in Monte Carlo Methods"
 AUTHOR="D. Sanz-Alonso and O. Al-Ghattas"
 EDITION="1"
-SOURCE_PDF="pdfs/scanned.pdf"
+SOURCE_PDF="pdfs/a_first_course_in_monte_carlo_methods.pdf"
 PAGE_COUNT="341"
 PAGE_OFFSET="12"
 COPYRIGHT_PAGE="4"
@@ -224,11 +234,13 @@ You are setting up a LaTeX project from a scanned PDF textbook. Do the following
 ### Resuming an interrupted run — run this BEFORE Phase 0, every time
 
 Five-plus books share this repo, so `ls books/` cannot tell you which one is yours.
-Neither can `SOURCE_PDF`: **`pdfs/scanned.pdf` is the shared default path for every
-book in this repo**, so a book.conf naming it tells you only that some book was once
-converted from that path — not that it is *this* book. Grepping for it and then
-skipping Phase 0 points ~50 transcription agents at an unrelated book's tree and
-destroys it, and nothing surfaces until the final phase.
+Neither can `SOURCE_PDF`. A PDF path is only as unique as whoever named the file: books
+in this repo have historically all been dropped at the same generic `pdfs/scanned.pdf`,
+so a `book.conf` naming a path tells you that *some* book was once converted from it —
+not that it is *this* book. Grepping for the path and then skipping Phase 0 points ~50
+transcription agents at an unrelated book's tree and destroys it, and nothing surfaces
+until the final phase. Giving each book its own filename makes a collision less likely
+but never proves identity, so the check below does not depend on the filename at all.
 
 Resuming therefore requires a **verified identity**: the PDF's real page count must
 equal the `PAGE_COUNT` recorded in `book.conf`, and `book.conf` must carry every key
@@ -284,17 +296,21 @@ chapter. A 341-page book is roughly 45–70 chunks. Organise them like this:
 
 Every one of these agents runs on **Sonnet** — pass `model: "sonnet"`.
 
-### One writer per file — YOU write the chapter wrapper, not the chunk agents
+### One writer per file — YOU own the shared files, not the chunk agents
 
-Chunk agents write **only** their own `secNN_M.tex` files. They must never write
-`chNN/chNN.tex`. Four concurrent agents all writing the same wrapper means the last
-writer wins and the other three chunks' section files sit on disk unreferenced — they
-never appear in the PDF. That failure is invisible: the book still compiles, and
-`inventory_check.py` globs every `*.tex` under `chNN/`, so the section, equation and
-figure counts all still look right.
+Two files in this phase are **shared across all four concurrent agents**, and a shared
+file with four writers is a lost write every time. Chunk agents write **only** their own
+`secNN_M.tex` files. They must never write either of these:
 
-**After every chunk of a chapter has returned**, you (the orchestrator) write that
-chapter's wrapper exactly once, listing every section file in reading order:
+| Shared file | What happens if a chunk agent writes it |
+|---|---|
+| `books/<BOOK_NAME>/latex/chNN/chNN.tex` | Last writer wins, so the other three chunks' section files sit on disk unreferenced and never appear in the PDF. Invisible: the book still compiles, and `inventory_check.py` globs every `*.tex` under `chNN/`, so section, equation and figure counts all still look right |
+| `books/<BOOK_NAME>/progress.md` | Last writer wins, so three agents' checkmarks are lost. Completion is under-reported, and on a resume you re-dispatch pages that are already transcribed — wasted spend on a 341-page book, and a re-transcription can overwrite good output with a worse second pass |
+
+**After every chunk of a chapter has returned**, you (the orchestrator) update both,
+exactly once, for that chapter.
+
+**1. The wrapper** — every section file, in reading order:
 
 ```latex
 \chapter{<chapter title>}
@@ -310,6 +326,18 @@ sorts before `secNN_2`:
 ```bash
 grep -H "^% PAGES:" books/<BOOK_NAME>/latex/chNN/sec*.tex | sort -t: -k3 -n
 ```
+
+**2. `progress.md`** — tick only the sections that **actually landed on disk**, not the
+ones the agents reported. An agent can report success and still have been cut off, and
+a checkmark for a file that does not exist is worse than no checkmark: it makes a
+resume skip real work. The same listing you just used is the evidence:
+
+```bash
+ls books/<BOOK_NAME>/latex/chNN/sec*.tex
+```
+
+If a chunk produced no file, leave its sections unchecked and note the page range under
+`## Failed chunks` in `progress.md` so a resume picks them up.
 
 ### Then verify it, per chapter, before moving on
 
@@ -341,12 +369,14 @@ Read pages X–Y of the PDF at <PDF_PATH>. These pages have no text layer — re
 page images. Typeset them (Chapter N) as LaTeX.
 
 - Write ONLY section files: books/<BOOK_NAME>/latex/chNN/secNN_M.tex, one file per
-  section your pages cover.
-  Do NOT create or edit books/<BOOK_NAME>/latex/chNN/chNN.tex. Other agents are
-  working on this same chapter right now, and the chapter wrapper is written once,
-  by the orchestrator, after all of you have finished. If you write it you will
-  erase their work.
-  Do NOT create or edit any file outside books/<BOOK_NAME>/latex/chNN/.
+  section your pages cover. Those are the only files you may create or edit.
+  Other agents are working on this same chapter right now. Two of the files here are
+  shared, and are written once by the orchestrator after all of you have finished:
+    books/<BOOK_NAME>/latex/chNN/chNN.tex   — the chapter wrapper
+    books/<BOOK_NAME>/progress.md           — the checklist
+  Do NOT create or edit either of them, and do NOT create or edit any file outside
+  books/<BOOK_NAME>/latex/chNN/. If you write a shared file you will erase the work
+  of the agents running alongside you.
 - Begin EVERY file you create with a page-range comment on line 1, exactly:
     % PAGES: X-Y
   Later phases use this to map pages to files. Do not omit it.
@@ -376,7 +406,9 @@ page images. Typeset them (Chapter N) as LaTeX.
 - Theorem-like environments share one counter — never renumber them.
 - Output only LaTeX source code. Match every word and equation exactly as shown on the
   scanned pages.
-- After done: update books/<BOOK_NAME>/progress.md marking sections [x]
+- When done, do NOT edit progress.md. Instead report, as your final message: the exact
+  list of files you wrote, and the section number and title in each. The orchestrator
+  ticks the checklist from that plus what is actually on disk.
 ```
 
 ### After each batch
@@ -534,6 +566,9 @@ Rules:
   \begin{proof}...\end{proof}. The proof environment auto-adds the QED symbol.
   Use \qedhere only when a proof ends with a displayed equation or list.
 - Theorem-like environments share one counter — do not renumber them.
+
+- Do NOT edit books/<BOOK_NAME>/progress.md or any chNN.tex wrapper. Those are shared
+  with the agents running alongside you and are written only by the orchestrator.
 
 Output: apply the edits, then report one line per correction:
   chNN/secNN_M.tex:LINE  was → now  (reason)
@@ -697,6 +732,20 @@ in `book.conf`.
 Treat it as the final Phase 1a batch: same 5–8 page chunks, same concurrency cap, same
 filter rules, on **Sonnet** (`model: "sonnet"`).
 
+**The same one-writer-per-file rule applies, and it bites harder here.** A bibliography
+routinely runs longer than one 5–8 page chunk, so two concurrent agents would both
+target `backmatter/bibliography.tex` and one would erase the other — losing references
+outright, not just a checkmark. So chunk agents write **page-scoped** files and you
+concatenate:
+
+- Each agent writes `backmatter/<kind>_pXX_YY.tex`, where `XX-YY` is its own page range.
+  No two agents can collide, because no two agents have the same page range.
+- After all back-matter chunks return, you (the orchestrator) concatenate each kind in
+  page order into the canonical `bibliography.tex` / `answers.tex` / `index.tex`, wrap
+  it in the single environment that must not repeat (one `thebibliography`, one
+  `\chapter*{Answers…}`), and delete the per-chunk files.
+- You also update `progress.md` — the chunk agents never touch it.
+
 ```
 You are a professional LaTeX typesetter. The user owns the document these scanned pages
 come from.
@@ -704,13 +753,19 @@ come from.
 Read pages X–Y of the PDF at <PDF_PATH>. These pages have no text layer — read them as
 page images. Typeset them as LaTeX back matter.
 
-- Write into books/<BOOK_NAME>/latex/backmatter/:
-    bibliography.tex — a thebibliography environment, one \bibitem per reference,
-      keys as \bibitem{author_year}
-    answers.tex      — \chapter*{Answers to Selected Exercises}, grouped by chapter,
-      reusing the project's \exerciselabel numbering
-    index.tex        — \printindex plus any \index{} entries the source lists
-  Create only the files whose content actually appears on your pages.
+- Write ONLY files named for your own page range, into
+  books/<BOOK_NAME>/latex/backmatter/:
+    bibliography_pX_Y.tex — one \bibitem per reference, keys as \bibitem{author_year}.
+      Emit the \bibitem lines ONLY — no \begin{thebibliography} wrapper.
+    answers_pX_Y.tex      — the answers on your pages, reusing the project's
+      \exerciselabel numbering. No \chapter* heading.
+    index_pX_Y.tex        — any \index{} entries the source lists. No \printindex.
+  Substitute your actual page numbers for X and Y. Create only the files whose content
+  actually appears on your pages.
+  Other agents are working on the back matter right now. Never write
+  bibliography.tex, answers.tex, index.tex or progress.md — those are assembled once,
+  by the orchestrator, after all of you have finished. The wrappers and headings are
+  added there, which is why you must not emit them.
 - Begin every file with % PAGES: X-Y on line 1.
 - Same math conventions as the chapters: \E{}, \Var{}, \Cov{}, and the \bf<Name> macros
   for bold vectors — never \vec{} or a raw \mathbf{}.
@@ -718,7 +773,14 @@ page images. Typeset them as LaTeX back matter.
 - Do not typeset ©, ISBN, Library of Congress numbers, "all rights reserved", or
   publisher addresses if they appear on these pages.
 - Output only LaTeX source. Match every entry exactly as printed.
-- After done: update books/<BOOK_NAME>/progress.md.
+- When done, do NOT edit progress.md. Report the exact list of files you wrote.
+```
+
+After assembling, confirm no per-chunk file was missed and none was left behind:
+
+```bash
+ls books/<BOOK_NAME>/latex/backmatter/
+grep -c '\\bibitem' books/<BOOK_NAME>/latex/backmatter/bibliography.tex
 ```
 
 Confirm `main.tex` `\include`s whatever back-matter files were created.
@@ -829,8 +891,9 @@ Once clean:
 | `book.conf` is `source`d by `build.sh` under `set -e` | One `KEY="value"` per line, every value double-quoted. An unquoted title breaks every build of that book, with an error pointing nowhere near the cause |
 | Every page number is a PDF index, never a printed page number | Front matter offsets the two by 10–20 pages. Record `PAGE_OFFSET` in Phase 0 and spot-check it before launching subagents — a wrong offset transcribes the entire book off by a constant |
 | 5–8 pages per subagent call, not full chapters; cap 4 concurrent | Smaller outputs avoid volume-based copyright pattern matching; the cap keeps rate limits and filter retries from eating the gain |
-| Resume only on a verified identity — `scripts/resume_check.py`, never a `SOURCE_PDF` grep | `pdfs/scanned.pdf` is the shared default path for every book here, so matching it proves nothing. A page-count mismatch means a *different* book sits at that path; resuming into it would point ~50 agents at that book's tree and destroy it. Mismatch is a HARD STOP, never "resume" and never a silent fresh start |
-| Chunk agents write only `secNN_M.tex`; the ORCHESTRATOR writes `chNN/chNN.tex`, once, after all chunks return | 4 concurrent agents writing one wrapper means last-writer-wins and the other chunks are orphaned out of the PDF. It compiles fine and `inventory_check.py` still counts the orphans, so only `check_chapter_wrapper.py` finds it |
+| `<PDF_PATH>` is an explicit input; never assume a filename, and give each book its own | Books all dropped at one generic path is what makes `SOURCE_PDF` useless as an identity and how a run comes to overwrite another book. Scripts that default to `pdfs/scanned.pdf` must always be passed `--pdf` |
+| Resume only on a verified identity — `scripts/resume_check.py`, never a `SOURCE_PDF` grep | A PDF path is only as unique as whoever named the file, so matching it proves nothing. A page-count mismatch means a *different* book sits at that path; resuming into it would point ~50 agents at that book's tree and destroy it. Mismatch is a HARD STOP, never "resume" and never a silent fresh start |
+| **Every file two agents could write is owned by the ORCHESTRATOR, never by a subagent** | Concurrent subagents are last-writer-wins. Applies to `chNN/chNN.tex` (orphans a chunk out of the PDF — invisible, since it still compiles and `inventory_check.py` still counts it), `progress.md` (under-reports completion, so a resume re-transcribes done pages), and Phase 3's `bibliography.tex`/`answers.tex`/`index.tex` (loses references outright). Subagents write only page- or section-scoped files and *report*; the orchestrator writes the shared file once, after they return |
 | Phase 1b splits by FILE, not by page | 1b agents edit files that already exist. Two agents on one file is a silently lost write |
 | Figures point at `figures/placeholder.png` until Phase 2 wires them — never an empty `{}` | An empty path is a fatal `File \`' not found`, and Phase 1a compiles after every batch, before Phase 2 runs. The placeholder compiles, still matches the rewrite regex, and is visible in the PDF. Verify with `grep -rn 'placeholder\.png'`, not `grep '{}'` |
 | Verbatim output — never paraphrase, and never correct the author | Goal is exact reproduction. If the book itself errs, mark `% UNCLEAR` — do not fix it |
