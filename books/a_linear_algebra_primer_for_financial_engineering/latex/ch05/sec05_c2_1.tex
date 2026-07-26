@@ -1,0 +1,130 @@
+% PAGES: 163-164
+% Continues the manual "\textit{Solution:}" block opened in c1's
+% sec05_c1_4.tex (page 162 / folio 146) for the 2x2 spd/spsd example -- that
+% file ends immediately after equation (5.27), $P_A(t) = \det(tI-A) =
+% t^2-(a+d)t+ad-b^2$, with NO closing square yet. Per c1_4's own trailing
+% comment, this file must NOT print a fresh "\textit{Solution:}" label; it
+% picks up the sentence right after (5.27) and supplies the closing
+% "\hfill$\square$\par\medskip" where the printed square appears (bottom of
+% page 164 / folio 148, after (5.38)). No \begin{...} environment was left
+% open (the Example:/Solution: labels are plain manual text, matching c1's
+% convention), so nothing needs to be closed here.
+
+Recall from Lemma 4.1 that
+\begin{equation}
+P_A(t) \;=\; (t-\lambda_1)(t-\lambda_2) \;=\; t^2 - (\lambda_1+\lambda_2)t + \lambda_1\lambda_2,
+\end{equation}
+where $\lambda_1$ and $\lambda_2$ are the eigenvalues of $A$. Since $A$ is a symmetric
+matrix with real entries, it follows that $\lambda_1$ and $\lambda_2$ are real numbers;
+cf. Theorem 5.3. From (5.27) and (5.28), we obtain that
+\begin{equation}
+\lambda_1+\lambda_2 \;=\; a+d; \quad \lambda_1\lambda_2 \;=\; ad-b^2.
+\end{equation}
+
+(i) From Theorem 5.6 (i), it follows that
+\begin{equation}
+A \ \text{symmetric positive definite} \quad \Longleftrightarrow \quad (\lambda_1 > 0 \text{ and } \lambda_2 > 0).
+\end{equation}
+Note that two real numbers are positive if and only if both their product and their sum
+are positive. From (5.29), we find that
+\begin{equation}
+\begin{split}
+(\lambda_1 > 0 \text{ and } \lambda_2 > 0) \quad &\Longleftrightarrow \quad (\lambda_1+\lambda_2 > 0 \text{ and } \lambda_1\lambda_2 > 0)\\
+&\Longleftrightarrow \quad (a+d > 0 \text{ and } ad > b^2).
+\end{split}
+\end{equation}
+Note that, if $ad > b^2$, then $ad > 0$, and therefore $a$ and $d$ must have the same
+sign and be nonzero. Thus,
+\begin{equation}
+(a+d > 0 \text{ and } ad > b^2) \quad \Longleftrightarrow \quad (a > 0 \text{ and } ad > b^2).
+\end{equation}
+From (5.31) and (5.32), it follows that
+\begin{equation}
+(\lambda_1 > 0 \text{ and } \lambda_2 > 0) \quad \Longleftrightarrow \quad (a > 0 \text{ and } ad > b^2),
+\end{equation}
+and, from (5.30) and (5.33), we conclude that the matrix $A$ is symmetric positive
+definite if and only if $a > 0$ and $ad > b^2$.
+
+(ii) From Theorem 5.6 (ii), it follows that
+\begin{equation}
+A \ \text{symmetric positive semidefinite} \quad \Longleftrightarrow \quad (\lambda_1 \geq 0 \text{ and } \lambda_2 \geq 0).
+\end{equation}
+Note that two real numbers are greater than or equal to $0$ if and only if both their
+product and their sum are greater than or equal to $0$. From (5.29), we find that
+\begin{align}
+(\lambda_1 \geq 0 \text{ and } \lambda_2 \geq 0) \quad &\Longleftrightarrow \quad (\lambda_1+\lambda_2 \geq 0 \text{ and } \lambda_1\lambda_2 \geq 0)\\
+&\Longleftrightarrow \quad (a+d \geq 0 \text{ and } ad \geq b^2).
+\end{align}
+Note that, if $ad \geq b^2$, then $ad \geq 0$, and therefore $a$ and $d$ must have the
+same sign. Thus,
+\begin{equation}
+(a+d \geq 0 \text{ and } ad \geq b^2) \quad \Longleftrightarrow \quad (a \geq 0,\ d \geq 0, \text{ and } ad \geq b^2).
+\end{equation}
+From (5.35--5.37), it follows that
+\begin{equation}
+(\lambda_1 \geq 0 \text{ and } \lambda_2 \geq 0) \quad \Longleftrightarrow \quad (a \geq 0,\ d \geq 0, \text{ and } ad \geq b^2),
+\end{equation}
+and, from (5.34) and (5.38), we conclude that the matrix $A$ is symmetric positive
+semidefinite if and only if $a \geq 0$, $d \geq 0$, and $ad \geq b^2$.
+\hfill$\square$
+\par\medskip
+
+\par\medskip\noindent\textit{Example:}\ Show that the $N \times N$ matrix
+\[
+B_N \;=\; \begin{pmatrix}
+2 & -1 & \dots & 0\\
+-1 & \ddots & \ddots & \vdots\\
+\vdots & \ddots & \ddots & -1\\
+0 & \dots & -1 & 2
+\end{pmatrix}
+\]
+is symmetric positive definite.
+
+\par\medskip\noindent\textit{Solution:}\ Recall from Lemma 4.10 that the eigenvalues of
+the matrix $B_N$ are
+\[
+\mu_j \;=\; 2\left(1-\cos\left(\frac{j\pi}{N+1}\right)\right), \quad \forall\, j = 1:N.
+\]
+Since $-1 \leq \cos(x) < 1$ for all $x \neq 2k\pi$, where $k$ is an integer, we find that
+$\mu_j > 0$ for all $j = 1:N$. Thus, all the eigenvalues of $B_N$ are strictly positive,
+and, from Theorem 5.6, we obtain that $B_N$ is a symmetric positive definite matrix.
+\hfill$\square$
+\par\medskip
+
+\par\medskip\noindent\textit{Example:}\ Show that the $N \times N$ tridiagonal symmetric
+matrix
+\begin{equation}
+T_N \;=\; \begin{pmatrix}
+d & -a & \dots & 0\\
+-a & \ddots & \ddots & \vdots\\
+\vdots & \ddots & \ddots & -a\\
+0 & \dots & -a & d
+\end{pmatrix}
+\end{equation}
+is symmetric positive definite if and only if the parameters $d$ and $a$ satisfy the
+inequality
+\begin{equation}
+d \;>\; 2|a|\cos\left(\frac{\pi}{N+1}\right).
+\end{equation}
+
+\par\medskip\noindent\textit{Solution:}\ The eigenvalues of the matrix $T_N$ are
+\begin{equation}
+\lambda_j \;=\; d - 2a\cos\left(\frac{\pi j}{N+1}\right), \quad \forall\, j = 1:N;
+\end{equation}
+see Lemma 4.11. Note that
+\begin{equation}
+1 \;>\; \cos\left(\frac{\pi}{N+1}\right) \;>\; \cos\left(\frac{2\pi}{N+1}\right) \;>\; \cos\left(\frac{N\pi}{N+1}\right) \;>\; -1.
+\end{equation}
+
+If $a \geq 0$, it follows from (5.41) and (5.42) that
+\[
+\lambda_1 \;\leq\; \lambda_2 \;\leq\; \dots \;\leq\; \lambda_N.
+\]
+
+Recall from Theorem 5.6 that a symmetric matrix is symmetric positive definite if and
+only if all the eigenvalues of the matrix are strictly greater than zero. Then, the
+matrix $T_N$ is symmetric positive definite if and only if
+$\lambda_1 = d - 2a\cos\left(\frac{\pi}{N+1}\right) > 0$, which is equivalent to
+\begin{equation}
+d \;>\; 2a\cos\left(\frac{\pi}{N+1}\right).
+\end{equation}

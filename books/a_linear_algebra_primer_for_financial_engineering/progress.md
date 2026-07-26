@@ -80,13 +80,13 @@ offset.
 
 ## Chapter 5 — Symmetric matrices and symmetric positive definite matrices (PDF 155–176)
 
-- [ ] 5.1 Symmetric matrices
-- [ ] 5.2 Symmetric positive definite matrices
-- [ ] 5.2.1 Sylvester's Criterion
-- [ ] 5.2.2 Positive definiteness criteria for symmetric matrices
-- [ ] 5.3 The diagonal form of symmetric matrices
-- [ ] 5.4 References
-- [ ] 5.5 Exercises
+- [x] 5.1 Symmetric matrices
+- [x] 5.2 Symmetric positive definite matrices
+- [x] 5.2.1 Sylvester's Criterion
+- [x] 5.2.2 Positive definiteness criteria for symmetric matrices
+- [x] 5.3 The diagonal form of symmetric matrices
+- [x] 5.4 References
+- [x] 5.5 Exercises
 
 ## Chapter 6 — Cholesky decomposition. Efficient cubic spline interpolation. (PDF 177–208)
 

@@ -1,0 +1,138 @@
+% PAGES: 181-182
+% Closes the "Proof of Theorem 6.1" opened in sec06_c1_1.tex (page 178 /
+% folio 162) and continued through sec06_c1_2.tex (page 179-180 / folio
+% 163-164): the "\end{proof}" a few lines below matches that
+% "\begin{proof}[Proof of Theorem 6.1]". No other environment is open on
+% entry.
+
+Then, from (6.15) and (6.18), we obtain that
+\begin{equation}
+(U(2:n,2:n))\tp U(2:n,2:n) \;=\; A(2:n,2:n) \;-\; \frac{(A(1,2:n))\tp A(1,2:n)}{A(1,1)}.
+\end{equation}
+
+The crucial step that makes the Cholesky decomposition possible is that, if $A$ is a
+symmetric positive definite matrix, then the matrix
+\begin{equation}
+A(2:n,2:n) \;-\; \frac{(A(1,2:n))\tp A(1,2:n)}{A(1,1)}
+\end{equation}
+from the right hand side of (6.19) is symmetric positive definite matrix. This result
+is proved in Chapter 10; see Lemma 10.17.
+
+Then, if follows from (6.19) that the $(n-1) \times (n-1)$ matrix $U(2:n,2:n)$ is the
+Cholesky factor of the symmetric positive definite matrix from (6.20), and we conclude
+that the matrix $A$ has a Cholesky decomposition $A = U\tp U$ with Cholesky factor
+\[
+U \;=\; \begin{pmatrix} U(1,1) & U(1,2:n) \\ 0 & U(2:n,2:n) \end{pmatrix}.
+\]
+\end{proof}
+
+The proof above also provides the idea for the recursive implementation of the
+Cholesky decomposition algorithm. Once the first row of $U$ is computed, the entries of
+$A(2:n,2:n)$ are updated\footnote{The entries of $A(2:n,2:n)$ are updated using
+(6.15), i.e., $A(2:n,2:n) - (U(1,2:n))\tp U(1,2:n)$; formula (6.19), i.e., $A(2:n,2:n) -
+\frac{(A(1,2:n))\tp A(1,2:n)}{A(1,1)}$, is only used for the proof of the existence of
+the Cholesky decomposition.} to $A(2:n,2:n) - (U(1,2:n))\tp U(1,2:n)$, i.e.,
+\begin{equation}
+A(2:n,2:n) \;=\; A(2:n,2:n) \;-\; (U(1,2:n))\tp U(1,2:n).
+\end{equation}
+Then, the first row of the matrix $U(2:n,2:n)$ (which coincides with the second row of
+$U$ without the first entry which is equal to $0$) is computed from the matrix
+$A(2:n,2:n) - (U(1,2:n))\tp U(1,2:n)$ in the same way as the first row of $U$ was
+computed from the matrix $A$. The matrix $A(3:n,3:n)$ is then updated and will again be
+a symmetric positive definite matrix, and therefore this recursive process continues
+until all the rows of $U$ are computed.
+
+The Cholesky factor $U$ is obtained once all its $n$ rows are computed recursively via
+this algorithm; see section 6.1.1 for more details.
+
+\begin{theorem}
+The Cholesky decomposition of a symmetric positive definite matrix is unique.
+\end{theorem}
+
+\begin{proof}
+We give a proof by contradiction. Assume that the symmetric positive definite matrix
+$A$ of size $n$ has two Cholesky decompositions, i.e., assume that
+\[
+A \;=\; U_1\tp U_1 \quad \text{and} \quad A \;=\; U_2\tp U_2,
+\]
+where $U_1$ and $U_2$ are upper triangular matrices with positive entries on the main
+diagonal. Then,
+\begin{equation}
+U_1\tp U_1 \;=\; U_2\tp U_2.
+\end{equation}
+Note that $U_1$ and $U_2$ are nonsingular matrices, since any Cholesky factor is a
+nonsingular matrix; see Definition 6.1. Multiply (6.22) by $(U_2\tp)^{-1}$ on the left
+and by $U_1^{-1}$ on the right and obtain
+\begin{align}
+(U_2\tp)^{-1}(U_1\tp U_1)U_1^{-1} &= (U_2\tp)^{-1}(U_2\tp U_2)U_1^{-1} \notag \\
+\Longleftrightarrow \quad \big((U_2\tp)^{-1}U_1\tp\big) \cdot \big(U_1 U_1^{-1}\big)
+&= \big((U_2\tp)^{-1}U_2\tp\big) \cdot \big(U_2 U_1^{-1}\big) \notag \\
+\Longleftrightarrow \quad (U_2\tp)^{-1}U_1\tp &= U_2 U_1^{-1},
+\end{align}
+since $U_1U_1^{-1} = I$ and $(U_2\tp)^{-1}U_2\tp = I$.
+
+Recall from Lemma 1.17 that the inverse of an upper triangular matrix is upper
+triangular, and the inverse of a lower triangular matrix is lower triangular, and, from
+Lemma 1.15, that the product of two upper triangular matrices is upper triangular, and
+the product of two lower triangular matrices is lower triangular. Thus, the matrix
+$U_1^{-1}$ is upper triangular and therefore the matrix $U_2U_1^{-1}$ is also upper
+triangular. Similarly, the matrix $(U_2\tp)^{-1}$ is lower triangular and therefore the
+matrix $(U_2\tp)^{-1}U_1\tp$ is also lower triangular. Since the matrices
+$(U_2\tp)^{-1}U_1\tp$ and $U_2U_1^{-1}$ are equal, see (6.23), it follows that they
+must be diagonal matrices.
+
+Let $D = \diag(d_j)_{j=1:n}$ be a diagonal matrix such that
+\[
+D \;=\; (U_2\tp)^{-1}U_1\tp \;=\; U_2U_1^{-1}.
+\]
+Then, by multiplying $D = U_2U_1^{-1}$ to the right by $U_1$, we find that
+\begin{equation}
+U_2 \;=\; DU_1
+\end{equation}
+and therefore
+\begin{equation}
+A \;=\; U_2\tp U_2 \;=\; (DU_1)\tp U_2 \;=\; U_1\tp D\tp DU_1 \;=\; U_1\tp D^2 U_1,
+\end{equation}
+where the last equality follows from the fact that $D\tp = D$, since $D$ is a diagonal
+matrix. Since $A = U_1\tp U_1$ and $U_1$ is a nonsingular matrix, it follows from
+(6.25) that
+\begin{align*}
+U_1\tp U_1 = U_1\tp D^2 U_1 &\iff (U_1\tp)^{-1}U_1\tp U_1(U_1)^{-1} = (U_1\tp)^{-1}U_1\tp
+D^2 U_1(U_1)^{-1} \\
+&\iff I = D^2.
+\end{align*}
+Note that $D^2 = \diag(d_j^2)_{j=1:n}$, see (1.93), and therefore $I = D^2$ if and only
+if $d_j^2 = 1$ for all $j = 1:n$. Thus, all the diagonal entries of $D$ are either $1$
+or $-1$, i.e.,
+\begin{equation}
+d_j = 1 \quad \text{or} \quad d_j = -1, \quad \forall\, j = 1:n.
+\end{equation}
+Recall from (6.24) that $U_2 = DU_1$. From Lemma 1.10, we obtain that the $j$-th row of
+the matrix $DU_1$ is equal to the $j$-th row of the matrix $U_1$ multiplied by $d_j$.
+In particular, $(DU_1)(j,j) = d_jU_1(j,j)$. Since $U_2 = DU_1$, it follows that
+$U_2(j,j) = d_jU_1(j,j)$, and therefore
+\begin{equation}
+d_j \;=\; \frac{U_2(j,j)}{U_1(j,j)} \;>\; 0, \quad \forall\, j = 1:n,
+\end{equation}
+since, by Definition 6.1, all the main diagonal entries of $U_1$ and $U_2$ are
+positive.
+
+From (6.26) and (6.27), we obtain that $d_j = 1$ for all $j = 1:n$, and therefore the
+matrix $D = \diag(d_j)_{j=1:n}$ is equal to the identity matrix, i.e., $D = I$.
+
+Since $D = I$, it follows from (6.24) that $U_2 = U_1$, and we conclude that the
+Cholesky decomposition of the matrix $A$ is unique.
+\end{proof}
+
+\subsection{Pseudocode and operation count for Cholesky decomposition}
+
+Based on the proof of Theorem 6.1, the algorithm for finding the Cholesky decomposition
+of a symmetric positive definite matrix can be implemented recursively as detailed
+below; see also the pseudocode from Table 6.1.
+
+Let $A$ be a symmetric positive definite matrix and let $U$ be the Cholesky factor of
+$A$.
+
+\begin{itemize}
+\item Compute the first row of $U$:
+\end{itemize}
