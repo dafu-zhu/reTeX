@@ -91,7 +91,15 @@ Committed on `div_grad_curl_and_all_that` but absent from `master` — import in
 `extract_figures_ocr.py`, `extract_figures_roman.py`, `ocr_extract.py`
 
 Untracked in the working tree, never committed anywhere — commit into `scripts/`:
-`extract_figures_v2.py`, `check_clean_textbook.py`, `codex_rewrite_chapter.ps1`
+`extract_figures_v2.py` (generic: `--pdf/--out/--dpi` argparse interface)
+
+**Not salvaged** — both are one-off scratch tied to the discarded `ai_ch02` experiment,
+not reusable framework:
+- `check_clean_textbook.py` — hardcoded assertions against `latex/ai_ch02/page_038.tex`,
+  `\chapter{Forward Pricing}` (Option Volatility Pricing ch02), and specific preamble
+  geometry values. Its generic successor is `scripts/check_repo_layout.py` (see below).
+- `codex_rewrite_chapter.ps1` — depends on `latex/ai_clean_chNN/` and `ocr_output/chNN/`,
+  both discarded, and drives a `codex exec` rewrite flow outside this pipeline.
 
 ### Discarded
 
@@ -104,6 +112,11 @@ Untracked in the working tree, never committed anywhere — commit into `scripts
 
 Tag every tip as `archive/<name>` before deleting, so no commit becomes unreachable.
 Then delete local and remote.
+
+**Tags stay local — never pushed.** Pushing them would republish the very copyright pages
+the scrub removes, since a tag pins the pre-scrub tree. Local tags give a rollback path
+during the migration; the public remote ends up carrying only scrubbed content. Once the
+migration is verified, the tags can be deleted to let git GC the old objects.
 
 | Branch | Disposition |
 |---|---|
@@ -227,9 +240,23 @@ Constraints: never restyle prose, never rewrite correct-but-differently-phrased 
 never resolve genuine ambiguity by guessing — emit `% UNCLEAR:` instead. Inherits the
 QED and shared-theorem-counter rules. Each edit carries a one-line rationale.
 
+## Layout Validator
+
+`scripts/check_repo_layout.py` — generic successor to the discarded
+`check_clean_textbook.py`, and the regression gate for this migration. Asserts:
+
+- every directory under `books/` has `book.conf`, `progress.md`, `latex/main.tex`,
+  `latex/preamble.tex`
+- no file under `books/` matches `ISBN`, `all rights reserved`, `library of congress`,
+  `\textcopyright`, or `\copyright`
+- no legacy paths survive: repo-root `book.conf`, `docs/progress.md`, `latex/ch*/`
+
+Run in CI position — after every migration task and before the final commit.
+
 ## Verification
 
-1. `git branch -a` shows only `master` plus `archive/*` tags
+1. `git branch -a` shows only `master`; `git tag` shows `archive/*` locally and
+   `git ls-remote --tags origin` shows none of them
 2. Every book directory contains `book.conf`, `progress.md`, `latex/main.tex`,
    `latex/preamble.tex`, and its full chapter set
 3. Chapter counts match: hayashi 10, applied_pde 14, white 8, div_grad_curl 4,
