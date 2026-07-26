@@ -79,3 +79,20 @@ def test_binary_files_do_not_crash_the_scan(tmp_path):
     (book / "latex" / "figures").mkdir()
     (book / "latex" / "figures" / "fig.png").write_bytes(b"\x89PNG\r\n\x1a\n\xff\xfe")
     assert check_layout(tmp_path) == []
+
+
+def test_missing_books_dir_still_reports_legacy_violations(tmp_path):
+    (tmp_path / "book.conf").write_text("BOOK_NAME=x\n", encoding="utf-8")
+    (tmp_path / "latex" / "ch01").mkdir(parents=True)
+    violations = check_layout(tmp_path)
+    assert any("missing books/ directory" in v for v in violations)
+    assert any("book.conf" in v for v in violations)
+    assert any("latex/ch01" in v for v in violations)
+
+
+def test_bare_copyright_word_is_not_flagged(tmp_path):
+    book = make_book(tmp_path, "some_book")
+    (book / "latex" / "frontmatter.tex").write_text(
+        "Copyright 2020 Some Author\n", encoding="utf-8"
+    )
+    assert check_layout(tmp_path) == []

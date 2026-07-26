@@ -30,8 +30,20 @@ def check_layout(root: pathlib.Path) -> list[str]:
     violations: list[str] = []
     books = root / "books"
 
+    # Legacy-path checks reference only `root`, never `books` — they must run
+    # unconditionally so they aren't silently skipped while books/ doesn't
+    # exist yet (e.g. before Task 4 creates it).
+    if (root / "book.conf").is_file():
+        violations.append("legacy repo-root book.conf still present")
+    if (root / "docs" / "progress.md").is_file():
+        violations.append("legacy docs/progress.md still present")
+    for legacy in sorted((root / "latex").glob("ch*")):
+        if legacy.is_dir():
+            violations.append(f"legacy latex/{legacy.name} still present")
+
     if not books.is_dir():
-        return [f"missing books/ directory at {books}"]
+        violations.append(f"missing books/ directory at {books}")
+        return violations
 
     for book in sorted(p for p in books.iterdir() if p.is_dir()):
         for rel in REQUIRED_FILES:
@@ -48,14 +60,6 @@ def check_layout(root: pathlib.Path) -> list[str]:
                     violations.append(
                         f"{rel_path}: contains forbidden marker {pattern.pattern}"
                     )
-
-    if (root / "book.conf").is_file():
-        violations.append("legacy repo-root book.conf still present")
-    if (root / "docs" / "progress.md").is_file():
-        violations.append("legacy docs/progress.md still present")
-    for legacy in sorted((root / "latex").glob("ch*")):
-        if legacy.is_dir():
-            violations.append(f"legacy latex/{legacy.name} still present")
 
     return violations
 
