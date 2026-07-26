@@ -1,0 +1,89 @@
+% PAGES: 53-54
+
+\noindent The numerical solution of linear systems.
+\medskip
+
+\noindent Forward substitution. Backward substitution.
+\medskip
+
+\noindent Finding discount factors using forward substitution.
+\medskip
+
+\noindent LU decomposition without pivoting. Existence and uniqueness. Pseudocode and
+operation count.
+\medskip
+
+\noindent Linear solvers using the LU decomposition without pivoting.
+\medskip
+
+\noindent LU linear solvers for tridiagonal matrices.
+\medskip
+
+\noindent LU decomposition with row pivoting. Pseudocode and operation count.
+\medskip
+
+\noindent Linear solvers using the LU decomposition with row pivoting.
+\medskip
+
+\noindent Solving linear systems corresponding to the same matrix.
+\medskip
+
+\noindent Finding discount factors using the LU decomposition.
+\medskip
+
+\noindent Cubic spline interpolation. Cubic spline interpolation for zero rate curves.
+\medskip
+
+\section{The numerical solution of linear systems}
+
+A fundamental problem in numerical analysis is solving linear systems, i.e., finding
+a vector $x$ such that
+\begin{equation}
+Ax \;=\; b,
+\end{equation}
+where $A$ is a square matrix and $b$ is a column vector of size equal to the number of
+columns of $A$.
+
+The \textit{numerical solution} of the problem (2.1) requires finding efficient
+numerical algorithms to compute the vector $x$ such that $Ax = b$, given the matrix $A$
+and the column vector $b$. These numerical algorithms will also address implicitly the
+question whether the matrix $A$ is nonsingular, which is required for the linear system
+(2.1) to have a unique solution.
+
+The numerical methods for solving linear systems are of two fundamentally different
+types:
+
+\begin{itemize}
+\item \textit{Direct Methods:} The solution of the linear system $Ax=b$ is found by
+computing the LU decomposition with pivoting of the matrix $A$, or the Cholesky
+decomposition of $A$, if the matrix $A$ is symmetric positive definite, and then
+solving two linear systems corresponding to lower triangular matrices and to upper
+triangular matrices.
+\item \textit{Iterative Methods:} The solution of the linear system $Ax=b$ is obtained
+recursively. The iteration is stopped once an approximate solution with prescribed
+precision is found. Examples of such methods are Jacobi iteration, Gauss--Siedel
+iteration, and SOR (Successive Overrelaxation).
+\end{itemize}
+
+All the methods mentioned above are much more efficient from a numerical standpoint
+than a computation of the inverse matrix $A^{-1}$ and finding $x$ by using the
+matrix--vector multiplication $x=A^{-1}b$.
+
+In practice, direct methods are faster for solving linear systems arising from
+discretizations of two dimensional problems, while iterative methods are faster for
+solving linear systems corresponding to three dimensional problems (or higher
+dimensional problems). We only discuss direct methods herein: see sections 2.4 and 2.6
+for the LU decomposition, and section 6.1 for the Cholesky decomposition.
+
+Note that linear systems corresponding to nonsingular diagonal matrices have
+straightforward solution. If $D$ is a nonsingular diagonal matrix of size $n$, i.e.,
+with $D(j,j)\neq 0$ for all $j=1:n$, see Lemma 1.12, then the solution $x$ to $Dx=b$,
+where $b$ is an $n\times 1$ vector, is given by
+\[
+x(j) \;=\; \frac{b(j)}{D(j,j)}, \quad \forall\, j=1:n.
+\]
+
+Linear systems corresponding to lower triangular matrices or to upper triangular
+matrices can also be solved directly, by using the Forward Substitution, if the matrix
+is lower triangular, or by using the Backward Substitution, if the matrix is upper
+triangular; see section 2.2 and section 2.3, respectively.

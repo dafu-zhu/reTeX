@@ -1,0 +1,255 @@
+% PAGES: 88-91
+% Continues subsection 2.7.1 "Solving linear systems corresponding to the
+% same matrix" (itself a subsection of section 2.7 "Linear solvers using LU
+% decomposition with row pivoting"), begun before page 88 (PDF index) in a
+% sibling agent's file. Do not open that file; this file starts fresh
+% mid-subsection with Table 2.12, which appears complete and self-contained
+% at the top of page 88.
+
+\begin{table}[H]
+\centering
+\caption{Solution of multiple linear systems corresponding to the same matrix}
+\fbox{\begin{minipage}{0.8\textwidth}
+\textbf{Input:}\\
+$A = $ nonsingular square matrix of size $n$ with LU decomposition\\
+$b_i = $ column vectors of size $n$, $i=1:p$
+
+\medskip
+\textbf{Output:}\\
+$x_i = $ solution to $Ax_i=b_i$, $i=1:p$
+
+\medskip
+$[P,L,U] = \text{lu\_row\_pivoting}(A)$;\\
+for $i = 1:p$\\
+\hspace*{1.5em}$y = \text{forward\_subst}(L,Pb_i)$;\\
+\hspace*{1.5em}$x_i = \text{backward\_subst}(U,y)$;\\
+end
+\end{minipage}}
+\end{table}
+
+Thus, the operation count for solving the $p$ linear systems using the method from
+Table 2.12 is
+\[
+\frac23n^3+O(n^2) \;+\; p\bigl(n^2+O(n)+n^2+O(n)\bigr) \;=\;
+\frac23n^3+2pn^2+O(n^2)+pO(n),
+\]
+which is smaller than $\frac23pn^3+pO(n^2)$, the operation count required by solving
+the $p$ linear systems sequentially; see (2.69).
+
+As an example of solving multiple systems corresponding to the same matrix, we show
+how to efficiently compute the inverse of a nonsingular matrix.
+
+Finding the inverse of a nonsingular matrix one entry at a time requires computing
+the determinant of the matrix and one minor for every entry of the matrix, for a
+total cost of more than $n^2\cdot n!$ operations. This is beyond regular computer
+power limits even for small values of $n$, since, from Stirling's formula, $n!$ is
+of the order $\frac{n^{n+1/2}}{e^n}$; for example, computing the inverse of a
+nonsingular $27\times27$ matrix using this method would require more than $10^{28}$
+operations.
+
+Nonetheless, the inverse of an $n\times n$ nonsingular matrix having an LU
+decomposition can be computed very efficiently in $\frac83n^3+O(n^2)$ operations as
+follows:
+
+Let $A$ be an $n\times n$ nonsingular matrix, and let $A^{-1} = \text{col}(c_k)_{k=1:n}$
+be the column form of the inverse matrix of $A$. Then, $AA^{-1}=I$, where
+$I=\text{col}(e_k)_{k=1:n}$ is the identity matrix of size $n$. Using (1.11), we find
+that $AA^{-1}=\text{col}(Ac_k)_{k=1:n}$, and therefore $AA^{-1}=I$ is equivalent to
+\[
+Ac_k \;=\; e_k, \quad \forall k=1:n,
+\]
+which can be solved using the method from Table 2.12 as follows:
+
+\begin{center}
+\fbox{\begin{minipage}{0.6\textwidth}
+$[P,L,U] = \text{lu\_row\_pivoting}(A)$\\
+for $k = 1:n$\\
+\hspace*{1.5em}$y = \text{forward\_subst}(L,Pe_k)$\\
+\hspace*{1.5em}$c_k = \text{backward\_subst}(U,y)$\\
+end\\
+$A^{-1} = \text{col}(c_k)_{k=1:n}$
+\end{minipage}}
+\end{center}
+
+The operation count for computing the inverse matrix using this method is
+\begin{equation}
+\frac23n^3+O(n^2) \;+\; n\bigl(n^2+O(n)+n^2+O(n)\bigr) \;=\; \frac83n^3+O(n^2);
+\end{equation}
+see (10.88) in Section 10.2.3 for a proof of the last equality.
+
+\subsection{Finding discount factors using the LU decomposition}
+
+If the number of cash flow dates is equal to the number of bonds (and if there are
+no redundancies), then the discount factors corresponding to the cash flow dates can
+be uniquely determined from the bond prices by solving a linear system using LU
+decomposition with row pivoting; see also section 2.2.1 for an example when forward
+substitution is used to determine the discount factors.
+
+For the example below, recall that a semiannual coupon bond with face value \$100,
+coupon rate $C$, and maturity $T$ pays the holder of the bond a coupon payment equal
+to $\frac{C}{2}\cdot100$ every six months, except at maturity. The final payment at
+maturity is equal to the face value of the bond plus one coupon payment, i.e.,
+$100+\frac{C}{2}100$. For example, a semiannual coupon bond with 15 months to
+maturity and coupon rate 5\%, i.e., $C=0.05$, has three cash flow dates, in 3, 9,
+and 15 months, corresponding to $t_1=\frac{3}{12}=\frac14$, $t_2=\frac9{12}=\frac34$,
+and $t_3=\frac{15}{12}=\frac54$, respectively. The corresponding cash flows are
+$c_1=2.5$, $c_2=2.5$, and $c_3=102.5$.
+
+\begin{examplex}
+The values of the following coupon bonds with face value \$100 are given:
+
+\begin{center}
+\begin{tabular}{ccc}
+Bond Type & Coupon Rate & Bond Price \\[0.4em]
+11 months semiannual & 4\% & \$101.5 \\
+17 months annual & 5\% & \$105.5 \\
+23 months semiannual & 3\% & \$101 \\
+23 months annual & 6\% & \$106.75 \\
+\end{tabular}
+\end{center}
+
+The cash flows and the cash flow dates of the bonds are recorded in the table
+below:
+
+\begin{center}
+\begin{tabular}{|l|l|}
+\hline
+Bond Type & Cash Flow \& Date \\
+\hline
+11 months semiannual & \begin{tabular}[t]{@{}l@{}}\$2 in 5 months\\ \$102 in 11
+months\end{tabular} \\
+\hline
+17 months annual & \begin{tabular}[t]{@{}l@{}}\$5 in 5 months\\ \$105 in 17
+months\end{tabular} \\
+\hline
+23 months semiannual & \begin{tabular}[t]{@{}l@{}}\$1.5 in 5 months\\ \$1.5 in 11
+months\\ \$1.5 in 17 months\\ \$101.5 in 23 months\end{tabular} \\
+\hline
+23 months annual & \begin{tabular}[t]{@{}l@{}}\$6 in 11 months\\ \$106 in 23
+months\end{tabular} \\
+\hline
+\end{tabular}
+\end{center}
+
+Note that the four bonds have exactly four cash flow dates, i.e., 5 months, 11
+months, 17 months, and 23 months, and let $d_1,d_2,d_3,d_4$ be the discount factors
+corresponding to these dates. Using the formula (2.11) for bond valuation, we find
+that
+\begin{align*}
+101.5 &= 2d_1+102d_2; \\
+105.5 &= 5d_1+105d_3; \\
+101 &= 1.5d_1+1.5d_2+1.5d_3+101.5d_4; \\
+106.75 &= 6d_2+106d_4.
+\end{align*}
+
+This linear system can be written in matrix notation as $Ax=b$, where
+\[
+A = \begin{pmatrix} 2 & 102 & 0 & 0\\ 5 & 0 & 105 & 0\\ 1.5 & 1.5 & 1.5 & 101.5\\
+0 & 6 & 0 & 106\end{pmatrix}; \quad
+x = \begin{pmatrix} d_1\\ d_2\\ d_3\\ d_4\end{pmatrix}; \quad
+b = \begin{pmatrix} 101.5\\ 105.5\\ 101\\ 106.75\end{pmatrix}.
+\]
+
+The solution of $Ax=b$ is obtained using the LU decomposition with row pivoting
+linear solver\footnote{We provide more numerical details here. The permutation
+matrix $P$, lower triangular matrix $L$, and upper triangular matrix $U$ from the
+LU decomposition with row pivoting of $A$ are
+\[
+P = \begin{pmatrix} 0&1&0&0\\ 1&0&0&0\\ 0&0&1&0\\ 0&0&0&1\end{pmatrix}; \quad
+L = \begin{pmatrix} 1&0&0&0\\ 0.4&1&0&0\\ 0.3&0.0147&1&0\\
+0&0.0588&-0.0841&1\end{pmatrix};
+\]
+\[
+U = \begin{pmatrix} 5&0&105&0\\ 0&102&-42&0\\ 0&0&-29.3824&101.5\\
+0&0&0&114.5345\end{pmatrix}.
+\]
+Furthermore,
+\[
+y \;=\; \text{forward\_subst}(L,Pb) \;=\; \begin{pmatrix} 105.5\\ 59.3\\ 68.4779\\
+109.0197\end{pmatrix}.
+\]} from Table 2.11, i.e.,
+\[
+x \;=\; \text{linear\_solve\_lu\_row\_pivoting}(A,b) \;=\; \begin{pmatrix} 0.9916\\
+0.9757\\ 0.9575\\ 0.9518\end{pmatrix}.
+\]
+
+Recall that the discount factors corresponding to the cash flow dates are equal to
+the entries of $x$. Thus,
+\[
+d_1 = \text{Disc}\left(\frac5{12}\right) = 0.9916; \quad
+d_2 = \text{Disc}\left(\frac{11}{12}\right) = 0.9757;
+\]
+\[
+d_3 = \text{Disc}\left(\frac{17}{12}\right) = 0.9575; \quad
+d_4 = \text{Disc}\left(\frac{23}{12}\right) = 0.9518.
+\]
+
+Then, formula (2.12), i.e.,
+\[
+\text{Disc}(t_i) \;=\; \exp\bigl(-t_ir(0,t_i)\bigr),
+\]
+can be used to find the corresponding continuously compounded zero rates, as
+follows:
+\begin{align*}
+d_1 = \exp\left(-\frac5{12}r\left(0,\frac5{12}\right)\right) \quad &\Longleftrightarrow
+\quad r\left(0,\frac5{12}\right) = -\frac{\ln(d_1)}{5/12} = 0.0202 = 2.02\%; \\
+d_2 = \exp\left(-\frac{11}{12}r\left(0,\frac{11}{12}\right)\right) \quad
+&\Longleftrightarrow \quad r\left(0,\frac{11}{12}\right) = -\frac{\ln(d_2)}{11/12} =
+0.0269 = 2.69\%; \\
+d_3 = \exp\left(-\frac{17}{12}r\left(0,\frac{17}{12}\right)\right) \quad
+&\Longleftrightarrow \quad r\left(0,\frac{17}{12}\right) = -\frac{\ln(d_3)}{17/12} =
+0.0306 = 3.06\%; \\
+d_4 = \exp\left(-\frac{23}{12}r\left(0,\frac{23}{12}\right)\right) \quad
+&\Longleftrightarrow \quad r\left(0,\frac{23}{12}\right) = -\frac{\ln(d_4)}{23/12} =
+0.0257 = 2.57\%.
+\end{align*}
+\end{examplex}
+
+\section{Cubic spline interpolation}
+
+Interpolating a continuous function from known values at a finite number of
+discrete nodes is a frequently used tool for financial applications, e.g., for
+inferring a zero--rate curve from known discount factors.
+
+The continuous interpolation problem can be described in general terms as follows:
+
+Find a continuous function $f:[x_0,x_n]\to\R$ such that $f(x_i)=v_i$, for all
+$i=0:n$, where $x_0<x_1<\ldots<x_n$, and $v_i$ are the known values of $f(x)$ at
+the point $x_i$, for all $i=0:n$.
+
+The simplest way to obtain such a function is by linear interpolation between every
+two points $x_{i-1}$ and $x_i$, for $i=1:n$, resulting in the following function:
+\[
+f(x) \;=\; \frac{(x-x_{i-1})v_i}{x_i-x_{i-1}} + \frac{(x_i-x)v_{i-1}}{x_i-x_{i-1}},
+\quad \forall x_{i-1}\le x\le x_i, \quad \forall i=1:n.
+\]
+
+However, linear interpolation has a major drawback: the resulting function $f(x)$
+is not differentiable at any point $x_i$, $i=1:(n-1)$.
+
+The interpolation method most often used in practice is \textit{cubic spline
+interpolation}, which requires the function $f(x)$ to be a polynomial of degree
+three (i.e., a cubic polynomial) on each interval $[x_{i-1},x_i]$, for $i=1:n$, as
+well as to be twice differentiable on the entire interval $[x_0,x_n]$.
+
+In other words, we are looking for a function $f(x)$ of the form
+\begin{equation}
+f(x) \;=\; f_i(x) \;=\; a_i+b_ix+c_ix^2+d_ix^3, \quad \forall x_{i-1}\le x\le x_i,
+\quad \forall i=1:n,
+\end{equation}
+such that
+\begin{align}
+f_i(x_{i-1}) &= v_{i-1}, \quad \forall i=1:n; \\
+f_i(x_i) &= v_i, \quad \forall i=1:n; \\
+f_i'(x_i) &= f_{i+1}'(x_i), \quad \forall i=1:(n-1); \\
+f_i''(x_i) &= f_{i+1}''(x_i), \quad \forall i=1:(n-1).
+\end{align}
+
+Using (2.71), we can rewrite (2.72--2.75), respectively, as follows:
+\begin{align}
+a_i+b_ix_{i-1}+c_ix_{i-1}^2+d_ix_{i-1}^3 &= v_{i-1}, \quad \forall i=1:n; \\
+a_i+b_ix_i+c_ix_i^2+d_ix_i^3 &= v_i, \quad \forall i=1:n; \\
+b_i+2c_ix_i+3d_ix_i^2 &= b_{i+1}+2c_{i+1}x_i+3d_{i+1}x_i^2, \quad \forall
+i=1:(n-1); \\
+2c_i+6d_ix_i &= 2c_{i+1}+6d_{i+1}x_i, \quad \forall i=1:(n-1).
+\end{align}

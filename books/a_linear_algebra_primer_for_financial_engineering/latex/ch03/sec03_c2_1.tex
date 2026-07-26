@@ -1,0 +1,150 @@
+% PAGES: 109-110
+
+% This file continues Section 3.2 "Arbitrage-free markets" and the proof of
+% Theorem 3.1, both begun before PDF page 109 in another agent's file. The
+% paragraph below is the tail end of the case-(II)-arbitrage argument; do
+% NOT reopen \begin{proof} here -- it closes the proof already in progress.
+
+An arbitrage of type (II) occurs if and only if there exists an $m \times 1$
+positions vector $\Theta$ such that
+\begin{equation}
+V_{t_0} \;=\; \Theta^t S_{t_0} \;<\; 0 \quad \text{and} \quad
+V_\tau^{\omega^k} \;=\; \Theta^t S_\tau^{\omega^k} \;\geq\; 0, \quad \forall\, k = 1:n.
+\end{equation}
+Note that, since $S_{t_0} = M_\tau Q$, formula (3.15) holds, i.e.,
+\[
+V_{t_0} \;=\; \sum_{k=1}^n Q_k V_\tau^{\omega^k}.
+\]
+Then, since $Q_k > 0$ and $V_\tau^{\omega^k} \geq 0$ for all $k = 1:n$, we
+find that $V_{t_0} \geq 0$, which contradicts the assumption that
+$V_{t_0} < 0$ from the no--arbitrage condition (3.16).
+\end{proof}
+
+\medskip
+\noindent\rule{\linewidth}{0.4pt}
+\medskip
+
+\noindent\textbf{\textit{One Period Binomial Model Example (Continued):}}\\
+The one period binomial model is arbitrage--free if and only if
+\begin{equation}
+d \;<\; e^{r\delta t} \;<\; u.
+\end{equation}
+
+To see this, note that, from Theorem 3.1, it follows that the one period
+binomial model is arbitrage--free if and only if there exist
+$Q = \begin{pmatrix} Q_1 \\ Q_2 \end{pmatrix}$ with $Q_1 > 0$ and $Q_2 > 0$
+such that
+\begin{equation}
+M_\tau Q \;=\; S_{t_0},
+\end{equation}
+where $S_{t_0}$ is the price vector of the securities at time $t_0$ given by
+(3.4) and $M_\tau$ is the payoff matrix at time $\tau$ given by (3.5).
+
+The equality (3.18) can be written as follows:
+\[
+\begin{pmatrix} e^{r\delta t} & e^{r\delta t} \\ uS_0 & dS_0 \end{pmatrix}
+\begin{pmatrix} Q_1 \\ Q_2 \end{pmatrix}
+\;=\;
+\begin{pmatrix} 1 \\ S_0 \end{pmatrix}
+\quad\Longleftrightarrow\quad
+\begin{cases}
+e^{r\delta t} Q_1 \;+\; e^{r\delta t} Q_2 \;=\; 1 \\
+uS_0 Q_1 \;+\; dS_0 Q_2 \;=\; S_0
+\end{cases}
+\]
+which can be written as
+\begin{align}
+Q_1 + Q_2 &= e^{-r\delta t}; \\
+uQ_1 + dQ_2 &= 1.
+\end{align}
+
+By multiplying (3.19) by $d$ and subtracting the resulting equation from
+(3.20) and solving for $Q_1$, we obtain that
+\begin{equation}
+Q_1 \;=\; \frac{1 - de^{-r\delta t}}{u - d} \;=\; e^{-r\delta t}\,\frac{e^{r\delta t} - d}{u - d}.
+\end{equation}
+
+From (3.19) and (3.21), we find that
+\begin{equation}
+Q_2 \;=\; \frac{ue^{-r\delta t} - 1}{u - d} \;=\; e^{-r\delta t}\,\frac{u - e^{r\delta t}}{u - d}.
+\end{equation}
+
+Recall that $d < u$ and therefore $u - d > 0$. Then, from (3.21) and (3.22),
+if follows that $Q_1 > 0$ and $Q_2 > 0$ if and only if $d < e^{r\delta t} <
+u$. From Theorem 3.1, we conclude that the one period binomial model is
+arbitrage--free if and only if $d < e^{r\delta t} < u$, which is what we
+wanted to show; cf. (3.17).
+
+The intuition behind the no--arbitrage condition (3.17) is as follows: if
+(3.17) were not satisfied, then the following arbitrage opportunities would
+occur:
+
+\begin{itemize}
+\item If $d \geq e^{r\delta t}$, then the asset will appreciate at least at
+the risk free rate even if its value at time $\tau$ is $dS_0$, the lower of
+the two possible values for the asset. The arbitrage follows from a
+``buy low, sell high'' strategy: borrowing cash and purchasing the asset is
+guaranteed not to lose money in either state of the market at time $\tau$,
+and will have a positive payoff if the value of the asset at time $\tau$ is
+$uS_0$. This is an arbitrage opportunity of type (I).
+
+\item If $e^{r\delta t} \geq u$, then the asset will appreciate at most at
+the risk free rate even if its value at time $\tau$ is $uS_0$, the higher of
+the two possible values for the asset. The arbitrage follows from a
+``buy low, sell high'' strategy: shorting the asset and investing the cash
+at the risk--free rate is guaranteed to not lose money in either state of
+the market at time $\tau$, and will have a positive payoff if the value of
+the asset at time $\tau$ is $dS_0$. This is an arbitrage opportunity of type
+(I). \hfill$\square$
+\end{itemize}
+
+\medskip
+\noindent\rule{\linewidth}{0.4pt}
+\medskip
+
+The result below is a special case of the no--arbitrage Law of One Price for
+arbitrage--free one period market models; see Stefanica [36, 37] for a
+general form of the Law of One Price and more applications.
+
+\begin{theorem}
+(The Law of One Price) Consider an arbitrage--free one period market model
+with $m$ securities and $n$ market states. If two portfolios have the same
+value in every state of the market at time $\tau > t_0$, then they must
+have the same value at time $t_0$.
+\end{theorem}
+
+\begin{proof}
+Let $V_{t_0}$ and $W_{t_0}$ be the values at time $t_0$ of two portfolios
+which have the same value in every state of the market at time $\tau$, i.e.
+$V_\tau^{\omega^k} = W_\tau^{\omega^k}$, for all $1 \leq k \leq n$. We will
+show that if the one period market model is arbitrage--free, then $V_{t_0} =
+W_{t_0}$.
+
+If $V_{t_0} \neq W_{t_0}$, assume, for example, that $V_{t_0} < W_{t_0}$ and
+consider a portfolio with a long position in the first portfolio and a short
+position in the second portfolio. The value at time $t_0$ of this portfolio
+is $V_{t_0} - W_{t_0} < 0$, while its value in any state $\omega^k$ at time
+$\tau$ is $0$, since $V_\tau^{\omega^k} - W_\tau^{\omega^k} = 0$ for all $k =
+1:n$. This is an arbitrage of type (II), which contradicts the fact that the
+one period market model was arbitrage--free. The contradiction comes from
+the assumption that $V_{t_0} \neq W_{t_0}$, and therefore we conclude that
+$V_{t_0} = W_{t_0}$.
+\end{proof}
+
+The value of a replicable derivative security in an arbitrage--free market
+can be determined as follows:
+
+\begin{lemma}
+Consider an arbitrage--free one period market model with $m$ securities and
+$n$ market states. Let $Q_k > 0$, $k = 1:n$, be the state prices, and let $Q
+= (Q_k)_{k=1:n}$. Let $s_\tau$ be the $1 \times n$ price vector at time
+$\tau$ of a replicable security. The value $s_{t_0}$ at time $t_0$ of the
+replicable security is
+\begin{equation}
+s_{t_0} \;=\; s_\tau Q \;=\; \sum_{k=1}^n Q_k s_\tau^{\omega^k},
+\end{equation}
+where $s_\tau^{\omega^k}$ is the value of the replicable security at time
+$\tau$ if state $\omega^k$ occurs.
+\end{lemma}
+
+% Proof of Lemma 3.3 continues on PDF page 111, covered by sec03_c2_2.tex.

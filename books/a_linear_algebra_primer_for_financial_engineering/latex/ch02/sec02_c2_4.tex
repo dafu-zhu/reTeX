@@ -1,0 +1,89 @@
+% PAGES: 66  (printed 50-50)
+% Opens mid-"examplex" environment: closes the $4\times4$-matrix example
+% begun in sec02_c2_3.tex (page 49). Do not add a new \begin{examplex}
+% here -- the \end{examplex} below matches the \begin{examplex} in
+% sec02_c2_3.tex.
+% This file stops at the end of printed page 50, right before the
+% "for k = i:n ... end" pseudocode box, which is the first content of
+% page 51 (out of range for this agent).
+
+\[
+U(1,2:n) \;=\; U(1,2:4) \;=\; \big(U(1,2)\ \ U(1,3)\ \ U(1,4)\big);
+\]
+\[
+U(2:n,2:n) \;=\; U(2:4,2:4) \;=\;
+\begin{pmatrix} U(2,2) & U(2,3) & U(2,4)\\ 0 & U(3,3) & U(3,4)\\ 0 & 0 & U(4,4)\end{pmatrix},
+\]
+and therefore (2.28--2.29) is written as follows if $A$, $L$, and $U$
+are $4\times 4$ matrices:
+\begin{equation}
+\begin{pmatrix} 1 & 0 \\ L(2:4,1) & L(2:4,2:4)\end{pmatrix}
+\begin{pmatrix} U(1,1) & U(1,2:4) \\ 0 & U(2:4,2:4)\end{pmatrix}
+\end{equation}
+\begin{equation}
+\;=\; \begin{pmatrix} A(1,1) & A(1,2:4) \\ A(2:4,1) & A(2:4,2:4)\end{pmatrix}.
+\end{equation}
+
+From (2.33--2.34), we find by block matrix multiplication the following
+explicit form of (2.30) for $4\times 4$ matrices:
+\[
+L(2:4,1)U(1,2:4) \;+\; L(2:4,2:4)U(2:4,2:4) \;=\; A(2:4,2:4),
+\]
+and therefore
+\begin{equation}
+L(2:4,2:4)U(2:4,2:4) \;=\; A(2:4,2:4) \;-\; L(2:4,1)U(1,2:4).
+\end{equation}
+\end{examplex}
+
+The LU decomposition without pivoting algorithm can be implemented
+recursively as detailed below; see also the pseudocode from Table 2.5.
+
+Let $A$ be a matrix with LU decomposition without pivoting, and let $L$
+and $U$ be the LU factors of $A$.
+
+\begin{itemize}
+\item[$\bullet$] Compute the first row of $U$ and the first column of $L$:
+\end{itemize}
+
+\begin{center}
+\fbox{%
+\begin{minipage}{0.5\textwidth}
+for $k = 1:n$\\
+\hspace*{1.5em}$U(1,k) = A(1,k)$\\
+\hspace*{1.5em}$L(k,1) = A(k,1)/U(1,1)$\\
+end
+\end{minipage}%
+}
+\end{center}
+
+Note that, in the ``for'' loop above, we compute $L(1,1) = 1$, rather
+than requiring it.
+
+\begin{itemize}
+\item[$\bullet$] Update the $(n-1)\times(n-1)$ lower right part of $A$ as follows:
+\end{itemize}
+\begin{equation}
+A(2:n,2:n) \;=\; A(2:n,2:n) \;-\; L(2:n,1)U(1,2:n),
+\end{equation}
+see (2.32), which can be written entry by entry as follows:
+
+\begin{center}
+\fbox{%
+\begin{minipage}{0.55\textwidth}
+for $j = 2:n$\\
+\hspace*{1.5em}for $k = 2:n$\\
+\hspace*{3em}$A(j,k) = A(j,k) - L(j,1)U(1,k)$\\
+\hspace*{1.5em}end\\
+end
+\end{minipage}%
+}
+\end{center}
+
+Every row of $U$ and column of $L$ are thereafter computed recursively
+from the latest updated part of the matrix $A$; see also the $4\times4$
+example below. For example, to compute the $i$-th row of $U$ and the
+$i$-th column of $L$, we do the following:
+
+\begin{itemize}
+\item[$\bullet$] Compute the $i$-th row of $U$ and the $i$-th column of $L$:
+\end{itemize}

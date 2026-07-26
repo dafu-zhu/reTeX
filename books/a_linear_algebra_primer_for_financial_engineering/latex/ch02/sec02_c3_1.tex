@@ -1,0 +1,284 @@
+% PAGES: 67-71 (printed pages 51-55; ends before the "2.5 Linear solvers using
+% the LU decomposition without pivoting" heading, which begins later on
+% printed page 55 and is covered by sec02_c3_2.tex)
+
+% This file continues Section 2.4 "LU decomposition without pivoting", begun
+% before printed page 51 (PDF page < 67) in another agent's file. The
+% material below picks up mid-bullet: the previous page ends with the bullet
+% "Compute the $i$-th row of $U$ and the $i$-th column of $L$:", and the
+% framed pseudocode box below is that bullet's content. Do not open or edit
+% the prior file.
+
+\begin{center}
+\fbox{\begin{minipage}{0.45\linewidth}
+\noindent
+for $k=i:n$\\
+\hspace*{1.5em}$U(i,k) = A(i,k)$\\
+\hspace*{1.5em}$L(k,i) = A(k,i)/U(i,i)$\\
+end
+\end{minipage}}
+\end{center}
+
+\noindent $\bullet$ Update the $(n-i)\times(n-i)$ lower right part of $A$ as follows:
+\begin{equation}
+A(i+1:n,i+1:n) \;=\; A(i+1:n,i+1:n) \;-\; L(i+1:n,i)U(i,i+1:n),
+\end{equation}
+which can be written entry by entry as follows:
+
+\begin{center}
+\fbox{\begin{minipage}{0.5\linewidth}
+\noindent
+for $j=(i+1):n$\\
+\hspace*{1.5em}for $k=(i+1):n$\\
+\hspace*{3em}$A(j,k) = A(j,k) - L(j,i)U(i,k)$\\
+\hspace*{1.5em}end\\
+end
+\end{minipage}}
+\end{center}
+
+Further clarification on the recursive part of the LU decomposition can be
+found in the example below for a $4\times 4$ matrix.
+
+\begin{examplex}
+Let
+\begin{equation}
+A \;=\; \begin{pmatrix} 2 & -1 & 3 & 0 \\ -4 & 5 & -7 & -2 \\ -2 & 10 & -4 & -7 \\ 4 & -14 & 8 & 10 \end{pmatrix}.
+\end{equation}
+
+Let $L$ and $U$ be the LU factors of $A$. The entries of the first row of $U$
+are given by (2.22), i.e., $U(1,k)=A(1,k)$ for $k=1:4$.
+\[
+U(1,1)=2; \quad U(1,2)=-1; \quad U(1,3)=3; \quad U(1,4)=0.
+\]
+
+The entries of the first column of $L$ are given by (2.24), i.e.,
+$L(k,1) = A(k,1)/U(1,1)$ for $k=1:4$:
+\[
+L(1,1)=1; \quad L(2,1)=\frac{-4}{U(1,1)}=\frac{-4}{2}=-2; \quad L(3,1)=\frac{-2}{U(1,1)}=\frac{-2}{2}=-1;
+\]
+\[
+L(4,1)=\frac{4}{U(1,1)}=\frac{4}{2}=2.
+\]
+
+Then, the current forms of $L$ and $U$ are
+\begin{equation}
+L=\begin{pmatrix} 1 & 0 & 0 & 0 \\ -2 & 1 & 0 & 0 \\ -1 & L(3,2) & 1 & 0 \\ 2 & L(4,2) & L(4,3) & 1 \end{pmatrix};
+\qquad
+U=\begin{pmatrix} 2 & -1 & 3 & 0 \\ 0 & U(2,2) & U(2,3) & U(2,4) \\ 0 & 0 & U(3,3) & U(3,4) \\ 0 & 0 & 0 & U(4,4) \end{pmatrix}.
+\end{equation}
+
+The updated form of the $3\times 3$ matrix $A(2:4,2:4)$ is computed using
+(2.36), from $A(2:4,2:4)$ obtained from (2.38) and with $L$ and $U$ given by
+(2.39), as follows:
+\begin{align*}
+A(2:4,2:4) &= A(2:4,2:4) - L(2:4,1)U(1,2:4) \\
+&= \begin{pmatrix} 5 & -7 & -2 \\ 10 & -4 & -7 \\ -14 & 8 & 10 \end{pmatrix} - \begin{pmatrix} -2 \\ -1 \\ 2 \end{pmatrix}(-1\ \ 3\ \ 0) \\
+&= \begin{pmatrix} 5 & -7 & -2 \\ 10 & -4 & -7 \\ -14 & 8 & 10 \end{pmatrix} - \begin{pmatrix} 2 & -6 & 0 \\ 1 & -3 & 0 \\ -2 & 6 & 0 \end{pmatrix} \\
+&= \begin{pmatrix} 3 & -1 & -2 \\ 9 & -1 & -7 \\ -12 & 2 & 10 \end{pmatrix}.
+\end{align*}
+
+Thus, the updated form of the $3\times 3$ matrix $A(2:4,2:4)$ is
+\begin{equation}
+A(2:4,2:4) \;=\; \begin{pmatrix} 3 & -1 & -2 \\ 9 & -1 & -7 \\ -12 & 2 & 10 \end{pmatrix}.
+\end{equation}
+
+Then,
+\[
+L(2:4,2:4)U(2:4,2:4) \;=\; \begin{pmatrix} 3 & -1 & -2 \\ 9 & -1 & -7 \\ -12 & 2 & 10 \end{pmatrix},
+\]
+which can be written as
+\[
+\begin{pmatrix} 1 & 0 & 0 \\ L(3,2) & 1 & 0 \\ L(4,2) & L(4,3) & 1 \end{pmatrix}
+\begin{pmatrix} U(2,2) & U(2,3) & U(2,4) \\ 0 & U(3,3) & U(3,4) \\ 0 & 0 & U(4,4) \end{pmatrix}
+=
+\begin{pmatrix} 3 & -1 & -2 \\ 9 & -1 & -7 \\ -12 & 2 & 10 \end{pmatrix}.
+\]
+
+The unknown entries from the second row of $U$ and from the second column of
+$L$ can be computed from the $3\times 3$ matrix above as follows:
+\[
+U(2,2)=3; \quad U(2,3)=-1; \quad U(2,4)=-2;
+\]
+\[
+L(2,2)=1; \quad L(3,2)=\frac{9}{U(2,2)}=\frac{9}{3}=3; \quad L(4,2)=\frac{-12}{U(2,2)}=\frac{-12}{3}=-4.
+\]
+
+Then, the current forms of $L$ and $U$ are
+\begin{equation}
+L=\begin{pmatrix} 1 & 0 & 0 & 0 \\ -2 & 1 & 0 & 0 \\ -1 & 3 & 1 & 0 \\ 2 & -4 & L(4,3) & 1 \end{pmatrix};
+\qquad
+U=\begin{pmatrix} 2 & -1 & 3 & 0 \\ 0 & 3 & -1 & -2 \\ 0 & 0 & U(3,3) & U(3,4) \\ 0 & 0 & 0 & U(4,4) \end{pmatrix}.
+\end{equation}
+
+The updated form of the $2\times 2$ matrix $A(3:4,3:4)$ is computed using
+(2.37), from $A(3:4,3:4)$ obtained from (2.40) and with $L$ and $U$ given by
+(2.41), as follows:
+\begin{align*}
+A(3:4,3:4) &= A(3:4,3:4) - L(3:4,2)U(2,3:4) \\
+&= \begin{pmatrix} -1 & -7 \\ 2 & 10 \end{pmatrix} - \begin{pmatrix} 3 \\ -4 \end{pmatrix}(-1\ \ -2) \\
+&= \begin{pmatrix} -1 & -7 \\ 2 & 10 \end{pmatrix} - \begin{pmatrix} -3 & -6 \\ 4 & 8 \end{pmatrix} \\
+&= \begin{pmatrix} 2 & -1 \\ -2 & 2 \end{pmatrix}.
+\end{align*}
+
+Thus, the updated form of the $2\times 2$ matrix $A(3:4,3:4)$ is
+\begin{equation}
+A(3:4,3:4) \;=\; \begin{pmatrix} 2 & -1 \\ -2 & 2 \end{pmatrix}.
+\end{equation}
+
+Then,
+\[
+L(3:4,3)U(3,3:4) \;=\; \begin{pmatrix} 2 & -1 \\ -2 & 2 \end{pmatrix},
+\]
+which can be written as
+\[
+\begin{pmatrix} 1 & 0 \\ L(4,3) & 1 \end{pmatrix}
+\begin{pmatrix} U(3,3) & U(3,4) \\ 0 & U(4,4) \end{pmatrix}
+=
+\begin{pmatrix} 2 & -1 \\ -2 & 2 \end{pmatrix}.
+\]
+
+The unknown entries from the third row of $U$ and from the third column of
+$L$ can be computed from the $2\times 2$ matrix above as follows:
+\[
+U(3,3)=2; \quad U(3,4)=-1;
+\]
+\[
+L(3,3)=1; \quad L(4,3)=\frac{-2}{U(3,3)}=\frac{-2}{2}=-1.
+\]
+
+Then, the current forms of $L$ and $U$ are
+\begin{equation}
+L=\begin{pmatrix} 1 & 0 & 0 & 0 \\ -2 & 1 & 0 & 0 \\ -1 & 3 & 1 & 0 \\ 2 & -4 & -1 & 1 \end{pmatrix};
+\qquad
+U=\begin{pmatrix} 2 & -1 & 3 & 0 \\ 0 & 3 & -1 & -2 \\ 0 & 0 & 2 & -1 \\ 0 & 0 & 0 & U(4,4) \end{pmatrix}.
+\end{equation}
+
+The updated form of $A(4,4)$, which is a number, is computed using (2.37),
+from $A(4,4)$ obtained from (2.42) and with $L$ and $U$ given by (2.43), as
+follows:
+\[
+A(4,4) \;=\; A(4,4) - L(4,3)U(3,4) \;=\; 2-(-1)\cdot(-1) \;=\; 1,
+\]
+which corresponds to
+\[
+L(4,4)=1; \quad U(4,4)=1.
+\]
+
+We conclude that the matrix $A$ has an LU decomposition with the following
+$L$ and $U$ factors:
+\[
+L=\begin{pmatrix} 1 & 0 & 0 & 0 \\ -2 & 1 & 0 & 0 \\ -1 & 3 & 1 & 0 \\ 2 & -4 & -1 & 1 \end{pmatrix};
+\qquad
+U=\begin{pmatrix} 2 & -1 & 3 & 0 \\ 0 & 3 & -1 & -2 \\ 0 & 0 & 2 & -1 \\ 0 & 0 & 0 & 1 \end{pmatrix}.
+\]
+\end{examplex}
+
+The pseudocode for the LU decomposition without pivoting, given as a
+function call $[L,U]=\text{lu\_no\_pivoting}(A)$, can be found in
+Table~2.5.
+
+\begin{table}[H]
+\centering
+\caption{Pseudocode for LU decomposition without pivoting}
+\fbox{\begin{minipage}{0.9\linewidth}
+\textbf{Function Call:}\\
+$[L,U] = \text{lu\_no\_pivoting}(A)$
+\bigskip
+
+\textbf{Input:}\\
+$A$ = nonsingular matrix of size $n$ with LU decomposition
+\bigskip
+
+\textbf{Output:}\\
+$L$ = lower triangular matrix with entries $1$ on main diagonal\\
+$U$ = upper triangular matrix\\
+such that $A = LU$
+\bigskip
+
+\noindent
+for $i = 1:(n-1)$\\
+\hspace*{1.5em}for $k=i:n$\\
+\hspace*{3em}$U(i,k) = A(i,k)$; \hfill\textit{// compute row $i$ of $U$}\\
+\hspace*{3em}$L(k,i) = A(k,i)/U(i,i)$; \hfill\textit{// compute column $i$ of $L$}\\
+\hspace*{1.5em}end\\
+\hspace*{1.5em}for $j = (i+1):n$\\
+\hspace*{3em}for $k = (i+1):n$\\
+\hspace*{4.5em}$A(j,k) = A(j,k) - L(j,i)U(i,k)$;\\
+\hspace*{3em}end\\
+\hspace*{1.5em}end\\
+end\\
+$L(n,n) = 1$; $U(n,n) = A(n,n)$
+\end{minipage}}
+\end{table}
+
+\begin{lemma}
+The operation count for the LU decomposition without pivoting of an
+$n\times n$ nonsingular matrix is
+\begin{equation}
+\frac{2}{3}n^3 \;+\; O(n^2).
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+At step $i$, the ``for'' loop
+
+\begin{center}
+\fbox{\begin{minipage}{0.45\linewidth}
+\noindent
+for $k=i:n$\\
+\hspace*{1.5em}$U(i,k) = A(i,k)$\\
+\hspace*{1.5em}$L(k,i) = A(k,i)/U(i,i)$\\
+end
+\end{minipage}}
+\end{center}
+
+\noindent to compute the $i$-th row of $U$ and the $i$-th column of $L$
+requires $n-i+1$ operations.
+
+Also at step $i$, the double ``for'' loop
+
+\begin{center}
+\fbox{\begin{minipage}{0.5\linewidth}
+\noindent
+for $j=(i+1):n$\\
+\hspace*{1.5em}for $k=(i+1):n$\\
+\hspace*{3em}$A(j,k) = A(j,k) - L(j,i)U(i,k)$\\
+\hspace*{1.5em}end\\
+end
+\end{minipage}}
+\end{center}
+
+\noindent to update $A(i+1:n,i+1:n)$ requires
+\[
+\sum_{j=i+1}^{n}\sum_{k=i+1}^{n} 2 \;=\; 2(n-i)^2
+\]
+operations.
+
+When accounting for the outside ``for'' loop ``for $i=1:(n-1)$'', see
+Table~2.5, we obtain that the operation count for the LU decomposition
+without pivoting is
+\begin{equation}
+\sum_{i=1}^{n-1} \left(2(n-i)^2+n-i+1\right).
+\end{equation}
+
+Recall that
+\begin{equation}
+\sum_{l=1}^{p} l \;=\; \frac{p(p+1)}{2} \quad \text{and} \quad \sum_{l=1}^{p} l^2 \;=\; \frac{p(p+1)(2p+1)}{6};
+\end{equation}
+see, e.g., section 10.3.1 from Stefanica \cite{36}.
+
+Then, by letting $l=n-i$ in (2.45) and using (2.46) for $p=n-1$, we obtain
+that
+\begin{align*}
+\sum_{i=1}^{n-1}\left(2(n-i)^2+n-i+1\right)
+&= \sum_{l=1}^{n-1}\left(2l^2+l+1\right)
+\;=\; 2\sum_{l=1}^{n-1}l^2 + \sum_{l=1}^{n-1}l + \sum_{l=1}^{n-1}1 \\
+&= 2\,\frac{(n-1)n(2n-1)}{6} \;+\; \frac{(n-1)n}{2} \;+\; n-1 \\
+&= \frac{2n^3}{3} - \frac{n^2}{2} + \frac{5n}{6} - 1 \\
+&= \frac{2}{3}n^3 + O(n^2);
+\end{align*}
+see (10.79) in Section 10.2.3 for the last equality.
+
+We conclude that the operation count for the LU decomposition without
+pivoting is $\dfrac{2}{3}n^3+O(n^2)$.
+\end{proof}

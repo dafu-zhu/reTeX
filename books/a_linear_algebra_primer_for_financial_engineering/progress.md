@@ -40,22 +40,22 @@ offset.
 
 ## Chapter 2 — LU decomposition (PDF 53–102)
 
-- [ ] 2.1 The numerical solution of linear systems
-- [ ] 2.2 Forward substitution
-- [ ] 2.2.1 Finding discount factors using forward substitution
-- [ ] 2.3 Backward substitution
-- [ ] 2.4 LU decomposition without pivoting
-- [ ] 2.4.1 Pseudocode and operation count for LU decomposition
-- [ ] 2.5 Linear solvers using LU decomposition without pivoting
-- [ ] 2.5.1 LU linear solvers for tridiagonal matrices
-- [ ] 2.6 LU decomposition with row pivoting
-- [ ] 2.7 Linear solvers using LU decomposition with row pivoting
-- [ ] 2.7.1 Solving linear systems corresponding to the same matrix
-- [ ] 2.7.2 Finding discount factors using the LU decomposition
-- [ ] 2.8 Cubic spline interpolation
-- [ ] 2.8.1 Cubic spline interpolation for zero rate curves
-- [ ] 2.9 References
-- [ ] 2.10 Exercises
+- [x] 2.1 The numerical solution of linear systems
+- [x] 2.2 Forward substitution
+- [x] 2.2.1 Finding discount factors using forward substitution
+- [x] 2.3 Backward substitution
+- [x] 2.4 LU decomposition without pivoting
+- [x] 2.4.1 Pseudocode and operation count for LU decomposition
+- [x] 2.5 Linear solvers using LU decomposition without pivoting
+- [x] 2.5.1 LU linear solvers for tridiagonal matrices
+- [x] 2.6 LU decomposition with row pivoting
+- [x] 2.7 Linear solvers using LU decomposition with row pivoting
+- [x] 2.7.1 Solving linear systems corresponding to the same matrix
+- [x] 2.7.2 Finding discount factors using the LU decomposition
+- [x] 2.8 Cubic spline interpolation
+- [x] 2.8.1 Cubic spline interpolation for zero rate curves
+- [x] 2.9 References
+- [x] 2.10 Exercises
 
 ## Chapter 3 — The Arrow--Debreu one period market model (PDF 103–126)
 

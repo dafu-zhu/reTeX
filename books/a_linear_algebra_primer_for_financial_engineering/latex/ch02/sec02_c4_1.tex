@@ -1,0 +1,210 @@
+% PAGES: 74-76
+% Continues section 2.5.1 "LU linear solvers for tridiagonal matrices"
+% (subsection of 2.5 "Linear solvers using LU decomposition without
+% pivoting"), begun before page 74 in a sibling agent's file. Do not open
+% that file. This file ends mid-sentence at the bottom of page 76; the
+% sentence is completed at the top of page 77 in sec02_c4_2.tex.
+
+Moreover, since
+\[
+U(i,i+1:n) \;=\; \bigl(U(i,i+1)\ \ 0\ \ \ldots\ \ 0\bigr)
+\]
+\[
+\text{and} \quad L(i+1:n,i) \;=\; \begin{pmatrix} L(i+1,i)\\ 0\\ \vdots\\ 0\end{pmatrix},
+\]
+we find that
+\begin{align*}
+L(i+1:n,i)\,U(i,i+1:n)
+&\;=\; \begin{pmatrix} L(i+1,i)\\ 0\\ \vdots\\ 0\end{pmatrix}
+\bigl(U(i,i+1)\ \ 0\ \ \ldots\ \ 0\bigr)\\[6pt]
+&\;=\; \begin{pmatrix}
+L(i+1,i)U(i,i+1) & 0 & \ldots & 0\\
+0 & 0 & \ldots & 0\\
+\vdots & \vdots & \ddots & \vdots\\
+0 & 0 & \ldots & 0
+\end{pmatrix}.
+\end{align*}
+
+Then, updating the $(n-i)\times(n-i)$ lower right part of $A$ as in (2.37), i.e.,
+\[
+A(i+1:n,i+1:n) \;=\; A(i+1:n,i+1:n) \;-\; L(i+1:n,i)\,U(i,i+1:n),
+\]
+involves only changing the value of the $A(i+1,i+1)$ entry to
+\[
+A(i+1,i+1) \;=\; A(i+1,i+1) \;-\; L(i+1,i)U(i,i+1),
+\]
+which preserves the tridiagonal structure of the updated $(n-i-1)\times(n-i-1)$
+matrix $A(i+1:n,i+1:n)$.
+
+The LU decomposition routine from Table 2.5 simplifies to the routine from Table 2.7
+for tridiagonal matrices with LU decomposition without pivoting.
+The operation count for the tridiagonal LU decomposition without pivoting from
+Table 2.7 is $3n-3$ operations: in each step of the ``for'' loop
+
+\begin{center}
+\fbox{\begin{minipage}{0.82\textwidth}
+\raggedright
+for $i = 1 : (n-1)$\\
+\hspace*{1.5em}$L(i,i) = 1;\ L(i+1,i) = A(i+1,i)/A(i,i);$\\
+\hspace*{1.5em}$U(i,i) = A(i,i);\ U(i,i+1) = A(i,i+1);$\\
+\hspace*{1.5em}$A(i+1,i+1) = A(i+1,i+1) - L(i+1,i)U(i,i+1);$\\
+end
+\end{minipage}}
+\end{center}
+
+we perform $3$ operations, for a total number of operations of
+\begin{equation}
+3(n-1) \;=\; 3n-3.
+\end{equation}
+
+Thus, if $A$ is a tridiagonal matrix with LU decomposition without pivoting, the
+LU decomposition $[L,U] = lu\_no\_pivoting(A)$ from the linear solver routine from
+Table 2.6 can be replaced by the solver $[L,U] = lu\_no\_pivoting\_tridiag(A)$ from
+Table 2.7.
+Moreover, since the matrix $L$ is lower triangular bidiagonal, the forward
+substitution $y = forward\_subst(L,b)$ from Table 2.6 can be replaced by the
+forward substitution $y = forward\_subst\_bidiag(L,b)$ for lower triangular
+bidiagonal matrices, see Table 2.2, and, since the matrix $U$ is upper triangular
+bidiagonal, the backward substitution $x = backward\_subst(U,y)$ from Table 2.6 can
+be replaced by the backward substitution $x = backward\_subst\_bidiag(U,y)$ for
+upper triangular bidiagonal matrices, see Table 2.4.
+The resulting routine for solving linear systems corresponding to tridiagonal
+matrices using LU decomposition without pivoting can be found in Table 2.8.
+
+\begin{table}[H]
+\centering
+\caption{LU decomposition without pivoting for tridiagonal matrices}
+\fbox{\begin{minipage}{0.88\textwidth}
+\raggedright
+\textbf{Function Call:}\\
+$[L,U] = lu\_no\_pivoting\_tridiag(A)$
+
+\medskip
+\textbf{Input:}\\
+$A = $ nonsingular tridiagonal matrix of size $n$ with LU decomposition
+
+\medskip
+\textbf{Output:}\\
+$L = $ lower triangular bidiagonal matrix with entries $1$ on main diagonal\\
+$U = $ upper triangular bidiagonal matrix\\
+such that $A = LU$
+
+\medskip
+for $i = 1 : (n-1)$\\
+\hspace*{1.5em}$L(i,i) = 1;\ L(i+1,i) = A(i+1,i)/A(i,i);$\\
+\hspace*{1.5em}$U(i,i) = A(i,i);\ U(i,i+1) = A(i,i+1);$\\
+\hspace*{1.5em}$A(i+1,i+1) = A(i+1,i+1) - L(i+1,i)U(i,i+1);$\\
+end\\
+$L(n,n) = 1;\ U(n,n) = A(n,n)$
+\end{minipage}}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{Tridiagonal linear solver using LU decomposition without pivoting}
+\fbox{\begin{minipage}{0.88\textwidth}
+\raggedright
+\textbf{Function Call:}\\
+$x = linear\_solve\_LU\_no\_pivoting\_tridiag(A,b)$
+
+\medskip
+\textbf{Input:}\\
+$A = $ nonsingular tridiagonal matrix of size $n$ with LU decomposition\\
+$b = $ column vector of size $n$
+
+\medskip
+\textbf{Output:}\\
+$x = $ solution to $Ax=b$
+
+\medskip
+\small
+\begin{tabular}{@{}p{0.60\linewidth}@{\hspace{0.8em}}p{0.35\linewidth}@{}}
+$[L,U] = lu\_no\_pivoting\_tridiag(A);$ & \textit{// LU decomposition of $A$}\\
+$y = forward\_subst\_bidiag(L,b);$ & \textit{// solve $Ly=b$}\\
+$x = backward\_subst\_bidiag(U,y);$ & \textit{// solve $Ux=y$}\\
+\end{tabular}
+\end{minipage}}
+\end{table}
+
+Using the explicit implementations of $lu\_no\_pivoting\_tridiag$ from Table 2.7, of
+$forward\_subst\_bidiag$ from Table 2.2, and of $backward\_subst\_bidiag$ from
+Table 2.4, the explicit implementation of the tridiagonal linear solver from
+Table 2.8 can be found in Table 2.9.
+Note that, in the pseudocode from Table 2.9, the following further simplifications
+
+\begin{table}[H]
+\centering
+\caption{Explicit tridiagonal linear solver using LU decomposition without pivoting}
+\fbox{\begin{minipage}{0.88\textwidth}
+\raggedright
+\textbf{Function Call:}\\
+$x = linear\_solve\_LU\_no\_pivoting\_tridiag(A,b)$
+
+\medskip
+\textbf{Input:}\\
+$A = $ nonsingular tridiagonal matrix of size $n$ with LU decomposition\\
+$b = $ column vector of size $n$
+
+\medskip
+\textbf{Output:}\\
+$x = $ solution to $Ax=b$
+
+\medskip
+\small
+\begin{tabular}{@{}p{0.58\linewidth}@{\hspace{0.8em}}p{0.37\linewidth}@{}}
+for $i = 1 : (n-1)$ & \\
+\quad $L(i,i) = 1;\ L(i+1,i) = A(i+1,i)/A(i,i);$ & \\
+\quad $U(i,i) = A(i,i);\ U(i,i+1) = A(i,i+1);$ & \\
+\quad $A(i+1,i+1) = A(i+1,i+1) - L(i+1,i)U(i,i+1);$ & \\
+end & \\
+$L(n,n) = 1;\ U(n,n) = A(n,n);$ & \textit{// LU decomposition of $A$}\\
+$y(1) = b(1);$ & \\
+for $j = 2 : n$ & \\
+\quad $y(j) = b(j) - L(j,j-1)y(j-1);$ & \textit{// forward substitution for $Ly=b$}\\
+end & \\
+$x(n) = \dfrac{y(n)}{U(n,n)};$ & \\
+for $j = (n-1) : 1$ & \\
+\quad $x(j) = \dfrac{y(j)-U(j,j+1)x(j+1)}{U(j,j)};$ & \\
+end & \textit{// backward substitution for $Ux=y$}\\
+\end{tabular}
+\end{minipage}}
+\end{table}
+
+in the explicit implementation of $y = forward\_subst\_bidiag(L,b)$, see Table 2.2,
+are included:
+\begin{itemize}
+\item since $L(1,1)=1$, $x(1) = \dfrac{b(1)}{L(1,1)}$ from Table 2.2 becomes
+$x(1) = b(1)$;
+\item since $L(j,j)=1$, $x(j) = \dfrac{b(j)-L(j,j-1)x(j-1)}{L(j,j)}$ from Table 2.2
+becomes
+\[
+x(j) \;=\; b(j) - L(j,j-1)x(j-1).
+\]
+\end{itemize}
+
+Thus, the operation count for the forward substitution ``for'' loop
+
+\begin{center}
+\fbox{\begin{minipage}{0.82\textwidth}
+\raggedright
+for $j = 2 : n$\\
+\hspace*{1.5em}$x(j) = b(j) - L(j,j-1)x(j-1);$\\
+end
+\end{minipage}}
+\end{center}
+
+from Table 2.9 is
+\begin{equation}
+2(n-1) \;=\; 2n-2.
+\end{equation}
+
+The operation count for the pseudocode from Table 2.9 is as follows:
+\begin{itemize}
+\item $3n-3$ for the LU decomposition of $A$; cf. (2.48);
+\item $2n-2$ for the forward substitution for $Ly=b$; cf. (2.49);
+\item $3n-2$ for the backward substitution for $Ux=y$; cf. (2.20),
+\end{itemize}
+for a total operation count of
+\[
+(3n-3) + (2n-2) + (3n-2) \;=\; 8n-7 \;=\; 8n+O(1);
+\]

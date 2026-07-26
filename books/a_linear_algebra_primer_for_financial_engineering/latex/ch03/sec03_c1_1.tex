@@ -1,0 +1,118 @@
+% PAGES: 103-104
+
+\noindent Matrix setup for the one period market model.
+\medskip
+
+\noindent Non--redundant securities. Replicable derivative securities.
+\medskip
+
+\noindent A one period binomial model example.
+\medskip
+
+\noindent Arbitrage--free markets. Necessary and sufficient conditions for
+arbitrage--free markets. Positive state prices.
+\medskip
+
+\noindent Complete markets. Necessary and sufficient conditions for
+complete markets.
+\medskip
+
+\noindent Risk--neutral pricing in arbitrage--free complete markets.
+\medskip
+
+\noindent State prices.
+\medskip
+
+\noindent A one period index options market model.
+\medskip
+
+\section{One period market models}
+
+One period market models (also called Arrow--Debreu models) are designed by
+selecting a fixed number $m$ of securities and assuming that, at a future
+time $\tau > t_0$, where $t_0$ denotes the present time, there will be a
+finite number $n$ of possible states of the market.
+
+If the one period market model is arbitrage--free (i.e., if there are no
+portfolios with value 0 at present time $t_0$ and with positive values in
+every state of the market at time $\tau$, see Section 3.2 for details) and
+complete (i.e., if any cash flow at time $\tau$ can be synthesized with a
+portfolio made of the $m$ securities, see Section 3.3), then a unique
+no--arbitrage value can be found for every derivative security in this
+market. In other words, every derivative security can be priced in this
+market. This is also called risk--neutral pricing for arbitrage--free
+complete one period market models; cf. Section 3.4.
+
+Such a model is of interest in trying to identify and exploit market
+arbitrages. An example of a one period market model for S\&P 500 options
+can be found in section 3.5.
+
+We proceed with a formal introduction of one period market models with $m$
+securities and $n$ market states.
+
+Consider a market with $m$ securities. Let $S_{1t_0}, S_{2t_0}, \ldots,
+S_{mt_0}$ be the spot prices of the securities at time $t_0$, and denote by
+$S_{t_0}$ the price vector of the securities at time $t_0$, i.e.,
+
+\[
+S_{t_0} \;=\;
+\begin{pmatrix} S_{1t_0} \\ S_{2t_0} \\ \vdots \\ S_{mt_0} \end{pmatrix}.
+\]
+
+Note that $S_{t_0}$ is an $m \times 1$ column vector.
+
+At time $\tau > t_0$, we assume that there are $n$ possible states of the
+market, denoted by $\omega^1, \omega^2, \ldots, \omega^n$. Let
+$S_{j\tau}^{\omega^k}$ be the price at time $\tau$ of asset $j$ if state
+$\omega^k$ occurs, for $1 \le j \le m$ and $1 \le k \le n$. Let
+
+\begin{equation}
+S_\tau^{\omega^k} \;=\;
+\begin{pmatrix} S_{1\tau}^{\omega^k} \\ S_{2\tau}^{\omega^k} \\ \vdots \\
+S_{m\tau}^{\omega^k} \end{pmatrix}
+\end{equation}
+
+be the price vector of the $m$ assets if state $\omega^k$ occurs, for
+$k = 1:n$, and let
+
+\[
+S_{j\tau} \;=\; \left(S_{j\tau}^{\omega^1}\ \ S_{j\tau}^{\omega^2}\ \ \ldots\
+\ S_{j\tau}^{\omega^n}\right)
+\]
+
+be the vector of all the possible prices of asset $j$ at time $\tau$, for
+$j = 1:m$. Note that $S_\tau^{\omega^k}$ is an $m \times 1$ column vector,
+and $S_{j\tau}$ is an $1 \times n$ row vector.
+
+Let $M_\tau$ be the $m \times n$ payoff matrix made of the possible asset
+prices at time $\tau$, with the $j$-th row of matrix $M_\tau$ corresponding
+to the prices of asset $j$, for $j = 1:m$, and the $k$-th column of matrix
+$M_\tau$ corresponding to the asset prices in state $\omega^k$, for
+$k = 1:n$, i.e.,
+
+\begin{equation}
+M_\tau \;=\; \mathrm{col}\,\left(S_\tau^{\omega^k}\right)_{k=1:n} \;=\;
+\left(S_\tau^{\omega^1} \mid S_\tau^{\omega^2} \mid \ldots \mid
+S_\tau^{\omega^n}\right);
+\end{equation}
+\begin{equation}
+M_\tau \;=\; \mathrm{row}\,(S_{j\tau})_{j=1:m} \;=\;
+\begin{pmatrix} S_{1\tau} \\ \text{--} \\ S_{2\tau} \\ \text{--} \\ \vdots \\
+\text{--} \\ S_{m\tau} \end{pmatrix}.
+\end{equation}
+
+\begin{definition}
+Consider a market model with $m$ securities and $n$ market states at time
+$\tau > t_0$. The $m$ securities are non--redundant if and only if their
+price vectors at time $\tau$ are linearly independent.
+
+In other words, the $m$ securities are non--redundant if and only if the
+price vectors $S_{1\tau}, S_{2\tau}, \ldots, S_{m\tau}$ are linearly
+independent, i.e., if and only if the (row) rank of the payoff matrix
+$M_\tau$ is $m$.\footnote{Recall that the row rank and the rank of a matrix
+are the same; cf. Lemma 10.14.}
+\end{definition}
+
+Note that a necessary (but not sufficient) condition for the $m$ securities
+to be non--redundant is that there are at least as many states of the
+market at time $\tau$ as there are securities, i.e., $n \ge m$.

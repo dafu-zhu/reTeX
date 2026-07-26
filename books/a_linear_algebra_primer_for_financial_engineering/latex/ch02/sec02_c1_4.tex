@@ -1,0 +1,16 @@
+% PAGES: 59 (partial -- section 2.3 continues beyond page 59)
+
+\section{Backward substitution}
+
+Let $U$ be a nonsingular upper triangular matrix of size $n$, i.e., assume that
+\begin{equation}
+U(j,k) \;=\; 0, \quad \forall\, 1\le k<j\le n; \qquad U(i,i) \;\neq\; 0, \quad
+\forall\, 1\le i\le n;
+\end{equation}
+see Lemma 1.16.
+
+Let $b$ be an $n\times 1$ column vector, and let $x$ be the $n\times 1$ vector which
+is the unique solution to the linear system $Ux = b$.
+
+Backward substitution is a numerical algorithm designed to compute the entries of $x$
+efficiently, as detailed below.

@@ -1,0 +1,124 @@
+% PAGES: 60-61  (printed 44-45)
+% Continues section 2.3 "Backward Substitution", begun before page 44
+% (PDF page 60). Do not open or append to the file containing the start
+% of section 2.3 -- start reading from here.
+
+By multiplying the $n$-th row of $U$ by $x$, and using the fact that
+$U(n,k) = 0$ for all $k = 1:(n-1)$, since $U$ is upper triangular, see
+(2.13), we obtain that
+\[
+\sum_{k=1}^{n} U(n,k)x(k) \;=\; U(n,n)x(n) \;=\; b(n),
+\]
+and therefore
+\begin{equation}
+x(n) \;=\; \frac{b(n)}{U(n,n)};
+\end{equation}
+note that $U(n,n) \neq 0$, since $U$ is nonsingular.
+
+Moving backward to computing $x(n-1)$, multiply the $(n-1)$-th row of $U$
+by $x$, and use the fact that $U(n-1,k) = 0$ for all $k = 1:(n-2)$, since
+$U$ is upper triangular, see (2.13), to obtain that
+\begin{equation}
+\sum_{k=1}^{n} U(n-1,k)x(k) \;=\; U(n-1,n-1)x(n-1) + U(n-1,n)x(n) \;=\; b(n-1).
+\end{equation}
+
+By solving (2.15) for $x(n-1)$, we find that
+\begin{equation}
+x(n-1) \;=\; \frac{b(n-1) - U(n-1,n)x(n)}{U(n-1,n-1)};
+\end{equation}
+note that $U(n-1,n-1) \neq 0$, since $U$ is nonsingular. Since the value
+of $x(n)$ is known from (2.14), the value of $x(n-1)$ can be computed
+from (2.16).
+
+We continue to move backward until all the entries of $x$ are computed,
+as follows: Assume that the values of $x(n), x(n-1), \ldots, x(j+1)$
+have been computed, where $n-1 \geq j \geq 1$. To compute $x(j)$,
+multiply the $j$-th row of $U$ by $x$, and use the fact that $U(j,k) = 0$
+for all $k = 1:(j-1)$, since $U$ is upper triangular, to obtain that
+\[
+\sum_{k=1}^{n} U(j,k)x(k) \;=\; \sum_{k=j}^{n} U(j,k)x(k) \;=\; b(j).
+\]
+Thus,
+\begin{equation}
+U(j,j)x(j) \;+\; \sum_{k=j+1}^{n} U(j,k)x(k) \;=\; b(j).
+\end{equation}
+By solving (2.17) for $x(j)$, we find that
+\begin{equation}
+x(j) \;=\; \frac{b(j) - \sum_{k=j+1}^{n} U(j,k)x(k)}{U(j,j)};
+\end{equation}
+note that $U(j,j) \neq 0$, since $L$ is nonsingular. Thus, given
+$x(n), x(n-1), \ldots, x(j+1)$, the value for $x(j)$ can be computed
+using (2.18).
+
+The pseudocode for Backward Substitution can be found in Table 2.3.
+
+The operation count for Backward Substitution is $n^2 + O(n)$, the same
+as for Forward Substitution; the proof of the result below is similar to
+that of Lemma 2.1:
+
+\begin{lemma}
+The operation count for the Backward Substitution algorithm applied to
+an upper triangular matrix of size $n$ is
+\begin{equation}
+n^2 \;+\; O(n).
+\end{equation}
+\end{lemma}
+
+\begin{table}[H]
+\centering
+\caption{Pseudocode for Backward Substitution}
+\fbox{%
+\begin{minipage}{0.82\textwidth}
+\textbf{Function Call:}\\
+$x = \text{backward\_subst}(U,b)$
+
+\medskip
+\textbf{Input:}\\
+$U = $ nonsingular upper triangular matrix of size $n$\\
+$b = $ column vector of size $n$
+
+\medskip
+\textbf{Output:}\\
+$x = $ solution to $Ux = b$
+
+\medskip
+$x(n) = \dfrac{b(n)}{U(n,n)}$;\\
+for $j = (n-1):1$\\
+\hspace*{1.5em}sum $= 0$;\\
+\hspace*{1.5em}for $k = (j+1):n$\\
+\hspace*{3em}sum $=$ sum $+ U(j,k)x(k)$;\\
+\hspace*{1.5em}end\\
+\hspace*{1.5em}$x(j) = \dfrac{b(j)-\text{sum}}{U(j,j)}$;\\
+end
+\end{minipage}%
+}
+\end{table}
+
+The relevance of Forward Substitution and Backward Substitution is
+highlighted by the fact that, for a nonsingular matrix $A$ that is not
+upper triangular nor lower triangular, a solution to the linear system
+$Ax = b$ can be found without explicitly computing $A^{-1}$, by using
+forward substitution and backward substitution, and the LU decomposition
+with row pivoting of $A$; see section 2.6 and the pseudocode from
+Table 2.10 for details.
+
+We conclude this section with the Backward Substitution pseudocode
+corresponding to an upper triangular bidiagonal matrix, which will be
+used for solving linear systems corresponding to tridiagonal matrices;
+cf. section 2.5.1 and section 6.3.
+
+Let $U$ be an $n \times n$ upper triangular bidiagonal matrix, i.e., a
+matrix whose only nonzero entries could be the main diagonal entries
+$U(j,j)$, for $j = 1:n$, and the upper diagonal entries $U(j,j+1)$, for
+$j = 1:(n-1)$. Then, the recursion formula (2.18) simplifies to
+\[
+x(j) \;=\; \frac{b(j) - U(j,j+1)x(j+1)}{U(j,j)},
+\]
+which corresponds to the reduced version of the Backward Substitution
+pseudocode from Table 2.3 included in Table 2.4.
+
+The operation count for the Backward Substitution for upper triangular
+bidiagonal matrices is
+\begin{equation}
+1 + 3(n-1) \;=\; 3n - 2.
+\end{equation}

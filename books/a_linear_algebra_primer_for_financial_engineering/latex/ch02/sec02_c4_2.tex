@@ -1,0 +1,311 @@
+% PAGES: 77-80
+% Line 1 of sec02_c4_1.tex ends mid-sentence at the bottom of page 76; the
+% opening sentence below completes it (top of page 77), still within
+% section 2.5.1. Section 2.6 "LU decomposition with row pivoting" begins
+% shortly after, on the same page. This file ends mid-equation at the very
+% bottom of page 80 (the equation for updating $A(2:5,2:5)$); its
+% continuation is on page 81, owned by a different agent -- do not
+% fabricate that continuation here.
+
+see (10.76) in Section 10.2.3 for a proof of the last equality.
+
+\section{LU decomposition with row pivoting}
+
+The LU decomposition without pivoting of a matrix has a major drawback: it does not
+exist for all nonsingular matrices. In fact, it does not exist even for very well
+conditioned matrices. For example, the matrix $A = \begin{pmatrix} 0 & 1\\ 1 & 1
+\end{pmatrix}$ does not have an LU decomposition without row pivoting. If it did,
+then $A=LU$ could be written as
+\begin{equation}
+\begin{pmatrix} 1 & 0\\ L(2,1) & 1\end{pmatrix}
+\begin{pmatrix} U(1,1) & U(1,2)\\ 0 & U(2,2)\end{pmatrix}
+\;=\;
+\begin{pmatrix} 0 & 1\\ 1 & 1\end{pmatrix}.
+\end{equation}
+By multiplying the matrix $U$ by the first row of $L$, we find that $U(1,1)=0$ and
+$U(1,2)=1$. Thus, (2.50) becomes
+\[
+\begin{pmatrix} 1 & 0\\ L(2,1) & 1\end{pmatrix}
+\begin{pmatrix} 0 & 1\\ 0 & U(2,2)\end{pmatrix}
+\;=\;
+\begin{pmatrix} 0 & 1\\ 1 & 1\end{pmatrix}.
+\]
+However, multiplying the second row of $L$ by the first column of $U$ we obtain that
+\[
+L(2,1)\cdot 0 + 1\cdot 0 \;=\; 1,
+\]
+which is not possible. The reason for this is that $A(1,1)=0$, and, since $A(1,1)$
+is the first leading principal minor of $A$, the matrix $A$ does not satisfy the
+requirement for the existence of the LU decomposition without pivoting from
+Theorem 2.1, i.e., that all the leading principal minors are nonzero.
+
+However, any nonsingular matrix has an LU decomposition with row pivoting. To
+introduce the concept of pivoting, recall from section 10.1.2 that a permutation
+matrix is a matrix obtained by permuting the rows of the identity matrix, and that
+matrix multiplication by a permutation matrix to the left results in a
+corresponding permutation of the rows of the matrix. For example, the permutation
+matrix
+\[
+P \;=\;
+\begin{pmatrix} 0&0&1&0\\ 1&0&0&0\\ 0&0&0&1\\ 0&1&0&0\end{pmatrix}
+\quad \text{has row form} \quad
+P \;=\; \begin{pmatrix} e_3^t\\ e_1^t\\ e_4^t\\ e_2^t\end{pmatrix},
+\]
+and is also denoted, using column notation, as
+\[
+P \;=\; \begin{pmatrix} 3\\ 1\\ 4\\ 2\end{pmatrix}.
+\]
+If $A$ is a $4\times 4$ matrix with row form
+\[
+A \;=\; \begin{pmatrix} r_1\\ r_2\\ r_3\\ r_4\end{pmatrix},
+\quad \text{then} \quad
+PA \;=\; \begin{pmatrix} r_3\\ r_1\\ r_4\\ r_2\end{pmatrix}.
+\]
+
+\begin{definition}
+The LU decomposition with row pivoting of a nonsingular square matrix $A$ consists
+of finding a permutation matrix $P$, a lower triangular matrix $L$ with all entries
+on the main diagonal equal to $1$, and a nonsingular upper triangular matrix $U$
+such that
+\[
+PA \;=\; LU.
+\]
+\end{definition}
+
+\begin{theorem}
+Any nonsingular matrix has an LU decomposition with row pivoting.
+\end{theorem}
+
+A proof of this result can be found, e.g., in Datta~[12].
+
+For a given permutation matrix $P$, the $L$ and $U$ factors from $PA=LU$ are
+unique. However, for any nonsingular matrix $A$, there may be many different
+permutation matrices $P$ such that the matrix $PA$ has an LU decomposition. The
+algorithm described below, and whose pseudocode is included in Table 2.10,
+uniquely identifies the permutation matrix $P$ and the $L$ and $U$ factors for the
+LU decomposition with row pivoting of a given nonsingular matrix $A$. Note that all
+the entries of the matrix $L$ identified using this algorithm are less than or
+equal in absolute value to $1$.
+
+Let $A$ be a nonsingular matrix. We identify a permutation matrix $P$ and a lower
+triangular matrix $L$ (with main diagonal entries equal to $1$) and an upper
+triangular matrix $U$ as detailed below.
+
+\begin{itemize}
+\item Identify the largest entry (in absolute value) in the first column vector
+$A(1:n,1)$ of $A$. Switch the corresponding row and the first row of $A$, and do
+the same for the permutation matrix $P$, which was initialized to be equal to the
+identity matrix:
+\end{itemize}
+
+\begin{center}
+\fbox{\begin{minipage}{0.85\textwidth}
+\raggedright
+$P = 1:n$\\
+find $i\_max$, the location of the largest entry from $A(1:n,1)$\\
+\hspace*{1.5em}$vv = A(1,1:n);\ A(1,1:n) = A(i\_max,1:n);\ A(i\_max,1:n) = vv;$\\
+\hspace*{1.5em}$cc = P(1);\ P(1) = P(i\_max);\ P(i\_max) = cc;$\\
+clear $vv$ $cc$
+\end{minipage}}
+\end{center}
+
+\begin{itemize}
+\item Compute the first row of $U$ and the first column of $L$:
+\end{itemize}
+
+\begin{center}
+\fbox{\begin{minipage}{0.5\textwidth}
+\raggedright
+for $k = 1 : n$\\
+\hspace*{1.5em}$U(1,k) \;=\; A(1,k)$\\
+\hspace*{1.5em}$L(k,1) \;=\; \dfrac{A(k,1)}{U(1,1)}$\\
+end
+\end{minipage}}
+\end{center}
+
+\begin{itemize}
+\item Update the $(n-1)\times(n-1)$ lower right part of $A$ as follows:
+\end{itemize}
+\begin{equation}
+A(2:n,2:n) \;=\; A(2:n,2:n) \;-\; L(2:n,1)\,U(1,2:n),
+\end{equation}
+which can be written entry by entry as follows:
+
+\begin{center}
+\fbox{\begin{minipage}{0.5\textwidth}
+\raggedright
+for $j = 2 : n$\\
+\hspace*{1.5em}for $k = 2 : n$\\
+\hspace*{3em}$A(j,k) = A(j,k) - L(j,1)U(1,k)$\\
+\hspace*{1.5em}end\\
+end
+\end{minipage}}
+\end{center}
+
+The row permutation process as well as the computation of every row of $U$ and
+column of $L$ are done recursively from the latest updated part of the matrix $A$;
+see also the $5\times 5$ example below. For example, to compute the $i$-th row of
+$U$ and the $i$-th column of $L$, we do the following:
+
+\begin{itemize}
+\item Identify the largest entry (in absolute value) in the first column vector
+$A(i:n,i)$ of $A(i:n,i:n)$. Switch the corresponding row and the first row of
+$A(i:n,i:n)$. Switch the corresponding row and the row $i$ of the permutation
+matrix $P$. Also, switch all the entries already computed from the corresponding
+row and the row $i$ of the matrix $L$:
+\end{itemize}
+
+\begin{center}
+\fbox{\begin{minipage}{0.85\textwidth}
+\raggedright
+find $i\_max$, the location of the largest entry from $A(i:n,i)$\\
+$vv = A(i,i:n);\ A(i,i:n) = A(i\_max,i:n);\ A(i\_max,i:n) = vv;$\\
+$cc = P(i);\ P(i) = P(i\_max);\ P(i\_max) = cc;$\\
+\hspace*{1.5em}$ww = L(i,1:(i-1));$\\
+\hspace*{1.5em}$L(i,1:(i-1)) = L(i\_max,1:(i-1));\ L(i\_max,1:(i-1)) = ww;$\\
+clear $vv$ $ww$ $cc$
+\end{minipage}}
+\end{center}
+
+\begin{itemize}
+\item Compute the $i$-th row of $U$ and the $i$-th column of $L$:
+\end{itemize}
+
+\begin{center}
+\fbox{\begin{minipage}{0.5\textwidth}
+\raggedright
+for $k = i : n$\\
+\hspace*{1.5em}$U(i,k) \;=\; A(i,k)$\\
+\hspace*{1.5em}$L(k,i) \;=\; \dfrac{A(k,i)}{U(i,i)}$\\
+end
+\end{minipage}}
+\end{center}
+
+\begin{itemize}
+\item Update the $(n-i)\times(n-i)$ lower right part of $A$ as follows:
+\end{itemize}
+\begin{equation}
+A(i+1:n,i+1:n) \;=\; A(i+1:n,i+1:n) \;-\; L(i+1:n,i)\,U(i,i+1:n),
+\end{equation}
+which can be written entry by entry as follows:
+
+\begin{center}
+\fbox{\begin{minipage}{0.55\textwidth}
+\raggedright
+for $j = (i+1) : n$\\
+\hspace*{1.5em}for $k = (i+1) : n$\\
+\hspace*{3em}$A(j,k) = A(j,k) - L(j,i)U(i,k)$\\
+\hspace*{1.5em}end\\
+end
+\end{minipage}}
+\end{center}
+
+Further clarification on the recursive part of the LU decomposition with row
+pivoting can be found in the example below for a $5\times 5$ matrix.
+
+% NOTE: this worked example is not finished within pages 74-80 -- it
+% continues past the bottom of page 80 onto page 81, which belongs to a
+% different agent's file. The \examplex environment (see preamble.tex) is
+% therefore deliberately NOT used here, since closing it would print the
+% closing square before the example actually ends. The continuation file
+% should open with \textit{Example:} already implied (do not print a
+% second "Example:" label) and must supply the closing
+% \hfill$\square$\par\medskip once the example concludes.
+\par\medskip\noindent\textit{Example:}\ Let
+\[
+A \;=\; \begin{pmatrix}
+1 & 2 & -7 & -1.5 & 2\\
+4 & 4 & 0 & -6 & -2\\
+-2 & -1 & 2 & 6 & 2.5\\
+0 & -2 & 2 & -4 & 1\\
+2 & 1 & 13 & -5 & 3.5
+\end{pmatrix}.
+\]
+Let $L$ and $U$ be the LU factors from the LU decomposition with row pivoting of
+$A$ corresponding to a permutation matrix $P$ which will be identified below, i.e.,
+such that $PA=LU$.
+
+The permutation matrix $P$ is set equal to the identity matrix and will be updated
+as rows are switched. We will use the following notation for the row form of the
+permutation matrix $P$:
+\[
+P \;=\; \begin{pmatrix} 1\\ 2\\ 3\\ 4\\ 5\end{pmatrix}
+\;=\;
+\begin{pmatrix} e_1^t\\ e_2^t\\ e_3^t\\ e_4^t\\ e_5^t\end{pmatrix}.
+\]
+
+We begin by identifying the largest entry, in absolute value, from the first
+column
+\[
+\begin{pmatrix} 1\\ 4\\ -2\\ 0\\ 2\end{pmatrix}
+\]
+of $A$. That entry is $4$, corresponding to the second row of $A$. We switch the
+first row and the second row of $A$. The new form of the matrix $A$ is
+\begin{equation}
+A \;=\; \begin{pmatrix}
+4 & 4 & 0 & -6 & -2\\
+1 & 2 & -7 & -1.5 & 2\\
+-2 & -1 & 2 & 6 & 2.5\\
+0 & -2 & 2 & -4 & 1\\
+2 & 1 & 13 & -5 & 3.5
+\end{pmatrix}.
+\end{equation}
+
+We record the switch by permuting the first row and the second row of $P$ as
+follows:
+\begin{equation}
+P \;=\; \begin{pmatrix} 1\\ 2\\ 3\\ 4\\ 5\end{pmatrix}
+\quad \text{becomes} \quad
+P \;=\; \begin{pmatrix} \mathbf{2}\\ \mathbf{1}\\ 3\\ 4\\ 5\end{pmatrix}
+\;=\;
+\begin{pmatrix} e_2^t\\ e_1^t\\ e_3^t\\ e_4^t\\ e_5^t\end{pmatrix}.
+\end{equation}
+
+After the row permutations are done, the first row of $U$ and the first column of
+$L$ are computed as in the algorithm for LU decomposition without row pivoting.
+
+The entries of first row of $U$ are given by (2.22), i.e., $U(1,k) = A(1,k)$ for
+$k=1:5$, where the matrix $A$ is given by (2.53):
+\[
+U(1,1) = 4;\quad U(1,2) = 4;\quad U(1,3) = 0;
+\]
+\[
+U(1,4) = -6;\quad U(1,5) = -2.
+\]
+The entries of first column of $L$ are given by (2.24), i.e., $L(k,1) =
+\dfrac{A(k,1)}{U(1,1)}$ for $k=1:5$, where the matrix $A$ is given by (2.53):
+\[
+L(1,1) = 1;\quad L(2,1) = \frac{1}{U(1,1)} = \frac{1}{4} = 0.25;
+\]
+\[
+L(3,1) = \frac{-2}{U(1,1)} = \frac{-2}{4} = -0.5;
+\]
+\[
+L(4,1) = \frac{0}{U(1,1)} = 0;\quad L(5,1) = \frac{2}{U(1,1)} = \frac{2}{4} = 0.5.
+\]
+
+The current forms of $L$ and $U$ are
+\begin{equation}
+L \;=\; \begin{pmatrix} 1\\ 0.25\\ -0.5\\ 0\\ 0.5\end{pmatrix};
+\qquad
+U \;=\; \begin{pmatrix}
+4 & 4 & 0 & -6 & -2\\
+0 & U(2,2) & U(2,3) & U(2,4) & U(2,5)\\
+0 & 0 & U(3,3) & U(3,4) & U(3,5)\\
+0 & 0 & 0 & U(4,4) & U(4,5)\\
+0 & 0 & 0 & U(5,4) & U(5,5)
+\end{pmatrix}.
+\end{equation}
+Note that, for the current form of the matrix $L$, we only consider the entries of
+$L$ computed so far, since the rows of $L$ will switch as the corresponding rows of
+$A$ switch.
+
+The updated form of the $4\times 4$ matrix $A(2:5,2:5)$ is computed using (2.51),
+from $A(2:5,2:5)$ obtained from (2.53) and with $L$ and $U$ given by (2.55), as
+follows:
+\begin{align*}
+& A(2:5,2:5)\\
+& \;=\; A(2:5,2:5) \;-\; L(2:5,1)\, U(1,2:5)
+\end{align*}
+% Example continues on page 81 (owned by a different agent); the closing
+% \hfill$\square$\par\medskip belongs in that continuation file, not here.

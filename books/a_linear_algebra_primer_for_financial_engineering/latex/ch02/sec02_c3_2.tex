@@ -1,0 +1,155 @@
+% PAGES: 71-73 (printed pages 55-57; begins mid-page-55 with the "2.5"
+% section heading, immediately after the end of the proof of Lemma 2.3
+% transcribed in sec02_c3_1.tex)
+
+\section{Linear solvers using the LU decomposition without pivoting}
+
+Let $A$ be a nonsingular square matrix of size $n$, and let $b$ be a column
+vector of size $n$. If the matrix $A$ has an LU decomposition without
+pivoting $A=LU$, then, solving a linear system $Ax=b$ is equivalent to
+solving
+\[
+LUx \;=\; b.
+\]
+This is the same as solving
+\[
+Ly \;=\; b
+\]
+for $y$, which can be done using forward substitution since the matrix $L$
+is lower triangular, and then solving
+\[
+Ux \;=\; y
+\]
+for $x$, which can be done using backward substitution since the matrix $U$
+is upper triangular.
+
+The pseudocode for solving a linear system using the LU decomposition
+without pivoting of a matrix can be found in Table~2.6.
+
+\begin{table}[H]
+\centering
+\caption{Linear solver using LU decomposition without pivoting}
+\fbox{\begin{minipage}{0.9\linewidth}
+\textbf{Function Call:}\\
+$x = \text{linear\_solve\_LU\_no\_pivoting}(A,b)$
+\bigskip
+
+\textbf{Input:}\\
+$A$ = nonsingular square matrix of size $n$ with LU decomposition\\
+$b$ = column vector of size $n$
+\bigskip
+
+\textbf{Output:}\\
+$x$ = solution to $Ax=b$
+\bigskip
+
+\noindent
+$[L,U] = \text{lu\_no\_pivoting}(A)$; \hfill\textit{// LU decomposition of $A$}\\
+$y = \text{forward\_subst}(L,b)$; \hfill\textit{// solve $Ly=b$}\\
+$x = \text{backward\_subst}(U,y)$; \hfill\textit{// solve $Ux=y$}
+\end{minipage}}
+\end{table}
+
+The operation count for the pseudocode from Table~2.6 is as follows:
+\begin{itemize}
+\item[$\bullet$] $\dfrac{2}{3}n^3+O(n^2)$ for the LU decomposition of $A$; cf.\ (2.44);
+\item[$\bullet$] $n^2+O(n)$ for the forward substitution for solving $Ly=b$; cf.\ (2.8);
+\item[$\bullet$] $n^2+O(n)$ for the backward substitution for solving $Ux=y$; cf.\ (2.19),
+\end{itemize}
+for a total operation count of
+\[
+\left(\frac{2}{3}n^3+O(n^2)\right) + \left(n^2+O(n)\right) + \left(n^2+O(n)\right) \;=\; \frac{2}{3}n^3+O(n^2);
+\]
+see (10.86) in Section 10.2.3 for a proof of the last equality.
+
+\subsection{LU linear solvers for tridiagonal matrices}
+
+Solving linear systems corresponding to tridiagonal matrices having LU
+decomposition is often needed for practical applications such as cubic
+spline interpolation and the finite difference solution of the
+Black--Scholes PDE. We discuss the solution to tridiagonal linear systems
+here, and furthermore in section 6.3 when investigating efficient linear
+solvers for tridiagonal symmetric positive definite matrices.
+
+We begin by showing that the $L$ and $U$ factors from the LU decomposition
+without pivoting of a tridiagonal matrix are bidiagonal matrices.\footnote{More
+generally, the $L$ and $U$ factors from the LU decomposition without
+pivoting of a banded matrix of band $m$ are also banded of band $m$; see an
+exercise from the end of this chapter and Stefanica \cite{38} for details.}
+
+Let $A$ be an $n\times n$ tridiagonal matrix, i.e., such that
+\begin{equation}
+A(j,k) \;=\; 0, \quad \forall\, 1\le j,k\le n \text{ with } |j-k|\ge 2,
+\end{equation}
+and assume that the matrix $A$ has an LU decomposition without
+pivoting.\footnote{A strictly diagonally dominated tridiagonal matrix is an
+example of a tridiagonal matrix with LU decomposition without pivoting; see
+section 4.3.} Let $L$ and $U$ be the LU factors of $A$. We will show that
+$L$ is a lower triangular bidiagonal matrix, i.e., the only entries of $L$
+that can be nonzero are the main diagonal entries $L(i,i)$, for $i=1:n$, and
+the lower diagonal entries $L(i,i-1)$, for $i=2:n$, and that $U$ is an upper
+triangular bidiagonal matrix, i.e., the only entries of $U$ that can be
+nonzero are the main diagonal entries $U(i,i)$, for $i=1:n$, and the upper
+diagonal entries $U(i,i+1)$, for $i=1:(n-1)$.
+
+Following step by step the LU decomposition without row pivoting from
+section 2.4.1, we compute the entries from the first row of $U$ as
+$U(1,k)=A(1,k)$, for all $k=1:n$, and the entries from the first column of
+$L$ as $L(k,1)=A(k,1)/U(1,1)$, for $k=1:n$. Note that $A(1,k)=0$ if
+$3\le k\le n$ and $A(k,1)=0$ if $3\le k\le n$, since $A$ is a tridiagonal
+matrix; cf.\ (2.47). Then, $U(1,k)=0$ if $3\le k\le n$ and $L(k,1)=0$ if
+$3\le k\le n$, and therefore the only possible nonzero entries from the
+first row of $U$ and from the first column of $L$ correspond to an upper
+triangular bidiagonal form for $U$ and a lower triangular bidiagonal form
+for $L$.
+
+Moreover, since
+\[
+U(1,2:n) = (U(1,2)\ \ 0\ \ \dots\ \ 0)
+\quad\text{and}\quad
+L(2:n,1) = \begin{pmatrix} L(2,1) \\ 0 \\ \vdots \\ 0 \end{pmatrix},
+\]
+it follows that
+\begin{align*}
+L(2:n,1)U(1,2:n)
+&= \begin{pmatrix} L(2,1) \\ 0 \\ \vdots \\ 0 \end{pmatrix} (U(1,2)\ \ 0\ \ \dots\ \ 0) \\
+&= \begin{pmatrix}
+L(2,1)U(1,2) & 0 & \dots & 0 \\
+0 & 0 & \dots & 0 \\
+\vdots & \vdots & \dots & \vdots \\
+0 & 0 & \dots & 0
+\end{pmatrix}.
+\end{align*}
+
+Thus, updating the $(n-1)\times(n-1)$ lower right part of $A$ as in (2.36),
+i.e.,
+\[
+A(2:n,2:n) \;=\; A(2:n,2:n) \;-\; L(2:n,1)U(1,2:n),
+\]
+only involves changing the value of $A(2,2)$ to
+\[
+A(2,2) \;=\; A(2,2) \;-\; L(2,1)U(1,2),
+\]
+which preserves the tridiagonal structure of the matrix $A(2:n,2:n)$.
+
+The tridiagonal structure of the updated part of $A$ and the bidiagonal
+structure of $U$ and $L$ will be further preserved as every row of $U$ and
+every column of $L$ are computed.
+
+For example, assuming that the updated form $A(i:n,i:n)$ of the matrix $A$
+is tridiagonal after $i-1$ rows of $U$ and $i-1$ columns of $L$ are
+computed, the $i$-th row of $U$ is computed as $U(i,k)=A(i,k)$, for all
+$k=i:n$, and the $i$-th column of $L$ is computed as $L(k,i)=A(k,i)/U(i,i)$,
+for all $k=i:n$. Since $A(i:n,i:n)$ is tridiagonal, it follows that
+$A(i,k)=0$ if $i+2\le k\le n$, and therefore
+\[
+U(i,k)=0, \quad \forall\, i+2\le k\le n,
+\]
+and also that $A(k,i)=0$ if $i+2\le k\le n$, and therefore
+\[
+L(k,i)=0, \quad \forall\, i+2\le k\le n.
+\]
+
+Thus, the only possible nonzero entries from the $i$-th row of $U$ and from
+the $i$-th column of $L$ correspond to an upper triangular bidiagonal form
+for $U$ and a lower triangular bidiagonal form for $L$.

@@ -1,0 +1,160 @@
+% PAGES: 105-106
+
+\medskip
+\noindent\rule{\linewidth}{0.4pt}
+\medskip
+
+\noindent\textbf{\textit{One Period Binomial Model Example:}}\par
+In a one period binomial model for the evolution of the price of an asset,
+it is assumed that the price at time $\tau > t_0$ of an asset with price
+$S_0$ at time $t_0$ will be either $uS_0$ or $dS_0$, where $d < u$.
+
+This corresponds to a one period market model with two securities, i.e.,
+the asset described above and cash, and two states, i.e., state
+$\omega^1$, when the price of the asset at time $\tau$ is $uS_0$, and
+state $\omega^2$, when the price of the asset at time $\tau$ is $dS_0$.
+
+Assume, without restricting the generality of the model, that the cash
+position at time $t_0$ is \$1. If $r$ denotes the continuously compounded
+annualized risk--free rate of return of a deposit made at time $t_0$ and
+maturing at time $\tau$, then the future value at time $\tau$ of \$1 at
+time $t_0$ is $e^{r(\tau-t_0)} = e^{r\delta t}$, where $\delta t = \tau -
+t_0$.
+
+The price vector of the securities at time $t_0$ is
+
+\begin{equation}
+S_{t_0} \;=\; \begin{pmatrix} 1 \\ S_0 \end{pmatrix}
+\end{equation}
+
+and the payoff matrix at time $\tau$ corresponding to this one period
+market model is
+
+\begin{equation}
+M_\tau \;=\; \begin{pmatrix} e^{r\delta t} & e^{r\delta t} \\ uS_0 & dS_0
+\end{pmatrix}.
+\end{equation}
+
+If, as it was assumed, $d < u$, then the two securities from the one
+period binomial model are nonredundant.
+
+To see this, note that the securities are nonredundant if and only if
+$\rank(M_\tau) = 2$. Note that $\rank(M_\tau) = 1$ if and only if the rows
+of the matrix $M_\tau$ are scalar multiples of each other, i.e., if and
+only if there exists a constant $c$ such that
+
+\[
+\begin{aligned}
+\begin{pmatrix} uS_0 & dS_0 \end{pmatrix} \;=\; c\begin{pmatrix}
+e^{r\delta t} & e^{r\delta t} \end{pmatrix}
+&\iff
+\begin{cases} uS_0 \;=\; ce^{r\delta t} \\ dS_0 \;=\; ce^{r\delta t}
+\end{cases} \\[6pt]
+&\iff u \;=\; d \;=\; \dfrac{ce^{r\delta t}}{S_0},
+\end{aligned}
+\]
+
+which contradicts the assumption that $d < u$.
+
+We conclude that $\rank(M_\tau) = 2$ and therefore that the two assets are
+non--redundant. \hfill$\square$
+
+\medskip
+\noindent\rule{\linewidth}{0.4pt}
+\medskip
+
+Consider a portfolio made of the $m$ securities and consisting of
+$\Theta_j$ units of asset $j$ at time $t_0$, $j = 1:m$. The value $V_{t_0}$
+of the portfolio at time $t_0$ is
+
+\begin{equation}
+V_{t_0} \;=\; \sum_{j=1}^m \Theta_j S_{jt_0} \;=\; \Theta^t S_{t_0},
+\end{equation}
+
+where $\Theta = (\Theta_j)_{j=1:m}$ denotes the $m \times 1$ column vector
+of securities positions; cf.\ (1.5) and since $S_{t_0} =
+(S_{jt_0})_{j=1:m}$.
+
+\begin{lemma}
+Consider a one period market model with $m$ securities and $n$ market
+states at time $\tau > t_0$ and with payoff matrix $M_\tau =
+\mathrm{row}\,(S_{j\tau})_{j=1:m}$. Let $\Theta$ be the positions vector at
+time $t_0$ of a portfolio made of the $m$ securities and assume that the
+asset positions in the portfolio remain unchanged until time $\tau$. If
+$V_\tau$ is the $1 \times n$ row vector of the possible values of the
+portfolio at time $\tau$, then
+
+\begin{equation}
+V_\tau \;=\; \Theta^t M_\tau \;=\; \sum_{j=1}^m \Theta_j S_{j\tau}.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Let $V_\tau^{\omega^k}$ be the value at time $\tau$ of the portfolio if
+state $\omega^k$ occurs, for $k = 1:n$. Since the asset positions at time
+$\tau$ are $\Theta_j$, $j = 1:m$, it follows that
+
+\begin{equation}
+V_\tau^{\omega^k} \;=\; \sum_{j=1}^m \Theta_j S_{j\tau}^{\omega^k} \;=\;
+\Theta^t S_\tau^{\omega^k},
+\end{equation}
+
+where $S_{j\tau}^{\omega^k}$ is the value of asset $j$ at time $\tau$ if
+state $\omega^k$ occurs, for $k = 1:n$, and $S_\tau^{\omega^k} =
+\left(S_{j\tau}^{\omega^k}\right)_{j=1:m}$; see (3.1). Then, from (3.8), we
+obtain that
+
+\[
+\begin{aligned}
+V_\tau &= \left(V_\tau^{\omega^1}\ \ V_\tau^{\omega^2}\ \ \ldots\ \
+V_\tau^{\omega^n}\right) \;=\; \left(\Theta^t S_\tau^{\omega^1}\ \ \Theta^t
+S_\tau^{\omega^2}\ \ \ldots\ \ \Theta^t S_\tau^{\omega^n}\right) \\
+&= \Theta^t\,\mathrm{col}\left(S_\tau^{\omega^k}\right)_{k=1:n} \\
+&= \Theta^t M_\tau,
+\end{aligned}
+\]
+
+since $M_\tau = \mathrm{col}\left(S_\tau^{\omega^k}\right)_{k=1:n}$; cf.\
+(3.2).
+
+Using (1.9) and the row form $M_\tau = \mathrm{row}\,(S_{j\tau})_{j=1:m}$
+of the payoff matrix $M_\tau$, see (3.3), we conclude that
+
+\[
+V_\tau \;=\; \Theta^t M_\tau \;=\; \sum_{j=1}^m \Theta_j S_{j\tau}.
+\]
+\end{proof}
+
+\begin{definition}
+A derivative security is replicable in a market model with $m$ securities
+and $n$ market states at time $\tau > t_0$ if there exists a portfolio
+made of the $m$ securities which has the same value as the derivative
+security in every state of the market at time $\tau$.
+\end{definition}
+
+\begin{lemma}
+Consider a market model with $m$ securities and $n$ market states at time
+$\tau > t_0$ with payoff matrix $M_\tau = \mathrm{row}\,(S_{j\tau})_{j=1:m}$.
+Let $s_\tau$ be the price vector at time $\tau$ of a replicable derivative
+security, and let $\Theta = (\Theta_j)_{j=1:m}$ be the positions vector of
+the replicating portfolio. Then,
+
+\begin{equation}
+s_\tau \;=\; \Theta^t M_\tau \;=\; \sum_{j=1}^m \Theta_j S_{j\tau}.
+\end{equation}
+\end{lemma}
+
+We note that, if a derivative security is replicable, its value at time
+$t_0$ is not necessarily uniquely determined, unless the market is
+arbitrage--free; see Theorem 3.1.
+
+\begin{proof}
+By Definition 3.2, if $V_\tau$ is the price vector at time $\tau$ of the
+replicating portfolio of a security with price vector $s_\tau$ at time
+$\tau$, then $V_\tau = s_\tau$. From (3.7), we find that
+
+\[
+s_\tau \;=\; V_\tau \;=\; \Theta^t M_\tau \;=\; \sum_{j=1}^m \Theta_j
+S_{j\tau}.
+\]
+\end{proof}

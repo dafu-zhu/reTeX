@@ -1,0 +1,146 @@
+% PAGES: 62-63  (printed 46-47)
+
+\begin{table}[H]
+\centering
+\caption{Backward Substitution for upper triangular bidiagonal matrices}
+\fbox{%
+\begin{minipage}{0.82\textwidth}
+\textbf{Function Call:}\\
+$x = \text{backward\_subst\_bidiag}(U,b)$
+
+\medskip
+\textbf{Input:}\\
+$U = $ nonsingular upper triangular bidiagonal matrix of size $n$\\
+$b = $ column vector of size $n$
+
+\medskip
+\textbf{Output:}\\
+$x = $ solution to $Ux = b$
+
+\medskip
+$x(n) = \dfrac{b(n)}{U(n,n)}$;\\
+for $j = (n-1):1$\\
+\hspace*{1.5em}$x(j) = \dfrac{b(j)-U(j,j+1)x(j+1)}{U(j,j)}$;\\
+end
+\end{minipage}%
+}
+\end{table}
+
+\section{LU decomposition without pivoting}
+
+The LU decomposition of a matrix provides a computationally efficient
+way for solving linear systems; see section 2.5 for details. While the
+LU decomposition without pivoting does not exist for every nonsingular
+matrix, it is often used in practice, e.g., for tridiagonal matrices;
+see section 2.5.1. Moreover, the LU decomposition without pivoting
+contains the main idea for the recursive algorithm behind both the LU
+decomposition with row pivoting, which exists for all nonsingular
+matrices,\footnote{Note that, throughout this book, ``LU decomposition''
+will refer to the LU decomposition without pivoting, unless otherwise
+specified.} and the Cholesky decomposition; see section 2.6 and
+section 6.1, respectively.
+
+\begin{definition}
+The $LU$ decomposition without pivoting of a nonsingular square matrix
+$A$ consists of finding a lower triangular matrix $L$ with all entries
+on the main diagonal equal to $1$ and a nonsingular upper triangular
+matrix $U$ such that
+\[
+A \;=\; LU.
+\]
+The $L$ and $U$ matrices are called the $LU$ factors of $A$.
+\end{definition}
+
+Note that requiring the diagonal entries of the matrix $L$ to be equal
+to $1$ is necessary for the uniqueness of the LU decomposition: The
+$n\times n$ matrix $A$ has $n^2$ entries, while the matrix $L$ has
+$\frac{n(n+1)}{2}$ entries below the main diagonal and on the main
+diagonal, and the matrix $U$ has $\frac{n(n+1)}{2}$ entries above the
+main diagonal and on the main diagonal, for a total of
+$\frac{n(n+1)}{2}+\frac{n(n+1)}{2} = n^2+n$ entries. These entries can be
+thought of as unknowns when looking for the LU decomposition of $A$.
+Thus, we have $n^2+n$ unknowns to be found given the $n^2$ entries of
+$A$. Requiring the $n$ entries of $L$ on the main diagonal to be equal
+to $1$ reduces the number of unknowns to $n^2$, which creates the
+framework for the LU decomposition to be unique; see Theorem 2.2.
+
+\begin{definition}
+Let $A$ be an $n\times n$ matrix. The leading principal minors of $A$
+are the determinants of the $i\times i$ matrices $A_i = A(1:i,1:i)$ made
+of the $i^2$ upper left entries of $A$, for $1\le i\le
+n$.\footnote{For example, the leading principal minors of the matrix
+$\begin{pmatrix} 2 & -3 & 0\\ 1 & 1 & 1\\ -1 & 5 & -3\end{pmatrix}$ are
+\[
+\det(2) = 2; \quad
+\det\begin{pmatrix} 2 & -3\\ 1 & 1\end{pmatrix} = 5; \quad
+\det\begin{pmatrix} 2 & -3 & 0\\ 1 & 1 & 1\\ -1 & 5 & -3\end{pmatrix} = -22;
+\]
+see section 5.2.1 for more details and examples.}
+\end{definition}
+
+\begin{theorem}
+A matrix has an LU decomposition if and only if all the leading
+principal minors of the matrix are nonzero.
+\end{theorem}
+
+\begin{proof}
+The proof of this result is of no further relevance herein and can be
+found, e.g., in Datta~\cite{12}.
+\end{proof}
+
+For the LU decomposition to be consistent, it should be unique, and this
+is, indeed, the case:
+
+\begin{theorem}
+If it exists, the LU decomposition without row pivoting of a matrix is
+unique.
+\end{theorem}
+
+The proof of this result can be found in the technical appendix from
+Chapter 10; see the proof of Theorem 10.10 from section 10.6.
+
+\subsection{Pseudocode and operation count for LU decomposition}
+
+The $L$ and $U$ matrices from the LU decomposition of a matrix are
+computed using a recursive algorithm, one row of $U$ and one column of
+$L$ at a time.
+
+Let $A$ be an $n\times n$ nonsingular matrix with LU decomposition
+without pivoting. We are looking for an $n\times n$ lower triangular
+matrix $L$ with main diagonal entries equal to $1$ and for an $n\times
+n$ upper triangular matrix $U$ such that
+\begin{equation}
+LU \;=\; A.
+\end{equation}
+
+\begin{examplex}
+\textit{$4\times 4$ matrix}\par
+For clarity, we include explicit formulations of certain formulas for
+$4\times 4$ matrices. In particular, formula (2.21) is written as
+follows if $A$, $L$, and $U$ are $4\times 4$ matrices:
+\[
+\begin{aligned}
+&\begin{pmatrix}
+1 & 0 & 0 & 0\\
+L(2,1) & 1 & 0 & 0\\
+L(3,1) & L(3,2) & 1 & 0\\
+L(4,1) & L(4,2) & L(4,3) & 1
+\end{pmatrix}
+\begin{pmatrix}
+U(1,1) & U(1,2) & U(1,3) & U(1,4)\\
+0 & U(2,2) & U(2,3) & U(2,4)\\
+0 & 0 & U(3,3) & U(3,4)\\
+0 & 0 & 0 & U(4,4)
+\end{pmatrix}\\[4pt]
+&\;=\;
+\begin{pmatrix}
+A(1,1) & A(1,2) & A(1,3) & A(1,4)\\
+A(2,1) & A(2,2) & A(2,3) & A(2,4)\\
+A(3,1) & A(3,2) & A(3,3) & A(3,4)\\
+A(4,1) & A(4,2) & A(4,3) & A(4,4)
+\end{pmatrix},
+\end{aligned}
+\]
+since all the main diagonal entries of $L$ are required to be equal to
+$1$.
+\end{examplex}

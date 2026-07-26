@@ -1,0 +1,134 @@
+% PAGES: 57-59
+
+\subsection{Finding discount factors using forward substitution}
+
+The value of a bond is equal to the sum of the present values of all its future cash
+flows. Therefore, known prices of several bonds provide information regarding the
+discount factors corresponding to all the cash flow dates of the bonds.
+
+If the number of cash flow dates is higher than the number of bonds, then there is not
+enough information to uniquely determine the discount factors. If the number of bonds
+is higher than the number of cash flow dates, there is a redundancy of data and
+arbitrage opportunities may exist.
+
+However, if the number of cash flow dates is equal to the number of bonds, and if
+there are no redundancies (i.e., if no bond can be synthesized by taking positions in
+the other bonds), then it is possible to uniquely identify the discount factors
+corresponding to the cash flow dates (and the corresponding values of the zero rates)
+from the bond prices.
+
+In this section, we present an example where the discount factors can be computed
+using forward substitution. A more general example requiring LU decomposition for
+computing the discount factors can be found in section 2.7.2.
+
+Recall that the value of a bond is equal to the sum of the present value of all its
+future cash flows. In other words, if $B$ is the value of a bond with future cash
+flows $c_i$ to be paid at times $t_i$, and if $\text{Disc}(t_i)$ are the discount
+factors corresponding to time $t_i$, for $i=1:n$, then
+\begin{equation}
+B \;=\; \sum_{i=1}^n c_i\text{Disc}(t_i).
+\end{equation}
+
+Note that the discount factor $\text{Disc}(t_i)$ at time $t_i$ is uniquely determined
+by the risk-free zero rate $r(0,t_i)$ at time $t_i$. For example, if interest is
+continuously compounded (which is assumed to be the case throughout the book, unless
+otherwise specified), then
+\begin{equation}
+\text{Disc}(t_i) \;=\; e^{-t_ir(0,t_i)} \;=\; \exp\left(-t_ir(0,t_i)\right).
+\end{equation}
+
+For the example below, recall that an annual coupon bond with face value \$100,
+coupon rate $C$, and maturity $T$ (measured in years) pays the holder of the bond a
+coupon payment equal to $C\cdot 100$ every year, except at maturity. The final payment
+at maturity $T$ is equal to the face value of the bond plus one coupon payment, i.e.,
+$(1+C)100$. For example, an annual coupon bond with 15 months to maturity and coupon
+rate 5\%, i.e., $C=0.05$, has two cash flow dates, in 3 and in 15 months,
+corresponding to $t_1 = \frac{3}{12} = \frac{1}{4}$, and $t_2 = \frac{15}{12} =
+\frac{5}{4}$, respectively. The corresponding cash flows are $c_1=5$ and $c_2=105$.
+
+\begin{examplex}
+The prices of the following annual coupon bonds with face value \$100 are given:
+
+\begin{center}
+\begin{tabular}{ccc}
+Bond Maturity & Coupon Rate & Bond Price \\[0.4em]
+1 year & 0 & \$98 \\
+2 years & 6\% & \$104 \\
+3 years & 8\% & \$111 \\
+4 years & 5\% & \$102 \\
+\end{tabular}
+\end{center}
+
+The cash flows and the cash flow dates of the bonds are recorded in the table below:
+
+\begin{center}
+\begin{tabular}{|l|l|}
+\hline
+Maturity & Cash Flow \& Date \\
+\hline
+1 year & \$100 in 1 year \\
+\hline
+2 years & \begin{tabular}[t]{@{}l@{}}\$6 in 1 year\\ \$106 in 2 years\end{tabular} \\
+\hline
+3 years & \begin{tabular}[t]{@{}l@{}}\$8 in 1 year\\ \$8 in 2 years\\
+\$108 in 3 years\end{tabular} \\
+\hline
+4 years & \begin{tabular}[t]{@{}l@{}}\$5 in 1 year\\ \$5 in 2 years\\
+\$5 in 3 years\\ \$105 in 4 years\end{tabular} \\
+\hline
+\end{tabular}
+\end{center}
+
+Note that the four bonds have exactly four cash flow dates, i.e., 1 year, 2 years, 3
+years, and 4 years. For $i=1:4$, denote by $d_i$ the discount factor corresponding to
+time equal to $i$ years. Using formula (2.11) for the values of the bonds, we find
+that
+\begin{align*}
+98 &= 100d_1; \\
+104 &= 6d_1 + 106d_2; \\
+111 &= 8d_1 + 8d_2 + 108d_3; \\
+102 &= 5d_1 + 5d_2 + 5d_3 + 105d_4.
+\end{align*}
+
+This linear system can be written in matrix notation as $Ld = b$, where $L$ is a
+lower triangular matrix, and $d$ and $b$ are column vectors given by
+\[
+L = \begin{pmatrix} 100 & 0 & 0 & 0 \\ 6 & 106 & 0 & 0 \\ 8 & 8 & 108 & 0 \\
+5 & 5 & 5 & 105 \end{pmatrix}; \quad
+d = \begin{pmatrix} d_1 \\ d_2 \\ d_3 \\ d_4 \end{pmatrix}; \quad
+b = \begin{pmatrix} 98 \\ 104 \\ 111 \\ 102 \end{pmatrix}.
+\]
+
+The solution of the linear system $Ld = b$ is found using forward
+substitution,\footnote{Without using the routine forward\_subst, $d_1$, $d_2$, $d_3$,
+and $d_4$ can be obtained as follows:
+\[
+d_1 \;=\; \frac{98}{100} \;=\; 0.98;
+\]
+\[
+d_2 \;=\; \frac{104 - 6d_1}{106} \;=\; 0.9257;
+\]
+\[
+d_3 \;=\; \frac{111 - 8d_1 - 8d_2}{108} \;=\; 0.8866;
+\]
+\[
+d_4 \;=\; \frac{102 - 5d_1 - 5d_2 - 5d_3}{105} \;=\; 0.8385.
+\]} i.e.,
+\[
+d \;=\; \text{forward\_subst}(L,b) \;=\; \begin{pmatrix} 0.98 \\ 0.9257 \\ 0.8866 \\
+0.8385 \end{pmatrix}.
+\]
+
+Formula (2.12) can be used to find the corresponding continuously compounded zero
+rates:
+\begin{align*}
+d_1 = \text{Disc}(1) = e^{-r(0,1)} \quad &\Longleftrightarrow \quad r(0,1) =
+-\ln(d_1) = 0.0202 = 2.02\%; \\
+d_2 = \text{Disc}(2) = e^{-2r(0,2)} \quad &\Longleftrightarrow \quad r(0,2) =
+-\frac{\ln(d_2)}{2} = 0.0386 = 3.86\%; \\
+d_3 = \text{Disc}(3) = e^{-3r(0,3)} \quad &\Longleftrightarrow \quad r(0,3) =
+-\frac{\ln(d_3)}{3} = 0.0401 = 4.01\%; \\
+d_4 = \text{Disc}(4) = e^{-4r(0,4)} \quad &\Longleftrightarrow \quad r(0,4) =
+-\frac{\ln(d_4)}{4} = 0.0440 = 4.40\%.
+\end{align*}
+\end{examplex}
