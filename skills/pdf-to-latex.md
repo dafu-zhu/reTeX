@@ -18,12 +18,14 @@ Per-book directory layout:
 
 ```
 books/<BOOK_NAME>/
-  book.conf                 # BOOK_NAME, TITLE, AUTHOR, EDITION, CHNN_PAGES, …
+  book.conf                 # BOOK_NAME, TITLE, AUTHOR, EDITION, PAGE_COUNT, CHNN_PAGES, …
   progress.md               # section-level checklist
   latex/
     main.tex  preamble.tex  frontmatter.tex
-    ch01/ … chNN/           # chNN.tex wrapper + secNN_M.tex per section
+    ch01/ … chNN/           # secNN_M.tex per section (chunk agents)
+                            #   + chNN.tex wrapper (orchestrator only)
     backmatter/
+    figures/placeholder.png # every figure points here until Phase 2 wires it
     figures/ch01/ … chNN/
   build/                    # all aux/log/toc — never committed
 ```
@@ -83,6 +85,7 @@ TITLE="A First Course in Monte Carlo Methods"
 AUTHOR="D. Sanz-Alonso and O. Al-Ghattas"
 EDITION="1"
 SOURCE_PDF="pdfs/scanned.pdf"
+PAGE_COUNT="341"
 PAGE_OFFSET="12"
 COPYRIGHT_PAGE="4"
 FIGURE_NUMBERING="two-part"
@@ -90,6 +93,11 @@ CH01_PAGES="17-42"
 CH02_PAGES="43-68"
 BACKMATTER_PAGES="320-341"
 ```
+
+`PAGE_COUNT` is the PDF's real page count — `len(pymupdf.open(pdf))`, not a printed
+page number. It is what makes a later resume verifiable, since `SOURCE_PDF` is the
+same default path for every book here. Omit it and the next run cannot tell this
+book from any other and must hard-stop.
 
 Bad — each of these breaks `source`:
 
@@ -138,11 +146,22 @@ You are setting up a LaTeX project from a scanned PDF textbook. Do the following
    mkdir -p books/<BOOK_NAME>/latex/figures/ch{01..NN}
    mkdir -p books/<BOOK_NAME>/latex/backmatter books/<BOOK_NAME>/build
 
+   Then install the figure placeholder that Phase 1a points every figure at
+   until Phase 2 wires the real image:
+   cp assets/figure_placeholder.png books/<BOOK_NAME>/latex/figures/placeholder.png
+
+   This file is not optional. Phase 1a compiles after every batch, and a
+   figure whose image is missing is a fatal LaTeX error.
+
 3. Write these files:
    a. books/<BOOK_NAME>/book.conf — BOOK_NAME, TITLE, AUTHOR, EDITION, SOURCE_PDF
-      (the path you were given), PAGE_OFFSET, COPYRIGHT_PAGE, FIGURE_NUMBERING,
-      BACKMATTER_PAGES, and one CHNN_PAGES per chapter as PDF page indices
-      (e.g. CH01_PAGES="17-42").
+      (the path you were given), PAGE_COUNT, PAGE_OFFSET, COPYRIGHT_PAGE,
+      FIGURE_NUMBERING, BACKMATTER_PAGES, and one CHNN_PAGES per chapter as PDF
+      page indices (e.g. CH01_PAGES="17-42").
+      PAGE_COUNT is the PDF's real page count — get it with
+      python -c "import pymupdf,sys; print(len(pymupdf.open(sys.argv[1])))" <PDF_PATH>
+      Every later run uses it to confirm this book.conf really describes this
+      PDF, so it must be exact.
       Do NOT add a PUBLISHER field.
       This file is sourced as a shell script: one KEY="value" per line, every value
       double-quoted, no spaces around =, no bare words, no command substitution.
@@ -170,7 +189,7 @@ You are setting up a LaTeX project from a scanned PDF textbook. Do the following
       sections. Use the BOOK_NAME slug as the heading, NOT the full title. Include
       PDF page ranges per chapter.
 
-4. Report back: BOOK_NAME, number of chapters, total pages, PAGE_OFFSET and how you
+4. Report back: BOOK_NAME, number of chapters, PAGE_COUNT, PAGE_OFFSET and how you
    confirmed it, the copyright page number (or "none"), FIGURE_NUMBERING, the
    back-matter page range, and the chapter-to-page-range mapping.
 ```
@@ -184,22 +203,61 @@ You are setting up a LaTeX project from a scanned PDF textbook. Do the following
 1. Read `books/<BOOK_NAME>/book.conf` to get BOOK_NAME and chapter page ranges — this is safe (small file, structured data).
 2. Confirm it sources cleanly: `bash -n books/<BOOK_NAME>/book.conf`. If it does not, fix the quoting **now** — every build depends on it.
 2b. Sanity-check `PAGE_OFFSET` before launching 50 subagents against it: read the first PDF page of `CH02_PAGES` and confirm it is chapter 2's opening page. A wrong offset silently transcribes the whole book off by a constant, and you will not notice until Phase 4.
+2c. Confirm the book.conf you just got is one a later run could resume from — same check, same script:
+
+   ```bash
+   python scripts/resume_check.py --pdf <PDF_PATH>    # must print DECISION: RESUME <BOOK_NAME>
+   ```
+
+   Anything else means Phase 0 left out `PAGE_COUNT` or another required key. Fix it now, while you still know the answers.
+2d. Confirm the figure placeholder is in place — without it every batch compile fails on every figure:
+
+   ```bash
+   test -f books/<BOOK_NAME>/latex/figures/placeholder.png \
+     || cp assets/figure_placeholder.png books/<BOOK_NAME>/latex/figures/placeholder.png
+   ```
+
 3. Read `books/<BOOK_NAME>/progress.md` to confirm the checklist is complete.
 4. **Do NOT read the PDF front matter pages.** You have everything you need from `book.conf` and `progress.md`.
 5. Proceed directly to Phase 1a.
 
-### Resuming an interrupted run
+### Resuming an interrupted run — run this BEFORE Phase 0, every time
 
 Five-plus books share this repo, so `ls books/` cannot tell you which one is yours.
-Identify the current book by its source PDF:
+Neither can `SOURCE_PDF`: **`pdfs/scanned.pdf` is the shared default path for every
+book in this repo**, so a book.conf naming it tells you only that some book was once
+converted from that path — not that it is *this* book. Grepping for it and then
+skipping Phase 0 points ~50 transcription agents at an unrelated book's tree and
+destroys it, and nothing surfaces until the final phase.
+
+Resuming therefore requires a **verified identity**: the PDF's real page count must
+equal the `PAGE_COUNT` recorded in `book.conf`, and `book.conf` must carry every key
+later phases read. Run:
 
 ```bash
-grep -l "SOURCE_PDF=\"<PDF_PATH>\"" books/*/book.conf
+python scripts/resume_check.py --pdf <PDF_PATH>
 ```
 
-- One match → that is `books/<BOOK_NAME>/`. **Skip Phase 0 entirely**; do not re-read the PDF front matter. Read its `book.conf` for page ranges and `progress.md` for what is already done, then resume at the first unchecked section.
-- No match → this PDF has not been set up. Run Phase 0.
-- If an older `book.conf` predates the `SOURCE_PDF` key, match on `BOOK_NAME` instead and add `SOURCE_PDF` while you are there.
+It prints exactly one `DECISION:` line. Act on it and nothing else:
+
+| Decision | Meaning | What you do |
+|---|---|---|
+| `RESUME <book_name>` | Page count matches and every required key is present — this PDF *is* that book | **Skip Phase 0 entirely.** Do not re-read the PDF front matter. Read that book's `book.conf` for page ranges and `progress.md` for what is done, then resume at the first unchecked section |
+| `FRESH` | No `book.conf` references this PDF | Run Phase 0 |
+| `STOP` | A book claims this PDF path but the identity does not hold | **HARD STOP. Report to the user and do nothing else.** Never resume into it, and never "start fresh" — Phase 0 would overwrite that book's tree |
+
+`STOP` is not a soft warning and there is no override. The two ways it fires:
+
+- **`PAGE_COUNT=N` but the PDF has M pages** — a *different* book now sits at that PDF
+  path. Resolve by giving this PDF its own path, or by moving the other book's source
+  aside, then re-run the check.
+- **`book.conf` is missing keys later phases read** (`PAGE_COUNT`, `PAGE_OFFSET`,
+  `COPYRIGHT_PAGE`, `FIGURE_NUMBERING`, `BACKMATTER_PAGES`, at least one `CHNN_PAGES`)
+  — that is a stale conversion from an older pipeline, not a resumable run. Repairing
+  those keys by hand is a deliberate human decision, not something to guess at.
+
+The check never prints `TITLE`, `AUTHOR` or `EDITION`: it runs in the main
+conversation, and metadata there trips the content filter on every later tool call.
 
 ---
 
@@ -226,6 +284,50 @@ chapter. A 341-page book is roughly 45–70 chunks. Organise them like this:
 
 Every one of these agents runs on **Sonnet** — pass `model: "sonnet"`.
 
+### One writer per file — YOU write the chapter wrapper, not the chunk agents
+
+Chunk agents write **only** their own `secNN_M.tex` files. They must never write
+`chNN/chNN.tex`. Four concurrent agents all writing the same wrapper means the last
+writer wins and the other three chunks' section files sit on disk unreferenced — they
+never appear in the PDF. That failure is invisible: the book still compiles, and
+`inventory_check.py` globs every `*.tex` under `chNN/`, so the section, equation and
+figure counts all still look right.
+
+**After every chunk of a chapter has returned**, you (the orchestrator) write that
+chapter's wrapper exactly once, listing every section file in reading order:
+
+```latex
+\chapter{<chapter title>}
+\label{ch:NN}
+\input{chNN/secNN_1}
+\input{chNN/secNN_2}
+\input{chNN/secNN_3}
+```
+
+Get the order from the files' `% PAGES:` headers, not from filename sort — `secNN_10`
+sorts before `secNN_2`:
+
+```bash
+grep -H "^% PAGES:" books/<BOOK_NAME>/latex/chNN/sec*.tex | sort -t: -k3 -n
+```
+
+### Then verify it, per chapter, before moving on
+
+```bash
+python scripts/check_chapter_wrapper.py --book <BOOK_NAME> --chapter N
+```
+
+This is a gate, not a report. It exits non-zero and prints `FAIL:` lines when a
+section file on disk is not `\input`/`\include`d by the wrapper (`ORPHAN` — a whole
+chunk's transcription is missing from the book) or when the wrapper references a file
+that does not exist (`DANGLING` — a chunk failed and you did not notice).
+
+- **ORPHAN** → add the missing `\input` in the right position and re-run.
+- **DANGLING** → that chunk never produced its file. Re-run that chunk agent.
+
+Do not start the next chapter until this passes. Run it once more over the whole book
+(`--book <BOOK_NAME>`, no `--chapter`) at Phase 4.
+
 ### Per-chunk subagent prompt
 
 **Copyright filter avoidance**: Never include book title, author name, edition, or publisher in subagent prompts. The subagent does not need to know what book it is converting.
@@ -238,7 +340,13 @@ content shown on those pages.
 Read pages X–Y of the PDF at <PDF_PATH>. These pages have no text layer — read them as
 page images. Typeset them (Chapter N) as LaTeX.
 
-- Write: books/<BOOK_NAME>/latex/chNN/chNN.tex (wrapper) + books/<BOOK_NAME>/latex/chNN/secNN_M.tex (one file per section)
+- Write ONLY section files: books/<BOOK_NAME>/latex/chNN/secNN_M.tex, one file per
+  section your pages cover.
+  Do NOT create or edit books/<BOOK_NAME>/latex/chNN/chNN.tex. Other agents are
+  working on this same chapter right now, and the chapter wrapper is written once,
+  by the orchestrator, after all of you have finished. If you write it you will
+  erase their work.
+  Do NOT create or edit any file outside books/<BOOK_NAME>/latex/chNN/.
 - Begin EVERY file you create with a page-range comment on line 1, exactly:
     % PAGES: X-Y
   Later phases use this to map pages to files. Do not omit it.
@@ -251,13 +359,16 @@ page images. Typeset them (Chapter N) as LaTeX.
   script matches this shape literally and silently skips anything else:
     \begin{figure}[H]
     \centering
-    \includegraphics[width=0.8\textwidth]{}
+    \includegraphics[width=0.8\textwidth]{figures/placeholder.png}
     \caption{<caption text exactly as printed>}
     \label{fig:<the figure number exactly as printed, e.g. 1.1 or 1.1.1>}
     \end{figure}
-  Keep the empty {} in \includegraphics — Phase 2 fills in the path. The [width=...]
-  brackets are required. \caption must be immediately followed by \label on the next
-  line. Never write a bare "% TODO: extract figure" comment; nothing consumes it.
+  Use figures/placeholder.png verbatim for EVERY figure — Phase 2 replaces it with
+  the real image. Do not invent a per-figure filename, and do not leave the braces
+  empty: an empty path is a fatal "File `' not found" error, and this chapter is
+  compiled after every batch, before Phase 2 runs. The [width=...] brackets are
+  required. \caption must be immediately followed by \label on the next line.
+  Never write a bare "% TODO: extract figure" comment; nothing consumes it.
 - Unclear content: % UNCLEAR: [description, page X] — never guess
 - Skip the copyright page if it falls inside your page range — do not typeset ©,
   ISBN, Library of Congress numbers, "all rights reserved", or publisher addresses.
@@ -269,7 +380,22 @@ page images. Typeset them (Chapter N) as LaTeX.
 ```
 
 ### After each batch
-Run the compile-fix loop immediately — `python scripts/compile_fix.py --book <BOOK_NAME>`, with the escalation ladder in Phase 4. Do not accumulate errors across batches.
+
+In this order, and do not start the next batch until both pass:
+
+```bash
+# 1. Every chunk's work is actually referenced (per chapter in the batch)
+python scripts/check_chapter_wrapper.py --book <BOOK_NAME> --chapter N
+
+# 2. It compiles
+python scripts/compile_fix.py --book <BOOK_NAME> 2>&1 | tee /tmp/cf.log
+grep -q "Compilation successful (0 errors)" /tmp/cf.log && echo CLEAN || echo DIRTY
+```
+
+The wrapper check comes first because an orphaned section file is invisible to the
+compiler — a batch can be perfectly clean and still be missing a quarter of its
+content. On DIRTY, use the escalation ladder in Phase 4. Do not accumulate errors
+across batches.
 
 ### Content filter handling
 When a subagent returns a 400 "Output blocked by content filtering policy" error:
@@ -303,12 +429,19 @@ This is the step that distinguishes an agent from an OCR engine. OCR classifies 
 glyph in isolation. An agent reads the surrounding mathematics and infers which glyph
 was *meant*.
 
-### Split by file, not by page — these agents edit, they do not create
+### Split by file, not by page
 
-Phase 1a agents *create* files, so overlapping page ranges are harmless. Phase 1b agents
-*edit* existing files: if two agents open the same `secNN_M.tex` because a section
-straddles their page boundary, the second write silently destroys the first. Prevent it
-by assigning **disjoint file sets**, not page ranges.
+Two agents writing one file is a silently lost write, and it is a hazard in **both**
+phases — Phase 1a is not exempt. A Phase 1a chunk agent creates its own `secNN_M.tex`
+files, which is safe only because each section belongs to exactly one chunk; the moment
+two agents target the same path, one of them is erased. That is precisely what happened
+when every chunk agent was told to write `chNN/chNN.tex` (see Phase 1a), and it is why
+the orchestrator now owns that file.
+
+Phase 1b has no safe case at all: these agents *edit* files that already exist, so if
+two of them open the same `secNN_M.tex` because a section straddles their page boundary,
+the second write destroys the first. Prevent it by assigning **disjoint file sets**, not
+page ranges.
 
 Build the page→file map from the `% PAGES:` header every Phase 1a file carries:
 
@@ -440,39 +573,83 @@ python scripts/extract_figures.py --book <BOOK_NAME> --pdf <PDF_PATH>
 `books/<BOOK_NAME>/latex/figures/chNN/fig_X_Y_Z.png`, then rewrites the path inside
 matching figure blocks.
 
-### No-text-layer path (OCR)
+### No-text-layer path (OCR) — the normal case for this pipeline
 
-The repo carries OCR extractors salvaged from an earlier book with this same problem, and
-`easyocr` is installed. Their CLIs are being brought onto the `--book` convention, so
-**check the signature before invoking rather than guessing a flag**:
+`scripts/extract_figures_ocr.py` renders each page, OCRs it with EasyOCR, finds the
+figure captions and crops the region above each one. Invoke it directly — do **not**
+edit the script; its caption patterns are already parameterised and editing them breaks
+a working script:
 
 ```bash
-grep -n "argparse\|sys.argv\|add_argument" scripts/extract_figures_ocr.py
+python scripts/extract_figures_ocr.py --book <BOOK_NAME> --pdf <PDF_PATH> --numbering <STYLE>
 ```
 
-Then invoke it accordingly — it renders each page, OCRs it, finds caption text, and crops
-the region above. Two traps:
+**`--numbering` is the one thing you must get right.** `book.conf` records
+`FIGURE_NUMBERING` in different vocabulary than the script accepts, so translate:
 
-- Its caption regex was written for a book numbering figures `Figure I-3` (Roman chapter,
-  hyphen). If this book numbers `Figure 1.1` or `Figure 1.1.1`, it matches nothing.
-  Check the regex against `FIGURE_NUMBERING` from `book.conf` and adjust it before
-  concluding the book has no figures.
-- Confirm it writes under `books/<BOOK_NAME>/latex/figures/`, not a repo-root `latex/`.
+| `FIGURE_NUMBERING` in `book.conf` | caption on the page | `--numbering` |
+|---|---|---|
+| `two-part` | `Figure 3.7` | `arabic-dot` (the default) |
+| `three-part` | `Figure 3.7.1` | `arabic-dot3` |
+| *(not recorded by Phase 0)* | `Figure I-3` — Roman chapter, hyphen | `roman-dash` |
 
-If the extractor cannot be made to match this book's captions, fall back to:
+A wrong choice does not error. It prints `Total: 0 figures extracted`, which reads
+exactly like a book that happens to have no figures. **Zero is a failure, not a
+result** — if you get zero, open one page that visibly has a figure, read its caption,
+and pick the style that matches what is actually printed. Phase 0 only ever records
+`two-part` or `three-part`, so a book numbering `Figure I-3` will be mislabelled in
+`book.conf`; trust the printed caption over the config.
+
+Other flags: `--dpi` (default 250) and `--pdf` (defaults to `pdfs/scanned.pdf` — pass
+it explicitly). Output goes to `books/<BOOK_NAME>/latex/figures/chNN/`, with `.` and
+`-` in the figure number replaced by `_`:
+
+| numbering | caption | file written |
+|---|---|---|
+| `arabic-dot` | `Figure 3.7` | `books/<BOOK_NAME>/latex/figures/ch03/fig_3_7.png` |
+| `arabic-dot3` | `Figure 3.7.1` | `books/<BOOK_NAME>/latex/figures/ch03/fig_3_7_1.png` |
+| `roman-dash` | `Figure I-3` | `books/<BOOK_NAME>/latex/figures/ch01/fig_I_3.png` |
+
+**This script crops PNGs and nothing else. It performs NO `.tex` rewriting.** Unlike
+the text-layer path, it will never touch your `\includegraphics{}` lines, so after it
+runs *every* figure still points at `figures/placeholder.png`. The wiring step below is
+therefore **always required on this path** — it is not a fallback, it is the second
+half of the procedure.
+
+If the extractor still matches nothing on any numbering style, fall back to:
 `python scripts/ocr_extract.py <PDF_PATH> <start> <end> <out_dir>` to OCR the chapter's
 pages, then a **Sonnet** agent (`model: "sonnet"`) reads the OCR text plus the page
 images and reports the page and caption of every figure, and you crop those pages.
 
 ### Wiring images into the source
 
-`extract_figures.py` does **not** turn a comment into an `\includegraphics`. It only
-rewrites the path inside a figure block that already matches this shape exactly:
+Until this step runs, every figure block still reads
+`\includegraphics[width=0.8\textwidth]{figures/placeholder.png}` — that is what Phase 1a
+emitted, and it is why the book has compiled cleanly all the way here. Wiring means
+replacing that one path per figure with the extracted image.
+
+**Path convention** — the path is relative to `books/<BOOK_NAME>/latex/`, never to the
+chapter directory and never absolute:
+
+```
+figures/chNN/fig_X_Y.png       two-part   (Figure 3.7   → figures/ch03/fig_3_7.png)
+figures/chNN/fig_X_Y_Z.png     three-part (Figure 3.7.1 → figures/ch03/fig_3_7_1.png)
+figures/chNN/fig_R_N.png       roman-dash (Figure I-3   → figures/ch01/fig_I_3.png)
+```
+
+**On the OCR path the rewrite is entirely manual** — `extract_figures_ocr.py` writes
+PNGs and never touches `.tex`. Hand a **Sonnet** agent (`model: "sonnet"`) the list of
+extracted PNG filenames and the figure blocks still pointing at `placeholder.png`, and
+have it wire each one by matching caption text to filename. Purely mechanical — do not
+spend Opus on it.
+
+**On the text-layer path** `extract_figures.py` does the rewrite itself, but only for a
+figure block matching this shape exactly:
 
 ```
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.8\textwidth]{}
+\includegraphics[width=0.8\textwidth]{figures/placeholder.png}
 \caption{...}
 \label{fig:1.1.1}
 \end{figure}
@@ -480,27 +657,34 @@ rewrites the path inside a figure block that already matches this shape exactly:
 
 and only when the `\label` contains a **three-part** number matching `\d+\.\d+\.\d+`.
 Phase 1a is instructed to emit exactly this block, which is what makes the rewrite work.
-The `[width=...]` brackets are part of the match — a bare `\includegraphics{}` is skipped.
+The `[width=...]` brackets are part of the match — a bare `\includegraphics{...}` with no
+brackets is skipped. It does **not** turn a comment into an `\includegraphics`.
 
 **If `FIGURE_NUMBERING="two-part"`** (`Figure 1.1`), both the caption scan and the label
 matcher key on three-part numbers and will match nothing — the automatic rewrite is dead
-for this book. Do not rely on it. Extract the images, then hand a **Sonnet** agent
-(`model: "sonnet"`) the list of extracted PNG filenames and the figure blocks with empty
-`\includegraphics{}`, and have it wire each one by matching caption text to filename.
-Purely mechanical — do not spend Opus on it.
+for this book too. Wire it with the same Sonnet agent as the OCR path.
 
 ### Verify — a zero is a failure, not a result
 
 ```bash
-find books/<BOOK_NAME>/latex/figures -name '*.png' | wc -l
+find books/<BOOK_NAME>/latex/figures -name 'fig_*.png' | wc -l
 grep -rc '\\begin{figure}' books/<BOOK_NAME>/latex/ch*/*.tex | awk -F: '{s+=$2} END {print s}'
+grep -rn 'placeholder\.png' books/<BOOK_NAME>/latex/ch*/*.tex
 grep -rn 'includegraphics\[[^]]*\]{}' books/<BOOK_NAME>/latex/ch*/*.tex
 ```
 
-The first two counts should agree, and the third must return nothing. Zero extracted
-images on a book that visibly has figures means the extractor never matched — go back to
-the text-layer check and the caption regex. Record any figure you could not wire in
-`progress.md`; never leave an empty `\includegraphics{}` in a "finished" book.
+The first two counts should agree, and the last two must return nothing. Note the third
+grep: an unwired figure now shows as `figures/placeholder.png`, **not** as an empty
+`{}` — checking only for `{}` would report a fully unwired book as finished.
+
+Zero extracted images on a book that visibly has figures means the extractor never
+matched — go back to the text-layer check and the `--numbering` table above. Record any
+figure you could not wire in `progress.md`; never ship a "finished" book still pointing
+at `placeholder.png`.
+
+Once every figure is wired, `books/<BOOK_NAME>/latex/figures/placeholder.png` is no
+longer referenced. Leave the file in place — it is small, and deleting it breaks any
+figure block that was missed.
 
 ---
 
@@ -590,6 +774,16 @@ Once clean:
 ### Then, on Opus
 
 1. Quantitative inventory: `python scripts/inventory_check.py --book <BOOK_NAME>` — counts sections, equations, figures, exercises per chapter.
+
+   **Run the wrapper check alongside it, and read it first:**
+
+   ```bash
+   python scripts/check_chapter_wrapper.py --book <BOOK_NAME>
+   ```
+
+   `inventory_check.py` globs every `*.tex` under `chNN/`, so it counts a section file
+   that no wrapper `\input`s exactly as if it were in the book. Its numbers only mean
+   something once the wrapper check passes. Any `FAIL:` here is a blocker, not a note.
 2. Compare against the TOC (sections should match exactly). Decide, per discrepancy, whether it is a genuinely missing section or the same section under a different name. This is the judgment call the phase exists for — do not just report the numbers.
 3. Layout and copyright audit. `scripts/check_repo_layout.py` validates **every** book in the repo, so another book's problem will appear in its output. The gate for *this* run is that no violation names this book:
 
@@ -601,6 +795,13 @@ Once clean:
    - A violation naming this book with `contains forbidden marker` means copyright text got typeset. Run `python scripts/scrub_copyright.py`, then re-run the check. If it still fails, remove the offending lines by hand — never ship a book with these markers.
    - A violation naming this book with `missing …` means Phase 0 did not write a required file (`book.conf`, `progress.md`, `latex/main.tex`, `latex/preamble.tex`). Create it.
 4. Sweep for leftovers: `grep -rn "UNCLEAR\|TODO" books/<BOOK_NAME>/latex/` — every remaining marker goes into `progress.md` for manual follow-up.
+4b. Unwired figures are a Phase 4 blocker. A figure still pointing at the placeholder compiles cleanly, so nothing before this catches it:
+
+   ```bash
+   grep -rn 'placeholder\.png' books/<BOOK_NAME>/latex/ch*/*.tex books/<BOOK_NAME>/latex/backmatter/*.tex
+   ```
+
+   Must print nothing. If it does, go back to Phase 2 and wire those figures.
 5. Commit on the current branch. `compile_fix.py` writes a PDF to `books/<BOOK_NAME>/latex/<BOOK_NAME>.pdf`, which `.gitignore` does **not** cover (it ignores `books/*/*.pdf`, one level up), so remove build output before staging:
 
    ```bash
@@ -628,7 +829,10 @@ Once clean:
 | `book.conf` is `source`d by `build.sh` under `set -e` | One `KEY="value"` per line, every value double-quoted. An unquoted title breaks every build of that book, with an error pointing nowhere near the cause |
 | Every page number is a PDF index, never a printed page number | Front matter offsets the two by 10–20 pages. Record `PAGE_OFFSET` in Phase 0 and spot-check it before launching subagents — a wrong offset transcribes the entire book off by a constant |
 | 5–8 pages per subagent call, not full chapters; cap 4 concurrent | Smaller outputs avoid volume-based copyright pattern matching; the cap keeps rate limits and filter retries from eating the gain |
+| Resume only on a verified identity — `scripts/resume_check.py`, never a `SOURCE_PDF` grep | `pdfs/scanned.pdf` is the shared default path for every book here, so matching it proves nothing. A page-count mismatch means a *different* book sits at that path; resuming into it would point ~50 agents at that book's tree and destroy it. Mismatch is a HARD STOP, never "resume" and never a silent fresh start |
+| Chunk agents write only `secNN_M.tex`; the ORCHESTRATOR writes `chNN/chNN.tex`, once, after all chunks return | 4 concurrent agents writing one wrapper means last-writer-wins and the other chunks are orphaned out of the PDF. It compiles fine and `inventory_check.py` still counts the orphans, so only `check_chapter_wrapper.py` finds it |
 | Phase 1b splits by FILE, not by page | 1b agents edit files that already exist. Two agents on one file is a silently lost write |
+| Figures point at `figures/placeholder.png` until Phase 2 wires them — never an empty `{}` | An empty path is a fatal `File \`' not found`, and Phase 1a compiles after every batch, before Phase 2 runs. The placeholder compiles, still matches the rewrite regex, and is visible in the PDF. Verify with `grep -rn 'placeholder\.png'`, not `grep '{}'` |
 | Verbatim output — never paraphrase, and never correct the author | Goal is exact reproduction. If the book itself errs, mark `% UNCLEAR` — do not fix it |
 | Python `re` for text replacement, never `sed` | sed interprets `\f` as form feed (0x0c), corrupts `\frac` |
 | Compile after every batch, and escalate a dirty compile-fix | Catch errors at 4 chapters, not 14. `compile_fix.py` exits 0 even when errors remain — check its output text, not `$?` |
@@ -651,8 +855,10 @@ Every book-scoped script takes the slug explicitly. Run them from the repo root.
 | `./scripts/build.sh <BOOK_NAME> clean` | Remove build artifacts |
 | `./scripts/build.sh` | List available books |
 | `python scripts/compile_fix.py --book <BOOK_NAME>` | Compile → diagnose → fix → recompile loop (`--chapter N`, `--fix-only`, `--compile-only`, `--max-iter N`). **Exits 0 even with errors remaining** — check for `Compilation successful (0 errors)` in its output |
-| `python scripts/extract_figures.py --book <BOOK_NAME> --pdf <PDF_PATH>` | Figure extraction for a PDF **with** a text layer |
-| `scripts/extract_figures_ocr.py` | Figure extraction via EasyOCR for a scan with no text layer. Check its CLI and its caption regex before use (see Phase 2) |
+| `python scripts/resume_check.py --pdf <PDF_PATH>` | Decide RESUME / FRESH / STOP before Phase 0. Exits 1 on STOP. Run this first, every time |
+| `python scripts/check_chapter_wrapper.py --book <BOOK_NAME> [--chapter N]` | Every `secNN_*.tex` is `\input`ed by its `chNN.tex`. Catches the orphans concurrent Phase 1a agents leave behind. Exits 1 on any violation |
+| `python scripts/extract_figures.py --book <BOOK_NAME> --pdf <PDF_PATH>` | Figure extraction for a PDF **with** a text layer. Crops PNGs **and** rewrites the `.tex` paths — but only for three-part figure numbers |
+| `python scripts/extract_figures_ocr.py --book <BOOK_NAME> --pdf <PDF_PATH> --numbering <arabic-dot\|arabic-dot3\|roman-dash>` | Figure extraction via EasyOCR for a scan with no text layer. **Crops PNGs only — no `.tex` rewriting**, so wiring is always a separate step. Map `FIGURE_NUMBERING` to `--numbering` with the table in Phase 2; a wrong style prints `Total: 0 figures extracted` |
 | `python scripts/ocr_extract.py <PDF_PATH> <start> <end> <out_dir>` | Raw EasyOCR text per page — content-filter fallback and figure-hunting aid |
 | `python scripts/inventory_check.py --book <BOOK_NAME>` | Per-chapter section/equation/figure/exercise counts |
 | `python scripts/check_repo_layout.py` | Validates **all** books; filter its output to this book (see Phase 4) |
