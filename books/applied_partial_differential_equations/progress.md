@@ -1,4 +1,11 @@
-# Progress Tracker
+# Progress: Applied Partial Differential Equations (Haberman)
+
+## Book Info
+- **Title**: Applied Partial Differential Equations with Fourier Series and Boundary Value Problems
+- **Author**: Richard Haberman
+- **Edition**: Fourth Edition
+- **Chapters**: 14
+- **Figures**: 195
 
 ## Phase 0: Setup
 - [x] Directory structure created
