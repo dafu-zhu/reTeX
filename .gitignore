@@ -1,5 +1,5 @@
 # Build artifacts
-latex/build/
+books/*/build/
 *.aux
 *.log
 *.toc
@@ -11,24 +11,22 @@ latex/build/
 *.fdb_latexmk
 *.synctex.gz
 
-# Output PDFs
-latex/*.pdf
+# Compiled book PDFs
+books/*/*.pdf
 
 # Source PDFs (user provides)
 pdfs/*.pdf
 
-# Extracted figures (from copyrighted source)
-latex/figures/**/*.png
-
-# Generated book content (per-conversion output)
-latex/ch*/
-latex/backmatter/
-latex/frontmatter.tex
+# OCR intermediates (regenerable from source PDF)
+ocr_output*/
 
 # OS
 .DS_Store
 Thumbs.db
 
-# Claude
-.claude/
+# Claude — session state stays local, project rules are versioned
+.claude/*
+!.claude/CLAUDE.md
+
 scripts/__pycache__/
+.pytest_cache/
