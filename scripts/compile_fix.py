@@ -819,9 +819,13 @@ def main():
             basename = 'main' if args.chapter is None else f'ch{args.chapter:02d}_standalone'
             src_pdf = os.path.join(BUILD_DIR, f'{basename}.pdf')
             if args.chapter is None:
-                dst_pdf = os.path.join(LATEX_DIR, f'{book_name}.pdf')
+                # Write beside build.sh's output, not into latex/. Two tools
+                # writing the same PDF to two places left every book carrying
+                # duplicate copies, and only one of the two paths was covered
+                # by .gitignore.
+                dst_pdf = os.path.join(BOOK_DIR, f'{book_name}.pdf')
             else:
-                dst_pdf = os.path.join(LATEX_DIR, f'{book_name}_ch{args.chapter:02d}.pdf')
+                dst_pdf = os.path.join(BOOK_DIR, f'{book_name}_ch{args.chapter:02d}.pdf')
             if os.path.exists(src_pdf):
                 import shutil
                 shutil.copy2(src_pdf, dst_pdf)
