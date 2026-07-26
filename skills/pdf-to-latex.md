@@ -18,7 +18,7 @@ Per-book directory layout:
 
 ```
 books/<BOOK_NAME>/
-  book.conf                 # BOOK_NAME, TITLE, AUTHOR, EDITION, CHNN_PAGES
+  book.conf                 # BOOK_NAME, TITLE, AUTHOR, EDITION, CHNN_PAGES, …
   progress.md               # section-level checklist
   latex/
     main.tex  preamble.tex  frontmatter.tex
@@ -62,6 +62,45 @@ The API content filter triggers on the model's **output tokens**. Once the conve
 
 Phase 0 no longer extracts the publisher at all, and no phase ever typesets the copyright page. That is primarily a copyright rule (see Critical Rules), but it also **removes a cause of content-filter blocks rather than mitigating a symptom**: publisher lines, ISBNs, Library of Congress numbers and "all rights reserved" boilerplate are exactly the recognizable metadata the filter pattern-matches on. Not extracting it means it never enters any context window.
 
+### `book.conf` format — get this exactly right
+
+`book.conf` is **`source`d as a shell script** by `scripts/build.sh`, which runs under
+`set -e`. A single malformed line breaks every future build of that book, with a shell
+error that points nowhere near the cause. The rules are absolute:
+
+- One `KEY="value"` per line. **Every value double-quoted**, including numbers.
+- No spaces around `=`. No bare unquoted words — `TITLE=A First Course` runs `First` as a
+  command and kills the build.
+- No backticks, no `$(...)`, no command substitution of any kind.
+- `#` comments and blank lines are fine.
+- Keys are `[A-Z0-9_]+` only.
+
+Good:
+
+```sh
+BOOK_NAME="a_first_course_in_monte_carlo_methods"
+TITLE="A First Course in Monte Carlo Methods"
+AUTHOR="D. Sanz-Alonso and O. Al-Ghattas"
+EDITION="1"
+SOURCE_PDF="pdfs/scanned.pdf"
+PAGE_OFFSET="12"
+COPYRIGHT_PAGE="4"
+FIGURE_NUMBERING="two-part"
+CH01_PAGES="17-42"
+CH02_PAGES="43-68"
+BACKMATTER_PAGES="320-341"
+```
+
+Bad — each of these breaks `source`:
+
+```sh
+TITLE=A First Course in Monte Carlo Methods     # bare words
+EDITION = 1                                     # spaces around =
+BUILT="$(date)"                                 # command substitution
+```
+
+Verify before finishing: `bash -n books/<BOOK_NAME>/book.conf && (set -e; source books/<BOOK_NAME>/book.conf && echo "book.conf sources cleanly")`.
+
 ### Run Phase 0 as a single subagent
 
 Run this task on Sonnet's more capable sibling — launch ONE `general-purpose` Agent on **Opus** (`model: "opus"`) with the following prompt (substitute the actual PDF path):
@@ -69,33 +108,53 @@ Run this task on Sonnet's more capable sibling — launch ONE `general-purpose` 
 ```
 You are setting up a LaTeX project from a scanned PDF textbook. Do the following:
 
-1. Read the PDF file at <PDF_PATH>, pages 1–15. Extract:
+1. Read pages 1–15 of the PDF at <PDF_PATH>. If those pages have no text layer,
+   read them as page images. Extract:
    - Title, author, edition
    - Do NOT extract publisher, imprint, ISBN, or Library of Congress number.
    - BOOK_NAME slug: title → lowercase, spaces to underscores, drop subtitle
    - Number of chapters, chapter titles, and PDF page ranges for each chapter
+   - The PDF page range of the back matter (bibliography, answers, index)
    - The PDF page number of the copyright page, so later phases can skip it
+
+   EVERY page number you record is a 1-based PDF page index, NOT the page number
+   printed on the page. Front matter means the two differ, usually by 10–20: printed
+   page 1 is often PDF page 13. Every later phase reads pages by PDF index, so an
+   uncorrected offset makes every chunk transcribe the wrong pages.
+   Determine the offset explicitly: find the PDF index of printed page 1, then
+   record PAGE_OFFSET="<that index minus 1>" in book.conf. Convert every range you
+   read from the table of contents by adding it, and spot-check by opening the first
+   and last PDF page of two different chapters and confirming they show that
+   chapter's opening and closing pages.
+   - Whether figure captions are numbered two-part ("Figure 1.1") or three-part
+     ("Figure 1.1.1") — record as FIGURE_NUMBERING="two-part" or "three-part"
    - Page dimensions (width, height, margins) for geometry package
    - Exercise numbering style
-   - Figure caption format
 
-2. Create directory structure (substitute the real chapter count for NN,
-   e.g. ch01..ch12):
-   mkdir -p books/<BOOK_NAME>/{latex/{ch01..chNN,backmatter,figures/{ch01..chNN}},build}
+2. Create the directory structure. Replace NN with the zero-padded last chapter
+   number (e.g. ch{01..12}). Do NOT write ch01..chNN — bash creates one literal
+   directory with that name instead of expanding it.
+   mkdir -p books/<BOOK_NAME>/latex/ch{01..NN}
+   mkdir -p books/<BOOK_NAME>/latex/figures/ch{01..NN}
+   mkdir -p books/<BOOK_NAME>/latex/backmatter books/<BOOK_NAME>/build
 
 3. Write these files:
-   a. books/<BOOK_NAME>/book.conf — BOOK_NAME, TITLE, AUTHOR, EDITION, and a
-      CHAPTERS variable mapping chapter numbers to PDF page ranges
-      (e.g., CH01_PAGES="17-42"). Also record COPYRIGHT_PAGE=<n> if one exists.
+   a. books/<BOOK_NAME>/book.conf — BOOK_NAME, TITLE, AUTHOR, EDITION, SOURCE_PDF
+      (the path you were given), PAGE_OFFSET, COPYRIGHT_PAGE, FIGURE_NUMBERING,
+      BACKMATTER_PAGES, and one CHNN_PAGES per chapter as PDF page indices
+      (e.g. CH01_PAGES="17-42").
       Do NOT add a PUBLISHER field.
+      This file is sourced as a shell script: one KEY="value" per line, every value
+      double-quoted, no spaces around =, no bare words, no command substitution.
+      Verify with: bash -n books/<BOOK_NAME>/book.conf
    b. books/<BOOK_NAME>/latex/preamble.tex — geometry matching source dimensions,
       math packages (\E{}, \Var{}, \Cov{}, \plim, \dto, \pto, \pd{}{}),
       \exerciselabel configured from the exercise style found, metadata macros
       (\booktitle, \bookauthor, \bookedition) with literal values from book.conf.
-      Do NOT define \bookpublisher. Define ALL bold vector/matrix macros the book
-      uses (e.g. \bfX, \bfbeta, \bfOmega) and both \Var and \var — undefined
-      macros cascade into errors in every chapter. Use
-      \numberwithin{equation}{chapter}.
+      Do NOT define \bookpublisher. Define a \bf<Name> macro for EVERY bold vector
+      or matrix symbol the book uses (\bfX, \bfbeta, \bfOmega, …) and both \Var and
+      \var — undefined macros cascade into errors in every chapter. Use
+      \numberwithin{equation}{chapter}. Load float (for [H]) and graphicx.
       IMPORTANT: check whether the source uses a shared counter for all
       theorem-like environments (most math books do: Def 2.1, Ex 2.2, Prop 2.3 all
       sequential). If so, use `\newtheorem{definition}[theorem]{Definition}` etc.
@@ -111,8 +170,9 @@ You are setting up a LaTeX project from a scanned PDF textbook. Do the following
       sections. Use the BOOK_NAME slug as the heading, NOT the full title. Include
       PDF page ranges per chapter.
 
-4. Report back: BOOK_NAME, number of chapters, total pages, the copyright page
-   number (or "none"), and the chapter-to-page-range mapping.
+4. Report back: BOOK_NAME, number of chapters, total pages, PAGE_OFFSET and how you
+   confirmed it, the copyright page number (or "none"), FIGURE_NUMBERING, the
+   back-matter page range, and the chapter-to-page-range mapping.
 ```
 
 **Do NOT read the PDF yourself.** Do NOT look at the subagent's detailed output beyond the final summary. The subagent's context contains metadata — if you internalize it, your context becomes tainted too.
@@ -122,15 +182,24 @@ You are setting up a LaTeX project from a scanned PDF textbook. Do the following
 ### After the subagent returns
 
 1. Read `books/<BOOK_NAME>/book.conf` to get BOOK_NAME and chapter page ranges — this is safe (small file, structured data).
-2. Read `books/<BOOK_NAME>/progress.md` to confirm the checklist is complete.
-3. **Do NOT read the PDF front matter pages.** You have everything you need from `book.conf` and `progress.md`.
-4. Proceed directly to Phase 1a.
+2. Confirm it sources cleanly: `bash -n books/<BOOK_NAME>/book.conf`. If it does not, fix the quoting **now** — every build depends on it.
+2b. Sanity-check `PAGE_OFFSET` before launching 50 subagents against it: read the first PDF page of `CH02_PAGES` and confirm it is chapter 2's opening page. A wrong offset silently transcribes the whole book off by a constant, and you will not notice until Phase 4.
+3. Read `books/<BOOK_NAME>/progress.md` to confirm the checklist is complete.
+4. **Do NOT read the PDF front matter pages.** You have everything you need from `book.conf` and `progress.md`.
+5. Proceed directly to Phase 1a.
 
 ### Resuming an interrupted run
 
-If Phase 0 files already exist (check for `books/<BOOK_NAME>/book.conf` and `books/<BOOK_NAME>/progress.md`; `ls books/` if you do not yet know the slug):
-- **Skip Phase 0 entirely.** Do not re-read the PDF front matter.
-- Read `book.conf` for chapter page ranges, then go straight to Phase 1a.
+Five-plus books share this repo, so `ls books/` cannot tell you which one is yours.
+Identify the current book by its source PDF:
+
+```bash
+grep -l "SOURCE_PDF=\"<PDF_PATH>\"" books/*/book.conf
+```
+
+- One match → that is `books/<BOOK_NAME>/`. **Skip Phase 0 entirely**; do not re-read the PDF front matter. Read its `book.conf` for page ranges and `progress.md` for what is already done, then resume at the first unchecked section.
+- No match → this PDF has not been set up. Run Phase 0.
+- If an older `book.conf` predates the `SOURCE_PDF` key, match on `BOOK_NAME` instead and add `SOURCE_PDF` while you are there.
 
 ---
 
@@ -138,37 +207,69 @@ If Phase 0 files already exist (check for `books/<BOOK_NAME>/book.conf` and `boo
 
 ### Before starting Phase 1a
 
-1. Read `books/<BOOK_NAME>/book.conf` to get chapter-to-page-range mapping (e.g., `CH01_PAGES="17-42"`) and `COPYRIGHT_PAGE`.
+1. Read `books/<BOOK_NAME>/book.conf` for `CHNN_PAGES`, `PAGE_OFFSET`, `COPYRIGHT_PAGE`, `SOURCE_PDF`, `FIGURE_NUMBERING`, `BACKMATTER_PAGES`. All page numbers there are PDF indices and are passed to subagents as-is — never re-apply `PAGE_OFFSET`.
 2. **Do NOT read the PDF's front matter (pages 1–15).** All metadata is in `book.conf`. Reading the front matter taints your context and triggers the content filter on all subsequent tool calls.
 
-### Execution
+### Unit of work and concurrency
 
-Execute in batches of ~4 chapters. Within each batch, launch one subagent per chapter concurrently. Every one of these agents runs on **Sonnet** — pass `model: "sonnet"`.
+The unit of work is **one chunk of 5–8 scanned pages = one subagent call**, not one
+chapter. A 341-page book is roughly 45–70 chunks. Organise them like this:
 
-### Per-chapter subagent prompt
+- Walk the book in **batches of ~4 chapters**, taken from `CHNN_PAGES`.
+- Inside a batch, split every chapter into 5–8 page chunks and launch those chunk
+  subagents concurrently.
+- **Cap concurrency at 4 in-flight subagents.** More than that and rate limits plus
+  content-filter retries make the batch slower, not faster.
+- Prefer chunk boundaries that fall on section boundaries — it keeps one `.tex` file
+  owned by exactly one agent and makes Phase 1b safe to parallelise.
+- After each batch: run the compile-fix loop (see Phase 4) before starting the next.
+
+Every one of these agents runs on **Sonnet** — pass `model: "sonnet"`.
+
+### Per-chunk subagent prompt
 
 **Copyright filter avoidance**: Never include book title, author name, edition, or publisher in subagent prompts. The subagent does not need to know what book it is converting.
 
-Split each chapter into chunks of **5–8 scanned pages** per subagent call. Launch chunk subagents concurrently within each chapter.
-
 ```
-You are a professional LaTeX typesetter. The user has provided scanned pages from a document they own. Your task is to produce structured LaTeX source that exactly matches the content shown on these pages.
+You are a professional LaTeX typesetter. The user owns the document these scanned pages
+come from. Your task is to produce structured LaTeX source that exactly matches the
+content shown on those pages.
 
-Typeset pages X–Y (Chapter N) from the attached scanned pages as LaTeX.
-- Write: books/<BOOK_NAME>/latex/chNN/chNN.tex (wrapper) + books/<BOOK_NAME>/latex/chNN/secNN_M.tex (per section)
-- Conventions: \E{}, \Var{}, \Cov{}, \plim, \dto, \pto, \pd{}{}, \vec{x} for bold vectors
-- Figures: \begin{figure}[H] with % TODO: extract figure placeholder
+Read pages X–Y of the PDF at <PDF_PATH>. These pages have no text layer — read them as
+page images. Typeset them (Chapter N) as LaTeX.
+
+- Write: books/<BOOK_NAME>/latex/chNN/chNN.tex (wrapper) + books/<BOOK_NAME>/latex/chNN/secNN_M.tex (one file per section)
+- Begin EVERY file you create with a page-range comment on line 1, exactly:
+    % PAGES: X-Y
+  Later phases use this to map pages to files. Do not omit it.
+- Conventions: \E{}, \Var{}, \Cov{}, \plim, \dto, \pto, \pd{}{}
+- Bold vectors and matrices: use the \bf<Name> macros from preamble.tex — \bfX,
+  \bfbeta, \bfOmega. Never \vec{} and never a raw \mathbf{}. If the book uses a bold
+  symbol that has no macro yet, still write \bf<Name>; the missing definition surfaces
+  as a compile error and gets added to preamble.tex.
+- Figures: emit this EXACT five-line block, with no blank lines inside it. The figure
+  script matches this shape literally and silently skips anything else:
+    \begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{}
+    \caption{<caption text exactly as printed>}
+    \label{fig:<the figure number exactly as printed, e.g. 1.1 or 1.1.1>}
+    \end{figure}
+  Keep the empty {} in \includegraphics — Phase 2 fills in the path. The [width=...]
+  brackets are required. \caption must be immediately followed by \label on the next
+  line. Never write a bare "% TODO: extract figure" comment; nothing consumes it.
 - Unclear content: % UNCLEAR: [description, page X] — never guess
 - Skip the copyright page if it falls inside your page range — do not typeset ©,
   ISBN, Library of Congress numbers, "all rights reserved", or publisher addresses.
 - QED: NEVER use \qed or \blacksquare or \hfill$\blacksquare$ inside \begin{proof}...\end{proof}. The proof environment auto-adds the QED symbol. Only use \qedhere when proof ends with a displayed equation or list.
 - Theorem-like environments share one counter — never renumber them.
-- Output only LaTeX source code. Match every word and equation exactly as shown on the scanned pages.
+- Output only LaTeX source code. Match every word and equation exactly as shown on the
+  scanned pages.
 - After done: update books/<BOOK_NAME>/progress.md marking sections [x]
 ```
 
 ### After each batch
-Run the compile-fix loop immediately — `python scripts/compile_fix.py --book <BOOK_NAME>` (see Phase 4). Do not accumulate errors across batches.
+Run the compile-fix loop immediately — `python scripts/compile_fix.py --book <BOOK_NAME>`, with the escalation ladder in Phase 4. Do not accumulate errors across batches.
 
 ### Content filter handling
 When a subagent returns a 400 "Output blocked by content filtering policy" error:
@@ -180,7 +281,7 @@ When a subagent returns a 400 "Output blocked by content filtering policy" error
 3. **Single-page mode** — if halving still fails, process one page at a time.
 
 4. **OCR fallback** — if single-page mode still triggers the filter:
-   - Run Nougat (`nougat <pdf_path> -p <page_range> -o <output_dir>`) or Mathpix to get raw LaTeX/Markdown from the blocked pages
+   - Run `python scripts/ocr_extract.py <PDF_PATH> <start_page> <end_page> <output_dir>` (EasyOCR; writes one `page_NNN.txt` per page), or Nougat/Mathpix, to get raw text from the blocked pages
    - Feed the raw OCR output to Claude with prompt: "Format this raw OCR output as clean LaTeX matching the project conventions. Fix OCR errors by cross-referencing the scanned page image."
    - Since Claude is editing LaTeX source (not transcribing from a recognized PDF), the filter will not trigger.
 
@@ -200,37 +301,73 @@ When a subagent returns a 400 "Output blocked by content filtering policy" error
 
 This is the step that distinguishes an agent from an OCR engine. OCR classifies each
 glyph in isolation. An agent reads the surrounding mathematics and infers which glyph
-was *meant*: a subscript rendered `o` is almost always `0` when its neighbours are
-indexed `x_1, x_2`; `ν` and `v` are indistinguishable in scanned serif type but decided
-by whether the symbol is used elsewhere as a frequency or a velocity.
+was *meant*.
 
-Run one Opus subagent per chunk (`model: "opus"`), over the same page ranges Phase 1a
-used. Launch concurrently within a chapter, after that chapter's Phase 1a chunks have
-all landed.
+### Split by file, not by page — these agents edit, they do not create
 
-Give each subagent the PDF path and its page range so it reads those pages itself —
-never paste page text into the prompt. The same filter-avoidance rules and the same
-retry ladder as Phase 1a apply here (no title/author/publisher in the prompt; on a 400,
-retry, then halve the range).
+Phase 1a agents *create* files, so overlapping page ranges are harmless. Phase 1b agents
+*edit* existing files: if two agents open the same `secNN_M.tex` because a section
+straddles their page boundary, the second write silently destroys the first. Prevent it
+by assigning **disjoint file sets**, not page ranges.
 
-**Assembling the symbol inventory.** Before launching, build the chapter's inventory
-from what Phase 1a already produced, and paste it into each chunk's prompt so every
-agent judges against the same chapter-wide usage:
+Build the page→file map from the `% PAGES:` header every Phase 1a file carries:
 
 ```bash
-grep -ohE '\\[A-Za-z]+' books/<BOOK_NAME>/latex/chNN/*.tex | sort | uniq -c | sort -rn | head -60
+grep -H "^% PAGES:" books/<BOOK_NAME>/latex/chNN/*.tex
 ```
 
-Add to that any single-letter variables that carry a fixed meaning in the chapter
-(what each stands for, and its typical sub/superscripts).
+Then, per chapter:
+
+- Give each Phase 1b agent an explicit, exclusive list of `.tex` files and the union of
+  their page ranges. No file appears in two agents' lists.
+- With disjoint file sets, run those agents concurrently (cap 4 in flight).
+- If any file lacks a `% PAGES:` header, or the map is ambiguous, **serialize Phase 1b
+  for that chapter** — one agent at a time. Slower beats corrupted.
+- Different chapters live in different directories and are always safe to run in parallel.
+
+Run these on **Opus** (`model: "opus"`), after that chapter's Phase 1a chunks have all
+landed. The same filter-avoidance rules and retry ladder as Phase 1a apply (no
+title/author/publisher in the prompt; on a 400, retry, then split the file list).
+
+### The symbol inventory
+
+Build the chapter's inventory from Phase 1a's output and paste it into every agent's
+prompt, so all of them judge against the same chapter-wide usage. Sorting *all* macros
+by frequency just returns `\begin`, `\end`, `\frac`, `\label` — structural noise. Use an
+allowlist of the things that actually get misread:
+
+```bash
+# Greek letters, accents, and the book's bold macros
+grep -ohE '\\(alpha|beta|gamma|delta|epsilon|varepsilon|zeta|eta|theta|vartheta|iota|kappa|lambda|mu|nu|xi|rho|varrho|sigma|varsigma|tau|upsilon|phi|varphi|chi|psi|omega|Gamma|Delta|Theta|Lambda|Xi|Pi|Sigma|Upsilon|Phi|Psi|Omega|hat|bar|tilde|dot|ddot|bf[A-Za-z]+)\b' \
+  books/<BOOK_NAME>/latex/chNN/*.tex | sort | uniq -c | sort -rn
+
+# Subscripted single-letter variables — the 0/o and 1/l danger zone
+grep -ohE '[A-Za-z]_\{?[0-9A-Za-z]+\}?' books/<BOOK_NAME>/latex/chNN/*.tex | sort | uniq -c | sort -rn | head -40
+```
+
+Annotate the result with what each symbol denotes in this chapter, then paste it in.
+
+**The inventory is evidence, not ground truth.** It is built from Phase 1a's output, so
+a *systematic* misread — the same glyph mistaken the same way on every page — shows up
+in it as consensus and will get confirmed rather than caught. Say so in the prompt: when
+the inventory and the scanned page disagree, the page wins.
+
+### Per-agent prompt
 
 ```
 You are proofreading LaTeX source against the scanned pages it was typeset from.
 
-Inputs:
-- Scanned pages X–Y (attached)
-- The generated source: books/<BOOK_NAME>/latex/chNN/*.tex covering those pages
-- Symbol inventory established so far in this chapter: <list>
+Read pages X–Y of the PDF at <PDF_PATH>. These pages have no text layer — read them as
+page images. They are the pages that produced these files, and you may edit ONLY these
+files:
+  books/<BOOK_NAME>/latex/chNN/secNN_M.tex
+  books/<BOOK_NAME>/latex/chNN/secNN_K.tex
+  <exact list — do not touch any other file>
+
+Symbol inventory established so far in this chapter: <list>
+Treat the inventory as evidence, not truth: it was derived from the same transcription
+you are checking, so a mistake repeated on every page looks like consensus. Where the
+inventory and the scanned page disagree, the scanned page wins.
 
 Correct ONLY glyph and notation errors that the mathematical context resolves:
 - 0/o/O, 1/l/I, 2/z, 5/S, 8/B in subscripts, superscripts, and indices
@@ -241,11 +378,23 @@ Correct ONLY glyph and notation errors that the mathematical context resolves:
 - misread summation, product, and integral bounds
 - misread equation and theorem cross-reference numbers
 
+How to decide — resolve by USAGE, not by appearance:
+- A subscript rendered `o` is almost always `0` when its neighbours are indexed
+  x_1, x_2: the sequence identifies the glyph, not its shape.
+- `ν` and `v` are indistinguishable in scanned serif type. Decide by whether the symbol
+  is used elsewhere in the chapter as a frequency or as a velocity.
+Apply that same test to every candidate.
+
 Rules:
 - Resolve each candidate by how the symbol is used elsewhere in the chapter, not by
   how it looks. State that reasoning in the rationale.
+- The scanned page is ground truth even where the mathematics looks wrong to you. If
+  the book itself contains an error, an odd convention, or a step you believe is
+  mistaken, leave it as printed and add % UNCLEAR: [description, page X]. You are
+  proofreading the transcription, not the author. Never silently "fix" the book.
 - Never restyle prose. Never rewrite text that is correct but phrased differently
   than you would phrase it. Never touch \label or \ref keys that already resolve.
+- Never edit the `% PAGES:` header line.
 - If context does NOT resolve an ambiguity, leave the source alone and add
   % UNCLEAR: [description, page X]. Never guess.
 - NEVER use \qed or \blacksquare or \hfill$\blacksquare$ inside
@@ -255,6 +404,7 @@ Rules:
 
 Output: apply the edits, then report one line per correction:
   chNN/secNN_M.tex:LINE  was → now  (reason)
+If you changed nothing, say so explicitly.
 ```
 
 Never use `sed` to apply these corrections — it reads `\f` as a form feed and corrupts
@@ -264,29 +414,130 @@ Never use `sed` to apply these corrections — it reads `\f` as a form feed and 
 
 ## Phase 2: Figures (script, then Sonnet)
 
-Run the extraction script (deterministic — no model needed):
+### First: does the PDF have a text layer?
+
+`scripts/extract_figures.py` locates figures by **PyMuPDF text search** for `Figure X.Y.Z`
+captions. On a scanned book with no text layer it searches an empty string, finds zero
+figures, and still prints a summary that looks like a successful run. **A scan with no
+text layer is the normal case for this pipeline** — check first, every time:
+
+```bash
+python -c "import pymupdf,sys; d=pymupdf.open(sys.argv[1]); print('text chars:', sum(len(p.get_text().strip()) for p in d))" <PDF_PATH>
+```
+
+- **Non-zero** → text layer present → use `extract_figures.py`.
+- **`text chars: 0`** → no text layer → the text-search extractor cannot work at all. Use
+  the OCR path below. Do not "fix" this by rerunning the text extractor.
+
+### Text-layer path
 
 ```bash
 python scripts/extract_figures.py --book <BOOK_NAME> --pdf <PDF_PATH>
 ```
 
-`--pdf` defaults to `pdfs/scanned.pdf`; pass it explicitly when the book's scan lives elsewhere. The script:
+`--pdf` defaults to `pdfs/scanned.pdf`; pass it explicitly. The script scans for
+`Figure X.Y.Z` captions, crops the region above each caption to PNG at 250 DPI into
+`books/<BOOK_NAME>/latex/figures/chNN/fig_X_Y_Z.png`, then rewrites the path inside
+matching figure blocks.
 
-1. Scans the PDF for `Figure X.Y.Z` captions via PyMuPDF
-2. Crops the figure region (above the caption) → PNG at 250 DPI
-3. Saves to `books/<BOOK_NAME>/latex/figures/chNN/fig_X_Y_Z.png`
-4. Replaces `% TODO: extract figure` placeholders with `\includegraphics[width=0.8\textwidth]{...}`
-5. Prints extracted count vs. figure environments in the `.tex` — these should match
+### No-text-layer path (OCR)
 
-Any placeholders the script could not match are swapped by a **Sonnet** subagent (`model: "sonnet"`): give it the unmatched placeholder locations and the list of extracted PNG filenames, and have it wire each `\includegraphics` to the right file. Purely mechanical — do not spend Opus on it.
+The repo carries OCR extractors salvaged from an earlier book with this same problem, and
+`easyocr` is installed. Their CLIs are being brought onto the `--book` convention, so
+**check the signature before invoking rather than guessing a flag**:
+
+```bash
+grep -n "argparse\|sys.argv\|add_argument" scripts/extract_figures_ocr.py
+```
+
+Then invoke it accordingly — it renders each page, OCRs it, finds caption text, and crops
+the region above. Two traps:
+
+- Its caption regex was written for a book numbering figures `Figure I-3` (Roman chapter,
+  hyphen). If this book numbers `Figure 1.1` or `Figure 1.1.1`, it matches nothing.
+  Check the regex against `FIGURE_NUMBERING` from `book.conf` and adjust it before
+  concluding the book has no figures.
+- Confirm it writes under `books/<BOOK_NAME>/latex/figures/`, not a repo-root `latex/`.
+
+If the extractor cannot be made to match this book's captions, fall back to:
+`python scripts/ocr_extract.py <PDF_PATH> <start> <end> <out_dir>` to OCR the chapter's
+pages, then a **Sonnet** agent (`model: "sonnet"`) reads the OCR text plus the page
+images and reports the page and caption of every figure, and you crop those pages.
+
+### Wiring images into the source
+
+`extract_figures.py` does **not** turn a comment into an `\includegraphics`. It only
+rewrites the path inside a figure block that already matches this shape exactly:
+
+```
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{}
+\caption{...}
+\label{fig:1.1.1}
+\end{figure}
+```
+
+and only when the `\label` contains a **three-part** number matching `\d+\.\d+\.\d+`.
+Phase 1a is instructed to emit exactly this block, which is what makes the rewrite work.
+The `[width=...]` brackets are part of the match — a bare `\includegraphics{}` is skipped.
+
+**If `FIGURE_NUMBERING="two-part"`** (`Figure 1.1`), both the caption scan and the label
+matcher key on three-part numbers and will match nothing — the automatic rewrite is dead
+for this book. Do not rely on it. Extract the images, then hand a **Sonnet** agent
+(`model: "sonnet"`) the list of extracted PNG filenames and the figure blocks with empty
+`\includegraphics{}`, and have it wire each one by matching caption text to filename.
+Purely mechanical — do not spend Opus on it.
+
+### Verify — a zero is a failure, not a result
+
+```bash
+find books/<BOOK_NAME>/latex/figures -name '*.png' | wc -l
+grep -rc '\\begin{figure}' books/<BOOK_NAME>/latex/ch*/*.tex | awk -F: '{s+=$2} END {print s}'
+grep -rn 'includegraphics\[[^]]*\]{}' books/<BOOK_NAME>/latex/ch*/*.tex
+```
+
+The first two counts should agree, and the third must return nothing. Zero extracted
+images on a book that visibly has figures means the extractor never matched — go back to
+the text-layer check and the caption regex. Record any figure you could not wire in
+`progress.md`; never leave an empty `\includegraphics{}` in a "finished" book.
 
 ---
 
 ## Phase 3: Back Matter (Sonnet)
 
-Convert bibliography, answers to starred exercises, index skeleton into
-`books/<BOOK_NAME>/latex/backmatter/`. Repetitive reference formatting — run on
-**Sonnet** (`model: "sonnet"`). Usually folded into the Phase 1a final batch.
+Back matter is bibliography, answers to starred exercises, and an index skeleton. It
+lives in `books/<BOOK_NAME>/latex/backmatter/` and its page range is `BACKMATTER_PAGES`
+in `book.conf`.
+
+Treat it as the final Phase 1a batch: same 5–8 page chunks, same concurrency cap, same
+filter rules, on **Sonnet** (`model: "sonnet"`).
+
+```
+You are a professional LaTeX typesetter. The user owns the document these scanned pages
+come from.
+
+Read pages X–Y of the PDF at <PDF_PATH>. These pages have no text layer — read them as
+page images. Typeset them as LaTeX back matter.
+
+- Write into books/<BOOK_NAME>/latex/backmatter/:
+    bibliography.tex — a thebibliography environment, one \bibitem per reference,
+      keys as \bibitem{author_year}
+    answers.tex      — \chapter*{Answers to Selected Exercises}, grouped by chapter,
+      reusing the project's \exerciselabel numbering
+    index.tex        — \printindex plus any \index{} entries the source lists
+  Create only the files whose content actually appears on your pages.
+- Begin every file with % PAGES: X-Y on line 1.
+- Same math conventions as the chapters: \E{}, \Var{}, \Cov{}, and the \bf<Name> macros
+  for bold vectors — never \vec{} or a raw \mathbf{}.
+- Unclear content: % UNCLEAR: [description, page X] — never guess.
+- Do not typeset ©, ISBN, Library of Congress numbers, "all rights reserved", or
+  publisher addresses if they appear on these pages.
+- Output only LaTeX source. Match every entry exactly as printed.
+- After done: update books/<BOOK_NAME>/progress.md.
+```
+
+Confirm `main.tex` `\include`s whatever back-matter files were created.
 
 ---
 
@@ -296,19 +547,71 @@ The compile-fix loop is mechanical (error → fix) and runs on **Sonnet**; the T
 comparison is a judgment call — a real omission looks the same as a renamed section —
 and runs on **Opus**.
 
+### The compile-fix escalation ladder
+
 ```bash
-python scripts/compile_fix.py --book <BOOK_NAME>     # Sonnet, if any error needs judgment
-./scripts/build.sh <BOOK_NAME>                       # final build → books/<BOOK_NAME>/<BOOK_NAME>.pdf
+python scripts/compile_fix.py --book <BOOK_NAME> 2>&1 | tee /tmp/cf.log
 ```
 
-Then, on **Opus**:
+**`compile_fix.py` exits 0 whether or not it succeeded.** Do not test `$?`. It is clean
+only if its output contains `Compilation successful (0 errors)`:
 
-1. Quantitative inventory: `python scripts/inventory_check.py --book <BOOK_NAME>` — counts sections, equations, figures, exercises per chapter
-2. Compare against the TOC (sections should match exactly). Decide, per discrepancy, whether it is a genuinely missing section or the same section under a different name.
-3. Layout and copyright audit: `python scripts/check_repo_layout.py` — must print `Layout OK`. It fails on a missing `book.conf`/`progress.md`/`latex/main.tex`/`latex/preamble.tex`, on legacy flat paths, and on any ISBN / "all rights reserved" / Library of Congress / `\copyright` marker anywhere under `books/`.
+```bash
+grep -q "Compilation successful (0 errors)" /tmp/cf.log && echo CLEAN || echo DIRTY
+```
+
+It stops dirty in two ways, both of which print the remaining errors as
+`[file:line] message`:
+- `No automatic fixes available for remaining errors.` — its regex fixes are exhausted
+- `Max iterations (N) reached with errors remaining.` — it kept fixing but never converged
+
+On DIRTY, escalate. **Maximum 3 rounds**, then stop:
+
+1. Collect the `[file:line] message` list from the log, and the distinct files named.
+2. Launch a **Sonnet** agent (`model: "sonnet"`) with the error list verbatim, the named
+   files, and these instructions — *fix only the errors listed; make the smallest edit
+   that resolves each; never delete content, an environment, or an equation to silence
+   an error; never use `sed`; if an error is an undefined macro, add the definition to
+   `preamble.tex` rather than rewriting every call site; report each fix as
+   `file:line — error → fix`.*
+3. Re-run `compile_fix.py` and re-test for `Compilation successful (0 errors)`.
+4. Clean → continue. Dirty with rounds remaining → go back to 1 with the *new* error list.
+5. **After 3 rounds still dirty: STOP.** Append the surviving errors to
+   `books/<BOOK_NAME>/progress.md` under `## Unresolved compile errors`, with file, line,
+   and message. Report the run as incomplete. **Do not report success, and do not keep
+   looping** — errors that survive three targeted rounds need a human.
+
+Once clean:
+
+```bash
+./scripts/build.sh <BOOK_NAME>      # → books/<BOOK_NAME>/<BOOK_NAME>.pdf
+```
+
+### Then, on Opus
+
+1. Quantitative inventory: `python scripts/inventory_check.py --book <BOOK_NAME>` — counts sections, equations, figures, exercises per chapter.
+2. Compare against the TOC (sections should match exactly). Decide, per discrepancy, whether it is a genuinely missing section or the same section under a different name. This is the judgment call the phase exists for — do not just report the numbers.
+3. Layout and copyright audit. `scripts/check_repo_layout.py` validates **every** book in the repo, so another book's problem will appear in its output. The gate for *this* run is that no violation names this book:
+
+   ```bash
+   python scripts/check_repo_layout.py | grep -E "^FAIL: (books/)?<BOOK_NAME>[:/]" && echo "THIS BOOK FAILS" || echo "this book clean"
+   ```
+
+   - Violations naming other books, or legacy repo-wide paths (a repo-root `book.conf`, a `docs/` progress file, a top-level `latex/` chapter directory): **report them, do not block on them.** They are not this conversion's defect.
+   - A violation naming this book with `contains forbidden marker` means copyright text got typeset. Run `python scripts/scrub_copyright.py`, then re-run the check. If it still fails, remove the offending lines by hand — never ship a book with these markers.
+   - A violation naming this book with `missing …` means Phase 0 did not write a required file (`book.conf`, `progress.md`, `latex/main.tex`, `latex/preamble.tex`). Create it.
 4. Sweep for leftovers: `grep -rn "UNCLEAR\|TODO" books/<BOOK_NAME>/latex/` — every remaining marker goes into `progress.md` for manual follow-up.
-5. Commit on the current branch — `git add books/<BOOK_NAME> && git commit -m "feat: <BOOK_NAME> LaTeX conversion"`. Do not create a branch, and never commit `books/<BOOK_NAME>/build/` or the source PDF.
-6. Report final stats.
+5. Commit on the current branch. `compile_fix.py` writes a PDF to `books/<BOOK_NAME>/latex/<BOOK_NAME>.pdf`, which `.gitignore` does **not** cover (it ignores `books/*/*.pdf`, one level up), so remove build output before staging:
+
+   ```bash
+   rm -f books/<BOOK_NAME>/latex/*.pdf
+   git add books/<BOOK_NAME>
+   git status --short books/<BOOK_NAME> | grep -i '\.pdf$'   # must print nothing
+   git commit -m "feat: <BOOK_NAME> LaTeX conversion"
+   ```
+
+   Do not create a branch. Never commit `books/<BOOK_NAME>/build/` or the source PDF.
+6. Report final stats: chapters, sections, equations, figures, exercises, unresolved compile errors, and remaining `% UNCLEAR` markers.
 
 ---
 
@@ -321,11 +624,15 @@ Then, on **Opus**:
 | Never typeset the copyright page | No ©, ISBN, Library of Congress number, "all rights reserved", publisher name, imprint, or address. Title, author, and edition only. This also removes a chunk of content-filter pressure — publisher and copyright text is exactly the recognizable metadata that trips it |
 | One branch: `master`. Each book in `books/<name>/` | Per-book branches all claimed the same flat chapter paths under `latex/`, so they could never merge and the working tree mixed books together |
 | Sonnet transcribes, Opus cross-checks | Bulk transcription is tedious but specified; resolving a glyph by mathematical context is the judgment OCR cannot do. See Model Tiering |
-| 5–8 pages per subagent call, not full chapters | Smaller outputs avoid volume-based copyright pattern matching |
-| Verbatim output — never paraphrase | Goal is exact reproduction of every word and equation |
+| Every subagent prompt says `Read pages X–Y of <PDF_PATH>` | Nothing is "attached" to an Agent call — it takes text. A prompt naming a page range without the PDF path leaves the agent no way to reach the pages |
+| `book.conf` is `source`d by `build.sh` under `set -e` | One `KEY="value"` per line, every value double-quoted. An unquoted title breaks every build of that book, with an error pointing nowhere near the cause |
+| Every page number is a PDF index, never a printed page number | Front matter offsets the two by 10–20 pages. Record `PAGE_OFFSET` in Phase 0 and spot-check it before launching subagents — a wrong offset transcribes the entire book off by a constant |
+| 5–8 pages per subagent call, not full chapters; cap 4 concurrent | Smaller outputs avoid volume-based copyright pattern matching; the cap keeps rate limits and filter retries from eating the gain |
+| Phase 1b splits by FILE, not by page | 1b agents edit files that already exist. Two agents on one file is a silently lost write |
+| Verbatim output — never paraphrase, and never correct the author | Goal is exact reproduction. If the book itself errs, mark `% UNCLEAR` — do not fix it |
 | Python `re` for text replacement, never `sed` | sed interprets `\f` as form feed (0x0c), corrupts `\frac` |
-| Parallel subagents, never manual chapter-by-chapter | 4x faster, consistent quality |
-| Compile after every batch | Catch errors at 4 chapters, not 14 |
+| Compile after every batch, and escalate a dirty compile-fix | Catch errors at 4 chapters, not 14. `compile_fix.py` exits 0 even when errors remain — check its output text, not `$?` |
+| Check for a text layer before extracting figures | The default extractor finds figures by text search and reports a clean zero on a scan that has none |
 | Figures from PDF screenshots, not TikZ | Faster, accurate, no recreation errors |
 | Build into `books/<name>/build/`, PDF to `books/<name>/` | Keep source directory clean |
 | Shared counter for ALL theorem-like environments | Most math textbooks use one sequential counter per chapter (Def 2.1, Ex 2.2, Prop 2.3, ...). Use `\newtheorem{definition}[theorem]{Definition}` etc. — never `\newtheorem{definition}{Definition}[chapter]` with a separate counter. Verify in Phase 0 by checking if the source numbers are sequential across environment types. |
@@ -335,7 +642,7 @@ Then, on **Opus**:
 
 ## Script Reference
 
-Every script takes the book slug explicitly. Run them from the repo root.
+Every book-scoped script takes the slug explicitly. Run them from the repo root.
 
 | Command | Purpose |
 |---|---|
@@ -343,7 +650,10 @@ Every script takes the book slug explicitly. Run them from the repo root.
 | `./scripts/build.sh <BOOK_NAME> 3` | Build chapter 3 only |
 | `./scripts/build.sh <BOOK_NAME> clean` | Remove build artifacts |
 | `./scripts/build.sh` | List available books |
-| `python scripts/compile_fix.py --book <BOOK_NAME>` | Compile → diagnose → fix → recompile loop (`--chapter N`, `--fix-only`, `--compile-only`, `--max-iter N`) |
-| `python scripts/extract_figures.py --book <BOOK_NAME> --pdf <PDF_PATH>` | Phase 2 figure extraction |
+| `python scripts/compile_fix.py --book <BOOK_NAME>` | Compile → diagnose → fix → recompile loop (`--chapter N`, `--fix-only`, `--compile-only`, `--max-iter N`). **Exits 0 even with errors remaining** — check for `Compilation successful (0 errors)` in its output |
+| `python scripts/extract_figures.py --book <BOOK_NAME> --pdf <PDF_PATH>` | Figure extraction for a PDF **with** a text layer |
+| `scripts/extract_figures_ocr.py` | Figure extraction via EasyOCR for a scan with no text layer. Check its CLI and its caption regex before use (see Phase 2) |
+| `python scripts/ocr_extract.py <PDF_PATH> <start> <end> <out_dir>` | Raw EasyOCR text per page — content-filter fallback and figure-hunting aid |
 | `python scripts/inventory_check.py --book <BOOK_NAME>` | Per-chapter section/equation/figure/exercise counts |
-| `python scripts/check_repo_layout.py` | Validate `books/` layout and absence of copyright markers |
+| `python scripts/check_repo_layout.py` | Validates **all** books; filter its output to this book (see Phase 4) |
+| `python scripts/scrub_copyright.py` | Removes reproduced copyright pages / publisher imprints; idempotent |
