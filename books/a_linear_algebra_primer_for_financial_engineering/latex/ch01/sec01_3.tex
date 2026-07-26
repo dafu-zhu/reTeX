@@ -1,0 +1,191 @@
+% PAGES: 31-38, 39-45
+
+\section{Nonsingular matrices}
+
+From a numerical perspective, a nonsingular matrix $A$ is a square matrix
+such that any linear system of the form $Ax=b$ has a unique solution $x$.
+Solving linear systems corresponding to nonsingular matrices is often
+required in financial applications and is a fundamental numerical linear
+algebra problem.
+
+The formal definition of a nonsingular matrix is given below:
+
+\begin{definition}
+The square matrix $A$ is nonsingular if and only if there exists another
+matrix, called the inverse matrix of $A$ and denoted by $A^{-1}$, such
+that
+
+\begin{equation}
+AA^{-1} \;=\; A^{-1}A \;=\; I.
+\end{equation}
+\end{definition}
+
+\begin{definition}
+The square matrix $A$ is singular if and only if the matrix $A$ is not
+nonsingular.
+\end{definition}
+
+From (1.73), we obtain that the matrix $A$ satisfies the definition of the
+inverse of the matrix $A^{-1}$. Thus, the inverse of the inverse of a
+nonsingular matrix is equal to the matrix itself, i.e.,
+
+\begin{equation}
+\left(A^{-1}\right)^{-1} \;=\; A.
+\end{equation}
+
+Note that, for Definition 1.12 to make sense, the inverse matrix of a
+nonsingular matrix as given by (1.73) must be unique, which is indeed the
+case: Assume that $B_1$ and $B_2$ are inverse matrices of a nonsingular
+matrix $A$. We will show that $B_1=B_2$. From (1.73), we find that
+
+\[
+AB_1 \;=\; B_1A \;=\; I \quad\text{and}\quad AB_2 \;=\; B_2A \;=\; I.
+\]
+
+By multiplying $I=AB_1$ to the left by $B_2$ and using the fact that
+$B_2A=I$, we obtain that
+
+\[
+B_2 \;=\; B_2(AB_1) \;=\; (B_2A)B_1 \;=\; IB_1 \;=\; B_1.
+\]
+
+\begin{theorem}
+Let $A$ be a square matrix of size $n$. The conditions below can be
+regarded as equivalent definitions for $A$ to be a nonsingular matrix:
+
+\begin{align}
+A\ \text{nonsingular} &\iff \mathrm{Null}(A)=\{0\} \\
+&\iff \mathrm{Range}(A)=\R^n \\
+&\iff \rank(A)=n.
+\end{align}
+
+Similarly, the conditions below\footnote{Other necessary and sufficient
+conditions for the matrix $A$ to be singular are
+\[
+A\ \text{singular} \iff \mathrm{Range}(A)\ne\R^n \iff \rank(A)<n.
+\]
+These conditions have less practical value, and are not included in
+Theorem 1.1.} can be regarded as equivalent definitions for $A$ to be a
+singular matrix:
+
+\begin{align}
+A\ \text{singular} &\iff \mathrm{Null}(A)\ne\{0\} \\
+&\iff \text{there exists}\ v\in\R^n,\ v\ne 0,\ \text{such that}\ Av=0.
+\end{align}
+\end{theorem}
+
+The proof of Theorem 1.1 is of less relevance for our purposes and can be
+found, e.g., in Strang \cite{41}.
+
+A very useful equivalent characterization of a matrix being nonsingular
+can be given in terms of the determinant of the matrix; see section
+10.1.1 for details.
+
+\begin{theorem}
+Let $A$ be a square matrix. Then,
+
+\begin{align}
+A\ \text{nonsingular} &\iff \det(A)\ne 0; \\
+A\ \text{singular} &\iff \det(A)=0.
+\end{align}
+\end{theorem}
+
+\begin{lemma}
+Let $A$ and $B$ be square matrices of the same size. If $AB=I$, then $A$
+and $B$ are nonsingular matrices, $B$ is the inverse matrix of $A$ (and
+$A$ is the inverse matrix of $B$), and therefore $BA=I$.
+\end{lemma}
+
+\begin{proof}
+Recall that the determinant of the identity matrix is 1, i.e.,
+$\det(I)=1$; cf.\ (10.1). Since $AB=I$, it follows from Lemma 10.1 that
+$\det(A)\det(B)=1$, and therefore both $\det(A)\ne 0$ and $\det(B)\ne 0$.
+From (1.80), we conclude that $A$ and $B$ are nonsingular matrices. Let
+$A^{-1}$ be the inverse of $A$. Multiplying $AB=I$ to the left by
+$A^{-1}$ and using the fact that $A^{-1}A=I$, we find that
+
+\[
+A^{-1} \;=\; A^{-1}(AB) \;=\; (A^{-1}A)B \;=\; B.
+\]
+
+We conclude that $B$ is the inverse of $A$, and therefore
+$BA=A^{-1}A=I$.
+\end{proof}
+
+\begin{lemma}
+Let $A$ and $B$ be square matrices of the same size.
+
+(i) The matrix $AB$ is nonsingular if and only if both $A$ and $B$ are
+nonsingular.
+
+(ii) If $A$ and $B$ are nonsingular, then\footnote{Note that (1.82)
+extends as follows: $\left(\prod_{i=1}^{p}A_i\right)^{-1} =
+\prod_{i=1}^{p}A_{p+1-i}^{-1}$. A proof can be given by induction; see an
+exercise at the end of the chapter.}
+
+\begin{equation}
+(AB)^{-1} \;=\; B^{-1}A^{-1}.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+(i) From (1.80), we find that $AB$ is nonsingular if and only if
+$\det(AB)\ne 0$, i.e., if and only if $\det(A)\det(B)\ne 0$; cf.\ (10.9).
+Thus, the matrix $AB$ is nonsingular if and only if $\det(A)\ne 0$ and
+$\det(B)\ne 0$. Using again (1.80), we conclude that the matrix $AB$ is
+nonsingular if and only if both matrices $A$ and $B$ are nonsingular.
+
+(ii) If $A$ and $B$ are nonsingular, it follows that
+
+\[
+\left(B^{-1}A^{-1}\right)AB \;=\; B^{-1}\left(A^{-1}A\right)B \;=\; B^{-1}B \;=\; I,
+\]
+
+since $A^{-1}A=I$ and $B^{-1}B=I$. From Definition 1.12, we conclude that
+$(AB)^{-1}=B^{-1}A^{-1}$.
+\end{proof}
+
+It is important to note that the inverse of the product of two matrices
+is \textit{not} the product of the inverses, i.e.,
+
+\[
+(AB)^{-1} \;\ne\; A^{-1}B^{-1}.
+\]
+
+Also, note the similarity between (1.82), i.e., $(AB)^{-1}=B^{-1}A^{-1}$,
+and the result $(AB)^t=B^tA^t$ for the transposition of the product of
+two matrices; cf.\ (1.24).
+
+\begin{lemma}
+Let $A$ be a square matrix. If $A$ is nonsingular, then $A^t$ is a
+nonsingular matrix and
+
+\begin{equation}
+\left(A^t\right)^{-1} \;=\; \left(A^{-1}\right)^t.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Note that it is enough to show that $\left(A^{-1}\right)^tA^t=I$; cf.\
+Lemma 1.6. This follows from (1.24), since
+
+\[
+\left(A^{-1}\right)^tA^t \;=\; \left(AA^{-1}\right)^t \;=\; I^t \;=\; I. \qedhere
+\]
+\end{proof}
+
+\begin{lemma}
+The inverse of a symmetric nonsingular matrix is a symmetric matrix.
+
+In other words, if $A$ is a symmetric nonsingular matrix, then
+\[
+\left(A^{-1}\right)^{t} \;=\; A^{-1}.
+\]
+\end{lemma}
+
+\begin{proof}
+If $A$ is a symmetric matrix, then $A^{t}=A$. From (1.83), we find that
+\[
+\left(A^{-1}\right)^{t} \;=\; \left(A^{t}\right)^{-1} \;=\; A^{-1}. \qedhere
+\]
+\end{proof}

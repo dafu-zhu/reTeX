@@ -1,0 +1,341 @@
+% PAGES: 39-45
+
+\section{Diagonal matrices}
+
+\begin{definition}
+A square matrix is diagonal if and only if all the entries of the matrix
+which are not on the main diagonal are equal to $0$.
+
+In other words, the $n\times n$ matrix $D$ is diagonal if and only if
+\begin{equation}
+D(j,k) \;=\; 0, \quad \forall\, 1\le j\ne k\le n.
+\end{equation}
+\end{definition}
+
+Note that, if $d_i=D(i,i)$ for all $i=1:n$, then
+\begin{equation}
+D \;=\; \begin{pmatrix} d_1 & 0 & \ldots & 0 \\ 0 & d_2 & \ldots & 0 \\
+\vdots & \vdots & \ddots & \vdots \\ 0 & 0 & \ldots & d_n \end{pmatrix}.
+\end{equation}
+
+From (1.84) and (1.85), it follows that:
+
+(i) any diagonal matrix is symmetric;
+
+(ii) both the sum and the product of two diagonal matrices are diagonal
+matrices; see also Lemma 1.11;
+
+(iii) any diagonal matrix is both upper triangular and lower
+triangular;\footnote{An equivalent definition for a diagonal matrix is
+that a diagonal matrix is a matrix that is both upper triangular and
+lower triangular.} see (1.103) and (1.104).
+
+The shorthand notation for the diagonal matrix $D$ given by (1.85) is
+\[
+D \;=\; \diag(d_k)_{k=1:n}.
+\]
+
+The column form of the diagonal matrix $D=\diag(d_k)_{k=1:n}$ is
+\begin{equation}
+D \;=\; \mathrm{col}\,(d_ke_k)_{k=1:n},
+\end{equation}
+
+where $e_k$ is the $k$-th column of the identity matrix of size $n$, for
+$k=1:n$.
+
+The row form of the diagonal matrix $D=\diag(d_k)_{k=1:n}$ is
+\begin{equation}
+D \;=\; \mathrm{row}\,(d_je_j^t)_{j=1:n}.
+\end{equation}
+
+\begin{lemma}
+Let $A$ be an $m\times n$ matrix with column form
+$A=\mathrm{col}\,(a_k)_{k=1:n}$ and row form $A=\mathrm{row}\,(r_j)_{j=1:m}$.
+
+(i) If $D=\diag(d_k)_{k=1:n}$ is a diagonal matrix of size $n$, then
+\begin{equation}
+AD \;=\; \mathrm{col}\,(d_ka_k)_{k=1:n} \;=\; (d_1a_1\ |\ d_2a_2\ |\ \ldots\ |\ d_na_n).
+\end{equation}
+
+(ii) If $D=\diag(d_j)_{j=1:m}$ is a diagonal matrix of size $m$, then
+\begin{equation}
+DA \;=\; \mathrm{row}\,(d_jr_j)_{j=1:m} \;=\;
+\begin{pmatrix} d_1r_1 \\ \text{--} \\ d_2r_2 \\ \text{--} \\ \vdots \\ \text{--} \\ d_nr_n \end{pmatrix}.
+\end{equation}
+
+(iii) If $D_1=\diag\!\left(d_j^{(1)}\right)_{j=1:m}$ and
+$D_2=\diag\!\left(d_k^{(2)}\right)_{k=1:n}$ are diagonal matrices, then
+\begin{equation}
+(D_1AD_2)(j,k) \;=\; d_j^{(1)}d_k^{(2)}A(j,k), \quad \forall\, j=1:m,\ k=1:n.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+(i) Let $D=\mathrm{col}\,(d_ke_k)_{k=1:n}$ be the column form of the
+diagonal matrix $D$, where $e_k$ is the $k$-th column of the identity
+matrix of size $n$. Recall from (1.26) that $Ae_k=a_k$, for all $k=1:n$.
+Then, using (1.11), we find that
+\[
+AD \;=\; \mathrm{col}\,(A\cdot d_ke_k)_{k=1:n} \;=\; \mathrm{col}\,(d_k\cdot Ae_k)_{k=1:n}
+\;=\; \mathrm{col}\,(d_ka_k)_{k=1:n}.
+\]
+
+(ii) Let $D=\mathrm{row}\,(d_je_j^t)_{j=1:m}$ be the row form of the
+diagonal matrix $D$, where $e_j$ is the $j$-th column of the identity
+matrix of size $m$. Recall from (1.27) that $e_j^tA=r_j$, for all $j=1:m$.
+Then, using (1.12), we find that
+\[
+DA \;=\; \mathrm{row}\,(d_je_j^t\cdot A)_{j=1:m} \;=\; \mathrm{row}\,(d_j\cdot e_j^tA)_{j=1:m}
+\;=\; \mathrm{row}\,(d_jr_j)_{j=1:m}.
+\]
+
+(iii) Let
+\[
+D_1 \;=\; \mathrm{row}\,\!\left(d_j^{(1)}(e_j^{(1)})^t\right)_{j=1:m}
+\quad\text{and}\quad
+D_2 \;=\; \mathrm{col}\,\!\left(d_k^{(2)}e_k^{(2)}\right)_{k=1:n}
+\]
+be the row form of the diagonal matrix $D_1$ and the column form of the
+diagonal matrix $D_2$, respectively, where $e_j^{(1)}$ is the $j$-th
+column of the identity matrix of size $m$ and $e_k^{(2)}$ is the $k$-th
+column of the identity matrix of size $n$.
+
+Let $1\le j\le m$ and $1\le k\le n$ arbitrary. Recall from (1.14) that the
+entry $(j,k)$ of the matrix $D_1AD_2$ is
+\begin{equation}
+(D_1AD_2)(j,k) \;=\; \left(d_j^{(1)}(e_j^{(1)})^t\right)A\left(d_k^{(2)}e_k^{(2)}\right)
+\;=\; d_j^{(1)}d_k^{(2)}\left((e_j^{(1)})^tAe_k^{(2)}\right).
+\end{equation}
+
+Recall from (1.26) that $Ae_k^{(2)}=a_k$. Since $a_k=(A(i,k))_{i=1:m}$, we
+find using (1.5) that
+\begin{equation}
+(e_j^{(1)})^tAe_k^{(2)} \;=\; (e_j^{(1)})^ta_k \;=\; \sum_{i=1}^m e_j^{(1)}(i)A(i,k) \;=\; A(j,k),
+\end{equation}
+since $e_j^{(1)}(i)=0$ for any $i\ne j$ and $e_j^{(1)}(j)=1$.
+
+From (1.91) and (1.92), we conclude that
+\[
+(D_1AD_2)(j,k) \;=\; d_j^{(1)}d_k^{(2)}A(j,k), \quad \forall\, j=1:m,\ k=1:n. \qedhere
+\]
+\end{proof}
+
+\begin{lemma}
+The product of two diagonal matrices of the same size is a diagonal
+matrix. Also, products of diagonal matrices are commutative.
+
+In other words, if $D_1=\diag\!\left(d_k^{(1)}\right)_{k=1:n}$ and
+$D_2=\diag\!\left(d_k^{(2)}\right)_{k=1:n}$ are diagonal matrices, then
+\begin{equation}
+D_1D_2 \;=\; \diag\!\left(d_k^{(1)}d_k^{(2)}\right)_{k=1:n}
+\end{equation}
+and $D_1D_2=D_2D_1$.
+\end{lemma}
+
+\begin{proof}
+Let $D_1=\diag\!\left(d_k^{(1)}\right)_{k=1:n}$ and
+$D_2=\diag\!\left(d_k^{(2)}\right)_{k=1:n}$ be diagonal matrices.
+
+The column form of $D_1$ is $D_1=\mathrm{col}\,\!\left(d_k^{(1)}e_k\right)_{k=1:n}$,
+and, using (1.88), we find that
+\[
+D_1D_2 \;=\; \mathrm{col}\,\!\left(d_k^{(2)}\cdot d_k^{(1)}e_k\right)_{k=1:n}
+\;=\; \mathrm{col}\,\!\left(d_k^{(1)}d_k^{(2)}e_k\right)_{k=1:n}
+\;=\; \diag\!\left(d_k^{(1)}d_k^{(2)}\right)_{k=1:n}.
+\]
+
+By using (1.93) for $D_1=D_2$ and $D_2=D_1$, we find that
+\[
+D_2D_1 \;=\; \diag\!\left(d_k^{(2)}d_k^{(1)}\right)_{k=1:n} \;=\; \diag\!\left(d_k^{(1)}d_k^{(2)}\right)_{k=1:n} \;=\; D_1D_2,
+\]
+and we conclude that products of diagonal matrices are commutative.
+\end{proof}
+
+\begin{lemma}
+(i) A diagonal matrix is nonsingular if and only if all its entries on the
+main diagonal are nonzero.
+
+In other words, the matrix $D=\diag(d_k)_{k=1:n}$ is nonsingular if and
+only if $d_k\ne 0$ for all $k=1:n$.
+
+(ii) If $D=\diag(d_k)_{k=1:n}$ is a nonsingular diagonal matrix, then
+\begin{equation}
+D^{-1} \;=\; \diag\!\left(\frac{1}{d_k}\right)_{k=1:n}.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+(i) Let $D=\diag(d_k)_{k=1:n}$ be a diagonal matrix. Then,
+$\det(D)=\prod_{k=1}^n d_k$; cf.\ (10.1). From Theorem 1.2, we conclude
+that the matrix $D$ is nonsingular if and only if $d_k\ne 0$ for all
+$k=1:n$.
+
+(ii) Let $D^{-1}$ be the matrix given by (1.94); recall that $d_k\ne 0$
+for all $k=1:n$, since $D$ is nonsingular. From (1.93), we find that
+\[
+DD^{-1} \;=\; \diag\!\left(d_k\cdot\frac{1}{d_k}\right)_{k=1:n} \;=\; \diag(1)_{k=1:n} \;=\; I,
+\]
+and therefore $D^{-1}$ is the inverse matrix of $D$; cf.\ Lemma 1.6.
+\end{proof}
+
+\subsection{Converting between covariance and correlation matrices}
+
+The covariance matrix $\Sigma_{\bfX}$ and the correlation matrix
+$\Omega_{\bfX}$ of $n$ nonconstant random variables $X_1,X_2,\ldots,X_n$
+are the $n\times n$ matrices given by
+\begin{align*}
+\Sigma_{\bfX}(j,k) &= \cov(X_j,X_k), \quad \forall\, 1\le j,k\le n; \\
+\Omega_{\bfX}(j,k) &= \corr(X_j,X_k), \quad \forall\, 1\le j,k\le n,
+\end{align*}
+where $\cov(X_j,X_k)$ and $\corr(X_j,X_k)$ denote the covariance and the
+correlation of the random variables $X_j$ and $X_k$, respectively. Recall
+that
+\[
+\cov(X_j,X_k) \;=\; \sigma_j\sigma_k\corr(X_j,X_k), \quad \forall\, 1\le j,k\le n,
+\]
+where $\sigma_j$ and $\sigma_k$ are the standard deviations of $X_j$ and
+$X_k$, respectively. Thus,
+\[
+\Sigma_{\bfX}(j,k) \;=\; \sigma_j\sigma_k\corr(X_j,X_k), \quad \forall\, 1\le j,k\le n.
+\]
+
+Then, from (1.90), it follows that
+\begin{equation}
+\Sigma_{\bfX} \;=\; D_{\sigma_{\bfX}}\Omega_{\bfX}D_{\sigma_{\bfX}},
+\end{equation}
+where $D_{\sigma_{\bfX}}$ is the diagonal matrix given by
+$D_{\sigma_{\bfX}}=\diag(\sigma_i)_{i=1:n}$.
+
+We conclude that, if the standard deviations of the $n$ random variables
+are known, then the covariance matrix $\Sigma_{\bfX}$ can be uniquely
+determined from the correlation matrix $\Omega_{\bfX}$ by using formula
+(1.95).
+
+Since $\sigma_i\ne 0$ for all $i=1:n$, the matrix $D_{\sigma_{\bfX}}$ is
+nonsingular and
+$(D_{\sigma_{\bfX}})^{-1}=\diag\!\left(\frac{1}{\sigma_i}\right)_{i=1:n}$;
+see (1.94). Then, from (1.95), we obtain that
+\begin{equation}
+\Omega_{\bfX} \;=\; (D_{\sigma_{\bfX}})^{-1}\Sigma_{\bfX}(D_{\sigma_{\bfX}})^{-1}.
+\end{equation}
+
+Note that
+\begin{equation}
+D_{\sigma_{\bfX}} \;=\; \diag(\sigma_i)_{i=1:n} \;=\; \diag\!\left(\sqrt{\Sigma_{\bfX}(i,i)}\right)_{i=1:n},
+\end{equation}
+since, by definition, $\sigma_i^2=\cov(X_i,X_i)=\Sigma_{\bfX}(i,i)$. In
+other words, the entries of the matrix $D_{\sigma_{\bfX}}$ can be
+obtained from the entries of $\Sigma_{\bfX}$.
+
+We conclude that the correlation matrix $\Omega_{\bfX}$ is uniquely
+determined by the covariance matrix $\Sigma_{\bfX}$, and can be computed
+by using (1.96) and (1.97).
+
+For more properties of covariance and correlation matrices, see section
+7.1.
+
+\begin{examplex}
+Assume that the covariance matrix of three random variables is
+\[
+\Sigma_{\bfX} \;=\; \begin{pmatrix} 1 & 0.1 & -0.6 \\ 0.1 & 0.25 & 0.5 \\ -0.6 & 0.5 & 4 \end{pmatrix}.
+\]
+
+Note that
+\[
+\sigma_1=\sqrt{\Sigma_{\bfX}(1,1)}=1; \quad \sigma_2=\sqrt{\Sigma_{\bfX}(2,2)}=0.5; \quad \sigma_3=\sqrt{\Sigma_{\bfX}(3,3)}=2.
+\]
+
+Thus, $D_{\sigma_{\bfX}}=\begin{pmatrix} 1 & 0 & 0 \\ 0 & \frac12 & 0 \\ 0 & 0 & 2 \end{pmatrix}$
+and $(D_{\sigma_{\bfX}})^{-1}=\begin{pmatrix} 1 & 0 & 0 \\ 0 & 2 & 0 \\ 0 & 0 & \frac12 \end{pmatrix}$.
+From (1.96), we find that the correlation matrix of the three random
+variables is
+\[
+\Omega_{\bfX} \;=\; (D_{\sigma_{\bfX}})^{-1}\Sigma_{\bfX}(D_{\sigma_{\bfX}})^{-1}
+\;=\; \begin{pmatrix} 1 & 0.2 & -0.3 \\ 0.2 & 1 & 0.5 \\ -0.3 & 0.5 & 1 \end{pmatrix}.
+\]
+\end{examplex}
+
+\begin{examplex}
+Assume that the correlation matrix of three random variables with
+standard deviations $\sigma_1=2$, $\sigma_2=1$, and $\sigma_3=0.9$, is
+\[
+\Omega_{\bfX} \;=\; \begin{pmatrix} 1 & 0.15 & -0.2 \\ 0.15 & 1 & 0.1 \\ -0.2 & 0.1 & 1 \end{pmatrix}.
+\]
+
+Then, $D_{\sigma_{\bfX}}=\begin{pmatrix} 2 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 0.9 \end{pmatrix}$,
+and, from (1.95), we conclude that the covariance matrix of the three
+random variables is
+\[
+\Sigma_{\bfX} \;=\; D_{\sigma_{\bfX}}\Omega_{\bfX}D_{\sigma_{\bfX}}
+\;=\; \begin{pmatrix} 4 & 0.3 & -0.36 \\ 0.3 & 1 & 0.09 \\ -0.36 & 0.09 & 0.81 \end{pmatrix}.
+\]
+\end{examplex}
+
+Formulas similar to (1.95) and (1.96) can also be derived for sample
+covariance matrices and sample correlation matrices; see (1.99) and
+(1.100), respectively.
+
+Denote by $\widehat{\sigma}_i=\sqrt{\widehat{\var}(X_i)}$ the sample
+standard deviation of $X_i$, for $i=1:n$. Then, the sample correlation of
+$X_j$ and $X_k$ is
+\[
+\widehat{\corr}(X_j,X_k) \;=\; \frac{\widehat{\cov}(X_j,X_k)}{\widehat{\sigma}_j\widehat{\sigma}_k}, \quad \forall\, 1\le j,k\le n,
+\]
+where $\widehat{\cov}(X_j,X_k)$ is the sample covariance of $X_j$ and
+$X_k$ given by (1.31).
+
+The sample covariance matrix $\widehat{\Sigma}_{\bfX}$ and the sample
+correlation matrix $\widehat{\Omega}_{\bfX}$ of the random variables
+$X_1,X_2,\ldots X_n$ are the $n\times n$ matrices given by
+\begin{align*}
+\widehat{\Sigma}_{\bfX}(j,k) &= \widehat{\cov}(X_j,X_k), \quad \forall\, 1\le j,k\le n; \\
+\widehat{\Omega}_{\bfX}(j,k) &= \widehat{\corr}(X_j,X_k), \quad \forall\, 1\le j,k\le n.
+\end{align*}
+
+If
+\begin{equation}
+\widehat{D}_{\sigma_{\bfX}} \;=\; \diag(\widehat{\sigma}_i)_{i=1:n} \;=\; \diag\!\left(\sqrt{\widehat{\Sigma}_{\bfX}(i,i)}\right)_{i=1:n},
+\end{equation}
+then,
+\begin{align}
+\widehat{\Sigma}_{\bfX} &= \widehat{D}_{\sigma_{\bfX}}\widehat{\Omega}_{\bfX}\widehat{D}_{\sigma_{\bfX}}; \\
+\widehat{\Omega}_{\bfX} &= (\widehat{D}_{\sigma_{\bfX}})^{-1}\widehat{\Sigma}_{\bfX}(\widehat{D}_{\sigma_{\bfX}})^{-1}.
+\end{align}
+
+\par\medskip\noindent\textit{Example (continued):}\
+The sample covariance matrix $\widehat{\Sigma}_{\bfX}$ of the daily
+returns of AAPL, FB, GOOG, MSFT, YHOO between 1/11/2013 and 1/29/2013 is
+given by (1.44). The diagonal matrix of the standard deviation of the
+daily returns
+$\widehat{D}_{\sigma_{\bfX}}=\diag\!\left(\sqrt{\widehat{\Sigma}_{\bfX}(i,i)}\right)_{i=1:5}$
+is
+\begin{equation}
+\widehat{D}_{\sigma_{\bfX}} \;=\;
+\begin{pmatrix}
+0.0426 & 0 & 0 & 0 & 0 \\
+0 & 0.0254 & 0 & 0 & 0 \\
+0 & 0 & 0.0194 & 0 & 0 \\
+0 & 0 & 0 & 0.0072 & 0 \\
+0 & 0 & 0 & 0 & 0.0147
+\end{pmatrix}.
+\end{equation}
+
+From (1.100), and using (1.44) and (1.101), we find that the sample
+correlation matrix $\widehat{\Omega}_{\bfX}$ of the daily returns of
+AAPL, FB, GOOG, MSFT, YHOO between 1/11/2013 and 1/29/2013
+is\footnote{Note that, when computing $\widehat{D}_{\sigma_{\bfX}}$ and
+$\widehat{\Omega}_{\bfX}$ from (1.101) and (1.102), respectively, we
+used the non-truncated values for the entries of the sample covariance
+matrix $\widehat{\Sigma}_{\bfX}$, and not the values from (1.44) which
+are rounded at four decimal digits.}
+\begin{equation}
+\widehat{\Omega}_{\bfX} \;=\;
+\begin{pmatrix}
+1 & -0.0087 & -0.0736 & -0.0615 & -0.2002 \\
+-0.0087 & 1 & 0.1075 & -0.0506 & 0.2929 \\
+-0.0736 & 0.1075 & 1 & 0.5614 & 0.0591 \\
+-0.0615 & -0.0506 & 0.5614 & 1 & 0.0250 \\
+-0.2002 & 0.2929 & 0.0591 & 0.0250 & 1
+\end{pmatrix}.
+\end{equation}
+\hfill$\square$\par\medskip

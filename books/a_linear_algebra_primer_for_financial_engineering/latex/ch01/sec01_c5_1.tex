@@ -1,0 +1,55 @@
+% PAGES: 46
+% Continues section 1.5 "Lower triangular and upper triangular matrices.
+% Tridiagonal matrices." begun in sec01_5.tex (ends there with the banded
+% matrix definition and a band-$2$ example). Do not open sec01_5.tex.
+
+A matrix of band $1$ is called a tridiagonal matrix and appears frequently
+in practical applications.
+
+\begin{definition}
+The $n\times n$ matrix $A$ is tridiagonal if and only if
+\[
+A(j,k) \;=\; 0, \quad \forall\, 1\le j,k\le n \text{ with } |j-k|>1,
+\]
+or, equivalently, if and only if the only nonzero entries of $A$ could be
+the main diagonal entries $A(i,i)$, for $i=1:n$, the upper diagonal
+entries $A(i,i+1)$, for $i=1:(n-1)$, and the lower diagonal entries
+$A(i,i-1)$, for $i=2:n$.
+\end{definition}
+
+\begin{examplex}
+The positions of the entries of a $6\times 6$ tridiagonal matrix which
+could be nonzero are denoted by ``$\times$'' in the matrix below:
+\[
+\begin{pmatrix}
+\times & \times & 0 & 0 & 0 & 0 \\
+\times & \times & \times & 0 & 0 & 0 \\
+0 & \times & \times & \times & 0 & 0 \\
+0 & 0 & \times & \times & \times & 0 \\
+0 & 0 & 0 & \times & \times & \times \\
+0 & 0 & 0 & 0 & \times & \times
+\end{pmatrix}.
+\]
+\end{examplex}
+
+\section{References}
+
+Several linear algebra books are close in spirit to our approach
+emphasizing numerical implementation and applications: Gilbert Strang's
+``Introduction to Linear Algebra'' \cite{41} and ``Linear Algebra and Its
+Applications'' \cite{40} and Peter Lax's ``Linear Algebra and Its
+Applications'' \cite{26} are three acclaimed such texts; also, Strang's
+OpenCourseWare MIT videos are a remarkable resource. A classical approach
+to graduate level linear algebra can be found in Horn and Johnson
+\cite{22}.
+
+The numerical analysis approach to linear algebra was pioneered by the
+classical monograph of Golub and Van Loan \cite{18}, and further
+solidified by Demmel \cite{13}. The insightful numerical linear algebra
+textbook by Trefethen and Bau \cite{43} presents the intuition behind
+numerical linear algebra methods.
+
+Some of the exercises contained in this chapter and throughout the book
+are frequently asked in interviews for positions requiring quantitative
+skills; see Stefanica, Radoičić, and Wang \cite{39} for more
+interview--style questions.

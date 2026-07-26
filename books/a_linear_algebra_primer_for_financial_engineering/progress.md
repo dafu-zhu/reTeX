@@ -27,16 +27,16 @@ offset.
 
 ## Chapter 1 — Vectors and matrices (PDF 17–52)
 
-- [ ] 1.1 Column and row vectors. Column form and row form of a matrix.
-- [ ] 1.1.1 Covariance matrix computation from time series data
-- [ ] 1.2 Matrix rank, nullspace, and range of a matrix
-- [ ] 1.2.1 A one period market model
-- [ ] 1.3 Nonsingular matrices
-- [ ] 1.4 Diagonal matrices
-- [ ] 1.4.1 Converting between covariance and correlation matrices
-- [ ] 1.5 Lower triangular and upper triangular matrices. Tridiagonal matrices.
-- [ ] 1.6 References
-- [ ] 1.7 Exercises
+- [x] 1.1 Column and row vectors. Column form and row form of a matrix.
+- [x] 1.1.1 Covariance matrix computation from time series data
+- [x] 1.2 Matrix rank, nullspace, and range of a matrix
+- [x] 1.2.1 A one period market model
+- [x] 1.3 Nonsingular matrices
+- [x] 1.4 Diagonal matrices
+- [x] 1.4.1 Converting between covariance and correlation matrices
+- [x] 1.5 Lower triangular and upper triangular matrices. Tridiagonal matrices.
+- [x] 1.6 References
+- [x] 1.7 Exercises
 
 ## Chapter 2 — LU decomposition (PDF 53–102)
 

@@ -1,0 +1,202 @@
+% PAGES: 39-45
+
+\section{Lower triangular and upper triangular matrices. Tridiagonal matrices.}
+
+\begin{definition}
+A square matrix is lower triangular if and only if all the entries of the
+matrix which are above the main diagonal are equal to $0$.
+
+In other words, the $n\times n$ matrix $L$ is lower triangular if and
+only if
+\begin{equation}
+L(j,k) \;=\; 0, \quad \forall\, 1\le j<k\le n.
+\end{equation}
+\end{definition}
+
+\begin{definition}
+A square matrix is upper triangular if and only if all the entries of the
+matrix which are below the main diagonal are equal to $0$.
+
+In other words, the $n\times n$ matrix $U$ is upper triangular if and
+only if
+\begin{equation}
+U(j,k) \;=\; 0, \quad \forall\, 1\le k<j\le n.
+\end{equation}
+\end{definition}
+
+From (1.103) and (1.104), it follows that the transpose of a lower
+triangular matrix is an upper triangular matrix and the transpose of an
+upper triangular matrix is a lower triangular matrix.
+
+The results below follow from (1.103) and (1.104), and can be regarded as
+column-based and row-based definitions for lower triangular and upper
+triangular matrices:
+
+\begin{lemma}
+A square matrix of size $n$ is lower triangular if and only if the first
+$k-1$ entries of the $k$-th column of the matrix are equal to $0$, for
+all $k=2:n$.
+
+In other words, the $n\times n$ matrix $L=\mathrm{col}\,(l_k)_{k=1:n}$ is
+lower triangular if and only if
+\begin{equation}
+l_k(i) \;=\; 0, \quad \forall\, 1\le i\le k-1,\ \forall\, k=2:n.
+\end{equation}
+
+A square matrix of size $n$ is lower triangular if and only if the last
+$n-j$ entries of the $j$-th row of the matrix are equal to $0$, for all
+$j=1:(n-1)$.
+
+In other words, the $n\times n$ matrix $L=\mathrm{row}\,(r_j)_{j=1:n}$ is
+lower triangular if and only if
+\begin{equation}
+r_j(i) \;=\; 0, \quad \forall\, j+1\le i\le n,\ \forall\, j=1:(n-1).
+\end{equation}
+\end{lemma}
+
+\begin{lemma}
+A square matrix of size $n$ is upper triangular if and only if the last
+$n-k$ entries of the $k$-th column of the matrix are equal to $0$, for
+all $k=1:(n-1)$.
+
+In other words, the $n\times n$ matrix $U=\mathrm{col}\,(u_k)_{k=1:n}$ is
+upper triangular if and only if
+\begin{equation}
+u_k(i) \;=\; 0, \quad \forall\, k+1\le i\le n,\ \forall\, k=1:(n-1).
+\end{equation}
+
+A square matrix of size $n$ is upper triangular if and only if the first
+$j-1$ entries of the $j$-th row of the matrix are equal to $0$, for all
+$j=2:n$.
+
+In other words, the $n\times n$ matrix $U=\mathrm{row}\,(r_j)_{j=1:n}$ is
+upper triangular if and only if
+\begin{equation}
+r_j(i) \;=\; 0, \quad \forall\, 1\le i\le j-1,\ \forall\, j=2:n.
+\end{equation}
+\end{lemma}
+
+Note that the sum of two lower triangular matrices is a lower triangular
+matrix, the sum of two upper triangular matrices is an upper triangular
+matrix, and the result of multiplying a lower triangular (or an upper
+triangular) matrix by a constant is a lower triangular (or, respectively,
+an upper triangular) matrix. Thus, any linear combination of lower
+triangular matrices is lower triangular and any linear combination of
+upper triangular matrices is upper triangular.
+
+\begin{lemma}
+(i) The product of two lower triangular matrices is lower triangular.
+
+(ii) The product of two upper triangular matrices is upper triangular.
+\end{lemma}
+
+\begin{proof}
+(i) Let $L_1=\mathrm{col}\,\!\left(l_k^{(1)}\right)_{k=1:n}$ and
+$L_2=\mathrm{col}\,\!\left(l_k^{(2)}\right)_{k=1:n}$ be lower triangular
+matrices. Recall from (1.105) that
+\begin{align}
+l_k^{(1)}(j) &= 0, \quad 1\le j\le k-1,\ \forall\, k=2:n; \\
+l_k^{(2)}(j) &= 0, \quad 1\le j\le k-1,\ \forall\, k=2:n.
+\end{align}
+
+Recall from (1.11) that
+\[
+L_1L_2 \;=\; \mathrm{col}\,\!\left(L_1l_k^{(2)}\right)_{k=1:n}.
+\]
+
+Thus, the $k$-th column of $L_1L_2$ is $L_1l_k^{(2)}$. Using (1.7) and
+the column form $L_1=\mathrm{col}\,\!\left(l_k^{(1)}\right)_{k=1:n}$ of
+$L_1$, we obtain that
+\begin{equation}
+L_1l_k^{(2)} \;=\; \sum_{j=1}^n l_k^{(2)}(j)l_j^{(1)} \;=\; \sum_{j=k}^n l_k^{(2)}(j)l_j^{(1)},
+\end{equation}
+since $l_k^{(2)}(j)=0$ for all $j$ such that $1\le j\le k-1$; cf.\ (1.110).
+
+Let $i$ such that $1\le i\le k-1$. If $k\le j\le n$, then $1\le i\le j-1$
+and, from (1.109), it follows that
+\begin{equation}
+l_j^{(1)}(i) \;=\; 0, \quad \forall\, k\le j\le n.
+\end{equation}
+
+Then, from (1.111) and (1.112), we find that
+\[
+\left(L_1l_k^{(2)}\right)(i) \;=\; \sum_{j=k}^n l_k^{(2)}(j)l_j^{(1)}(i) \;=\; 0, \quad \forall\, 1\le i\le k-1.
+\]
+
+We conclude that the first $k-1$ entries of $L_1l_k^{(2)}$, which is the
+$k$-th column of the matrix $L_1L_2$, are equal to $0$. Therefore, from
+Lemma 1.13, it follows that $L_1L_2$ is a lower triangular matrix.
+
+(ii) Let $U_1$ and $U_2$ be upper triangular matrices of the same size.
+Recall that a matrix is upper triangular if and only if its transpose is
+a lower triangular matrix. Thus, $U_1^t$ and $U_2^t$ are lower triangular
+matrices. The matrix $U_2^tU_1^t$ is also a lower triangular matrix,
+since we already proved that the product of two lower triangular
+matrices is lower triangular. Since $(U_1U_2)^t=U_2^tU_1^t$; see (1.24),
+it follows that the transpose of the matrix $U_1U_2$ is a lower
+triangular matrix. We conclude that $U_1U_2$ is an upper triangular
+matrix.
+\end{proof}
+
+Recall from (10.3) and (10.4), respectively, that the determinant of a
+lower triangular matrix $L$ is equal to the product of all its entries on
+the main diagonal, and the determinant of an upper triangular matrix $U$
+is equal to the product of all its entries on the main diagonal, i.e.,
+\begin{align}
+\det(L) &= \prod_{i=1}^n L(i,i); \\
+\det(U) &= \prod_{i=1}^n U(i,i).
+\end{align}
+
+\begin{lemma}
+(i) A lower triangular matrix $L$ is nonsingular if and only if all its
+entries on the main diagonal are nonzero, i.e., if and only if
+\[
+L(i,i) \;\ne\; 0, \quad \forall\, i=1:n.
+\]
+
+(ii) An upper triangular matrix $U$ is nonsingular if and only if all its
+entries on the main diagonal are nonzero, i.e., if and only if
+\[
+U(i,i) \;\ne\; 0, \quad \forall\, i=1:n.
+\]
+\end{lemma}
+
+\begin{proof}
+These results follow from (1.113) and (1.114), and from the fact that a
+matrix is nonsingular if and only if its determinant is nonzero; cf.\
+Theorem 1.2.
+\end{proof}
+
+\begin{lemma}
+(i) The inverse of an upper triangular matrix is upper triangular.
+
+(ii) The inverse of a lower triangular matrix is lower triangular.
+\end{lemma}
+
+A proof of this result can be found in Section 10.7; see Lemma 10.18.
+
+\begin{definition}
+The $n\times n$ matrix $A$ is banded of band $m$ if and only if
+\[
+A(j,k) \;=\; 0, \quad \forall\, 1\le j,k\le n \text{ with } |j-k|>m.
+\]
+\end{definition}
+
+Note that a banded matrix of band $0$ is a diagonal matrix, since
+$A(j,k)=0$ for all $j$ and $k$ with $|j-k|>0$ is equivalent to $A(j,k)=0$
+for all $j\ne k$.
+
+\begin{examplex}
+The positions of the entries of a $6\times 6$ banded matrix with band $2$
+which could be nonzero are denoted by ``$\times$'' in the matrix below:
+\[
+\begin{pmatrix}
+\times & \times & \times & 0 & 0 & 0 \\
+\times & \times & \times & \times & 0 & 0 \\
+\times & \times & \times & \times & \times & 0 \\
+0 & \times & \times & \times & \times & \times \\
+0 & 0 & \times & \times & \times & \times \\
+0 & 0 & 0 & \times & \times & \times
+\end{pmatrix}.
+\]
+\end{examplex}
