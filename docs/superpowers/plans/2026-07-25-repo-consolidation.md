@@ -22,16 +22,16 @@
 
 ---
 
-### Task 0: Move to master and carry the design docs over
+### Task 0: Create the working branch and carry the design docs over
 
-The session that produced this plan ran on `output/a_first_course_in_monte_carlo_methods`, and the design spec was committed there. Every task below must land on `master` — Task 12 deletes that branch.
+The session that produced this plan ran on `output/a_first_course_in_monte_carlo_methods`, which Task 12 deletes. Tasks 0–11 run on `refactor/consolidate-books`, cut from `master`; Task 12 merges it to `master` and then deletes the old branches.
 
 **Files:**
-- Create on `master`: `docs/superpowers/specs/2026-07-25-repo-consolidation-design.md`, `docs/superpowers/plans/2026-07-25-repo-consolidation.md`
+- Create on `refactor/consolidate-books`: `docs/superpowers/specs/2026-07-25-repo-consolidation-design.md`, `docs/superpowers/plans/2026-07-25-repo-consolidation.md`
 
 **Interfaces:**
 - Consumes: nothing
-- Produces: `master` checked out, with both design documents committed. Every later task assumes `master` is the current branch.
+- Produces: `refactor/consolidate-books` checked out from `master`, with both design documents committed. Every later task through Task 11 assumes it is the current branch.
 
 - [ ] **Step 1: Record the two design-doc commit SHAs**
 
@@ -43,16 +43,17 @@ git log --oneline -2 -- docs/superpowers/
 ```
 Expected: `output/a_first_course_in_monte_carlo_methods`, and two commits — `docs: repo consolidation design …` and `docs: repo consolidation implementation plan`. Note both SHAs, oldest first: `<SPEC_SHA>` then `<PLAN_SHA>`.
 
-- [ ] **Step 2: Switch to master and replay both commits**
+- [ ] **Step 2: Cut the working branch from master and replay both commits**
 
 ```bash
 git checkout master
+git checkout -b refactor/consolidate-books
 git cherry-pick <SPEC_SHA> <PLAN_SHA>
 ```
 
 Both files are new on `master`, so a conflict is unexpected. If one occurs, resolve by taking the incoming version in full.
 
-- [ ] **Step 3: Verify both documents are on master**
+- [ ] **Step 3: Verify both documents are on the working branch**
 
 Run:
 ```bash
@@ -60,7 +61,7 @@ git branch --show-current
 ls docs/superpowers/specs/ docs/superpowers/plans/
 git status --porcelain | grep -v '^??' || echo "clean"
 ```
-Expected: `master`, both `.md` files listed, and `clean`.
+Expected: `refactor/consolidate-books`, both `.md` files listed, and `clean`.
 
 ---
 
@@ -285,10 +286,10 @@ git commit -m "feat: add books/ layout and copyright validator"
 - Consumes: nothing
 - Produces: local tags `archive/<branch-slug>` for all seven `output/*` branches plus `dev`; a baseline inventory file that Task 11 diffs against.
 
-- [ ] **Step 0: Confirm you are on master**
+- [ ] **Step 0: Confirm you are on the working branch**
 
 Run: `git branch --show-current`
-Expected: `master`. If not, Task 0 did not complete — go back and finish it. Committing any later task to an `output/*` branch means Task 12 deletes the work.
+Expected: `refactor/consolidate-books`. If not, Task 0 did not complete — go back and finish it. Committing any later task to an `output/*` branch means Task 12 deletes the work.
 
 - [ ] **Step 1: Confirm the working tree is clean enough to proceed**
 
@@ -1466,14 +1467,25 @@ Expected: `Layout OK` and `clean and valid`. If either fails, stop — do not de
 Run: `git tag -l 'archive/*' | wc -l`
 Expected: `8`. These are the rollback path. If the count is wrong, recreate the missing tags before deleting.
 
-- [ ] **Step 3: Push master first**
+- [ ] **Step 3: Merge the working branch into master**
+
+```bash
+git checkout master
+git merge --no-ff refactor/consolidate-books -m "refactor: consolidate all books onto master under books/"
+```
+Expected: a clean merge — `master` has not moved since Task 0 cut the branch from it.
+
+Run: `python scripts/check_repo_layout.py`
+Expected: `Layout OK` on `master` too. If the merge lost anything, stop before pushing.
+
+- [ ] **Step 4: Push master**
 
 ```bash
 git push origin master
 ```
 Expected: success. The remote must have the consolidated content before its branches are removed.
 
-- [ ] **Step 4: Delete local branches**
+- [ ] **Step 5: Delete local branches**
 
 ```bash
 for b in econometrics_hayashi applied_partial_differential_equations \
@@ -1483,13 +1495,14 @@ for b in econometrics_hayashi applied_partial_differential_equations \
     git branch -D "output/$b"
 done
 git branch -D dev
+git branch -d refactor/consolidate-books
 ```
 
-Task 0 already switched to `master`, so `output/a_first_course_in_monte_carlo_methods` is not checked out and can be deleted. If `git branch --show-current` does not print `master`, stop — the migration commits landed on a branch about to be deleted.
+Step 3 switched to `master`, so neither `output/a_first_course_in_monte_carlo_methods` nor the working branch is checked out, and both can be deleted. If `git branch --show-current` does not print `master`, stop.
 
-`-D` rather than `-d` is deliberate: these branches were never merged into `master` (their content was imported, not merged), so `-d` would refuse. The `archive/*` tags from Task 2 are what make this safe.
+`-D` rather than `-d` for the `output/*` branches is deliberate: their content was imported, not merged, so `-d` would refuse. The working branch uses `-d` — it *was* merged in Step 3, and a refusal there is a real signal that the merge did not happen.
 
-- [ ] **Step 5: Delete remote branches**
+- [ ] **Step 6: Delete remote branches**
 
 ```bash
 for b in applied_partial_differential_equations applied_pde_solutions_manual \
@@ -1501,7 +1514,7 @@ git push origin --delete fix/content-filter-phase0-subagent
 
 Only these six exist on the remote — `output/option_volatility_pricing` and `output/a_first_course_in_monte_carlo_methods` were never pushed. Run `git branch -r` first to confirm the live list rather than trusting this one.
 
-- [ ] **Step 6: Verify one branch remains**
+- [ ] **Step 7: Verify one branch remains**
 
 Run: `git branch -a`
 Expected: only `* master` and `remotes/origin/master`.
