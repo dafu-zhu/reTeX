@@ -58,8 +58,11 @@ AD \;=\; \mathrm{col}\,(d_ka_k)_{k=1:n} \;=\; (d_1a_1\ |\ d_2a_2\ |\ \ldots\ |\ 
 \end{equation}
 
 (ii) If $D=\diag(d_j)_{j=1:m}$ is a diagonal matrix of size $m$, then
+% UNCLEAR: (1.89) on page 39 is printed as row(d_j r_j)_{j=1:n} with last row
+% d_n r_n, although D is stated to have size m, so m was expected in both
+% places. The scan reads n; left as printed. See page 39.
 \begin{equation}
-DA \;=\; \mathrm{row}\,(d_jr_j)_{j=1:m} \;=\;
+DA \;=\; \mathrm{row}\,(d_jr_j)_{j=1:n} \;=\;
 \begin{pmatrix} d_1r_1 \\ \text{--} \\ d_2r_2 \\ \text{--} \\ \vdots \\ \text{--} \\ d_nr_n \end{pmatrix}.
 \end{equation}
 

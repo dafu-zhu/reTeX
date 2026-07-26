@@ -2,6 +2,17 @@
 
 \section{Matrix rank, nullspace, and range of a matrix}
 
+\begin{definition}
+Let $w_1, w_2, \ldots, w_p$ be vectors of the same size. The vectors $w_1,
+w_2, \ldots, w_p$ are linearly independent if and only if the only linear
+combination of these vectors that is equal to 0 has all coefficients equal
+to 0, i.e.,
+\[
+\text{if} \quad \sum_{i=1}^p c_iw_i = 0, \quad \text{with}\ c_i\in\R,\
+i=1:p, \quad \text{then} \quad c_i=0, \quad \forall\, i=1:p.
+\]
+\end{definition}
+
 If $A$ is an $m\times n$ matrix, the column rank of $A$ is the largest
 number of linearly independent columns of $A$, and the row rank of $A$ is
 the largest number of linearly independent rows of $A$. However, the
@@ -261,6 +272,9 @@ strike \$30 on the first asset are given by
 C_1(1/4) \;=\; \max(S_1(1/4)-30,0),
 \]
 
+% UNCLEAR: page 30 says $S_1(1/4)$ "denotes the value of the second asset",
+% but $S_1$ is the first asset throughout this example (strike \$30, values
+% 34/24). Author's error; left as printed.
 where $S_1(1/4)$ denotes the value of the second asset in three months,
 and are as follows:
 
@@ -630,6 +644,9 @@ $S_{2,1/4}$, $S_{4,1/4}$, and $S_{1,1/4}$ are the price vectors
 corresponding to $P(T)$, $S(T)$, $C(T)$, and $K$, respectively, for the
 three months ATM put and call on the first asset.
 
+% UNCLEAR: page 35 ends this paragraph with "on the first asset", but
+% $S_{3,1/4}$, $S_{6,1/4}$, $S_{7,1/4}$ are the second asset's vectors, so
+% "second asset" was expected. Author's error; left as printed.
 Similarly, (1.71) is a consequence of (1.72), since the vectors
 $S_{7,1/4}$, $S_{3,1/4}$, $S_{6,1/4}$, and $S_{1,1/4}$ are the price
 vectors corresponding to $P(T)$, $S(T)$, $C(T)$, and $K$, respectively, for
