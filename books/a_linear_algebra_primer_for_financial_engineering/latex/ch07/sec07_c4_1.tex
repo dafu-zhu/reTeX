@@ -1,0 +1,142 @@
+% PAGES: 235-236
+% PDF page 235 (folio 219) opens with the "7.7 Multivariate random variables
+% formulation for covariance and correlation matrices" section heading at
+% the very top of the page; PDF page 234 (folio 218, the last page of chunk
+% c3's range) was rendered and inspected directly and ends cleanly with
+% Lemma 7.9's proof closed by its QED box, with blank space below -- so
+% nothing is open to close at the start of this file.
+
+\section{Multivariate random variables formulation for covariance and correlation matrices}
+
+The formulas from section 7.1 connecting the covariance and correlation matrix of
+random variables, as well as the Linear Transformation Property from section 7.3, can
+be established in an elegant way by using multivariate random variables.
+
+Let $X_1, X_2, \ldots, X_n$ be random variables on the same probability space, and let
+$\bfX$ be the $n$-dimensional multivariate random variable
+\begin{equation}
+\bfX \;=\; \begin{pmatrix} X_1 \\ X_2 \\ \vdots \\ X_n \end{pmatrix}.
+\end{equation}
+
+The expected value $\mu_{\bfX}$ of $\bfX$ is
+\[
+\mu_{\bfX} \;=\; \E{\bfX} \;=\; \begin{pmatrix} \E{X_1} \\ \E{X_2} \\ \vdots \\ \E{X_n}
+\end{pmatrix} \;=\; \begin{pmatrix} \mu_1 \\ \mu_2 \\ \vdots \\ \mu_n \end{pmatrix},
+\]
+where $\mu_i = \E{X_i}$ for all $i = 1:n$.
+
+Similarly, if $\bfX = (X_{j,k})_{1\le j\le m,1\le k\le n}$ is a multivariate random
+variable taking values in $\R^{m\times n}$, where $X_{j,k}$ are univariate random
+variables on the same probability space, for all $1\le j\le m$, $1\le k\le n$, then
+$\E{\bfX} = (\E{X_{j,k}})_{1\le j\le m,1\le k\le n}$.
+
+The general result from Lemma 7.10 follows from the linearity of expected values of
+random variables and will be used repeatedly:
+
+\begin{lemma}
+Let $\bfX$ be an $m \times n$ multivariate random variable. Let $A$ and $B$ be matrices
+of sizes $p \times m$ and $n \times q$, respectively, with constant real entries. Then,
+\begin{equation}
+\E{A\bfX B} \;=\; A\,\E{\bfX}\,B.
+\end{equation}
+\end{lemma}
+
+The result below is comprised of particular cases of (7.127) which will be used
+subsequently.
+
+\begin{lemma}
+Let $\bfX$ be an $n$-dimensional multivariate random variable. Let $M$ be an $m\times n$
+matrix with constant entries and let $C$ be an $n\times 1$ column vector with constant
+entries. Then,\footnote{In formula (7.130), $\bfX C^t$ is an $n \times n$ matrix since
+$\bfX$ is an $n \times 1$ column vector and $C^t$ is an $1 \times n$ row vector; cf.
+(1.6).}
+\begin{align}
+\E{M\bfX} &= M\,\E{\bfX}; \\
+\E{C^t\bfX} &= C^t\E{\bfX}; \\
+\E{\bfX C^t} &= \E{\bfX}\,C^t.
+\end{align}
+\end{lemma}
+
+The covariance matrix of the random variables $X_1, X_2, \ldots, X_n$ can be expressed
+compactly using the multivariate random variable $\bfX$ given by (7.126) as follows:
+
+\begin{lemma}
+Let $\Sigma_{\bfX}$ be the covariance matrix of the random variables $X_1, X_2, \ldots,
+X_n$. Then,
+\begin{equation}
+\Sigma_{\bfX} \;=\; \E{(\bfX - \E{\bfX})(\bfX - \E{\bfX})^t},
+\end{equation}
+where $\bfX = (X_i)_{i=1:n}$ is the corresponding multivariate random variable.
+\end{lemma}
+
+\begin{proof}
+Note that $\bfX - \E{\bfX}$ is an $n \times 1$ column vector and $(\bfX - \E{\bfX})^t$ is
+an $1 \times n$ row vector. Then, from (1.6), it follows that $(\bfX - \E{\bfX})(\bfX -
+\E{\bfX})^t$ is the $n \times n$ matrix whose $(j,k)$ entry is $(X_j - \mu_j)(X_k -
+\mu_k)$, for all $1 \le j,k \le n$. Thus, the $(j,k)$-th entry of the matrix
+$\E{(\bfX-\E{\bfX})(\bfX-\E{\bfX})^t}$ is
+\begin{equation}
+\E{(X_j-\mu_j)(X_k-\mu_k)} \;=\; \cov(X_j,X_k),
+\end{equation}
+which is the same as the $(j,k)$-th entry of the covariance matrix $\Sigma_{\bfX}$; see
+Definition 7.1.
+
+We conclude that $\Sigma_{\bfX} = \E{(\bfX-\E{\bfX})(\bfX-\E{\bfX})^t}$.
+\end{proof}
+
+The formulas for the variance and the covariance of linear combinations of random
+% Printed as "multivariate random variable" (singular) on PDF page 236 (folio
+% 220); transcribed as printed, cf. fidelity rule.
+variables from Lemma 7.3 can be proved by using multivariate random variable and the
+formula (7.131) for the covariance matrix as seen below:
+
+\begin{lemma}[Same as Lemma 7.3.]
+Let $X_1, X_2, \ldots, X_n$ be random variables on the same probability space. Then,
+\begin{equation}
+\cov\!\left(\sum_{i=1}^n c_i^{(1)}X_i, \sum_{i=1}^n c_i^{(2)}X_i\right) \;=\;
+\left(C^{(1)}\right)^t\Sigma_{\bfX}C^{(2)} \;=\; \left(C^{(2)}\right)^t\Sigma_{\bfX}C^{(1)},
+\end{equation}
+where $C^{(1)} = \left(c_i^{(1)}\right)_{i=1:n}$ and $C^{(2)} =
+\left(c_i^{(2)}\right)_{i=1:n}$ are two column vectors of size $n$ with real entries,
+and $\Sigma_{\bfX}$ is the covariance matrix of the random variables $X_1, X_2, \ldots,
+X_n$.
+\end{lemma}
+
+\begin{proof}
+Let $\bfX = (X_i)_{i=1:n}$ be an $n \times 1$ multivariate random variable. Note that
+\[
+\sum_{i=1}^n c_i^{(1)}X_i \;=\; \left(C^{(1)}\right)^t\bfX \quad \text{and} \quad
+\sum_{i=1}^n c_i^{(2)}X_i \;=\; \left(C^{(2)}\right)^t\bfX.
+\]
+
+Then, using (7.132), we obtain that
+\begin{align}
+\cov\!\left(\sum_{i=1}^n c_i^{(1)}X_i, \sum_{i=1}^n c_i^{(2)}X_i\right)
+&= \cov\!\left(\left(C^{(1)}\right)^t\bfX, \left(C^{(2)}\right)^t\bfX\right) \notag \\
+&= \E{\left(\left(C^{(1)}\right)^t\bfX - \E{\left(C^{(1)}\right)^t\bfX}\right)
+\left(\left(C^{(2)}\right)^t\bfX - \E{\left(C^{(2)}\right)^t\bfX}\right)^t}.
+\end{align}
+
+Using (7.129), we find that
+\begin{align}
+\left(C^{(1)}\right)^t\bfX - \E{\left(C^{(1)}\right)^t\bfX} &=
+\left(C^{(1)}\right)^t\bfX - \left(C^{(1)}\right)^t\E{\bfX} \;=\;
+\left(C^{(1)}\right)^t(\bfX - \E{\bfX}); \\
+\left(\left(C^{(2)}\right)^t\bfX - \E{\left(C^{(2)}\right)^t\bfX}\right)^t &=
+\left(\left(C^{(2)}\right)^t(\bfX-\E{\bfX})\right)^t \;=\; (\bfX-\E{\bfX})^tC^{(2)}.
+\end{align}
+
+From (7.134--7.136) and using (7.127), we conclude that
+\begin{align*}
+\cov\!\left(\sum_{i=1}^n c_i^{(1)}X_i, \sum_{i=1}^n c_i^{(2)}X_i\right)
+&= \E{\left(C^{(1)}\right)^t(\bfX-\E{\bfX})(\bfX-\E{\bfX})^tC^{(2)}} \\
+&= \left(C^{(1)}\right)^t \E{(\bfX-\E{\bfX})(\bfX-\E{\bfX})^t}\, C^{(2)} \\
+&= \left(C^{(1)}\right)^t\Sigma_{\bfX}C^{(2)},
+\end{align*}
+% PDF page 236 (folio 220) ends here, immediately after this unnumbered
+% align* block (three-line derivation with no printed equation tag). The
+% closing "since Sigma_X = E[...]; see (7.131)." clause that finishes this
+% sentence begins the top of PDF page 237 (folio 221) and continues in
+% sec07_c4_2.tex -- the proof environment itself is NOT closed here, it
+% remains open across this file boundary and is closed at the start of the
+% next file.

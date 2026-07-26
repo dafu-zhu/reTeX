@@ -1,0 +1,115 @@
+% PAGES: 222-223
+
+% CONTINUES: the \begin{proof} of Theorem 7.2 and its bullet item, both left open
+% at the end of sec07_c2_2.tex (PDF page 221, folio 205). Do not open a new
+% \begin{proof} here.
+Since $\overline{T}_{X_k} = (X_k(t_i))_{i=1:N} - \widehat{\mu}_{X_k}$ and $T_{X_k} =
+(X_k(t_i))_{i=1:N}$, see (7.48) and (7.36), we obtain that
+\begin{equation}
+\overline{T}_{X_k} \;=\; T_{X_k} - \widehat{\mu}_{X_k}\bfone.
+\end{equation}
+Then, from (7.70) and (7.71), we find that
+\begin{align*}
+0 &= \sum_{k=1}^n c_k\overline{T}_{X_k} \;=\; \sum_{k=1}^n c_k\left(T_{X_k}-\widehat{\mu}_{X_k}\bfone\right) \;=\; \sum_{k=1}^n c_kT_{X_k} - \sum_{k=1}^n c_k\widehat{\mu}_{X_k}\bfone \\
+&= \sum_{k=1}^n c_kT_{X_k} - \left(\sum_{k=1}^n c_k\widehat{\mu}_{X_k}\right)\bfone,
+\end{align*}
+and, since $T_{X_1}, T_{X_2}, \ldots, T_{X_n}, \bfone$ are linearly independent, we
+conclude that $c_k = 0$ for all $k = 1:n$, which is what we wanted to show.
+
+\noindent$\bullet$ Assume that $\overline{T}_{X_1}, \overline{T}_{X_2}, \ldots,
+\overline{T}_{X_n}$ are linearly independent. We will show that $T_{X_1},
+T_{X_2}, \ldots, T_{X_n}, \bfone$ are linearly independent, which is equivalent to
+showing that, if $d_k$, $k = 0:n$, are constants such that
+\begin{equation}
+d_0\bfone \;+\; \sum_{k=1}^n d_kT_{X_k} \;=\; 0,
+\end{equation}
+then $d_k = 0$ or all $k = 0:n$.
+
+From the definition (7.38) of $\widehat{\mu}_{X_k}$, it follows that
+\begin{equation}
+\bfone^tT_{X_k} \;=\; \sum_{i=1}^N X_k(t_i) \;=\; N\widehat{\mu}_{X_k}, \quad \forall\, k = 1:n.
+\end{equation}
+Also, note that
+\begin{equation}
+\bfone^t\bfone \;=\; \sum_{i=1}^N 1 \;=\; N.
+\end{equation}
+By multiplying (7.72) by $\bfone^t$ and using (7.73) and (7.74), we find that
+\[
+Nd_0 \;+\; N\sum_{k=1}^n d_k\widehat{\mu}_{X_k} \;=\; 0,
+\]
+and therefore
+\begin{equation}
+d_0 \;=\; -\sum_{k=1}^n d_k\widehat{\mu}_{X_k}.
+\end{equation}
+By substituting formula (7.75) for $d_0$ into (7.72) and using (7.71), we obtain
+that
+\begin{align*}
+0 &= d_0\bfone \;+\; \sum_{k=1}^n d_kT_{X_k} \\
+&= -\left(\sum_{k=1}^n d_k\widehat{\mu}_{X_k}\right)\bfone \;+\; \sum_{k=1}^n d_kT_{X_k} \\
+&= \sum_{k=1}^n d_kT_{X_k} \;-\; \sum_{k=1}^n d_k\widehat{\mu}_{X_k}\bfone \\
+&= \sum_{k=1}^n d_k\left(T_{X_k}-\widehat{\mu}_{X_k}\bfone\right) \\
+&= \sum_{k=1}^n d_k\overline{T}_{X_k}.
+\end{align*}
+Since we assumed that $\overline{T}_{X_1}, \overline{T}_{X_2}, \ldots,
+\overline{T}_{X_n}$ are linearly independent, we conclude that $d_k = 0$ for all
+$k = 0:n$, which is what we wanted to show.
+\end{proof}
+
+Note that the linear independence of the time series data vectors $T_{X_1},
+T_{X_2}, \ldots, T_{X_n}$ is not sufficient for the sample covariance matrix
+$\widehat{\Sigma}_{\bfX}$ to be nonsingular; a counterexample can be found in an
+exercise at the end of this chapter.
+
+\section{The Linear Transformation Property}
+% NOTE: the printed running head on PDF page 223 (folio 207) reads "7.2. LINEAR
+% TRANSFORMATION PROPERTY" -- the OLD section number (7.2) paired with the NEW
+% section's title text -- while the in-body heading below is "7.3 The Linear
+% Transformation Property". This is an apparent erratum in the source book's
+% running heads, reproduced here only as a comment; the auto-generated \rightmark
+% for this file is left to track the true section number (7.3).
+
+\begin{theorem}[Linear Transformation Property]
+Let $X_1$, $X_2$, \ldots, $X_n$ be $n$ random variables on the same probability
+space, and let $Y_1$, $Y_2$, \ldots, $Y_m$ be random variables given by
+\[
+\bfY \;=\; M\bfX,
+\]
+where $M$ is an $m \times n$ matrix, and $\bfY = (Y_i)_{i=1:m}$ and $\bfX =
+(X_i)_{i=1:n}$ denote the column vectors of the random variables $Y_i$, $i=1:m$,
+and $X_i$, $i=1:n$, respectively.
+
+Let $\Sigma_{\bfX}$ and $\Sigma_{\bfY}$ be the covariance matrices of $\bfX$ and
+$\bfY$, respectively. Then,
+\begin{equation}
+\Sigma_{\bfY} \;=\; M\Sigma_{\bfX}M^t.
+\end{equation}
+Note that (7.76) can also be written as
+\begin{equation}
+\Sigma_{M\bfX} \;=\; M\Sigma_{\bfX}M^t.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+To prove (7.76), recall from (1.14) that, if $A$, $B$, $C$ are matrices of sizes
+$m \times n$, $n \times n$, and $n \times m$, respectively, with $A =
+\mathrm{row}(r_j)_{j=1:m}$ and $C = \mathrm{col}(c_k)_{k=1:m}$, then $ABC$ is an
+$m \times m$ matrix with\footnote{Note that $r_j$ is a row vector, and therefore
+the row vector--matrix--column vector multiplication from (7.78) is well defined.}
+\begin{equation}
+(ABC)(j,k) \;=\; r_jBc_k, \quad \forall\, j = 1:m,\ k = 1:m.
+\end{equation}
+Let $M = \mathrm{row}(r_j)_{j=1:m}$ be the row form of $M$. Then, $M^t$ is an
+$n \times m$ matrix with column form $M^t = \mathrm{col}\left(r_k^t\right)_{k=1:m}$;
+see (1.18). From (7.78), it follows that
+\begin{equation}
+\left(M\Sigma_{\bfX}M^t\right)(j,k) \;=\; r_j\Sigma_{\bfX}r_k^t, \quad \forall\, j = 1:m,\ k = 1:m.
+\end{equation}
+Note that, if $M = \mathrm{row}(r_j)_{j=1:m}$, then $M\bfX = (r_i\bfX)_{i=1:m}$; see
+(1.12). Since $\bfY = M\bfX$ and $\bfY = (Y_i)_{i=1:m}$, we find that
+\begin{equation}
+Y_i \;=\; r_i\bfX, \quad \forall\, i = 1:m.
+\end{equation}
+% CONTINUES: \begin{proof} of Theorem 7.3 (opened above) is left OPEN here at the
+% end of PDF page 223 (folio 207), right after eq. (7.80). The next file
+% (sec07_c2_4.tex, PAGES 224-225) picks up with eq. (7.81) and closes this proof
+% with \end{proof}. Do not open a new \begin{proof} there.

@@ -1,0 +1,202 @@
+% PAGES: 239-242
+% Continues after sec07_c4_2.tex (PDF pages 237-238), which ended the
+% References section (7.8) cleanly with no environment left open. PDF page
+% 239 (folio 223) opens fresh with the "7.9 Exercises" section heading at
+% the top of the page.
+%
+% This is the whole of Chapter 7's exercise list (items 1-20, PDF pages
+% 239-242 / folios 223-226), kept in a single \exercises environment so the
+% shared enumerate counter is never reset mid-list. PDF page 242 (folio 226)
+% ends with exercise 20; the lower two-thirds of that page is blank, and PDF
+% page 243 (folio 227, rendered and inspected directly to confirm) opens
+% Chapter 8 fresh -- this is genuinely the end of Chapter 7, not a dropped
+% page. No environment is left open at the end of this file, and this is the
+% last chunk of the chapter: nothing further follows.
+
+\section{Exercises}
+
+\begin{exercises}
+
+% PDF page 239 (folio 223), exercise 1: the printed top-left entry of the
+% first correlation matrix shows "1." with a stray period immediately after
+% the 1 (verified at 1200 dpi); this reads as a print/scan artifact rather
+% than a deliberate second matrix entry, since a correlation matrix must
+% have 1's on its diagonal and the analogous entry in the answer matrix two
+% lines below has no such mark. Transcribed as plain 1.
+\item Let $X_1$ and $X_2$ be random variables with correlation matrix
+$\begin{pmatrix} 1 & \rho \\ \rho & 1 \end{pmatrix}$, where $-1 \le \rho \le 1$. Let
+$Y_1 = X_1$ and $Y_2 = -X_2$. Show that the correlation matrix of $Y_1$ and $Y_2$ is
+$\begin{pmatrix} 1 & -\rho \\ -\rho & 1 \end{pmatrix}$.
+
+\item What is the correlation matrix of three random variables whose covariance matrix
+is $\begin{pmatrix} 1 & 0.36 & -1.44 \\ 0.36 & 4 & 0.80 \\ -1.44 & 0.80 & 9
+\end{pmatrix}$?
+
+\item Find all the values of $\rho$ such that the matrix
+$\begin{pmatrix} 1 & 0.6 & -0.3 \\ 0.6 & 1 & \rho \\ -0.3 & \rho & 1 \end{pmatrix}$ is a
+correlation matrix.
+
+\item Let $X_1$, $X_2$, $X_3$ be random variables such that
+\[
+\corr(X_1,X_3) = 0.3; \quad \corr(X_2,X_3) = 0.1.
+\]
+Find upper and lower bounds for $\rho = \corr(X_1,X_2)$.
+
+\item Consider three random variables with pairwise correlation $\rho$, i.e., such that
+the correlation between any two of the random variables is $\rho$. What is the smallest
+possible value for $\rho$?
+
+\item Let $X_1$, $X_2$, $X_3$, $X_4$ be random variables such that
+\[
+\corr(X_1,X_3) = 0.3; \quad \corr(X_1,X_4) = 0.2; \quad \corr(X_2,X_3) = 0.1;
+\]
+\[
+\corr(X_2,X_4) = -0.1; \quad \corr(X_3,X_4) = -0.2.
+\]
+Find upper and lower bounds for $\rho = \corr(X_1,X_2)$.
+
+\item Assume that all the entries of an $n \times n$ correlation matrix which are not on
+the main diagonal are equal to $q$. Find upper and lower bounds on the possible values
+of $q$.
+
+\item Show that the matrix
+$\begin{pmatrix} 1 & 0.1 & 0.2 \\ 0.1 & 1 & -0.3 \\ 0.2 & -0.3 & 1 \end{pmatrix}$ is a
+correlation matrix, and find its Cholesky factor.
+
+\item Show that it is not possible to find three random variables on the same
+probability space with correlations $0.8$, $0.7$, and $-0.5$.
+
+\item Consider three random variables given by the following time series data at five
+data points:
+\[
+\begin{pmatrix}
+0.25 & -0.50 & 1.50 \\
+1 & -1 & 1.25 \\
+-0.50 & -0.25 & 2 \\
+0 & 0.50 & 0.75 \\
+-1 & 0.75 & 1.50
+\end{pmatrix}.
+\]
+
+\begin{subparts}
+\item Show that the time series vectors
+$\begin{pmatrix} 0.25 \\ 1 \\ -0.50 \\ 0 \\ -1 \end{pmatrix}$,
+$\begin{pmatrix} -0.50 \\ -1 \\ -0.25 \\ 0.50 \\ 0.75 \end{pmatrix}$,
+$\begin{pmatrix} 1.50 \\ 1.25 \\ 2 \\ 0.75 \\ 1.50 \end{pmatrix}$ of the three random
+variables are linearly independent.
+
+\item Show that the vectors
+$\begin{pmatrix} 0.25 \\ 1 \\ -0.50 \\ 0 \\ -1 \end{pmatrix}$,
+$\begin{pmatrix} -0.50 \\ -1 \\ -0.25 \\ 0.50 \\ 0.75 \end{pmatrix}$,
+$\begin{pmatrix} 1.50 \\ 1.25 \\ 2 \\ 0.75 \\ 1.50 \end{pmatrix}$,
+$\begin{pmatrix} 1 \\ 1 \\ 1 \\ 1 \\ 1 \end{pmatrix}$ are not linearly independent.
+
+\item Compute the sample covariance matrix of the three random variables and show that
+it is singular.
+\end{subparts}
+
+\noindent Note: This is an example of random variables with linearly independent time
+series data whose sample covariance matrix is singular. Recall that the necessary and
+sufficient condition for the sample covariance matrix to be nonsingular is that the time
+series data column vectors \emph{and} the column vector with all entries equal to 1 are
+linearly independent.
+
+\item The file \emph{data-DJ30-july2011-june2013.xlsx} from fepress.org/nla-primer
+contains the end of week and end of month closing prices for eight financial and
+technology Dow Jones components (AXP; BAC; JPM; CSCO; HPQ; IBM; INTC; MSFT) between July
+1, 2011, and June 30, 2013.
+
+\begin{subparts}
+\item Compute the weekly and monthly log returns of these eight stocks. Recall that the
+log return between $t_1$ and $t_2$ of an asset with price $S(t)$ is
+$\ln\!\left(\dfrac{S(t_2)}{S(t_1)}\right)$.
+
+\item Compute the sample covariance matrix and the sample correlation matrix of the
+weekly and monthly log returns of the stocks, and compare them with the sample
+covariance and correlation matrices of the weekly and monthly percentage returns
+computed in an example in this chapter.
+\end{subparts}
+
+\item Let $X_1, X_2, \ldots, X_n$ be nonconstant random variables, and let $Y_1, Y_2,
+\ldots, Y_n$ be the random variables given by $Y_i = d_iX_i$, $i = 1:n$, where $d_i \neq
+0$, $i = 1:n$, are constants. Denote by $\Sigma_{\bfX}$, $\Omega_{\bfX}$ and
+$\Sigma_{\bfY}$, $\Omega_{\bfY}$ the covariance and correlation matrices of $X_1, X_2,
+\ldots, X_n$ and of $Y_1, Y_2, \ldots, Y_n$, respectively, and let $D =
+\diag(d_i)_{i=1:n}$.
+
+\begin{subparts}
+\item Show that $\Sigma_{\bfY} = D\Sigma_{\bfX}D$.
+\item If $d_i > 0$ for all $i = 1:n$, show that $\Omega_{\bfY} = \Omega_{\bfX}$.
+\end{subparts}
+
+\item Let
+\[
+\begin{pmatrix} X_1 \\ X_2 \\ X_3 \end{pmatrix} \;\sim\; \Normal\!\left(
+\begin{pmatrix} 1 \\ -2 \\ 1 \end{pmatrix},
+\begin{pmatrix} 1 & -1 & 0 \\ -1 & 3 & -2 \\ 0 & -2 & 3 \end{pmatrix}\right)
+\]
+be a 3-dimensional multivariate normal random variable.
+
+Find the probability that $X_1 + 2X_2 + 2X_3$ is positive.
+
+\item Let
+\[
+\begin{pmatrix} X_1 \\ X_2 \\ X_3 \end{pmatrix} \;\sim\; \Normal\!\left(
+\begin{pmatrix} 2 \\ -1 \\ -2 \end{pmatrix},
+\begin{pmatrix} 2 & 0 & 0.5 \\ 0 & 1 & -0.25 \\ 0.5 & -0.25 & 1 \end{pmatrix}\right)
+\]
+be a 3-dimensional multivariate normal random variable, and let
+\[
+Y_1 = X_1; \quad Y_2 = X_1 + X_2; \quad Y_3 = X_1 + X_2 + X_3.
+\]
+
+\begin{subparts}
+\item What are the expected value vector and the covariance matrix of
+$\begin{pmatrix} Y_1 \\ Y_2 \\ Y_3 \end{pmatrix}$?
+\item Find the probability that $Y_1 + Y_2 + Y_3$ is negative.
+\end{subparts}
+
+\item Let
+\[
+\begin{pmatrix} X_1 \\ X_2 \\ X_3 \end{pmatrix} \;\sim\; \Normal\!\left(
+\begin{pmatrix} 1 \\ 0 \\ -2 \end{pmatrix},
+\begin{pmatrix} 2 & 1 & 0.5 \\ 1 & 3 & -1.5 \\ 0.5 & -1.5 & 4 \end{pmatrix}\right)
+\]
+be a 3-dimensional multivariate normal random variable.
+
+\begin{subparts}
+\item What are the expected value and the covariance matrix of
+$\begin{pmatrix} X_1 - X_2 \\ X_2 - X_3 \\ X_3 - X_1 \end{pmatrix}$?
+\item What is the probability density function of
+$\begin{pmatrix} X_1 - X_2 \\ X_2 - X_3 \\ X_3 - X_1 \end{pmatrix}$?
+\end{subparts}
+
+\item Let $Z_1$, $Z_2$, $Z_3$ be three independent standard normal variables, and let
+$X_1$, $X_2$, $X_3$ and $Y_1$, $Y_2$, $Y_3$ be normal random variables given by
+\[
+X_1 = Z_3; \quad X_2 = Z_1 + 2Z_2 - 2Z_3; \quad X_3 = -3Z_1 + Z_2 + Z_3;
+\]
+\[
+Y_1 = Z_1; \quad Y_2 = -2Z_1 + \sqrt{5}Z_2; \quad Y_3 = Z_1 - \frac{1}{\sqrt{5}}Z_2 +
+\sqrt{9.8}Z_3.
+\]
+Show that the covariance matrix of $X_1, X_2, X_3$ and the covariance matrix of $Y_1,
+Y_2, Y_3$ are equal.
+
+\item Given $Z_1$ and $Z_2$ independent standard normal variables, find two normal
+random variables $X_1$ and $X_2$ with covariance matrix
+$\begin{pmatrix} 4 & -1 \\ -1 & 9 \end{pmatrix}$.
+
+\item Given $Z_1$ and $Z_2$ independent standard normal variables, find two normal
+random variables $X_1$ and $X_2$ with correlation matrix
+$\begin{pmatrix} 1 & 0.25 \\ 0.25 & 1 \end{pmatrix}$.
+
+\item Given $Z_1$, $Z_2$, $Z_3$ independent standard normal variables, find three normal
+random variables $X_1$, $X_2$, $X_3$ with covariance matrix
+$\begin{pmatrix} 1 & 1 & 0.5 \\ 1 & 4 & -2 \\ 0.5 & -2 & 9 \end{pmatrix}$.
+
+\item Given $Z_1$, $Z_2$, $Z_3$ independent standard normal variables, find three normal
+random variables $X_1$, $X_2$, $X_3$ with correlation matrix
+$\begin{pmatrix} 1 & 0.3 & 0.4 \\ 0.3 & 1 & 0.5 \\ 0.4 & 0.5 & 1 \end{pmatrix}$.
+
+\end{exercises}

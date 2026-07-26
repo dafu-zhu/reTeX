@@ -1,0 +1,139 @@
+% PAGES: 224-225
+
+% CONTINUES: closes the \begin{proof} of Theorem 7.3 left open at the end of
+% sec07_c2_3.tex (PDF page 223, folio 207), whose last item was eq. (7.80).
+If $\bfX = (X_i)_{i=1:n}$ denotes the column vector of the random variables $X_i$,
+$i = 1:n$, then formula (7.24) from Lemma 7.3 can be written as follows:
+\begin{equation}
+\cov\!\left((C^{(1)})^t\bfX,(C^{(2)})^t\bfX\right) \;=\; (C^{(1)})^t\Sigma_{\bfX}C^{(2)} \;=\; (C^{(2)})^t\Sigma_{\bfX}C^{(1)}.
+\end{equation}
+Then, from (7.80) and using (7.81) it follows that
+\begin{align}
+\Sigma_{\bfY}(j,k) &= \cov(Y_j,Y_k) \;=\; \cov(r_j\bfX,r_k\bfX) \notag \\
+&= r_j\Sigma_{\bfX}r_k^t, \quad \forall\, 1\le j,k\le m.
+\end{align}
+From (7.79) and (7.82), we conclude that $\Sigma_{\bfY} = M\Sigma_{\bfX}M^t$.
+\end{proof}
+
+\begin{examplex}
+As a simple application of the Linear Transformation Property, let $X_1$,
+$X_2$, \ldots, $X_n$ be nonconstant random variables, and let $Y_1$, $Y_2$,
+\ldots, $Y_n$ be the random variables given by $Y_i = d_iX_i$, where $d_i \neq 0$,
+are constants, for $i = 1:n$. Let $\bfY = (Y_i)_{i=1:n}$ and $\bfX =
+(X_i)_{i=1:n}$. Then, $\bfY = D\bfX$, and, from the Linear Transformation Property
+(7.76), it follows that $\Sigma_{\bfY} = D\Sigma_{\bfX}D^t$. Since $D$ is a
+diagonal matrix, $D^t = D$, we conclude that
+\begin{equation}
+\Sigma_{\bfY} \;=\; D\Sigma_{\bfX}D.
+\end{equation}
+\end{examplex}
+
+\begin{theorem}
+Let $X_1$, $X_2$, \ldots, $X_n$ be $n$ random variables, and let $\bfX =
+(X_i)_{i=1:n}$. Denote by $\mu_{\bfX}$ the mean vector of $\bfX$ and by
+$\Sigma_{\bfX}$ the covariance matrix of $\bfX$. Let $Y_1$, $Y_2$, \ldots, $Y_m$ be
+random variables given by
+\[
+\bfY \;=\; b + M\bfX,
+\]
+where $\bfY = (Y_i)_{i=1:m}$, $M$ is an $m \times n$ matrix, and $b$ is an $m
+\times 1$ column vector. Denote by $\mu_{\bfY}$ the mean vector of $\bfY$ and by
+$\Sigma_{\bfY}$ the covariance matrix of $\bfY$.
+
+Then,
+\begin{equation}
+\mu_{\bfY} \;=\; b + M\mu_{\bfX} \qquad \text{and} \qquad \Sigma_{\bfY} \;=\; M\Sigma_{\bfX}M^t.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+From the linearity of expectation, it follows that
+\begin{equation}
+\E{M\bfX} \;=\; M\E{\bfX} \;=\; M\mu_{\bfX};
+\end{equation}
+see (7.128). Then, from (7.85), we find that
+\[
+\mu_{\bfY} \;=\; \E{\bfY} \;=\; \E{b+M\bfX} \;=\; b + \E{M\bfX} \;=\; b + M\mu_{\bfX}.
+\]
+Moreover, since $b$ is a constant vector, the covariance matrix of $\bfY = b +
+M\bfX$ is the same as the covariance matrix of $M\bfX$, and therefore
+$\Sigma_{\bfY} = \Sigma_{M\bfX}$. Note that $\Sigma_{M\bfX} = M\Sigma_{\bfX}M^t$;
+see (7.77). Thus, we conclude that
+\[
+\Sigma_{\bfY} \;=\; \Sigma_{M\bfX} \;=\; M\Sigma_{\bfX}M^t.
+\]
+\end{proof}
+
+The Linear Transformation Property can be used for generating normal random
+variables with a given correlation matrix, which can be subsequently used for
+Monte Carlo simulations, see section 7.5, and for establishing that any symmetric
+positive semidefinite matrix is the covariance matrix (or the correlation matrix,
+if the main diagonal entries are equal to $1$) of some random variables; see
+section 7.4.
+
+\section{Necessary and sufficient conditions for covariance and correlation matrices}
+
+In Lemma 7.4, we proved that any covariance matrix is symmetric positive
+semidefinite. We now show, using the Linear Transformation Property, that this is
+a necessary and sufficient condition by finding normal random variables with
+covariance matrix equal to any given symmetric positive semidefinite matrix, and
+establish a similar result for correlation matrices.
+
+\begin{theorem}
+(i) An $n \times n$ square matrix is the covariance matrix of $n$ random variables
+if and only if the matrix is symmetric positive semidefinite.
+
+(ii) An $n \times n$ square matrix is the correlation matrix of $n$ random
+variables if and only if the matrix is symmetric positive semidefinite and has
+all the entries on the main diagonal equal to $1$.
+\end{theorem}
+
+\begin{proof}
+(i) Recall from Lemma 7.4 that any covariance matrix is symmetric positive
+semidefinite.
+
+To prove that any symmetric positive semidefinite matrix is a covariance matrix,
+let $A$ be an $n \times n$ symmetric positive semidefinite matrix. We will find
+random variables $X_1$, $X_2$, \ldots, $X_n$ with covariance matrix
+$\Sigma_{\bfX} = A$.
+
+Since the matrix $A$ is symmetric, it follows from Theorem 5.4 that there exists
+an orthogonal matrix $Q$ and a diagonal matrix $\Lambda$ such that
+\begin{equation}
+A \;=\; Q\Lambda Q^t.
+\end{equation}
+Recall that $\Lambda = \diag(\lambda_i)_{i=1:n}$, where $\lambda_i$, $i = 1:n$,
+are the eigenvalues of $A$. Note that $\lambda_i \ge 0$, for all $i = 1:n$, since
+the eigenvalues of a symmetric positive semidefinite matrix are nonnegative; see
+Theorem 5.6. Let $\Lambda^{1/2}$ be the diagonal matrix given by
+\begin{equation}
+\Lambda^{1/2} \;=\; \diag\!\left(\sqrt{\lambda_i}\right)_{i=1:n}.
+\end{equation}
+Using (1.93), we find that
+\begin{equation}
+\Lambda^{1/2}\Lambda^{1/2} \;=\; \diag(\lambda_i)_{i=1:n} \;=\; \Lambda.
+\end{equation}
+Let
+\begin{equation}
+M \;=\; Q\Lambda^{1/2}.
+\end{equation}
+Then,
+\begin{equation}
+M^t \;=\; \left(\Lambda^{1/2}\right)^tQ^t \;=\; \Lambda^{1/2}Q^t,
+\end{equation}
+since $\Lambda^{1/2}$ is a diagonal matrix and therefore symmetric, i.e.,
+$\left(\Lambda^{1/2}\right)^t = \Lambda^{1/2}$. Then, from (7.89), (7.90), (7.88),
+and (7.86), we obtain that
+\begin{equation}
+MM^t \;=\; Q\Lambda^{1/2}\Lambda^{1/2}Q^t \;=\; Q\Lambda Q^t \;=\; A.
+\end{equation}
+Let $Z_1$, $Z_2$, \ldots, $Z_n$ be independent standard normal variables, and let
+$X_1$, $X_2$, \ldots, $X_n$ be random variables\footnote{Note that $X_1$, $X_2$,
+\ldots, $X_n$ are, in fact, normal random variables, since they are linear
+combinations of independent normal variables.} given by $\bfX = M\bfZ$, where $M$
+is the matrix given by (7.89), $\bfX = (X_i)_{i=1:n}$ and $\bfZ = (Z_i)_{i=1:n}$.
+Let $\Sigma_{\bfX}$ be the covariance matrix of $X_1$,
+% CONTINUES: \begin{proof} of Theorem 7.5 part (i) (opened above) is left OPEN
+% here at the end of PDF page 225 (folio 209), mid-sentence right after "$X_1$,".
+% The next file (sec07_c2_5.tex, PAGES 226) picks up with "$X_2, \ldots, X_n$."
+% and closes this proof. Do not open a new \begin{proof} there.

@@ -102,16 +102,16 @@ offset.
 
 ## Chapter 7 — Covariance matrices. Multivariate normals. (PDF 209–242)
 
-- [ ] 7.1 Covariance and correlation matrices
-- [ ] 7.2 Covariance and correlation matrix estimation from time series data
-- [ ] 7.3 Linear Transformation Property
-- [ ] 7.4 Necessary and sufficient conditions for covariance and correlation matrices
-- [ ] 7.5 Finding normal variables with a given covariance or correlation matrix
-- [ ] 7.5.1 Monte Carlo simulation for basket options pricing
-- [ ] 7.6 Multivariate normal random variables
-- [ ] 7.7 Multivariate random variables formulation for covariance and correlation matrices
-- [ ] 7.8 References
-- [ ] 7.9 Exercises
+- [x] 7.1 Covariance and correlation matrices
+- [x] 7.2 Covariance and correlation matrix estimation from time series data
+- [x] 7.3 Linear Transformation Property
+- [x] 7.4 Necessary and sufficient conditions for covariance and correlation matrices
+- [x] 7.5 Finding normal variables with a given covariance or correlation matrix
+- [x] 7.5.1 Monte Carlo simulation for basket options pricing
+- [x] 7.6 Multivariate normal random variables
+- [x] 7.7 Multivariate random variables formulation for covariance and correlation matrices
+- [x] 7.8 References
+- [x] 7.9 Exercises
 
 ## Chapter 8 — Ordinary least squares (OLS). Linear regression. (PDF 243–266)
 

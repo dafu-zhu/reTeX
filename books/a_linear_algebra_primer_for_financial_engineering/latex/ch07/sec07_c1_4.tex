@@ -1,0 +1,128 @@
+% PAGES: 215-216
+% Opens by closing the "\begin{proof}" of Lemma 7.3 left open at the end of
+% sec07_c1_3.tex (folio 198), whose last item was equation (7.27). Do not open a
+% new "\begin{proof}" for this continuation.
+
+since the covariance matrix $\Sigma_{\bfX}$ is symmetric, i.e., $\Sigma_{\bfX}^t =
+\Sigma_{\bfX}$.
+
+Moreover, since $\left(C^{(1)}\right)^t\Sigma_{\bfX}C^{(2)} \in \R$ is a number, it
+follows that
+\begin{equation}
+\left(\left(C^{(1)}\right)^t\Sigma_{\bfX}C^{(2)}\right)^t
+\;=\; \left(C^{(1)}\right)^t\Sigma_{\bfX}C^{(2)}.
+\end{equation}
+From (7.27) and (7.28), we conclude that
+\[
+\left(C^{(1)}\right)^t\Sigma_{\bfX}C^{(2)} \;=\; \left(C^{(2)}\right)^t\Sigma_{\bfX}C^{(1)},
+\]
+and therefore the second equality of (7.24) is proven.
+
+By letting $C^{(1)} = C^{(2)} = C = (c_i)_{i=1:n}$ in (7.24), we obtain that
+\[
+\var\!\left(\sum_{i=1}^n c_iX_i\right) \;=\; \cov\!\left(\sum_{i=1}^n c_iX_i,\sum_{i=1}^n c_iX_i\right) \;=\; C^t\Sigma_{\bfX}C.
+\]
+\end{proof}
+
+The formulas from Lemma 7.3 connecting the covariance and correlation matrix of
+random variables, as well as the Linear Transformation Property from section 7.3,
+can also be established by using matrix operations and notations for multivariate
+random variables. For more details, see section 7.7.
+
+\begin{lemma}
+(i) Any covariance matrix is symmetric positive semidefinite.
+
+(ii) Any correlation matrix is symmetric positive semidefinite.
+\end{lemma}
+
+\begin{proof}
+Let $\Sigma_{\bfX}$ and $\Omega_{\bfX}$ be the covariance and the correlation matrix
+of the random variables $X_1, X_2, \ldots, X_n$, respectively. Recall from (7.8) and
+(7.10) that $\Sigma_{\bfX}$ and $\Omega_{\bfX}$ are symmetric matrices.
+
+(i) Let $v = (v_i)_{i=1:n} \in \R^n$ be an arbitrary column vector of size $n$. From
+(7.25), we find that
+\begin{equation}
+v^t\Sigma_{\bfX}v \;=\; \var\!\left(\sum_{i=1}^n v_iX_i\right) \;\ge\; 0,
+\end{equation}
+since the variance of any random variable is nonnegative. Thus, $v^t\Sigma_{\bfX}v
+\ge 0$ for any $v \in \R^n$, and we conclude that $\Sigma_{\bfX}$ is a symmetric
+positive semidefinite matrix; cf. Definition 5.7.
+
+(ii) Recall from (7.17) that
+\begin{equation}
+\Omega_{\bfX} \;=\; (D_{\sigma_{\bfX}})^{-1}\Sigma_{\bfX}(D_{\sigma_{\bfX}})^{-1},
+\end{equation}
+where $(D_{\sigma_{\bfX}})^{-1} = \diag\!\left(\frac{1}{\sigma_i}\right)_{i=1:n}$.
+
+Let $v \in \R^n$ and let
+\begin{equation}
+w \;=\; (D_{\sigma_{\bfX}})^{-1}v.
+\end{equation}
+Then,
+\begin{equation}
+w^t \;=\; v^t\left((D_{\sigma_{\bfX}})^{-1}\right)^t \;=\; v^t(D_{\sigma_{\bfX}})^{-1},
+\end{equation}
+since $(D_{\sigma_{\bfX}})^{-1}$ is a diagonal matrix and therefore symmetric, i.e.,
+$\left((D_{\sigma_{\bfX}})^{-1}\right)^t = (D_{\sigma_{\bfX}})^{-1}$.
+
+From (7.29--7.32), we find that
+\begin{align*}
+v^t\Omega_{\bfX}v &= v^t(D_{\sigma_{\bfX}})^{-1}\Sigma_{\bfX}(D_{\sigma_{\bfX}})^{-1}v \\
+&= w^t\Sigma_{\bfX}w \\
+&\ge 0, \quad \forall\, w \in \R^n.
+\end{align*}
+Thus, $v^t\Omega_{\bfX}v \ge 0$ for all $v \in \R^n$, and we conclude that
+$\Omega_{\bfX}$ is a symmetric positive semidefinite matrix; cf. Definition 5.7.
+\end{proof}
+
+\begin{lemma}
+Let $X_1, X_2, \ldots, X_n$ be $n$ random variables on the same probability space.
+The covariance matrix $\Sigma_{\bfX}$ of $X_1, X_2, \ldots, X_n$ is nonsingular if
+and only if there is no linear combination of the random variables $X_1, X_2,
+\ldots, X_n$ that would be constant, i.e., a constant random variable.
+\end{lemma}
+
+\begin{proof}
+In order to prove Lemma 7.5, it is enough to show that the matrix $\Sigma_{\bfX}$
+is singular if and only if there exist constants $c_1, c_2, \ldots, c_n$, and $c_0$,
+not all equal to $0$, such that
+\[
+\sum_{i=1}^n c_iX_i + c_0 \;=\; 0,
+\]
+which is equivalent to
+\begin{equation}
+\var\!\left(\sum_{i=1}^n c_iX_i\right) \;=\; 0,
+\end{equation}
+since $c_0$ is a constant.
+
+Let $C = (c_i)_{i=1:n}$. From (7.25) and (7.33), we obtain that
+\begin{equation}
+C^t\Sigma_{\bfX}C \;=\; 0.
+\end{equation}
+Note that, since the constants $c_1, c_2, \ldots, c_n$, and $c_0$ were assumed to
+not be all equal to $0$, it follows that the $n \times 1$ vector $C$ is not equal to
+$0$.
+
+In other words, we need to show that
+\begin{equation}
+\Sigma_{\bfX} \text{ singular} \quad \Longleftrightarrow \quad \text{there exists } C \neq 0 \text{ such that } C^t\Sigma_{\bfX}C = 0.
+\end{equation}
+To prove (7.35), it is important to recall from Lemma 7.4 that $\Sigma_{\bfX}$ is a
+symmetric positive semidefinite matrix.\footnote{The equivalence (7.35) does not
+hold for a matrix which is not symmetric positive semidefinite matrix. For example,
+if $A = \begin{pmatrix} 1 & 0 \\ 0 & -1 \end{pmatrix}$ and $C = \begin{pmatrix} 1 \\
+1 \end{pmatrix}$, then $C^tAC = 0$ and $A$ is a nonsingular matrix.}
+
+If $\Sigma_{\bfX}$ is a singular matrix, it follows from Theorem 4.3 that $0$ is an
+eigenvalue of $\Sigma_{\bfX}$. Let $C \neq 0$ be an eigenvector of $\Sigma_{\bfX}$
+corresponding to the eigenvalue $0$. Then, $\Sigma_{\bfX}C = 0$ and therefore
+$C^t\Sigma_{\bfX}C = 0$.
+
+If there exists a vector $C \neq 0$ such that $C^t\Sigma_{\bfX}C = 0$, we obtain
+from Definition 5.6 that $\Sigma_{\bfX}$ is not symmetric positive definite. Then,
+from Theorem 5.6, it follows that $0$ is an eigenvalue of $\Sigma_{\bfX}$, and we
+conclude from Theorem 4.3 that the matrix $\Sigma_{\bfX}$ is singular.
+
+Thus, the equivalence (7.35) is established.
+\end{proof}

@@ -1,0 +1,70 @@
+% PAGES: 226
+
+% CONTINUES: closes the \begin{proof} of Theorem 7.5 part (i) left open at the end
+% of sec07_c2_4.tex (PDF page 225, folio 209), mid-sentence right after "$X_1$,".
+$X_2, \ldots, X_n$. Note that the covariance matrix $\Sigma_{\bfZ}$ of $Z_1$,
+$Z_2$, \ldots, $Z_n$ is the identity matrix, i.e., $\Sigma_{\bfZ} = I$. Then, from
+the Linear Transformation Property (Theorem 7.3) and using (7.91), we find that
+\[
+\Sigma_{\bfX} \;=\; M\Sigma_{\bfZ}M^t \;=\; MM^t \;=\; A.
+\]
+In other words, we found random variables $X_1$, $X_2$, \ldots, $X_n$ with
+covariance matrix equal to the matrix $A$. We conclude that any symmetric
+positive semidefinite matrix is a covariance matrix.
+
+(ii) Recall from Lemma 7.4 that any correlation matrix is symmetric positive
+semidefinite with main diagonal entries equal to $1$; see (7.11).
+
+To prove that any symmetric positive semidefinite matrix with main diagonal
+entries equal to $1$ is a correlation matrix, let $A$ be an $n \times n$
+symmetric positive semidefinite with $A(i,i) = 1$ for all $i = 1:n$. We will find
+random variables $X_1$, $X_2$, \ldots, $X_n$ with correlation matrix $\Omega_{\bfX}
+= A$.
+
+We showed above that there exist random variables $X_1$, $X_2$, \ldots, $X_n$
+with covariance matrix $\Sigma_{\bfX} = A$. Since $A(i,i) = 1$ for all $i = 1:n$,
+it follows that $\Sigma_{\bfX}(i,i) = 1$ for all $i = 1:n$, and, from Lemma 7.2,
+we conclude that $\Omega_{\bfX} = \Sigma_{\bfX} = A$, which is what we wanted to
+show.
+\end{proof}
+
+The method for finding normal random variables with a given covariance matrix
+described above requires finding the eigenvalues of the given symmetric positive
+semidefinite matrix. Note that this method is not used in practice if the given
+matrix is symmetric positive definite, in which case the Cholesky decomposition
+of the given covariance matrix is used; see section 7.5 for details.
+
+\begin{examplex}
+The $3 \times 3$ matrix
+\begin{equation}
+A \;=\; \begin{pmatrix} 1 & a & b \\ a & 1 & c \\ b & c & 1 \end{pmatrix}
+\end{equation}
+is a correlation matrix if and only if
+\begin{equation}
+-1 \le a,b,c \le 1 \quad \text{and} \quad \det(A) = 1+2abc-a^2-b^2-c^2 \ge 0.
+\end{equation}
+
+\par\medskip\noindent\textit{Solution:}\ Since all the main diagonal entries of
+$A$ are equal to $1$, it follows from Theorem 7.5 that the matrix $A$ is a
+correlation matrix if and only if it is symmetric positive semidefinite, which,
+according to (5.64) is equivalent to
+\begin{equation}
+-1 \le a,b,c \le 1 \quad \text{and} \quad \det(A) = 1+2abc-a^2-b^2-c^2 \ge 0.
+\end{equation}
+\end{examplex}
+
+\begin{examplex}
+Find all the values of $\rho$ such that the matrix
+\[
+\Omega \;=\; \begin{pmatrix} 1 & 0.8 & 0.3 \\ 0.8 & 1 & \rho \\ 0.3 & \rho & 1 \end{pmatrix}
+\]
+is a correlation matrix.
+% OPEN AT END OF PDF page 226 (folio 210): this \begin{examplex} is left
+% deliberately UNCLOSED. The source's "Solution:" and the closing square do not
+% appear until PDF page 227, outside this agent's assigned range (218-226).
+% check_env_balance.py CANNOT see this gap: examplex is a manual run-in block
+% (\textit{Example:} ... ends with $\square$ via \end{examplex}), not an
+% environment the balance checker tracks structurally beyond its own
+% begin/end pairing. THE NEXT AGENT (covering PDF 227+) MUST supply the missing
+% "Solution:" text and close this block with \end{examplex} -- do not open a new
+% \begin{examplex} for it.

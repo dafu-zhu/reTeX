@@ -1,0 +1,140 @@
+% PAGES: 220-221
+
+\begin{examplex}
+\footnote{A similar example for computing sample covariance and correlation
+matrices for daily returns of Apple, Facebook, Google, Microsoft, and Yahoo was
+included in Chapter 1. Details on computing percentage returns can also be found
+there.}
+The file \textit{data-DJ30-july2011-june2013.xlsx} from fepress.org/nla-primer
+contains the end of week and end of month adjusted closing prices for eight
+financial and technology Dow Jones components (AXP; BAC; JPM; CSCO; HPQ; IBM;
+INTC; MSFT) between July 1, 2011 and June 30, 2013. We compute the sample
+covariance and sample correlation matrix of the returns of the eight stocks using
+this data.
+
+The weekly (percentage) returns are computed using the end of week closing prices
+for the eight stocks, which, using the notation from section 7.2, give the entries
+of the matrix $T_{\bfX}$. After computing the mean normalized time series matrix
+$\overline{T}_{\bfX}$ of the stock returns, the sample covariance matrix
+$\widehat{\Sigma}_{\bfX,week}$ and the sample correlation matrix
+$\widehat{\Omega}_{\bfX,week}$ are computed from the formulas (7.60) and (7.61),
+respectively.
+\[
+\widehat{\Sigma}_{\bfX,week} \;=\;
+\begin{pmatrix}
+0.0010 & 0.0013 & 0.0010 & 0.0005 & 0.0007 & 0.0005 & 0.0006 & 0.0005 \\
+0.0013 & 0.0036 & 0.0021 & 0.0010 & 0.0011 & 0.0009 & 0.0009 & 0.0009 \\
+0.0010 & 0.0021 & 0.0019 & 0.0009 & 0.0011 & 0.0007 & 0.0007 & 0.0007 \\
+0.0005 & 0.0010 & 0.0009 & 0.0015 & 0.0009 & 0.0006 & 0.0005 & 0.0005 \\
+0.0007 & 0.0011 & 0.0011 & 0.0009 & 0.0034 & 0.0008 & 0.0010 & 0.0006 \\
+0.0005 & 0.0009 & 0.0007 & 0.0006 & 0.0008 & 0.0009 & 0.0005 & 0.0004 \\
+0.0006 & 0.0009 & 0.0007 & 0.0005 & 0.0010 & 0.0005 & 0.0011 & 0.0005 \\
+0.0005 & 0.0009 & 0.0007 & 0.0005 & 0.0006 & 0.0004 & 0.0005 & 0.0009
+\end{pmatrix}
+\]
+\[
+\widehat{\Omega}_{\bfX,week} \;=\;
+\begin{pmatrix}
+1      & 0.6875 & 0.6995 & 0.3727 & 0.3607 & 0.4847 & 0.5286 & 0.5497 \\
+0.6875 & 1      & 0.8068 & 0.4165 & 0.3253 & 0.4876 & 0.4517 & 0.4771 \\
+0.6995 & 0.8068 & 1      & 0.5411 & 0.4300 & 0.5338 & 0.4848 & 0.5088 \\
+0.3727 & 0.4165 & 0.5411 & 1      & 0.4002 & 0.5183 & 0.4222 & 0.4569 \\
+0.3607 & 0.3253 & 0.4300 & 0.4002 & 1      & 0.4937 & 0.5135 & 0.3233 \\
+0.4847 & 0.4876 & 0.5338 & 0.5183 & 0.4937 & 1      & 0.5482 & 0.4872 \\
+0.5286 & 0.4517 & 0.4848 & 0.4222 & 0.5135 & 0.5482 & 1      & 0.5137 \\
+0.5497 & 0.4771 & 0.5088 & 0.4569 & 0.3233 & 0.4872 & 0.5137 & 1
+\end{pmatrix}
+\]
+Note that the rows and columns in the correlation and covariance matrices herein
+correspond to the companies in the following order: AXP; BAC; JPM; CSCO; HPQ; IBM;
+INTC; MSFT.
+
+Similarly, the monthly returns are computed using the end of monthly closing
+prices for the eight stocks. This gives the entries of the matrix $T_X$, which can
+be used to compute the mean normalized time series matrix $\overline{T}_X$ of the
+stock returns. The following sample covariance matrix and sample correlation
+matrix are then computed by using formulas (7.60) and (7.61), respectively:
+\[
+\widehat{\Sigma}_{\bfX,month} \;=\;
+\begin{pmatrix}
+0.0030 & 0.0053 & 0.0047 & 0.0029 & 0.0039 & 0.0012 & 0.0017 & 0.0022 \\
+0.0053 & 0.0201 & 0.0125 & 0.0058 & 0.0061 & 0.0022 & 0.0020 & 0.0047 \\
+0.0047 & 0.0125 & 0.0124 & 0.0061 & 0.0049 & 0.0022 & 0.0023 & 0.0042 \\
+0.0029 & 0.0058 & 0.0061 & 0.0076 & 0.0048 & 0.0020 & 0.0025 & 0.0028 \\
+0.0039 & 0.0061 & 0.0049 & 0.0048 & 0.0193 & 0.0035 & 0.0039 & 0.0022 \\
+0.0012 & 0.0022 & 0.0022 & 0.0020 & 0.0035 & 0.0020 & 0.0012 & 0.0008 \\
+0.0017 & 0.0020 & 0.0023 & 0.0025 & 0.0039 & 0.0012 & 0.0039 & 0.0024 \\
+0.0022 & 0.0047 & 0.0042 & 0.0028 & 0.0022 & 0.0008 & 0.0024 & 0.0034
+\end{pmatrix}
+\]
+\[
+\widehat{\Omega}_{\bfX,month} \;=\;
+\begin{pmatrix}
+1      & 0.6843 & 0.7659 & 0.5991 & 0.5098 & 0.4781 & 0.5116 & 0.6890 \\
+0.6843 & 1      & 0.7923 & 0.4652 & 0.3100 & 0.3482 & 0.2269 & 0.5745 \\
+0.7659 & 0.7923 & 1      & 0.6304 & 0.3188 & 0.4438 & 0.3388 & 0.6493 \\
+0.5991 & 0.4652 & 0.6304 & 1      & 0.3947 & 0.5165 & 0.4610 & 0.5610 \\
+0.5098 & 0.3100 & 0.3188 & 0.3947 & 1      & 0.5544 & 0.4464 & 0.2697 \\
+0.4781 & 0.3482 & 0.4438 & 0.5165 & 0.5544 & 1      & 0.4360 & 0.3009 \\
+0.5116 & 0.2269 & 0.3388 & 0.4610 & 0.4464 & 0.4360 & 1      & 0.6733 \\
+0.6890 & 0.5745 & 0.6493 & 0.5610 & 0.2697 & 0.3009 & 0.6733 & 1
+\end{pmatrix}
+\]
+As expected, the correlations between the returns of the financial companies, and
+the correlations between the returns of the technology companies are generally
+stronger than the correlations of the returns of a financial company and a
+technology company. Also, all the returns, both weekly and monthly, are positively
+correlated with each other.
+\end{examplex}
+
+An important issue in practice is that the sample covariance matrix of time series
+data may be very close to singular, which affects the performance of many
+algorithms, e.g., the Cholesky decomposition and linear solvers. The result of
+Theorem 7.2 gives necessary and sufficient conditions for the sample covariance
+matrix to be nonsingular, and will be used subsequently for the linear regression
+of time series data; see section 8.2. This result is the time series version of
+Lemma 7.5 for random variables.
+
+\begin{theorem}
+Let $X_1$, $X_2$, \ldots, $X_n$ be $n$ random variables given by the $N \times n$
+time series data matrix $T_{\bfX} = \mathrm{col}(T_{X_k})_{k=1:n}$ at $N$ data
+points, with $N > n$. The sample covariance matrix $\widehat{\Sigma}_{\bfX}$ is
+nonsingular if and only if the vectors $T_{X_1}, T_{X_2}, \ldots, T_{X_n}, \bfone$
+are linearly independent, i.e.,
+\begin{equation}
+\widehat{\Sigma}_{\bfX} \text{ nonsingular} \quad \Longleftrightarrow \quad T_{X_1},T_{X_2},\ldots,T_{X_n},\bfone \text{ linearly independent},
+\end{equation}
+where $\bfone$ denotes the $N \times 1$ column vector with all entries equal to $1$.
+\end{theorem}
+
+\begin{proof}
+Recall from (7.60) that $\widehat{\Sigma}_{\bfX} = \frac{1}{N-1}\,\overline{T}^t_{\bfX}\overline{T}_{\bfX}$,
+where $\overline{T}_{\bfX} = \mathrm{col}\left(\overline{T}_{X_k}\right)_{k=1:n}$ is
+the mean--normalized $N \times n$ matrix of time series data for the $n$ random
+variables; see (7.48) and (7.49).
+
+Also, recall from Lemma 5.2 that a matrix of the form $M^tM$ is symmetric positive
+definite if and only if the columns of $M$ are linearly independent.
+
+Then, we conclude that
+\begin{equation}
+\widehat{\Sigma}_{\bfX} \text{ nonsingular} \quad \Longleftrightarrow \quad \overline{T}_{X_1},\overline{T}_{X_2},\ldots,\overline{T}_{X_n} \text{ linearly independent}.
+\end{equation}
+From (7.67), it follows that, in order to prove (7.66), it is enough to show that
+\begin{align}
+T_{X_1},T_{X_2},\ldots,T_{X_n},\bfone &\text{ linearly independent} \\
+\Longleftrightarrow \quad \overline{T}_{X_1},\overline{T}_{X_2},\ldots,\overline{T}_{X_n} &\text{ linearly independent}.
+\end{align}
+\noindent$\bullet$ Assume that $T_{X_1}, T_{X_2}, \ldots, T_{X_n}, \bfone$ are linearly
+independent. We will show that $\overline{T}_{X_1}, \overline{T}_{X_2}, \ldots,
+\overline{T}_{X_n}$ are linearly independent, which is equivalent to showing that,
+if $c_k$, $k=1:n$, are constants such that
+\begin{equation}
+\sum_{k=1}^n c_k\overline{T}_{X_k} \;=\; 0,
+\end{equation}
+then $c_k = 0$ for all $k = 1:n$.
+% CONTINUES: \begin{proof} of Theorem 7.2 (opened above) and the surrounding bullet
+% item are left OPEN here at the end of PDF page 221 (folio 205). The next file
+% (sec07_c2_3.tex, PAGES 222-223) picks up with "Since $\overline{T}_{X_k} =
+% (X_k(t_i)-\widehat{\mu}_{X_k})_{i=1:N}$ ..." and eventually closes this proof
+% with \end{proof}. Do not open a new \begin{proof} there.
