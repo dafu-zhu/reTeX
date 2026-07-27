@@ -11,8 +11,8 @@ books/*/build/
 *.fdb_latexmk
 *.synctex.gz
 
-# Compiled book PDFs — compile_fix.py writes into latex/, build.sh into the book root
-books/*/*.pdf
+# The canonical PDF that build.sh writes to the book root IS versioned:
+# books/<name>/<name>.pdf. Only compile_fix.py's duplicate under latex/ is ignored.
 books/*/latex/*.pdf
 
 # Source PDFs (user provides)
