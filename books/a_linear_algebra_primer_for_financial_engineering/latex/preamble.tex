@@ -9,17 +9,26 @@
 \usepackage{microtype}
 
 %% -------------------------------------------------------
-%% Page geometry — measured from the scan
-%% Trim size 438.48 x 648.99 pt = 6.09in x 9.01in
-%% Text block  ~4.69in wide, ~7.41in tall
+%% Page geometry
+%%
+%% The scan measures 6.09in x 9.01in with a 4.69in (338.9pt) text block.
+%% That measure is too narrow for this book's own display mathematics: the
+%% block-matrix equations of Chapters 4, 6 and 7 run up to 524pt wide and
+%% spilled into the right margin. Enlarged to a standard 7x10in textbook
+%% trim, which widens the measure to 5.60in (404.5pt, +19%) and deepens it
+%% to 8.30in (+12%) — roughly a third more content per page. Base size
+%% stays at 11pt so the line still runs about 80 characters.
+%%
+%% Displays wider than 404.5pt are still broken by hand, following the
+%% line breaks the printed book uses; \shrinkwrap below is the last resort.
 %% -------------------------------------------------------
 \usepackage[
-  paperwidth=6.09in,
-  paperheight=9.01in,
+  paperwidth=7.00in,
+  paperheight=10.00in,
   left=0.70in,
   right=0.70in,
-  top=0.75in,
-  bottom=0.85in,
+  top=0.80in,
+  bottom=0.90in,
   headheight=14pt,
   headsep=18pt,
   footskip=24pt
@@ -39,7 +48,15 @@
 %% -------------------------------------------------------
 \usepackage{graphicx}
 \usepackage{float}          % provides the [H] float specifier
+\usepackage{adjustbox}
 \graphicspath{{./figures/}{../figures/}}
+
+%% Last-resort fit for a single display that no line break can rescue.
+%% Scales the body down only if it exceeds the measure; leaves it untouched
+%% otherwise, so it never enlarges type. Prefer breaking the display by hand.
+%%   \[ \shrinkwrap{ ...matrices... } \]
+\newcommand{\shrinkwrap}[1]{%
+  \adjustbox{max width=\linewidth}{$\displaystyle #1$}}
 
 %% -------------------------------------------------------
 %% Lists, tables, index
@@ -88,6 +105,14 @@
 \numberwithin{table}{chapter}
 \setcounter{tocdepth}{2}
 \setcounter{secnumdepth}{3}
+
+%% The wider measure lets some long List-of-Tables captions reach the folio
+%% column, where book.cls sets them flush against the page number. Reserving
+%% more room on the right makes those entries wrap instead of colliding.
+\makeatletter
+\renewcommand{\@pnumwidth}{2.1em}
+\renewcommand{\@tocrmarg}{3.6em}
+\makeatother
 
 %% -------------------------------------------------------
 %% Theorem environments

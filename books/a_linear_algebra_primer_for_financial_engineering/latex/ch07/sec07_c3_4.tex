@@ -55,14 +55,18 @@ follows that
 % "-1/2" already applied to this same quantity in the exponent of (7.118) --
 % the two negative signs together would make the exponent positive. Reproduced
 % exactly as printed; not corrected.
-&= \frac{-1}{1-\rho^2}\left(\frac{(x_1-\mu_1)^2}{\sigma_1^2} - \frac{2\rho(x_1-\mu_1)(x_2-\mu_2)}{\sigma_1\sigma_2} + \frac{(x_2-\mu_2)^2}{\sigma_2^2}\right).
+&= \frac{-1}{1-\rho^2}\left(\frac{(x_1-\mu_1)^2}{\sigma_1^2} - \frac{2\rho(x_1-\mu_1)(x_2-\mu_2)}{\sigma_1\sigma_2}\right.\notag\\
+&\qquad\qquad\qquad\qquad\qquad \left. + \frac{(x_2-\mu_2)^2}{\sigma_2^2}\right).
 \end{align}
 
 Using (7.116) and (7.117), we obtain that the probability density function of the bivariate
 normal random variable given by (7.113) can be written as follows:
 \begin{equation}
-f(x_1,x_2) \;=\; \frac{1}{2\pi\sigma_1\sigma_2\sqrt{1-\rho^2}}\cdot
-\exp\!\left(-\frac{1}{2(1-\rho^2)}\left(\frac{(x_1-\mu_1)^2}{\sigma_1^2} - \frac{2\rho(x_1-\mu_1)(x_2-\mu_2)}{\sigma_1\sigma_2} + \frac{(x_2-\mu_2)^2}{\sigma_2^2}\right)\right)
+\begin{split}
+f(x_1,x_2) \;=\;& \frac{1}{2\pi\sigma_1\sigma_2\sqrt{1-\rho^2}}\;\cdot\\
+&\exp\!\left(-\frac{1}{2(1-\rho^2)}\left(\frac{(x_1-\mu_1)^2}{\sigma_1^2} - \frac{2\rho(x_1-\mu_1)(x_2-\mu_2)}{\sigma_1\sigma_2}\right.\right.\\
+&\qquad\qquad\qquad\qquad\qquad\quad \left.\left. + \frac{(x_2-\mu_2)^2}{\sigma_2^2}\right)\right)
+\end{split}
 \end{equation}
 % NOTE: source does not print a closing square after this Example (verified at
 % 600 dpi: PDF page 232, folio 216, ends here; PDF page 233, folio 217, opens

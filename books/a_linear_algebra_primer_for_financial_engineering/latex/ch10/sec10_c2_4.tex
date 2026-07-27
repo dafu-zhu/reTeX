@@ -29,18 +29,17 @@ is symmetric positive definite.
 \begin{proof}
 Note that, since $A$ is a symmetric matrix, $A(2:n,1) = (A(1,2:n))^t$. Then, from
 Lemma 10.15, we find that
-% Textstyle fractions (as printed) bring this to ~376pt against a 338pt measure,
-% so it still needs a light \resizebox -- now ~0.90 (approx 9.8pt type) rather
-% than the 0.76 it used with \dfrac. The source keeps all three matrices on one
-% line, so scaling is preferable to breaking the product.
+% Textstyle fractions (as printed) bring this to ~376pt, which fits the 404.5pt
+% measure unscaled. \shrinkwrap is kept as a guard only -- it shrinks nothing
+% while the display fits. The source keeps all three matrices on one line.
 \[
-\resizebox{\linewidth}{!}{$\displaystyle
+\shrinkwrap{
 A \;=\; \begin{pmatrix} \sqrt{A(1,1)} & \bfzero^t \\[0.6em]
 \frac{(A(1,2:n))^t}{\sqrt{A(1,1)}} & I_{n-1} \end{pmatrix}
 \begin{pmatrix} 1 & \bfzero^t \\[0.6em]
 \bfzero & A_{n-1} - \frac{(A(1,2:n))^tA(1,2:n)}{A(1,1)} \end{pmatrix}
 \begin{pmatrix} \sqrt{A(1,1)} & \frac{A(1,2:n)}{\sqrt{A(1,1)}} \\[0.6em]
-\bfzero & I_{n-1} \end{pmatrix}$}
+\bfzero & I_{n-1} \end{pmatrix}}
 \]
 which can be written as
 \begin{equation}
@@ -113,13 +112,13 @@ matrix of size $n$ is also diagonalizable.
 Let $A$ be an $n \times n$ symmetric positive definite matrix. Then, $A(2:n,1) =
 (A(1,2:n))^t$, and, from Lemma 10.15, we find that
 \begin{equation}
-\resizebox{\linewidth}{!}{$\displaystyle
+\shrinkwrap{
 A \;=\; \begin{pmatrix} \sqrt{A(1,1)} & \bfzero^t \\[0.6em]
 \frac{(A(1,2:n))^t}{\sqrt{A(1,1)}} & I_{n-1} \end{pmatrix}
 \begin{pmatrix} 1 & \bfzero^t \\[0.6em]
 \bfzero & A_{n-1} - \frac{(A(1,2:n))^tA(1,2:n)}{A(1,1)} \end{pmatrix}
 \begin{pmatrix} \sqrt{A(1,1)} & \frac{A(1,2:n)}{\sqrt{A(1,1)}} \\[0.6em]
-\bfzero & I_{n-1} \end{pmatrix}$}
+\bfzero & I_{n-1} \end{pmatrix}}
 \end{equation}
 where $I_{n-1}$ is the $(n-1)\times(n-1)$ identity matrix, and $\mathbf{0}$ is the
 column vector of size $n-1$ with all entries equal to $0$.
